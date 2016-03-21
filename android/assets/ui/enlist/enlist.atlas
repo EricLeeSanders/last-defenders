@@ -1,0 +1,171 @@
+
+enlist.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+enlist_bg
+  rotate: false
+  xy: 1, 235
+  size: 325, 250
+  orig: 325, 250
+  offset: 0, 0
+  index: -1
+flamethrowerDisabled
+  rotate: false
+  xy: 1, 73
+  size: 140, 160
+  orig: 140, 160
+  offset: 0, 0
+  index: -1
+flamethrowerEnabled
+  rotate: false
+  xy: 328, 325
+  size: 140, 160
+  orig: 140, 160
+  offset: 0, 0
+  index: -1
+machineDisabled
+  rotate: false
+  xy: 143, 73
+  size: 140, 160
+  orig: 140, 160
+  offset: 0, 0
+  index: -1
+machineEnabled
+  rotate: false
+  xy: 470, 325
+  size: 140, 160
+  orig: 140, 160
+  offset: 0, 0
+  index: -1
+rifleDisabled
+  rotate: false
+  xy: 612, 325
+  size: 140, 160
+  orig: 140, 160
+  offset: 0, 0
+  index: -1
+rifleEnabled
+  rotate: false
+  xy: 754, 325
+  size: 140, 160
+  orig: 140, 160
+  offset: 0, 0
+  index: -1
+rocketlauncherDisabled
+  rotate: false
+  xy: 328, 163
+  size: 140, 160
+  orig: 140, 160
+  offset: 0, 0
+  index: -1
+rocketlauncherEnabled
+  rotate: false
+  xy: 470, 163
+  size: 140, 160
+  orig: 140, 160
+  offset: 0, 0
+  index: -1
+sniperDisabled
+  rotate: false
+  xy: 612, 163
+  size: 140, 160
+  orig: 140, 160
+  offset: 0, 0
+  index: -1
+sniperEnabled
+  rotate: false
+  xy: 754, 163
+  size: 140, 160
+  orig: 140, 160
+  offset: 0, 0
+  index: -1
+tankDisabled
+  rotate: false
+  xy: 285, 1
+  size: 140, 160
+  orig: 140, 160
+  offset: 0, 0
+  index: -1
+tankEnabled
+  rotate: false
+  xy: 427, 1
+  size: 140, 160
+  orig: 140, 160
+  offset: 0, 0
+  index: -1
+turretDisabled
+  rotate: false
+  xy: 569, 1
+  size: 140, 160
+  orig: 140, 160
+  offset: 0, 0
+  index: -1
+turretEnabled
+  rotate: false
+  xy: 711, 1
+  size: 140, 160
+  orig: 140, 160
+  offset: 0, 0
+  index: -1
+cancel
+  rotate: false
+  xy: 896, 410
+  size: 75, 75
+  orig: 75, 75
+  offset: 0, 0
+  index: -1
+place
+  rotate: false
+  xy: 973, 435
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+rotate
+  rotate: false
+  xy: 973, 383
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+
+enlist2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+paint/iconHealth
+  rotate: false
+  xy: 1, 1
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+paint/dollarSign
+  rotate: false
+  xy: 53, 1
+  size: 34, 50
+  orig: 34, 50
+  offset: 0, 0
+  index: -1
+paint/iconAttack
+  rotate: false
+  xy: 89, 11
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+paint/iconRange
+  rotate: false
+  xy: 131, 11
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+paint/iconSpeed
+  rotate: false
+  xy: 173, 11
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1

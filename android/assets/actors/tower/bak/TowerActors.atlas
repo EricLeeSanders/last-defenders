@@ -1,0 +1,40 @@
+
+TowerActors.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+rotate
+  rotate: false
+  xy: 1, 199
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+Tank
+  rotate: false
+  xy: 1, 67
+  size: 47, 130
+  orig: 47, 130
+  offset: 0, 0
+  index: -1
+InfantryLeft
+  rotate: false
+  xy: 515, 647
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+InfantryRight
+  rotate: false
+  xy: 1, 1
+  size: 32, 64
+  orig: 32, 64
+  offset: 0, 0
+  index: -1
+Infantry
+  rotate: false
+  xy: 50, 141
+  size: 32, 56
+  orig: 32, 56
+  offset: 0, 0
+  index: -1
