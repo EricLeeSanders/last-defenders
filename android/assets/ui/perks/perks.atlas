@@ -1,0 +1,40 @@
+
+perks.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+select_bg
+  rotate: false
+  xy: 1, 78
+  size: 500, 281
+  orig: 500, 281
+  offset: 0, 0
+  index: -1
+perks_bg
+  rotate: false
+  xy: 503, 109
+  size: 325, 250
+  orig: 325, 250
+  offset: 0, 0
+  index: -1
+cancel
+  rotate: false
+  xy: 1, 1
+  size: 75, 75
+  orig: 75, 75
+  offset: 0, 0
+  index: -1
+selectPerk
+  rotate: false
+  xy: 830, 284
+  size: 75, 75
+  orig: 75, 75
+  offset: 0, 0
+  index: -1
+sandbags
+  rotate: false
+  xy: 503, 83
+  size: 64, 24
+  orig: 64, 24
+  offset: 0, 0
+  index: -1

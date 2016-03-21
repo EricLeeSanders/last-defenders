@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" nextobjectid="101">
+ <tileset firstgid="1" name="pokemon" tilewidth="16" tileheight="16">
+  <image source="tileset-alistair.png" width="1461" height="1056"/>
+ </tileset>
+ <layer name="Terrain" width="60" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztlkEOgjAQRYfGtfEIcgPkeOqJuIfeALyOLjDB2MIMEtriW7xVM5O+SfszzU6kAQAAAAAAAIBNsT+kDb744ruub1uIdD2PAt/UfM+vO16UXD0+ufkO7zuFz2dYXxpnlbuvtTa2711ETu6Tm2zXd8rHd1657xlpZ5Wj7xjWWnzj+obyN5S9uftaswjf9H1D+avJ3ti+vr93nJlHmn9t7b207xI7geWdx943/s03tAe9qZ3ed2yvmtt7jbxKCXx/4wnQKAa5
+  </data>
+ </layer>
+ <objectgroup name="Path" visible="0">
+  <object id="47" name="PathLine" x="-1" y="577">
+   <polyline points="0,0 113,-1 113,-177 241,-177 241,-65 337,-65 337,-1 481,-1 481,-161 369,-161 369,-241"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="PathBoundary" visible="0">
+  <object id="50" x="1" y="552" width="131" height="44"/>
+  <object id="54" x="91" y="380" width="42" height="171"/>
+  <object id="56" x="135" y="379" width="126" height="42"/>
+  <object id="57" x="216" y="422" width="47" height="112"/>
+  <object id="58" x="267" y="490" width="90" height="45"/>
+  <object id="60" x="315" y="537" width="41" height="59"/>
+  <object id="61" x="358" y="550" width="142" height="46"/>
+  <object id="62" x="457" y="395" width="43" height="153"/>
+  <object id="66" x="347" y="392" width="110" height="46"/>
+  <object id="67" x="347" y="336" width="43" height="55"/>
+ </objectgroup>
+ <objectgroup name="UI_Title" visible="0">
+  <object id="19" name="Enlist" x="580" y="287.33" width="50" height="50"/>
+  <object id="34" name="Quit" x="9.33367" y="287.333" width="50" height="50"/>
+  <object id="35" name="Options" x="69.3337" y="287.333" width="50" height="50"/>
+  <object id="36" name="Money" x="228.667" y="298.333" width="50" height="27.3333"/>
+  <object id="37" name="Life" x="298.667" y="298.333" width="50" height="27.3333"/>
+  <object id="38" name="Panel" x="0" y="227" width="640" height="111"/>
+  <object id="42" name="Wave" x="580" y="580" width="50" height="50"/>
+ </objectgroup>
+ <objectgroup name="UI_Enlist">
+  <object id="20" name="EnlistTank" x="580" y="405" width="50" height="50"/>
+  <object id="21" name="EnlistRifle" x="580" y="345.667" width="50" height="50"/>
+  <object id="30" name="Cancel" x="580" y="287.33" width="50" height="50"/>
+  <object id="40" name="Panel" x="573" y="337.5" width="67" height="301.5"/>
+  <object id="69" name="Rotate" x="460" y="287.33" width="50" height="50"/>
+  <object id="74" name="Place" x="522" y="287.33" width="50" height="50"/>
+ </objectgroup>
+ <objectgroup name="UI_Upgrade">
+  <object id="29" name="Close" x="569" y="575" width="61" height="56"/>
+  <object id="70" name="Panel" x="0" y="529" width="640" height="111"/>
+  <object id="71" name="Health" x="7" y="536" width="95" height="27"/>
+  <object id="76" name="Sell" x="498" y="575" width="61" height="56"/>
+  <object id="78" name="IncreaseHealth" x="209" y="536" width="84" height="96"/>
+  <object id="80" name="Heal" x="112" y="536" width="84" height="96"/>
+  <object id="81" name="IncreaseRange" x="306" y="536" width="84" height="96"/>
+  <object id="83" name="Kills" x="7" y="567" width="95" height="27"/>
+  <object id="84" name="Target" x="498" y="537" width="95" height="27"/>
+  <object id="82" name="IncreaseAttackSpeed" x="402" y="536" width="84" height="96"/>
+  <object id="97" name="TargetChange" x="598" y="537" width="32" height="27"/>
+ </objectgroup>
+</map>
