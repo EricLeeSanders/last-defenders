@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" nextobjectid="132">
+ <tileset firstgid="1" name="pokemon" tilewidth="16" tileheight="16" tilecount="6006" columns="91">
+  <image source="tileset-alistair.png" width="1461" height="1056"/>
+ </tileset>
+ <layer name="Terrain" width="60" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztmMERwiAQRZeMFy+OJWgHanmaitJAKtAO1E48m4szkUFYkGVR/uEdMkyGfdllIQwLogEAAAAAAAAAAAB/xWpdN/CFbwwj8eDE9u37tfhyY/tV36MhOinRm/dYSvhepzlvStwb9JXuzz7fy/S872Q5UznfUH7t+pLAN99jWTa/Lt/c/WxTsJ5T8iu5vue+Gv1K07fG/ObuZ4eubt/XuOuMxTl7aZyv7Lhsn9D4J9+YvtabMr6cfpma35h1bn9XKd/YOFrw9eV366nReZ24+prvXCXly+mXOfYjzrqo5f+3dd9dhn1Vyzd0LxEi9d5Cy/cJUW7HVg==
+  </data>
+ </layer>
+ <objectgroup name="Path">
+  <object id="131" name="PathLine" x="48" y="511">
+   <polyline points="0,0 544,1"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="PathBoundary" visible="0">
+  <object id="119" x="506" y="524" width="42" height="114"/>
+  <object id="121" x="220" y="572" width="200" height="38"/>
+  <object id="122" x="379" y="552" width="41" height="60"/>
+  <object id="123" x="380.5" y="523" width="163" height="38"/>
+  <object id="124" x="220" y="443" width="40" height="132"/>
+  <object id="125" x="259" y="444" width="321" height="38"/>
+  <object id="126" x="536" y="365" width="42" height="114"/>
+  <object id="127" x="91" y="364" width="486.5" height="38"/>
+  <object id="128" x="91" y="381" width="40" height="196"/>
+  <object id="129" x="2" y="540" width="127" height="38"/>
+ </objectgroup>
+ <objectgroup name="UI_Title">
+  <object id="38" name="Panel" x="0" y="227" width="640" height="111"/>
+ </objectgroup>
+</map>

@@ -1,0 +1,26 @@
+
+level_select.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+choose
+  rotate: false
+  xy: 1, 1
+  size: 682, 83
+  orig: 682, 83
+  offset: 0, 0
+  index: -1
+level1
+  rotate: false
+  xy: 685, 14
+  size: 150, 70
+  orig: 150, 70
+  offset: 0, 0
+  index: -1
+level2
+  rotate: false
+  xy: 837, 14
+  size: 150, 70
+  orig: 150, 70
+  offset: 0, 0
+  index: -1

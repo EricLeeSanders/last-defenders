@@ -1,0 +1,40 @@
+
+EnemyActors.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+TankTurret
+  rotate: false
+  xy: 1, 59
+  size: 30, 165
+  orig: 30, 165
+  offset: 0, 0
+  index: -1
+Tank
+  rotate: false
+  xy: 33, 119
+  size: 69, 105
+  orig: 69, 105
+  offset: 0, 0
+  index: -1
+Rifle
+  rotate: false
+  xy: 33, 61
+  size: 32, 56
+  orig: 32, 56
+  offset: 0, 0
+  index: -1
+RifleLeft
+  rotate: false
+  xy: 67, 61
+  size: 32, 56
+  orig: 32, 56
+  offset: 0, 0
+  index: -1
+RifleRight
+  rotate: false
+  xy: 1, 1
+  size: 32, 56
+  orig: 32, 56
+  offset: 0, 0
+  index: -1
