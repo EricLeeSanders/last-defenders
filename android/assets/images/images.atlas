@@ -1,0 +1,61 @@
+
+images.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+logo
+  rotate: false
+  xy: 1, 201
+  size: 800, 480
+  orig: 800, 480
+  offset: 0, 0
+  index: -1
+ui_bg
+  rotate: false
+  xy: 1, 83
+  size: 512, 116
+  orig: 512, 116
+  offset: 0, 0
+  index: -1
+attribute_gray
+  rotate: false
+  xy: 803, 644
+  size: 100, 37
+  orig: 100, 37
+  offset: 0, 0
+  index: -1
+attribute_green
+  rotate: false
+  xy: 1, 44
+  size: 100, 37
+  orig: 100, 37
+  offset: 0, 0
+  index: -1
+rotate
+  rotate: false
+  xy: 515, 149
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
+lives
+  rotate: false
+  xy: 803, 599
+  size: 50, 43
+  orig: 50, 43
+  offset: 0, 0
+  index: -1
+kills
+  rotate: false
+  xy: 1, 1
+  size: 51, 41
+  orig: 51, 41
+  offset: 0, 0
+  index: -1
+dollarsign
+  rotate: false
+  xy: 515, 97
+  size: 34, 50
+  orig: 34, 50
+  offset: 0, 0
+  index: -1

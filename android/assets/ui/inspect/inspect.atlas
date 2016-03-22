@@ -1,0 +1,197 @@
+
+inspect.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+inspect_bg
+  rotate: false
+  xy: 1, 359
+  size: 152, 152
+  orig: 152, 152
+  offset: 0, 0
+  index: -1
+btnArmorDisabled
+  rotate: false
+  xy: 1, 197
+  size: 110, 160
+  orig: 110, 160
+  offset: 0, 0
+  index: -1
+btnAttackDisabled
+  rotate: false
+  xy: 1, 35
+  size: 110, 160
+  orig: 110, 160
+  offset: 0, 0
+  index: -1
+btnRangeDisabled
+  rotate: false
+  xy: 155, 351
+  size: 110, 160
+  orig: 110, 160
+  offset: 0, 0
+  index: -1
+btnSpeedDisabled
+  rotate: false
+  xy: 267, 351
+  size: 110, 160
+  orig: 110, 160
+  offset: 0, 0
+  index: -1
+btnArmor
+  rotate: false
+  xy: 379, 383
+  size: 110, 128
+  orig: 110, 128
+  offset: 0, 0
+  index: -1
+btnAttack
+  rotate: false
+  xy: 113, 221
+  size: 110, 128
+  orig: 110, 128
+  offset: 0, 0
+  index: -1
+btnRange
+  rotate: false
+  xy: 113, 91
+  size: 110, 128
+  orig: 110, 128
+  offset: 0, 0
+  index: -1
+btnDischarge
+  rotate: false
+  xy: 113, 1
+  size: 147, 88
+  orig: 147, 88
+  offset: 0, 0
+  index: -1
+btnSpeed
+  rotate: false
+  xy: 225, 221
+  size: 110, 128
+  orig: 110, 128
+  offset: 0, 0
+  index: -1
+btnTargetPriority
+  rotate: false
+  xy: 225, 131
+  size: 147, 88
+  orig: 147, 88
+  offset: 0, 0
+  index: -1
+close
+  rotate: false
+  xy: 262, 88
+  size: 141, 41
+  orig: 141, 41
+  offset: 0, 0
+  index: -1
+kills
+  rotate: false
+  xy: 262, 45
+  size: 51, 41
+  orig: 51, 41
+  offset: 0, 0
+  index: -1
+
+inspect2.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Paint/btnBg
+  rotate: false
+  xy: 1, 24
+  size: 800, 987
+  orig: 800, 987
+  offset: 0, 0
+  index: -1
+Paint/attack
+  rotate: false
+  xy: 803, 945
+  size: 180, 66
+  orig: 180, 66
+  offset: 0, 0
+  index: -1
+Paint/range
+  rotate: false
+  xy: 803, 877
+  size: 180, 66
+  orig: 180, 66
+  offset: 0, 0
+  index: -1
+Paint/speed
+  rotate: false
+  xy: 803, 809
+  size: 180, 66
+  orig: 180, 66
+  offset: 0, 0
+  index: -1
+Paint/armor
+  rotate: false
+  xy: 803, 767
+  size: 180, 40
+  orig: 180, 40
+  offset: 0, 0
+  index: -1
+Paint/discharge
+  rotate: false
+  xy: 1, 1
+  size: 147, 21
+  orig: 147, 21
+  offset: 0, 0
+  index: -1
+Paint/dollarSign
+  rotate: false
+  xy: 985, 961
+  size: 34, 50
+  orig: 34, 50
+  offset: 0, 0
+  index: -1
+Paint/iconArmor
+  rotate: false
+  xy: 803, 725
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+Paint/iconAttack
+  rotate: false
+  xy: 803, 683
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+Paint/iconRange
+  rotate: false
+  xy: 845, 725
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+Paint/iconSpeed
+  rotate: false
+  xy: 803, 641
+  size: 40, 40
+  orig: 40, 40
+  offset: 0, 0
+  index: -1
+Paint/TargetPriorityArrow
+  rotate: false
+  xy: 985, 927
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+
+inspect3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Paint/btn_bg
+  rotate: false
+  xy: 1, 1
+  size: 260, 260
+  orig: 260, 260
+  offset: 0, 0
+  index: -1
