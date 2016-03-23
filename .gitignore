@@ -5,7 +5,7 @@
 *.ear
 *.index
 hs_err_pid*
-java.hprof.TMP*
+java.hprof*
 java_Leak_Suspects.zip
 java_System_Overview.zip
 java_Top_Consumers.zip
