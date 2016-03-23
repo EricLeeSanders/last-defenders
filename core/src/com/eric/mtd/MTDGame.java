@@ -7,24 +7,23 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.eric.mtd.helper.Resources;
-import com.eric.mtd.model.Player;
-import com.eric.mtd.model.actor.ActorGroups;
-import com.eric.mtd.model.level.state.ILevelStateObserver;
-import com.eric.mtd.model.level.state.LevelStateManager;
-import com.eric.mtd.model.level.state.LevelStateManager.LevelState;
-import com.eric.mtd.model.stage.GameStage;
-import com.eric.mtd.ui.state.UIStateManager;
-import com.eric.mtd.ui.state.UIStateManager.UIState;
-import com.eric.mtd.screen.GameScreen;
-import com.eric.mtd.screen.LevelScreen;
-import com.eric.mtd.screen.LoadingScreen;
-import com.eric.mtd.screen.MenuScreen;
+import com.eric.mtd.game.GameScreen;
+import com.eric.mtd.game.GameStage;
+import com.eric.mtd.game.helper.Resources;
+import com.eric.mtd.game.model.Player;
+import com.eric.mtd.game.model.actor.ActorGroups;
+import com.eric.mtd.game.model.level.state.ILevelStateObserver;
+import com.eric.mtd.game.model.level.state.LevelStateManager;
+import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
+import com.eric.mtd.game.ui.state.IUIStateObserver;
+import com.eric.mtd.game.ui.state.UIStateManager;
+import com.eric.mtd.game.ui.state.UIStateManager.UIState;
+import com.eric.mtd.load.LoadingScreen;
+import com.eric.mtd.menu.MenuScreen;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.screen.state.IScreenStateObserver;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
 import com.eric.mtd.state.GameStateManager;
-import com.eric.mtd.ui.state.IUIStateObserver;
 
 public class MTDGame extends Game implements IScreenStateObserver {
 	private ScreenStateManager screenStateManager;
@@ -51,10 +50,6 @@ public class MTDGame extends Game implements IScreenStateObserver {
 	@Override
 	public void changeScreenState(ScreenState state) {
     	switch(state){
-		case LEVEL_SELECTION:
-			this.getScreen().dispose(); //dispose current screen
-			this.setScreen(new LevelScreen(screenStateManager));
-			break;
 		case MENU:
 			this.getScreen().dispose(); //dispose current screen
 			this.setScreen( new MenuScreen( screenStateManager ) );
