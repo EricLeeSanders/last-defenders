@@ -2,7 +2,7 @@ package com.eric.mtd.screen.state;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import com.eric.mtd.helper.Logger;
+import com.eric.mtd.Logger;
 
 
 public class ScreenStateManager {
