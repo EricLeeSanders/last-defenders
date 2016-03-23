@@ -3,10 +3,31 @@ menu.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-background
+title
+  rotate: false
+  xy: 1, 68
+  size: 1065, 74
+  orig: 1065, 74
+  offset: 0, 0
+  index: -1
+highscores
   rotate: false
   xy: 1, 1
-  size: 640, 360
-  orig: 640, 360
+  size: 569, 65
+  orig: 569, 65
+  offset: 0, 0
+  index: -1
+options
+  rotate: false
+  xy: 572, 1
+  size: 350, 65
+  orig: 350, 65
+  offset: 0, 0
+  index: -1
+start
+  rotate: false
+  xy: 924, 1
+  size: 258, 65
+  orig: 258, 65
   offset: 0, 0
   index: -1
