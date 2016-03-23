@@ -41,7 +41,7 @@ public class LoadingScreen extends AbstractScreen
 	public void show(){
 		super.show();
 		Resources.loadGraphics();
-        atlas = Resources.getAtlas(Resources.IMAGES_ATLAS);
+        //atlas = Resources.getAtlas(Resources.IMAGES_ATLAS);
         logoRegion = atlas.findRegion("logo");
         logoImage = new Image( logoRegion);
         
