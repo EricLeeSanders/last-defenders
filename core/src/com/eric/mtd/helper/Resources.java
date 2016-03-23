@@ -19,7 +19,6 @@ import com.eric.mtd.MTDGame;
 
 //-agentlib:hprof=heap=dump,format=b
 public abstract class Resources {
-    public static final String IMAGES_ATLAS = "images/images.atlas";
     public static final String MENU_ATLAS = "menu/menu.atlas";
     public static final String ENEMY_ATLAS = "actors/enemy/EnemyActors.atlas";   
     public static final String LEVEL_SELECT_ATLAS = "level_select/level_select.atlas";
@@ -55,7 +54,6 @@ public abstract class Resources {
 		Resources.loadSkin(Resources.SKIN_JSON);
 		Resources.loadAtlas(Resources.ENEMY_ATLAS);
 		Resources.loadAtlas(Resources.TOWER_ATLAS);
-		Resources.loadAtlas(Resources.IMAGES_ATLAS);
 		Resources.loadAtlas(Resources.EXPLOSION_ATLAS);
 		Resources.loadAtlas(Resources.FLAMES_ATLAS);
 		Resources.loadAtlas(Resources.MENU_ATLAS);
