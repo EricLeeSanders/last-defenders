@@ -31,7 +31,7 @@ import com.eric.mtd.game.model.actor.tower.TowerTank;
 import com.eric.mtd.game.model.placement.TowerPlacement;
 import com.eric.mtd.game.ui.controller.EnlistController;
 import com.eric.mtd.game.ui.controller.interfaces.IEnlistController;
-import com.eric.mtd.game.ui.state.GameIUIStateObserver;
+import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
@@ -39,7 +39,7 @@ import com.eric.mtd.game.ui.view.widget.MTDImageButton;
 import com.eric.mtd.game.ui.view.widget.MTDTextButton;
 import com.eric.mtd.game.ui.view.widget.enlist.MTDTowerButton;
 
-public class EnlistGroup extends Group implements InputProcessor,GameIUIStateObserver{
+public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObserver{
 	private MTDImage pnlEnlist;
 	private MTDTowerButton btnTank, btnFlameThrower, btnTurret, btnSniper, btnMachine, btnRocketLauncher, btnRifle;
 	private MTDImageButton btnCancel, btnPlace, btnRotate;
@@ -55,8 +55,8 @@ public class EnlistGroup extends Group implements InputProcessor,GameIUIStateObs
 		createControls();
 	}
 	public void createControls(){
-		pnlEnlist = new MTDImage("UI_Enlist", "panel",Resources.ENLIST_ATLAS, "enlist_bg",true, false);
-			pnlEnlist.getColor().set(1f,1f,1f,.75f);
+		pnlEnlist = new MTDImage("UI_Enlist", "panel",Resources.ENLIST_ATLAS, "background",true, false);
+			pnlEnlist.getColor().set(1f,1f,1f,1f);
 			choosingGroup.addActor(pnlEnlist);
 			
 

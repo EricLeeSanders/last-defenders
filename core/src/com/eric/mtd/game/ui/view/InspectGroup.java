@@ -18,7 +18,7 @@ import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.ai.TowerTargetPriority;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.game.ui.controller.interfaces.IInspectController;
-import com.eric.mtd.game.ui.state.GameIUIStateObserver;
+import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
@@ -28,7 +28,7 @@ import com.eric.mtd.game.ui.view.widget.MTDTextButton;
 import com.eric.mtd.game.ui.view.widget.inspect.AttributeUpgrade;
 import com.eric.mtd.game.ui.view.widget.inspect.UpgradeButton;
 import com.eric.mtd.game.ui.view.widget.inspect.UpgradeLevel;
-public class InspectGroup extends Group implements GameIUIStateObserver, InputProcessor{
+public class InspectGroup extends Group implements IGameUIStateObserver, InputProcessor{
 	private GameUIStateManager uiStateManager;
 	private IInspectController controller;
 	private UpgradeButton btnArmor, btnSpeed, btnRange, btnAttack;
@@ -123,10 +123,10 @@ public class InspectGroup extends Group implements GameIUIStateObserver, InputPr
 	}
 
 	public void updateInspect(){
-		//lblArmorCost.setText(String.valueOf(controller.getArmorCost()));
-		//lblSpeedCost.setText(String.valueOf(controller.getSpeedCost()));
-		//lblRangeCost.setText(String.valueOf(controller.getRangeCost()));
-		//lblAttackCost.setText(String.valueOf(controller.getAttackCost()));
+		lblArmorCost.setText(String.valueOf(controller.getArmorCost()));
+		lblSpeedCost.setText(String.valueOf(controller.getSpeedCost()));
+		lblRangeCost.setText(String.valueOf(controller.getRangeCost()));
+		lblAttackCost.setText(String.valueOf(controller.getAttackCost()));
 		lblDischargePrice.setText(String.valueOf(controller.getSellPrice()));
 		lblKills.setText(String.valueOf(controller.getKills()+ " kills"));
 		lvlArmor.resetLevels();

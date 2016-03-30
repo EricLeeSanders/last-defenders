@@ -52,7 +52,7 @@ import com.eric.mtd.game.ui.controller.interfaces.IHUDController;
 import com.eric.mtd.game.ui.controller.interfaces.IInspectController;
 import com.eric.mtd.game.ui.controller.interfaces.IOptionsController;
 import com.eric.mtd.game.ui.controller.interfaces.IPerksController;
-import com.eric.mtd.game.ui.state.GameIUIStateObserver;
+import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.EnlistGroup;
@@ -60,7 +60,7 @@ import com.eric.mtd.game.ui.view.HUDGroup;
 import com.eric.mtd.game.ui.view.InspectGroup;
 import com.eric.mtd.game.ui.view.OptionsGroup;
 
-public class GameStage extends Stage implements GameIUIStateObserver, ILevelStateObserver{
+public class GameStage extends Stage implements IGameUIStateObserver, ILevelStateObserver{
 	// I create the groups here because I found it to be the best place.
 	// If I put them in the current level and tower placement classes, then referencing them elsewhere would be difficult.
 	// For this reason, I create them here and in the current level and tower placement classes, I call the getTower method from this stage class.

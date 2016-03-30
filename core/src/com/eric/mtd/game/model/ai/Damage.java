@@ -20,7 +20,7 @@ public class Damage {
 	public static void dealBulletDamage(GameActor shooter, GameActor target){
 		if((!(target instanceof IPlatedArmor))||(shooter instanceof IRPG)){
 			target.takeDamage(shooter.getAttack());
-	    	if(target.isInactive()){
+	    	if(target.isDead()){
 	    		if(Logger.DEBUG)System.out.println("Bullet giving kill");
 	    		shooter.giveKill();
 	    	}
@@ -37,7 +37,7 @@ public class Damage {
 				//if(Logger.DEBUG)System.out.println("Doing " + damage + " damage");
 				((GameActor)flameTarget).takeDamage(damage);
 				//if(Logger.DEBUG)System.out.println("Actors new health:"+((GameActor)flameTarget).getHealth());
-		    	if(((GameActor)flameTarget).isInactive()){
+		    	if(((GameActor)flameTarget).isDead()){
 		    		if(Logger.DEBUG)System.out.println("Flame giving kill");
 		    		shooter.giveKill();
 		    	}
@@ -50,7 +50,7 @@ public class Damage {
 		//dealBulletDamage(actor, target);
 		float radius = ((IRPG) shooter).getAoeRadius();
 		for(Actor aoeTarget : targetGroup.getChildren()){
-	    	if(((GameActor)aoeTarget).isInactive()==false){
+	    	if(((GameActor)aoeTarget).isDead()==false){
 				if(aoeTarget.equals(target)){
 					if(Logger.DEBUG)System.out.println("aoeTarget == target");
 				}
@@ -64,7 +64,7 @@ public class Damage {
 	    				if(Logger.DEBUG)System.out.println("Doing " + damagePercent + "% of damage for " + damage + " damage");
 	    				((GameActor)aoeTarget).takeDamage(damage);
 	    				if(Logger.DEBUG)System.out.println("Actors new health:"+((GameActor)aoeTarget).getHealth());
-	    		    	if(((GameActor)aoeTarget).isInactive()){
+	    		    	if(((GameActor)aoeTarget).isDead()){
 	    		    		if(Logger.DEBUG)System.out.println("Explosion giving kill");
 	    		    		shooter.giveKill();
 	    		    	}

@@ -33,7 +33,7 @@ public final class TowerAI {
 		lastEnemyDistance = 0;
 		for(Actor enemy : enemies){
 			if(enemy instanceof Enemy){
-				if(!((Enemy)enemy).isInactive()){
+				if(!((Enemy)enemy).isDead()){
 					if(CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(),tower.getRangeShape())){
 						if(((Enemy) enemy).lengthTillEnd() > lastEnemyDistance){
 							if((!(enemy instanceof IPlatedArmor))||(tower instanceof IRPG)){
@@ -71,7 +71,7 @@ public final class TowerAI {
 		firstEnemyDistance = Integer.MAX_VALUE;
 		for(Actor enemy : enemies){
 			if(enemy instanceof Enemy){
-				if(!((Enemy)enemy).isInactive()){
+				if(!((Enemy)enemy).isDead()){
 					if(CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(),tower.getRangeShape())){
 						if(((Enemy) enemy).lengthTillEnd() < firstEnemyDistance){
 							if((!(enemy instanceof IPlatedArmor))||(tower instanceof IRPG)){
@@ -109,7 +109,7 @@ public final class TowerAI {
 		weakestEnemyHealth = Integer.MAX_VALUE;
 		for(Actor enemy : enemies){
 			if(enemy instanceof Enemy){
-				if(!((Enemy)enemy).isInactive()){
+				if(!((Enemy)enemy).isDead()){
 					if(CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(),tower.getRangeShape())){
 						if(((Enemy) enemy).getHealth() < weakestEnemyHealth){
 							if((!(enemy instanceof IPlatedArmor))||(tower instanceof IRPG)){
@@ -147,7 +147,7 @@ public final class TowerAI {
 		strongestEnemyAttack = 0;
 		for(Actor enemy : enemies){
 			if(enemy instanceof Enemy){
-				if(!((Enemy)enemy).isInactive()){
+				if(!((Enemy)enemy).isDead()){
 					if(CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(),tower.getRangeShape())){
 						if(((Enemy) enemy).getAttack() > strongestEnemyAttack){
 							if((!(enemy instanceof IPlatedArmor))||(tower instanceof IRPG)){

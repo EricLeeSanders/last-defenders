@@ -71,7 +71,7 @@ public class Flame extends Actor implements Pool.Poolable{
     	super.act(delta);
     	//attackTick = (attackTick * delta);
     	stateTime += delta;
-    	if(shooter.isInactive()){
+    	if(shooter.isDead()){
 			this.remove();
 			ActorFactory.flamePool.free(this);
     	}
