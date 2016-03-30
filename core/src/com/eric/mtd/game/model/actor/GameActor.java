@@ -45,7 +45,7 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
 	private ShapeRenderer rangeShape = new ShapeRenderer();
 	private ShapeRenderer shapeRenderer2 = new ShapeRenderer();
 	private Color rangeColor = new Color(1.0f,0f,0f,0.5f);
-	private boolean showRange, hasArmor, inactive;
+	private boolean showRange, hasArmor, dead;
 	private GameActorPool<GameActor> pool;
 	public GameActor(TextureRegion textureRegion, GameActorPool<GameActor> pool, float [] bodyPoints, Vector2 textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range){
 		this.MAX_HEALTH = health;
@@ -63,7 +63,6 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
 		this.gunPos = gunPos;
 		this.range = range;
 		this.pool = pool;
-    	//QUESTION: WTF DOES THE BOUNDS DO?
     	//QUESTION: do I need to change the x,y bounds if I change the origin?
 		this.setOrigin(textureSize.x/2,textureSize.y/2);
 		//this.setBounds(this.getX(), this.getY(), textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
@@ -125,9 +124,6 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
     @Override
     public void act(float delta){
     	super.act(delta);
-    	if(isInactive()){
-    		pool.free(this);
-       	}
     }
     @Override
     public void draw(Batch batch, float alpha){
@@ -189,7 +185,7 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
     		health = health - damage;
     	}
     	if(health <=0){
-    		this.setInactive(true);
+    		this.setDead(true);
     	}
  
     }
@@ -244,7 +240,7 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
     	this.range = range;
     }
     public void attackTarget(){
-    	//if(Logger.DEBUG)System.out.println("Attacking target at " +getTarget().getPositionCenter());
+    	if(Logger.DEBUG)System.out.println("Attacking target at " +getTarget().getPositionCenter());
     	if(this instanceof IFlame){
     		Flame flame = ActorFactory.loadFlame();
     		flame.setFlame(this,this.getTarget());
@@ -283,12 +279,14 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
     public Color getRangeColor(){
     	return rangeColor;
     }
-    public void setInactive(boolean inactive){
-    	this.inactive = inactive;
+    public void setDead(boolean dead){
+    	this.dead = dead;
+    	if(isDead()){
+    		pool.free(this);
+       	}
     }
-	public boolean isInactive() {
-		return inactive;
-		
+	public boolean isDead() {
+		return dead;
 	}
 	public int getNumOfKills(){
 		return kills;

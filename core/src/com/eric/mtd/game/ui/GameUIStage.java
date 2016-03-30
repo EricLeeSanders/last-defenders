@@ -1,5 +1,6 @@
 package com.eric.mtd.game.ui;
 
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
@@ -16,7 +17,7 @@ import com.eric.mtd.game.ui.controller.interfaces.IHUDController;
 import com.eric.mtd.game.ui.controller.interfaces.IInspectController;
 import com.eric.mtd.game.ui.controller.interfaces.IOptionsController;
 import com.eric.mtd.game.ui.controller.interfaces.IPerksController;
-import com.eric.mtd.game.ui.state.GameIUIStateObserver;
+import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.EnlistGroup;
@@ -28,7 +29,7 @@ import com.eric.mtd.game.ui.view.PerksGroup;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.state.GameStateManager;
 
-public class GameUIStage extends Stage implements GameIUIStateObserver{
+public class GameUIStage extends Stage implements IGameUIStateObserver{
 	private HUDGroup hudGroup;
 	private InspectGroup inspectGroup;
 	private EnlistGroup enlistGroup;
@@ -49,8 +50,11 @@ public class GameUIStage extends Stage implements GameIUIStateObserver{
 	private GameStateManager gameStateManager;
 	private ScreenStateManager screenStateManager;
 	private ActorGroups actorGroups;
+	private InputMultiplexer imp;
 	public GameUIStage(int intLevel, Player player, ActorGroups actorGroups, GameUIStateManager uiStateManager, 
-			LevelStateManager levelStateManager, GameStateManager gameStateManager, ScreenStateManager screenStateManager){
+			LevelStateManager levelStateManager, GameStateManager gameStateManager, ScreenStateManager screenStateManager,
+			InputMultiplexer imp){
+		this.imp = imp;
 		this.intLevel = intLevel;
 		this.player = player;
 		this.actorGroups = actorGroups;
@@ -59,6 +63,7 @@ public class GameUIStage extends Stage implements GameIUIStateObserver{
 		this.levelStateManager = levelStateManager;
 		this.gameStateManager = gameStateManager;
 		this.screenStateManager = screenStateManager;
+		imp.addProcessor(this);
 		createUI();
 	}
 	public void createUI(){
@@ -78,7 +83,7 @@ public class GameUIStage extends Stage implements GameIUIStateObserver{
 	    this.perksGroup = new PerksGroup(uiStateManager, perksController);
 	    	perksGroup.setVisible(false);
 	    	
-	    this.optionsController = new OptionsController(uiStateManager, gameStateManager);
+	    this.optionsController = new OptionsController(uiStateManager, gameStateManager, screenStateManager);
 	    this.optionsGroup = new OptionsGroup(optionsController);
 	    	optionsGroup.setVisible(false);
 	    	
@@ -92,6 +97,10 @@ public class GameUIStage extends Stage implements GameIUIStateObserver{
 		this.addActor(perksGroup);
 		this.addActor(optionsGroup);
 		this.addActor(gameOverGroup);
+		
+		imp.addProcessor(this);
+		imp.addProcessor(enlistGroup);
+		imp.addProcessor(inspectGroup);
 	}
 	
     @Override
@@ -141,29 +150,6 @@ public class GameUIStage extends Stage implements GameIUIStateObserver{
 		default:
 			break;
 		}
-	}
-	public HUDGroup getHudGroup() {
-		return hudGroup;
-	}
-
-	public void setHudGroup(HUDGroup hudGroup) {
-		this.hudGroup = hudGroup;
-	}
-
-	public InspectGroup getInspectGroup() {
-		return inspectGroup;
-	}
-
-	public void setInspectGroup(InspectGroup inspectGroup) {
-		this.inspectGroup = inspectGroup;
-	}
-
-	public EnlistGroup getEnlistGroup() {
-		return enlistGroup;
-	}
-
-	public void setEnlistGroup(EnlistGroup enlistGroup) {
-		this.enlistGroup = enlistGroup;
 	}
 		
 }

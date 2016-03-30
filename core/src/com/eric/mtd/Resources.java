@@ -18,7 +18,6 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 //-agentlib:hprof=heap=dump,format=b
 public abstract class Resources {
-    public static final String IMAGES_ATLAS = "images/images.atlas";
     public static final String MENU_ATLAS = "menu/menu.atlas";
     public static final String ENEMY_ATLAS = "actors/enemy/EnemyActors.atlas";   
     public static final String LEVEL_SELECT_ATLAS = "level_select/level_select.atlas";
@@ -33,8 +32,8 @@ public abstract class Resources {
     public static final String EXPLOSION_ATLAS = "misc/Explosion/Explosion.atlas";
     public static final String FLAMES_ATLAS = "misc/Flames/Flames.atlas";
     
-    public static final int VIEWPORT_WIDTH = 640; //16:9
-    public static final int VIEWPORT_HEIGHT = 360; 
+    public static final int SCREEN_WIDTH = 640; //16:9
+    public static final int SCREEN_HEIGHT = 360; 
     
     public static final float NORMAL_SPEED = 1.0f;
     public static final float DOUBLE_SPEED = 2.0f;
@@ -54,7 +53,6 @@ public abstract class Resources {
 		Resources.loadSkin(Resources.SKIN_JSON);
 		Resources.loadAtlas(Resources.ENEMY_ATLAS);
 		Resources.loadAtlas(Resources.TOWER_ATLAS);
-		Resources.loadAtlas(Resources.IMAGES_ATLAS);
 		Resources.loadAtlas(Resources.EXPLOSION_ATLAS);
 		Resources.loadAtlas(Resources.FLAMES_ATLAS);
 		Resources.loadAtlas(Resources.MENU_ATLAS);

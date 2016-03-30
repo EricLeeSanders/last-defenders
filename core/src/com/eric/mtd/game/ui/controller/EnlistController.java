@@ -14,7 +14,7 @@ import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.model.actor.tower.TowerTank;
 import com.eric.mtd.game.model.placement.TowerPlacement;
 import com.eric.mtd.game.ui.controller.interfaces.IEnlistController;
-import com.eric.mtd.game.ui.state.GameIUIStateObserver;
+import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.EnlistGroup;

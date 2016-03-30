@@ -1,5 +1,6 @@
 package com.eric.mtd.game.ui.view;
 
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -16,11 +17,11 @@ import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
 import com.eric.mtd.game.ui.controller.HUDController;
 import com.eric.mtd.game.ui.controller.interfaces.IHUDController;
-import com.eric.mtd.game.ui.state.GameIUIStateObserver;
+import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.widget.*;
-public class HUDGroup extends Group implements GameIUIStateObserver, ILevelStateObserver{
+public class HUDGroup extends Group implements IGameUIStateObserver, ILevelStateObserver{
 	private GameUIStateManager uiStateManager;
 	private LevelStateManager levelStateManager;
 	private MTDImage pnlTitle, imgMoney, imgLife;

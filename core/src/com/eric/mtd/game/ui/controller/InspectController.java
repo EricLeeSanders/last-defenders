@@ -11,11 +11,11 @@ import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.ai.TowerTargetPriority;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.game.ui.controller.interfaces.IInspectController;
-import com.eric.mtd.game.ui.state.GameIUIStateObserver;
+import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 
-public class InspectController implements IInspectController, GameIUIStateObserver {
+public class InspectController implements IInspectController, IGameUIStateObserver {
 	private GameUIStateManager uiStateManager;
 	private Tower selectedTower;
 	private Player player;

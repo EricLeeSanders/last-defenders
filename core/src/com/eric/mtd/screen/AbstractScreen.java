@@ -53,7 +53,7 @@ public abstract class AbstractScreen implements Screen {
        // WORLD_WIDTH = Gdx.graphics.getHeight();
         //WORLD_HEIGHT = Gdx.graphics.getWidth();
 		camera = new OrthographicCamera();
-		viewport = new ExtendViewport(Resources.VIEWPORT_WIDTH,Resources.VIEWPORT_HEIGHT, camera);
+		viewport = new ExtendViewport(Resources.SCREEN_WIDTH,Resources.SCREEN_HEIGHT, camera);
 	    imp = new InputMultiplexer();
 	}
 	public abstract void renderElements(float delta);
@@ -109,7 +109,6 @@ public abstract class AbstractScreen implements Screen {
 
 	@Override
 	public void show() {
-		// set the stage as the input processor
 		Gdx.input.setInputProcessor(imp);
 		if(Logger.DEBUG)System.out.println("Processer Set");
 	}

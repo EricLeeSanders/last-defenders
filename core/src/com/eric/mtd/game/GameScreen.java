@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.eric.mtd.Logger;
@@ -52,7 +53,7 @@ import com.eric.mtd.state.GameStateManager;
 import com.eric.mtd.state.GameStateManager.GameState;
 
 public class GameScreen extends AbstractScreen {
-	private TextField framesField;
+	private Label framesLabel;
 	private GameStage gameStage;
 	private GameUIStage gameUIStage;
 	private Player player;
@@ -67,20 +68,18 @@ public class GameScreen extends AbstractScreen {
     	this.gameStateManager = gameStateManager;
 	    gameStage = new GameStage(intLevel, player, actorGroups, levelStateManager, uiStateManager);
 	    gameStage.setViewport(getViewport());
-	    gameUIStage = new GameUIStage(intLevel, player, actorGroups, uiStateManager, levelStateManager, gameStateManager, screenStateManager);
+	    gameUIStage = new GameUIStage(intLevel, player, actorGroups, uiStateManager, levelStateManager, gameStateManager, screenStateManager, super.getInputMultiplexer());
 	    gameUIStage.setViewport(getViewport());
-	    super.addInputProcessor(gameUIStage);
-	    super.addInputProcessor(gameUIStage.getEnlistGroup());
-	    super.addInputProcessor(gameUIStage.getInspectGroup());
 		super.show();
 		
 	    
 	}
     public void createFramesField(){
-    	framesField = new TextField( "0", Resources.getSkin(Resources.SKIN_JSON) );
-    	framesField.setSize(40, 40);
-    	framesField.setPosition(0, 0);
-    	gameUIStage.addActor(framesField);
+    	framesLabel = new Label( "0", Resources.getSkin(Resources.SKIN_JSON) );
+    	framesLabel.setColor(1f,1f,1f,0.30f);
+    	framesLabel.setFontScale(0.5f);
+    	framesLabel.setPosition(200, 310);
+    	gameUIStage.addActor(framesLabel);
     }
 
 	@Override
@@ -107,7 +106,7 @@ public class GameScreen extends AbstractScreen {
 		Gdx.gl.glClear( GL20.GL_COLOR_BUFFER_BIT );
 		////if(Logger.DEBUG)System.out.println(Gdx.graphics.getDeltaTime());
 		getCamera().update();
-		framesField.setText(Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
+		framesLabel.setText(Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
 		renderElements(delta);
 
 	}

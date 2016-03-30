@@ -70,7 +70,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable{
 			findTarget();
 		}
 		if(super.getTarget() != null){
-    		if(super.getTarget().isInactive()){
+    		if(super.getTarget().isDead()){
     			this.setTarget(null);
     		}
     		else{
