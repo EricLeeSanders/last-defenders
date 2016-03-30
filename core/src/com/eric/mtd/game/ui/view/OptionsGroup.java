@@ -17,7 +17,7 @@ import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
 
 public class OptionsGroup extends Group{
 	private IOptionsController controller;
-	private MTDTextButton btnResume;
+	private MTDTextButton btnResume, btnNewGame, btnMainMenu;
 	private MTDImage panel;
 	public OptionsGroup(IOptionsController controller){
 		this.controller = controller;
@@ -29,8 +29,16 @@ public class OptionsGroup extends Group{
 		addActor(panel);
 	
 		btnResume =new MTDTextButton("UI_Options", "btnResume","Resume", true);
-			setBtnResumeListener();
+		setBtnResumeListener();
 		addActor(btnResume);
+		
+		btnNewGame =new MTDTextButton("UI_Options", "btnNewGame","New Game", true);
+		setBtnNewGameListener();
+		addActor(btnNewGame);
+			
+		btnMainMenu =new MTDTextButton("UI_Options", "btnMainMenu","Main Menu", true);
+		setBtnMainMenuListener();
+		addActor(btnMainMenu);
 	}
 	private void setBtnResumeListener(){
 	    btnResume.addListener(new ClickListener() {
@@ -39,6 +47,30 @@ public class OptionsGroup extends Group{
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
 	    		if(Logger.DEBUG)System.out.println("Resume Button Pressed");
+	    		controller.resumeGame();
+	        }
+	    } );
+	    
+	}
+	private void setBtnNewGameListener(){
+	    btnNewGame.addListener(new ClickListener() {
+	    	@Override
+	        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
+	        {
+	    		super.touchUp( event, x, y, pointer, button );
+	    		if(Logger.DEBUG)System.out.println("New game Pressed");
+	    		controller.resumeGame();
+	        }
+	    } );
+	    
+	}
+	private void setBtnMainMenuListener(){
+	    btnMainMenu.addListener(new ClickListener() {
+	    	@Override
+	        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
+	        {
+	    		super.touchUp( event, x, y, pointer, button );
+	    		if(Logger.DEBUG)System.out.println("Main Menu Button Pressed");
 	    		controller.resumeGame();
 	        }
 	    } );

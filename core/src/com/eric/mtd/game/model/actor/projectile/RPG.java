@@ -68,7 +68,7 @@ public class RPG extends Actor implements Pool.Poolable{
     public void act(float delta){
     	super.act(delta);
 
-    	if(target.isInactive()){
+    	if(target.isDead()){
     		ActorFactory.rpgPool.free(this);
     		this.remove();
     	}

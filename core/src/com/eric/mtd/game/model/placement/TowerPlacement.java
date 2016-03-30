@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Field;
+import com.eric.mtd.Logger;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.model.Player;
@@ -75,11 +76,9 @@ public class TowerPlacement{
 	}
 	public void moveTower(Vector2 clickCoords){
 		if(currentTower!=null){
-			if(!currentTower.isVisible()){
-				currentTower.setVisible(true);
-			}
+			currentTower.setVisible(true);
 			currentTower.setPositionCenter(clickCoords); 
-			//if(Logger.DEBUG)System.out.println(currentTower.getPositionCenter());
+			if(Logger.DEBUG)System.out.println(currentTower.getPositionCenter());
 			if(towerCollides()){
 				currentTower.setShowRange(true);
 				currentTower.setRangeColor(1f,0f,0f,0.5f);//Red
@@ -94,7 +93,7 @@ public class TowerPlacement{
 	public void rotateTower(float rotation){
 		if(currentTower!=null){
 			currentTower.setRotation(currentTower.getRotation()-rotation);//rotate clockwise
-			//if(Logger.DEBUG)System.out.println(currentTower.getPositionCenter());
+			if(Logger.DEBUG)System.out.println(currentTower.getPositionCenter());
 			if(towerCollides()){
 				currentTower.setShowRange(true);
 				currentTower.setRangeColor(1f,0f,0f,0.5f);//Red
@@ -113,6 +112,7 @@ public class TowerPlacement{
 				currentTower.setShowRange(false);
 				currentTower.remove();
 				currentTower.setActive(true);
+				currentTower.setDead(false);
 				actorGroups.getTowerGroup().addActor(currentTower);
 				HealthBar healthBar = ActorFactory.loadHealthBar();
 				healthBar.setActor(currentTower, actorGroups);

@@ -68,7 +68,7 @@ public class Bullet extends Actor implements Pool.Poolable{
     @Override
     public void act(float delta){
     	super.act(delta);
-    	if(target.isInactive()){
+    	if(target.isDead()){
     		ActorFactory.bulletPool.free(this);
     		this.remove();
     	}

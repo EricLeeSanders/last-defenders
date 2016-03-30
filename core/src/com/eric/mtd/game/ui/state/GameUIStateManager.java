@@ -7,16 +7,16 @@ import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 public class GameUIStateManager {
 	
 	private GameUIState state;
-	private CopyOnWriteArrayList<GameIUIStateObserver> observers = new CopyOnWriteArrayList<GameIUIStateObserver>(); //QUESTION: Do I need to use some other sort of list? Like a libgdx list?
+	private CopyOnWriteArrayList<IGameUIStateObserver> observers = new CopyOnWriteArrayList<IGameUIStateObserver>(); //QUESTION: Do I need to use some other sort of list? Like a libgdx list?
 	public GameUIStateManager(){
 		this.setState(GameUIState.STANDBY);
 	}
-	public void attach(GameIUIStateObserver observer){
+	public void attach(IGameUIStateObserver observer){
 		observers.add(observer);
 	}
 	public void notifyObservers(){
 		//if(Logger.DEBUG)System.out.println("Notify Observers");
-		for(GameIUIStateObserver observer : observers){
+		for(IGameUIStateObserver observer : observers){
 			//if(Logger.DEBUG)System.out.println("Notifying: " + observer.getClass().getName());
 			observer.changeUIState(state);
 		}

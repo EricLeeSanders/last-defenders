@@ -24,7 +24,7 @@ public class EnemyAI {
 		
 		for(Actor tower : towers){
 			if(tower instanceof Tower){
-				if(!((Tower)tower).isInactive() && ((Tower)tower).isActive()){
+				if(!((Tower)tower).isDead() && ((Tower)tower).isActive()){ //Tower is active and not dead
 					if(CollisionDetection.targetWithinRange(((Tower) tower).getBody(),enemy.getRangeShape())){
 						if(((Tower) tower).getPositionCenter().dst(enemy.getPositionCenter()) < firstTowerDistance){
 							if(!(tower instanceof IPlatedArmor)){

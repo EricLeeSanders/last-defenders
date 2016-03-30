@@ -79,7 +79,6 @@ public abstract class Enemy extends GameActor implements Pool.Poolable{
 	//Set the Enemies Path. Start off the screen
 	//TODO: Needs testing on different maps when the starting point is not on the left side of the screen.
 	public void setPath(Queue<Vector2> path){
-		this.setInactive(false);
 		//this.path = path;
 		//currentWaypoint = path.remove();
 
@@ -171,7 +170,7 @@ public abstract class Enemy extends GameActor implements Pool.Poolable{
     		super.act(delta);
     	}
  
-    	if(!isInactive() && !attacking){
+    	if(!isDead() && !attacking){
     		if(this.getActions().size == 0){
     			if(actionIndex < actionList.size()){
     				//if(Logger.DEBUG)System.out.println("getting new waypoint");
@@ -226,7 +225,6 @@ public abstract class Enemy extends GameActor implements Pool.Poolable{
     public void reset() {
     	super.reset();
     	//if(Logger.DEBUG)System.out.println("Resetting Enemy");
-		setInactive(true);
     	this.setRotation(0);
     	attacking = false;
     	//path = null;
