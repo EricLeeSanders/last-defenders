@@ -14,10 +14,10 @@ import com.eric.mtd.game.model.level.state.ILevelStateObserver;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
 import com.eric.mtd.game.stage.GameStage;
-import com.eric.mtd.game.ui.state.GameIUIStateObserver;
+import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
-import com.eric.mtd.levelselect.LevelScreen;
+import com.eric.mtd.levelselect.LevelSelectScreen;
 import com.eric.mtd.load.LoadingScreen;
 import com.eric.mtd.menu.MenuScreen;
 import com.eric.mtd.screen.state.ScreenStateManager;
@@ -52,7 +52,7 @@ public class MTDGame extends Game implements IScreenStateObserver {
     	switch(state){
 		case LEVEL_SELECTION:
 			this.getScreen().dispose(); //dispose current screen
-			this.setScreen(new LevelScreen(screenStateManager));
+			this.setScreen(new LevelSelectScreen(screenStateManager));
 			break;
 		case MENU:
 			this.getScreen().dispose(); //dispose current screen

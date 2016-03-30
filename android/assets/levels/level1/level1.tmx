@@ -1,38 +1,183 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" nextobjectid="153">
- <tileset firstgid="1" name="tileset_by_evolina-d36bih3" tilewidth="16" tileheight="16">
-  <image source="../tileset_by_evolina-d36bih3.png" width="128" height="544"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" nextobjectid="185">
+ <tileset firstgid="1" name="tiles" tilewidth="16" tileheight="16" tilecount="43" columns="0">
+  <tile id="0">
+   <image width="16" height="16" source="../tiles/1.png"/>
+  </tile>
+  <tile id="1">
+   <image width="16" height="16" source="../tiles/2.png"/>
+  </tile>
+  <tile id="2">
+   <image width="16" height="16" source="../tiles/3.png"/>
+  </tile>
+  <tile id="3">
+   <image width="16" height="16" source="../tiles/4.png"/>
+  </tile>
+  <tile id="4">
+   <image width="16" height="16" source="../tiles/5.png"/>
+  </tile>
+  <tile id="5">
+   <image width="16" height="16" source="../tiles/6.png"/>
+  </tile>
+  <tile id="6">
+   <image width="16" height="16" source="../tiles/7.png"/>
+  </tile>
+  <tile id="7">
+   <image width="16" height="16" source="../tiles/8.png"/>
+  </tile>
+  <tile id="8">
+   <image width="16" height="16" source="../tiles/9.png"/>
+  </tile>
+  <tile id="9">
+   <image width="16" height="16" source="../tiles/10.png"/>
+  </tile>
+  <tile id="10">
+   <image width="16" height="16" source="../tiles/11.png"/>
+  </tile>
+  <tile id="11">
+   <image width="16" height="16" source="../tiles/12.png"/>
+  </tile>
+  <tile id="12">
+   <image width="16" height="16" source="../tiles/13.png"/>
+  </tile>
+  <tile id="13">
+   <image width="16" height="16" source="../tiles/14.png"/>
+  </tile>
+  <tile id="14">
+   <image width="16" height="16" source="../tiles/15.png"/>
+  </tile>
+  <tile id="15">
+   <image width="16" height="16" source="../tiles/16.png"/>
+  </tile>
+  <tile id="16">
+   <image width="16" height="16" source="../tiles/17.png"/>
+  </tile>
+  <tile id="17">
+   <image width="16" height="16" source="../tiles/18.png"/>
+  </tile>
+  <tile id="18">
+   <image width="16" height="16" source="../tiles/19.png"/>
+  </tile>
+  <tile id="19">
+   <image width="16" height="16" source="../tiles/20.png"/>
+  </tile>
+  <tile id="20">
+   <image width="16" height="16" source="../tiles/21.png"/>
+  </tile>
+  <tile id="21">
+   <image width="16" height="16" source="../tiles/22.png"/>
+  </tile>
+  <tile id="22">
+   <image width="16" height="16" source="../tiles/23.png"/>
+  </tile>
+  <tile id="23">
+   <image width="16" height="16" source="../tiles/24.png"/>
+  </tile>
+  <tile id="24">
+   <image width="16" height="16" source="../tiles/25.png"/>
+  </tile>
+  <tile id="25">
+   <image width="16" height="16" source="../tiles/26.png"/>
+  </tile>
+  <tile id="26">
+   <image width="16" height="16" source="../tiles/27.png"/>
+  </tile>
+  <tile id="27">
+   <image width="16" height="16" source="../tiles/28.png"/>
+  </tile>
+  <tile id="28">
+   <image width="16" height="16" source="../tiles/29.png"/>
+  </tile>
+  <tile id="29">
+   <image width="16" height="16" source="../tiles/30.png"/>
+  </tile>
+  <tile id="30">
+   <image width="16" height="16" source="../tiles/31.png"/>
+  </tile>
+  <tile id="31">
+   <image width="16" height="16" source="../tiles/32.png"/>
+  </tile>
+  <tile id="32">
+   <image width="16" height="16" source="../tiles/33.png"/>
+  </tile>
+  <tile id="33">
+   <image width="16" height="16" source="../tiles/34.png"/>
+  </tile>
+  <tile id="34">
+   <image width="16" height="16" source="../tiles/35.png"/>
+  </tile>
+  <tile id="35">
+   <image width="16" height="16" source="../tiles/36.png"/>
+  </tile>
+  <tile id="36">
+   <image width="16" height="16" source="../tiles/37.png"/>
+  </tile>
+  <tile id="37">
+   <image width="16" height="16" source="../tiles/38.png"/>
+  </tile>
+  <tile id="38">
+   <image width="16" height="16" source="../tiles/39.png"/>
+  </tile>
+  <tile id="39">
+   <image width="16" height="16" source="../tiles/40.png"/>
+  </tile>
+  <tile id="40">
+   <image width="16" height="16" source="../tiles/41.png"/>
+  </tile>
+  <tile id="41">
+   <image width="16" height="16" source="../tiles/42.png"/>
+  </tile>
+  <tile id="42">
+   <image width="16" height="16" source="../tiles/43.png"/>
+  </tile>
  </tileset>
- <layer name="Terrain" width="60" height="40">
+ <tileset firstgid="44" name="objects" tilewidth="32" tileheight="32" tilecount="5" columns="0">
+  <tile id="0">
+   <image width="32" height="32" source="../tiles/tree_large.png"/>
+  </tile>
+  <tile id="1">
+   <image width="16" height="16" source="../tiles/tree_small.png"/>
+  </tile>
+  <tile id="2">
+   <image width="16" height="16" source="../tiles/rock1.png"/>
+  </tile>
+  <tile id="3">
+   <image width="16" height="16" source="../tiles/rock2.png"/>
+  </tile>
+  <tile id="4">
+   <image width="16" height="16" source="../tiles/rock3.png"/>
+  </tile>
+ </tileset>
+ <layer name="Terrain" width="60" height="40" offsetx="-3.66667" offsety="-4.66667">
   <data encoding="base64" compression="zlib">
-   eJzt1jEOwjAMQFH3iBQYaGEo3P8ODVIlKkTiBJDlWH94C5M/SeQOIjIAAAAAMHdJps3sYB566aWXXnrppde3QzIqjoF697PnvDfR24/97KfkvjlX9l6l/T146Z0rfq+9E6X7YSH339+C9rbOVepd5HXvc0rvobfeX96JFe08nh6Beq3npdc3bcdqO7Xn3m92TLRe7bsqt9e9WqS8U71/b1icebTeT2feuteBf1gBOUN6IA==
+   eJztwzENAAAMBKHb3r/jaugOCaumqqqqqqqqqqrq+wFo4UGh
+  </data>
+ </layer>
+ <layer name="Objects" width="60" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztmGkKwyAQhT1B9wXaHqHb/U9X+0OQEDOLojPhffAgJJi8FyXOJAQAAAAAAAAAAABIOUddoq6jjXQCeX3zJK6vLS+FJi/1Di3jZX5fje6T8h6j9gwdGj23Fbsg85vycmVtHVD+p35vUXeGtoXxrdaZlpR3E3h+pfe1ML+f7Ljkq9avpbw5yLt8vsS7cnwvNHk59cOovNT+eCr48rqetfuk17ycvfKvx2Sc17xa5upGSW3oNa+2NqTyfqvctSevG1Otxe0Rlr6DHpD2CNb6BWnNzu0R5mQhb4le/yFG90hr4gc5+Ba3
   </data>
  </layer>
  <objectgroup name="Path">
-  <object id="150" name="PathLine" x="0" y="448">
-   <polyline points="0,0 128,0 128,-80 224,-80 224,96 304,96 304,128 480,128 480,-32 336,-32 336,-192"/>
+  <object id="184" name="PathLine" x="2" y="504">
+   <polyline points="0,0 150,0 151,-113 246,-112 245,49 294,49 295,81 502,80 501,-129 340,-127 342,-233"/>
   </object>
  </objectgroup>
  <objectgroup name="PathBoundary">
-  <object id="138" x="1.33333" y="424.667" width="146.667" height="44.6667"/>
-  <object id="139" x="107.333" y="345.333" width="40" height="123.333"/>
-  <object id="140" x="109.333" y="346" width="136.667" height="43.3333"/>
-  <object id="141" x="206" y="390.667" width="38" height="173.333"/>
-  <object id="143" x="204.667" y="524" width="118.667" height="39.3333"/>
-  <object id="144" x="286.667" y="524.667" width="38.6667" height="73.3333"/>
-  <object id="145" x="290.667" y="556" width="208.667" height="41.3333"/>
-  <object id="146" x="458" y="395.333" width="39.3333" height="200.667"/>
-  <object id="151" x="318" y="391.333" width="182.667" height="44.6667"/>
-  <object id="152" x="312.667" y="195.333" width="45.3333" height="240.667"/>
+  <object id="168" x="1" y="482.5" width="170" height="41"/>
+  <object id="170" x="131.5" y="374" width="40" height="150"/>
+  <object id="172" x="133" y="372.5" width="134" height="39.5"/>
+  <object id="174" x="226" y="373.333" width="42" height="196.667"/>
+  <object id="175" x="228" y="530.667" width="86.6667" height="40"/>
+  <object id="176" x="276" y="532.667" width="38" height="69.3333"/>
+  <object id="177" x="277.333" y="563.333" width="247.333" height="40"/>
+  <object id="178" x="482" y="357.333" width="42.6667" height="244.667"/>
+  <object id="180" x="323.333" y="354.667" width="196" height="40.6667"/>
+  <object id="183" x="324" y="258.667" width="38.6667" height="126"/>
  </objectgroup>
  <objectgroup name="MapBoundary">
   <object id="119" x="0" y="272">
    <polyline points="0,0 639,0 640,368"/>
   </object>
  </objectgroup>
- <layer name="Path" width="60" height="40">
-  <data encoding="base64" compression="zlib">
-   eJztwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAB4DCWAAAE=
-  </data>
- </layer>
 </map>

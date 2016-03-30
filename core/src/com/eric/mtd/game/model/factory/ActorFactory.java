@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
+import com.eric.mtd.Logger;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.Resources;
 import com.eric.mtd.game.model.actor.ActorGroups;
@@ -71,7 +72,7 @@ public class ActorFactory {
 			tower =  (Tower) towerFlameThrowerPool.obtain();
 		}
 		tower.setPositionCenter(pos);
-
+		if(Logger.DEBUG)System.out.println("Obtained : " + type);
 
 		//GameStage.towerGroup.addActor(tower);
       return tower;
@@ -105,7 +106,8 @@ public class ActorFactory {
 		
 		enemy.setPath(new LinkedList<Vector2>(path));
 		enemy.setHasArmor(armor);
-		
+		enemy.setDead(false);
+		if(Logger.DEBUG)System.out.println("Obtained : " + type);
 		//GameStage.enemyGroup.addActor(enemy);
       return enemy;
 	}
@@ -230,7 +232,7 @@ public class ActorFactory {
       else {
           throw new NullPointerException("Actor factory couldn't create: " + type.getSimpleName());
       }
-      //if(Logger.DEBUG)System.out.println("Created new " + actorType);
+      if(Logger.DEBUG)System.out.println("Created new " + actorType);
 		return actorType;
 		
 	}

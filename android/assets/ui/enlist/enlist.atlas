@@ -3,128 +3,128 @@ enlist.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-enlist_bg
+background
   rotate: false
-  xy: 1, 235
-  size: 325, 250
-  orig: 325, 250
+  xy: 1, 325
+  size: 152, 152
+  orig: 152, 152
   offset: 0, 0
   index: -1
 flamethrowerDisabled
   rotate: false
-  xy: 1, 73
+  xy: 1, 163
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 flamethrowerEnabled
   rotate: false
-  xy: 328, 325
+  xy: 1, 1
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 machineDisabled
   rotate: false
-  xy: 143, 73
+  xy: 155, 317
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 machineEnabled
   rotate: false
-  xy: 470, 325
+  xy: 297, 317
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 rifleDisabled
   rotate: false
-  xy: 612, 325
+  xy: 439, 317
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 rifleEnabled
   rotate: false
-  xy: 754, 325
+  xy: 581, 317
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 rocketlauncherDisabled
   rotate: false
-  xy: 328, 163
+  xy: 723, 317
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 rocketlauncherEnabled
   rotate: false
-  xy: 470, 163
+  xy: 865, 317
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 sniperDisabled
   rotate: false
-  xy: 612, 163
+  xy: 143, 155
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 sniperEnabled
   rotate: false
-  xy: 754, 163
+  xy: 285, 155
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 tankDisabled
   rotate: false
-  xy: 285, 1
+  xy: 427, 155
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 tankEnabled
   rotate: false
-  xy: 427, 1
+  xy: 569, 155
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 turretDisabled
   rotate: false
-  xy: 569, 1
+  xy: 711, 155
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 turretEnabled
   rotate: false
-  xy: 711, 1
+  xy: 853, 155
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 cancel
   rotate: false
-  xy: 896, 410
+  xy: 143, 78
   size: 75, 75
   orig: 75, 75
   offset: 0, 0
   index: -1
 place
   rotate: false
-  xy: 973, 435
+  xy: 143, 26
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 rotate
   rotate: false
-  xy: 973, 383
+  xy: 220, 103
   size: 50, 50
   orig: 50, 50
   offset: 0, 0

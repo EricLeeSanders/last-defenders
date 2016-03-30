@@ -66,7 +66,7 @@ public class HealthBar extends Actor implements Pool.Poolable{
 
 	    	////if(Logger.DEBUG)System.out.println(actor.getParent().toString());
 	    	super.act(delta);
-	    	if(actor.isInactive()){
+	    	if(actor.isDead()){
 	    		//if(Logger.DEBUG)System.out.println("Freeing Healthbar");
 	    		ActorFactory.healthPool.free(this);
 	    	}

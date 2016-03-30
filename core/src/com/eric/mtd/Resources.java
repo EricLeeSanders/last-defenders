@@ -32,8 +32,8 @@ public abstract class Resources {
     public static final String EXPLOSION_ATLAS = "misc/Explosion/Explosion.atlas";
     public static final String FLAMES_ATLAS = "misc/Flames/Flames.atlas";
     
-    public static final int VIEWPORT_WIDTH = 640; //16:9
-    public static final int VIEWPORT_HEIGHT = 360; 
+    public static final int SCREEN_WIDTH = 640; //16:9
+    public static final int SCREEN_HEIGHT = 360; 
     
     public static final float NORMAL_SPEED = 1.0f;
     public static final float DOUBLE_SPEED = 2.0f;

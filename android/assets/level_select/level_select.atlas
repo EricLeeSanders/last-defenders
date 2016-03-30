@@ -3,24 +3,31 @@ level_select.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-choose
+background
   rotate: false
-  xy: 1, 1
-  size: 682, 83
-  orig: 682, 83
+  xy: 1, 150
+  size: 640, 360
+  orig: 640, 360
   offset: 0, 0
   index: -1
 level1
   rotate: false
-  xy: 685, 14
+  xy: 1, 78
   size: 150, 70
   orig: 150, 70
   offset: 0, 0
   index: -1
 level2
   rotate: false
-  xy: 837, 14
+  xy: 643, 440
   size: 150, 70
   orig: 150, 70
+  offset: 0, 0
+  index: -1
+cancel
+  rotate: false
+  xy: 1, 1
+  size: 75, 75
+  orig: 75, 75
   offset: 0, 0
   index: -1

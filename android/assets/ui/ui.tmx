@@ -33,7 +33,7 @@
   <object id="105" name="btnFlameThrower" x="333" y="471" width="140" height="160"/>
   <object id="106" name="btnRocketLauncher" x="490" y="289" width="140" height="160"/>
  </objectgroup>
- <objectgroup name="UI_Inspect">
+ <objectgroup name="UI_Inspect" visible="0">
   <object id="29" name="btnClose" x="486" y="582" width="147" height="45"/>
   <object id="70" name="bottomPanel" x="0" y="503" width="640" height="137"/>
   <object id="76" name="btnDischarge" x="486" y="391" width="147" height="88"/>
@@ -67,12 +67,12 @@
   <object id="157" name="btnApache" x="15.5" y="505.5" width="84" height="96"/>
   <object id="158" name="btnArtilleryStrike" x="358" y="377" width="84" height="96"/>
  </objectgroup>
- <objectgroup name="UI_Options" visible="0">
+ <objectgroup name="UI_Options">
   <object id="170" name="panel" x="183" y="314" width="264" height="274"/>
   <object id="171" name="btnSound" x="287" y="525" width="50" height="50"/>
   <object id="176" name="btnMainMenu" x="232" y="399" width="167" height="48"/>
   <object id="178" name="btnResume" x="232" y="457" width="167" height="48"/>
-  <object id="179" name="btnHighScores" x="232" y="340" width="167" height="48"/>
+  <object id="179" name="btnNewGame" x="232" y="340" width="167" height="48"/>
  </objectgroup>
  <objectgroup name="UI_GameOver" visible="0">
   <object id="180" name="panel" x="183" y="297" width="264" height="327"/>

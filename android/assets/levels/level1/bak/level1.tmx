@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" nextobjectid="153">
+ <tileset firstgid="1" name="tileset_by_evolina-d36bih3" tilewidth="16" tileheight="16">
+  <image source="../tileset_by_evolina-d36bih3.png" width="128" height="544"/>
+ </tileset>
+ <layer name="Terrain" width="60" height="40">
+  <data encoding="base64" compression="zlib">
+   eJzt1jEOwjAMQFH3iBQYaGEo3P8ODVIlKkTiBJDlWH94C5M/SeQOIjIAAAAAMHdJps3sYB566aWXXnrppde3QzIqjoF697PnvDfR24/97KfkvjlX9l6l/T146Z0rfq+9E6X7YSH339+C9rbOVepd5HXvc0rvobfeX96JFe08nh6Beq3npdc3bcdqO7Xn3m92TLRe7bsqt9e9WqS8U71/b1icebTeT2feuteBf1gBOUN6IA==
+  </data>
+ </layer>
+ <objectgroup name="Path">
+  <object id="150" name="PathLine" x="0" y="448">
+   <polyline points="0,0 128,0 128,-80 224,-80 224,96 304,96 304,128 480,128 480,-32 336,-32 336,-192"/>
+  </object>
+ </objectgroup>
+ <objectgroup name="PathBoundary">
+  <object id="138" x="1.33333" y="424.667" width="146.667" height="44.6667"/>
+  <object id="139" x="107.333" y="345.333" width="40" height="123.333"/>
+  <object id="140" x="109.333" y="346" width="136.667" height="43.3333"/>
+  <object id="141" x="206" y="390.667" width="38" height="173.333"/>
+  <object id="143" x="204.667" y="524" width="118.667" height="39.3333"/>
+  <object id="144" x="286.667" y="524.667" width="38.6667" height="73.3333"/>
+  <object id="145" x="290.667" y="556" width="208.667" height="41.3333"/>
+  <object id="146" x="458" y="395.333" width="39.3333" height="200.667"/>
+  <object id="151" x="318" y="391.333" width="182.667" height="44.6667"/>
+  <object id="152" x="312.667" y="195.333" width="45.3333" height="240.667"/>
+ </objectgroup>
+ <objectgroup name="MapBoundary">
+  <object id="119" x="0" y="272">
+   <polyline points="0,0 639,0 640,368"/>
+  </object>
+ </objectgroup>
+ <layer name="Path" width="60" height="40">
+  <data encoding="base64" compression="zlib">
+   eJztwTEBAAAAwqD1T20Hb6AAAAAAAAAAAAB4DCWAAAE=
+  </data>
+ </layer>
+</map>
