@@ -10,8 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.eric.mtd.Logger;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.tower.Tower;
@@ -28,6 +26,8 @@ import com.eric.mtd.game.ui.view.widget.MTDTextButton;
 import com.eric.mtd.game.ui.view.widget.inspect.AttributeUpgrade;
 import com.eric.mtd.game.ui.view.widget.inspect.UpgradeButton;
 import com.eric.mtd.game.ui.view.widget.inspect.UpgradeLevel;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 public class InspectGroup extends Group implements IGameUIStateObserver, InputProcessor{
 	private GameUIStateManager uiStateManager;
 	private IInspectController controller;

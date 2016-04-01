@@ -1,14 +1,14 @@
 package com.eric.mtd.game.ui.controller;
 
 import com.badlogic.gdx.math.Vector2;
-import com.eric.mtd.Logger;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
 import com.eric.mtd.game.model.placement.SandbagPlacement;
 import com.eric.mtd.game.ui.controller.interfaces.IPerksController;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class PerksController implements IPerksController{
 	private LevelStateManager gameStateManager;

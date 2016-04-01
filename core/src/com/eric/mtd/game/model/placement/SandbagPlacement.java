@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Field;
-import com.eric.mtd.Logger;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.model.Player;
@@ -28,6 +27,7 @@ import com.eric.mtd.game.model.actor.perks.Sandbag;
 import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.factory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Logger;
 
 import sun.util.calendar.CalendarSystem;
 

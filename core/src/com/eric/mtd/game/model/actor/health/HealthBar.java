@@ -13,12 +13,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.MTDGame;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.factory.ActorFactory;
 import com.eric.mtd.game.model.factory.ActorFactory.HealthPool;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Resources;
 
 public class HealthBar extends Actor implements Pool.Poolable{
 	   private GameActor actor = null;

@@ -13,11 +13,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.eric.mtd.Logger;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.interfaces.ICollision;
 import com.eric.mtd.game.model.actor.perks.Sandbag;
 import com.eric.mtd.game.model.actor.tower.Tower;
+import com.eric.mtd.util.Logger;
 import com.badlogic.gdx.math.Shape2D;
 public final class CollisionDetection {
 /*	public static boolean towerAndPath(TiledMap tiledMap, Tower placeTower){
