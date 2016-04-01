@@ -11,9 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
-import com.eric.mtd.Logger;
 import com.eric.mtd.MTDGame;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.enemy.*;
@@ -25,6 +23,8 @@ import com.eric.mtd.game.model.actor.projectile.Flame;
 import com.eric.mtd.game.model.actor.projectile.RPG;
 import com.eric.mtd.game.model.actor.tower.*;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 //Question: Doing a lot of static things here
 public class ActorFactory {
 	private static GameActorPool<GameActor> towerRiflePool = new GameActorPool<GameActor>(TowerRifle.class);

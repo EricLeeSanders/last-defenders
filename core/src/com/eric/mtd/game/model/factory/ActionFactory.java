@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Pool;
-import com.eric.mtd.Logger;
+import com.eric.mtd.util.Logger;
 
 
 public class ActionFactory {

@@ -17,12 +17,12 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Pool;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.ai.TowerAI;
 import com.eric.mtd.game.model.ai.TowerTargetPriority;
 import com.eric.mtd.game.model.factory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Resources;
 public abstract class Tower extends GameActor implements Pool.Poolable{
     public static final int TOWER_RANGE_LEVEL_MAX = 2;
     public static final int TOWER_ATTACK_SPEED_LEVEL_MAX = 2;
