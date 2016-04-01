@@ -12,10 +12,10 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
-import com.eric.mtd.Logger;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.model.actor.interfaces.ICollision;
 import com.eric.mtd.game.model.factory.ActorFactory.SandbagPool;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class Sandbag extends Actor implements Pool.Poolable, ICollision{
 	private TextureRegion textureRegion;

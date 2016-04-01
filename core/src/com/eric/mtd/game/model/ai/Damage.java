@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.eric.mtd.Logger;
 import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.health.interfaces.IPlatedArmor;
@@ -14,6 +13,7 @@ import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
 import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.factory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Logger;
 
 public class Damage {
 	

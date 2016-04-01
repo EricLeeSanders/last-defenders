@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.eric.mtd.Resources;
+import com.eric.mtd.util.Resources;
 
 public class MTDImage extends Image{
 	public MTDImage(String layer, String objectName, String strAtlas, String regionName, boolean visible, boolean useImgAsSize){

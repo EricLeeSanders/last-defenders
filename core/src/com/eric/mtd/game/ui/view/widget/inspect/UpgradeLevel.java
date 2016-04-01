@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.ui.view.widget.MTDLabel;
+import com.eric.mtd.util.Resources;
 
 public class UpgradeLevel extends Group{// extends Label{
 	private int maxLevel;
