@@ -13,8 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Pool.Poolable;
-import com.eric.mtd.Logger;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.projectile.Flame;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IFlame;
@@ -22,6 +20,8 @@ import com.eric.mtd.game.model.factory.ActorFactory;
 import com.eric.mtd.game.model.factory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class EnemyFlameThrower extends Enemy implements IFlame{
 	public static float HEALTH = 6;  

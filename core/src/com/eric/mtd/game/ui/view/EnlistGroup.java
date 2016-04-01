@@ -21,8 +21,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.eric.mtd.Logger;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
@@ -38,6 +36,8 @@ import com.eric.mtd.game.ui.view.widget.MTDImage;
 import com.eric.mtd.game.ui.view.widget.MTDImageButton;
 import com.eric.mtd.game.ui.view.widget.MTDTextButton;
 import com.eric.mtd.game.ui.view.widget.enlist.MTDTowerButton;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObserver{
 	private MTDImage pnlEnlist;

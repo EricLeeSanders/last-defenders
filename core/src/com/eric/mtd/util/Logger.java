@@ -1,4 +1,4 @@
-package com.eric.mtd;
+package com.eric.mtd.util;
 
 public class Logger {
 	public static final boolean DEBUG = true;

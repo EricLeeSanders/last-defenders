@@ -17,8 +17,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.eric.mtd.Logger;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.model.actor.health.HealthBar;
 import com.eric.mtd.game.model.actor.interfaces.ICollision;
 import com.eric.mtd.game.model.actor.projectile.Bullet;
@@ -30,6 +28,8 @@ import com.eric.mtd.game.model.ai.TowerAI;
 import com.eric.mtd.game.model.factory.ActorFactory;
 import com.eric.mtd.game.model.factory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 

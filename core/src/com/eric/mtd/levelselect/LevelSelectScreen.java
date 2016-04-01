@@ -9,11 +9,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.eric.mtd.MTDGame;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.screen.AbstractScreen;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
+import com.eric.mtd.util.Resources;
 
 public class LevelSelectScreen extends AbstractScreen
 {	

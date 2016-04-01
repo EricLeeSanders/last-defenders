@@ -19,7 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.MTDGame;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IFlame;
@@ -27,6 +26,7 @@ import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.ai.Damage;
 import com.eric.mtd.game.model.factory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Resources;
 
 public class Flame extends Actor implements Pool.Poolable{
 	private Animation flameAnimation;

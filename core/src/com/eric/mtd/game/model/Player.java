@@ -1,6 +1,6 @@
 package com.eric.mtd.game.model;
 
-import com.eric.mtd.Resources;
+import com.eric.mtd.util.Resources;
 
 public class Player {
 	private int money, lives;
