@@ -13,8 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.eric.mtd.Logger;
-import com.eric.mtd.Resources;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class LevelSelectTable extends Table{
 	private ILevelSelectController controller;

@@ -26,13 +26,13 @@ import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.eric.mtd.Logger;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.ai.EnemyAI;
 import com.eric.mtd.game.model.factory.ActionFactory;
 import com.eric.mtd.game.model.factory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Logger;
 import com.badlogic.gdx.utils.Pool;
 
 public abstract class Enemy extends GameActor implements Pool.Poolable{

@@ -30,11 +30,11 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.eric.mtd.Logger;
 import com.eric.mtd.MTDGame;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 
 public abstract class AbstractScreen implements Screen {

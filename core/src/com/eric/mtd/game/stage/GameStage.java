@@ -22,9 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pools;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.eric.mtd.Logger;
 import com.eric.mtd.MTDGame;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
@@ -59,6 +57,8 @@ import com.eric.mtd.game.ui.view.EnlistGroup;
 import com.eric.mtd.game.ui.view.HUDGroup;
 import com.eric.mtd.game.ui.view.InspectGroup;
 import com.eric.mtd.game.ui.view.OptionsGroup;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class GameStage extends Stage implements IGameUIStateObserver, ILevelStateObserver{
 	// I create the groups here because I found it to be the best place.

@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.eric.mtd.Logger;
-import com.eric.mtd.Resources;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class MTDImageButton extends ImageButton{
 	public MTDImageButton(String layer, String objectName, String strAtlas, String regionName, boolean visible, boolean useImgAsSize){

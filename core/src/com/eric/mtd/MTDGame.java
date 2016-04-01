@@ -24,6 +24,7 @@ import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.screen.state.IScreenStateObserver;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
 import com.eric.mtd.state.GameStateManager;
+import com.eric.mtd.util.Resources;
 
 public class MTDGame extends Game implements IScreenStateObserver {
 	private ScreenStateManager screenStateManager;

@@ -18,10 +18,10 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Disposable;
-import com.eric.mtd.Logger;
 import com.eric.mtd.MTDGame;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class Map implements Disposable{
 	private TiledMap tiledMap;

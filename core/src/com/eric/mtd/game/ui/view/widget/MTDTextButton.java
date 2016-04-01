@@ -3,7 +3,7 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.Align;
-import com.eric.mtd.Resources;
+import com.eric.mtd.util.Resources;
 
 public class MTDTextButton extends TextButton{
 	public MTDTextButton(String layer, String objectName, String buttonText,boolean visible) {

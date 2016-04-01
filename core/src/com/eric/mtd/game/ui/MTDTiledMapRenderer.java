@@ -11,9 +11,9 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.utils.Disposable;
-import com.eric.mtd.Logger;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class MTDTiledMapRenderer implements Disposable{
 	private TiledMap tiledMap;

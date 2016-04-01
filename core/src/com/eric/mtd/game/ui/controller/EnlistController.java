@@ -6,8 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
-import com.eric.mtd.Logger;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
@@ -18,6 +16,8 @@ import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.EnlistGroup;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class EnlistController implements IEnlistController {
 	private TowerPlacement towerPlacement;
