@@ -7,14 +7,14 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.eric.mtd.Logger;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.ui.controller.interfaces.IPerksController;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
 import com.eric.mtd.game.ui.view.widget.MTDTextButton;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class PerksGroup extends Group implements InputProcessor, IGameUIStateObserver{
 	private MTDImage pnlPerks;

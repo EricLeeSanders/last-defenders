@@ -1,4 +1,4 @@
-package com.eric.mtd;
+package com.eric.mtd.util;
 
 
 import com.badlogic.gdx.Game;
@@ -37,6 +37,8 @@ public abstract class Resources {
     
     public static final float NORMAL_SPEED = 1.0f;
     public static final float DOUBLE_SPEED = 2.0f;
+    
+    public static final String MENU_MUSIC = "audio/big_action_trailer.mp3";
 
     
     //Question: Bad?

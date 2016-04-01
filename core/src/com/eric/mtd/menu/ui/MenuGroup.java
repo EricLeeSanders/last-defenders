@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.eric.mtd.Logger;
-import com.eric.mtd.Resources;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class MenuGroup extends Group{
 	private static final float PLAY_MOVE_DURATION = 0.5f;

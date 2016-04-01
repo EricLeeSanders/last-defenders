@@ -24,9 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.eric.mtd.Logger;
 import com.eric.mtd.MTDGame;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
@@ -51,6 +49,8 @@ import com.eric.mtd.screen.AbstractScreen;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.state.GameStateManager;
 import com.eric.mtd.state.GameStateManager.GameState;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class GameScreen extends AbstractScreen {
 	private Label framesLabel;

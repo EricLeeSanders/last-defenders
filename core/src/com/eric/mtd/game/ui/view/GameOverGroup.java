@@ -5,12 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.eric.mtd.Logger;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.ui.controller.interfaces.IGameOverController;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
 import com.eric.mtd.game.ui.view.widget.MTDLabel;
 import com.eric.mtd.game.ui.view.widget.MTDTextButton;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class GameOverGroup extends Group {
 	private IGameOverController controller;

@@ -8,12 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.eric.mtd.Logger;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.ui.controller.interfaces.IOptionsController;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
 import com.eric.mtd.game.ui.view.widget.MTDTextButton;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
+import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 public class OptionsGroup extends Group{
 	private IOptionsController controller;
@@ -59,7 +59,7 @@ public class OptionsGroup extends Group{
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
 	    		if(Logger.DEBUG)System.out.println("New game Pressed");
-	    		controller.resumeGame();
+	    		controller.newGame();
 	        }
 	    } );
 	    
@@ -71,7 +71,7 @@ public class OptionsGroup extends Group{
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
 	    		if(Logger.DEBUG)System.out.println("Main Menu Button Pressed");
-	    		controller.resumeGame();
+	    		controller.mainMenu();
 	        }
 	    } );
 	    

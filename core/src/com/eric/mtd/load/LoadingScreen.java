@@ -19,10 +19,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.eric.mtd.MTDGame;
-import com.eric.mtd.Resources;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
 import com.eric.mtd.screen.AbstractScreen;
+import com.eric.mtd.util.Resources;
 
 public class LoadingScreen extends AbstractScreen
 {

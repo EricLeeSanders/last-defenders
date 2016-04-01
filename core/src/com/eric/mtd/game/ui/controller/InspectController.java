@@ -3,7 +3,6 @@ package com.eric.mtd.game.ui.controller;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.eric.mtd.Logger;
 import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
@@ -14,6 +13,7 @@ import com.eric.mtd.game.ui.controller.interfaces.IInspectController;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
+import com.eric.mtd.util.Logger;
 
 public class InspectController implements IInspectController, IGameUIStateObserver {
 	private GameUIStateManager uiStateManager;
