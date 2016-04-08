@@ -1,4 +1,4 @@
-package com.eric.mtd.game.ui.controller;
+package com.eric.mtd.game.ui.presenter;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
@@ -9,99 +9,93 @@ import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.ai.TowerTargetPriority;
 import com.eric.mtd.game.stage.GameStage;
-import com.eric.mtd.game.ui.controller.interfaces.IInspectController;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
+import com.eric.mtd.game.ui.view.interfaces.IInspectView;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.util.Logger;
 
-public class InspectController implements IInspectController, IGameUIStateObserver {
+public class InspectPresenter implements IGameUIStateObserver {
 	private GameUIStateManager uiStateManager;
 	private Tower selectedTower;
 	private Player player;
 	private ActorGroups actorGroups;
-	public InspectController(GameUIStateManager uiStateManager, Player player, ActorGroups actorGroups){
+	private IInspectView view;
+	public InspectPresenter(GameUIStateManager uiStateManager, Player player, ActorGroups actorGroups){
 		this.uiStateManager = uiStateManager;
+		uiStateManager.attach(this);
 		this.player = player;
 		this.actorGroups = actorGroups;
 	}
-	@Override
+	public void setView(IInspectView view){
+		this.view = view;
+		changeUIState(uiStateManager.getState());
+	}
 	public void closeInspect() {
 		uiStateManager.setState(GameUIState.STANDBY);
 		
 	}
 
-	@Override
+
 	public void changeTargetPriority() {
 		if(selectedTower != null){
 			TowerTargetPriority p = TowerTargetPriority.valueOf(selectedTower.getTargetPriority());
 			String s = TowerTargetPriority.values()[(p.getPosition()+1)%4].name();
 			selectedTower.setTargetPriority(s);
+			view.update(selectedTower);
 		}
 		
 	}
 
-	@Override
+
 	public void increaseAttack() {
 		if(selectedTower != null){
 			if(selectedTower.getAttackLevel() < Tower.TOWER_ATTACK_LEVEL_MAX){
 				player.spendMoney(selectedTower.getAttackIncreaseCost());
 				selectedTower.increaseAttack();
+				view.update(selectedTower);
 			}
 		}
-		
 	}
 
-	@Override
+
 	public void giveArmor() {
 		if(selectedTower != null){
 			if(!(selectedTower.hasArmor())){
 				player.spendMoney(selectedTower.getArmorCost());
 				selectedTower.setHasArmor(true);
+				view.update(selectedTower);
 			}
 		}
 	}
 
-	@Override
+
 	public void increaseRange() {
 		if(selectedTower != null){
 			if(selectedTower.getRangeLevel() < Tower.TOWER_RANGE_LEVEL_MAX){
 				player.spendMoney(selectedTower.getRangeIncreaseCost());
 				selectedTower.increaseRange();
+				view.update(selectedTower);
 			}
 		}
 	}
 
-	@Override
 	public void increaseSpeed() {
 		if(selectedTower != null){
 			if(selectedTower.getSpeedLevel() < Tower.TOWER_ATTACK_SPEED_LEVEL_MAX){
 				player.spendMoney(selectedTower.getSpeedIncreaseCost());
 				selectedTower.increaseSpeed();
+				view.update(selectedTower);
 			}
 		}
 	}
 
-	@Override
 	public void dishcharge() {
 		if(selectedTower != null){
 			player.giveMoney(selectedTower.getSellCost());
 			selectedTower.sellTower();
 			uiStateManager.setState(GameUIState.STANDBY);
 		}
-	}
-	
-	@Override
-	public void setSelectedTower(Tower selectedTower) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public String getTowerTargetPriority() {
-		if(selectedTower != null){
-			return selectedTower.getTargetPriority();
-		}
-		return null;
 	}
 	public void inspectTower(Vector2 coords){
 		if(uiStateManager.getState().equals(GameUIState.STANDBY)){
@@ -116,82 +110,21 @@ public class InspectController implements IInspectController, IGameUIStateObserv
 		    }
 		}
 	}
-	@Override
-	public int getArmorCost() {
-		if(selectedTower != null){
-			return selectedTower.getArmorCost();
-		}
-		return 0;
-	}
-	@Override
-	public int getAttackCost() {
-		if(selectedTower != null){
-			return selectedTower.getAttackIncreaseCost();
-		}
-		return 0;
-	}
-	@Override
-	public int getRangeCost() {
-		if(selectedTower != null){
-			return selectedTower.getRangeIncreaseCost();
-		}
-		return 0;
-	}
-	@Override
-	public int getSpeedCost() {
-		if(selectedTower != null){
-			return selectedTower.getSpeedIncreaseCost();
-		}
-		return 0;
-	}
-	@Override
-	public int getSellPrice() {
-		if(selectedTower != null){
-			return selectedTower.getSellCost();
-		}
-		return 0;
-	}
-	@Override
-	public int getKills() {
-		if(selectedTower != null){
-			return selectedTower.getNumOfKills();
-		}
-		return 0;
-	}
-	@Override
-	public boolean hasArmor() {
-		if(selectedTower != null){
-			return selectedTower.hasArmor();
-		}
-		return false;
-	}
-	@Override
-	public int getAttackLevel() {
-		if(selectedTower != null){
-			return selectedTower.getAttackLevel();
-		}
-		return 0;
-	}
-	@Override
-	public int getRangeLevel() {
-		if(selectedTower != null){
-			return selectedTower.getRangeLevel();
-		}
-		return 0;
-	}
-	@Override
-	public int getSpeedLevel() {
-		if(selectedTower != null){
-			return selectedTower.getSpeedLevel();
-		}
-		return 0;
-	}
-	@Override
+
+
 	public void changeUIState(GameUIState state) {
-		// TODO Auto-generated method stub
+		switch(state){
+		case INSPECTING:
+			view.inspectingState();
+			view.update(selectedTower);
+			break;
+		default:
+			view.standByState();
+			break;
+		}
 		
 	}
-	@Override
+
 	public boolean canAffordUpgrade(int upgradeCost) {
 		if(upgradeCost <= player.getMoney()){
 			return true;

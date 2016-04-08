@@ -16,11 +16,11 @@ import com.badlogic.gdx.utils.Align;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
-public class LevelSelectTable extends Table{
-	private ILevelSelectController controller;
+public class LevelSelectView extends Table{
+	private LevelSelectPresenter presenter;
 	private ImageButton close, btnLevel1, btnLevel2;
-	public LevelSelectTable(ILevelSelectController controller){
-		this.controller = controller;
+	public LevelSelectView(LevelSelectPresenter presenter){
+		this.presenter = presenter;
 		createControls();
 	}
 	
@@ -51,7 +51,7 @@ public class LevelSelectTable extends Table{
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
 	            if(Logger.DEBUG)System.out.println("Level 1 Pressed");
-	            controller.playLevel(1);
+	            presenter.playLevel(1);
 	        }
 	    } );
 	    
@@ -63,7 +63,7 @@ public class LevelSelectTable extends Table{
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
 	            if(Logger.DEBUG)System.out.println("Level 2 Pressed");
-	            controller.playLevel(2);
+	            presenter.playLevel(2);
 	        }
 	    } );
 	    
