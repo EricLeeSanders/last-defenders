@@ -29,22 +29,16 @@ import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
-import com.eric.mtd.game.model.placement.TowerPlacement;
+import com.eric.mtd.game.service.actorplacement.TowerPlacement;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.game.ui.GameUIStage;
-import com.eric.mtd.game.ui.controller.EnlistController;
-import com.eric.mtd.game.ui.controller.HUDController;
-import com.eric.mtd.game.ui.controller.InspectController;
-import com.eric.mtd.game.ui.controller.PerksController;
-import com.eric.mtd.game.ui.controller.interfaces.IEnlistController;
-import com.eric.mtd.game.ui.controller.interfaces.IHUDController;
-import com.eric.mtd.game.ui.controller.interfaces.IInspectController;
-import com.eric.mtd.game.ui.controller.interfaces.IPerksController;
+import com.eric.mtd.game.ui.presenter.EnlistPresenter;
+import com.eric.mtd.game.ui.presenter.HUDPresenter;
+import com.eric.mtd.game.ui.presenter.InspectPresenter;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
-import com.eric.mtd.game.ui.view.EnlistGroup;
-import com.eric.mtd.game.ui.view.HUDGroup;
-import com.eric.mtd.game.ui.view.InspectGroup;
-import com.eric.mtd.game.ui.view.PerksGroup;
+import com.eric.mtd.game.ui.view.EnlistView;
+import com.eric.mtd.game.ui.view.HUDView;
+import com.eric.mtd.game.ui.view.InspectView;
 import com.eric.mtd.screen.AbstractScreen;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.state.GameStateManager;
@@ -59,8 +53,8 @@ public class GameScreen extends AbstractScreen {
 	private Player player;
 	private GameStateManager gameStateManager;
 
-    public GameScreen(int intLevel, Player player, GameStateManager gameStateManager, ScreenStateManager screenStateManager){
-    	this.player = player;
+    public GameScreen(int intLevel, GameStateManager gameStateManager, ScreenStateManager screenStateManager){
+    	this.player = new Player();
     	//TODO: Question: Don't really like creating my actor groups, and state managers here.
     	ActorGroups actorGroups = new ActorGroups();
     	GameUIStateManager uiStateManager = new GameUIStateManager();

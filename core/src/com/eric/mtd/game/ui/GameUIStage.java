@@ -5,43 +5,33 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
-import com.eric.mtd.game.ui.controller.EnlistController;
-import com.eric.mtd.game.ui.controller.GameOverController;
-import com.eric.mtd.game.ui.controller.HUDController;
-import com.eric.mtd.game.ui.controller.InspectController;
-import com.eric.mtd.game.ui.controller.OptionsController;
-import com.eric.mtd.game.ui.controller.PerksController;
-import com.eric.mtd.game.ui.controller.interfaces.IEnlistController;
-import com.eric.mtd.game.ui.controller.interfaces.IGameOverController;
-import com.eric.mtd.game.ui.controller.interfaces.IHUDController;
-import com.eric.mtd.game.ui.controller.interfaces.IInspectController;
-import com.eric.mtd.game.ui.controller.interfaces.IOptionsController;
-import com.eric.mtd.game.ui.controller.interfaces.IPerksController;
+import com.eric.mtd.game.ui.presenter.EnlistPresenter;
+import com.eric.mtd.game.ui.presenter.GameOverPresenter;
+import com.eric.mtd.game.ui.presenter.HUDPresenter;
+import com.eric.mtd.game.ui.presenter.InspectPresenter;
+import com.eric.mtd.game.ui.presenter.OptionsPresenter;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
-import com.eric.mtd.game.ui.view.EnlistGroup;
-import com.eric.mtd.game.ui.view.GameOverGroup;
-import com.eric.mtd.game.ui.view.HUDGroup;
-import com.eric.mtd.game.ui.view.InspectGroup;
-import com.eric.mtd.game.ui.view.OptionsGroup;
-import com.eric.mtd.game.ui.view.PerksGroup;
+import com.eric.mtd.game.ui.view.EnlistView;
+import com.eric.mtd.game.ui.view.GameOverView;
+import com.eric.mtd.game.ui.view.HUDView;
+import com.eric.mtd.game.ui.view.InspectView;
+import com.eric.mtd.game.ui.view.OptionsView;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.state.GameStateManager;
 
 public class GameUIStage extends Stage implements IGameUIStateObserver{
-	private HUDGroup hudGroup;
-	private InspectGroup inspectGroup;
-	private EnlistGroup enlistGroup;
-	private IEnlistController enlistController;
-	private IHUDController hudController;
-	private IInspectController inspectController;
-	private IPerksController perksController;
-	private PerksGroup perksGroup;
-	private OptionsGroup optionsGroup;
-	private IOptionsController optionsController;
-	private IGameOverController gameOverController;
-	private GameOverGroup gameOverGroup;
+	private HUDView hudView;
+	private InspectView inspectView;
+	private EnlistView enlistView;
+	private EnlistPresenter enlistPresenter;
+	private HUDPresenter hudPresenter;
+	private InspectPresenter inspectPresenter;
+	private OptionsView optionsView;
+	private OptionsPresenter optionsPresenter;
+	private GameOverPresenter gameOverPresenter;
+	private GameOverView gameOverView;
 	
 	private Player player;
 	private int intLevel;
@@ -67,89 +57,78 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		createUI();
 	}
 	public void createUI(){
-	    this.enlistController = new EnlistController(uiStateManager, player, intLevel, actorGroups);
-	    this.enlistGroup = new EnlistGroup(enlistController, uiStateManager);
-	    	enlistGroup.setVisible(false);
+	    this.enlistPresenter = new EnlistPresenter(uiStateManager, player, intLevel, actorGroups);
+	    this.enlistView = new EnlistView(enlistPresenter);
+	    enlistPresenter.setView(enlistView);
 	    	
-	    this.hudController = new HUDController(uiStateManager, levelStateManager, gameStateManager, player);
-	    this.hudGroup = new HUDGroup(uiStateManager, levelStateManager, hudController);
-	    	hudGroup.setVisible(true);
+	    this.hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player);
+	    this.hudView = new HUDView(hudPresenter);
+	    hudPresenter.setView(hudView);
 	    	
-	    this.inspectController = new InspectController(uiStateManager, player, actorGroups);
-	    this.inspectGroup = new InspectGroup(uiStateManager, inspectController);
-	    	inspectGroup.setVisible(false);
+	    this.inspectPresenter = new InspectPresenter(uiStateManager, player, actorGroups);
+	    this.inspectView = new InspectView(inspectPresenter);
+	    inspectPresenter.setView(inspectView);
 	    	
-	    this.perksController = new PerksController(levelStateManager, player, intLevel, actorGroups);
-	    this.perksGroup = new PerksGroup(uiStateManager, perksController);
-	    	perksGroup.setVisible(false);
-	    	
-	    this.optionsController = new OptionsController(uiStateManager, gameStateManager, screenStateManager);
-	    this.optionsGroup = new OptionsGroup(optionsController);
-	    	optionsGroup.setVisible(false);
-	    	
-	    this.gameOverController = new GameOverController(screenStateManager, player);
-	    this.gameOverGroup = new GameOverGroup(gameOverController);
-	    	gameOverGroup.setVisible(false);
+	    this.optionsPresenter = new OptionsPresenter(uiStateManager, gameStateManager, screenStateManager);
+	    this.optionsView = new OptionsView(optionsPresenter);
+	    optionsPresenter.setView(optionsView);
 	    
-		this.addActor(hudGroup);
-		this.addActor(enlistGroup);
-		this.addActor(inspectGroup);
-		this.addActor(perksGroup);
-		this.addActor(optionsGroup);
-		this.addActor(gameOverGroup);
+	    this.gameOverPresenter = new GameOverPresenter(uiStateManager,screenStateManager, player);
+	    this.gameOverView = new GameOverView(gameOverPresenter);
+	    gameOverPresenter.setView(gameOverView);
+	    
+		this.addActor(hudView);
+		this.addActor(enlistView);
+		this.addActor(inspectView);
+		this.addActor(optionsView);
+		this.addActor(gameOverView);
 		
 		imp.addProcessor(this);
-		imp.addProcessor(enlistGroup);
-		imp.addProcessor(inspectGroup);
+		imp.addProcessor(enlistView);
+		imp.addProcessor(inspectView);
 	}
-	
-    @Override
-    public void act(float delta) {
-        super.act(delta);
-		hudGroup.update();
-    }
 	@Override
 	public void changeUIState(GameUIState state) {
-		switch(state){
+	/*	switch(state){
 		case STANDBY:
 			perksGroup.setVisible(false);
 			inspectGroup.setVisible(false);
-			enlistGroup.setVisible(false);
+			enlistView.setVisible(false);
 			optionsGroup.setVisible(false);
 			break;
 		case PERKS:
 			perksGroup.setVisible(true);
-			enlistGroup.setVisible(false);
+			enlistView.setVisible(false);
 			inspectGroup.setVisible(false);
 			break;
 		case ENLIST:
 			perksGroup.setVisible(false);
-			enlistGroup.setVisible(true);
+			enlistView.setVisible(true);
 			inspectGroup.setVisible(false);
 			break;
 		case INSPECTING:
 			perksGroup.setVisible(false);
 			inspectGroup.setVisible(true);
 			inspectGroup.updateInspect();
-			enlistGroup.setVisible(false);
+			enlistView.setVisible(false);
 			break;	
 		case OPTIONS:
 			perksGroup.setVisible(false);
 			inspectGroup.setVisible(false);
-			enlistGroup.setVisible(false);
+			enlistView.setVisible(false);
 			optionsGroup.setVisible(true);
 			break;
 		case LEVEL_OVER:
 			perksGroup.setVisible(false);
 			inspectGroup.setVisible(false);
-			enlistGroup.setVisible(false);
+			enlistView.setVisible(false);
 			optionsGroup.setVisible(false);
-			gameOverGroup.update();
-			gameOverGroup.setVisible(true);
+			gameOverView.update();
+			gameOverView.setVisible(true);
 			break;
 		default:
 			break;
-		}
+		}*/
 	}
 		
 }

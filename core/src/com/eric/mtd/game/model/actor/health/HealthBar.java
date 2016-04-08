@@ -15,8 +15,8 @@ import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.GameActor;
-import com.eric.mtd.game.model.factory.ActorFactory;
-import com.eric.mtd.game.model.factory.ActorFactory.HealthPool;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.HealthPool;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Resources;
 

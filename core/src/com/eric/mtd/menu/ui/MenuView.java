@@ -11,12 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
-public class MenuGroup extends Group{
+public class MenuView extends Group{
 	private static final float PLAY_MOVE_DURATION = 0.5f;
-	private IMenuController controller;
+	private MenuPresenter presenter;
 	private TextButton btnPlay;
-	public MenuGroup(IMenuController controller){
-		this.controller = controller;
+	public MenuView(MenuPresenter presenter){
+		this.presenter = presenter;
 		createControls();
 	}
 
@@ -36,7 +36,7 @@ public class MenuGroup extends Group{
 	        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
-	    		controller.playGame();
+	    		presenter.playGame();
 	            if(Logger.DEBUG)System.out.println("Play Pressed");
 	        }
 	    } );

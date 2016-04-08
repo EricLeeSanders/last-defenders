@@ -15,10 +15,11 @@ import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.ai.TowerTargetPriority;
 import com.eric.mtd.game.stage.GameStage;
-import com.eric.mtd.game.ui.controller.interfaces.IInspectController;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
+import com.eric.mtd.game.ui.presenter.InspectPresenter;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
+import com.eric.mtd.game.ui.view.interfaces.IInspectView;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
 import com.eric.mtd.game.ui.view.widget.MTDImageButton;
 import com.eric.mtd.game.ui.view.widget.MTDLabel;
@@ -28,36 +29,59 @@ import com.eric.mtd.game.ui.view.widget.inspect.UpgradeButton;
 import com.eric.mtd.game.ui.view.widget.inspect.UpgradeLevel;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
-public class InspectGroup extends Group implements IGameUIStateObserver, InputProcessor{
-	private GameUIStateManager uiStateManager;
-	private IInspectController controller;
+public class InspectView extends Group implements InputProcessor, IInspectView{
+	private InspectPresenter presenter;
 	private UpgradeButton btnArmor, btnSpeed, btnRange, btnAttack;
 	private MTDLabel lblArmorCost, lblSpeedCost, lblRangeCost, lblAttackCost;
 	private UpgradeLevel lvlArmor, lvlSpeed, lvlRange, lvlAttack;
 	private Group grpArmor, grpSpeed, grpRange, grpAttack, grpDischarge, grpTargetPriority;
-	//private MTDLabel [] lblIncreaseSpeedLevel, lblIncreaseAttackLevel, lblIncreaseRangeLevel;
 	private MTDLabel lblDischargePrice, lblTargetPriorityTitle, lblTargetPriority, lblKills;
 	private MTDImage pnlInspect, pnlSideInspect, imgDischarge, iconDischarge, imgKills;
 	private MTDImageButton btnDischarge, btnTargetPriority;
 	private MTDTextButton btnInspectClose;
-	public InspectGroup(GameUIStateManager uiStateManager,IInspectController controller){
-		this.uiStateManager = uiStateManager;
-		this.controller = controller;
-		uiStateManager.attach(this);
+	public InspectView(InspectPresenter presenter){
+		this.presenter = presenter;
 		createControls();
 	}
 	
 	public void createControls(){
-		grpArmor = new Group();
-		grpSpeed = new Group();
-		grpRange = new Group();
-		grpAttack = new Group();
 		grpDischarge = new Group();
 		grpTargetPriority = new Group();
 		pnlInspect = new MTDImage("UI_Inspect", "bottomPanel", Resources.INSPECT_ATLAS, "inspect_bg",true, false);
 			addActor(pnlInspect);
 		pnlSideInspect = new MTDImage("UI_Inspect", "sidePanel", Resources.INSPECT_ATLAS, "inspect_bg",true, false);
-			addActor(pnlSideInspect);
+			addActor(pnlSideInspect);	
+
+		btnDischarge = new MTDImageButton("UI_Inspect","btnDischarge",Resources.INSPECT_ATLAS,"btnDischarge",true, false);
+			setDischargeListener();
+			lblDischargePrice = new MTDLabel("UI_Inspect", "lblDischargePrice", "", true, Color.WHITE, Align.left, 0.625f);
+			grpDischarge.addActor(btnDischarge);
+			grpDischarge.addActor(lblDischargePrice);
+		addActor(grpDischarge);
+		
+		btnTargetPriority = new MTDImageButton("UI_Inspect","btnTargetPriority",Resources.INSPECT_ATLAS,"btnTargetPriority",true, false);
+			lblTargetPriority = new MTDLabel("UI_Inspect","lblTargetPriority",TowerTargetPriority.values()[0].name(),true, Color.WHITE, Align.center, 0.5f);
+			setTargetPriorityListener();
+			grpTargetPriority.addActor(btnTargetPriority);
+			grpTargetPriority.addActor(lblTargetPriority);
+		addActor(grpTargetPriority);
+	
+		btnInspectClose = new MTDTextButton("UI_Inspect","btnClose","Close",Align.center, true);
+			setUpgradeCloseListener();
+		addActor(btnInspectClose);
+		
+		imgKills = new MTDImage("UI_Inspect","imgKills",Resources.INSPECT_ATLAS,"kills",true, true);
+		addActor(imgKills);
+		lblKills = new MTDLabel("UI_Inspect", "lblKills","0 kills",true,Color.WHITE, Align.left, 0.5f);
+		addActor(lblKills);
+		
+		createUpgradeControls();
+	}
+	private void createUpgradeControls(){
+		grpArmor = new Group();
+		grpSpeed = new Group();
+		grpRange = new Group();
+		grpAttack = new Group();
 		
 		btnArmor = new UpgradeButton("UI_Inspect","btnArmor",Resources.INSPECT_ATLAS,"btnArmor","btnArmorDisabled",true, false);
 		lblArmorCost  = new MTDLabel("UI_Inspect", "lblArmorCost", "5555", true, Color.WHITE, Align.left, 0.58f);	
@@ -95,116 +119,74 @@ public class InspectGroup extends Group implements IGameUIStateObserver, InputPr
 		addActor(grpSpeed);
 		addActor(grpRange);
 		addActor(grpAttack);
-		
-
-		btnDischarge = new MTDImageButton("UI_Inspect","btnDischarge",Resources.INSPECT_ATLAS,"btnDischarge",true, false);
-			setDischargeListener();
-			lblDischargePrice = new MTDLabel("UI_Inspect", "lblDischargePrice", "", true, Color.WHITE, Align.left, 0.625f);
-			grpDischarge.addActor(btnDischarge);
-			grpDischarge.addActor(lblDischargePrice);
-		addActor(grpDischarge);
-		
-		btnTargetPriority = new MTDImageButton("UI_Inspect","btnTargetPriority",Resources.INSPECT_ATLAS,"btnTargetPriority",true, false);
-			lblTargetPriority = new MTDLabel("UI_Inspect","lblTargetPriority",TowerTargetPriority.values()[0].name(),true, Color.WHITE, Align.center, 0.5f);
-			setTargetPriorityListener();
-			grpTargetPriority.addActor(btnTargetPriority);
-			grpTargetPriority.addActor(lblTargetPriority);
-		addActor(grpTargetPriority);
-	
-		btnInspectClose = new MTDTextButton("UI_Inspect","btnClose","Close",Align.center, true);
-			setUpgradeCloseListener();
-		addActor(btnInspectClose);
-		
-		
-		imgKills = new MTDImage("UI_Inspect","imgKills",Resources.INSPECT_ATLAS,"kills",true, true);
-		addActor(imgKills);
-		lblKills = new MTDLabel("UI_Inspect", "lblKills","0 kills",true,Color.WHITE, Align.left, 0.5f);
-		addActor(lblKills);
 	}
-
-	public void updateInspect(){
-		lblArmorCost.setText(String.valueOf(controller.getArmorCost()));
-		lblSpeedCost.setText(String.valueOf(controller.getSpeedCost()));
-		lblRangeCost.setText(String.valueOf(controller.getRangeCost()));
-		lblAttackCost.setText(String.valueOf(controller.getAttackCost()));
-		lblDischargePrice.setText(String.valueOf(controller.getSellPrice()));
-		lblKills.setText(String.valueOf(controller.getKills()+ " kills"));
+	@Override 
+	public void standByState(){
+		this.setVisible(false);
+	}
+	@Override
+	public void inspectingState(){
+		this.setVisible(true);
+	}
+	//Bind to model
+	public void update(Tower selectedTower){
+		lblArmorCost.setText(String.valueOf(selectedTower.getArmorCost()));
+		lblSpeedCost.setText(String.valueOf(selectedTower.getSpeedIncreaseCost()));
+		lblRangeCost.setText(String.valueOf(selectedTower.getRangeIncreaseCost()));
+		lblAttackCost.setText(String.valueOf(selectedTower.getAttackIncreaseCost()));
+		lblDischargePrice.setText(String.valueOf(selectedTower.getSellCost()));
+		lblKills.setText(String.valueOf(selectedTower.getNumOfKills()+ " kills"));
 		lvlArmor.resetLevels();
 		lvlSpeed.resetLevels();
 		lvlRange.resetLevels();
 		lvlAttack.resetLevels();
 		
 		if(Logger.DEBUG){
-			System.out.println("Armor: " + controller.hasArmor());
-			System.out.println("Speed: " + controller.getSpeedLevel());
-			System.out.println("Range: " + controller.getRangeLevel());
-			System.out.println("Attack: " + controller.getAttackLevel());
+			System.out.println("Armor: " + selectedTower.hasArmor());
+			System.out.println("Speed: " + selectedTower.getSpeedLevel());
+			System.out.println("Range: " + selectedTower.getRangeLevel());
+			System.out.println("Attack: " + selectedTower.getAttackLevel());
 		}
-		if(controller.hasArmor()){
+		if(selectedTower.hasArmor()){
 			lvlArmor.setLevel(1);
 		}
-		lvlSpeed.setLevel(controller.getSpeedLevel());
-		lvlRange.setLevel(controller.getRangeLevel());
-		lvlAttack.setLevel(controller.getAttackLevel());
+		lvlSpeed.setLevel(selectedTower.getSpeedLevel());
+		lvlRange.setLevel(selectedTower.getRangeLevel());
+		lvlAttack.setLevel(selectedTower.getAttackLevel());
 		
-		lblTargetPriority.setText(controller.getTowerTargetPriority());
+		lblTargetPriority.setText(selectedTower.getTargetPriority());
 		
-		//TODO: Question: Could probably find a better way to do this
-		if(controller.canAffordUpgrade(controller.getArmorCost())){
-			grpArmor.setTouchable(Touchable.enabled);
-			btnArmor.setDisabled(false);
-			lblArmorCost.getStyle().fontColor = Color.WHITE;
-		}
-		else{
-			grpArmor.setTouchable(Touchable.disabled);
-			btnArmor.setDisabled(true);
-			lblArmorCost.getStyle().fontColor = Color.RED;
-		}
-		
-		if(controller.canAffordUpgrade(controller.getAttackCost())){
-			grpAttack.setTouchable(Touchable.enabled);
-			btnAttack.setDisabled(false);
-			lblAttackCost.getStyle().fontColor = Color.WHITE;
-		}
-		else{
-			grpAttack.setTouchable(Touchable.disabled);
-			btnAttack.setDisabled(true);
-			lblAttackCost.getStyle().fontColor = Color.RED;
-		}
-		
-		if(controller.canAffordUpgrade(controller.getSpeedCost())){
-			grpSpeed.setTouchable(Touchable.enabled);
-			btnSpeed.setDisabled(false);
-			lblSpeedCost.getStyle().fontColor = Color.WHITE;
-		}
-		else{
-			grpSpeed.setTouchable(Touchable.disabled);
-			btnSpeed.setDisabled(true);
-			lblSpeedCost.getStyle().fontColor = Color.RED;
-		}
-		
-		if(controller.canAffordUpgrade(controller.getRangeCost())){
-			grpRange.setTouchable(Touchable.enabled);
-			btnRange.setDisabled(false);
-			lblRangeCost.getStyle().fontColor = Color.WHITE;
-		}
-		else{
-			grpRange.setTouchable(Touchable.disabled);
-			btnRange.setDisabled(true);
-			lblRangeCost.getStyle().fontColor = Color.RED;
-		}
+		updateUpgradeControls(selectedTower.getRangeIncreaseCost(), grpRange,
+							btnRange, lblRangeCost);
+		updateUpgradeControls(selectedTower.getSpeedIncreaseCost(), grpSpeed,
+							btnSpeed, lblSpeedCost);
+		updateUpgradeControls(selectedTower.getAttackIncreaseCost(), grpAttack,
+							btnAttack, lblAttackCost);
+		updateUpgradeControls(selectedTower.getArmorCost(), grpArmor,
+							btnArmor, lblArmorCost);
 	}
 	
-	
+	private void updateUpgradeControls(int towerCost, Group group,
+									UpgradeButton button, MTDLabel label){
+		if(presenter.canAffordUpgrade(towerCost)){
+			group.setTouchable(Touchable.enabled);
+			button.setDisabled(false);
+			label.getStyle().fontColor = Color.WHITE;
+		}
+		else{
+			group.setTouchable(Touchable.disabled);
+			button.setDisabled(true);
+			label.getStyle().fontColor = Color.RED;
+		}
+		
+	}
 	private void setUpgradeCloseListener(){
 		btnInspectClose.addListener(new ClickListener() {
 	    	@Override
 	        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
-	    		controller.closeInspect();
-	    		//showUpgrade(false);
-	    		//showTowerRanges(false);
+	    		presenter.closeInspect();
 	        }
 	    } );
 	}
@@ -215,8 +197,8 @@ public class InspectGroup extends Group implements IGameUIStateObserver, InputPr
 	        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
-	    		controller.changeTargetPriority();
-	    		updateInspect();
+	    		presenter.changeTargetPriority();
+	    		//updateInspect();
 	        }
 	    } );
 	}
@@ -226,8 +208,8 @@ public class InspectGroup extends Group implements IGameUIStateObserver, InputPr
 	        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
-	    		controller.increaseAttack();
-    			updateInspect();
+	    		presenter.increaseAttack();
+    			//updateInspect();
 	        }
 	    } );
 	}
@@ -237,8 +219,8 @@ public class InspectGroup extends Group implements IGameUIStateObserver, InputPr
 	        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
-	    		controller.giveArmor();
-    			updateInspect();
+	    		presenter.giveArmor();
+    			//updateInspect();
 	        }
 	    } );
 	}
@@ -249,8 +231,8 @@ public class InspectGroup extends Group implements IGameUIStateObserver, InputPr
 	        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
-	    		controller.increaseRange();
-    			updateInspect();
+	    		presenter.increaseRange();
+    			//updateInspect();
 	        }
 	    } );
 	}
@@ -261,8 +243,8 @@ public class InspectGroup extends Group implements IGameUIStateObserver, InputPr
 	        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
-	    		controller.increaseSpeed();
-    			updateInspect();
+	    		presenter.increaseSpeed();
+    			//updateInspect();
 	        }
 	    } );
 	}
@@ -272,7 +254,7 @@ public class InspectGroup extends Group implements IGameUIStateObserver, InputPr
 	        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
-	    		controller.dishcharge();
+	    		presenter.dishcharge();
 	    		
 	        }
 	    } );
@@ -298,7 +280,7 @@ public class InspectGroup extends Group implements IGameUIStateObserver, InputPr
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2((float)screenX,(float)screenY));
-		controller.inspectTower(coords);
+		presenter.inspectTower(coords);
 		return false;
 	}
 
@@ -326,11 +308,6 @@ public class InspectGroup extends Group implements IGameUIStateObserver, InputPr
 		return false;
 	}
 
-	@Override
-	public void changeUIState(GameUIState state) {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 }

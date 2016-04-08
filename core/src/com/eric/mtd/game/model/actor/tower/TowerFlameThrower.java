@@ -24,9 +24,9 @@ import com.eric.mtd.game.model.actor.enemy.Enemy;
 import com.eric.mtd.game.model.actor.projectile.Bullet;
 import com.eric.mtd.game.model.actor.projectile.Flame;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IFlame;
-import com.eric.mtd.game.model.factory.ActorFactory;
-import com.eric.mtd.game.model.factory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.model.level.Map;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Resources;
 

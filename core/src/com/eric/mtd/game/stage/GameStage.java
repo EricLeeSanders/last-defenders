@@ -33,30 +33,24 @@ import com.eric.mtd.game.model.actor.projectile.Flame;
 import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.actor.tower.TowerTank;
 import com.eric.mtd.game.model.ai.TowerAI;
-import com.eric.mtd.game.model.factory.ActorFactory;
 import com.eric.mtd.game.model.level.Level;
 import com.eric.mtd.game.model.level.state.ILevelStateObserver;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
-import com.eric.mtd.game.model.placement.TowerPlacement;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.actorplacement.TowerPlacement;
 import com.eric.mtd.game.ui.MTDTiledMapRenderer;
-import com.eric.mtd.game.ui.controller.EnlistController;
-import com.eric.mtd.game.ui.controller.HUDController;
-import com.eric.mtd.game.ui.controller.InspectController;
-import com.eric.mtd.game.ui.controller.OptionsController;
-import com.eric.mtd.game.ui.controller.PerksController;
-import com.eric.mtd.game.ui.controller.interfaces.IEnlistController;
-import com.eric.mtd.game.ui.controller.interfaces.IHUDController;
-import com.eric.mtd.game.ui.controller.interfaces.IInspectController;
-import com.eric.mtd.game.ui.controller.interfaces.IOptionsController;
-import com.eric.mtd.game.ui.controller.interfaces.IPerksController;
+import com.eric.mtd.game.ui.presenter.EnlistPresenter;
+import com.eric.mtd.game.ui.presenter.HUDPresenter;
+import com.eric.mtd.game.ui.presenter.InspectPresenter;
+import com.eric.mtd.game.ui.presenter.OptionsPresenter;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
-import com.eric.mtd.game.ui.view.EnlistGroup;
-import com.eric.mtd.game.ui.view.HUDGroup;
-import com.eric.mtd.game.ui.view.InspectGroup;
-import com.eric.mtd.game.ui.view.OptionsGroup;
+import com.eric.mtd.game.ui.view.EnlistView;
+import com.eric.mtd.game.ui.view.HUDView;
+import com.eric.mtd.game.ui.view.InspectView;
+import com.eric.mtd.game.ui.view.OptionsView;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -78,6 +72,7 @@ public class GameStage extends Stage implements IGameUIStateObserver, ILevelStat
 	public static float totalLevelDelta = 0;
 	public GameStage( int intLevel, Player player, ActorGroups actorGroups, LevelStateManager levelStateManager, GameUIStateManager uiStateManager) {
     	//if(Logger.DEBUG)System.out.println("game stage created");
+		MTDGame.gameSpeed = (Resources.NORMAL_SPEED);
     	this.player = player;
     	this.actorGroups = actorGroups;
     	this.levelStateManager = levelStateManager;
@@ -139,7 +134,7 @@ public class GameStage extends Stage implements IGameUIStateObserver, ILevelStat
  
 	public void isWaveOver(){
 		if(getActorGroups().getEnemyGroup().getChildren().size<=0){
-			if(!(levelStateManager.getState().equals(LevelState.LEVEL_OVER))){
+			if(!(levelStateManager.getState().equals(LevelState.GAME_OVER))){
 				player.giveMoney((int)( 100 * (float)level.getCurrentWave()));
 				levelStateManager.setState(LevelState.STANDBY);
 				player.setWaveCount(player.getWaveCount() + 1);
@@ -164,8 +159,8 @@ public class GameStage extends Stage implements IGameUIStateObserver, ILevelStat
 			player.setLives(player.getLives()-1);
 		}
 		if(player.getLives()<=0){ //end game
-			levelStateManager.setState(LevelState.LEVEL_OVER);
-			uiStateManager.setState(GameUIState.LEVEL_OVER);
+			levelStateManager.setState(LevelState.GAME_OVER);
+			uiStateManager.setState(GameUIState.GAME_OVER);
 		}
 	}
 	public void showTowerRanges(boolean bool){
