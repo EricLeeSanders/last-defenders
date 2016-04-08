@@ -8,19 +8,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.eric.mtd.game.ui.controller.interfaces.IOptionsController;
+import com.eric.mtd.game.ui.presenter.OptionsPresenter;
+import com.eric.mtd.game.ui.view.interfaces.IOptionsView;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
 import com.eric.mtd.game.ui.view.widget.MTDTextButton;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
-public class OptionsGroup extends Group{
-	private IOptionsController controller;
+public class OptionsView extends Group implements IOptionsView{
+	private OptionsPresenter presenter;
 	private MTDTextButton btnResume, btnNewGame, btnMainMenu;
 	private MTDImage panel;
-	public OptionsGroup(IOptionsController controller){
-		this.controller = controller;
+	public OptionsView(OptionsPresenter presenter){
+		this.presenter = presenter;
 		createControls();
 	}
 	public void createControls(){
@@ -47,7 +48,7 @@ public class OptionsGroup extends Group{
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
 	    		if(Logger.DEBUG)System.out.println("Resume Button Pressed");
-	    		controller.resumeGame();
+	    		presenter.resumeGame();
 	        }
 	    } );
 	    
@@ -59,7 +60,7 @@ public class OptionsGroup extends Group{
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
 	    		if(Logger.DEBUG)System.out.println("New game Pressed");
-	    		controller.newGame();
+	    		presenter.newGame();
 	        }
 	    } );
 	    
@@ -71,9 +72,19 @@ public class OptionsGroup extends Group{
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
 	    		if(Logger.DEBUG)System.out.println("Main Menu Button Pressed");
-	    		controller.mainMenu();
+	    		presenter.mainMenu();
 	        }
 	    } );
 	    
+	}
+	@Override
+	public void optionsState() {
+		this.setVisible(true);
+		
+	}
+	@Override
+	public void standByState() {
+		this.setVisible(false);
+		
 	}
 }

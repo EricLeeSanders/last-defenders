@@ -2,6 +2,7 @@ package com.eric.mtd.game.model.actor;
 
 import java.util.List;
 import java.util.Queue;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -25,9 +26,10 @@ import com.eric.mtd.game.model.actor.projectile.RPG;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IFlame;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
 import com.eric.mtd.game.model.ai.TowerAI;
-import com.eric.mtd.game.model.factory.ActorFactory;
-import com.eric.mtd.game.model.factory.ActorFactory.GameActorPool;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 import com.badlogic.gdx.utils.Disposable;

@@ -26,12 +26,12 @@ import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.actor.tower.TowerTank;
-import com.eric.mtd.game.model.placement.TowerPlacement;
-import com.eric.mtd.game.ui.controller.EnlistController;
-import com.eric.mtd.game.ui.controller.interfaces.IEnlistController;
+import com.eric.mtd.game.service.actorplacement.TowerPlacement;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
+import com.eric.mtd.game.ui.presenter.EnlistPresenter;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
+import com.eric.mtd.game.ui.view.interfaces.IEnlistView;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
 import com.eric.mtd.game.ui.view.widget.MTDImageButton;
 import com.eric.mtd.game.ui.view.widget.MTDTextButton;
@@ -39,17 +39,14 @@ import com.eric.mtd.game.ui.view.widget.enlist.MTDTowerButton;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
-public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObserver{
+public class EnlistView extends Group implements IEnlistView,InputProcessor{
 	private MTDImage pnlEnlist;
 	private MTDTowerButton btnTank, btnFlameThrower, btnTurret, btnSniper, btnMachine, btnRocketLauncher, btnRifle;
 	private MTDImageButton btnCancel, btnPlace, btnRotate;
-	private IEnlistController controller;
-	private GameUIStateManager uiStateManager;
+	private EnlistPresenter presenter;
 	private Group choosingGroup;
-	public EnlistGroup(IEnlistController controller, GameUIStateManager UIStateManager){
-		this.controller = controller;
-		this.uiStateManager = UIStateManager;
-		this.uiStateManager.attach(this);
+	public EnlistView(EnlistPresenter presenter){
+		this.presenter = presenter;
 		choosingGroup = new Group();
 		addActor(choosingGroup);
 		createControls();
@@ -105,19 +102,12 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
 			addActor(btnRotate);
 			
 	}
-	public void towerRotatable(boolean rotatable){
-		if(controller.isTowerRotatable()){
-			btnRotate.setVisible(true);
-		}
-		else{
-			btnRotate.setVisible(false);
-		}
-	}
+
 	
 	private void updateTowerButtons(){
 		for(Actor button : choosingGroup.getChildren()){
 			if(button instanceof MTDTowerButton){
-				if(controller.canAffordTower(((MTDTowerButton) button).getTowerName())){ //Tower is affordable
+				if(presenter.canAffordTower(((MTDTowerButton) button).getTowerName())){ //Tower is affordable
 					if(Logger.DEBUG)System.out.println("Setting " + ((MTDTowerButton) button).getTowerName() + " to Enabled");
 					((MTDTowerButton) button).setDisabled(false);
 					button.setTouchable(Touchable.enabled); //TODO: Question: Not sure why I have to do this
@@ -135,7 +125,7 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
 	public void act (float delta) {
 		super.act(delta);
 		if(btnRotate.isPressed()){
-			controller.rotateTower();
+			presenter.rotateTower();
 		}                                         
 	}
 	private void setRotateListener(){
@@ -156,8 +146,7 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
 	        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
-	            controller.enlistTower("Rifle"); 
-	            controller.createTower();
+	            presenter.createTower("Rifle");
 	        }
 	    } );
 	    
@@ -168,8 +157,7 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
 		        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
 		        {
 		    		super.touchUp( event, x, y, pointer, button );
-		            controller.enlistTower("Tank"); 
-		            controller.createTower();
+		            presenter.createTower("Tank");
 		        }
 		    } );
 	}
@@ -180,8 +168,7 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
 		        {
 		    		super.touchUp( event, x, y, pointer, button );
 		            if(Logger.DEBUG)System.out.println("Flame Thrower Button Pressed");
-		            controller.enlistTower("FlameThrower"); 
-		            controller.createTower();
+		            presenter.createTower("FlameThrower");
 		        }
 		    } );
 	}
@@ -192,8 +179,7 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
 		        {
 		    		super.touchUp( event, x, y, pointer, button );
 		            if(Logger.DEBUG)System.out.println("Sniper Button Pressed");
-		            controller.enlistTower("Sniper"); 
-		            controller.createTower();
+		            presenter.createTower("Sniper");
 		        }
 		    } );
 	}
@@ -204,8 +190,7 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
 		        {
 		    		super.touchUp( event, x, y, pointer, button );
 		            if(Logger.DEBUG)System.out.println("Machine Button Pressed");
-		            controller.enlistTower("Machine"); 
-		            controller.createTower();
+		            presenter.createTower("Machine");
 		        }
 		    } );
 	}
@@ -216,8 +201,7 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
 		        {
 		    		super.touchUp( event, x, y, pointer, button );
 		            if(Logger.DEBUG)System.out.println("RocketLauncher Button Pressed");
-		            controller.enlistTower("RocketLauncher"); 
-		            controller.createTower();
+		            presenter.createTower("RocketLauncher");
 		        }
 		    } );
 	}
@@ -228,8 +212,7 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
 		        {
 		    		super.touchUp( event, x, y, pointer, button );
 		            if(Logger.DEBUG)System.out.println("Turret Button Pressed");
-		            controller.enlistTower("Turret"); 
-		            controller.createTower();
+		            presenter.createTower("Turret");
 		        }
 		    } );
 	}
@@ -240,9 +223,7 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
             {
         		super.touchUp( event, x, y, pointer, button );
                 if(Logger.DEBUG)System.out.println("Place Pressed");
-                controller.placeTower();
-               // towerRotatable(false);
-                //btnPlace.setVisible(false);
+                presenter.placeTower();
             }
         } );
 	}
@@ -253,9 +234,7 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
             {
         		super.touchUp( event, x, y, pointer, button );
                 if(Logger.DEBUG)System.out.println("Cancel Pressed");
-                controller.cancelEnlist();
-               // towerRotatable(false);
-                //btnPlace.setVisible(false);
+                presenter.cancelEnlist();
             }
         } );
 	}
@@ -276,13 +255,8 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
 	}
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		if(uiStateManager.getState().equals(GameUIState.PLACING_TOWER)){
-			Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2((float)screenX,(float)screenY));
-			if(Logger.DEBUG)System.out.println("Enlist Touch Down");
-			controller.moveTower(coords);
-			towerRotatable(controller.isTowerRotatable());
-			btnPlace.setVisible(true);
-		}
+		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2((float)screenX,(float)screenY));
+		presenter.moveTower(coords);
 		return false;
 	}
 	@Override
@@ -292,12 +266,8 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
 	}
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		if(uiStateManager.getState().equals(GameUIState.PLACING_TOWER)){
-			Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2((float)screenX,(float)screenY));
-			controller.moveTower(coords);
-			btnPlace.setVisible(true);
-			towerRotatable(controller.isTowerRotatable());
-		}
+		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2((float)screenX,(float)screenY));
+		presenter.moveTower(coords);
 		return false;
 		
 	}
@@ -311,9 +281,38 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
 		// TODO Auto-generated method stub
 		return false;
 	}
+	@Override
+	public void enlistingState() {
+		updateTowerButtons();
+		choosingGroup.setVisible(true);
+		btnCancel.setVisible(true);
+		this.setVisible(true);
+	}
+	@Override
+	public void placingTowerState() {
+		btnCancel.setVisible(true);
+		choosingGroup.setVisible(false);
+		
+	}
+	@Override
+	public void standByState() {
+		// TODO Auto-generated method stub
+		btnCancel.setVisible(false);
+		choosingGroup.setVisible(false);
+		btnRotate.setVisible(false);
+		btnPlace.setVisible(false);
+		btnCancel.setVisible(false);
+		this.setVisible(false);
+	}
+	@Override
+	public void towerShowing(boolean rotatable) {
+		btnPlace.setVisible(true);
+		btnRotate.setVisible(rotatable);
+		
+	}
 
 	
-	@Override
+	/*@Override
 	public void changeUIState(GameUIState state) {
 		switch(state){
 		case STANDBY:
@@ -338,6 +337,6 @@ public class EnlistGroup extends Group implements InputProcessor,IGameUIStateObs
 			break;
 		}
 		
-	}
+	}*/
 
 }

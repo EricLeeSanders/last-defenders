@@ -1,4 +1,4 @@
-package com.eric.mtd.game.model.placement;
+package com.eric.mtd.game.service.actorplacement;
 
 //import java.lang.reflect.Field;
 
@@ -28,7 +28,7 @@ import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.health.HealthBar;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.model.actor.tower.Tower;
-import com.eric.mtd.game.model.factory.ActorFactory;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Logger;
 
