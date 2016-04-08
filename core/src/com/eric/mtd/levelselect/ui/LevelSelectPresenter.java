@@ -3,13 +3,12 @@ package com.eric.mtd.levelselect.ui;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
 
-public class LevelSelectController implements ILevelSelectController{
+public class LevelSelectPresenter{
 	private ScreenStateManager screenStateManager;
-	public LevelSelectController(ScreenStateManager screenStateManager){
+	public LevelSelectPresenter(ScreenStateManager screenStateManager){
 		this.screenStateManager = screenStateManager;
 	}
 	
-	@Override
 	public void playLevel(int level){
 		switch(level){
 		case 1:

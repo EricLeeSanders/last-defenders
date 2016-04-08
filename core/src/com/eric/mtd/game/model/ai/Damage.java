@@ -11,7 +11,7 @@ import com.eric.mtd.game.model.actor.projectile.Explosion;
 import com.eric.mtd.game.model.actor.projectile.Flame;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
 import com.eric.mtd.game.model.actor.tower.Tower;
-import com.eric.mtd.game.model.factory.ActorFactory;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Logger;
 

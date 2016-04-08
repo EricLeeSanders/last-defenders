@@ -24,7 +24,7 @@ import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IFlame;
 import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.ai.Damage;
-import com.eric.mtd.game.model.factory.ActorFactory;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Resources;
 

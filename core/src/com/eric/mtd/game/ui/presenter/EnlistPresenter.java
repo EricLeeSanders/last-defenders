@@ -1,4 +1,4 @@
-package com.eric.mtd.game.ui.controller;
+package com.eric.mtd.game.ui.presenter;
 
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
@@ -10,29 +10,33 @@ import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.model.actor.tower.TowerTank;
-import com.eric.mtd.game.model.placement.TowerPlacement;
-import com.eric.mtd.game.ui.controller.interfaces.IEnlistController;
+import com.eric.mtd.game.service.actorplacement.TowerPlacement;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
-import com.eric.mtd.game.ui.view.EnlistGroup;
+import com.eric.mtd.game.ui.view.EnlistView;
+import com.eric.mtd.game.ui.view.interfaces.IEnlistView;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
-public class EnlistController implements IEnlistController {
+public class EnlistPresenter implements IGameUIStateObserver{
 	private TowerPlacement towerPlacement;
 	private GameUIStateManager uiStateManager;
 	private String strEnlistTower;
 	private Player player;
-	public EnlistController(GameUIStateManager uiStateManager, Player player, int intLevel, ActorGroups actorGroups){
+	private IEnlistView view;
+	public EnlistPresenter(GameUIStateManager uiStateManager, Player player, int intLevel, ActorGroups actorGroups){
 		this.uiStateManager = uiStateManager;
+		uiStateManager.attach(this);
 		this.player = player;
 		towerPlacement = new TowerPlacement(Resources.getMap(intLevel), actorGroups);
 	}
-	public void enlistTower(String strEnlistTower){
-		this.strEnlistTower = strEnlistTower;
+	public void setView(IEnlistView view){
+		this.view = view;
+		changeUIState(uiStateManager.getState());
 	}
-	public void createTower(){
+	public void createTower(String strEnlistTower){
+		this.strEnlistTower = strEnlistTower;
 		towerPlacement.createTower(strEnlistTower);
         uiStateManager.setState(GameUIState.PLACING_TOWER);
 	}
@@ -56,10 +60,10 @@ public class EnlistController implements IEnlistController {
 		towerPlacement.removeCurrentTower();
 	}
 	public void moveTower(Vector2 coords){
-		if(towerPlacement.isCurrentTower()){
+		if(towerPlacement.isCurrentTower() && uiStateManager.getState().equals(GameUIState.PLACING_TOWER)){
 			if(Logger.DEBUG)System.out.println("Trying to move tower");
-			//btnPlace.setVisible(true); //only show the place button when the tower has been shown on the screen
 			towerPlacement.moveTower(coords);
+			view.towerShowing(this.isTowerRotatable());
 		}
 	}
 	public void rotateTower(){
@@ -73,7 +77,6 @@ public class EnlistController implements IEnlistController {
 			return false;
 		}
 	}
-	@Override
 	public boolean canAffordTower(String tower) {
 		
 		try {
@@ -99,6 +102,21 @@ public class EnlistController implements IEnlistController {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	@Override
+	public void changeUIState(GameUIState state) {
+		switch(state){
+		case ENLISTING:
+			view.enlistingState();
+			break;
+		case PLACING_TOWER:
+			view.placingTowerState();
+			break;
+		default:
+			view.standByState();
+			break;
+		}
+		
 	}
 
 

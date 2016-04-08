@@ -1,4 +1,4 @@
-package com.eric.mtd.game.model.factory;
+package com.eric.mtd.game.service.actorfactory;
 
 
 import com.badlogic.gdx.scenes.scene2d.Action;
