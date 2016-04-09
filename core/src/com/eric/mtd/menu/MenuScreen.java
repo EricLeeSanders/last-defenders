@@ -11,9 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.stage.GameStage;
-import com.eric.mtd.menu.ui.IMenuController;
-import com.eric.mtd.menu.ui.MenuController;
-import com.eric.mtd.menu.ui.MenuGroup;
+import com.eric.mtd.menu.ui.MenuPresenter;
+import com.eric.mtd.menu.ui.MenuView;
 import com.eric.mtd.screen.AbstractScreen;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
@@ -26,8 +25,8 @@ public class MenuScreen extends AbstractScreen
 	private static final float PLAY_MOVE_DURATION = 0.5f;
 	private ScreenStateManager screenStateManager;
 	private MenuStage stage;
-	private IMenuController menuController;
-	private MenuGroup menuGroup;
+	private MenuPresenter presenter;
+	private MenuView menuView;
 	public MenuScreen(ScreenStateManager screenStateManager)	
 	{
 	    Resources.loadGraphics();

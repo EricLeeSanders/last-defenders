@@ -13,30 +13,23 @@ import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.level.state.ILevelStateObserver;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
-import com.eric.mtd.game.ui.controller.HUDController;
-import com.eric.mtd.game.ui.controller.interfaces.IHUDController;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
+import com.eric.mtd.game.ui.presenter.HUDPresenter;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
+import com.eric.mtd.game.ui.view.interfaces.IHUDView;
 import com.eric.mtd.game.ui.view.widget.*;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
-public class HUDGroup extends Group implements IGameUIStateObserver, ILevelStateObserver{
-	private GameUIStateManager uiStateManager;
-	private LevelStateManager levelStateManager;
+public class HUDView extends Group implements IHUDView{
 	private MTDImage pnlTitle, imgMoney, imgLife;
 	private MTDImageButton btnWave, btnEnlist, btnQuit, btnOptions, btnNormalSpeed, btnDoubleSpeed;
 	private MTDLabel lblMoney, lblLives, lblWaveCount;
-	private IHUDController controller;
+	private HUDPresenter presenter;
 	private Group btnSpeedGroup = new Group();
-	public HUDGroup(GameUIStateManager uiStateManager,LevelStateManager levelStateManager,IHUDController controller){
-		this.uiStateManager = uiStateManager;
-		this.levelStateManager = levelStateManager;
-		this.controller = controller;
-		uiStateManager.attach(this);
-		levelStateManager.attach(this);
+	public HUDView(HUDPresenter presenter){
+		this.presenter = presenter;
 		createControls();
-        controller.setGameSpeed(Resources.NORMAL_SPEED);
 	}
 	public void createControls(){
 		//pnlTitle = new MTDImage("UI_HUD", "panel", Resources.HUD_ATLAS, "Title_bg",true, false);
@@ -75,11 +68,6 @@ public class HUDGroup extends Group implements IGameUIStateObserver, ILevelState
 		lblWaveCount = new MTDLabel("UI_HUD", "lblWaveCount","0",true, Color.WHITE, Align.left, 0.5f);
 		addActor(lblWaveCount);
 	}
-	public void update(){
-		lblMoney.setText(String.valueOf(controller.getMoney()));
-		lblLives.setText(String.valueOf(controller.getLives()));
-		lblWaveCount.setText("Wave: " + String.valueOf(controller.getWaveCount()));
-	}
 	private void setBtnNormalSpeedListener(){
 		btnNormalSpeed.addListener(new ClickListener() {
 	    	@Override
@@ -87,9 +75,7 @@ public class HUDGroup extends Group implements IGameUIStateObserver, ILevelState
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
 	            if(Logger.DEBUG)System.out.println("Normal Speed");
-	            controller.setGameSpeed(Resources.NORMAL_SPEED);
-	            btnNormalSpeed.setVisible(false);
-	            btnDoubleSpeed.setVisible(true);
+	            presenter.changeGameSpeed();
 	        }
 		} );
 	}
@@ -100,9 +86,7 @@ public class HUDGroup extends Group implements IGameUIStateObserver, ILevelState
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
 	            if(Logger.DEBUG)System.out.println("Double Speed");
-	            controller.setGameSpeed(Resources.DOUBLE_SPEED);
-	            btnNormalSpeed.setVisible(true);
-	            btnDoubleSpeed.setVisible(false);
+	            presenter.changeGameSpeed();
 	        }
 		} );
 	}
@@ -113,7 +97,7 @@ public class HUDGroup extends Group implements IGameUIStateObserver, ILevelState
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
 	            if(Logger.DEBUG)System.out.println("Button Options Pressed");
-	            controller.options();
+	            presenter.options();
 	        }
 		} );
 	}
@@ -124,7 +108,7 @@ public class HUDGroup extends Group implements IGameUIStateObserver, ILevelState
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
 	            if(Logger.DEBUG)System.out.println("Button Quit Pressed");
-	            controller.quit();
+	            presenter.quit();
 	        }
 		} );
 	}
@@ -135,7 +119,7 @@ public class HUDGroup extends Group implements IGameUIStateObserver, ILevelState
 	            {
 	        		super.touchUp( event, x, y, pointer, button );
 	                if(Logger.DEBUG)System.out.println("Button Wave Pressed");
-	                controller.wave();
+	                presenter.startWave();
 	            }
 	        } );
 	}
@@ -146,12 +130,59 @@ public class HUDGroup extends Group implements IGameUIStateObserver, ILevelState
 	            {
 	        		super.touchUp( event, x, y, pointer, button );
 	                if(Logger.DEBUG)System.out.println("Button Enlist Pressed");
-	                controller.enlist();
+	                presenter.enlist();
 	                
 	            }
 	        } );
 	}
-	@Override
+	public void setMoney(String money){
+		lblMoney.setText(money);
+	}
+	public void setLives(String lives){
+		lblLives.setText(lives);
+	}
+	public void setWaveCount(String waveCount){
+		lblWaveCount.setText("Wave: " + waveCount);
+	}
+	public void changeSpeed(boolean isNormalSpeed){
+		if(isNormalSpeed){
+            btnNormalSpeed.setVisible(false);
+            btnDoubleSpeed.setVisible(true);
+		}
+		else{
+            btnNormalSpeed.setVisible(true);
+            btnDoubleSpeed.setVisible(false);
+		}
+	}
+	public void standByState(){
+		btnEnlist.setTouchable(Touchable.enabled);
+		btnWave.setTouchable(Touchable.enabled);
+		btnSpeedGroup.setTouchable(Touchable.enabled);
+		btnOptions.setTouchable(Touchable.enabled);
+		btnWave.setVisible(true);
+		btnEnlist.setVisible(true);
+		btnOptions.setVisible(true);
+		btnSpeedGroup.setVisible(true);
+	}
+	public void enlistingState(){
+		btnEnlist.setVisible(false);
+		btnWave.setVisible(false);
+		btnOptions.setVisible(false);
+		btnSpeedGroup.setVisible(false);
+	}
+	public void optionsState(){
+		btnEnlist.setTouchable(Touchable.disabled);
+		btnWave.setTouchable(Touchable.disabled);
+		btnSpeedGroup.setTouchable(Touchable.disabled);
+		btnOptions.setTouchable(Touchable.disabled);
+	}
+	public void gameOverState(){
+		optionsState();
+	}
+	public void waveInProgress(){
+		btnWave.setVisible(false);
+	}
+	/*@Override
 	public void changeLevelState(LevelState state) {
 		switch(state){
 		case SPAWNING_ENEMIES:
@@ -167,18 +198,18 @@ public class HUDGroup extends Group implements IGameUIStateObserver, ILevelState
 			break;
 		}
 		
-	}
-	@Override
+	}*/
+/*	@Override
 	public void changeUIState(GameUIState state) {
 		switch(state){
-		case LEVEL_OVER:
+		case GAME_OVER:
 		case OPTIONS:
 			btnEnlist.setTouchable(Touchable.disabled);
 			btnWave.setTouchable(Touchable.disabled);
 			btnSpeedGroup.setTouchable(Touchable.disabled);
 			btnOptions.setTouchable(Touchable.disabled);
 			break;
-		case ENLIST:
+		case ENLISTING:
 			btnEnlist.setVisible(false);
 			btnWave.setVisible(false);
 			btnOptions.setVisible(false);
@@ -202,5 +233,5 @@ public class HUDGroup extends Group implements IGameUIStateObserver, ILevelState
 		
 		}
 		
-	}
+	}*/
 }

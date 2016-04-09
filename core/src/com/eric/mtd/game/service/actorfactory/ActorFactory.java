@@ -1,4 +1,4 @@
-package com.eric.mtd.game.model.factory;
+package com.eric.mtd.game.service.actorfactory;
 
 import java.util.ArrayList;
 import java.util.LinkedList;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.eric.mtd.util.Logger;
+
 public class GameStateManager {
 	
 	private GameState state;
@@ -15,14 +17,14 @@ public class GameStateManager {
 		observers.add(observer);
 	}
 	public void notifyObservers(){
-		//if(Logger.DEBUG)System.out.println("Notify Observers");
+		if(Logger.DEBUG)System.out.println("Notify Observers");
 		for(IGameStateObserver observer : observers){
-			//if(Logger.DEBUG)System.out.println("Notifying: " + observer.getClass().getName());
+			if(Logger.DEBUG)System.out.println("Notifying: " + observer.getClass().getName());
 			observer.changeGameState(state);
 		}
 	}
 	public void setState(GameState state){
-		//if(Logger.DEBUG)System.out.println("Chaning Game state: " + this.getState() + " to state: " + state);
+		if(Logger.DEBUG)System.out.println("Chaning Game state: " + this.getState() + " to state: " + state);
 		this.state = state;
 		notifyObservers();
 	}
