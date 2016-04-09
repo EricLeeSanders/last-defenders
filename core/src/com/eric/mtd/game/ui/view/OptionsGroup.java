@@ -59,7 +59,7 @@ public class OptionsGroup extends Group{
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
 	    		if(Logger.DEBUG)System.out.println("New game Pressed");
-	    		controller.resumeGame();
+	    		controller.newGame();
 	        }
 	    } );
 	    
@@ -71,7 +71,7 @@ public class OptionsGroup extends Group{
 	        {
 	    		super.touchUp( event, x, y, pointer, button );
 	    		if(Logger.DEBUG)System.out.println("Main Menu Button Pressed");
-	    		controller.resumeGame();
+	    		controller.mainMenu();
 	        }
 	    } );
 	    
