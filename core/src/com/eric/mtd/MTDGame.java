@@ -29,13 +29,11 @@ import com.eric.mtd.util.Resources;
 public class MTDGame extends Game implements IScreenStateObserver {
 	private ScreenStateManager screenStateManager;
 	private GameStateManager gameStateManager;
-	private Player player;
 	public static float gameSpeed = Resources.NORMAL_SPEED; //This has to be static because animations directly call Gdx.graphics.getDeltaTime()
 															
 	
 	@Override
 	public void create () {
-		player = new Player();
 		screenStateManager = new ScreenStateManager();
 		screenStateManager.attach(this);
 		gameStateManager = new GameStateManager();
@@ -61,11 +59,11 @@ public class MTDGame extends Game implements IScreenStateObserver {
 			break;
 		case LEVEL_1_SELECTED:
 			this.getScreen().dispose(); //dispose current screen
-			this.setScreen( new GameScreen(1, player, gameStateManager, screenStateManager));
+			this.setScreen( new GameScreen(1,gameStateManager, screenStateManager));
 			break;
 		case LEVEL_2_SELECTED:
 			this.getScreen().dispose(); //dispose current screen
-			this.setScreen( new GameScreen(2, player, gameStateManager, screenStateManager));
+			this.setScreen( new GameScreen(2, gameStateManager, screenStateManager));
 			break;
 		default:
 			break;

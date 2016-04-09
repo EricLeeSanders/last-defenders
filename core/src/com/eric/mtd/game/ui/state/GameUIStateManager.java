@@ -3,6 +3,7 @@ package com.eric.mtd.game.ui.state;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
+import com.eric.mtd.util.Logger;
 
 public class GameUIStateManager {
 	
@@ -15,14 +16,14 @@ public class GameUIStateManager {
 		observers.add(observer);
 	}
 	public void notifyObservers(){
-		//if(Logger.DEBUG)System.out.println("Notify Observers");
+		if(Logger.DEBUG)System.out.println("Notify Observers");
 		for(IGameUIStateObserver observer : observers){
-			//if(Logger.DEBUG)System.out.println("Notifying: " + observer.getClass().getName());
+			if(Logger.DEBUG)System.out.println("Notifying: " + observer.getClass().getName());
 			observer.changeUIState(state);
 		}
 	}
 	public void setState(GameUIState state){
-		//if(Logger.DEBUG)System.out.println("Chaning UI state: " + this.getState() + " to state: " + state);
+		if(Logger.DEBUG)System.out.println("Chaning UI state: " + this.getState() + " to state: " + state);
 		this.state = state;
 		notifyObservers();
 	}
@@ -31,13 +32,12 @@ public class GameUIStateManager {
 	}
 	
 	public enum GameUIState {
-	    ENLIST,
-	    PERKS,
+	    ENLISTING,
 	    INSPECTING,
 	    HIGH_SCORES,
 	    OPTIONS,
 	    STANDBY,
-	    LEVEL_OVER,
+	    GAME_OVER,
 	    PLACING_TOWER,
 	    PLACING_SANDBAG;
 	    

@@ -13,10 +13,10 @@ import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.enemy.Enemy;
 import com.eric.mtd.game.model.actor.health.HealthBar;
-import com.eric.mtd.game.model.factory.ActorFactory;
 import com.eric.mtd.game.model.level.state.ILevelStateObserver;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Logger;
 
@@ -27,7 +27,7 @@ public class Level implements ILevelStateObserver{
 	private LevelStateManager levelStateManager;
 	private int currentWave = 1;
 	private final int startingLives = 20;
-	private final int startingMoney = 1000;
+	private final int startingMoney = 10000;
 	private Queue<Enemy> enemies;
 	private Queue<Float> delays;
 	private int numOfWaves = 3;
@@ -52,7 +52,7 @@ public class Level implements ILevelStateObserver{
 				delayCount = 0;
 				actorGroups.getEnemyGroup().addActor(enemies.remove());
 				enemyDelay = delays.remove(); //Question: Cause lag? Should I use linked list and just iterate?
-				////if(Logger.DEBUG)System.out.println("EnemyDelay: " + enemyDelay);
+				if(Logger.DEBUG)System.out.println("EnemyDelay: " + enemyDelay);
 			}
 		}
 		else{

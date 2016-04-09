@@ -2,202 +2,52 @@
 "wave": [
     {
         "enemy": Rifle,
-        "delay": .15,
+        "delay": .25,
         "armor": false
     },
     {
         "enemy": Rifle,
-        "delay": .15,
+        "delay": .25,
         "armor": false
     },
     {
         "enemy": Rifle,
-        "delay": .15,
+        "delay": .25,
         "armor": false
     },
     {
         "enemy": Rifle,
-        "delay": .15,
+        "delay": .25,
         "armor": false
     },
     {
         "enemy": Rifle,
-        "delay": .15,
+        "delay": .25,
         "armor": false
     },
         {
         "enemy": Rifle,
-        "delay": .15,
+        "delay": .25,
         "armor": false
     },
     {
         "enemy": Rifle,
-        "delay": .15,
+        "delay": .25,
         "armor": false
     },
     {
         "enemy": Rifle,
-        "delay": .15,
+        "delay": .25,
         "armor": false
     },
     {
         "enemy": Rifle,
-        "delay": .15,
+        "delay": .25,
         "armor": false
     },
     {
         "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-        {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-        {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-        {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-        {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-        {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-        {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .15,
+        "delay": .25,
         "armor": false
     }
 ]

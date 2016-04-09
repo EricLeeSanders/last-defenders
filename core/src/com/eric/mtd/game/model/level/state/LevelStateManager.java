@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import com.eric.mtd.util.Logger;
+
 public class LevelStateManager {
 	
 	private LevelState state;
@@ -15,14 +17,14 @@ public class LevelStateManager {
 		observers.add(observer);
 	}
 	public void notifyObservers(){
-		//if(Logger.DEBUG)System.out.println("Notify Observers");
+		if(Logger.DEBUG)System.out.println("Notify Observers");
 		for(ILevelStateObserver observer : observers){
-			//if(Logger.DEBUG)System.out.println("Notifying: " + observer.getClass().getName());
+			if(Logger.DEBUG)System.out.println("Notifying: " + observer.getClass().getName());
 			observer.changeLevelState(state);
 		}
 	}
 	public void setState(LevelState state){
-		//if(Logger.DEBUG)System.out.println("Chaning Level state: " + this.getState() + " to state: " + state);
+		if(Logger.DEBUG)System.out.println("Chaning Level state: " + this.getState() + " to state: " + state);
 		this.state = state;
 		notifyObservers();
 	}
@@ -33,7 +35,7 @@ public class LevelStateManager {
 	public enum LevelState {
 	    WAVE_IN_PROGRESS,
 	    STANDBY,
-	    LEVEL_OVER,
+	    GAME_OVER,
 	    SPAWNING_ENEMIES;
 	}
 }
