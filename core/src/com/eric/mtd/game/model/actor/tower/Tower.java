@@ -121,6 +121,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable{
 				break;
 			case STRONGEST:
 				target = TowerAI.findStrongestEnemy(this, enemyTargetGroup);
+				break;
 		}
 		setTarget(target);
 	}	
@@ -135,7 +136,7 @@ public abstract class Tower extends GameActor implements Pool.Poolable{
 		this.resetHealth();
 	}
 	public void increaseRange(){
-		if(this.getRangeLevel() < this.TOWER_RANGE_LEVEL_MAX){
+		if(this.getRangeLevel() < TOWER_RANGE_LEVEL_MAX){
 			this.increaseRangeLevel();
 			this.setRange(this.getRange() + (this.getRange()*TOWER_RANGE_INCREASE_RATE));
 		}
