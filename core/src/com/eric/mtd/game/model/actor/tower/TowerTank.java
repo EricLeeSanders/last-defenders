@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -63,7 +64,10 @@ public class TowerTank extends Tower implements Pool.Poolable,IRPG, IPlatedArmor
     }
     @Override
     public void draw(Batch batch, float alpha){
-    	 batch.end();
+ 		if(!isActive()){
+ 			bodyRotation = getRotation(); //Only rotate the tank body when the tank is not active (when the tank is being placed).
+ 		}
+ 		batch.end();
          if(isShowRange()){
              Gdx.gl.glClearColor(0, 0, 0, 0); 
              Gdx.gl.glEnable(GL20.GL_BLEND);
@@ -71,7 +75,7 @@ public class TowerTank extends Tower implements Pool.Poolable,IRPG, IPlatedArmor
              rangeShape.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
              rangeShape.begin(ShapeType.Filled);
              rangeShape.setColor(getRangeColor());
-             rangeShape.circle(getRangeShape().x,getRangeShape().y,getRangeShape().radius);
+             rangeShape.circle(((Circle)getRangeShape()).x,((Circle)getRangeShape()).y,((Circle)getRangeShape()).radius);
              rangeShape.end();
  			
          }
@@ -88,12 +92,8 @@ public class TowerTank extends Tower implements Pool.Poolable,IRPG, IPlatedArmor
  		shapeRenderer2.circle(getGunPos().x,getGunPos().y,5);
  		shapeRenderer2.end();*/
  		batch.begin(); 
- 		if(!isActive()){
- 			bodyRotation = getRotation(); //Only rotate the tank body when the tank is not active (when the tank is being placed).
- 		}
 		batch.draw(bodyRegion,this.getPositionCenter().x-(TEXTURE_BODY_SIZE.x/2),this.getPositionCenter().y-(TEXTURE_BODY_SIZE.y/2),TEXTURE_BODY_SIZE.x/2,TEXTURE_BODY_SIZE.y/2, TEXTURE_BODY_SIZE.x,TEXTURE_BODY_SIZE.y, 1, 1, bodyRotation);
 		batch.draw(turretRegion,getX(),getY(),getOriginX(),getOriginY(), TEXTURE_TURRET_SIZE.x,TEXTURE_TURRET_SIZE.y, 1, 1, getRotation());
-
     }
     //Need to get rotation of the tankBody, not turret so we need to override
     @Override
