@@ -127,8 +127,16 @@ public final class CollisionDetection {
 		}
 		return null;
 	}
-	public static boolean targetWithinRange(Polygon targetBody, Circle towerRange){
-		return polygonAndCircle(targetBody,towerRange);
+	public static boolean targetWithinRange(Polygon targetBody, Shape2D towerRange){
+		if(towerRange instanceof Circle){
+			return polygonAndCircle(targetBody,(Circle)towerRange);
+		}
+		else if(towerRange instanceof Polygon){
+			return polygonAndPolygon(targetBody, (Polygon)towerRange);
+		}
+		else{
+			return true;
+		}
 	}
 	
 	//Create lines between 2 vertices for each vertex. Check whether that line intersects the circle.
