@@ -26,6 +26,8 @@ import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.ai.Damage;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.AudioUtil;
+import com.eric.mtd.util.AudioUtil.ProjectileSound;
 import com.eric.mtd.util.Resources;
 
 public class Flame extends Actor implements Pool.Poolable{

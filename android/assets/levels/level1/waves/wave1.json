@@ -1,52 +1,7 @@
 {
 "wave": [
     {
-        "enemy": Rifle,
-        "delay": .25,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .25,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .25,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .25,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .25,
-        "armor": false
-    },
-        {
-        "enemy": Rifle,
-        "delay": .25,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .25,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .25,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .25,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
+        "enemy": Tank,
         "delay": .25,
         "armor": false
     }

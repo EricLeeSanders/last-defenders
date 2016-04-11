@@ -14,10 +14,19 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.projectile.Bullet;
+import com.eric.mtd.game.model.actor.projectile.Flame;
+import com.eric.mtd.game.model.actor.projectile.RPG;
+import com.eric.mtd.game.model.actor.projectile.interfaces.IFlame;
+import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
 import com.eric.mtd.game.model.level.Map;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.AudioUtil;
+import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
+import com.eric.mtd.util.AudioUtil.ProjectileSound;
 
 public class EnemyMachine extends Enemy{
 	   
@@ -34,4 +43,12 @@ public class EnemyMachine extends Enemy{
     public EnemyMachine(TextureRegion [] actorRegions, GameActorPool<GameActor> pool){
     	super(actorRegions,pool,BODY,TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR,ATTACK,ATTACK_SPEED,RANGE);
     }
+	@Override
+	public void attackTarget() {
+    	if(Logger.DEBUG)System.out.println("Attacking target at " +getTarget().getPositionCenter());
+    	AudioUtil.playProjectileSound(ProjectileSound.MACHINE);
+    	Bullet bullet = ActorFactory.loadBullet();
+    	bullet.setAction(this, getTarget(),this.getGunPos(),new Vector2(10,10));
+		
+	}
 }

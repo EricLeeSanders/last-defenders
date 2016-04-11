@@ -25,7 +25,9 @@ import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.ai.Damage;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.AudioUtil.ProjectileSound;
 
 public class RPG extends Actor implements Pool.Poolable{
 	private ShapeRenderer shapeRenderer = new ShapeRenderer();
@@ -67,24 +69,13 @@ public class RPG extends Actor implements Pool.Poolable{
     @Override
     public void act(float delta){
     	super.act(delta);
-
-    	if(target.isDead()){
-    		ActorFactory.rpgPool.free(this);
-    		this.remove();
-    	}
-    	else if (this.getActions().size == 0){
-    		//if(Logger.DEBUG)System.out.println("Bullet did not reach target");
+    	if (this.getActions().size == 0){
 	    	Damage.dealBulletDamage(shooter, target);
 			Explosion explosion = ActorFactory.loadExplosion();
 			explosion.setExplosion(shooter, target);
     		ActorFactory.rpgPool.free(this);
     		this.remove();
     	}
-    	/*else if (CollisionDetection.bulletAndTarget(getBody(), target.getBody())){
-    		targetTakeDamage();
-    		ActorFactory.bulletPool.free(this);
-    		this.remove();
-    	}*/
     	
     }
 	@Override
