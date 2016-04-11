@@ -14,12 +14,17 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.projectile.RPG;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
 import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.level.Map;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Resources;
+import com.eric.mtd.util.AudioUtil.ProjectileSound;
+import com.eric.mtd.util.Logger;
 
 public class EnemyRocketLauncher extends Enemy implements IRPG{
 	   
@@ -39,5 +44,13 @@ public class EnemyRocketLauncher extends Enemy implements IRPG{
 	@Override
 	public float getAoeRadius() {
 		return 50;
+	}
+	@Override
+	public void attackTarget() {
+		if(Logger.DEBUG)System.out.println("Attacking target at " +getTarget().getPositionCenter());
+		AudioUtil.playProjectileSound(ProjectileSound.ROCKET_LAUNCH);
+    	RPG rpg = ActorFactory.loadRPG();
+    	rpg.setAction(this, getTarget(),this.getGunPos(),new Vector2(10,10));
+		
 	}
 }

@@ -20,8 +20,10 @@ import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
+import com.eric.mtd.util.AudioUtil.ProjectileSound;
 
 public class EnemyFlameThrower extends Enemy implements IFlame{
 	public static float HEALTH = 6;  
@@ -40,7 +42,7 @@ public class EnemyFlameThrower extends Enemy implements IFlame{
 	@Override
     public void attackTarget(){
     	if(Logger.DEBUG)System.out.println("Attacking target");
-   	
+    	AudioUtil.playProjectileSound(ProjectileSound.FLAME_BURST);
 		Flame flame = ActorFactory.loadFlame();
 		flame.setFlame(this,this.getTarget());
 	}

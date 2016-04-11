@@ -20,6 +20,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.eric.mtd.game.model.actor.health.HealthBar;
 import com.eric.mtd.game.model.actor.interfaces.ICollision;
+import com.eric.mtd.game.model.actor.interfaces.IVehicle;
 import com.eric.mtd.game.model.actor.projectile.Bullet;
 import com.eric.mtd.game.model.actor.projectile.Flame;
 import com.eric.mtd.game.model.actor.projectile.RPG;
@@ -30,6 +31,7 @@ import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
+import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 import com.badlogic.gdx.utils.Disposable;
@@ -241,22 +243,7 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
     public void setRange(float range){
     	this.range = range;
     }
-    public void attackTarget(){
-    	if(Logger.DEBUG)System.out.println("Attacking target at " +getTarget().getPositionCenter());
-    	if(this instanceof IFlame){
-    		Flame flame = ActorFactory.loadFlame();
-    		flame.setFlame(this,this.getTarget());
-    	}
-    	else if(this instanceof IRPG){
-        	RPG rpg = ActorFactory.loadRPG();
-        	rpg.setAction(this, target,this.getGunPos(),new Vector2(10,10));
-    	}
-    	else{
-	    	Bullet bullet = ActorFactory.loadBullet();
-	    	bullet.setAction(this, target,this.getGunPos(),new Vector2(10,10));
-    	}
-    	
-    }
+    public abstract void attackTarget();
     @Override
     public Polygon getBody(){
     	Polygon poly = new Polygon(bodyPoints);
@@ -284,6 +271,9 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
     public void setDead(boolean dead){
     	this.dead = dead;
     	if(isDead()){
+    		if(this instanceof IVehicle){
+    			AudioUtil.playVehicleExplosion();
+    		}
     		pool.free(this);
        	}
     }

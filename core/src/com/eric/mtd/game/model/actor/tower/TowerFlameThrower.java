@@ -28,7 +28,10 @@ import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.AudioUtil;
+import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
+import com.eric.mtd.util.AudioUtil.ProjectileSound;
 
 public class TowerFlameThrower extends Tower implements IFlame{
 
@@ -51,22 +54,22 @@ public class TowerFlameThrower extends Tower implements IFlame{
     public TowerFlameThrower(TextureRegion actorRegion, GameActorPool<GameActor> pool){
     	super(actorRegion,pool,BODY,TEXTURE_SIZE,GUN_POS,HEALTH, ARMOR, ATTACK,ATTACK_SPEED,RANGE,COST,ARMOR_COST,RANGE_INCREASE_COST, SPEED_INCREASE_COST,ATTACK_INCREASE_COST);
     }
-   /* @Override
-    public void draw(Batch batch, float alpha){
-    	
-    	Rectangle body = this.getFlameBody();
-    	shapeRenderer2.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-		shapeRenderer2.begin(ShapeType.Line);
-		shapeRenderer2.setColor(Color.RED);
-		shapeRenderer2.rect(body.x,body.y,body.width,body.height);
-		shapeRenderer2.end();
-		super.draw(batch, alpha);
-    }*/
+
     
 	@Override
 	public Vector2 getFlameSize() {
 		Vector2 size = new Vector2(20,62);
 		return size;
+	}
+
+
+	@Override
+	public void attackTarget() {
+    	if(Logger.DEBUG)System.out.println("Attacking target");
+    	AudioUtil.playProjectileSound(ProjectileSound.FLAME_BURST);
+		Flame flame = ActorFactory.loadFlame();
+		flame.setFlame(this,this.getTarget());
+		
 	}
 
 }

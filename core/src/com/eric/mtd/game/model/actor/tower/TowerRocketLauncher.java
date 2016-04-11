@@ -14,11 +14,16 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.enemy.Enemy;
+import com.eric.mtd.game.model.actor.projectile.RPG;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
 import com.eric.mtd.game.model.level.Map;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.AudioUtil;
+import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
+import com.eric.mtd.util.AudioUtil.ProjectileSound;
 
 public class TowerRocketLauncher extends Tower implements IRPG{
 	
@@ -44,6 +49,14 @@ public class TowerRocketLauncher extends Tower implements IRPG{
 	@Override
 	public float getAoeRadius() {
 		return 50;
+	}
+	@Override
+	public void attackTarget() {
+		if(Logger.DEBUG)System.out.println("Attacking target at " +getTarget().getPositionCenter());
+		AudioUtil.playProjectileSound(ProjectileSound.ROCKET_LAUNCH);
+    	RPG rpg = ActorFactory.loadRPG();
+    	rpg.setAction(this, getTarget(),this.getGunPos(),new Vector2(10,10));
+		
 	}
 
 }
