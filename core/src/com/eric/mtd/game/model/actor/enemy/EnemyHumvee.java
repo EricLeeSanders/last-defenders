@@ -14,12 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.interfaces.IVehicle;
 import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Resources;
 
-public class EnemyHumvee extends Enemy{
+public class EnemyHumvee extends Enemy implements IVehicle{
 	   
 	public static float HEALTH = 8;  
 	public static float ARMOR = 4;
@@ -34,4 +35,9 @@ public class EnemyHumvee extends Enemy{
     public EnemyHumvee(TextureRegion actorRegion, GameActorPool<GameActor> pool){
     	super(actorRegion,pool,BODY,TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR,ATTACK,ATTACK_SPEED,RANGE);
     }
+	@Override
+	public void attackTarget() {
+		//Does not attack
+		
+	}
 }

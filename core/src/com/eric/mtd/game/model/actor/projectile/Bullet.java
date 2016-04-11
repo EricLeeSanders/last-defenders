@@ -19,13 +19,17 @@ import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.enemy.Enemy;
+import com.eric.mtd.game.model.actor.enemy.EnemyRifle;
 import com.eric.mtd.game.model.actor.health.interfaces.IPlatedArmor;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
 import com.eric.mtd.game.model.actor.tower.Tower;
+import com.eric.mtd.game.model.actor.tower.TowerRifle;
 import com.eric.mtd.game.model.ai.Damage;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.AudioUtil.ProjectileSound;
 
 public class Bullet extends Actor implements Pool.Poolable{
 	private ShapeRenderer shapeRenderer = new ShapeRenderer();

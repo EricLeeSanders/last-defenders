@@ -8,8 +8,6 @@ import java.util.Queue;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.PolygonRegion;
 import com.badlogic.gdx.graphics.g2d.PolygonSprite;
@@ -26,11 +24,16 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Pool.Poolable;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.enemy.Enemy;
+import com.eric.mtd.game.model.actor.projectile.Bullet;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.model.level.Map;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.AudioUtil;
+import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
+import com.eric.mtd.util.AudioUtil.ProjectileSound;
 
 public class TowerTurret extends Tower implements IRotatable{
 	
@@ -119,5 +122,14 @@ public class TowerTurret extends Tower implements IRotatable{
     	poly.setPosition(getPositionCenter().x-(TEXTURE_BODY_SIZE.x/2), getPositionCenter().y-(TEXTURE_BODY_SIZE.y/2));
     	return poly;
     }
+
+	@Override
+	public void attackTarget() {
+    	if(Logger.DEBUG)System.out.println("Attacking target");
+    	AudioUtil.playProjectileSound(ProjectileSound.MACHINE);
+    	Bullet bullet = ActorFactory.loadBullet();
+    	bullet.setAction(this, getTarget(),this.getGunPos(),new Vector2(10,10));
+		
+	}
 
 }

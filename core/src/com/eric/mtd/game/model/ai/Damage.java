@@ -16,7 +16,17 @@ import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Logger;
 
 public class Damage {
-	
+	public static void dealRpgDamage(GameActor shooter, GameActor target){
+		if(shooter instanceof IRPG){
+			if(target.isDead() == false){
+				target.takeDamage(shooter.getAttack());
+		    	if(target.isDead()){
+		    		if(Logger.DEBUG)System.out.println("Bullet giving kill");
+		    		shooter.giveKill();
+		    	}
+			}
+		}
+	}
 	public static void dealBulletDamage(GameActor shooter, GameActor target){
 		if((!(target instanceof IPlatedArmor))||(shooter instanceof IRPG)){
 			target.takeDamage(shooter.getAttack());

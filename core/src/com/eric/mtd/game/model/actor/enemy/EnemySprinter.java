@@ -34,4 +34,9 @@ public class EnemySprinter extends Enemy{
     public EnemySprinter(TextureRegion [] actorRegions, GameActorPool<GameActor> pool){
     	super(actorRegions,pool,BODY,TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR,ATTACK,ATTACK_SPEED,RANGE);
     }
+	@Override
+	public void attackTarget() {
+		// TODO Auto-generated method stub
+		
+	}
 }
