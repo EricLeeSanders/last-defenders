@@ -139,7 +139,7 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
             rangeShape.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
             rangeShape.begin(ShapeType.Filled);
             rangeShape.setColor(rangeColor);
-            rangeShape.circle(getRangeShape().x,getRangeShape().y,getRangeShape().radius);//TODO:QUESTION:Got to be a better way to do this
+            rangeShape.circle(((Circle)getRangeShape()).x,((Circle)getRangeShape()).y,((Circle)getRangeShape()).radius);//TODO:QUESTION:Got to be a better way to do this
             rangeShape.end();
 			
         }
@@ -225,7 +225,7 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
     public void setPositionTopMiddle(Vector2 pos){
     	this.setPosition(pos.x-(textureSize.x/2), pos.y-(textureSize.y));
     }
-    public Circle getRangeShape(){
+    public Shape2D getRangeShape(){
     	Vector2 center = getPositionCenter();
     	return new Circle(center.x,center.y, range);
     }
