@@ -39,8 +39,15 @@ public abstract class Resources {
     public static final float DOUBLE_SPEED = 2.0f;
     
     public static final String MENU_MUSIC = "audio/big_action_trailer.mp3";
-
     
+    public static final String RPG_EXPLOSION_SOUND = "audio/rpg_explosion.mp3";
+    public static final String ROCKET_LAUNCH_SOUND = "audio/rocket_launch.mp3";
+    public static final String FLAME_SOUND = "audio/flame_burst.mp3";
+    public static final String RIFLE_SHOT_SOUND = "audio/rifle_shot.mp3";
+    public static final String MACHINE_GUN_SHOT_SOUND = "audio/machine_gun_shot.mp3";
+    public static final String SNIPER_SHOT_SOUND = "audio/sniper_shot.mp3";
+    
+    public static final String VEHICLE_EXPLOSION_SOUND = "audio/vehicle_explosion.mp3";
     //Question: Bad?
     private static final AssetManager MANAGER = new AssetManager();
 
