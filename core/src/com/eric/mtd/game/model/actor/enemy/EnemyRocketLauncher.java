@@ -1,56 +1,52 @@
 package com.eric.mtd.game.model.actor.enemy;
 
-
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
-
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.utils.Pool.Poolable;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.projectile.RPG;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
-import com.eric.mtd.game.model.actor.tower.Tower;
-import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
-import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.AudioUtil;
-import com.eric.mtd.util.Resources;
 import com.eric.mtd.util.AudioUtil.ProjectileSound;
 import com.eric.mtd.util.Logger;
 
-public class EnemyRocketLauncher extends Enemy implements IRPG{
-	   
-	public static float HEALTH = 8;  
-	public static float ARMOR = 4;
-	public static float ATTACK = 9; 
-	public static float ATTACK_SPEED = 1;
-	public static float RANGE = 60; 
-	public static float SPEED = 55f;
-	
-	public static float [] BODY = {5,22,5,34,26,34,26,22};
-	public static Vector2 GUN_POS = new Vector2(4,26);
-	public static Vector2 TEXTURE_SIZE =  new Vector2(32,56);
-    public EnemyRocketLauncher(TextureRegion [] actorRegions, GameActorPool<GameActor> pool){
-    	super(actorRegions,pool,BODY,TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR,ATTACK,ATTACK_SPEED,RANGE);
-    }
+/**
+ * Represents an Enemy Rocket Launcher
+ * 
+ * @author Eric
+ *
+ */
+public class EnemyRocketLauncher extends Enemy implements IRPG {
+
+	public static final float HEALTH = 8;
+	public static final float ARMOR = 4;
+	public static final float ATTACK = 9;
+	public static final float ATTACK_SPEED = 1;
+	public static final float RANGE = 60;
+	public static final float SPEED = 55f;
+	public static final float AOE_RADIUS = 50f;
+	public static final Vector2 BULLET_SIZE = new Vector2(10, 10);
+	public static final float[] BODY = { 5, 22, 5, 34, 26, 34, 26, 22 };
+	public static final Vector2 GUN_POS = new Vector2(4, 26);
+	public static final Vector2 TEXTURE_SIZE = new Vector2(32, 56);
+
+	public EnemyRocketLauncher(TextureRegion[] actorRegions, GameActorPool<GameActor> pool) {
+		super(actorRegions, pool, BODY, TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
+	}
+
 	@Override
 	public float getAoeRadius() {
-		return 50;
+		return AOE_RADIUS;
 	}
+
 	@Override
 	public void attackTarget() {
-		if(Logger.DEBUG)System.out.println("Attacking target at " +getTarget().getPositionCenter());
+		if (Logger.DEBUG)
+			System.out.println("Enemy Rocket: Attacking target at " + getTarget().getPositionCenter());
 		AudioUtil.playProjectileSound(ProjectileSound.ROCKET_LAUNCH);
-    	RPG rpg = ActorFactory.loadRPG();
-    	rpg.setAction(this, getTarget(),this.getGunPos(),new Vector2(10,10));
-		
+		RPG rpg = ActorFactory.loadRPG();
+		rpg.initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
+
 	}
 }

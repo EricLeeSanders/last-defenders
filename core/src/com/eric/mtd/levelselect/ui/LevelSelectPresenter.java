@@ -3,14 +3,26 @@ package com.eric.mtd.levelselect.ui;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
 
-public class LevelSelectPresenter{
+/**
+ * Presenter for the Level Select Menu
+ * 
+ * @author Eric
+ *
+ */
+public class LevelSelectPresenter {
 	private ScreenStateManager screenStateManager;
-	public LevelSelectPresenter(ScreenStateManager screenStateManager){
+
+	public LevelSelectPresenter(ScreenStateManager screenStateManager) {
 		this.screenStateManager = screenStateManager;
 	}
-	
-	public void playLevel(int level){
-		switch(level){
+
+	/**
+	 * Sets the screen state to the level selected
+	 * 
+	 * @param level
+	 */
+	public void playLevel(int level) {
+		switch (level) {
 		case 1:
 			screenStateManager.setState(ScreenState.LEVEL_1_SELECTED);
 			break;
