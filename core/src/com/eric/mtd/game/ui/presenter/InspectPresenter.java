@@ -6,8 +6,12 @@ import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.IGameActorObserver;
+import com.eric.mtd.game.model.actor.ai.TowerTargetPriority;
 import com.eric.mtd.game.model.actor.tower.Tower;
-import com.eric.mtd.game.model.ai.TowerTargetPriority;
+import com.eric.mtd.game.model.level.state.ILevelStateObserver;
+import com.eric.mtd.game.model.level.state.LevelStateManager;
+import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.view.interfaces.IInspectView;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
@@ -20,16 +24,19 @@ import com.eric.mtd.util.Logger;
  * @author Eric
  *
  */
-public class InspectPresenter implements IGameUIStateObserver {
+public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserver, IGameActorObserver {
 	private GameUIStateManager uiStateManager;
+	private LevelStateManager levelStateManager;
 	private Tower selectedTower;
 	private Player player;
 	private ActorGroups actorGroups;
 	private IInspectView view;
 
-	public InspectPresenter(GameUIStateManager uiStateManager, Player player, ActorGroups actorGroups) {
+	public InspectPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, Player player, ActorGroups actorGroups) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
+		this.levelStateManager = levelStateManager;
+		levelStateManager.attach(this);
 		this.player = player;
 		this.actorGroups = actorGroups;
 	}
@@ -48,7 +55,11 @@ public class InspectPresenter implements IGameUIStateObserver {
 	 * Close and finishing inspecting
 	 */
 	public void closeInspect() {
+		selectedTower.detach(this);
+		view.standByState();
 		uiStateManager.setStateReturn();
+		
+		selectedTower = null;
 
 	}
 
@@ -123,7 +134,7 @@ public class InspectPresenter implements IGameUIStateObserver {
 		if (selectedTower != null) {
 			player.giveMoney(selectedTower.getSellCost());
 			selectedTower.sellTower();
-			uiStateManager.setStateReturn();
+			closeInspect();
 
 		}
 	}
@@ -143,6 +154,7 @@ public class InspectPresenter implements IGameUIStateObserver {
 				if (hitActor instanceof Tower) {
 					selectedTower = (Tower) hitActor;
 					selectedTower.setShowRange(true);
+					selectedTower.attach(this);
 					uiStateManager.setState(GameUIState.INSPECTING);
 				}
 			}
@@ -192,6 +204,31 @@ public class InspectPresenter implements IGameUIStateObserver {
 			break;
 		}
 
+	}
+
+	@Override
+	public void changeLevelState(LevelState state) {
+		switch(state){
+		case SPAWNING_ENEMIES:
+		case WAVE_IN_PROGRESS:
+			view.dischargeEnabled(false);
+			break;
+		default:
+			view.dischargeEnabled(true);
+		}
+		
+	}
+
+	@Override
+	public void notifty() {
+		if(selectedTower.isDead()
+			|| selectedTower == null){
+			closeInspect();
+		}
+		else{
+			view.update(selectedTower);
+		}
+		
 	}
 
 }
