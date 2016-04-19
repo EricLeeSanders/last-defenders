@@ -2,22 +2,22 @@
 "wave": [
     {
         "enemy": Rifle,
-        "delay": .25,
+        "delay": .05,
         "armor": false
     },
     {
         "enemy": Rifle,
-        "delay": .25,
+        "delay": .10,
         "armor": false
     },
     {
         "enemy": Rifle,
-        "delay": .25,
+        "delay": .15,
         "armor": false
     },
     {
         "enemy": Rifle,
-        "delay": .25,
+        "delay": .20,
         "armor": false
     },
     {

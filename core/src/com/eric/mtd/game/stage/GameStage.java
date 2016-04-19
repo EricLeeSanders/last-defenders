@@ -1,9 +1,11 @@
 package com.eric.mtd.game.stage;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
+import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.level.Level;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
@@ -92,11 +94,18 @@ public class GameStage extends Stage {
 				player.giveMoney((int) (100 * (float) level.getCurrentWave()));
 				levelStateManager.setState(LevelState.STANDBY);
 				player.setWaveCount(player.getWaveCount() + 1);
+				healTowers();
 			}
 		}
 
 	}
-
+	private void healTowers(){
+		for(Actor tower : actorGroups.getTowerGroup().getChildren()){
+			if (tower instanceof Tower){
+				((Tower)tower).heal();
+			}
+		}
+	}
 	public int getIntLevel() {
 		return intLevel;
 	}

@@ -1,8 +1,6 @@
 package com.eric.mtd.game.model.actor.interfaces;
-
 /**
- * Interface for a passive enemy that does not attack
- * 
+ * Marked interface for an enemy that is passive and does not attack
  * @author Eric
  *
  */

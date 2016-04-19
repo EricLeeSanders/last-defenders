@@ -74,6 +74,7 @@ public class GameUIStateManager implements ILevelStateObserver {
 			if (this.getState() == GameUIState.WAVE_IN_PROGRESS) {
 				this.setState(GameUIState.STANDBY);
 			}
+		default:
 		}
 	}
 }

@@ -1,4 +1,4 @@
-package com.eric.mtd.game.model.ai;
+package com.eric.mtd.game.model.actor.ai;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;

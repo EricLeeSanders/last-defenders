@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.eric.mtd.game.model.actor.ai.TowerTargetPriority;
 import com.eric.mtd.game.model.actor.tower.Tower;
-import com.eric.mtd.game.model.ai.TowerTargetPriority;
 import com.eric.mtd.game.ui.presenter.InspectPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IInspectView;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
@@ -135,7 +135,20 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	public void inspectingState() {
 		this.setVisible(true);
 	}
-
+	
+	@Override
+	public void dischargeEnabled(boolean enabled) {
+		if (enabled){
+			grpDischarge.setTouchable(Touchable.enabled);
+			btnDischarge.setDisabled(false);
+			
+		} else {
+			grpDischarge.setTouchable(Touchable.disabled);
+			btnDischarge.setDisabled(true);
+			
+		}
+		
+	}
 	/**
 	 * Binds to the Inspected Tower and updates the widgets
 	 */
@@ -146,7 +159,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		lblRangeCost.setText(String.valueOf(selectedTower.getRangeIncreaseCost()));
 		lblAttackCost.setText(String.valueOf(selectedTower.getAttackIncreaseCost()));
 		lblDischargePrice.setText(String.valueOf(selectedTower.getSellCost()));
-		lblKills.setText(String.valueOf(selectedTower.getNumOfKills() + " kills"));
+		lblKills.setText(String.valueOf(selectedTower.getNumOfKills()));
 		lvlArmor.resetLevels();
 		lvlSpeed.resetLevels();
 		lvlRange.resetLevels();
@@ -312,5 +325,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+
 
 }
