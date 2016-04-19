@@ -1,124 +1,178 @@
 package com.eric.mtd.game.ui.presenter;
 
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
+import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
-import com.eric.mtd.game.model.actor.tower.TowerTank;
+import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.service.actorplacement.TowerPlacement;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
-import com.eric.mtd.game.ui.view.EnlistView;
 import com.eric.mtd.game.ui.view.interfaces.IEnlistView;
-import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
-public class EnlistPresenter implements IGameUIStateObserver{
+/**
+ * Presenter for Enlist. Handles enlisting towers
+ * 
+ * @author Eric
+ *
+ */
+public class EnlistPresenter implements IGameUIStateObserver {
 	private TowerPlacement towerPlacement;
 	private GameUIStateManager uiStateManager;
-	private String strEnlistTower;
 	private Player player;
 	private IEnlistView view;
-	public EnlistPresenter(GameUIStateManager uiStateManager, Player player, int intLevel, ActorGroups actorGroups){
+	private ActorGroups actorGroups;
+
+	public EnlistPresenter(GameUIStateManager uiStateManager, Player player, int intLevel, ActorGroups actorGroups) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.player = player;
+		this.actorGroups = actorGroups;
 		towerPlacement = new TowerPlacement(Resources.getMap(intLevel), actorGroups);
 	}
-	public void setView(IEnlistView view){
+
+	/**
+	 * Set the view for enlisting
+	 * 
+	 * @param view
+	 */
+	public void setView(IEnlistView view) {
 		this.view = view;
 		changeUIState(uiStateManager.getState());
 	}
-	public void createTower(String strEnlistTower){
-		this.strEnlistTower = strEnlistTower;
+
+	/**
+	 * Create a tower
+	 * 
+	 * @param strEnlistTower
+	 */
+	public void createTower(String strEnlistTower) {
 		towerPlacement.createTower(strEnlistTower);
-        uiStateManager.setState(GameUIState.PLACING_TOWER);
+		uiStateManager.setState(GameUIState.PLACING_TOWER);
 	}
-	public void placeTower(){
+
+	/**
+	 * Try to place a tower
+	 */
+	public void placeTower() {
 		int cost = towerPlacement.getCurrentTower().getCost();
-        if(towerPlacement.placeTower()){
-        	uiStateManager.setState(GameUIState.STANDBY);
-        	if(towerPlacement == null){
-        		if(Logger.DEBUG)System.out.println("towerPlacement null");
-        	}
-        	else{
-        		if(Logger.DEBUG)System.out.println("towerPlacement not null");
-        	}
+		if (towerPlacement.placeTower()) {
+			uiStateManager.setStateReturn();
 			player.spendMoney(cost);
-        	towerPlacement.removeCurrentTower();
-        	
-        }
+			towerPlacement.removeCurrentTower();
+
+		}
 	}
-	public void cancelEnlist(){
-		uiStateManager.setState(GameUIState.STANDBY);
+
+	/**
+	 * Cancel enlisting
+	 */
+	public void cancelEnlist() {
+		uiStateManager.setStateReturn();
 		towerPlacement.removeCurrentTower();
 	}
-	public void moveTower(Vector2 coords){
-		if(towerPlacement.isCurrentTower() && uiStateManager.getState().equals(GameUIState.PLACING_TOWER)){
-			if(Logger.DEBUG)System.out.println("Trying to move tower");
+
+	/**
+	 * Move the tower
+	 * 
+	 * @param coords
+	 *            - Position to move
+	 */
+	public void moveTower(Vector2 coords) {
+		if (towerPlacement.isCurrentTower() && uiStateManager.getState().equals(GameUIState.PLACING_TOWER)) {
 			towerPlacement.moveTower(coords);
 			view.towerShowing(this.isTowerRotatable());
 		}
 	}
-	public void rotateTower(){
+
+	/**
+	 * Rotate the tower
+	 */
+	public void rotateTower() {
 		towerPlacement.rotateTower(1);
 	}
-	public boolean isTowerRotatable(){
-		if(towerPlacement.getCurrentTower() instanceof IRotatable){
+
+	/**
+	 * Determine if tower is able to be rotated
+	 * 
+	 * @return
+	 */
+	public boolean isTowerRotatable() {
+		if (towerPlacement.getCurrentTower() instanceof IRotatable) {
 			return true;
-		}
-		else{
+		} else {
 			return false;
 		}
 	}
+
+	/**
+	 * Show/Hide tower ranges for all towers
+	 * 
+	 * @param showRanges
+	 */
+	public void showTowerRanges(boolean showRanges) {
+		if (showRanges)
+			for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
+				if (tower instanceof Tower) {
+					if (showRanges)
+						((GameActor) tower).setShowRange(showRanges);
+				}
+			}
+	}
+
+	/**
+	 * Determines if the tower can be purchased.
+	 * 
+	 * @param tower
+	 *            - Tower to be purchased
+	 * @return boolean - if the tower can be purchased.
+	 */
 	public boolean canAffordTower(String tower) {
-		
+
 		try {
-			Class<?> myClass = Class.forName("com.eric.mtd.game.model.actor.tower.Tower"+tower);
-			Field field=ClassReflection.getDeclaredField(myClass,"COST");
+			Class<?> myClass = Class.forName("com.eric.mtd.game.model.actor.tower.Tower" + tower);
+			Field field = ClassReflection.getDeclaredField(myClass, "COST");
 			field.setAccessible(true);
 			int cost = (Integer) field.get(null);
-			if(cost > player.getMoney()){
+			if (cost > player.getMoney()) {
 				return false;
-			}
-			else{
+			} else {
 				return true;
 			}
-			    //field.set(object,value);
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ReflectionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return false;
 	}
+
 	@Override
 	public void changeUIState(GameUIState state) {
-		switch(state){
+		switch (state) {
 		case ENLISTING:
 			view.enlistingState();
+			showTowerRanges(false);
 			break;
 		case PLACING_TOWER:
 			view.placingTowerState();
+			showTowerRanges(true);
 			break;
 		default:
 			view.standByState();
+			showTowerRanges(false);
 			break;
 		}
-		
+
 	}
-
-
 
 }

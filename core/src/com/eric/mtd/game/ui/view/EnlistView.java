@@ -1,286 +1,292 @@
 package com.eric.mtd.game.ui.view;
 
-import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Align;
-import com.eric.mtd.game.helper.CollisionDetection;
-import com.eric.mtd.game.model.Player;
-import com.eric.mtd.game.model.actor.interfaces.IRotatable;
-import com.eric.mtd.game.model.actor.tower.Tower;
-import com.eric.mtd.game.model.actor.tower.TowerTank;
-import com.eric.mtd.game.service.actorplacement.TowerPlacement;
-import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.presenter.EnlistPresenter;
-import com.eric.mtd.game.ui.state.GameUIStateManager;
-import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.interfaces.IEnlistView;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
 import com.eric.mtd.game.ui.view.widget.MTDImageButton;
-import com.eric.mtd.game.ui.view.widget.MTDTextButton;
 import com.eric.mtd.game.ui.view.widget.enlist.MTDTowerButton;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
-public class EnlistView extends Group implements IEnlistView,InputProcessor{
+/**
+ * View class for Enlisting. Shows Enlisting window as well as the options to
+ * place the tower.
+ * 
+ * @author Eric
+ *
+ */
+public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	private MTDImage pnlEnlist;
 	private MTDTowerButton btnTank, btnFlameThrower, btnTurret, btnSniper, btnMachine, btnRocketLauncher, btnRifle;
 	private MTDImageButton btnCancel, btnPlace, btnRotate;
 	private EnlistPresenter presenter;
 	private Group choosingGroup;
-	public EnlistView(EnlistPresenter presenter){
+
+	public EnlistView(EnlistPresenter presenter) {
 		this.presenter = presenter;
 		choosingGroup = new Group();
 		addActor(choosingGroup);
 		createControls();
 	}
-	public void createControls(){
-		pnlEnlist = new MTDImage("UI_Enlist", "panel",Resources.ENLIST_ATLAS, "background",true, false);
-			pnlEnlist.getColor().set(1f,1f,1f,1f);
-			choosingGroup.addActor(pnlEnlist);
-			
 
-		btnRifle = new MTDTowerButton("UI_Enlist", "btnRifle",Resources.ENLIST_ATLAS, "rifleEnabled","rifleDisabled","Rifle",true, false);
-			setRifleListener();
-			choosingGroup.addActor(btnRifle);
+	/**
+	 * Creates the controls with the MTD widgets
+	 */
+	public void createControls() {
+		pnlEnlist = new MTDImage("UI_Enlist", "panel", Resources.ENLIST_ATLAS, "background", true, false);
+		pnlEnlist.getColor().set(1f, 1f, 1f, 1f);
+		choosingGroup.addActor(pnlEnlist);
 
-		btnTank =new MTDTowerButton("UI_Enlist", "btnTank",Resources.ENLIST_ATLAS, "tankEnabled","tankDisabled","Tank",true, false);
-			setTankListener();
-			choosingGroup.addActor(btnTank);
-			
-		btnFlameThrower = new MTDTowerButton("UI_Enlist", "btnFlameThrower",Resources.ENLIST_ATLAS, "flamethrowerEnabled","flamethrowerDisabled",
-				"FlameThrower",true, false);
-			setFlameThrowerListener();
-			choosingGroup.addActor(btnFlameThrower);
+		btnRifle = new MTDTowerButton("UI_Enlist", "btnRifle", Resources.ENLIST_ATLAS, "rifleEnabled", "rifleDisabled", "Rifle", true, false);
+		setRifleListener();
+		choosingGroup.addActor(btnRifle);
 
-			
-		btnTurret = new MTDTowerButton("UI_Enlist", "btnTurret",Resources.ENLIST_ATLAS, "turretEnabled","turretDisabled","Turret",true, false);
-			setTurretListener();
-			choosingGroup.addActor(btnTurret);
+		btnTank = new MTDTowerButton("UI_Enlist", "btnTank", Resources.ENLIST_ATLAS, "tankEnabled", "tankDisabled", "Tank", true, false);
+		setTankListener();
+		choosingGroup.addActor(btnTank);
 
-			
-		btnSniper = new MTDTowerButton("UI_Enlist", "btnSniper",Resources.ENLIST_ATLAS, "sniperEnabled","sniperDisabled","Sniper",true, false);
-			setSniperListener();
-			choosingGroup.addActor(btnSniper);
+		btnFlameThrower = new MTDTowerButton("UI_Enlist", "btnFlameThrower", Resources.ENLIST_ATLAS, "flamethrowerEnabled", "flamethrowerDisabled", "FlameThrower", true, false);
+		setFlameThrowerListener();
+		choosingGroup.addActor(btnFlameThrower);
 
-			
-		btnMachine = new MTDTowerButton("UI_Enlist", "btnMachine",Resources.ENLIST_ATLAS, "machineEnabled","machineDisabled","Machine",true, false);
-			setMachineListener();
-			choosingGroup.addActor(btnMachine);
+		btnTurret = new MTDTowerButton("UI_Enlist", "btnTurret", Resources.ENLIST_ATLAS, "turretEnabled", "turretDisabled", "Turret", true, false);
+		setTurretListener();
+		choosingGroup.addActor(btnTurret);
 
-			
-		btnRocketLauncher = new MTDTowerButton("UI_Enlist", "btnRocketLauncher",Resources.ENLIST_ATLAS, "rocketlauncherEnabled","rocketlauncherDisabled",
-				"RocketLauncher",true, false);
-			setRocketLauncherListener();
-			choosingGroup.addActor(btnRocketLauncher);
-		
-		btnCancel = new MTDImageButton("UI_Enlist","btnCancel",Resources.ENLIST_ATLAS,"cancel",false, false);
-			setCancelListener();
-			addActor(btnCancel);
-		btnPlace = new MTDImageButton("UI_Enlist","btnPlace",Resources.ENLIST_ATLAS,"place",false, false);
-			setPlaceListener();
-			addActor(btnPlace);
-		btnRotate = new MTDImageButton("UI_Enlist","btnRotate",Resources.ENLIST_ATLAS,"rotate",false, true);
-			setRotateListener();
-			addActor(btnRotate);
-			
+		btnSniper = new MTDTowerButton("UI_Enlist", "btnSniper", Resources.ENLIST_ATLAS, "sniperEnabled", "sniperDisabled", "Sniper", true, false);
+		setSniperListener();
+		choosingGroup.addActor(btnSniper);
+
+		btnMachine = new MTDTowerButton("UI_Enlist", "btnMachine", Resources.ENLIST_ATLAS, "machineEnabled", "machineDisabled", "MachineGun", true, false);
+		setMachineListener();
+		choosingGroup.addActor(btnMachine);
+
+		btnRocketLauncher = new MTDTowerButton("UI_Enlist", "btnRocketLauncher", Resources.ENLIST_ATLAS, "rocketlauncherEnabled", "rocketlauncherDisabled", "RocketLauncher", true, false);
+		setRocketLauncherListener();
+		choosingGroup.addActor(btnRocketLauncher);
+
+		btnCancel = new MTDImageButton("UI_Enlist", "btnCancel", Resources.ENLIST_ATLAS, "cancel", false, false);
+		setCancelListener();
+		addActor(btnCancel);
+		btnPlace = new MTDImageButton("UI_Enlist", "btnPlace", Resources.ENLIST_ATLAS, "place", false, false);
+		setPlaceListener();
+		addActor(btnPlace);
+		btnRotate = new MTDImageButton("UI_Enlist", "btnRotate", Resources.ENLIST_ATLAS, "rotate", false, true);
+		setRotateListener();
+		addActor(btnRotate);
+
 	}
 
-	
-	private void updateTowerButtons(){
-		for(Actor button : choosingGroup.getChildren()){
-			if(button instanceof MTDTowerButton){
-				if(presenter.canAffordTower(((MTDTowerButton) button).getTowerName())){ //Tower is affordable
-					if(Logger.DEBUG)System.out.println("Setting " + ((MTDTowerButton) button).getTowerName() + " to Enabled");
+	/**
+	 * Updates the tower buttons to disable/enable.
+	 */
+	private void updateTowerButtons() {
+		for (Actor button : choosingGroup.getChildren()) {
+			if (button instanceof MTDTowerButton) {
+				if (presenter.canAffordTower(((MTDTowerButton) button).getTowerName())) {
+					if (Logger.DEBUG)
+						System.out.println("Setting " + ((MTDTowerButton) button).getTowerName() + " to Enabled");
 					((MTDTowerButton) button).setDisabled(false);
-					button.setTouchable(Touchable.enabled); //TODO: Question: Not sure why I have to do this
-				}
-				else{
-					if(Logger.DEBUG)System.out.println("Setting " + ((MTDTowerButton) button).getTowerName() + " to Disabled");
+					button.setTouchable(Touchable.enabled);
+				} else {
+					if (Logger.DEBUG)
+						System.out.println("Setting " + ((MTDTowerButton) button).getTowerName() + " to Disabled");
 					((MTDTowerButton) button).setDisabled(true);
 					button.setTouchable(Touchable.disabled);
 				}
 			}
 		}
-		
+
 	}
+
+	/**
+	 * Checks if the rotate button is pressed and calls to rotate the tower
+	 */
 	@Override
-	public void act (float delta) {
+	public void act(float delta) {
 		super.act(delta);
-		if(btnRotate.isPressed()){
+		if (btnRotate.isPressed()) {
 			presenter.rotateTower();
-		}                                         
+		}
 	}
-	private void setRotateListener(){
+
+	private void setRotateListener() {
 		btnRotate.addListener(new ClickListener() {
-	        	@Override
-	            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button )
-	            {
-	        		super.touchDown(event, x, y, pointer, button);
-	                if(Logger.DEBUG)System.out.println("Rotate Pressed");
-	                return true;
-	            }
-	        } );
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchDown(event, x, y, pointer, button);
+				if (Logger.DEBUG)
+					System.out.println("Rotate Pressed");
+				return true;
+			}
+		});
 	}
-	private void setRifleListener(){
-		if(Logger.DEBUG)System.out.println("creating rifle listener");
-	    btnRifle.addListener(new ClickListener() {
-	    	@Override
-	        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
-	        {
-	    		super.touchUp( event, x, y, pointer, button );
-	            presenter.createTower("Rifle");
-	        }
-	    } );
-	    
+
+	private void setRifleListener() {
+		if (Logger.DEBUG)
+			System.out.println("creating rifle listener");
+		btnRifle.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				presenter.createTower("Rifle");
+			}
+		});
+
 	}
-	private void setTankListener(){
-		 btnTank.addListener(new ClickListener() {
-		    	@Override
-		        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
-		        {
-		    		super.touchUp( event, x, y, pointer, button );
-		            presenter.createTower("Tank");
-		        }
-		    } );
+
+	private void setTankListener() {
+		btnTank.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				presenter.createTower("Tank");
+			}
+		});
 	}
-	private void setFlameThrowerListener(){
-		 btnFlameThrower.addListener(new ClickListener() {
-		    	@Override
-		        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
-		        {
-		    		super.touchUp( event, x, y, pointer, button );
-		            if(Logger.DEBUG)System.out.println("Flame Thrower Button Pressed");
-		            presenter.createTower("FlameThrower");
-		        }
-		    } );
+
+	private void setFlameThrowerListener() {
+		btnFlameThrower.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				if (Logger.DEBUG)
+					System.out.println("Flame Thrower Button Pressed");
+				presenter.createTower("FlameThrower");
+			}
+		});
 	}
-	private void setSniperListener(){
-		 btnSniper.addListener(new ClickListener() {
-		    	@Override
-		        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
-		        {
-		    		super.touchUp( event, x, y, pointer, button );
-		            if(Logger.DEBUG)System.out.println("Sniper Button Pressed");
-		            presenter.createTower("Sniper");
-		        }
-		    } );
+
+	private void setSniperListener() {
+		btnSniper.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				if (Logger.DEBUG)
+					System.out.println("Sniper Button Pressed");
+				presenter.createTower("Sniper");
+			}
+		});
 	}
-	private void setMachineListener(){
-		 btnMachine.addListener(new ClickListener() {
-		    	@Override
-		        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
-		        {
-		    		super.touchUp( event, x, y, pointer, button );
-		            if(Logger.DEBUG)System.out.println("Machine Button Pressed");
-		            presenter.createTower("Machine");
-		        }
-		    } );
+
+	private void setMachineListener() {
+		btnMachine.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				if (Logger.DEBUG)
+					System.out.println("Machine Button Pressed");
+				presenter.createTower("Machine");
+			}
+		});
 	}
-	private void setRocketLauncherListener(){
-		 btnRocketLauncher.addListener(new ClickListener() {
-		    	@Override
-		        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
-		        {
-		    		super.touchUp( event, x, y, pointer, button );
-		            if(Logger.DEBUG)System.out.println("RocketLauncher Button Pressed");
-		            presenter.createTower("RocketLauncher");
-		        }
-		    } );
+
+	private void setRocketLauncherListener() {
+		btnRocketLauncher.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				if (Logger.DEBUG)
+					System.out.println("RocketLauncher Button Pressed");
+				presenter.createTower("RocketLauncher");
+			}
+		});
 	}
-	private void setTurretListener(){
-		 btnTurret.addListener(new ClickListener() {
-		    	@Override
-		        public void touchUp(InputEvent event, float x, float y, int pointer, int button )
-		        {
-		    		super.touchUp( event, x, y, pointer, button );
-		            if(Logger.DEBUG)System.out.println("Turret Button Pressed");
-		            presenter.createTower("Turret");
-		        }
-		    } );
+
+	private void setTurretListener() {
+		btnTurret.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				if (Logger.DEBUG)
+					System.out.println("Turret Button Pressed");
+				presenter.createTower("Turret");
+			}
+		});
 	}
-	private void setPlaceListener(){
+
+	private void setPlaceListener() {
 		btnPlace.addListener(new ClickListener() {
-        	@Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button )
-            {
-        		super.touchUp( event, x, y, pointer, button );
-                if(Logger.DEBUG)System.out.println("Place Pressed");
-                presenter.placeTower();
-            }
-        } );
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				if (Logger.DEBUG)
+					System.out.println("Place Pressed");
+				presenter.placeTower();
+			}
+		});
 	}
-	private void setCancelListener(){
+
+	private void setCancelListener() {
 		btnCancel.addListener(new ClickListener() {
-        	@Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button )
-            {
-        		super.touchUp( event, x, y, pointer, button );
-                if(Logger.DEBUG)System.out.println("Cancel Pressed");
-                presenter.cancelEnlist();
-            }
-        } );
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				if (Logger.DEBUG)
+					System.out.println("Cancel Pressed");
+				presenter.cancelEnlist();
+			}
+		});
 	}
+
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean keyUp(int keycode) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean keyTyped(char character) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2((float)screenX,(float)screenY));
+		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2(screenX, screenY));
 		presenter.moveTower(coords);
 		return false;
 	}
+
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2((float)screenX,(float)screenY));
+		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2(screenX, screenY));
 		presenter.moveTower(coords);
 		return false;
-		
+
 	}
+
 	@Override
 	public boolean mouseMoved(int screenX, int screenY) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public boolean scrolled(int amount) {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	@Override
 	public void enlistingState() {
 		updateTowerButtons();
@@ -288,15 +294,16 @@ public class EnlistView extends Group implements IEnlistView,InputProcessor{
 		btnCancel.setVisible(true);
 		this.setVisible(true);
 	}
+
 	@Override
 	public void placingTowerState() {
 		btnCancel.setVisible(true);
 		choosingGroup.setVisible(false);
-		
+
 	}
+
 	@Override
 	public void standByState() {
-		// TODO Auto-generated method stub
 		btnCancel.setVisible(false);
 		choosingGroup.setVisible(false);
 		btnRotate.setVisible(false);
@@ -304,39 +311,12 @@ public class EnlistView extends Group implements IEnlistView,InputProcessor{
 		btnCancel.setVisible(false);
 		this.setVisible(false);
 	}
+
 	@Override
 	public void towerShowing(boolean rotatable) {
 		btnPlace.setVisible(true);
 		btnRotate.setVisible(rotatable);
-		
-	}
 
-	
-	/*@Override
-	public void changeUIState(GameUIState state) {
-		switch(state){
-		case STANDBY:
-			btnCancel.setVisible(false);
-			choosingGroup.setVisible(false);
-			btnRotate.setVisible(false);
-			btnPlace.setVisible(false);
-			btnCancel.setVisible(false);
-			//enlistTable.setVisible(false);
-			break;
-		case ENLIST:
-			if(Logger.DEBUG)System.out.println("Enlisting");
-			updateTowerButtons();
-			choosingGroup.setVisible(true);
-			btnCancel.setVisible(true);
-			break;
-		case PLACING_TOWER:
-			btnCancel.setVisible(true);
-			choosingGroup.setVisible(false);
-			break;
-		default:
-			break;
-		}
-		
-	}*/
+	}
 
 }
