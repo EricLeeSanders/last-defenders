@@ -2,39 +2,62 @@ package com.eric.mtd.state;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 import com.eric.mtd.util.Logger;
 
+/**
+ * Game State Manager class that manages the state of the game
+ * 
+ * @author Eric
+ *
+ */
 public class GameStateManager {
-	
+
 	private GameState state;
-	private CopyOnWriteArrayList<IGameStateObserver> observers = new CopyOnWriteArrayList<IGameStateObserver>(); //QUESTION: Do I need to use some other sort of list? Like a libgdx list?
-	public GameStateManager(){
+	private List<IGameStateObserver> observers = new ArrayList<IGameStateObserver>();
+
+	public GameStateManager() {
 		this.setState(GameState.PLAY);
 	}
-	public void attach(IGameStateObserver observer){
+
+	/**
+	 * Attach an observer and add it to observers list.
+	 * 
+	 * @param observer
+	 */
+	public void attach(IGameStateObserver observer) {
 		observers.add(observer);
 	}
-	public void notifyObservers(){
-		if(Logger.DEBUG)System.out.println("Notify Observers");
-		for(IGameStateObserver observer : observers){
-			if(Logger.DEBUG)System.out.println("Notifying: " + observer.getClass().getName());
+
+	/**
+	 * Notify all observers of state change
+	 */
+	public void notifyObservers() {
+		if (Logger.DEBUG)
+			System.out.println("Notify Observers");
+		for (IGameStateObserver observer : observers) {
+			if (Logger.DEBUG)
+				System.out.println("Notifying: " + observer.getClass().getName());
 			observer.changeGameState(state);
 		}
 	}
-	public void setState(GameState state){
-		if(Logger.DEBUG)System.out.println("Chaning Game state: " + this.getState() + " to state: " + state);
+
+	/**
+	 * Set the state of the game
+	 * 
+	 * @param state
+	 */
+	public void setState(GameState state) {
+		if (Logger.DEBUG)
+			System.out.println("Chaning Game state: " + this.getState() + " to state: " + state);
 		this.state = state;
 		notifyObservers();
 	}
-	public GameState getState(){
+
+	public GameState getState() {
 		return state;
 	}
-	
+
 	public enum GameState {
-	    PLAY,
-	    PAUSE,
-	    QUIT;
+		PLAY, PAUSE, QUIT;
 	}
 }

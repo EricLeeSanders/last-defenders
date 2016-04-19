@@ -1,9 +1,0 @@
-{
-"wave": [
-    {
-        "enemy": Tank,
-        "delay": .25,
-        "armor": false
-    }
-]
-}

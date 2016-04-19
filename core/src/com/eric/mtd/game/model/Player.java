@@ -1,32 +1,43 @@
 package com.eric.mtd.game.model;
 
-import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.eric.mtd.game.ui.state.IGameUIStateObserver;
-import com.eric.mtd.util.Resources;
-
+/**
+ * Represents the player
+ * 
+ * @author Eric
+ *
+ */
 public class Player {
-	private int money, lives;
+	private int money = 1000;
+	private int lives = 20;
 	private int waveCount = 1;
-	private CopyOnWriteArrayList<IPlayerObserver> observers = new CopyOnWriteArrayList<IPlayerObserver>(); 
-	public void attachObserver(IPlayerObserver observer){
+	private List<IPlayerObserver> observers = new ArrayList<IPlayerObserver>();
+
+	public void attachObserver(IPlayerObserver observer) {
 		observers.add(observer);
 	}
-	public void notifyObservers(){
-		for(IPlayerObserver observer : observers){
+
+	public void notifyObservers() {
+		for (IPlayerObserver observer : observers) {
 			observer.playerAttributeChange();
 		}
 	}
-	public void setWaveCount(int waveCount){
+
+	public void setWaveCount(int waveCount) {
 		this.waveCount = waveCount;
 		notifyObservers();
 	}
-	public int getWavesCompleted(){
-		return waveCount -1;
+
+	public int getWavesCompleted() {
+		return waveCount - 1;
 	}
-	public int getWaveCount(){
+
+	public int getWaveCount() {
 		return waveCount;
 	}
+
 	public int getMoney() {
 		return money;
 	}
@@ -44,11 +55,13 @@ public class Player {
 		this.lives = lives;
 		notifyObservers();
 	}
-	public void spendMoney(int amount){
+
+	public void spendMoney(int amount) {
 		setMoney(getMoney() - amount);
 	}
-	public void giveMoney(int amount){
-		money = money + amount;
+
+	public void giveMoney(int amount) {
+		setMoney(getMoney() + amount);
 	}
 
 }

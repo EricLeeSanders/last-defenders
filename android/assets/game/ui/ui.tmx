@@ -10,14 +10,14 @@
  </layer>
  <objectgroup name="UI_HUD">
   <object id="161" name="imgMoney" x="76" y="280" width="30" height="30"/>
-  <object id="162" name="btnWave" x="7.5" y="581" width="50" height="50"/>
+  <object id="162" name="btnWave" x="71.5" y="581" width="50" height="50"/>
   <object id="163" name="lblMoney" x="111" y="285" width="72" height="19"/>
   <object id="164" name="lblLife" x="42" y="286" width="30" height="19"/>
   <object id="165" name="btnOptions" x="585.5" y="280" width="50" height="50"/>
   <object id="166" name="btnEnlist" x="584.5" y="581" width="50" height="50"/>
   <object id="167" name="imgLife" x="7" y="280" width="30" height="30"/>
   <object id="168" name="btnPerks" x="584.5" y="581" width="50" height="50"/>
-  <object id="169" name="btnSpeed" x="71.5" y="581" width="50" height="50"/>
+  <object id="169" name="btnSpeed" x="7.5" y="581" width="50" height="50"/>
   <object id="188" name="lblWaveCount" x="7" y="315" width="145" height="19"/>
  </objectgroup>
  <objectgroup name="UI_Enlist" visible="0">
