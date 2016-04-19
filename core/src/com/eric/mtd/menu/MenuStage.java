@@ -3,18 +3,23 @@ package com.eric.mtd.menu;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.eric.mtd.levelselect.ui.LevelSelectPresenter;
-import com.eric.mtd.levelselect.ui.LevelSelectView;
 import com.eric.mtd.menu.ui.MenuPresenter;
 import com.eric.mtd.menu.ui.MenuView;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.util.Resources;
 
-public class MenuStage extends Stage{
+/**
+ * Stage class for the Main menu.
+ * 
+ * @author Eric
+ *
+ */
+public class MenuStage extends Stage {
 	private ScreenStateManager screenStatemanager;
 	private MenuPresenter presenter;
 	private MenuView menuView;
-	public MenuStage(ScreenStateManager screenStateManager){
+
+	public MenuStage(ScreenStateManager screenStateManager) {
 		this.screenStatemanager = screenStateManager;
 
 		createBackground();
@@ -22,12 +27,13 @@ public class MenuStage extends Stage{
 		menuView = new MenuView(presenter);
 		this.addActor(menuView);
 	}
-	public void createBackground(){
-	    TextureAtlas menuAtlas = Resources.getAtlas(Resources.MENU_ATLAS);
-	    
-	    Image background = new Image(menuAtlas.findRegion("background"));
-    	background.setFillParent(true);
-    	this.addActor(background);
+
+	public void createBackground() {
+		TextureAtlas menuAtlas = Resources.getAtlas(Resources.MENU_ATLAS);
+
+		Image background = new Image(menuAtlas.findRegion("background"));
+		background.setFillParent(true);
+		this.addActor(background);
 	}
 
 }

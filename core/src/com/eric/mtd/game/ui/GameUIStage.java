@@ -10,9 +10,7 @@ import com.eric.mtd.game.ui.presenter.GameOverPresenter;
 import com.eric.mtd.game.ui.presenter.HUDPresenter;
 import com.eric.mtd.game.ui.presenter.InspectPresenter;
 import com.eric.mtd.game.ui.presenter.OptionsPresenter;
-import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
-import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.EnlistView;
 import com.eric.mtd.game.ui.view.GameOverView;
 import com.eric.mtd.game.ui.view.HUDView;
@@ -21,7 +19,13 @@ import com.eric.mtd.game.ui.view.OptionsView;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.state.GameStateManager;
 
-public class GameUIStage extends Stage implements IGameUIStateObserver{
+/**
+ * Stage for handling the UI of the game
+ * 
+ * @author Eric
+ *
+ */
+public class GameUIStage extends Stage {
 	private HUDView hudView;
 	private InspectView inspectView;
 	private EnlistView enlistView;
@@ -32,7 +36,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	private OptionsPresenter optionsPresenter;
 	private GameOverPresenter gameOverPresenter;
 	private GameOverView gameOverView;
-	
+
 	private Player player;
 	private int intLevel;
 	private GameUIStateManager uiStateManager;
@@ -41,94 +45,53 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	private ScreenStateManager screenStateManager;
 	private ActorGroups actorGroups;
 	private InputMultiplexer imp;
-	public GameUIStage(int intLevel, Player player, ActorGroups actorGroups, GameUIStateManager uiStateManager, 
-			LevelStateManager levelStateManager, GameStateManager gameStateManager, ScreenStateManager screenStateManager,
-			InputMultiplexer imp){
+
+	public GameUIStage(int intLevel, Player player, ActorGroups actorGroups, GameUIStateManager uiStateManager, LevelStateManager levelStateManager, GameStateManager gameStateManager, ScreenStateManager screenStateManager, InputMultiplexer imp) {
 		this.imp = imp;
 		this.intLevel = intLevel;
 		this.player = player;
 		this.actorGroups = actorGroups;
 		this.uiStateManager = uiStateManager;
-		uiStateManager.attach(this);
 		this.levelStateManager = levelStateManager;
 		this.gameStateManager = gameStateManager;
 		this.screenStateManager = screenStateManager;
 		imp.addProcessor(this);
 		createUI();
 	}
-	public void createUI(){
-	    this.enlistPresenter = new EnlistPresenter(uiStateManager, player, intLevel, actorGroups);
-	    this.enlistView = new EnlistView(enlistPresenter);
-	    enlistPresenter.setView(enlistView);
-	    	
-	    this.hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player);
-	    this.hudView = new HUDView(hudPresenter);
-	    hudPresenter.setView(hudView);
-	    	
-	    this.inspectPresenter = new InspectPresenter(uiStateManager, player, actorGroups);
-	    this.inspectView = new InspectView(inspectPresenter);
-	    inspectPresenter.setView(inspectView);
-	    	
-	    this.optionsPresenter = new OptionsPresenter(uiStateManager, gameStateManager, screenStateManager);
-	    this.optionsView = new OptionsView(optionsPresenter);
-	    optionsPresenter.setView(optionsView);
-	    
-	    this.gameOverPresenter = new GameOverPresenter(uiStateManager,screenStateManager, player);
-	    this.gameOverView = new GameOverView(gameOverPresenter);
-	    gameOverPresenter.setView(gameOverView);
-	    
+
+	/**
+	 * Create and initialize the views and presenters of the Game UI
+	 */
+	public void createUI() {
+		this.enlistPresenter = new EnlistPresenter(uiStateManager, player, intLevel, actorGroups);
+		this.enlistView = new EnlistView(enlistPresenter);
+		enlistPresenter.setView(enlistView);
+
+		this.hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player);
+		this.hudView = new HUDView(hudPresenter);
+		hudPresenter.setView(hudView);
+
+		this.inspectPresenter = new InspectPresenter(uiStateManager, player, actorGroups);
+		this.inspectView = new InspectView(inspectPresenter);
+		inspectPresenter.setView(inspectView);
+
+		this.optionsPresenter = new OptionsPresenter(uiStateManager, gameStateManager, screenStateManager);
+		this.optionsView = new OptionsView(optionsPresenter);
+		optionsPresenter.setView(optionsView);
+
+		this.gameOverPresenter = new GameOverPresenter(uiStateManager, screenStateManager, player);
+		this.gameOverView = new GameOverView(gameOverPresenter);
+		gameOverPresenter.setView(gameOverView);
+
 		this.addActor(hudView);
 		this.addActor(enlistView);
 		this.addActor(inspectView);
 		this.addActor(optionsView);
 		this.addActor(gameOverView);
-		
+
 		imp.addProcessor(this);
 		imp.addProcessor(enlistView);
 		imp.addProcessor(inspectView);
 	}
-	@Override
-	public void changeUIState(GameUIState state) {
-	/*	switch(state){
-		case STANDBY:
-			perksGroup.setVisible(false);
-			inspectGroup.setVisible(false);
-			enlistView.setVisible(false);
-			optionsGroup.setVisible(false);
-			break;
-		case PERKS:
-			perksGroup.setVisible(true);
-			enlistView.setVisible(false);
-			inspectGroup.setVisible(false);
-			break;
-		case ENLIST:
-			perksGroup.setVisible(false);
-			enlistView.setVisible(true);
-			inspectGroup.setVisible(false);
-			break;
-		case INSPECTING:
-			perksGroup.setVisible(false);
-			inspectGroup.setVisible(true);
-			inspectGroup.updateInspect();
-			enlistView.setVisible(false);
-			break;	
-		case OPTIONS:
-			perksGroup.setVisible(false);
-			inspectGroup.setVisible(false);
-			enlistView.setVisible(false);
-			optionsGroup.setVisible(true);
-			break;
-		case LEVEL_OVER:
-			perksGroup.setVisible(false);
-			inspectGroup.setVisible(false);
-			enlistView.setVisible(false);
-			optionsGroup.setVisible(false);
-			gameOverView.update();
-			gameOverView.setVisible(true);
-			break;
-		default:
-			break;
-		}*/
-	}
-		
+
 }

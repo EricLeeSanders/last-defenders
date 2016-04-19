@@ -1,20 +1,22 @@
 package com.eric.mtd.levelselect;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.eric.mtd.levelselect.ui.LevelSelectPresenter;
 import com.eric.mtd.levelselect.ui.LevelSelectView;
-import com.eric.mtd.menu.ui.MenuPresenter;
-import com.eric.mtd.menu.ui.MenuView;
 import com.eric.mtd.screen.state.ScreenStateManager;
-import com.eric.mtd.util.Resources;
 
-public class LevelSelectStage extends Stage{
+/**
+ * Stage for Level Select Menu
+ * 
+ * @author Eric
+ *
+ */
+public class LevelSelectStage extends Stage {
 	private ScreenStateManager screenStateManager;
 	private LevelSelectView levelSelectView;
 	private LevelSelectPresenter presenter;
-	public LevelSelectStage(ScreenStateManager screenStateManager){
+
+	public LevelSelectStage(ScreenStateManager screenStateManager) {
 		this.screenStateManager = screenStateManager;
 
 		presenter = new LevelSelectPresenter(screenStateManager);
