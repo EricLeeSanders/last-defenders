@@ -99,7 +99,7 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IRPG, IVehicle {
 		if (Logger.DEBUG)
 			System.out.println("Enemy Tank: Attacking target at " + getTarget().getPositionCenter());
 		RPG rpg = ActorFactory.loadRPG();
-		rpg.initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
+		rpg.initialize(this, getTarget(), getTowerGroup(), this.getGunPos(), BULLET_SIZE);
 	}
 
 	@Override

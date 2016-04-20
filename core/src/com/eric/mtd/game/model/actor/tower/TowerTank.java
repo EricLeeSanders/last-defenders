@@ -122,7 +122,7 @@ public class TowerTank extends Tower implements IVehicle, IRPG, IPlatedArmor, IR
 		if (Logger.DEBUG)
 			System.out.println("Tower Tank: Attacking target at " + getTarget().getPositionCenter());
 		RPG rpg = ActorFactory.loadRPG();
-		rpg.initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
+		rpg.initialize(this, getTarget(), getEnemyGroup(), this.getGunPos(), BULLET_SIZE);
 	}
 
 	@Override
