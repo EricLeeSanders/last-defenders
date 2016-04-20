@@ -53,7 +53,9 @@ public abstract class Tower extends GameActor {
 	public void setEnemyGroup(Group enemyGroup) {
 		this.enemyTargetGroup = enemyGroup;
 	}
-
+	public Group getEnemyGroup(){
+		return enemyTargetGroup;
+	}
 	/**
 	 * Gets the selling price for the tower. Adds up the upgraded attributes and
 	 * their cost and multiplies by a rate.

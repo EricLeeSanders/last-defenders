@@ -68,7 +68,9 @@ public abstract class Enemy extends GameActor {
 	public void setTowerGroup(Group towerGroup) {
 		this.towerTargetGroup = towerGroup;
 	}
-
+	public Group getTowerGroup(){
+		return towerTargetGroup;
+	}
 	/**
 	 * Sets the path for the enemy. Starts of screen.
 	 * 

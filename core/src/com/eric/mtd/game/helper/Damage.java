@@ -10,7 +10,11 @@ import com.eric.mtd.game.model.actor.projectile.Flame;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
 import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.util.Logger;
-
+/**
+ * Class that deals damage
+ * @author Eric
+ *
+ */
 public class Damage {
 	public static void dealRpgDamage(GameActor shooter, GameActor target) {
 		if (shooter instanceof IRPG) {

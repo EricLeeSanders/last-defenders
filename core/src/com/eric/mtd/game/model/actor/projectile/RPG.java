@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.game.helper.Damage;
@@ -27,6 +28,7 @@ public class RPG extends Actor implements Pool.Poolable {
 	private static final float SPEED = 350f;
 	private ShapeRenderer rpg = new ShapeRenderer();
 	private GameActor target, shooter;
+	private Group targetGroup;
 	private Vector2 destination;
 
 	/**
@@ -39,9 +41,10 @@ public class RPG extends Actor implements Pool.Poolable {
 	 * @param size
 	 *            - Size of the RPG
 	 */
-	public void initialize(GameActor shooter, GameActor target, Vector2 pos, Vector2 size) {
+	public void initialize(GameActor shooter, GameActor target, Group targetGroup, Vector2 pos, Vector2 size) {
 		this.target = target;
 		this.shooter = shooter;
+		this.targetGroup = targetGroup;
 		this.setPosition(pos.x, pos.y);
 		this.setSize(size.x, size.y);
 		if (shooter.getStage() instanceof GameStage) {
@@ -94,7 +97,7 @@ public class RPG extends Actor implements Pool.Poolable {
 			Damage.dealRpgDamage(shooter, target); // Deal damage
 			Explosion explosion = ActorFactory.loadExplosion(); // Get an
 																// Explosion
-			explosion.initialize(shooter, target, destination);
+			explosion.initialize(shooter, target, targetGroup, destination);
 			ActorFactory.rpgPool.free(this);
 
 		}
