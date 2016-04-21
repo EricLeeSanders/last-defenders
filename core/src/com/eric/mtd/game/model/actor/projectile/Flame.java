@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.helper.Damage;
@@ -37,7 +38,7 @@ public class Flame extends Actor implements Pool.Poolable {
 	private float stateTime;
 	private TextureRegion[] flameRegions = new TextureRegion[25];
 	private GameActor shooter, target;
-	private ShapeRenderer flameOutline = new ShapeRenderer();
+	private ShapeRenderer flameOutline = Resources.getShapeRenderer();
 	private Group targetGroup;
 	Polygon poly = null;
 	Polygon targetBodySnap = null;
@@ -171,5 +172,6 @@ public class Flame extends Actor implements Pool.Poolable {
 		attackCounter = 0;
 		targetGroup = null;
 	}
+
 
 }

@@ -1,6 +1,8 @@
 package com.eric.mtd.game.model.actor;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
  * A class that holds all of the various Actor Groups that are placed on the
@@ -9,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
  * @author Eric
  *
  */
-public class ActorGroups {
+public class ActorGroups{
 	private Group bulletGroup = new Group();
 	private Group enemyGroup = new Group();
 	private Group towerGroup = new Group();
@@ -73,4 +75,5 @@ public class ActorGroups {
 	public void setSandbagGroup(Group sandbagGroup) {
 		this.sandbagGroup = sandbagGroup;
 	}
+
 }

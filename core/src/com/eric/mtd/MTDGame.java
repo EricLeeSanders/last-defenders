@@ -20,7 +20,7 @@ public class MTDGame extends Game implements IScreenStateObserver {
 		screenStateManager = new ScreenStateManager();
 		screenStateManager.attach(this);
 		gameStateManager = new GameStateManager();
-		setScreen(new MenuScreen(screenStateManager));
+		setScreen(new MenuScreen(screenStateManager, gameStateManager));
 
 	}
 
@@ -36,11 +36,11 @@ public class MTDGame extends Game implements IScreenStateObserver {
 		switch (state) {
 		case LEVEL_SELECTION:
 			this.getScreen().dispose(); // dispose current screen
-			this.setScreen(new LevelSelectScreen(screenStateManager));
+			this.setScreen(new LevelSelectScreen(screenStateManager,gameStateManager));
 			break;
 		case MENU:
 			this.getScreen().dispose(); // dispose current screen
-			this.setScreen(new MenuScreen(screenStateManager));
+			this.setScreen(new MenuScreen(screenStateManager,gameStateManager));
 			break;
 		case LEVEL_1_SELECTED:
 			this.getScreen().dispose(); // dispose current screen

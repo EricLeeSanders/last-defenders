@@ -25,7 +25,7 @@ public class Damage {
 					if (shooter.isDead() == false) {
 						((Tower) shooter).giveKill();
 						if (Logger.DEBUG)
-							System.out.println("Bullet: giving kill to shooter");
+							System.out.println("RPG: giving kill to shooter");
 					}
 				}
 			}
@@ -41,7 +41,7 @@ public class Damage {
 					if (shooter.isDead() == false) {
 						((Tower) shooter).giveKill();
 						if (Logger.DEBUG)
-							System.out.println("RPG: giving kill to shooter");
+							System.out.println("Bullet: giving kill to shooter");
 					}
 				}
 			}
@@ -59,7 +59,7 @@ public class Damage {
 						if (shooter.isDead() == false) {
 							((Tower) shooter).giveKill();
 							if (Logger.DEBUG)
-								System.out.println("Bullet: giving kill to shooter");
+								System.out.println("Flame: giving kill to shooter");
 						}
 					}
 				}

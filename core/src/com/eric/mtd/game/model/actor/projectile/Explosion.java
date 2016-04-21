@@ -91,5 +91,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 		this.remove();
 		explosionAnimation = null;
 	}
+	
+	
 
 }
