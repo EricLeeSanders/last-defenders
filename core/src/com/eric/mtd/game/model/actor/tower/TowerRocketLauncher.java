@@ -22,7 +22,7 @@ public class TowerRocketLauncher extends Tower implements IRPG {
 	public static final float HEALTH = 8;
 	public static final float ARMOR = 4;
 	public static final float ATTACK = 10;
-	public static final float ATTACK_SPEED = 1;
+	public static final float ATTACK_SPEED = 1f;
 	public static final float RANGE = 60;
 	public static final int COST = 800;
 	public static final int ARMOR_COST = 500;
@@ -50,7 +50,7 @@ public class TowerRocketLauncher extends Tower implements IRPG {
 			System.out.println("Tower Rocket: Attacking target at " + getTarget().getPositionCenter());
 		AudioUtil.playProjectileSound(ProjectileSound.ROCKET_LAUNCH);
 		RPG rpg = ActorFactory.loadRPG();
-		rpg.initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
+		rpg.initialize(this, getTarget(), getEnemyGroup(), this.getGunPos(), BULLET_SIZE);
 
 	}
 

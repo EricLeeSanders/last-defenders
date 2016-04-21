@@ -2,6 +2,7 @@ package com.eric.mtd.menu;
 
 import com.eric.mtd.screen.AbstractScreen;
 import com.eric.mtd.screen.state.ScreenStateManager;
+import com.eric.mtd.state.GameStateManager;
 import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -15,7 +16,8 @@ import com.eric.mtd.util.Resources;
 public class MenuScreen extends AbstractScreen {
 	private MenuStage stage;
 
-	public MenuScreen(ScreenStateManager screenStateManager) {
+	public MenuScreen(ScreenStateManager screenStateManager, GameStateManager gameStateManager) {
+		super(gameStateManager);
 		Resources.loadGraphics();
 		this.stage = new MenuStage(screenStateManager);
 		stage.setViewport(getViewport());

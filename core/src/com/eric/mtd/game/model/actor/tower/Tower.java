@@ -1,11 +1,15 @@
 package com.eric.mtd.game.model.actor.tower;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.eric.mtd.game.model.actor.GameActor;
-import com.eric.mtd.game.model.ai.TowerAI;
-import com.eric.mtd.game.model.ai.TowerTargetPriority;
+import com.eric.mtd.game.model.actor.IGameActorObserver;
+import com.eric.mtd.game.model.actor.ai.TowerAI;
+import com.eric.mtd.game.model.actor.ai.TowerTargetPriority;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 
 /**
@@ -30,7 +34,6 @@ public abstract class Tower extends GameActor {
 	private float attackCounter = 0;
 	private Group enemyTargetGroup;
 	private int kills;
-
 	public Tower(TextureRegion textureRegion, GameActorPool<GameActor> pool, float[] bodyPoints, Vector2 textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost, int rangeIncreaseCost, int attackIncreaseCost) {
 		super(textureRegion, pool, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.pool = pool;
@@ -50,7 +53,9 @@ public abstract class Tower extends GameActor {
 	public void setEnemyGroup(Group enemyGroup) {
 		this.enemyTargetGroup = enemyGroup;
 	}
-
+	public Group getEnemyGroup(){
+		return enemyTargetGroup;
+	}
 	/**
 	 * Gets the selling price for the tower. Adds up the upgraded attributes and
 	 * their cost and multiplies by a rate.
@@ -99,6 +104,7 @@ public abstract class Tower extends GameActor {
 	@Override
 	public void reset() {
 		super.reset();
+		System.out.println("Resetting Tower");
 		rangeLevel = 0;
 		speedLevel = 0;
 		attackLevel = 0;
@@ -139,7 +145,8 @@ public abstract class Tower extends GameActor {
 	}
 
 	public void heal() {
-		this.resetHealth();
+		resetHealth();
+		resetArmor();
 	}
 
 	public void increaseRange() {
@@ -209,6 +216,7 @@ public abstract class Tower extends GameActor {
 
 	public void giveKill() {
 		kills++;
+		notifyObservers();
 	}
 
 	public void removeTower() {

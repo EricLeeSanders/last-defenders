@@ -5,6 +5,7 @@ import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -42,15 +43,21 @@ public abstract class Resources {
 	public static final String SNIPER_SHOT_SOUND = "audio/sniper_shot.mp3";
 
 	public static final String VEHICLE_EXPLOSION_SOUND = "audio/vehicle_explosion.mp3";
+	
+	private static final ShapeRenderer SHAPE_RENDERER = new ShapeRenderer();
+	
 	private static final AssetManager MANAGER = new AssetManager();
 
 	public static void dispose() {
 		if (Logger.DEBUG)
 			System.out.println("Resources dispose");
 		MANAGER.dispose();
+		SHAPE_RENDERER.dispose();
 
 	}
-
+	public static void gameResume(){
+		MANAGER.finishLoading();
+	}
 	public static void loadGraphics() {
 		if (Logger.DEBUG)
 			System.out.println("Loading Graphics");
@@ -153,6 +160,10 @@ public abstract class Resources {
 
 	public static Skin getSkin(String file) {
 		return MANAGER.get(file, Skin.class);
+	}
+	
+	public static ShapeRenderer getShapeRenderer(){
+		return SHAPE_RENDERER;
 	}
 
 }

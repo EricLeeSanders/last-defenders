@@ -32,6 +32,7 @@ public class GameScreen extends AbstractScreen {
 	private GameStateManager gameStateManager;
 
 	public GameScreen(int intLevel, GameStateManager gameStateManager, ScreenStateManager screenStateManager) {
+		super(gameStateManager);
 		this.player = new Player();
 		ActorGroups actorGroups = new ActorGroups();
 		LevelStateManager levelStateManager = new LevelStateManager();

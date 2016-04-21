@@ -10,7 +10,11 @@ import com.eric.mtd.game.model.actor.projectile.Flame;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
 import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.util.Logger;
-
+/**
+ * Class that deals damage
+ * @author Eric
+ *
+ */
 public class Damage {
 	public static void dealRpgDamage(GameActor shooter, GameActor target) {
 		if (shooter instanceof IRPG) {
@@ -21,7 +25,7 @@ public class Damage {
 					if (shooter.isDead() == false) {
 						((Tower) shooter).giveKill();
 						if (Logger.DEBUG)
-							System.out.println("Bullet: giving kill to shooter");
+							System.out.println("RPG: giving kill to shooter");
 					}
 				}
 			}
@@ -37,7 +41,7 @@ public class Damage {
 					if (shooter.isDead() == false) {
 						((Tower) shooter).giveKill();
 						if (Logger.DEBUG)
-							System.out.println("RPG: giving kill to shooter");
+							System.out.println("Bullet: giving kill to shooter");
 					}
 				}
 			}
@@ -55,7 +59,7 @@ public class Damage {
 						if (shooter.isDead() == false) {
 							((Tower) shooter).giveKill();
 							if (Logger.DEBUG)
-								System.out.println("Bullet: giving kill to shooter");
+								System.out.println("Flame: giving kill to shooter");
 						}
 					}
 				}

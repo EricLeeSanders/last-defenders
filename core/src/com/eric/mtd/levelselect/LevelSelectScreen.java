@@ -2,6 +2,7 @@ package com.eric.mtd.levelselect;
 
 import com.eric.mtd.screen.AbstractScreen;
 import com.eric.mtd.screen.state.ScreenStateManager;
+import com.eric.mtd.state.GameStateManager;
 
 /**
  * Screen for Level Select Menu
@@ -13,7 +14,8 @@ public class LevelSelectScreen extends AbstractScreen {
 	private ScreenStateManager screenStateManager;
 	private LevelSelectStage stage;
 
-	public LevelSelectScreen(ScreenStateManager screenStateManager) {
+	public LevelSelectScreen(ScreenStateManager screenStateManager, GameStateManager gameStateManager) {
+		super(gameStateManager);
 		this.screenStateManager = screenStateManager;
 		this.stage = new LevelSelectStage(screenStateManager);
 		stage.setViewport(getViewport());

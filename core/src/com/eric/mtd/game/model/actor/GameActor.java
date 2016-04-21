@@ -1,5 +1,9 @@
 package com.eric.mtd.game.model.actor;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,9 +19,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.eric.mtd.game.model.actor.interfaces.ICollision;
 import com.eric.mtd.game.model.actor.interfaces.IVehicle;
+import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 
@@ -27,7 +33,7 @@ import com.badlogic.gdx.utils.Pool;
  * @author Eric
  *
  */
-public abstract class GameActor extends Actor implements Pool.Poolable, Disposable, ICollision {
+public abstract class GameActor extends Actor implements Pool.Poolable, ICollision {
 	private TextureRegion textureRegion;
 	private final float RESET_ATTACK_SPEED, RESET_RANGE, MAX_HEALTH, MAX_ARMOR, RESET_ATTACK;
 	private float attackSpeed, range, health, attack, armor;
@@ -35,12 +41,12 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
 	private Vector2 positionCenter = new Vector2();
 	private float[] bodyPoints;
 	private GameActor target;
-	private ShapeRenderer rangeShape = new ShapeRenderer();
-	private ShapeRenderer debugBody = new ShapeRenderer();
+	private ShapeRenderer rangeShape = Resources.getShapeRenderer();
+	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private Color rangeColor = new Color(1.0f, 0f, 0f, 0.5f);
 	private boolean showRange, hasArmor, dead;
 	private GameActorPool<GameActor> pool;
-
+	private List<IGameActorObserver> observers = new CopyOnWriteArrayList<IGameActorObserver>();
 	public GameActor(TextureRegion textureRegion, GameActorPool<GameActor> pool, float[] bodyPoints, Vector2 textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range) {
 		this.MAX_HEALTH = health;
 		this.MAX_ARMOR = armor;
@@ -60,7 +66,17 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
 		// QUESTION: setting bounds
 		this.setOrigin(textureSize.x / 2, textureSize.y / 2);
 	}
-
+	public void detach(IGameActorObserver observer){
+		System.out.println(observers.remove(observer));
+	}
+	public void attach(IGameActorObserver observer){
+		observers.add(observer);
+	}
+	protected void notifyObservers(){
+		for(IGameActorObserver observer: observers){
+			observer.notifty();
+		}
+	}
 	/**
 	 * Calculates a rotation from the current position and the argument
 	 * position. Calculates the shortest distance rotation.
@@ -266,6 +282,7 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
 			}
 			pool.free(this);
 		}
+		notifyObservers();
 	}
 
 	public boolean isDead() {
@@ -287,7 +304,11 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
 	public void resetHealth() {
 		health = MAX_HEALTH;
 	}
-
+	public void resetArmor() {
+		if(hasArmor()){
+			armor = MAX_ARMOR;
+		}
+	}
 	public float getAttack() {
 		return attack;
 	}
@@ -308,14 +329,6 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
 		pool.free(this);
 	}
 
-	@Override
-	public void dispose() {
-		if (Logger.DEBUG)
-			System.out.println("Game Actor Disposing");
-		rangeShape.dispose();
-		debugBody.dispose();
-
-	}
 
 	public Vector2 getTextureSize() {
 		return textureSize;
