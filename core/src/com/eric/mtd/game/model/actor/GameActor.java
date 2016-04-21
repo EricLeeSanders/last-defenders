@@ -23,6 +23,7 @@ import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 
@@ -32,7 +33,7 @@ import com.badlogic.gdx.utils.Pool;
  * @author Eric
  *
  */
-public abstract class GameActor extends Actor implements Pool.Poolable, Disposable, ICollision {
+public abstract class GameActor extends Actor implements Pool.Poolable, ICollision {
 	private TextureRegion textureRegion;
 	private final float RESET_ATTACK_SPEED, RESET_RANGE, MAX_HEALTH, MAX_ARMOR, RESET_ATTACK;
 	private float attackSpeed, range, health, attack, armor;
@@ -40,8 +41,8 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
 	private Vector2 positionCenter = new Vector2();
 	private float[] bodyPoints;
 	private GameActor target;
-	private ShapeRenderer rangeShape = new ShapeRenderer();
-	private ShapeRenderer debugBody = new ShapeRenderer();
+	private ShapeRenderer rangeShape = Resources.getShapeRenderer();
+	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private Color rangeColor = new Color(1.0f, 0f, 0f, 0.5f);
 	private boolean showRange, hasArmor, dead;
 	private GameActorPool<GameActor> pool;
@@ -328,14 +329,6 @@ public abstract class GameActor extends Actor implements Pool.Poolable, Disposab
 		pool.free(this);
 	}
 
-	@Override
-	public void dispose() {
-		if (Logger.DEBUG)
-			System.out.println("Game Actor Disposing");
-		rangeShape.dispose();
-		debugBody.dispose();
-
-	}
 
 	public Vector2 getTextureSize() {
 		return textureSize;

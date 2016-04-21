@@ -19,6 +19,7 @@ import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 /**
  * Represents a Tower Tank
@@ -46,8 +47,8 @@ public class TowerTank extends Tower implements IVehicle, IRPG, IPlatedArmor, IR
 	public static final Vector2 TEXTURE_TURRET_SIZE = new Vector2(22, 120);
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
-	private ShapeRenderer body = new ShapeRenderer();
-	private ShapeRenderer rangeShape = new ShapeRenderer();
+	private ShapeRenderer body = Resources.getShapeRenderer();
+	private ShapeRenderer rangeShape = Resources.getShapeRenderer();
 	private float bodyRotation;
 
 	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, GameActorPool<GameActor> pool) {
@@ -123,16 +124,6 @@ public class TowerTank extends Tower implements IVehicle, IRPG, IPlatedArmor, IR
 			System.out.println("Tower Tank: Attacking target at " + getTarget().getPositionCenter());
 		RPG rpg = ActorFactory.loadRPG();
 		rpg.initialize(this, getTarget(), getEnemyGroup(), this.getGunPos(), BULLET_SIZE);
-	}
-
-	@Override
-	public void dispose() {
-		if (Logger.DEBUG)
-			System.out.println("Tower Tank Disposing");
-		body.dispose();
-		rangeShape.dispose();
-		super.dispose();
-
 	}
 
 }

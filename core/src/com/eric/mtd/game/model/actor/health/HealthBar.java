@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 /**
  * Healthbar that is placed over Actors. Is only displayed when that actor has
@@ -19,9 +20,9 @@ import com.eric.mtd.util.Logger;
  */
 public class HealthBar extends Actor implements Pool.Poolable {
 	private GameActor actor = null;
-	private ShapeRenderer backgroundBar = new ShapeRenderer();
-	private ShapeRenderer healthBar = new ShapeRenderer();
-	private ShapeRenderer armorBar = new ShapeRenderer();
+	private ShapeRenderer backgroundBar = Resources.getShapeRenderer();;
+	private ShapeRenderer healthBar = Resources.getShapeRenderer();;
+	private ShapeRenderer armorBar = Resources.getShapeRenderer();;
 	private float healthPercentage;
 	private float armorPercentage;
 	private float healthBarSize;

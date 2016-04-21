@@ -19,7 +19,7 @@ import com.eric.mtd.util.Resources;
 
 public class Sandbag extends Actor implements Pool.Poolable, ICollision {
 	private TextureRegion textureRegion;
-	private ShapeRenderer shapeRenderer2 = new ShapeRenderer();
+	private ShapeRenderer shapeRenderer2 = Resources.getShapeRenderer();
 	private float health;
 	private boolean dead;
 	private SandbagPool pool;

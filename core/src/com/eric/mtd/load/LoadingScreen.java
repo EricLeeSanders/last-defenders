@@ -12,17 +12,17 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.screen.AbstractScreen;
+import com.eric.mtd.state.GameStateManager;
 import com.eric.mtd.util.Resources;
 
 public class LoadingScreen extends AbstractScreen {
 	private TextureAtlas atlas;
 	private TextureRegion logoRegion;
 	private Image logoImage;
-	private LevelStateManager gameStateManager;
 	private Stage stage;
 
-	public LoadingScreen(LevelStateManager gameStateManager) {
-		this.gameStateManager = gameStateManager;
+	public LoadingScreen(GameStateManager gameStateManager) {
+		super(gameStateManager);
 		this.stage = new Stage();
 		stage.setViewport(getViewport());
 		super.addInputProcessor(stage);
