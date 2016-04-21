@@ -71,7 +71,7 @@ public class GameUIStage extends Stage {
 		this.hudView = new HUDView(hudPresenter);
 		hudPresenter.setView(hudView);
 
-		this.inspectPresenter = new InspectPresenter(uiStateManager, player, actorGroups);
+		this.inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager, player, actorGroups);
 		this.inspectView = new InspectView(inspectPresenter);
 		inspectPresenter.setView(inspectView);
 

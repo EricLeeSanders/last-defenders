@@ -36,7 +36,6 @@ public class Explosion extends Actor implements Pool.Poolable {
 	private float stateTime; // counter for animation
 	private TextureRegion[] explosionRegions = new TextureRegion[16];
 	private GameActor shooter, target;
-	private Group targetGroup;
 
 	/**
 	 * Constructs an Explosion.
@@ -52,7 +51,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 	/**
 	 * Initializes an Explosion and deals Damage
 	 */
-	public void initialize(GameActor shooter, GameActor target, Vector2 position) {
+	public void initialize(GameActor shooter, GameActor target, Group targetGroup, Vector2 position) {
 		if (Logger.DEBUG)
 			System.out.println("Setting RPG");
 		AudioUtil.playProjectileSound(ProjectileSound.RPG_EXPLOSION);
@@ -65,29 +64,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 		explosionAnimation = new Animation(0.05f, explosionRegions);
 		explosionAnimation.setPlayMode(PlayMode.NORMAL);
 		this.setPosition(position.x, position.y);
-		determineTargetGroup();
 		Damage.dealExplosionDamage(shooter, target, targetGroup);
-		;
-	}
-
-	/**
-	 * Determines what the Target Group should be. Either Towers or Enemies.
-	 */
-	public void determineTargetGroup() {
-		if (shooter instanceof Tower) {
-			if (this.getStage() instanceof GameStage) {
-				targetGroup = ((GameStage) this.getStage()).getActorGroups().getEnemyGroup();
-			} else {
-				targetGroup = null;
-			}
-
-		} else {
-			if (this.getStage() instanceof GameStage) {
-				targetGroup = ((GameStage) this.getStage()).getActorGroups().getTowerGroup();
-			} else {
-				targetGroup = null;
-			}
-		}
 	}
 
 	/**
@@ -106,14 +83,6 @@ public class Explosion extends Actor implements Pool.Poolable {
 		}
 	}
 
-	/**
-	 * Deal AOE Damage
-	 */
-	public void dealDamage() {
-
-		Damage.dealExplosionDamage(shooter, target, targetGroup);
-	}
-
 	@Override
 	public void reset() {
 		if (Logger.DEBUG)
@@ -122,5 +91,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 		this.remove();
 		explosionAnimation = null;
 	}
+	
+	
 
 }

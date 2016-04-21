@@ -12,6 +12,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.eric.mtd.state.GameStateManager;
+import com.eric.mtd.state.GameStateManager.GameState;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -25,9 +27,9 @@ public abstract class AbstractScreen implements Screen {
 	private Viewport viewport;
 	private OrthographicCamera camera;
 	private InputMultiplexer imp;
-	ShapeRenderer shapeRenderer = new ShapeRenderer();
-
-	public AbstractScreen() {
+	private GameStateManager gameStateManager;
+	public AbstractScreen(GameStateManager gameStateManager) {
+		this.gameStateManager = gameStateManager;
 		camera = new OrthographicCamera();
 		viewport = new ExtendViewport(Resources.SCREEN_WIDTH, Resources.SCREEN_HEIGHT, camera);
 		imp = new InputMultiplexer();
@@ -50,10 +52,14 @@ public abstract class AbstractScreen implements Screen {
 
 	@Override
 	public void pause() {
+		gameStateManager.setState(GameState.PAUSE);
 	}
 
 	@Override
 	public void resume() {
+		Resources.gameResume();
+		gameStateManager.setState(GameState.PLAY);
+		
 	}
 
 	@Override

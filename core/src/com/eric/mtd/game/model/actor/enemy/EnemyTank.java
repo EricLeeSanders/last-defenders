@@ -15,6 +15,7 @@ import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 /**
  * Represents an Enemy Tank.
@@ -38,7 +39,7 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IRPG, IVehicle {
 	public static final Vector2 TEXTURE_TURRET_SIZE = new Vector2(22, 120);
 
 	private TextureRegion tankBodyRegion;
-	private ShapeRenderer body = new ShapeRenderer();
+	private ShapeRenderer body = Resources.getShapeRenderer();
 	private float bodyRotation; //
 
 	public EnemyTank(TextureRegion tankRegion, TextureRegion turretRegion, GameActorPool<GameActor> pool) {
@@ -99,15 +100,7 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IRPG, IVehicle {
 		if (Logger.DEBUG)
 			System.out.println("Enemy Tank: Attacking target at " + getTarget().getPositionCenter());
 		RPG rpg = ActorFactory.loadRPG();
-		rpg.initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
+		rpg.initialize(this, getTarget(), getTowerGroup(), this.getGunPos(), BULLET_SIZE);
 	}
 
-	@Override
-	public void dispose() {
-		if (Logger.DEBUG)
-			System.out.println("Enemy Tank Disposing");
-		body.dispose();
-		super.dispose();
-
-	}
 }

@@ -8,25 +8,25 @@
    eJztz1EJACAUwMAHxrR/D0v4IfMOFmAzAAAA0LfX+/3Eb5vfNr9tftv8tvlt89vmt81vm982v223fw//aReB
   </data>
  </layer>
- <objectgroup name="UI_HUD">
+ <objectgroup name="UI_HUD" visible="0">
   <object id="161" name="imgMoney" x="76" y="280" width="30" height="30"/>
-  <object id="162" name="btnWave" x="71.5" y="581" width="50" height="50"/>
+  <object id="162" name="btnWave" x="71" y="581" width="50" height="50"/>
   <object id="163" name="lblMoney" x="111" y="285" width="72" height="19"/>
   <object id="164" name="lblLife" x="42" y="286" width="30" height="19"/>
-  <object id="165" name="btnOptions" x="585.5" y="280" width="50" height="50"/>
-  <object id="166" name="btnEnlist" x="584.5" y="581" width="50" height="50"/>
+  <object id="165" name="btnOptions" x="584" y="280" width="50" height="50"/>
+  <object id="166" name="btnEnlist" x="584" y="581" width="50" height="50"/>
   <object id="167" name="imgLife" x="7" y="280" width="30" height="30"/>
-  <object id="168" name="btnPerks" x="584.5" y="581" width="50" height="50"/>
-  <object id="169" name="btnSpeed" x="7.5" y="581" width="50" height="50"/>
+  <object id="168" name="btnPerks" x="584" y="581" width="50" height="50"/>
+  <object id="169" name="btnSpeed" x="7" y="581" width="50" height="50"/>
   <object id="188" name="lblWaveCount" x="7" y="315" width="145" height="19"/>
  </objectgroup>
  <objectgroup name="UI_Enlist" visible="0">
   <object id="20" name="btnTank" x="14" y="471" width="140" height="160"/>
   <object id="21" name="btnRifle" x="14" y="289" width="140" height="160"/>
-  <object id="30" name="btnCancel" x="579" y="582" width="50" height="50"/>
+  <object id="30" name="btnCancel" x="584" y="582" width="50" height="50"/>
   <object id="40" name="panel" x="0" y="204" width="755" height="436.5"/>
-  <object id="69" name="btnRotate" x="579" y="466" width="50" height="50"/>
-  <object id="74" name="btnPlace" x="579" y="523" width="50" height="50"/>
+  <object id="69" name="btnRotate" x="584" y="466" width="50" height="50"/>
+  <object id="74" name="btnPlace" x="584" y="523" width="50" height="50"/>
   <object id="102" name="btnMachine" x="175" y="289" width="140" height="160"/>
   <object id="103" name="btnTurret" x="175" y="471" width="140" height="160"/>
   <object id="104" name="btnSniper" x="333" y="289" width="140" height="160"/>
@@ -35,7 +35,7 @@
  </objectgroup>
  <objectgroup name="UI_Inspect" visible="0">
   <object id="29" name="btnClose" x="486" y="582" width="147" height="45"/>
-  <object id="70" name="bottomPanel" x="0" y="503" width="640" height="137"/>
+  <object id="70" name="bottomPanel" x="0" y="503" width="755" height="137"/>
   <object id="76" name="btnDischarge" x="486" y="391" width="147" height="88"/>
   <object id="78" name="btnAttack" x="126" y="507" width="110" height="128"/>
   <object id="80" name="btnArmor" x="8" y="507" width="110" height="128"/>
@@ -55,9 +55,9 @@
   <object id="146" name="lblTargetPriority" x="486" y="531.5" width="147" height="42.5"/>
   <object id="147" name="lblArmorCost" x="48" y="602" width="64" height="20"/>
   <object id="148" name="lblAttackCost" x="168" y="602" width="64" height="20"/>
-  <object id="149" name="lblRangeCost" x="284.25" y="602" width="64" height="20"/>
-  <object id="150" name="lblSpeedCost" x="398.25" y="602" width="64" height="20"/>
-  <object id="151" name="lblArmorLevel1" x="85.5" y="526" width="25" height="15"/>
+  <object id="149" name="lblRangeCost" x="284" y="602" width="64" height="20"/>
+  <object id="150" name="lblSpeedCost" x="398" y="602" width="64" height="20"/>
+  <object id="151" name="lblArmorLevel1" x="85" y="526" width="25" height="15"/>
  </objectgroup>
  <objectgroup name="UI_Perks" visible="0">
   <object id="153" name="Panel" x="0" y="337.5" width="640" height="303"/>
@@ -74,7 +74,7 @@
   <object id="178" name="btnResume" x="232" y="457" width="167" height="48"/>
   <object id="179" name="btnNewGame" x="232" y="340" width="167" height="48"/>
  </objectgroup>
- <objectgroup name="UI_GameOver" visible="0">
+ <objectgroup name="UI_GameOver">
   <object id="180" name="panel" x="183" y="297" width="264" height="327"/>
   <object id="182" name="btnMainMenu" x="232" y="568" width="167" height="48"/>
   <object id="183" name="btnNewGame" x="232" y="510" width="167" height="48"/>

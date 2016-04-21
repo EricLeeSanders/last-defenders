@@ -17,6 +17,7 @@ import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 import com.eric.mtd.util.AudioUtil.ProjectileSound;
 
 /**
@@ -48,9 +49,9 @@ public class TowerTurret extends Tower implements IRotatable {
 
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
-	private ShapeRenderer rangeShape = new ShapeRenderer();
+	private ShapeRenderer rangeShape = Resources.getShapeRenderer();
 	private float[] rangeTransformedVertices;
-	private ShapeRenderer body = new ShapeRenderer();
+	private ShapeRenderer body = Resources.getShapeRenderer();
 	private float bodyRotation;
 
 	public TowerTurret(TextureRegion bodyRegion, TextureRegion turretRegion, GameActorPool<GameActor> pool) {
@@ -131,16 +132,6 @@ public class TowerTurret extends Tower implements IRotatable {
 		AudioUtil.playProjectileSound(ProjectileSound.MACHINE);
 		Bullet bullet = ActorFactory.loadBullet();
 		bullet.initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
-
-	}
-
-	@Override
-	public void dispose() {
-		if (Logger.DEBUG)
-			System.out.println("Tower Turret Disposing");
-		body.dispose();
-		rangeShape.dispose();
-		super.dispose();
 
 	}
 

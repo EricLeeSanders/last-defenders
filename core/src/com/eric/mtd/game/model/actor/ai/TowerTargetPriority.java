@@ -1,4 +1,4 @@
-package com.eric.mtd.game.model.ai;
+package com.eric.mtd.game.model.actor.ai;
 
 /**
  * Attack Priorities for a Tower

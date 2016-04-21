@@ -33,14 +33,14 @@ public class TowerPlacement {
 	}
 
 	/**
-	 * Finds the path bounaries from the Tiled Map
+	 * Finds the path boundaries from the Tiled Map
 	 * 
 	 * @param tiledMap
 	 */
 	private void findPathBoundary(TiledMap tiledMap) {
 		MapObjects boundaries = tiledMap.getLayers().get("PathBoundary").getObjects();
 		for (MapObject boundry : boundaries) {
-			if (boundry.getClass().equals(com.badlogic.gdx.maps.objects.RectangleMapObject.class)) {
+			if (boundry instanceof RectangleMapObject) {
 				pathBoundary.add((RectangleMapObject) boundry);
 			}
 		}

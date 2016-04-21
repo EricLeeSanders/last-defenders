@@ -11,8 +11,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.ai.EnemyAI;
 import com.eric.mtd.game.model.actor.interfaces.IPassiveEnemy;
-import com.eric.mtd.game.model.ai.EnemyAI;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Logger;
@@ -68,7 +68,9 @@ public abstract class Enemy extends GameActor {
 	public void setTowerGroup(Group towerGroup) {
 		this.towerTargetGroup = towerGroup;
 	}
-
+	public Group getTowerGroup(){
+		return towerTargetGroup;
+	}
 	/**
 	 * Sets the path for the enemy. Starts of screen.
 	 * 
