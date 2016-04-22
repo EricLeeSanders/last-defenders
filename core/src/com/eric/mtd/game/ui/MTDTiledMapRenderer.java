@@ -25,12 +25,12 @@ public class MTDTiledMapRenderer implements Disposable {
 	public MTDTiledMapRenderer(int intLevel, GameStage camera) {
 		this.camera = camera;
 		tiledMap = Resources.getMap(intLevel);
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap,(float)(1/3f));
 		tiledMapRenderer.setView((OrthographicCamera) camera.getCamera());
 	}
 
 	public void update() {
-		
+		tiledMapRenderer.setView((OrthographicCamera) camera.getCamera());
 		tiledMapRenderer.render();
 	}
 
