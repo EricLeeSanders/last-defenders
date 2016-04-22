@@ -1,31 +1,184 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="40" tilewidth="16" tileheight="16" nextobjectid="132">
- <tileset firstgid="1" name="pokemon" tilewidth="16" tileheight="16" tilecount="6006" columns="91">
-  <image source="tileset-alistair.png" width="1461" height="1056"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" nextobjectid="5">
+ <tileset firstgid="1" name="Tiles" tilewidth="32" tileheight="32" tilecount="48" columns="0">
+  <tile id="0">
+   <image width="16" height="16" source="../tiles/1.png"/>
+  </tile>
+  <tile id="1">
+   <image width="16" height="16" source="../tiles/2.png"/>
+  </tile>
+  <tile id="2">
+   <image width="16" height="16" source="../tiles/3.png"/>
+  </tile>
+  <tile id="3">
+   <image width="16" height="16" source="../tiles/4.png"/>
+  </tile>
+  <tile id="4">
+   <image width="16" height="16" source="../tiles/5.png"/>
+  </tile>
+  <tile id="5">
+   <image width="16" height="16" source="../tiles/6.png"/>
+  </tile>
+  <tile id="6">
+   <image width="16" height="16" source="../tiles/7.png"/>
+  </tile>
+  <tile id="7">
+   <image width="16" height="16" source="../tiles/8.png"/>
+  </tile>
+  <tile id="8">
+   <image width="16" height="16" source="../tiles/9.png"/>
+  </tile>
+  <tile id="9">
+   <image width="16" height="16" source="../tiles/10.png"/>
+  </tile>
+  <tile id="10">
+   <image width="16" height="16" source="../tiles/11.png"/>
+  </tile>
+  <tile id="11">
+   <image width="16" height="16" source="../tiles/12.png"/>
+  </tile>
+  <tile id="12">
+   <image width="16" height="16" source="../tiles/13.png"/>
+  </tile>
+  <tile id="13">
+   <image width="16" height="16" source="../tiles/14.png"/>
+  </tile>
+  <tile id="14">
+   <image width="16" height="16" source="../tiles/15.png"/>
+  </tile>
+  <tile id="15">
+   <image width="16" height="16" source="../tiles/16.png"/>
+  </tile>
+  <tile id="16">
+   <image width="16" height="16" source="../tiles/17.png"/>
+  </tile>
+  <tile id="17">
+   <image width="16" height="16" source="../tiles/18.png"/>
+  </tile>
+  <tile id="18">
+   <image width="16" height="16" source="../tiles/19.png"/>
+  </tile>
+  <tile id="19">
+   <image width="16" height="16" source="../tiles/20.png"/>
+  </tile>
+  <tile id="20">
+   <image width="16" height="16" source="../tiles/21.png"/>
+  </tile>
+  <tile id="21">
+   <image width="16" height="16" source="../tiles/22.png"/>
+  </tile>
+  <tile id="22">
+   <image width="16" height="16" source="../tiles/23.png"/>
+  </tile>
+  <tile id="23">
+   <image width="16" height="16" source="../tiles/24.png"/>
+  </tile>
+  <tile id="24">
+   <image width="16" height="16" source="../tiles/25.png"/>
+  </tile>
+  <tile id="25">
+   <image width="16" height="16" source="../tiles/26.png"/>
+  </tile>
+  <tile id="26">
+   <image width="16" height="16" source="../tiles/27.png"/>
+  </tile>
+  <tile id="27">
+   <image width="16" height="16" source="../tiles/28.png"/>
+  </tile>
+  <tile id="28">
+   <image width="16" height="16" source="../tiles/29.png"/>
+  </tile>
+  <tile id="29">
+   <image width="16" height="16" source="../tiles/30.png"/>
+  </tile>
+  <tile id="30">
+   <image width="16" height="16" source="../tiles/31.png"/>
+  </tile>
+  <tile id="31">
+   <image width="16" height="16" source="../tiles/32.png"/>
+  </tile>
+  <tile id="32">
+   <image width="16" height="16" source="../tiles/33.png"/>
+  </tile>
+  <tile id="33">
+   <image width="16" height="16" source="../tiles/34.png"/>
+  </tile>
+  <tile id="34">
+   <image width="16" height="16" source="../tiles/35.png"/>
+  </tile>
+  <tile id="35">
+   <image width="16" height="16" source="../tiles/36.png"/>
+  </tile>
+  <tile id="36">
+   <image width="16" height="16" source="../tiles/37.png"/>
+  </tile>
+  <tile id="37">
+   <image width="16" height="16" source="../tiles/38.png"/>
+  </tile>
+  <tile id="38">
+   <image width="16" height="16" source="../tiles/39.png"/>
+  </tile>
+  <tile id="39">
+   <image width="16" height="16" source="../tiles/40.png"/>
+  </tile>
+  <tile id="40">
+   <image width="16" height="16" source="../tiles/41.png"/>
+  </tile>
+  <tile id="41">
+   <image width="16" height="16" source="../tiles/42.png"/>
+  </tile>
+  <tile id="42">
+   <image width="16" height="16" source="../tiles/43.png"/>
+  </tile>
+  <tile id="43">
+   <image width="16" height="16" source="../tiles/rock1.png"/>
+  </tile>
+  <tile id="44">
+   <image width="16" height="16" source="../tiles/rock2.png"/>
+  </tile>
+  <tile id="45">
+   <image width="16" height="16" source="../tiles/rock3.png"/>
+  </tile>
+  <tile id="46">
+   <image width="32" height="32" source="../tiles/tree_large.png"/>
+  </tile>
+  <tile id="47">
+   <image width="16" height="16" source="../tiles/tree_small.png"/>
+  </tile>
  </tileset>
- <layer name="Terrain" width="60" height="40">
-  <data encoding="base64" compression="zlib">
-   eJztmMERwiAQRZeMFy+OJWgHanmaitJAKtAO1E48m4szkUFYkGVR/uEdMkyGfdllIQwLogEAAAAAAAAAAAB/xWpdN/CFbwwj8eDE9u37tfhyY/tV36MhOinRm/dYSvhepzlvStwb9JXuzz7fy/S872Q5UznfUH7t+pLAN99jWTa/Lt/c/WxTsJ5T8iu5vue+Gv1K07fG/ObuZ4eubt/XuOuMxTl7aZyv7Lhsn9D4J9+YvtabMr6cfpma35h1bn9XKd/YOFrw9eV366nReZ24+prvXCXly+mXOfYjzrqo5f+3dd9dhn1Vyzd0LxEi9d5Cy/cJUW7HVg==
-  </data>
+ <layer name="Tile Layer 1" width="40" height="23">
+  <data encoding="csv">
+41,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,42,43,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7
+</data>
  </layer>
  <objectgroup name="Path">
-  <object id="131" name="PathLine" x="48" y="511">
-   <polyline points="0,0 544,1"/>
+  <object id="1" name="PathLine" x="127" y="154">
+   <polyline points="0,0 294,-2"/>
   </object>
  </objectgroup>
- <objectgroup name="PathBoundary" visible="0">
-  <object id="119" x="506" y="524" width="42" height="114"/>
-  <object id="121" x="220" y="572" width="200" height="38"/>
-  <object id="122" x="379" y="552" width="41" height="60"/>
-  <object id="123" x="380.5" y="523" width="163" height="38"/>
-  <object id="124" x="220" y="443" width="40" height="132"/>
-  <object id="125" x="259" y="444" width="321" height="38"/>
-  <object id="126" x="536" y="365" width="42" height="114"/>
-  <object id="127" x="91" y="364" width="486.5" height="38"/>
-  <object id="128" x="91" y="381" width="40" height="196"/>
-  <object id="129" x="2" y="540" width="127" height="38"/>
- </objectgroup>
- <objectgroup name="UI_Title">
-  <object id="38" name="Panel" x="0" y="227" width="640" height="111"/>
+ <objectgroup name="PathBoundary">
+  <object id="3" x="163" y="29" width="239" height="59"/>
  </objectgroup>
 </map>

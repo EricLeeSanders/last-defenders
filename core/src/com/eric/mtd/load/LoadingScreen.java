@@ -24,7 +24,7 @@ public class LoadingScreen extends AbstractScreen {
 	public LoadingScreen(GameStateManager gameStateManager) {
 		super(gameStateManager);
 		this.stage = new Stage();
-		stage.setViewport(getViewport());
+		//stage.setViewport(getViewport());
 		super.addInputProcessor(stage);
 		// super.setStage(new Stage());
 	}
