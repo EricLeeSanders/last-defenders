@@ -1,7 +1,10 @@
 package com.eric.mtd.game.ui;
 
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
@@ -18,6 +21,7 @@ import com.eric.mtd.game.ui.view.InspectView;
 import com.eric.mtd.game.ui.view.OptionsView;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.state.GameStateManager;
+import com.eric.mtd.util.Resources;
 
 /**
  * Stage for handling the UI of the game
@@ -47,6 +51,7 @@ public class GameUIStage extends Stage {
 	private InputMultiplexer imp;
 
 	public GameUIStage(int intLevel, Player player, ActorGroups actorGroups, GameUIStateManager uiStateManager, LevelStateManager levelStateManager, GameStateManager gameStateManager, ScreenStateManager screenStateManager, InputMultiplexer imp) {
+		super(new ScalingViewport(Scaling.stretch, Resources.SCREEN_WIDTH, Resources.SCREEN_HEIGHT, new OrthographicCamera()));
 		this.imp = imp;
 		this.intLevel = intLevel;
 		this.player = player;

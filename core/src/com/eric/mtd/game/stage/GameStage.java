@@ -1,7 +1,11 @@
 package com.eric.mtd.game.stage;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
@@ -33,6 +37,7 @@ public class GameStage extends Stage {
 	private MTDTiledMapRenderer mapRenderer;
 
 	public GameStage(int intLevel, Player player, ActorGroups actorGroups, LevelStateManager levelStateManager, GameUIStateManager uiStateManager) {
+		super(new ScalingViewport(Scaling.stretch, Resources.SCREEN_WIDTH, Resources.SCREEN_HEIGHT, new OrthographicCamera()));
 		MTDGame.gameSpeed = (Resources.NORMAL_SPEED);
 		this.player = player;
 		this.actorGroups = actorGroups;
