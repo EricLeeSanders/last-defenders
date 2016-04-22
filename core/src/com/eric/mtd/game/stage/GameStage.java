@@ -44,7 +44,6 @@ public class GameStage extends Stage {
 		mapRenderer = new MTDTiledMapRenderer(intLevel, this);
 
 	}
-
 	/**
 	 * Create the actor groups
 	 */

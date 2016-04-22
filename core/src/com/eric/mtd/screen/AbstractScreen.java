@@ -31,7 +31,7 @@ public abstract class AbstractScreen implements Screen {
 	public AbstractScreen(GameStateManager gameStateManager) {
 		this.gameStateManager = gameStateManager;
 		camera = new OrthographicCamera();
-		viewport = new ExtendViewport(Resources.SCREEN_WIDTH, Resources.SCREEN_HEIGHT, camera);
+		//viewport = new ExtendViewport(Resources.SCREEN_WIDTH, Resources.SCREEN_HEIGHT, camera);
 		imp = new InputMultiplexer();
 	}
 
@@ -64,20 +64,8 @@ public abstract class AbstractScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		if (Logger.DEBUG)
-			System.out.println("changed to " + width + ", " + height);
-		camera.setToOrtho(false, width, height);
-		camera.update();
-		viewport.update(width, height, true); // Changes viewport
-		if (Logger.DEBUG)
-			System.out.println("viewport to " + viewport.getScreenWidth() + ", " + viewport.getScreenHeight());
-		BigInteger b1 = BigInteger.valueOf(viewport.getScreenWidth());
-		BigInteger b2 = BigInteger.valueOf(viewport.getScreenHeight());
-		BigInteger gcd = b1.gcd(b2);
-		if (Logger.DEBUG)
-			System.out.println(b1.divide(gcd) + "/" + b2.divide(gcd));
-		if (Logger.DEBUG)
-			System.out.println("World: " + viewport.getWorldWidth() + ", " + viewport.getWorldHeight());
+	    camera.setToOrtho(false, width, height);
+	    camera.update();
 	}
 
 	@Override
@@ -98,9 +86,6 @@ public abstract class AbstractScreen implements Screen {
 		return camera;
 	}
 
-	public Viewport getViewport() {
-		return viewport;
-	}
 
 	public InputMultiplexer getInputMultiplexer() {
 		return imp;

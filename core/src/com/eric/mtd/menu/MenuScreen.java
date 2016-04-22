@@ -20,7 +20,7 @@ public class MenuScreen extends AbstractScreen {
 		super(gameStateManager);
 		Resources.loadGraphics();
 		this.stage = new MenuStage(screenStateManager);
-		stage.setViewport(getViewport());
+		//stage.setViewport(getViewport());
 		super.addInputProcessor(stage);
 		AudioUtil.load();
 		AudioUtil.playMusic();

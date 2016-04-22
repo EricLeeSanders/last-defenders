@@ -39,9 +39,9 @@ public class GameScreen extends AbstractScreen {
 		GameUIStateManager uiStateManager = new GameUIStateManager(levelStateManager);
 		this.gameStateManager = gameStateManager;
 		gameStage = new GameStage(intLevel, player, actorGroups, levelStateManager, uiStateManager);
-		gameStage.setViewport(getViewport());
+		//gameStage.setViewport(getViewport());
 		gameUIStage = new GameUIStage(intLevel, player, actorGroups, uiStateManager, levelStateManager, gameStateManager, screenStateManager, super.getInputMultiplexer());
-		gameUIStage.setViewport(getViewport());
+		//gameUIStage.setViewport(getViewport());
 		super.show();
 
 	}
@@ -59,7 +59,13 @@ public class GameScreen extends AbstractScreen {
 		if (Logger.DEBUG)
 			createFramesField();
 	}
-
+	@Override
+	public void resize(int width, int height) {
+		gameStage.getViewport().setScreenSize(width, height); // update the size of ViewPort
+		gameUIStage.getViewport().setScreenSize(width, height); // update the size of ViewPort
+	    super.resize(width, height);
+	}
+    //getViewport().setScreenSize(width, height); // update the size of ViewPort
 	@Override
 	public void render(float delta) {
 		delta = delta * MTDGame.gameSpeed;
