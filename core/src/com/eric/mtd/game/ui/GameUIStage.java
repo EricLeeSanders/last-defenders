@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
@@ -50,8 +51,9 @@ public class GameUIStage extends Stage {
 	private ActorGroups actorGroups;
 	private InputMultiplexer imp;
 
-	public GameUIStage(int intLevel, Player player, ActorGroups actorGroups, GameUIStateManager uiStateManager, LevelStateManager levelStateManager, GameStateManager gameStateManager, ScreenStateManager screenStateManager, InputMultiplexer imp) {
-		super(new ScalingViewport(Scaling.stretch, Resources.SCREEN_WIDTH, Resources.SCREEN_HEIGHT, new OrthographicCamera()));
+	public GameUIStage(int intLevel, Player player, ActorGroups actorGroups, GameUIStateManager uiStateManager, LevelStateManager levelStateManager, GameStateManager gameStateManager, ScreenStateManager screenStateManager, InputMultiplexer imp, Viewport viewport) {
+		//super(new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, new OrthographicCamera()));
+		super(viewport);
 		this.imp = imp;
 		this.intLevel = intLevel;
 		this.player = player;

@@ -1,67 +1,166 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="15" height="8" tilewidth="128" tileheight="128" nextobjectid="5">
- <tileset firstgid="1" name="Tiles" tilewidth="128" tileheight="128" tilecount="14" columns="0">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="30" height="17" tilewidth="64" tileheight="64" nextobjectid="24">
+ <tileset firstgid="1" name="Ground Tiles" tilewidth="64" tileheight="64" tilecount="41" columns="0">
   <tile id="0">
-   <image width="128" height="128" source="../Grass/land_grass01.png"/>
+   <image width="64" height="64" source="../tiles/rpgTile000.png"/>
   </tile>
   <tile id="1">
-   <image width="128" height="128" source="../Grass/land_grass02.png"/>
+   <image width="64" height="64" source="../tiles/rpgTile001.png"/>
   </tile>
   <tile id="2">
-   <image width="128" height="128" source="../Grass/land_grass03.png"/>
+   <image width="64" height="64" source="../tiles/rpgTile002.png"/>
   </tile>
   <tile id="3">
-   <image width="128" height="128" source="../Grass/land_grass04.png"/>
+   <image width="64" height="64" source="../tiles/rpgTile003.png"/>
   </tile>
   <tile id="4">
-   <image width="128" height="128" source="../Grass/land_grass05.png"/>
+   <image width="64" height="64" source="../tiles/rpgTile004.png"/>
   </tile>
   <tile id="5">
-   <image width="128" height="128" source="../Grass/land_grass06.png"/>
+   <image width="64" height="64" source="../tiles/rpgTile005.png"/>
   </tile>
   <tile id="6">
-   <image width="128" height="128" source="../Grass/land_grass07.png"/>
+   <image width="64" height="64" source="../tiles/rpgTile006.png"/>
   </tile>
   <tile id="7">
-   <image width="128" height="128" source="../Grass/land_grass08.png"/>
+   <image width="64" height="64" source="../tiles/rpgTile007.png"/>
   </tile>
   <tile id="8">
-   <image width="128" height="128" source="../Grass/land_grass09.png"/>
+   <image width="64" height="64" source="../tiles/rpgTile008.png"/>
   </tile>
   <tile id="9">
-   <image width="128" height="128" source="../Grass/land_grass10.png"/>
+   <image width="64" height="64" source="../tiles/rpgTile009.png"/>
   </tile>
   <tile id="10">
-   <image width="128" height="128" source="../Grass/land_grass11.png"/>
+   <image width="64" height="64" source="../tiles/rpgTile010.png"/>
   </tile>
   <tile id="11">
-   <image width="128" height="128" source="../Grass/land_grass12.png"/>
+   <image width="64" height="64" source="../tiles/rpgTile011.png"/>
   </tile>
   <tile id="12">
-   <image width="128" height="128" source="../Grass/land_grass13.png"/>
+   <image width="64" height="64" source="../tiles/rpgTile012.png"/>
   </tile>
   <tile id="13">
-   <image width="128" height="128" source="../Grass/land_grass14.png"/>
+   <image width="64" height="64" source="../tiles/rpgTile013.png"/>
+  </tile>
+  <tile id="14">
+   <image width="64" height="64" source="../tiles/rpgTile014.png"/>
+  </tile>
+  <tile id="15">
+   <image width="64" height="64" source="../tiles/rpgTile018.png"/>
+  </tile>
+  <tile id="16">
+   <image width="64" height="64" source="../tiles/rpgTile019.png"/>
+  </tile>
+  <tile id="17">
+   <image width="64" height="64" source="../tiles/rpgTile020.png"/>
+  </tile>
+  <tile id="18">
+   <image width="64" height="64" source="../tiles/rpgTile021.png"/>
+  </tile>
+  <tile id="19">
+   <image width="64" height="64" source="../tiles/rpgTile022.png"/>
+  </tile>
+  <tile id="20">
+   <image width="64" height="64" source="../tiles/rpgTile023.png"/>
+  </tile>
+  <tile id="21">
+   <image width="64" height="64" source="../tiles/rpgTile024.png"/>
+  </tile>
+  <tile id="22">
+   <image width="64" height="64" source="../tiles/rpgTile025.png"/>
+  </tile>
+  <tile id="23">
+   <image width="64" height="64" source="../tiles/rpgTile026.png"/>
+  </tile>
+  <tile id="24">
+   <image width="64" height="64" source="../tiles/rpgTile027.png"/>
+  </tile>
+  <tile id="25">
+   <image width="64" height="64" source="../tiles/rpgTile028.png"/>
+  </tile>
+  <tile id="26">
+   <image width="64" height="64" source="../tiles/rpgTile029.png"/>
+  </tile>
+  <tile id="27">
+   <image width="64" height="64" source="../tiles/rpgTile030.png"/>
+  </tile>
+  <tile id="28">
+   <image width="64" height="64" source="../tiles/rpgTile031.png"/>
+  </tile>
+  <tile id="29">
+   <image width="64" height="64" source="../tiles/rpgTile032.png"/>
+  </tile>
+  <tile id="30">
+   <image width="64" height="64" source="../tiles/rpgTile036.png"/>
+  </tile>
+  <tile id="31">
+   <image width="64" height="64" source="../tiles/rpgTile037.png"/>
+  </tile>
+  <tile id="32">
+   <image width="64" height="64" source="../tiles/rpgTile038.png"/>
+  </tile>
+  <tile id="33">
+   <image width="64" height="64" source="../tiles/rpgTile039.png"/>
+  </tile>
+  <tile id="34">
+   <image width="64" height="64" source="../tiles/rpgTile040.png"/>
+  </tile>
+  <tile id="35">
+   <image width="64" height="64" source="../tiles/rpgTile041.png"/>
+  </tile>
+  <tile id="36">
+   <image width="64" height="64" source="../tiles/rpgTile042.png"/>
+  </tile>
+  <tile id="37">
+   <image width="64" height="64" source="../tiles/rpgTile043.png"/>
+  </tile>
+  <tile id="38">
+   <image width="64" height="64" source="../tiles/rpgTile044.png"/>
+  </tile>
+  <tile id="39">
+   <image width="64" height="64" source="../tiles/rpgTile045.png"/>
+  </tile>
+  <tile id="40">
+   <image width="64" height="64" source="../tiles/rpgTile046.png"/>
   </tile>
  </tileset>
- <layer name="Tile Layer 1" width="15" height="8">
+ <layer name="Tile Layer 1" width="30" height="17">
   <data encoding="csv">
-12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,
-12,4,4,4,4,4,4,4,4,4,4,4,4,4,12,
-12,4,4,4,4,4,4,4,4,4,4,4,4,4,12,
-12,4,4,4,4,4,4,4,4,4,4,4,4,4,12,
-12,4,4,4,4,4,4,4,4,4,4,4,4,4,12,
-12,4,4,4,4,4,4,4,4,4,4,4,4,4,12,
-12,4,4,4,4,4,4,4,4,4,4,4,4,4,12,
-12,12,12,12,12,12,12,12,12,12,12,12,12,12,12
+17,17,34,35,34,35,34,35,34,35,34,35,34,21,23,35,34,35,34,35,34,35,34,35,34,35,34,35,34,35,
+34,17,17,35,34,35,34,35,34,35,17,17,34,21,23,35,34,35,34,35,34,35,34,35,34,35,34,35,34,35,
+34,35,17,17,34,35,34,35,34,35,17,17,17,21,23,35,34,35,17,17,17,17,17,17,17,17,34,35,34,35,
+34,35,34,17,34,35,34,35,34,17,34,35,17,21,23,17,17,17,34,35,34,35,34,35,34,35,17,35,34,35,
+34,35,34,17,35,34,34,35,35,34,34,35,17,21,23,35,34,35,17,17,17,17,34,35,34,35,17,35,34,35,
+34,35,34,35,6,7,7,7,7,8,34,35,34,21,24,7,7,7,7,7,7,7,8,17,17,17,34,17,34,35,
+34,35,34,35,21,9,37,37,10,23,34,35,34,36,37,37,37,37,37,37,37,10,23,17,34,35,17,17,34,35,
+17,17,17,34,21,23,34,17,21,23,34,35,34,35,34,35,34,35,17,35,34,21,23,35,17,17,17,35,34,35,
+34,35,17,35,21,23,34,35,21,23,17,17,34,35,34,35,34,35,34,17,17,21,23,17,34,35,17,35,34,35,
+7,7,7,7,25,23,17,17,21,23,34,35,17,17,17,35,34,35,34,35,34,21,23,35,17,17,34,35,34,35,
+37,37,37,37,37,38,34,35,21,23,34,35,34,35,34,17,17,35,34,35,34,21,23,35,34,17,17,35,34,35,
+34,35,34,35,17,35,34,35,21,23,34,35,34,35,34,35,34,17,17,35,34,21,23,35,34,17,17,35,34,35,
+34,35,34,17,34,35,34,35,21,24,7,8,34,35,34,35,34,35,34,34,34,21,23,35,34,17,17,35,34,35,
+34,17,17,17,34,35,34,35,36,37,10,24,7,7,7,7,7,7,7,7,7,25,23,35,17,35,17,35,34,35,
+34,17,34,17,34,35,34,35,34,35,36,37,37,37,37,37,37,37,37,37,37,37,38,17,17,17,17,17,34,35,
+34,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,17,34,35,34,35,34,35,34,35,34,35,34,35,
+34,35,34,35,34,35,34,35,34,35,34,35,34,35,34,35,34,35,34,35,34,35,34,35,34,35,34,35,34,35
 </data>
  </layer>
- <objectgroup name="PathBoundary">
-  <object id="4" x="438" y="250" width="526" height="122"/>
- </objectgroup>
  <objectgroup name="Path">
-  <object id="3" name="PathLine" x="1600" y="1014">
-   <polyline points="0,0 -16,-666"/>
+  <object id="2" name="PathLine" x="0" y="640">
+   <polyline points="0,0 320,0 320,-256 576,-256 576,192 704,192 704,256 1408,256 1408,-256 896,-256 896,-640"/>
   </object>
+ </objectgroup>
+ <objectgroup name="PathBoundary">
+  <object id="9" x="-2" y="584" width="366" height="104"/>
+  <object id="11" x="266" y="342" width="106" height="336"/>
+  <object id="12" x="274" y="332" width="340" height="108"/>
+  <object id="13" x="522" y="334" width="104" height="540"/>
+  <object id="14" x="524" y="784" width="226" height="98"/>
+  <object id="18" x="648" y="776" width="102" height="164"/>
+  <object id="20" x="662" y="840" width="784" height="108"/>
+  <object id="21" x="1348" y="334" width="108" height="608"/>
+  <object id="22" x="852" y="330" width="528" height="102"/>
+  <object id="23" x="844" y="0" width="102" height="430"/>
  </objectgroup>
 </map>

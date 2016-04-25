@@ -16,6 +16,7 @@ import com.eric.mtd.state.GameStateManager;
 import com.eric.mtd.state.GameStateManager.GameState;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 
 /**
  * Game Screen that creates the Game Stage and UI Stage as well as their
@@ -38,10 +39,9 @@ public class GameScreen extends AbstractScreen {
 		LevelStateManager levelStateManager = new LevelStateManager();
 		GameUIStateManager uiStateManager = new GameUIStateManager(levelStateManager);
 		this.gameStateManager = gameStateManager;
-		gameStage = new GameStage(intLevel, player, actorGroups, levelStateManager, uiStateManager);
+		gameStage = new GameStage(intLevel, player, actorGroups, levelStateManager, uiStateManager, getViewport());
 		//gameStage.setViewport(getViewport());
-		gameUIStage = new GameUIStage(intLevel, player, actorGroups, uiStateManager, levelStateManager, gameStateManager, screenStateManager, super.getInputMultiplexer());
-		//gameUIStage.setViewport(getViewport());
+		gameUIStage = new GameUIStage(intLevel, player, actorGroups, uiStateManager, levelStateManager, gameStateManager, screenStateManager, super.getInputMultiplexer(), getViewport());
 		super.show();
 
 	}
@@ -65,7 +65,6 @@ public class GameScreen extends AbstractScreen {
 		gameUIStage.getViewport().setScreenSize(width, height); // update the size of ViewPort
 	    super.resize(width, height);
 	}
-    //getViewport().setScreenSize(width, height); // update the size of ViewPort
 	@Override
 	public void render(float delta) {
 		delta = delta * MTDGame.gameSpeed;

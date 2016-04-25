@@ -18,10 +18,14 @@ public class LevelSelectScreen extends AbstractScreen {
 		super(gameStateManager);
 		this.screenStateManager = screenStateManager;
 		this.stage = new LevelSelectStage(screenStateManager);
-		//stage.setViewport(getViewport());
 		super.addInputProcessor(stage);
 	}
-
+	@Override
+	public void resize(int width, int height) {
+		stage.getViewport().setScreenSize(width, height); // update the size of ViewPort
+	    super.resize(width, height);
+	}
+	
 	@Override
 	public void show() {
 		super.show();
