@@ -20,7 +20,6 @@ public class MenuScreen extends AbstractScreen {
 		super(gameStateManager);
 		Resources.loadGraphics();
 		this.stage = new MenuStage(screenStateManager);
-		//stage.setViewport(getViewport());
 		super.addInputProcessor(stage);
 		AudioUtil.load();
 		AudioUtil.playMusic();
@@ -29,10 +28,13 @@ public class MenuScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
-		// retrieve the default table actor
 
 	}
-
+	@Override
+	public void resize(int width, int height) {
+		stage.getViewport().setScreenSize(width, height); // update the size of ViewPortS
+	    super.resize(width, height);
+	}
 	@Override
 	public void renderElements(float delta) {
 		stage.act(delta);

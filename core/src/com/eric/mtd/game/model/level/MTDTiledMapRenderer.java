@@ -1,5 +1,6 @@
-package com.eric.mtd.game.ui;
+package com.eric.mtd.game.model.level;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
@@ -20,17 +21,17 @@ import com.eric.mtd.util.Resources;
 public class MTDTiledMapRenderer implements Disposable {
 	private TiledMap tiledMap;
 	private TiledMapRenderer tiledMapRenderer;
-	private GameStage camera;
+	private Camera camera;
 
-	public MTDTiledMapRenderer(int intLevel, GameStage camera) {
+	public MTDTiledMapRenderer(int intLevel, Camera camera) {
 		this.camera = camera;
 		tiledMap = Resources.getMap(intLevel);
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap,(float)(1/3f));
-		tiledMapRenderer.setView((OrthographicCamera) camera.getCamera());
+		tiledMapRenderer.setView((OrthographicCamera) camera);
 	}
 
 	public void update() {
-		tiledMapRenderer.setView((OrthographicCamera) camera.getCamera());
+		tiledMapRenderer.setView((OrthographicCamera) camera);
 		tiledMapRenderer.render();
 	}
 

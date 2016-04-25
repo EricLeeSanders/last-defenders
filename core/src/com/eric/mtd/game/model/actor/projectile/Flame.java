@@ -61,7 +61,7 @@ public class Flame extends Actor implements Pool.Poolable {
 	 * @param shooter
 	 * @param target
 	 */
-	public void initialize(GameActor shooter, GameActor target) {
+	public void initialize(GameActor shooter, GameActor target, Group targetGroup) {
 		this.shooter = shooter;
 		this.target = target;
 		if (shooter.getStage() instanceof GameStage) {
@@ -73,28 +73,9 @@ public class Flame extends Actor implements Pool.Poolable {
 
 		attackTick = (shooter.getAttackSpeed() / shooter.getAttack());
 		attackTickDamage = 1; // Do a little bit of damage each tick
-		determineTargetGroup();
+		this.targetGroup = targetGroup;
 	}
 
-	/**
-	 * Determines what the Target Group should be. Either Towers or Enemies.
-	 */
-	public void determineTargetGroup() {
-		if (shooter instanceof Tower) {
-			if (this.getStage() instanceof GameStage) {
-				targetGroup = ((GameStage) this.getStage()).getActorGroups().getEnemyGroup();
-			} else {
-				targetGroup = null;
-			}
-
-		} else {
-			if (this.getStage() instanceof GameStage) {
-				targetGroup = ((GameStage) this.getStage()).getActorGroups().getTowerGroup();
-			} else {
-				targetGroup = null;
-			}
-		}
-	}
 
 	/**
 	 * Attacks the Target Group with AOE Damage
