@@ -27,8 +27,9 @@ public abstract class Resources {
 	public static final String EXPLOSION_ATLAS = "game/actors/projectile/Explosion/Explosion.atlas";
 	public static final String FLAMES_ATLAS = "game/actors/projectile/Flames/Flames.atlas";
 
-	public static final int SCREEN_WIDTH = 640; // 16:9
-	public static final int SCREEN_HEIGHT = 360;
+	public static final float VIRTUAL_WIDTH = 640; // 16:9
+	public static final float VIRTUAL_HEIGHT = 360;
+	public static final float TILED_MAP_SCALE = (1f/3f);
 
 	public static final float NORMAL_SPEED = 1.0f;
 	public static final float DOUBLE_SPEED = 2.0f;

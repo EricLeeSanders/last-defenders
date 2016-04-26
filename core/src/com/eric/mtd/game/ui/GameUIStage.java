@@ -1,9 +1,14 @@
 package com.eric.mtd.game.ui;
 
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
+import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.ui.presenter.EnlistPresenter;
 import com.eric.mtd.game.ui.presenter.GameOverPresenter;
@@ -18,6 +23,7 @@ import com.eric.mtd.game.ui.view.InspectView;
 import com.eric.mtd.game.ui.view.OptionsView;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.state.GameStateManager;
+import com.eric.mtd.util.Resources;
 
 /**
  * Stage for handling the UI of the game
@@ -38,17 +44,20 @@ public class GameUIStage extends Stage {
 	private GameOverView gameOverView;
 
 	private Player player;
-	private int intLevel;
 	private GameUIStateManager uiStateManager;
 	private LevelStateManager levelStateManager;
 	private GameStateManager gameStateManager;
 	private ScreenStateManager screenStateManager;
 	private ActorGroups actorGroups;
 	private InputMultiplexer imp;
-
-	public GameUIStage(int intLevel, Player player, ActorGroups actorGroups, GameUIStateManager uiStateManager, LevelStateManager levelStateManager, GameStateManager gameStateManager, ScreenStateManager screenStateManager, InputMultiplexer imp) {
+	private Map map;
+	public GameUIStage(Player player, ActorGroups actorGroups
+			, GameUIStateManager uiStateManager, LevelStateManager levelStateManager
+			, GameStateManager gameStateManager, ScreenStateManager screenStateManager
+			, InputMultiplexer imp, Viewport viewport, Map map) {
+		super(viewport);
+		this.map = map;
 		this.imp = imp;
-		this.intLevel = intLevel;
 		this.player = player;
 		this.actorGroups = actorGroups;
 		this.uiStateManager = uiStateManager;
@@ -63,7 +72,7 @@ public class GameUIStage extends Stage {
 	 * Create and initialize the views and presenters of the Game UI
 	 */
 	public void createUI() {
-		this.enlistPresenter = new EnlistPresenter(uiStateManager, player, intLevel, actorGroups);
+		this.enlistPresenter = new EnlistPresenter(uiStateManager, player, actorGroups, map);
 		this.enlistView = new EnlistView(enlistPresenter);
 		enlistPresenter.setView(enlistView);
 

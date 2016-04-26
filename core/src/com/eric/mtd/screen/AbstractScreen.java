@@ -11,6 +11,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.eric.mtd.state.GameStateManager;
 import com.eric.mtd.state.GameStateManager.GameState;
@@ -24,15 +28,15 @@ import com.eric.mtd.util.Resources;
  *
  */
 public abstract class AbstractScreen implements Screen {
-	private Viewport viewport;
 	private OrthographicCamera camera;
 	private InputMultiplexer imp;
 	private GameStateManager gameStateManager;
+	private Viewport viewport;
 	public AbstractScreen(GameStateManager gameStateManager) {
 		this.gameStateManager = gameStateManager;
 		camera = new OrthographicCamera();
-		viewport = new ExtendViewport(Resources.SCREEN_WIDTH, Resources.SCREEN_HEIGHT, camera);
 		imp = new InputMultiplexer();
+		viewport = new FitViewport(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, getCamera());
 	}
 
 	public abstract void renderElements(float delta);
@@ -64,20 +68,9 @@ public abstract class AbstractScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		if (Logger.DEBUG)
-			System.out.println("changed to " + width + ", " + height);
-		camera.setToOrtho(false, width, height);
-		camera.update();
-		viewport.update(width, height, true); // Changes viewport
-		if (Logger.DEBUG)
-			System.out.println("viewport to " + viewport.getScreenWidth() + ", " + viewport.getScreenHeight());
-		BigInteger b1 = BigInteger.valueOf(viewport.getScreenWidth());
-		BigInteger b2 = BigInteger.valueOf(viewport.getScreenHeight());
-		BigInteger gcd = b1.gcd(b2);
-		if (Logger.DEBUG)
-			System.out.println(b1.divide(gcd) + "/" + b2.divide(gcd));
-		if (Logger.DEBUG)
-			System.out.println("World: " + viewport.getWorldWidth() + ", " + viewport.getWorldHeight());
+	    //camera.setToOrtho(false, (float)(width*aspectRatio), height);
+	    //camera.update();
+	    viewport.update(width, height, true); // Changes viewport
 	}
 
 	@Override
@@ -98,10 +91,9 @@ public abstract class AbstractScreen implements Screen {
 		return camera;
 	}
 
-	public Viewport getViewport() {
+	public Viewport getViewport(){
 		return viewport;
 	}
-
 	public InputMultiplexer getInputMultiplexer() {
 		return imp;
 	}

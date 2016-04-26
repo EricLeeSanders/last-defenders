@@ -13,6 +13,7 @@ import com.eric.mtd.game.model.level.state.ILevelStateObserver;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Logger;
 
 public class Level implements ILevelStateObserver {
@@ -82,6 +83,10 @@ public class Level implements ILevelStateObserver {
 
 	public int getCurrentWave() {
 		return currentWave;
+	}
+	
+	public Map getMap(){
+		return map;
 	}
 
 	@Override

@@ -3,51 +3,51 @@ TowerActors.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-TurretBags
+TankTurret
   rotate: false
-  xy: 1, 156
-  size: 80, 74
-  orig: 80, 74
-  offset: 0, 0
-  index: -1
-Bunker
-  rotate: false
-  xy: 1, 79
-  size: 75, 75
-  orig: 75, 75
+  xy: 1, 76
+  size: 30, 165
+  orig: 30, 165
   offset: 0, 0
   index: -1
 Tank
   rotate: false
-  xy: 1, 1
-  size: 50, 76
-  orig: 50, 76
+  xy: 33, 136
+  size: 69, 105
+  orig: 69, 105
   offset: 0, 0
   index: -1
-TankTurret
+Bunker
   rotate: false
-  xy: 83, 110
-  size: 22, 120
-  orig: 22, 120
+  xy: 33, 59
+  size: 75, 75
+  orig: 75, 75
   offset: 0, 0
   index: -1
 BunkerGun
   rotate: false
-  xy: 107, 125
+  xy: 104, 136
   size: 5, 105
   orig: 5, 105
   offset: 0, 0
   index: -1
+TurretBags
+  rotate: false
+  xy: 1, 1
+  size: 60, 56
+  orig: 60, 56
+  offset: 0, 0
+  index: -1
 Rifle
   rotate: false
-  xy: 53, 21
+  xy: 63, 1
   size: 32, 56
   orig: 32, 56
   offset: 0, 0
   index: -1
 TurretMachine
   rotate: false
-  xy: 53, 21
+  xy: 63, 1
   size: 32, 56
   orig: 32, 56
   offset: 0, 0
@@ -57,17 +57,43 @@ TowerActors2.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-old/TankTurret
+old/old2/TankTurret
   rotate: false
   xy: 1, 1
+  size: 22, 120
+  orig: 22, 120
+  offset: 0, 0
+  index: -1
+old/old2/Tank
+  rotate: false
+  xy: 25, 45
+  size: 50, 76
+  orig: 50, 76
+  offset: 0, 0
+  index: -1
+
+TowerActors3.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+old/TankTurret
+  rotate: false
+  xy: 1, 17
   size: 30, 165
   orig: 30, 165
   offset: 0, 0
   index: -1
 old/Tank
   rotate: false
-  xy: 33, 61
+  xy: 33, 77
   size: 69, 105
   orig: 69, 105
+  offset: 0, 0
+  index: -1
+old/TurretBags
+  rotate: false
+  xy: 33, 1
+  size: 80, 74
+  orig: 80, 74
   offset: 0, 0
   index: -1

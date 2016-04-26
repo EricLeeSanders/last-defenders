@@ -10,6 +10,7 @@ import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.model.actor.tower.Tower;
+import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.service.actorplacement.TowerPlacement;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
@@ -30,12 +31,13 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	private IEnlistView view;
 	private ActorGroups actorGroups;
 
-	public EnlistPresenter(GameUIStateManager uiStateManager, Player player, int intLevel, ActorGroups actorGroups) {
+	public EnlistPresenter(GameUIStateManager uiStateManager, Player player
+			, ActorGroups actorGroups, Map map) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.player = player;
 		this.actorGroups = actorGroups;
-		towerPlacement = new TowerPlacement(Resources.getMap(intLevel), actorGroups);
+		towerPlacement = new TowerPlacement(map, actorGroups);
 	}
 
 	/**

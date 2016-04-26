@@ -1,15 +1,22 @@
 package com.eric.mtd.game.stage;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.level.Level;
+import com.eric.mtd.game.model.level.MTDTiledMapRenderer;
+import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
-import com.eric.mtd.game.ui.MTDTiledMapRenderer;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.util.Logger;
@@ -32,8 +39,12 @@ public class GameStage extends Stage {
 	private ActorGroups actorGroups;
 	private MTDTiledMapRenderer mapRenderer;
 
-	public GameStage(int intLevel, Player player, ActorGroups actorGroups, LevelStateManager levelStateManager, GameUIStateManager uiStateManager) {
+	public GameStage(int intLevel, Player player, ActorGroups actorGroups, LevelStateManager levelStateManager, GameUIStateManager uiStateManager, Viewport viewport) {
+		//super(new ScalingViewport(Scaling.stretch, Resources.SCREEN_WIDTH, Resources.SCREEN_HEIGHT, new OrthographicCamera()));
+		//super(new ExtendViewport(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, new OrthographicCamera()));
+		super(viewport);
 		MTDGame.gameSpeed = (Resources.NORMAL_SPEED);
+		//super.setViewport(new ScalingViewport(Scaling.stretch, Resources.SCREEN_WIDTH, Resources.SCREEN_HEIGHT, new OrthographicCamera()));
 		this.player = player;
 		this.actorGroups = actorGroups;
 		this.levelStateManager = levelStateManager;
@@ -41,10 +52,9 @@ public class GameStage extends Stage {
 		this.intLevel = intLevel;
 		createGroups();
 		level = new Level(intLevel, levelStateManager, getActorGroups());
-		mapRenderer = new MTDTiledMapRenderer(intLevel, this);
+		mapRenderer = new MTDTiledMapRenderer(intLevel, getCamera());
 
 	}
-
 	/**
 	 * Create the actor groups
 	 */
@@ -74,7 +84,7 @@ public class GameStage extends Stage {
 	public void draw() {
 		mapRenderer.update();
 		super.draw();
-	}
+	}	
 
 	@Override
 	public void dispose() {
@@ -129,6 +139,10 @@ public class GameStage extends Stage {
 
 	public void setActorGroups(ActorGroups actorGroups) {
 		this.actorGroups = actorGroups;
+	}
+	
+	public Map getMap(){
+		return level.getMap();
 	}
 
 }

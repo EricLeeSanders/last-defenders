@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
@@ -13,8 +14,10 @@ import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.health.HealthBar;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.model.actor.tower.Tower;
+import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.Resources;
 
 /**
  * Responsible for placing the Tower on the Stage
@@ -25,25 +28,10 @@ import com.eric.mtd.util.Logger;
 public class TowerPlacement {
 	private Tower currentTower;
 	private ActorGroups actorGroups;
-	private Array<RectangleMapObject> pathBoundary = new Array<RectangleMapObject>();
-
-	public TowerPlacement(TiledMap tiledMap, ActorGroups actorGroups) {
+	private Map map;
+	public TowerPlacement(Map map, ActorGroups actorGroups) {
+		this.map = map;
 		this.actorGroups = actorGroups;
-		findPathBoundary(tiledMap);
-	}
-
-	/**
-	 * Finds the path boundaries from the Tiled Map
-	 * 
-	 * @param tiledMap
-	 */
-	private void findPathBoundary(TiledMap tiledMap) {
-		MapObjects boundaries = tiledMap.getLayers().get("PathBoundary").getObjects();
-		for (MapObject boundry : boundaries) {
-			if (boundry instanceof RectangleMapObject) {
-				pathBoundary.add((RectangleMapObject) boundry);
-			}
-		}
 	}
 
 	/**
@@ -147,7 +135,7 @@ public class TowerPlacement {
 	private boolean towerCollides() {
 		SnapshotArray<Actor> towers = actorGroups.getTowerGroup().getChildren();
 
-		if (CollisionDetection.CollisionWithPath(pathBoundary, currentTower)) {
+		if (CollisionDetection.CollisionWithPath(map.getPathBoundaries(), currentTower)) {
 			return true;
 		} else if (CollisionDetection.CollisionWithActors(towers, currentTower)) {
 			return true;
