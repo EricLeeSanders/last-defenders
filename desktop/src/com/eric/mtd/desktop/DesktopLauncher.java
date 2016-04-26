@@ -8,8 +8,8 @@ import com.eric.mtd.MTDGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 1024;
-        config.height = 768;
+		config.width = 640;
+        config.height = 360;
 		new LwjglApplication(new MTDGame(), config);
 	}
 }

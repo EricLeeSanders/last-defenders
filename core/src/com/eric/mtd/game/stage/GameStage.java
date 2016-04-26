@@ -14,6 +14,7 @@ import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.level.Level;
 import com.eric.mtd.game.model.level.MTDTiledMapRenderer;
+import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
@@ -138,6 +139,10 @@ public class GameStage extends Stage {
 
 	public void setActorGroups(ActorGroups actorGroups) {
 		this.actorGroups = actorGroups;
+	}
+	
+	public Map getMap(){
+		return level.getMap();
 	}
 
 }

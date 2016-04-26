@@ -84,6 +84,10 @@ public class Level implements ILevelStateObserver {
 	public int getCurrentWave() {
 		return currentWave;
 	}
+	
+	public Map getMap(){
+		return map;
+	}
 
 	@Override
 	public void changeLevelState(LevelState state) {

@@ -41,7 +41,8 @@ public class GameScreen extends AbstractScreen {
 		this.gameStateManager = gameStateManager;
 		gameStage = new GameStage(intLevel, player, actorGroups, levelStateManager, uiStateManager, getViewport());
 		//gameStage.setViewport(getViewport());
-		gameUIStage = new GameUIStage(intLevel, player, actorGroups, uiStateManager, levelStateManager, gameStateManager, screenStateManager, super.getInputMultiplexer(), getViewport());
+		gameUIStage = new GameUIStage(player, actorGroups, uiStateManager, levelStateManager, gameStateManager
+						, screenStateManager, super.getInputMultiplexer(), getViewport(), gameStage.getMap());
 		super.show();
 
 	}
