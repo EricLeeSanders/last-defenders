@@ -26,7 +26,7 @@ public class MTDTiledMapRenderer implements Disposable {
 	public MTDTiledMapRenderer(int intLevel, Camera camera) {
 		this.camera = camera;
 		tiledMap = Resources.getMap(intLevel);
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap,(float)(1/3f));
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap,Resources.TILED_MAP_SCALE);
 		tiledMapRenderer.setView((OrthographicCamera) camera);
 	}
 

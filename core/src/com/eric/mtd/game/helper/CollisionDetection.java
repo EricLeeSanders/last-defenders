@@ -34,17 +34,17 @@ public final class CollisionDetection {
 	 *            - The actor that is being places
 	 * @return boolean - If there is a collision
 	 */
-	public static boolean CollisionWithPath(Array<RectangleMapObject> pathBoundary, ICollision placeActor) {
+	public static boolean CollisionWithPath(Array<Rectangle> pathBoundary, ICollision placeActor) {
 		Shape2D body = placeActor.getBody();
-		for (RectangleMapObject boundry : pathBoundary) {
+		for (Rectangle boundry : pathBoundary) {
 			if (body instanceof Polygon) {
-				if (polygonAndRectangle((Polygon) body, boundry.getRectangle())) {
+				if (polygonAndRectangle((Polygon) body, boundry)) {
 					if (Logger.DEBUG)
 						System.out.println("intersect with path!");
 					return true;
 				}
 			} else if (body instanceof Rectangle) {
-				if (rectangleAndRectangle((Rectangle) body, boundry.getRectangle())) {
+				if (rectangleAndRectangle((Rectangle) body, boundry)) {
 					if (Logger.DEBUG)
 						System.out.println("intersect with path!");
 					return true;
