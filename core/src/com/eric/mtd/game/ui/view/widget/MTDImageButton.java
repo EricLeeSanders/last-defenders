@@ -13,8 +13,10 @@ public class MTDImageButton extends ImageButton {
 		TextureRegion imageRegion = (Resources.getAtlas(strAtlas).findRegion(regionName));
 		if (useImgAsSize) {
 			setSize(imageRegion.getRegionWidth(), imageRegion.getRegionHeight());
+			setBounds(rectangle.getRectangle().x, rectangle.getRectangle().y, imageRegion.getRegionWidth(), imageRegion.getRegionHeight());
 		} else {
 			setSize(rectangle.getRectangle().getWidth(), rectangle.getRectangle().getHeight());
+			setBounds(rectangle.getRectangle().x, rectangle.getRectangle().y, rectangle.getRectangle().getWidth(), rectangle.getRectangle().getHeight());
 		}
 		setPosition(rectangle.getRectangle().x, rectangle.getRectangle().y);
 		setName(layer + "_" + objectName);
