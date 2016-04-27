@@ -19,6 +19,7 @@ public class ActorGroups{
 	private Group flameGroup = new Group();
 	private Group explosionGroup = new Group();
 	private Group sandbagGroup = new Group();
+	private Group supportGroup = new Group();
 
 	public Group getBulletGroup() {
 		return bulletGroup;
@@ -74,6 +75,14 @@ public class ActorGroups{
 
 	public void setSandbagGroup(Group sandbagGroup) {
 		this.sandbagGroup = sandbagGroup;
+	}
+	
+	public Group getSupportGroup(){
+		return supportGroup;
+	}
+	
+	public void setSupportGroup(Group supportGroup){
+		this.supportGroup = supportGroup;
 	}
 
 }

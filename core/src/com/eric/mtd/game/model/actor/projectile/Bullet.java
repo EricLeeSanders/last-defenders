@@ -29,6 +29,11 @@ public class Bullet extends Actor implements Pool.Poolable {
 	private static final float SPEED = 350f;
 	private ShapeRenderer bullet = Resources.getShapeRenderer();
 	private GameActor target, shooter;
+	private Pool<Bullet> pool;
+	
+	public Bullet(Pool<Bullet> pool){
+		this.pool = pool;
+	}
 
 	/**
 	 * Initializes the bullet with the following parameters
@@ -93,7 +98,7 @@ public class Bullet extends Actor implements Pool.Poolable {
 		super.act(delta);
 		if (this.getActions().size == 0) {
 			Damage.dealBulletDamage(shooter, target);
-			ActorFactory.bulletPool.free(this);
+			pool.free(this);
 		}
 	}
 

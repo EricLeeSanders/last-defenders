@@ -43,29 +43,29 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	 * Creates the controls with the MTD widgets
 	 */
 	public void createControls() {
-		pnlSupport = new MTDImage("UI_Support", "panel", Resources.SUPPORT_ATLAS, "panel", true, false);
+		pnlSupport = new MTDImage("UI_Support", "panel", Resources.SUPPORT_UI_ATLAS, "panel", true, false);
 		pnlSupport.getColor().set(1f, 1f, 1f, .75f);
 		choosingGroup.addActor(pnlSupport);
 
-		btnLandmines = new MTDSupportButton("UI_Support", "btnLandmines", Resources.SUPPORT_ATLAS, "landminesEnabled"
+		btnLandmines = new MTDSupportButton("UI_Support", "btnLandmines", Resources.SUPPORT_UI_ATLAS, "landminesEnabled"
 										, "landminesDisabled", "Landmine", true, false);
 		setLandminesListener();
 		choosingGroup.addActor(btnLandmines);
 
-		btnAirstrike = new MTDSupportButton("UI_Support", "btnAirstrike", Resources.SUPPORT_ATLAS, "airstrikeEnabled"
+		btnAirstrike = new MTDSupportButton("UI_Support", "btnAirstrike", Resources.SUPPORT_UI_ATLAS, "airstrikeEnabled"
 										, "airstrikeDisabled", "Airstrike", true, false);
 		setAirstrikeListener();
 		choosingGroup.addActor(btnAirstrike);
 
-		btnApache = new MTDSupportButton("UI_Support", "btnApache", Resources.SUPPORT_ATLAS, "apacheEnabled"
+		btnApache = new MTDSupportButton("UI_Support", "btnApache", Resources.SUPPORT_UI_ATLAS, "apacheEnabled"
 										, "apacheDisabled", "Apache", true, false);
 		setApacheListener();
 		choosingGroup.addActor(btnApache);
 
-		btnCancel = new MTDImageButton("UI_Support", "btnCancel", Resources.SUPPORT_ATLAS, "cancel", false, false);
+		btnCancel = new MTDImageButton("UI_Support", "btnCancel", Resources.SUPPORT_UI_ATLAS, "cancel", false, false);
 		setCancelListener();
 		addActor(btnCancel);
-		btnPlace = new MTDImageButton("UI_Support", "btnPlace", Resources.SUPPORT_ATLAS, "place", false, false);
+		btnPlace = new MTDImageButton("UI_Support", "btnPlace", Resources.SUPPORT_UI_ATLAS, "place", false, false);
 		setPlaceListener();
 		addActor(btnPlace);
 

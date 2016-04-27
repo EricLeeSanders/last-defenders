@@ -15,6 +15,7 @@ import com.eric.mtd.game.model.actor.projectile.Bullet;
 import com.eric.mtd.game.model.actor.projectile.Explosion;
 import com.eric.mtd.game.model.actor.projectile.Flame;
 import com.eric.mtd.game.model.actor.projectile.RPG;
+import com.eric.mtd.game.model.actor.support.Apache;
 import com.eric.mtd.game.model.actor.support.Sandbag;
 import com.eric.mtd.game.model.actor.tower.*;
 import com.eric.mtd.util.Logger;
@@ -43,12 +44,13 @@ public class ActorFactory {
 	private static GameActorPool<GameActor> enemySniperPool = new GameActorPool<GameActor>(EnemySniper.class);
 	private static GameActorPool<GameActor> enemySprinterPool = new GameActorPool<GameActor>(EnemySprinter.class);
 	private static GameActorPool<GameActor> enemyHumveePool = new GameActorPool<GameActor>(EnemyHumvee.class);
-	public static HealthPool healthPool = new HealthPool();
-	public static BulletPool bulletPool = new BulletPool();
-	public static RPGPool rpgPool = new RPGPool();
-	public static ExplosionPool explosionPool = new ExplosionPool();
-	public static FlamePool flamePool = new FlamePool();
-	public static SandbagPool sandbagPool = new SandbagPool();
+	private static HealthPool healthPool = new HealthPool();
+	private static BulletPool bulletPool = new BulletPool();
+	private static RPGPool rpgPool = new RPGPool();
+	private static ExplosionPool explosionPool = new ExplosionPool();
+	private static FlamePool flamePool = new FlamePool();
+	private static SandbagPool sandbagPool = new SandbagPool();
+	private static ApachePool apachePool = new ApachePool();
 
 	/**
 	 * Obtains a tower from the pool
@@ -189,7 +191,22 @@ public class ActorFactory {
 		sandbag.setPositionCenter(pos);
 		return sandbag;
 	}
-
+	
+	/**
+	 * Obtain an Apache from the pool
+	 * 
+	 * @param pos
+	 *            - Position to place the Apache
+	 * @return Apache
+	 */
+	public static Apache loadApache(Vector2 pos) {
+		Apache apache = apachePool.obtain();
+		if (Logger.DEBUG)
+			System.out.println("Apache obtained");
+		apache.setPositionCenter(pos);
+		return apache;
+	}
+	
 	/**
 	 * Create a Game Actor
 	 * 
@@ -282,7 +299,7 @@ public class ActorFactory {
 	 * @return Health Bar
 	 */
 	protected static HealthBar createHealthBarActor() {
-		HealthBar healthBar = new HealthBar();
+		HealthBar healthBar = new HealthBar(healthPool);
 		if (Logger.DEBUG)
 			System.out.println("Created new healthbar");
 		return healthBar;
@@ -295,7 +312,7 @@ public class ActorFactory {
 	 * @return Bullet
 	 */
 	protected static Bullet createBulletActor() {
-		Bullet bullet = new Bullet();
+		Bullet bullet = new Bullet(bulletPool);
 		return bullet;
 
 	}
@@ -306,7 +323,7 @@ public class ActorFactory {
 	 * @return RPG
 	 */
 	protected static RPG createRPGActor() {
-		RPG rpg = new RPG();
+		RPG rpg = new RPG(rpgPool);
 		return rpg;
 
 	}
@@ -317,7 +334,7 @@ public class ActorFactory {
 	 * @return Explosion
 	 */
 	protected static Explosion createExplosionActor() {
-		Explosion explosion = new Explosion();
+		Explosion explosion = new Explosion(explosionPool);
 		return explosion;
 
 	}
@@ -328,7 +345,7 @@ public class ActorFactory {
 	 * @return Flame
 	 */
 	protected static Flame createFlameActor() {
-		Flame flame = new Flame();
+		Flame flame = new Flame(flamePool);
 		return flame;
 
 	}
@@ -344,6 +361,17 @@ public class ActorFactory {
 
 	}
 
+	/**
+	 * Create an Apache
+	 * 
+	 * @return Apache
+	 */
+	protected static Apache createApacheActor() {
+		Apache apache = new Apache(apachePool);
+		return apache;
+
+	}
+	
 	public static class GameActorPool<T extends GameActor> extends Pool<GameActor> {
 		private final Class<? extends GameActor> type;
 
@@ -397,6 +425,13 @@ public class ActorFactory {
 		@Override
 		protected Sandbag newObject() {
 			return createSandbagActor();
+		}
+	}
+	
+	public static class ApachePool extends Pool<Apache> {
+		@Override
+		protected Apache newObject() {
+			return createApacheActor();
 		}
 	}
 }

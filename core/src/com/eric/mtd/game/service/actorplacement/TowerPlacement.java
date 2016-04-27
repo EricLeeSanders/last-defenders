@@ -40,12 +40,7 @@ public class TowerPlacement {
 	 * @return Boolean - tower is Rotatable
 	 */
 	public boolean isTowerRotatable() {
-		if (getCurrentTower() instanceof IRotatable) {
-			return true;
-		} else {
-			return false;
-
-		}
+		return (getCurrentTower() instanceof IRotatable);
 	}
 
 	/**
