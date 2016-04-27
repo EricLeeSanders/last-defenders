@@ -74,7 +74,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	}
 
 	/**
-	 * Show the enlist view
+	 * Show the Enlist view
 	 */
 	public void enlist() {
 		uiStateManager.setState(GameUIState.ENLISTING);
@@ -82,10 +82,10 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	}
 
 	/**
-	 * Show the perks view
+	 * Show the Support view
 	 */
-	public void perks() {
-		// stateManager.setState(State.PERKS);
+	public void support() {
+		uiStateManager.setState(GameUIState.SUPPORT);
 
 	}
 
@@ -112,6 +112,9 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 			break;
 		case OPTIONS:
 			view.optionsState();
+			break;
+		case SUPPORT:
+			view.supportState();
 			break;
 		case ENLISTING:
 			view.enlistingState();

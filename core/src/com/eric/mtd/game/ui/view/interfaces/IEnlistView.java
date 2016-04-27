@@ -14,5 +14,5 @@ public interface IEnlistView {
 
 	public void standByState();
 
-	public void towerShowing(boolean rotatable);
+	public void setTowerVisible(boolean rotatable);
 }

@@ -313,7 +313,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	}
 
 	@Override
-	public void towerShowing(boolean rotatable) {
+	public void setTowerVisible(boolean rotatable) {
 		btnPlace.setVisible(true);
 		btnRotate.setVisible(rotatable);
 

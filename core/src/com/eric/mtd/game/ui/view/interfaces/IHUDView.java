@@ -9,6 +9,8 @@ package com.eric.mtd.game.ui.view.interfaces;
  */
 public interface IHUDView {
 	public void standByState();
+	
+	public void supportState();
 
 	public void enlistingState();
 

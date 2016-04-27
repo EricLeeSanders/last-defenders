@@ -16,6 +16,7 @@ import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.interfaces.IEnlistView;
+import com.eric.mtd.game.ui.view.interfaces.ISupportView;
 import com.eric.mtd.util.Resources;
 
 /**
@@ -24,20 +25,17 @@ import com.eric.mtd.util.Resources;
  * @author Eric
  *
  */
-public class EnlistPresenter implements IGameUIStateObserver {
-	private TowerPlacement towerPlacement;
+public class SupportPresenter implements IGameUIStateObserver {
 	private GameUIStateManager uiStateManager;
 	private Player player;
-	private IEnlistView view;
+	private ISupportView view;
 	private ActorGroups actorGroups;
 
-	public EnlistPresenter(GameUIStateManager uiStateManager, Player player
-			, ActorGroups actorGroups, Map map) {
+	public SupportPresenter(GameUIStateManager uiStateManager, Player player, ActorGroups actorGroups) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.player = player;
 		this.actorGroups = actorGroups;
-		towerPlacement = new TowerPlacement(map, actorGroups);
 	}
 
 	/**
@@ -45,75 +43,18 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 * 
 	 * @param view
 	 */
-	public void setView(IEnlistView view) {
+	public void setView(ISupportView view) {
 		this.view = view;
 		changeUIState(uiStateManager.getState());
 	}
 
 	/**
-	 * Create a tower
-	 * 
-	 * @param strEnlistTower
+	 * Cancel Support
 	 */
-	public void createTower(String strEnlistTower) {
-		towerPlacement.createTower(strEnlistTower);
-		uiStateManager.setState(GameUIState.PLACING_TOWER);
-	}
-
-	/**
-	 * Try to place a tower
-	 */
-	public void placeTower() {
-		int cost = towerPlacement.getCurrentTower().getCost();
-		if (towerPlacement.placeTower()) {
-			uiStateManager.setStateReturn();
-			player.spendMoney(cost);
-			towerPlacement.removeCurrentTower();
-
-		}
-	}
-
-	/**
-	 * Cancel enlisting
-	 */
-	public void cancelEnlist() {
+	public void cancelSupport() {
 		uiStateManager.setStateReturn();
-		towerPlacement.removeCurrentTower();
 	}
-
-	/**
-	 * Move the tower
-	 * 
-	 * @param coords
-	 *            - Position to move
-	 */
-	public void moveTower(Vector2 coords) {
-		if (towerPlacement.isCurrentTower() && uiStateManager.getState().equals(GameUIState.PLACING_TOWER)) {
-			towerPlacement.moveTower(coords);
-			view.setTowerVisible(this.isTowerRotatable());
-		}
-	}
-
-	/**
-	 * Rotate the tower
-	 */
-	public void rotateTower() {
-		towerPlacement.rotateTower(1);
-	}
-
-	/**
-	 * Determine if tower is able to be rotated
-	 * 
-	 * @return
-	 */
-	public boolean isTowerRotatable() {
-		if (towerPlacement.getCurrentTower() instanceof IRotatable) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
+	
 	/**
 	 * Show/Hide tower ranges for all towers
 	 * 
@@ -161,12 +102,12 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	@Override
 	public void changeUIState(GameUIState state) {
 		switch (state) {
-		case ENLISTING:
-			view.enlistingState();
+		case SUPPORT:
+			view.supportState();
 			showTowerRanges(false);
 			break;
-		case PLACING_TOWER:
-			view.placingTowerState();
+		case PLACING_SUPPORT:
+			view.placingSupportState();
 			showTowerRanges(true);
 			break;
 		default:
