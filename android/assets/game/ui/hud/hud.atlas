@@ -38,50 +38,38 @@ quit
   orig: 50, 50
   offset: 0, 0
   index: -1
-wave
+support
   rotate: false
   xy: 695, 379
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
+wave
+  rotate: false
+  xy: 747, 431
+  size: 50, 50
+  orig: 50, 50
+  offset: 0, 0
+  index: -1
 options
   rotate: false
-  xy: 747, 433
+  xy: 643, 277
   size: 50, 48
   orig: 50, 48
   offset: 0, 0
   index: -1
 lives
   rotate: false
-  xy: 643, 282
+  xy: 695, 334
   size: 50, 43
   orig: 50, 43
   offset: 0, 0
   index: -1
 dollarsign
   rotate: false
-  xy: 695, 327
+  xy: 747, 379
   size: 34, 50
   orig: 34, 50
-  offset: 0, 0
-  index: -1
-
-hud2.png
-format: RGBA8888
-filter: Nearest,Nearest
-repeat: none
-old/enlist
-  rotate: false
-  xy: 1, 53
-  size: 500, 667
-  orig: 500, 667
-  offset: 0, 0
-  index: -1
-old/enlist
-  rotate: false
-  xy: 1, 1
-  size: 94, 50
-  orig: 94, 50
   offset: 0, 0
   index: -1

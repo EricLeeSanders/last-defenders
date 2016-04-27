@@ -18,7 +18,7 @@ public abstract class Resources {
 	public static final String LEVEL_SELECT_ATLAS = "level_select/level_select.atlas";
 	public static final String HUD_ATLAS = "game/ui/hud/hud.atlas";
 	public static final String ENLIST_ATLAS = "game/ui/enlist/enlist.atlas";
-	public static final String PERKS_ATLAS = "game/ui/perks/perks.atlas";
+	public static final String SUPPORT_ATLAS = "game/ui/support/support.atlas";
 	public static final String OPTIONS_ATLAS = "game/ui/options/options.atlas";
 	public static final String GAME_OVER_ATLAS = "game/ui/gameover/gameover.atlas";
 	public static final String INSPECT_ATLAS = "game/ui/inspect/inspect.atlas";
@@ -71,7 +71,7 @@ public abstract class Resources {
 		Resources.loadAtlas(Resources.MENU_ATLAS);
 		Resources.loadAtlas(Resources.HUD_ATLAS);
 		Resources.loadAtlas(Resources.ENLIST_ATLAS);
-		Resources.loadAtlas(Resources.PERKS_ATLAS);
+		Resources.loadAtlas(Resources.SUPPORT_ATLAS);
 		Resources.loadAtlas(Resources.INSPECT_ATLAS);
 		Resources.loadAtlas(Resources.OPTIONS_ATLAS);
 		Resources.loadAtlas(Resources.GAME_OVER_ATLAS);

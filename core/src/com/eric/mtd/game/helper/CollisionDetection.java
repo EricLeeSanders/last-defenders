@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.interfaces.ICollision;
-import com.eric.mtd.game.model.actor.perks.Sandbag;
+import com.eric.mtd.game.model.actor.support.Sandbag;
 import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.util.Logger;
 import com.badlogic.gdx.math.Shape2D;
