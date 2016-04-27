@@ -36,11 +36,12 @@ public class Explosion extends Actor implements Pool.Poolable {
 	private float stateTime; // counter for animation
 	private TextureRegion[] explosionRegions = new TextureRegion[16];
 	private GameActor shooter, target;
-
+	private Pool<Explosion> pool;
 	/**
 	 * Constructs an Explosion.
 	 */
-	public Explosion() {
+	public Explosion(Pool<Explosion> pool) {
+		this.pool = pool;
 		TextureAtlas explosionAtlas = Resources.getAtlas(Resources.EXPLOSION_ATLAS);
 		for (int i = 0; i < 16; i++) {
 			explosionRegions[i] = explosionAtlas.findRegion("Explosion" + (i + 1));
@@ -79,7 +80,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 
 		batch.draw(currentExplosion, this.getX() - (currentExplosion.getRegionWidth() / 2), this.getY() - (currentExplosion.getRegionHeight() / 2));
 		if (explosionAnimation.isAnimationFinished(stateTime)) {
-			ActorFactory.explosionPool.free(this);
+			pool.free(this);
 		}
 	}
 

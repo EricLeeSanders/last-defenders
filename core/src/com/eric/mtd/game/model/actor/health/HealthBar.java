@@ -27,7 +27,11 @@ public class HealthBar extends Actor implements Pool.Poolable {
 	private float armorPercentage;
 	private float healthBarSize;
 	private float armorBarSize;
-
+	private Pool<HealthBar> pool;
+	public HealthBar(Pool<HealthBar> pool) {
+		this.pool = pool;
+	}
+		
 	@Override
 	public void draw(Batch batch, float alpha) {
 		if (actor != null) {
@@ -71,7 +75,7 @@ public class HealthBar extends Actor implements Pool.Poolable {
 		if (actor.isDead() || actor == null) {
 			if (Logger.DEBUG)
 				System.out.println("Freeing Healthbar");
-			ActorFactory.healthPool.free(this);
+			pool.free(this);
 		}
 	}
 

@@ -32,7 +32,10 @@ public class RPG extends Actor implements Pool.Poolable {
 	private GameActor target, shooter;
 	private Group targetGroup;
 	private Vector2 destination;
-
+	private Pool<RPG> pool;
+	public RPG(Pool<RPG> pool){
+		this.pool = pool;
+	}
 	/**
 	 * Initializes an RPG
 	 * 
@@ -100,7 +103,7 @@ public class RPG extends Actor implements Pool.Poolable {
 			Explosion explosion = ActorFactory.loadExplosion(); // Get an
 																// Explosion
 			explosion.initialize(shooter, target, targetGroup, destination);
-			ActorFactory.rpgPool.free(this);
+			pool.free(this);
 
 		}
 

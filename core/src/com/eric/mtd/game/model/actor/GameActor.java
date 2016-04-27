@@ -45,9 +45,9 @@ public abstract class GameActor extends Actor implements Pool.Poolable, ICollisi
 	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private Color rangeColor = new Color(1.0f, 0f, 0f, 0.5f);
 	private boolean showRange, hasArmor, dead;
-	private GameActorPool<GameActor> pool;
+	private Pool<GameActor> pool;
 	private List<IGameActorObserver> observers = new CopyOnWriteArrayList<IGameActorObserver>();
-	public GameActor(TextureRegion textureRegion, GameActorPool<GameActor> pool, float[] bodyPoints, Vector2 textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range) {
+	public GameActor(TextureRegion textureRegion, Pool<GameActor> pool, float[] bodyPoints, Vector2 textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range) {
 		this.MAX_HEALTH = health;
 		this.MAX_ARMOR = armor;
 		this.RESET_ATTACK = attack;

@@ -44,11 +44,13 @@ public class Flame extends Actor implements Pool.Poolable {
 	Polygon targetBodySnap = null;
 	private float attackCounter = 0;
 	private float attackTick, attackTickDamage;
+	private Pool<Flame> pool;
 
 	/**
 	 * Constructs a flame
 	 */
-	public Flame() {
+	public Flame(Pool<Flame> pool) {
+		this.pool = pool;
 		TextureAtlas flameAtlas = Resources.getAtlas(Resources.FLAMES_ATLAS);
 		for (int i = 0; i < 25; i++) {
 			flameRegions[i] = flameAtlas.findRegion("Flame" + (i + 1));
@@ -85,7 +87,7 @@ public class Flame extends Actor implements Pool.Poolable {
 		super.act(delta);
 		if (shooter.isDead()) {
 			this.remove();
-			ActorFactory.flamePool.free(this);
+			pool.free(this);
 			System.out.println("Testing actor remove");
 			return;
 		}
@@ -122,7 +124,7 @@ public class Flame extends Actor implements Pool.Poolable {
 		batch.begin();
 		batch.draw(currentFlame, this.getX(), this.getY(), this.getOriginX(), this.getOriginY(), currentFlame.getRegionWidth(), currentFlame.getRegionHeight(), 1, 1, this.getRotation());
 		if (flameAnimation.isAnimationFinished(stateTime)) {
-			ActorFactory.flamePool.free(this);
+			pool.free(this);
 		}
 	}
 

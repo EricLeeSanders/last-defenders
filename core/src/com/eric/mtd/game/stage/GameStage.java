@@ -40,11 +40,8 @@ public class GameStage extends Stage {
 	private MTDTiledMapRenderer mapRenderer;
 
 	public GameStage(int intLevel, Player player, ActorGroups actorGroups, LevelStateManager levelStateManager, GameUIStateManager uiStateManager, Viewport viewport) {
-		//super(new ScalingViewport(Scaling.stretch, Resources.SCREEN_WIDTH, Resources.SCREEN_HEIGHT, new OrthographicCamera()));
-		//super(new ExtendViewport(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, new OrthographicCamera()));
 		super(viewport);
 		MTDGame.gameSpeed = (Resources.NORMAL_SPEED);
-		//super.setViewport(new ScalingViewport(Scaling.stretch, Resources.SCREEN_WIDTH, Resources.SCREEN_HEIGHT, new OrthographicCamera()));
 		this.player = player;
 		this.actorGroups = actorGroups;
 		this.levelStateManager = levelStateManager;
@@ -66,6 +63,7 @@ public class GameStage extends Stage {
 		this.addActor(getActorGroups().getFlameGroup());
 		this.addActor(getActorGroups().getBulletGroup());
 		this.addActor(getActorGroups().getSandbagGroup());
+		this.addActor(getActorGroups().getSupportGroup());
 	}
 
 	/**
