@@ -18,9 +18,9 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.helper.Damage;
-import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IFlame;
-import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Logger;
@@ -37,7 +37,7 @@ public class Flame extends Actor implements Pool.Poolable {
 	private TextureRegion currentFlame;
 	private float stateTime;
 	private TextureRegion[] flameRegions = new TextureRegion[25];
-	private GameActor shooter, target;
+	private CombatActor shooter, target;
 	private ShapeRenderer flameOutline = Resources.getShapeRenderer();
 	private Group targetGroup;
 	Polygon poly = null;
@@ -63,7 +63,7 @@ public class Flame extends Actor implements Pool.Poolable {
 	 * @param shooter
 	 * @param target
 	 */
-	public void initialize(GameActor shooter, GameActor target, Group targetGroup) {
+	public void initialize(CombatActor shooter, CombatActor target, Group targetGroup) {
 		this.shooter = shooter;
 		this.target = target;
 		if (shooter.getStage() instanceof GameStage) {

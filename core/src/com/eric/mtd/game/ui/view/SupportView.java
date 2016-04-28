@@ -119,7 +119,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.createApache();
+				presenter.createSupportActor("Apache");
 			}
 		});
 	}
@@ -131,7 +131,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 				super.touchUp(event, x, y, pointer, button);
 				if (Logger.DEBUG)
 					System.out.println("Place Pressed");
-				presenter.placeApache();
+				presenter.placeSupportActor();
 			}
 		});
 	}
@@ -169,7 +169,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2(screenX, screenY));
-		presenter.moveApache(coords);
+		presenter.moveSupportActor(coords);
 		return false;
 	}
 
@@ -182,7 +182,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2(screenX, screenY));
-		presenter.moveApache(coords);
+		presenter.moveSupportActor(coords);
 		return false;
 
 	}

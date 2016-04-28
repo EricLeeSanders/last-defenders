@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" nextobjectid="80">
- <layer name="Tile Layer 1" width="40" height="23">
+ <layer name="Tile Layer 1" width="40" height="23" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -69,13 +69,13 @@
   <object id="42" name="lblSpeedCost" x="398" y="333" width="64" height="20"/>
   <object id="43" name="lblArmorLevel1" x="85" y="257" width="25" height="15"/>
  </objectgroup>
- <objectgroup name="UI_Enlist" visible="0">
+ <objectgroup name="UI_Enlist">
   <object id="44" name="btnTank" x="15" y="197" width="140" height="160"/>
   <object id="45" name="btnRifle" x="15" y="15" width="140" height="160"/>
   <object id="46" name="btnCancel" x="582" y="313" width="50" height="50"/>
   <object id="47" name="panel" x="0" y="0" width="640" height="368"/>
   <object id="48" name="btnRotate" x="582" y="192" width="50" height="50"/>
-  <object id="49" name="btnPlace" x="582" y="249" width="50" height="50"/>
+  <object id="49" name="btnPlace" x="582" y="254" width="50" height="50"/>
   <object id="50" name="btnMachine" x="176" y="15" width="140" height="160"/>
   <object id="51" name="btnTurret" x="176" y="197" width="140" height="160"/>
   <object id="52" name="btnSniper" x="334" y="15" width="140" height="160"/>

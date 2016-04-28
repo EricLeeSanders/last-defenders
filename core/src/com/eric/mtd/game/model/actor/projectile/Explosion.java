@@ -13,8 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.helper.Damage;
-import com.eric.mtd.game.model.actor.GameActor;
-import com.eric.mtd.game.model.actor.tower.Tower;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.AudioUtil;
@@ -35,7 +35,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 											// animation to draw
 	private float stateTime; // counter for animation
 	private TextureRegion[] explosionRegions = new TextureRegion[16];
-	private GameActor shooter, target;
+	private CombatActor shooter, target;
 	private Pool<Explosion> pool;
 	/**
 	 * Constructs an Explosion.
@@ -52,7 +52,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 	/**
 	 * Initializes an Explosion and deals Damage
 	 */
-	public void initialize(GameActor shooter, GameActor target, Group targetGroup, Vector2 position) {
+	public void initialize(CombatActor shooter, CombatActor target, Group targetGroup, Vector2 position) {
 		if (Logger.DEBUG)
 			System.out.println("Setting RPG");
 		AudioUtil.playProjectileSound(ProjectileSound.RPG_EXPLOSION);

@@ -9,10 +9,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.interfaces.ICollision;
 import com.eric.mtd.game.model.actor.support.Sandbag;
-import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.util.Logger;
 import com.badlogic.gdx.math.Shape2D;
 
@@ -70,7 +70,7 @@ public final class CollisionDetection {
 		Shape2D placeBody = placeActor.getBody();
 		for (Actor actor : Actors) {
 			if (actor instanceof Tower) { // Checks for collision with towers
-				towerBody = ((GameActor) actor).getBody();
+				towerBody = ((CombatActor) actor).getBody();
 				if (!actor.equals(placeActor)) {
 					if (placeBody instanceof Polygon) {
 						if (polygonAndPolygon(towerBody, (Polygon) placeBody)) {
@@ -135,14 +135,14 @@ public final class CollisionDetection {
 	 *            - The coords where the player clicked
 	 * @return boolean - If a tower was hit.
 	 */
-	public static GameActor towerHit(SnapshotArray<Actor> Towers, Vector2 clickCoord) {
+	public static CombatActor towerHit(SnapshotArray<Actor> Towers, Vector2 clickCoord) {
 		Rectangle clickRect = new Rectangle(clickCoord.x, clickCoord.y, 1, 1);
 		for (Actor tower : Towers) {
 			if (tower instanceof Tower) {
-				Polygon towerBody = ((GameActor) tower).getBody();
+				Polygon towerBody = ((CombatActor) tower).getBody();
 				towerBody.getTransformedVertices();
 				if (polygonAndRectangle(towerBody, clickRect)) {
-					return (GameActor) tower;
+					return (CombatActor) tower;
 				}
 			}
 		}

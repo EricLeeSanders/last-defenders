@@ -7,9 +7,9 @@ import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
-import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
-import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.service.actorplacement.TowerPlacement;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
@@ -129,7 +129,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 				System.out.println("Showing ranges2");
 				if (tower instanceof Tower) {
 					System.out.println("Showing ranges3");
-					((GameActor) tower).setShowRange(showRanges);
+					((CombatActor) tower).setShowRange(showRanges);
 				}
 			}
 		}

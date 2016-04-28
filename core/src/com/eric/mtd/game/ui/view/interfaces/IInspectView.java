@@ -1,6 +1,6 @@
 package com.eric.mtd.game.ui.view.interfaces;
 
-import com.eric.mtd.game.model.actor.tower.Tower;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 
 /**
  * Interface for Inspect View. Used by the Inspect Presenter to communicate with

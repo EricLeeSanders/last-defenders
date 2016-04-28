@@ -1,4 +1,4 @@
-package com.eric.mtd.game.model.actor.enemy;
+package com.eric.mtd.game.model.actor.combat.enemy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,10 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.eric.mtd.MTDGame;
-import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.ai.EnemyAI;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.interfaces.IPassiveEnemy;
-import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Logger;
 
@@ -25,13 +25,13 @@ import com.eric.mtd.util.Logger;
  * @author Eric
  *
  */
-public abstract class Enemy extends GameActor {
+public abstract class Enemy extends CombatActor {
 	private static final float ATTACK_DELAY = 1f; // The delay to wait after
 													// attacking
 	private static final float FIND_TARGET_DELAY = 3f; // Delay between finding
 														// Targets
 														// TODO: Randomize
-	private GameActorPool<GameActor> pool;
+	private CombatActorPool<CombatActor> pool;
 	// Better to use a list for the LengthTillEnd Method
 	private List<MoveToAction> actionList = new ArrayList<MoveToAction>();
 	private int actionIndex = 0; // Current index in the actionList
@@ -47,7 +47,7 @@ public abstract class Enemy extends GameActor {
 									// Used to calculate in LengthTillEndMethod
 									// Class variable for optimization
 
-	public Enemy(TextureRegion[] textureRegions, GameActorPool<GameActor> pool, float[] bodyPoints, Vector2 textureSize, Vector2 gunPos, float speed, float health, float armor, float attack, float attackSpeed, float range) {
+	public Enemy(TextureRegion[] textureRegions, CombatActorPool<CombatActor> pool, float[] bodyPoints, Vector2 textureSize, Vector2 gunPos, float speed, float health, float armor, float attack, float attackSpeed, float range) {
 		super(textureRegions[0], pool, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.textureRegions = textureRegions;
 		this.pool = pool;
@@ -55,7 +55,7 @@ public abstract class Enemy extends GameActor {
 		multipleTextures = true;
 	}
 
-	public Enemy(TextureRegion textureRegion, GameActorPool<GameActor> pool, float[] bodyPoints, Vector2 textureSize, Vector2 gunPos, float speed, float health, float armor, float attack, float attackSpeed, float range) {
+	public Enemy(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, float[] bodyPoints, Vector2 textureSize, Vector2 gunPos, float speed, float health, float armor, float attack, float attackSpeed, float range) {
 		super(textureRegion, pool, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.speed = speed;
 		this.pool = pool;
@@ -181,12 +181,12 @@ public abstract class Enemy extends GameActor {
 				if (textureCounter >= 0.3f) {
 					textureCounter = 0;
 					textureIndex++;
-					super.setTexture(textureRegions[textureIndex % 2]);
+					super.setTextureRegion(textureRegions[textureIndex % 2]);
 				} else {
 					textureCounter += delta;
 				}
 			} else {
-				super.setTexture(textureRegions[2]); // Stationary when
+				super.setTextureRegion(textureRegions[2]); // Stationary when
 														// attacking
 			}
 		}

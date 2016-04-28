@@ -17,18 +17,18 @@ import com.eric.mtd.game.service.actorfactory.ActorFactory.SandbagPool;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
-public class Apache extends Actor implements Pool.Poolable {
-	private static final int COST = 1000;
+public class Apache extends SupportActor{
+	private static final int COST = 2000;
 	private static final float SCALE = 0.5f;
 	private TextureRegion currentTexture;
 	private TextureRegion [] textureRegions;
 	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private boolean active;
-	private Pool<Apache> pool;
 	private float textureCounter; // Used to animate textures
 	private int textureIndex; // Current texture index
-	public Apache(Pool<Apache> pool, TextureRegion [] textureRegions) {
-		this.pool = pool;
+	public Apache(Pool<SupportActor> pool, TextureRegion [] textureRegions) {
+		super(pool, textureRegions[0], new Vector2(textureRegions[0].getRegionWidth()*SCALE, textureRegions[0].getRegionHeight()*SCALE),
+				COST);
 		this.textureRegions = textureRegions;
 		this.setOrigin((textureRegions[0].getRegionWidth() / 2), 0);
 		this.setSize(this.textureRegions[0].getRegionWidth()*SCALE, this.textureRegions[0].getRegionHeight()*SCALE);
@@ -38,10 +38,7 @@ public class Apache extends Actor implements Pool.Poolable {
 	public void reset() {
 		if (Logger.DEBUG)
 			System.out.println("freeing apache");
-		this.setActive(false);
-		this.setRotation(0);
-		this.clear();
-		this.remove();
+		super.reset();
 	}
 
 	@Override
@@ -49,24 +46,7 @@ public class Apache extends Actor implements Pool.Poolable {
 		super.act(delta);
 		changeTextures(delta);
 	}
-
-	public void freeActor() {
-		pool.free(this);
-	}
 	
-	@Override
-	public void draw(Batch batch, float alpha) {
-		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glEnable(GL20.GL_BLEND);
-		batch.end();
-		debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-		debugBody.begin(ShapeType.Line);
-		debugBody.setColor(Color.RED);
-		debugBody.rect(this.getX(), this.getY(), this.getWidth(), this.getHeight());
-		debugBody.end();
-		batch.begin();
-		batch.draw(currentTexture, this.getX(), this.getY(), this.getOriginX(), this.getOriginY(), this.getWidth(), this.getHeight(), this.getScaleX(), this.getScaleY(), this.getRotation());
-	}
 
 	/**
 	 * Handles the changing of textures
@@ -77,30 +57,11 @@ public class Apache extends Actor implements Pool.Poolable {
 		if (textureCounter >= 0.2f) {
 			textureCounter = 0;
 			textureIndex++;
-			currentTexture = textureRegions[textureIndex % 3];
+			super.setTextureRegion(textureRegions[textureIndex % 3]);
 		} else {
 			textureCounter += delta;
 		}
 	}
-	
-	public void setPositionCenter(Vector2 pos) {
-		this.setPosition(pos.x - (this.getWidth() / 2), pos.y - (this.getHeight() / 2));
-	}
-
-	public Vector2 getPositionCenter() {
-		return new Vector2(getX() + (textureRegions[0].getRegionWidth() / 2), getY() + (textureRegions[0].getRegionHeight() / 2));
-	}
 
 
-	public boolean isActive() {
-		return active;
-	}
-
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-
-	public static int getCost() {
-		return COST;
-	}
 }

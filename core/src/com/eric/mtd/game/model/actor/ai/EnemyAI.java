@@ -3,10 +3,10 @@ package com.eric.mtd.game.model.actor.ai;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.eric.mtd.game.helper.CollisionDetection;
-import com.eric.mtd.game.model.actor.enemy.Enemy;
+import com.eric.mtd.game.model.actor.combat.enemy.Enemy;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.health.interfaces.IPlatedArmor;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
-import com.eric.mtd.game.model.actor.tower.Tower;
 
 /**
  * Contains Enemy AI methods to find towers.

@@ -3,11 +3,11 @@ package com.eric.mtd.game.model.actor.ai;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.eric.mtd.game.helper.CollisionDetection;
-import com.eric.mtd.game.model.actor.GameActor;
-import com.eric.mtd.game.model.actor.enemy.Enemy;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.combat.enemy.Enemy;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.health.interfaces.IPlatedArmor;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
-import com.eric.mtd.game.model.actor.tower.Tower;
 
 /**
  * Contains Tower AI methods to find enemies.
@@ -66,7 +66,7 @@ public final class TowerAI {
 	 * @param enemyGroup
 	 * @return Enemy
 	 */
-	public static GameActor findFirstEnemy(Tower tower, SnapshotArray<Actor> enemies) {
+	public static CombatActor findFirstEnemy(Tower tower, SnapshotArray<Actor> enemies) {
 		if (enemies.size == 0) {
 			return null;
 		}

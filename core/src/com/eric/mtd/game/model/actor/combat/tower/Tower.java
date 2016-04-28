@@ -1,4 +1,4 @@
-package com.eric.mtd.game.model.actor.tower;
+package com.eric.mtd.game.model.actor.combat.tower;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,11 +6,11 @@ import java.util.List;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.eric.mtd.game.model.actor.GameActor;
-import com.eric.mtd.game.model.actor.IGameActorObserver;
+import com.eric.mtd.game.model.actor.ICombatActorObserver;
 import com.eric.mtd.game.model.actor.ai.TowerAI;
 import com.eric.mtd.game.model.actor.ai.TowerTargetPriority;
-import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
 
 /**
  * Represents a Tower
@@ -18,7 +18,7 @@ import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
  * @author Eric
  *
  */
-public abstract class Tower extends GameActor {
+public abstract class Tower extends CombatActor {
 	public static final int TOWER_RANGE_LEVEL_MAX = 2;
 	public static final int TOWER_ATTACK_SPEED_LEVEL_MAX = 2;
 	public static final int TOWER_ATTACK_LEVEL_MAX = 2;
@@ -30,11 +30,11 @@ public abstract class Tower extends GameActor {
 			attackLevel;
 	private TowerTargetPriority targetPriority = TowerTargetPriority.FIRST;
 	private boolean active = false; // Used for placing a tower
-	private GameActorPool<GameActor> pool;
+	private CombatActorPool<CombatActor> pool;
 	private float attackCounter = 0;
 	private Group enemyTargetGroup;
 	private int kills;
-	public Tower(TextureRegion textureRegion, GameActorPool<GameActor> pool, float[] bodyPoints, Vector2 textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost, int rangeIncreaseCost, int attackIncreaseCost) {
+	public Tower(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, float[] bodyPoints, Vector2 textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost, int rangeIncreaseCost, int attackIncreaseCost) {
 		super(textureRegion, pool, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.pool = pool;
 		this.cost = cost;
