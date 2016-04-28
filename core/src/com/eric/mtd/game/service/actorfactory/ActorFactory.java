@@ -367,7 +367,12 @@ public class ActorFactory {
 	 * @return Apache
 	 */
 	protected static Apache createApacheActor() {
-		Apache apache = new Apache(apachePool);
+		TextureAtlas supportAtlas = Resources.getAtlas(Resources.SUPPORT_ATLAS);
+		TextureRegion [] textureRegions = new TextureRegion[3];
+		textureRegions[0] = supportAtlas.findRegion("apache1");
+		textureRegions[1] = supportAtlas.findRegion("apache2");
+		textureRegions[2] = supportAtlas.findRegion("apache3");
+		Apache apache = new Apache(apachePool, textureRegions);
 		return apache;
 
 	}

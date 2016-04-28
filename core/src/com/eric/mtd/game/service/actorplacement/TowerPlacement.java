@@ -108,10 +108,8 @@ public class TowerPlacement {
 			if (!towerCollides()) {
 
 				currentTower.setShowRange(false);
-				currentTower.remove();
 				currentTower.setActive(true);
 				currentTower.setDead(false);
-				actorGroups.getTowerGroup().addActor(currentTower);
 				HealthBar healthBar = ActorFactory.loadHealthBar();
 				healthBar.setActor(currentTower);
 				actorGroups.getHealthBarGroup().addActor(healthBar);
@@ -143,7 +141,7 @@ public class TowerPlacement {
 	 * Remove the current tower
 	 */
 	public void removeCurrentTower() {
-		if (currentTower != null) {
+		if (isCurrentTower()) {
 			currentTower.freeActor();
 			currentTower = null;
 		}
@@ -155,11 +153,7 @@ public class TowerPlacement {
 	 * @return boolean
 	 */
 	public boolean isCurrentTower() {
-		if (currentTower == null) {
-			return false;
-		} else {
-			return true;
-		}
+		return (currentTower != null);
 	}
 
 	public Tower getCurrentTower() {

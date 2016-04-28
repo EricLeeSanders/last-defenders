@@ -12,4 +12,6 @@ public interface ISupportView {
 	public void placingSupportState();
 
 	public void standByState();
+	
+	public void showBtnPlace();
 }
