@@ -1,4 +1,4 @@
-package com.eric.mtd.game.model.actor.tower;
+package com.eric.mtd.game.model.actor.combat.tower;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -10,14 +10,14 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.health.interfaces.IPlatedArmor;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.model.actor.interfaces.IVehicle;
 import com.eric.mtd.game.model.actor.projectile.RPG;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
-import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -51,7 +51,7 @@ public class TowerTank extends Tower implements IVehicle, IRPG, IPlatedArmor, IR
 	private ShapeRenderer rangeShape = Resources.getShapeRenderer();
 	private float bodyRotation;
 
-	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, GameActorPool<GameActor> pool) {
+	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool) {
 		super(turretRegion, pool, BODY, TEXTURE_TURRET_SIZE, GUN_POS, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.bodyRegion = bodyRegion;
 		this.turretRegion = turretRegion;
@@ -94,7 +94,7 @@ public class TowerTank extends Tower implements IVehicle, IRPG, IPlatedArmor, IR
 	}
 
 	/**
-	 * Body of the Tank. GameActor/Tower holds the Turret but not the body Which
+	 * Body of the Tank. CombatActor/Tower holds the Turret but not the body Which
 	 * we don't care about for collision detection.
 	 */
 	@Override

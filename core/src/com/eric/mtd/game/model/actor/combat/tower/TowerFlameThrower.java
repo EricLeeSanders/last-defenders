@@ -1,12 +1,12 @@
-package com.eric.mtd.game.model.actor.tower;
+package com.eric.mtd.game.model.actor.combat.tower;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.projectile.Flame;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IFlame;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
-import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
 import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.AudioUtil.ProjectileSound;
@@ -34,7 +34,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
 	public static final Vector2 GUN_POS = new Vector2(4, 26);
 	public static final Vector2 TEXTURE_SIZE = new Vector2(32, 56);
 
-	public TowerFlameThrower(TextureRegion actorRegion, GameActorPool<GameActor> pool) {
+	public TowerFlameThrower(TextureRegion actorRegion, CombatActorPool<CombatActor> pool) {
 		super(actorRegion, pool, BODY, TEXTURE_SIZE, GUN_POS, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 	}
 

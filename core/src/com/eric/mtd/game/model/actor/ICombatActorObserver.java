@@ -4,6 +4,6 @@ package com.eric.mtd.game.model.actor;
  * @author Eric
  *
  */
-public interface IGameActorObserver {
+public interface ICombatActorObserver {
 	public void notifty();
 }

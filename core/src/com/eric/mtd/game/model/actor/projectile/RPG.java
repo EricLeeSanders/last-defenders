@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.game.helper.Damage;
-import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Logger;
@@ -29,7 +29,7 @@ import com.eric.mtd.util.Resources;
 public class RPG extends Actor implements Pool.Poolable {
 	private static final float SPEED = 350f;
 	private ShapeRenderer rpg = Resources.getShapeRenderer();
-	private GameActor target, shooter;
+	private CombatActor target, shooter;
 	private Group targetGroup;
 	private Vector2 destination;
 	private Pool<RPG> pool;
@@ -46,7 +46,7 @@ public class RPG extends Actor implements Pool.Poolable {
 	 * @param size
 	 *            - Size of the RPG
 	 */
-	public void initialize(GameActor shooter, GameActor target, Group targetGroup, Vector2 pos, Vector2 size) {
+	public void initialize(CombatActor shooter, CombatActor target, Group targetGroup, Vector2 pos, Vector2 size) {
 		this.target = target;
 		this.shooter = shooter;
 		this.targetGroup = targetGroup;

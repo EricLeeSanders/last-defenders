@@ -7,12 +7,11 @@ import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
-import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
-import com.eric.mtd.game.model.actor.support.Apache;
-import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.level.Map;
-import com.eric.mtd.game.service.actorplacement.ApachePlacement;
+import com.eric.mtd.game.service.actorplacement.SupportActorPlacement;
 import com.eric.mtd.game.service.actorplacement.TowerPlacement;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
@@ -28,7 +27,7 @@ import com.eric.mtd.util.Resources;
  *
  */
 public class SupportPresenter implements IGameUIStateObserver {
-	private ApachePlacement apachePlacement;
+	private SupportActorPlacement supportActorPlacement;
 	private GameUIStateManager uiStateManager;
 	private Player player;
 	private ISupportView view;
@@ -39,7 +38,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 		uiStateManager.attach(this);
 		this.player = player;
 		this.actorGroups = actorGroups;
-		apachePlacement = new ApachePlacement(actorGroups);
+		supportActorPlacement = new SupportActorPlacement(actorGroups);
 	}
 
 	/**
@@ -53,23 +52,23 @@ public class SupportPresenter implements IGameUIStateObserver {
 	}
 	
 	/**
-	 * Create an Apache
+	 * Create a Support Actor
 	 * 
 	 */
-	public void createApache() {
-		apachePlacement.createApache();
+	public void createSupportActor(String type) {
+		supportActorPlacement.createSupportActor(type);
 		uiStateManager.setState(GameUIState.PLACING_SUPPORT);
 	}
 	
 	/**
-	 * Try to place an Apache
+	 * Try to place a Support Actor
 	 */
-	public void placeApache() {
-		int cost = Apache.getCost();
-		if (apachePlacement.placeApache()) {
+	public void placeSupportActor() {
+		int cost = supportActorPlacement.getCurrentSupportActor().getCost();
+		if (supportActorPlacement.placeSupportActor()) {
 			uiStateManager.setStateReturn();
 			player.spendMoney(cost);
-			apachePlacement.removeCurrentApache();
+			supportActorPlacement.removeCurrentSupportActor();
 
 		}
 	}
@@ -78,19 +77,19 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Cancel Support
 	 */
 	public void cancelSupport() {
-		apachePlacement.removeCurrentApache();
+		supportActorPlacement.removeCurrentSupportActor();
 		uiStateManager.setStateReturn();
 	}
 	
 	/**
-	 * Move the Apache
+	 * Move the Support Actor
 	 * 
 	 * @param coords
 	 *            - Position to move
 	 */
-	public void moveApache(Vector2 coords) {
-		if (apachePlacement.isCurrentApache() && uiStateManager.getState().equals(GameUIState.PLACING_SUPPORT)) {
-			apachePlacement.moveApache(coords);
+	public void moveSupportActor(Vector2 coords) {
+		if (supportActorPlacement.isCurrentSupportActor() && uiStateManager.getState().equals(GameUIState.PLACING_SUPPORT)) {
+			supportActorPlacement.moveSupportActor(coords);
 			view.showBtnPlace();
 		}
 	}
@@ -105,7 +104,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 			System.out.println("Showing ranges");
 			for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
 				if (tower instanceof Tower) {
-					((GameActor) tower).setShowRange(showRanges);
+					((CombatActor) tower).setShowRange(showRanges);
 				}
 			}
 		}

@@ -5,10 +5,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
-import com.eric.mtd.game.model.actor.GameActor;
-import com.eric.mtd.game.model.actor.IGameActorObserver;
+import com.eric.mtd.game.model.actor.ICombatActorObserver;
 import com.eric.mtd.game.model.actor.ai.TowerTargetPriority;
-import com.eric.mtd.game.model.actor.tower.Tower;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.level.state.ILevelStateObserver;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
@@ -24,7 +24,7 @@ import com.eric.mtd.util.Logger;
  * @author Eric
  *
  */
-public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserver, IGameActorObserver {
+public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserver, ICombatActorObserver {
 	private GameUIStateManager uiStateManager;
 	private LevelStateManager levelStateManager;
 	private Tower selectedTower;
@@ -170,7 +170,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	public void showTowerRanges(boolean showRanges) {
 		for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
 			if (tower instanceof Tower) {
-				((GameActor) tower).setShowRange(showRanges);
+				((CombatActor) tower).setShowRange(showRanges);
 			}
 		}
 	}

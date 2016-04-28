@@ -1,4 +1,4 @@
-package com.eric.mtd.game.model.actor.tower;
+package com.eric.mtd.game.model.actor.combat.tower;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -10,11 +10,11 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
-import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.projectile.Bullet;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
-import com.eric.mtd.game.service.actorfactory.ActorFactory.GameActorPool;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
 import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -54,7 +54,7 @@ public class TowerTurret extends Tower implements IRotatable {
 	private ShapeRenderer body = Resources.getShapeRenderer();
 	private float bodyRotation;
 
-	public TowerTurret(TextureRegion bodyRegion, TextureRegion turretRegion, GameActorPool<GameActor> pool) {
+	public TowerTurret(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool) {
 		super(turretRegion, pool, BODY, TEXTURE_TURRET_SIZE, GUN_POS, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.bodyRegion = bodyRegion;
 		this.turretRegion = turretRegion;
@@ -97,7 +97,7 @@ public class TowerTurret extends Tower implements IRotatable {
 	}
 
 	/**
-	 * Body of the Turret. GameActor/Tower holds the Turret but not the body
+	 * Body of the Turret. CombatActor/Tower holds the Turret but not the body
 	 * Which we don't care about for collision detection.
 	 */
 	@Override
