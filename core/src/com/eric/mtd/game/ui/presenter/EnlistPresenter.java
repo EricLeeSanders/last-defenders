@@ -90,7 +90,10 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	public void moveTower(Vector2 coords) {
 		if (towerPlacement.isCurrentTower() && uiStateManager.getState().equals(GameUIState.PLACING_TOWER)) {
 			towerPlacement.moveTower(coords);
-			view.setTowerVisible(this.isTowerRotatable());
+			view.showBtnPlace();
+			if(isTowerRotatable()){
+				view.showBtnRotate();
+			}
 		}
 	}
 
@@ -120,13 +123,16 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 * @param showRanges
 	 */
 	public void showTowerRanges(boolean showRanges) {
-		if (showRanges)
+		if (showRanges){
+			System.out.println("Showing ranges1");
 			for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
+				System.out.println("Showing ranges2");
 				if (tower instanceof Tower) {
-					if (showRanges)
-						((GameActor) tower).setShowRange(showRanges);
+					System.out.println("Showing ranges3");
+					((GameActor) tower).setShowRange(showRanges);
 				}
 			}
+		}
 	}
 
 	/**

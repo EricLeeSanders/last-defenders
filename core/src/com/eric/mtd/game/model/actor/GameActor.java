@@ -191,8 +191,6 @@ public abstract class GameActor extends Actor implements Pool.Poolable, ICollisi
 	public Vector2 getPositionCenter() {
 		positionCenter.set(getX() + (textureSize.x / 2), getY() + (textureSize.y / 2));
 		return positionCenter;
-		// return new Vector2(getX()+(textureSize.x/2),
-		// getY()+(textureSize.y/2));
 	}
 
 	public Vector2 getRotatedCoords(Vector2 coords) {

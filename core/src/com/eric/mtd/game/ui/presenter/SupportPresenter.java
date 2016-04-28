@@ -9,8 +9,10 @@ import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
+import com.eric.mtd.game.model.actor.support.Apache;
 import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.level.Map;
+import com.eric.mtd.game.service.actorplacement.ApachePlacement;
 import com.eric.mtd.game.service.actorplacement.TowerPlacement;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
@@ -26,6 +28,7 @@ import com.eric.mtd.util.Resources;
  *
  */
 public class SupportPresenter implements IGameUIStateObserver {
+	private ApachePlacement apachePlacement;
 	private GameUIStateManager uiStateManager;
 	private Player player;
 	private ISupportView view;
@@ -36,6 +39,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 		uiStateManager.attach(this);
 		this.player = player;
 		this.actorGroups = actorGroups;
+		apachePlacement = new ApachePlacement(actorGroups);
 	}
 
 	/**
@@ -47,12 +51,48 @@ public class SupportPresenter implements IGameUIStateObserver {
 		this.view = view;
 		changeUIState(uiStateManager.getState());
 	}
+	
+	/**
+	 * Create an Apache
+	 * 
+	 */
+	public void createApache() {
+		apachePlacement.createApache();
+		uiStateManager.setState(GameUIState.PLACING_SUPPORT);
+	}
+	
+	/**
+	 * Try to place an Apache
+	 */
+	public void placeApache() {
+		int cost = Apache.getCost();
+		if (apachePlacement.placeApache()) {
+			uiStateManager.setStateReturn();
+			player.spendMoney(cost);
+			apachePlacement.removeCurrentApache();
+
+		}
+	}
 
 	/**
 	 * Cancel Support
 	 */
 	public void cancelSupport() {
+		apachePlacement.removeCurrentApache();
 		uiStateManager.setStateReturn();
+	}
+	
+	/**
+	 * Move the Apache
+	 * 
+	 * @param coords
+	 *            - Position to move
+	 */
+	public void moveApache(Vector2 coords) {
+		if (apachePlacement.isCurrentApache() && uiStateManager.getState().equals(GameUIState.PLACING_SUPPORT)) {
+			apachePlacement.moveApache(coords);
+			view.showBtnPlace();
+		}
 	}
 	
 	/**
@@ -61,13 +101,14 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * @param showRanges
 	 */
 	public void showTowerRanges(boolean showRanges) {
-		if (showRanges)
+		if (showRanges){
+			System.out.println("Showing ranges");
 			for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
 				if (tower instanceof Tower) {
-					if (showRanges)
-						((GameActor) tower).setShowRange(showRanges);
+					((GameActor) tower).setShowRange(showRanges);
 				}
 			}
+		}
 	}
 
 	/**
@@ -110,9 +151,11 @@ public class SupportPresenter implements IGameUIStateObserver {
 			view.placingSupportState();
 			showTowerRanges(true);
 			break;
-		default:
+		case STANDBY:
 			view.standByState();
 			showTowerRanges(false);
+			break;
+		default:
 			break;
 		}
 

@@ -198,9 +198,10 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 			showTowerRanges(true);
 			break;
 		case STANDBY:
-		default:
 			view.standByState();
 			showTowerRanges(false);
+			break;
+		default:
 			break;
 		}
 
@@ -213,8 +214,10 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 		case WAVE_IN_PROGRESS:
 			view.dischargeEnabled(false);
 			break;
-		default:
+		case STANDBY:
 			view.dischargeEnabled(true);
+		default:
+			break;
 		}
 		
 	}
