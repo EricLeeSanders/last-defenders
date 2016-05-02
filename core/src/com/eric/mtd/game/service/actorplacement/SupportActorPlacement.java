@@ -6,8 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
-import com.eric.mtd.game.model.actor.support.Apache;
-import com.eric.mtd.game.model.actor.support.Sandbag;
 import com.eric.mtd.game.model.actor.support.SupportActor;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.util.Logger;
@@ -21,10 +19,11 @@ public class SupportActorPlacement {
 	}
 
 	public void createSupportActor(String type) {
-		currentSupportActor = ActorFactory.loadSupportActor(new Vector2(0, 0), type);
+		currentSupportActor = ActorFactory.loadSupportActor(new Vector2(0, 0), type, actorGroups.getEnemyGroup());
 		actorGroups.getSupportGroup().addActor(currentSupportActor);
 		currentSupportActor.setActive(false);
 		currentSupportActor.setVisible(false);
+		
 	}
 
 	public void moveSupportActor(Vector2 clickCoords) {
@@ -32,6 +31,7 @@ public class SupportActorPlacement {
 			if (!currentSupportActor.isVisible()) {
 				currentSupportActor.setVisible(true);
 			}
+			currentSupportActor.setShowRange(true);
 			currentSupportActor.setPositionCenter(clickCoords);
 			if (Logger.DEBUG)
 				System.out.println(currentSupportActor.getPositionCenter());
@@ -40,7 +40,9 @@ public class SupportActorPlacement {
 
 	public boolean placeSupportActor() {
 		if (currentSupportActor != null) {
+			//currentSupportActor.initialize(currentSupportActor.getPositionCenter());
 			currentSupportActor.setActive(true);
+			currentSupportActor.setShowRange(false);
 			currentSupportActor = null;
 			return true;
 		}

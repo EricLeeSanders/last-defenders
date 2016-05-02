@@ -19,6 +19,7 @@ public class GameActor extends Actor{
 	public GameActor(TextureRegion textureRegion, Vector2 textureSize){
 		this.setTextureRegion(textureRegion);
 		this.setTextureSize(textureSize);
+		this.setSize(textureSize.x, textureSize.y);
 		this.setOrigin(textureSize.x / 2, textureSize.y / 2);
 	}
 	

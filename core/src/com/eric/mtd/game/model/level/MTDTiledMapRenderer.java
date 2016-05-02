@@ -31,7 +31,7 @@ public class MTDTiledMapRenderer implements Disposable {
 	}
 
 	public void update() {
-		tiledMapRenderer.setView((OrthographicCamera) camera);
+		//tiledMapRenderer.setView((OrthographicCamera) camera);
 		tiledMapRenderer.render();
 	}
 

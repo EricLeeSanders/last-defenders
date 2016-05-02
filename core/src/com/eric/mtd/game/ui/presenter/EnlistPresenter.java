@@ -124,11 +124,8 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 */
 	public void showTowerRanges(boolean showRanges) {
 		if (showRanges){
-			System.out.println("Showing ranges1");
 			for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
-				System.out.println("Showing ranges2");
 				if (tower instanceof Tower) {
-					System.out.println("Showing ranges3");
 					((CombatActor) tower).setShowRange(showRanges);
 				}
 			}
@@ -145,7 +142,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	public boolean canAffordTower(String tower) {
 
 		try {
-			Class<?> myClass = Class.forName("com.eric.mtd.game.model.actor.tower.Tower" + tower);
+			Class<?> myClass = Class.forName("com.eric.mtd.game.model.actor.combat.tower.Tower" + tower);
 			Field field = ClassReflection.getDeclaredField(myClass, "COST");
 			field.setAccessible(true);
 			int cost = (Integer) field.get(null);

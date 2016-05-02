@@ -18,8 +18,8 @@ import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.eric.mtd.game.model.actor.GameActor;
-import com.eric.mtd.game.model.actor.ICombatActorObserver;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
+import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.model.actor.interfaces.ICollision;
 import com.eric.mtd.game.model.actor.interfaces.IVehicle;
 import com.eric.mtd.util.AudioUtil;
@@ -34,7 +34,7 @@ import com.badlogic.gdx.utils.Pool;
  * @author Eric
  *
  */
-public abstract class CombatActor extends GameActor implements Pool.Poolable, ICollision {
+public abstract class CombatActor extends GameActor implements Pool.Poolable, ICollision, IAttacker {
 	private final float RESET_ATTACK_SPEED, RESET_RANGE, MAX_HEALTH, MAX_ARMOR, RESET_ATTACK;
 	private float attackSpeed, range, health, attack, armor;
 	private Vector2 gunPos;
@@ -198,10 +198,9 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		return getRotatedCoords(pos);
 
 	}
-
+	@Override
 	public Shape2D getRangeShape() {
-		Vector2 center = getPositionCenter();
-		return new Circle(center.x, center.y, range);
+		return new Circle(getPositionCenter().x, getPositionCenter().y, range);
 	}
 
 	public float getAttackSpeed() {

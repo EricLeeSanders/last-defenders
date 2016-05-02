@@ -12,21 +12,19 @@ import com.badlogic.gdx.utils.Disposable;
  *
  */
 public class ActorGroups{
-	private Group bulletGroup = new Group();
+	private Group projectileGroup = new Group();
 	private Group enemyGroup = new Group();
 	private Group towerGroup = new Group();
 	private Group healthBarGroup = new Group();
-	private Group flameGroup = new Group();
-	private Group explosionGroup = new Group();
 	private Group sandbagGroup = new Group();
 	private Group supportGroup = new Group();
 
-	public Group getBulletGroup() {
-		return bulletGroup;
+	public Group getProjectileGroup() {
+		return projectileGroup;
 	}
 
-	public void setBulletGroup(Group bulletGroup) {
-		this.bulletGroup = bulletGroup;
+	public void setProjectileGroup(Group projectileGroup) {
+		this.projectileGroup = projectileGroup;
 	}
 
 	public Group getTowerGroup() {
@@ -51,22 +49,6 @@ public class ActorGroups{
 
 	public void setHealthBarGroup(Group healthBarGroup) {
 		this.healthBarGroup = healthBarGroup;
-	}
-
-	public Group getFlameGroup() {
-		return flameGroup;
-	}
-
-	public void setFlameGroup(Group flameGroup) {
-		this.flameGroup = flameGroup;
-	}
-
-	public Group getExplosionGroup() {
-		return explosionGroup;
-	}
-
-	public void setExplosionGroup(Group explosionGroup) {
-		this.explosionGroup = explosionGroup;
 	}
 
 	public Group getSandbagGroup() {

@@ -6,7 +6,7 @@ import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.model.actor.combat.enemy.Enemy;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.health.interfaces.IPlatedArmor;
-import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
+import com.eric.mtd.game.model.actor.projectile.interfaces.IAoe;
 
 /**
  * Contains Enemy AI methods to find towers.
@@ -37,7 +37,7 @@ public class EnemyAI {
 						if (((Tower) tower).getPositionCenter().dst(enemy.getPositionCenter()) < firstTowerDistance) {
 							// If the enemy is instanceof IRPG then it can
 							// attack plated towers.
-							if ((tower instanceof IPlatedArmor == false) || (enemy instanceof IRPG)) {
+							if ((tower instanceof IPlatedArmor == false) || (enemy instanceof IAoe)) {
 								firstTower = (Tower) tower;
 								firstTowerDistance = ((Tower) tower).getPositionCenter().dst(enemy.getPositionCenter());
 							}

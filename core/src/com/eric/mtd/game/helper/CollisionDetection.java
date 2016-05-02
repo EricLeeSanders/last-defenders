@@ -109,7 +109,20 @@ public final class CollisionDetection {
 		}
 		return false;
 	}
-
+	/**
+	 * Checks for collision bewteen a LandMine and an Enemy
+	 * @param landMineBody
+	 * @param enemy
+	 * @return boolean - If there is a collision
+	 */
+	public static boolean landMineAndEnemy(Rectangle landMineBody, Polygon enemy){
+		if (polygonAndRectangle(enemy, landMineBody)) {
+			if (Logger.DEBUG)
+				System.out.println("target hit!");
+			return true;
+		}
+		return false;
+	}
 	/**
 	 * Checks for collision between a bullet and its target
 	 * 

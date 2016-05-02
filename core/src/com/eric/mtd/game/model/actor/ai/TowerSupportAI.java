@@ -7,7 +7,8 @@ import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.enemy.Enemy;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.health.interfaces.IPlatedArmor;
-import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
+import com.eric.mtd.game.model.actor.interfaces.IAttacker;
+import com.eric.mtd.game.model.actor.projectile.interfaces.IAoe;
 
 /**
  * Contains Tower AI methods to find enemies.
@@ -15,16 +16,16 @@ import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
  * @author Eric
  *
  */
-public final class TowerAI {
+public final class TowerSupportAI {
 	/**
 	 * Finds the enemy farthest away from the end of the path within range of
 	 * the tower
 	 * 
-	 * @param tower
+	 * @param attacker
 	 * @param enemyGroup
 	 * @return Enemy
 	 */
-	public static Enemy findLastEnemy(Tower tower, SnapshotArray<Actor> enemies) {
+	public static Enemy findLastEnemy(IAttacker attacker, SnapshotArray<Actor> enemies) {
 		if (enemies.size == 0) {
 			return null;
 		}
@@ -34,9 +35,9 @@ public final class TowerAI {
 		for (Actor enemy : enemies) {
 			if (enemy instanceof Enemy) {
 				if (((Enemy) enemy).isDead() == false) {
-					if (CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(), tower.getRangeShape())) {
+					if (CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(), attacker.getRangeShape())) {
 						if (((Enemy) enemy).lengthTillEnd() > lastEnemyDistance) {
-							if ((enemy instanceof IPlatedArmor == false) || (tower instanceof IRPG)) {
+							if ((enemy instanceof IPlatedArmor == false) || (attacker instanceof IAoe)) {
 								lastEnemy = (Enemy) enemy;
 								lastEnemyDistance = ((Enemy) enemy).lengthTillEnd();
 							} else {
@@ -60,13 +61,13 @@ public final class TowerAI {
 	}
 
 	/**
-	 * Finds the enemy closest to the end of the path within range of the tower
+	 * Finds the enemy closest to the end of the path within range of the attacker
 	 * 
-	 * @param tower
+	 * @param attacker
 	 * @param enemyGroup
 	 * @return Enemy
 	 */
-	public static CombatActor findFirstEnemy(Tower tower, SnapshotArray<Actor> enemies) {
+	public static CombatActor findFirstEnemy(IAttacker attacker, SnapshotArray<Actor> enemies) {
 		if (enemies.size == 0) {
 			return null;
 		}
@@ -76,9 +77,9 @@ public final class TowerAI {
 		for (Actor enemy : enemies) {
 			if (enemy instanceof Enemy) {
 				if (((Enemy) enemy).isDead() == false) {
-					if (CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(), tower.getRangeShape())) {
+					if (CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(), attacker.getRangeShape())) {
 						if (((Enemy) enemy).lengthTillEnd() < firstEnemyDistance) {
-							if ((enemy instanceof IPlatedArmor == false) || (tower instanceof IRPG)) {
+							if ((enemy instanceof IPlatedArmor == false) || (attacker instanceof IAoe)) {
 								firstEnemy = (Enemy) enemy;
 								firstEnemyDistance = ((Enemy) enemy).lengthTillEnd();
 							} else {
@@ -97,13 +98,13 @@ public final class TowerAI {
 	}
 
 	/**
-	 * Finds the enemy with the least health within range of the tower
+	 * Finds the enemy with the least health within range of the attacker
 	 * 
-	 * @param tower
+	 * @param attacker
 	 * @param enemyGroup
 	 * @return Enemy
 	 */
-	public static Enemy findLeastHPEnemy(Tower tower, SnapshotArray<Actor> enemies) {
+	public static Enemy findLeastHPEnemy(IAttacker attacker, SnapshotArray<Actor> enemies) {
 		if (enemies.size == 0) {
 			return null;
 		}
@@ -114,9 +115,9 @@ public final class TowerAI {
 		for (Actor enemy : enemies) {
 			if (enemy instanceof Enemy) {
 				if (((Enemy) enemy).isDead() == false) {
-					if (CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(), tower.getRangeShape())) {
+					if (CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(), attacker.getRangeShape())) {
 						if (((Enemy) enemy).getHealth() < lowestEnemyHealth) {
-							if ((enemy instanceof IPlatedArmor == false) || (tower instanceof IRPG)) {
+							if ((enemy instanceof IPlatedArmor == false) || (attacker instanceof IAoe)) {
 								lowestHPEnemy = (Enemy) enemy;
 								lowestEnemyHealth = ((Enemy) enemy).getHealth();
 							} else {
@@ -138,11 +139,11 @@ public final class TowerAI {
 	/**
 	 * Finds the enemy with the most health within range of the tower
 	 * 
-	 * @param tower
+	 * @param attacker
 	 * @param enemyGroup
 	 * @return Enemy
 	 */
-	public static Enemy findMostHPEnemy(Tower tower, SnapshotArray<Actor> enemies) {
+	public static Enemy findMostHPEnemy(IAttacker attacker, SnapshotArray<Actor> enemies) {
 		if (enemies.size == 0) {
 			return null;
 		}
@@ -152,9 +153,9 @@ public final class TowerAI {
 		for (Actor enemy : enemies) {
 			if (enemy instanceof Enemy) {
 				if (((Enemy) enemy).isDead() == false) {
-					if (CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(), tower.getRangeShape())) {
+					if (CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(), attacker.getRangeShape())) {
 						if (((Enemy) enemy).getHealth() > highestEnemyHealth) {
-							if ((enemy instanceof IPlatedArmor == false) || (tower instanceof IRPG)) {
+							if ((enemy instanceof IPlatedArmor == false) || (attacker instanceof IAoe)) {
 								highestHPEnemy = (Enemy) enemy;
 								highestEnemyHealth = ((Enemy) enemy).getHealth();
 							} else {
@@ -174,24 +175,24 @@ public final class TowerAI {
 	}
 
 	/**
-	 * Finds the enemy with the highest attack within range of the tower
+	 * Finds the enemy with the highest attack within range of the attacker
 	 * 
-	 * @param tower
+	 * @param attacker
 	 * @param enemies
 	 * @return Enemy
 	 */
-	public static Enemy findDeadliestEnemy(Tower tower, SnapshotArray<Actor> enemies) {
+	public static Enemy findDeadliestEnemy(IAttacker attacker, SnapshotArray<Actor> enemies) {
 		return null;
 	}
 
 	/**
-	 * Finds the enemy with the lowest attack within range of the tower
+	 * Finds the enemy with the lowest attack within range of the attacker
 	 * 
-	 * @param tower
+	 * @param attacker
 	 * @param enemies
 	 * @return Enemy
 	 */
-	public static Enemy findWeakestEnemy(Tower tower, SnapshotArray<Actor> enemies) {
+	public static Enemy findWeakestEnemy(IAttacker attacker, SnapshotArray<Actor> enemies) {
 		return null;
 	}
 }

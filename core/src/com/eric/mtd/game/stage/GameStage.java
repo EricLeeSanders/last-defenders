@@ -59,9 +59,7 @@ public class GameStage extends Stage {
 		this.addActor(getActorGroups().getEnemyGroup());
 		this.addActor(getActorGroups().getTowerGroup());
 		this.addActor(getActorGroups().getHealthBarGroup());
-		this.addActor(getActorGroups().getExplosionGroup());
-		this.addActor(getActorGroups().getFlameGroup());
-		this.addActor(getActorGroups().getBulletGroup());
+		this.addActor(getActorGroups().getProjectileGroup());
 		this.addActor(getActorGroups().getSandbagGroup());
 		this.addActor(getActorGroups().getSupportGroup());
 	}
@@ -96,7 +94,7 @@ public class GameStage extends Stage {
 	 * Determine if the wave is over
 	 */
 	public void isWaveOver() {
-		System.out.println("enemies size: " + actorGroups.getEnemyGroup().getChildren().size);
+		//System.out.println("enemies size: " + actorGroups.getEnemyGroup().getChildren().size);
 		if (getActorGroups().getEnemyGroup().getChildren().size <= 0) {
 			if (!(levelStateManager.getState().equals(LevelState.GAME_OVER))) {
 				player.giveMoney((int) (100 * (float) level.getCurrentWave()));

@@ -3,31 +3,38 @@ support.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-airstrike
-  rotate: false
-  xy: 1, 1
-  size: 200, 200
-  orig: 200, 200
-  offset: 0, 0
-  index: -1
 apache1
   rotate: false
-  xy: 203, 1
+  xy: 1, 1
   size: 145, 200
   orig: 145, 200
   offset: 0, 0
   index: -1
 apache2
   rotate: false
-  xy: 350, 1
+  xy: 148, 1
   size: 145, 200
   orig: 145, 200
   offset: 0, 0
   index: -1
 apache3
   rotate: false
-  xy: 497, 1
+  xy: 295, 1
   size: 145, 200
   orig: 145, 200
+  offset: 0, 0
+  index: -1
+airstrike
+  rotate: false
+  xy: 442, 23
+  size: 120, 178
+  orig: 120, 178
+  offset: 0, 0
+  index: -1
+landmine
+  rotate: false
+  xy: 564, 101
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1

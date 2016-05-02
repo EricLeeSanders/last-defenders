@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.projectile.RPG;
-import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
+import com.eric.mtd.game.model.actor.projectile.interfaces.IAoe;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
 import com.eric.mtd.util.AudioUtil;
@@ -17,7 +17,7 @@ import com.eric.mtd.util.AudioUtil.ProjectileSound;
  * @author Eric
  *
  */
-public class TowerRocketLauncher extends Tower implements IRPG {
+public class TowerRocketLauncher extends Tower implements IAoe {
 
 	public static final float HEALTH = 8;
 	public static final float ARMOR = 4;

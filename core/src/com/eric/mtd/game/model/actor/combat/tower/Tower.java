@@ -6,10 +6,10 @@ import java.util.List;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.eric.mtd.game.model.actor.ICombatActorObserver;
-import com.eric.mtd.game.model.actor.ai.TowerAI;
+import com.eric.mtd.game.model.actor.ai.TowerSupportAI;
 import com.eric.mtd.game.model.actor.ai.TowerTargetPriority;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.combat.ICombatActorObserver;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
 
 /**
@@ -118,16 +118,16 @@ public abstract class Tower extends CombatActor {
 	public void findTarget() {
 		switch (getTargetPriority()) {
 		case FIRST:
-			setTarget(TowerAI.findFirstEnemy(this, enemyTargetGroup.getChildren()));
+			setTarget(TowerSupportAI.findFirstEnemy(this, enemyTargetGroup.getChildren()));
 			break;
 		case LAST:
-			setTarget(TowerAI.findLastEnemy(this, enemyTargetGroup.getChildren()));
+			setTarget(TowerSupportAI.findLastEnemy(this, enemyTargetGroup.getChildren()));
 			break;
 		case WEAKEST:
-			setTarget(TowerAI.findLeastHPEnemy(this, enemyTargetGroup.getChildren()));
+			setTarget(TowerSupportAI.findLeastHPEnemy(this, enemyTargetGroup.getChildren()));
 			break;
 		case STRONGEST:
-			setTarget(TowerAI.findMostHPEnemy(this, enemyTargetGroup.getChildren()));
+			setTarget(TowerSupportAI.findMostHPEnemy(this, enemyTargetGroup.getChildren()));
 			break;
 		}
 	}

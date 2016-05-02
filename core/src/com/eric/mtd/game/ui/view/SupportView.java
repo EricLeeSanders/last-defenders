@@ -98,7 +98,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				//presenter.createTower("Rifle");
+				presenter.createSupportActor("LandMine");
 			}
 		});
 
@@ -109,7 +109,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				//presenter.createTower("Tank");
+				presenter.createAirStrike();
 			}
 		});
 	}
@@ -169,7 +169,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2(screenX, screenY));
-		presenter.moveSupportActor(coords);
+		presenter.screenTouch(coords, "TouchDown");
 		return false;
 	}
 
@@ -182,7 +182,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
 		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2(screenX, screenY));
-		presenter.moveSupportActor(coords);
+		presenter.screenTouch(coords, "Dragged");
 		return false;
 
 	}
@@ -227,6 +227,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	public void showBtnPlace() {
 		btnPlace.setVisible(true);
 	}
+
 
 
 }

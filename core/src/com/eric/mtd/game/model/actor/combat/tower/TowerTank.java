@@ -15,7 +15,7 @@ import com.eric.mtd.game.model.actor.health.interfaces.IPlatedArmor;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.model.actor.interfaces.IVehicle;
 import com.eric.mtd.game.model.actor.projectile.RPG;
-import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
+import com.eric.mtd.game.model.actor.projectile.interfaces.IAoe;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
 import com.eric.mtd.util.Logger;
@@ -27,7 +27,7 @@ import com.eric.mtd.util.Resources;
  * @author Eric
  *
  */
-public class TowerTank extends Tower implements IVehicle, IRPG, IPlatedArmor, IRotatable {
+public class TowerTank extends Tower implements IVehicle, IAoe, IPlatedArmor, IRotatable {
 
 	public static final float HEALTH = 20;
 	public static final float ARMOR = 10;

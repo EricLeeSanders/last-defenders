@@ -67,7 +67,7 @@ public class Flame extends Actor implements Pool.Poolable {
 		this.shooter = shooter;
 		this.target = target;
 		if (shooter.getStage() instanceof GameStage) {
-			((GameStage) shooter.getStage()).getActorGroups().getFlameGroup().addActor(this);
+			((GameStage) shooter.getStage()).getActorGroups().getProjectileGroup().addActor(this);
 		}
 		stateTime = 0;
 		flameAnimation = new Animation(shooter.getAttackSpeed() / 25, flameRegions);
