@@ -1,4 +1,4 @@
-package com.eric.mtd.game.model.actor;
+package com.eric.mtd.game.model.actor.combat;
 /**
  * Interface for observing a tower
  * @author Eric

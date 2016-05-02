@@ -11,7 +11,7 @@ import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.health.interfaces.IPlatedArmor;
 import com.eric.mtd.game.model.actor.interfaces.IVehicle;
 import com.eric.mtd.game.model.actor.projectile.RPG;
-import com.eric.mtd.game.model.actor.projectile.interfaces.IRPG;
+import com.eric.mtd.game.model.actor.projectile.interfaces.IAoe;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
 import com.eric.mtd.util.Logger;
@@ -23,7 +23,7 @@ import com.eric.mtd.util.Resources;
  * @author Eric
  *
  */
-public class EnemyTank extends Enemy implements IPlatedArmor, IRPG, IVehicle {
+public class EnemyTank extends Enemy implements IPlatedArmor, IAoe, IVehicle {
 
 	public static final float HEALTH = 20;
 	public static final float ARMOR = 10;

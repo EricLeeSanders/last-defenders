@@ -1,11 +1,11 @@
 package com.eric.mtd.game.model.actor.projectile.interfaces;
 
 /**
- * Interface for classes that shoot RPGs
+ * Interface for classes that deals AOE damage
  * 
  * @author Eric
  *
  */
-public interface IRPG {
+public interface IAoe {
 	public float getAoeRadius();
 }

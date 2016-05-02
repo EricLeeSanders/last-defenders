@@ -15,47 +15,45 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.game.helper.Damage;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
 /**
- * Represents an RPG
+ * Represents an AirStrike's Bomb
  * 
  * @author Eric
  *
  */
-public class RPG extends Actor implements Pool.Poolable {
-	private static final float SPEED = 350f;
-	private ShapeRenderer rpg = Resources.getShapeRenderer();
-	private CombatActor target, shooter;
-	private Group targetGroup;
+public class AirStrikeBomb extends Actor implements Pool.Poolable {
+	private static final float SPEED = 600f;
+	private ShapeRenderer bomb = Resources.getShapeRenderer();
+	private IAttacker attacker;
 	private Vector2 destination;
-	private Pool<RPG> pool;
-	public RPG(Pool<RPG> pool){
+	private Group targetGroup;
+	private Pool<AirStrikeBomb> pool;
+	public AirStrikeBomb(Pool<AirStrikeBomb> pool){
 		this.pool = pool;
 	}
 	/**
-	 * Initializes an RPG
-	 * 
-	 * @param shooter
-	 * @param target
+	 * Initializes and AirStrike Bomb
+	 * @param attacker
+	 * @param destination
+	 * @param targetGroup
 	 * @param pos
-	 *            - Position to spawn the RPG
 	 * @param size
-	 *            - Size of the RPG
 	 */
-	public void initialize(CombatActor shooter, CombatActor target, Group targetGroup, Vector2 pos, Vector2 size) {
-		this.target = target;
-		this.shooter = shooter;
+	public void initialize(IAttacker attacker, Vector2 destination, Group targetGroup, Vector2 pos, Vector2 size) {
 		this.targetGroup = targetGroup;
 		this.setPosition(pos.x, pos.y);
 		this.setSize(size.x, size.y);
-		if (shooter.getStage() instanceof GameStage) {
-			((GameStage) shooter.getStage()).getActorGroups().getProjectileGroup().addActor(this);
+		this.attacker = attacker;
+		this.destination = destination;
+		if (targetGroup.getStage() instanceof GameStage) {
+			((GameStage) targetGroup.getStage()).getActorGroups().getProjectileGroup().addActor(this);
 		}
-		destination = target.getPositionCenter();
 		MoveToAction moveAction = new MoveToAction();
 		moveAction.setPosition(destination.x, destination.y);
 		moveAction.setDuration(destination.dst(pos) / SPEED);
@@ -70,11 +68,11 @@ public class RPG extends Actor implements Pool.Poolable {
 		batch.end();
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glEnable(GL20.GL_BLEND);
-		rpg.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-		rpg.begin(ShapeType.Filled);
-		rpg.setColor(Color.BLACK);
-		rpg.circle(getBody().x, getBody().y, 3);
-		rpg.end();
+		bomb.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+		bomb.begin(ShapeType.Filled);
+		bomb.setColor(Color.BLACK);
+		bomb.circle(getBody().x, getBody().y, 3);
+		bomb.end();
 		batch.begin();
 	}
 
@@ -98,10 +96,9 @@ public class RPG extends Actor implements Pool.Poolable {
 	public void act(float delta) {
 		super.act(delta);
 		if (this.getActions().size == 0) {
-			Damage.dealRpgDamage(shooter, target); // Deal damage
 			Explosion explosion = ActorFactory.loadExplosion(); // Get an
 																// Explosion
-			explosion.initialize(shooter, target, targetGroup, destination);
+			explosion.initialize(attacker, null, targetGroup, destination);
 			pool.free(this);
 
 		}
@@ -113,9 +110,6 @@ public class RPG extends Actor implements Pool.Poolable {
 		if (Logger.DEBUG)
 			System.out.println("freeing RPG");
 		this.clear();
-		target = null;
-		shooter = null;
-		destination = null;
 		this.remove();
 	}
 

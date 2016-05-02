@@ -12,11 +12,14 @@ import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.enemy.*;
 import com.eric.mtd.game.model.actor.combat.tower.*;
 import com.eric.mtd.game.model.actor.health.HealthBar;
+import com.eric.mtd.game.model.actor.projectile.AirStrikeBomb;
 import com.eric.mtd.game.model.actor.projectile.Bullet;
 import com.eric.mtd.game.model.actor.projectile.Explosion;
 import com.eric.mtd.game.model.actor.projectile.Flame;
 import com.eric.mtd.game.model.actor.projectile.RPG;
+import com.eric.mtd.game.model.actor.support.AirStrike;
 import com.eric.mtd.game.model.actor.support.Apache;
+import com.eric.mtd.game.model.actor.support.LandMine;
 import com.eric.mtd.game.model.actor.support.Sandbag;
 import com.eric.mtd.game.model.actor.support.SupportActor;
 import com.eric.mtd.util.Logger;
@@ -48,11 +51,13 @@ public class ActorFactory {
 	private static HealthPool healthPool = new HealthPool();
 	private static BulletPool bulletPool = new BulletPool();
 	private static RPGPool rpgPool = new RPGPool();
+	private static AirStrikeBombPool airStrikeBombPool = new AirStrikeBombPool();
 	private static ExplosionPool explosionPool = new ExplosionPool();
 	private static FlamePool flamePool = new FlamePool();
 	private static SandbagPool sandbagPool = new SandbagPool();
 	private static SupportActorPool<SupportActor> apachePool = new SupportActorPool<SupportActor>(Apache.class);
-
+	private static SupportActorPool<SupportActor> airStrikePool = new SupportActorPool<SupportActor>(AirStrike.class);
+	private static SupportActorPool<SupportActor> landMinePool = new SupportActorPool<SupportActor>(LandMine.class);
 	/**
 	 * Obtains a tower from the pool
 	 * 
@@ -157,6 +162,16 @@ public class ActorFactory {
 		RPG rpg = rpgPool.obtain();
 		return rpg;
 	}
+	
+	/**
+	 * Obtains an AirStrike Bomb from the pool
+	 * 
+	 * @return AirStrikeBomb
+	 */
+	public static AirStrikeBomb loadAirStrikeBomb() {
+		AirStrikeBomb airStrikeBomb = airStrikeBombPool.obtain();
+		return airStrikeBomb;
+	}
 
 	/**
 	 * Obtains an Explosion from the pool
@@ -200,14 +215,19 @@ public class ActorFactory {
 	 *            - Position to place the Support Actor
 	 * @return Support Actor
 	 */
-	public static SupportActor loadSupportActor(Vector2 pos, String type) {
+	public static SupportActor loadSupportActor(Vector2 pos, String type, Group enemyGroup) {
 		SupportActor supportActor = null;
 		if (type.equals("Apache")) {
 			supportActor = apachePool.obtain();
-		} 
+		} else if(type.equals("AirStrike")) {
+			supportActor = airStrikePool.obtain();
+		} else if(type.equals("LandMine")) {
+			supportActor = landMinePool.obtain();
+		}
 		if (Logger.DEBUG)
 			System.out.println("Obtained : " + type);
 		supportActor.setPositionCenter(pos);
+		supportActor.setEnemyGroup(enemyGroup);
 		return supportActor;
 	}
 	
@@ -329,6 +349,17 @@ public class ActorFactory {
 		return rpg;
 
 	}
+	
+	/**
+	 * Create an AirStrikeBomb
+	 * 
+	 * @return AirStrikeBomb
+	 */
+	protected static AirStrikeBomb createAirStrikeBombActor() {
+		AirStrikeBomb airStrikeBomb = new AirStrikeBomb(airStrikeBombPool);
+		return airStrikeBomb;
+
+	}
 
 	/**
 	 * Create an Explosion
@@ -368,7 +399,7 @@ public class ActorFactory {
 	 * 
 	 * @return Apache
 	 */
-	protected static Apache createSupportActor(Class<? extends SupportActor> type) {
+	protected static SupportActor createSupportActor(Class<? extends SupportActor> type) {
 		if (Logger.DEBUG)
 			System.out.println("Creating new " + type.getSimpleName());
 		TextureAtlas supportAtlas = Resources.getAtlas(Resources.SUPPORT_ATLAS);
@@ -379,7 +410,13 @@ public class ActorFactory {
 			textureRegions[1] = supportAtlas.findRegion("apache2");
 			textureRegions[2] = supportAtlas.findRegion("apache3");
 			return new Apache(apachePool, textureRegions);
-		}else {
+		} else if(type.equals(AirStrike.class)){
+			TextureRegion textureRegion = supportAtlas.findRegion("airstrike");
+			return new AirStrike(airStrikePool, textureRegion);	
+		} else if (type.equals(LandMine.class)){
+			TextureRegion textureRegion = supportAtlas.findRegion("landmine");
+			return new LandMine(landMinePool, textureRegion);	
+		} else {
 			throw new NullPointerException("Actor factory couldn't create: " + type.getSimpleName());
 		}
 
@@ -425,6 +462,13 @@ public class ActorFactory {
 		@Override
 		protected RPG newObject() {
 			return createRPGActor();
+		}
+	}
+
+	public static class AirStrikeBombPool extends Pool<AirStrikeBomb> {
+		@Override
+		protected AirStrikeBomb newObject() {
+			return createAirStrikeBombActor();
 		}
 	}
 
