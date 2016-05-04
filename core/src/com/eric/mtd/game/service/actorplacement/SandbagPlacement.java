@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
-import com.eric.mtd.game.model.actor.perks.Sandbag;
+import com.eric.mtd.game.model.actor.support.Sandbag;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.util.Logger;
 

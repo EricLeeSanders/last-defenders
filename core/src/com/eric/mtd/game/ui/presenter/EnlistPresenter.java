@@ -7,9 +7,9 @@ import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
-import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
-import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.service.actorplacement.TowerPlacement;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
@@ -90,7 +90,10 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	public void moveTower(Vector2 coords) {
 		if (towerPlacement.isCurrentTower() && uiStateManager.getState().equals(GameUIState.PLACING_TOWER)) {
 			towerPlacement.moveTower(coords);
-			view.towerShowing(this.isTowerRotatable());
+			view.showBtnPlace();
+			if(isTowerRotatable()){
+				view.showBtnRotate();
+			}
 		}
 	}
 
@@ -120,13 +123,13 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 * @param showRanges
 	 */
 	public void showTowerRanges(boolean showRanges) {
-		if (showRanges)
+		if (showRanges){
 			for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
 				if (tower instanceof Tower) {
-					if (showRanges)
-						((GameActor) tower).setShowRange(showRanges);
+					((CombatActor) tower).setShowRange(showRanges);
 				}
 			}
+		}
 	}
 
 	/**
@@ -139,7 +142,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	public boolean canAffordTower(String tower) {
 
 		try {
-			Class<?> myClass = Class.forName("com.eric.mtd.game.model.actor.tower.Tower" + tower);
+			Class<?> myClass = Class.forName("com.eric.mtd.game.model.actor.combat.tower.Tower" + tower);
 			Field field = ClassReflection.getDeclaredField(myClass, "COST");
 			field.setAccessible(true);
 			int cost = (Integer) field.get(null);

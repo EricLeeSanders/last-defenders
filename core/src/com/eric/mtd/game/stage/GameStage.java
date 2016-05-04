@@ -11,7 +11,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
-import com.eric.mtd.game.model.actor.tower.Tower;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.level.Level;
 import com.eric.mtd.game.model.level.MTDTiledMapRenderer;
 import com.eric.mtd.game.model.level.Map;
@@ -40,11 +40,8 @@ public class GameStage extends Stage {
 	private MTDTiledMapRenderer mapRenderer;
 
 	public GameStage(int intLevel, Player player, ActorGroups actorGroups, LevelStateManager levelStateManager, GameUIStateManager uiStateManager, Viewport viewport) {
-		//super(new ScalingViewport(Scaling.stretch, Resources.SCREEN_WIDTH, Resources.SCREEN_HEIGHT, new OrthographicCamera()));
-		//super(new ExtendViewport(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, new OrthographicCamera()));
 		super(viewport);
 		MTDGame.gameSpeed = (Resources.NORMAL_SPEED);
-		//super.setViewport(new ScalingViewport(Scaling.stretch, Resources.SCREEN_WIDTH, Resources.SCREEN_HEIGHT, new OrthographicCamera()));
 		this.player = player;
 		this.actorGroups = actorGroups;
 		this.levelStateManager = levelStateManager;
@@ -62,10 +59,9 @@ public class GameStage extends Stage {
 		this.addActor(getActorGroups().getEnemyGroup());
 		this.addActor(getActorGroups().getTowerGroup());
 		this.addActor(getActorGroups().getHealthBarGroup());
-		this.addActor(getActorGroups().getExplosionGroup());
-		this.addActor(getActorGroups().getFlameGroup());
-		this.addActor(getActorGroups().getBulletGroup());
+		this.addActor(getActorGroups().getProjectileGroup());
 		this.addActor(getActorGroups().getSandbagGroup());
+		this.addActor(getActorGroups().getSupportGroup());
 	}
 
 	/**
@@ -98,7 +94,7 @@ public class GameStage extends Stage {
 	 * Determine if the wave is over
 	 */
 	public void isWaveOver() {
-		System.out.println("enemies size: " + actorGroups.getEnemyGroup().getChildren().size);
+		//System.out.println("enemies size: " + actorGroups.getEnemyGroup().getChildren().size);
 		if (getActorGroups().getEnemyGroup().getChildren().size <= 0) {
 			if (!(levelStateManager.getState().equals(LevelState.GAME_OVER))) {
 				player.giveMoney((int) (100 * (float) level.getCurrentWave()));

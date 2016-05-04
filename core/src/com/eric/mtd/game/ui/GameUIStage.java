@@ -15,12 +15,14 @@ import com.eric.mtd.game.ui.presenter.GameOverPresenter;
 import com.eric.mtd.game.ui.presenter.HUDPresenter;
 import com.eric.mtd.game.ui.presenter.InspectPresenter;
 import com.eric.mtd.game.ui.presenter.OptionsPresenter;
+import com.eric.mtd.game.ui.presenter.SupportPresenter;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.view.EnlistView;
 import com.eric.mtd.game.ui.view.GameOverView;
 import com.eric.mtd.game.ui.view.HUDView;
 import com.eric.mtd.game.ui.view.InspectView;
 import com.eric.mtd.game.ui.view.OptionsView;
+import com.eric.mtd.game.ui.view.SupportView;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.state.GameStateManager;
 import com.eric.mtd.util.Resources;
@@ -36,6 +38,8 @@ public class GameUIStage extends Stage {
 	private InspectView inspectView;
 	private EnlistView enlistView;
 	private EnlistPresenter enlistPresenter;
+	private SupportView supportView;
+	private SupportPresenter supportPresenter;
 	private HUDPresenter hudPresenter;
 	private InspectPresenter inspectPresenter;
 	private OptionsView optionsView;
@@ -75,7 +79,11 @@ public class GameUIStage extends Stage {
 		this.enlistPresenter = new EnlistPresenter(uiStateManager, player, actorGroups, map);
 		this.enlistView = new EnlistView(enlistPresenter);
 		enlistPresenter.setView(enlistView);
-
+		
+		this.supportPresenter = new SupportPresenter(uiStateManager, player, actorGroups);
+		this.supportView = new SupportView(supportPresenter);
+		supportPresenter.setView(supportView);
+		
 		this.hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player);
 		this.hudView = new HUDView(hudPresenter);
 		hudPresenter.setView(hudView);
@@ -94,12 +102,14 @@ public class GameUIStage extends Stage {
 
 		this.addActor(hudView);
 		this.addActor(enlistView);
+		this.addActor(supportView);
 		this.addActor(inspectView);
 		this.addActor(optionsView);
 		this.addActor(gameOverView);
 
 		imp.addProcessor(this);
 		imp.addProcessor(enlistView);
+		imp.addProcessor(supportView);
 		imp.addProcessor(inspectView);
 	}
 
