@@ -140,7 +140,7 @@ public abstract class Enemy extends CombatActor {
 			delayCounter += delta;
 			if (delayCounter > (ATTACK_DELAY / MTDGame.gameSpeed)) {
 				if (actionIndex > 0) {
-					setRotation(calculateRotation((actionList.get(actionIndex - 1)).getX() + (this.getOriginX()), (actionList.get(actionIndex - 1)).getY() + (this.getOriginY())));
+					setRotation(calculateRotation(new Vector2((actionList.get(actionIndex - 1)).getX() + (this.getOriginX()), (actionList.get(actionIndex - 1)).getY() + (this.getOriginY()))));
 				}
 				delayCounter = 0;
 				attacking = false;
@@ -153,7 +153,7 @@ public abstract class Enemy extends CombatActor {
 		if (!isDead() && !attacking) {
 			if (this.getActions().size == 0) {
 				if (actionIndex < actionList.size()) {
-					setRotation(calculateRotation((actionList.get(actionIndex)).getX() + (this.getOriginX()), (actionList.get(actionIndex)).getY() + (this.getOriginY())));
+					setRotation(calculateRotation(new Vector2((actionList.get(actionIndex)).getX() + (this.getOriginX()), (actionList.get(actionIndex)).getY() + (this.getOriginY()))));
 
 					this.addAction(actionList.get(actionIndex)); // Set Move TO
 					actionIndex++;
