@@ -72,35 +72,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 			observer.notifty();
 		}
 	}
-	/**
-	 * Calculates a rotation from the current position and the argument
-	 * position. Calculates the shortest distance rotation.
-	 * 
-	 * @param vector
-	 *            - Position to rotate to
-	 * @return float - Rotation
-	 */
-	public float calculateRotation(Vector2 vector) {
-		double prevAngle = this.getRotation();
-		double angle = MathUtils.atan2(getPositionCenter().x - vector.x, vector.y - getPositionCenter().y);
-		angle = Math.toDegrees(angle);
-		double negAngle = (angle - 360) % 360;
-		double posAngle = (angle + 360) % 360;
-		double negDistance = Math.abs(prevAngle - negAngle);
-		double posDistance = Math.abs(prevAngle - posAngle);
-		if (negDistance < posDistance) {
-			angle = negAngle;
-		} else {
-			angle = posAngle;
-		}
-		angle = Math.round(angle); // Round to help smooth movement
-		return (float) angle;
-	}
-
-	public float calculateRotation(float x, float y) {
-		return calculateRotation(new Vector2(x, y));
-	}
-
 	@Override
 	public void reset() {
 		if (Logger.DEBUG)
@@ -182,16 +153,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.target = target;
 	}
 
-	public Vector2 getRotatedCoords(Vector2 coords) {
-		// Math stuff here -
-		// http://math.stackexchange.com/questions/270194/how-to-find-the-vertices-angle-after-rotation
-		double rotation = Math.toRadians(this.getRotation());
-		float cosa = (float) Math.cos(rotation);
-		float sina = (float) Math.sin(rotation);
-		float newX = ((((coords.x - getPositionCenter().x) * cosa) - ((coords.y - getPositionCenter().y) * sina)) + getPositionCenter().x);
-		float newY = ((((coords.x - getPositionCenter().x) * sina) + ((coords.y - getPositionCenter().y) * cosa)) + getPositionCenter().y);
-		return new Vector2(newX, newY);
-	}
 
 	public Vector2 getGunPos() {
 		Vector2 pos = new Vector2((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y));
