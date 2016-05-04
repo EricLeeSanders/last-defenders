@@ -107,11 +107,6 @@ public class SupportPresenter implements IGameUIStateObserver {
 				player.spendMoney(cost);
 				supportActorPlacement.removeCurrentSupportActor();
 				uiStateManager.setStateReturn();
-				//If it is an Apache that is being placed, then we need to call it's initialize method
-				if(supportActorPlacement.getCurrentSupportActor() instanceof Apache){
-					((Apache)supportActorPlacement.getCurrentSupportActor()).initialize(
-							supportActorPlacement.getCurrentSupportActor().getPositionCenter());
-				}
 			}
 		}
 	}
