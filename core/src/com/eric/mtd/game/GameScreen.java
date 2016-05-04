@@ -10,6 +10,7 @@ import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.game.ui.GameUIStage;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
+import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.screen.AbstractScreen;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.state.GameStateManager;
@@ -31,13 +32,14 @@ public class GameScreen extends AbstractScreen {
 	private GameUIStage gameUIStage;
 	private Player player;
 	private GameStateManager gameStateManager;
+	private GameUIStateManager uiStateManager;
 
 	public GameScreen(int intLevel, GameStateManager gameStateManager, ScreenStateManager screenStateManager) {
 		super(gameStateManager);
 		this.player = new Player();
 		ActorGroups actorGroups = new ActorGroups();
 		LevelStateManager levelStateManager = new LevelStateManager();
-		GameUIStateManager uiStateManager = new GameUIStateManager(levelStateManager);
+		uiStateManager = new GameUIStateManager(levelStateManager);
 		this.gameStateManager = gameStateManager;
 		gameStage = new GameStage(intLevel, player, actorGroups, levelStateManager, uiStateManager, getViewport());
 		//gameStage.setViewport(getViewport());
@@ -92,7 +94,13 @@ public class GameScreen extends AbstractScreen {
 		gameUIStage.draw();
 
 	}
-
+	@Override
+	public void resume() {
+		Resources.gameResume();
+		if(!uiStateManager.getState().equals(GameUIState.OPTIONS)){
+			gameStateManager.setState(GameState.PLAY);
+		}
+	}
 	@Override
 	public void dispose() {
 		if (Logger.DEBUG)
