@@ -52,6 +52,7 @@ public class Apache extends SupportActor{
 		this.textureRegions = textureRegions;
 	}
 	public void initialize(Vector2 position){
+		if(Logger.DEBUG) System.out.println("init apahce");
 		Vector2 destination = new Vector2(position.x - (this.getWidth()/2), position.y - (this.getHeight()/2));
 		setPositionCenter(new Vector2(0-this.getHeight(), Resources.VIRTUAL_HEIGHT/2));
 		float moveDistance = (destination.dst(this.getPositionCenter()) / MOVE_SPEED);
@@ -74,11 +75,11 @@ public class Apache extends SupportActor{
 	public void act(float delta) {
 		super.act(delta);
 		changeTextures(delta);
-		//System.out.println(this.getActions().size);
 		//If the Apache has been placed (active) but is done moving to the location
 		//then it is ready to attack
 		if(isActive() && !isReadyToAttack() && this.getActions().size <= 0){
 			setReadyToAttack(true);
+			if(Logger.DEBUG) System.out.println("Apache ready to attack");
 		}
 		if (isReadyToAttack()) {
 			findTarget();
