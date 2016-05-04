@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.eric.mtd.game.model.actor.ai.TowerTargetPriority;
-import com.eric.mtd.game.model.actor.tower.Tower;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.ui.presenter.InspectPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IInspectView;
 import com.eric.mtd.game.ui.view.widget.MTDImage;

@@ -18,9 +18,9 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.helper.Damage;
-import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.projectile.interfaces.IFlame;
-import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Logger;
@@ -37,18 +37,20 @@ public class Flame extends Actor implements Pool.Poolable {
 	private TextureRegion currentFlame;
 	private float stateTime;
 	private TextureRegion[] flameRegions = new TextureRegion[25];
-	private GameActor shooter, target;
+	private CombatActor shooter, target;
 	private ShapeRenderer flameOutline = Resources.getShapeRenderer();
 	private Group targetGroup;
 	Polygon poly = null;
 	Polygon targetBodySnap = null;
 	private float attackCounter = 0;
 	private float attackTick, attackTickDamage;
+	private Pool<Flame> pool;
 
 	/**
 	 * Constructs a flame
 	 */
-	public Flame() {
+	public Flame(Pool<Flame> pool) {
+		this.pool = pool;
 		TextureAtlas flameAtlas = Resources.getAtlas(Resources.FLAMES_ATLAS);
 		for (int i = 0; i < 25; i++) {
 			flameRegions[i] = flameAtlas.findRegion("Flame" + (i + 1));
@@ -61,11 +63,11 @@ public class Flame extends Actor implements Pool.Poolable {
 	 * @param shooter
 	 * @param target
 	 */
-	public void initialize(GameActor shooter, GameActor target, Group targetGroup) {
+	public void initialize(CombatActor shooter, CombatActor target, Group targetGroup) {
 		this.shooter = shooter;
 		this.target = target;
 		if (shooter.getStage() instanceof GameStage) {
-			((GameStage) shooter.getStage()).getActorGroups().getFlameGroup().addActor(this);
+			((GameStage) shooter.getStage()).getActorGroups().getProjectileGroup().addActor(this);
 		}
 		stateTime = 0;
 		flameAnimation = new Animation(shooter.getAttackSpeed() / 25, flameRegions);
@@ -85,7 +87,7 @@ public class Flame extends Actor implements Pool.Poolable {
 		super.act(delta);
 		if (shooter.isDead()) {
 			this.remove();
-			ActorFactory.flamePool.free(this);
+			pool.free(this);
 			System.out.println("Testing actor remove");
 			return;
 		}
@@ -122,7 +124,7 @@ public class Flame extends Actor implements Pool.Poolable {
 		batch.begin();
 		batch.draw(currentFlame, this.getX(), this.getY(), this.getOriginX(), this.getOriginY(), currentFlame.getRegionWidth(), currentFlame.getRegionHeight(), 1, 1, this.getRotation());
 		if (flameAnimation.isAnimationFinished(stateTime)) {
-			ActorFactory.flamePool.free(this);
+			pool.free(this);
 		}
 	}
 

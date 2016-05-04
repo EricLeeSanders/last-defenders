@@ -19,8 +19,8 @@ import com.eric.mtd.util.Resources;
  *
  */
 public class HUDView extends Group implements IHUDView {
-	private MTDImage pnlTitle, imgMoney, imgLife;
-	private MTDImageButton btnWave, btnEnlist, btnQuit, btnOptions, btnNormalSpeed, btnDoubleSpeed;
+	private MTDImage imgMoney, imgLife;
+	private MTDImageButton btnWave, btnEnlist, btnSupport, btnQuit, btnOptions, btnNormalSpeed, btnDoubleSpeed;
 	private MTDLabel lblMoney, lblLives, lblWaveCount;
 	private HUDPresenter presenter;
 	private Group btnSpeedGroup = new Group();
@@ -52,6 +52,10 @@ public class HUDView extends Group implements IHUDView {
 		setBtnEnlistListener();
 		addActor(btnEnlist);
 
+		btnSupport = new MTDImageButton("UI_HUD", "btnSupport", Resources.HUD_ATLAS, "support", true, true);
+		setBtnSupportListener();
+		addActor(btnSupport);
+		
 		btnOptions = new MTDImageButton("UI_HUD", "btnOptions", Resources.HUD_ATLAS, "options", true, false);
 		setBtnOptionsListener();
 		addActor(btnOptions);
@@ -139,6 +143,19 @@ public class HUDView extends Group implements IHUDView {
 			}
 		});
 	}
+	
+	private void setBtnSupportListener() {
+		btnSupport.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				if (Logger.DEBUG)
+					System.out.println("Button Support Pressed");
+				presenter.support();
+
+			}
+		});
+	}
 
 	@Override
 	public void setMoney(String money) {
@@ -172,18 +189,29 @@ public class HUDView extends Group implements IHUDView {
 	@Override
 	public void standByState() {
 		btnEnlist.setTouchable(Touchable.enabled);
+		btnSupport.setTouchable(Touchable.enabled);
 		btnWave.setTouchable(Touchable.enabled);
 		btnSpeedGroup.setTouchable(Touchable.enabled);
 		btnOptions.setTouchable(Touchable.enabled);
 		btnWave.setVisible(true);
 		btnEnlist.setVisible(true);
+		btnSupport.setVisible(true);
 		btnOptions.setVisible(true);
 		btnSpeedGroup.setVisible(true);
 	}
-
+	@Override
+	public void supportState() {
+		btnEnlist.setVisible(false);
+		btnSupport.setVisible(false);
+		btnWave.setVisible(false);
+		btnOptions.setVisible(false);
+		btnSpeedGroup.setVisible(false);
+	}
+	
 	@Override
 	public void enlistingState() {
 		btnEnlist.setVisible(false);
+		btnSupport.setVisible(false);
 		btnWave.setVisible(false);
 		btnOptions.setVisible(false);
 		btnSpeedGroup.setVisible(false);
@@ -192,6 +220,7 @@ public class HUDView extends Group implements IHUDView {
 	@Override
 	public void optionsState() {
 		btnEnlist.setTouchable(Touchable.disabled);
+		btnSupport.setTouchable(Touchable.disabled);
 		btnWave.setTouchable(Touchable.disabled);
 		btnSpeedGroup.setTouchable(Touchable.disabled);
 		btnOptions.setTouchable(Touchable.disabled);
@@ -205,11 +234,13 @@ public class HUDView extends Group implements IHUDView {
 	@Override
 	public void waveInProgressState() {
 		btnEnlist.setTouchable(Touchable.enabled);
+		btnSupport.setTouchable(Touchable.enabled);
 		btnWave.setTouchable(Touchable.enabled);
 		btnSpeedGroup.setTouchable(Touchable.enabled);
 		btnOptions.setTouchable(Touchable.enabled);
 		btnWave.setVisible(false);
 		btnEnlist.setVisible(true);
+		btnSupport.setVisible(true);
 		btnOptions.setVisible(true);
 		btnSpeedGroup.setVisible(true);
 	}

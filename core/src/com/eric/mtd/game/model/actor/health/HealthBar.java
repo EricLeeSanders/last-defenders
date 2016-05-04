@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
-import com.eric.mtd.game.model.actor.GameActor;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -19,7 +19,7 @@ import com.eric.mtd.util.Resources;
  *
  */
 public class HealthBar extends Actor implements Pool.Poolable {
-	private GameActor actor = null;
+	private CombatActor actor = null;
 	private ShapeRenderer backgroundBar = Resources.getShapeRenderer();;
 	private ShapeRenderer healthBar = Resources.getShapeRenderer();;
 	private ShapeRenderer armorBar = Resources.getShapeRenderer();;
@@ -27,7 +27,11 @@ public class HealthBar extends Actor implements Pool.Poolable {
 	private float armorPercentage;
 	private float healthBarSize;
 	private float armorBarSize;
-
+	private Pool<HealthBar> pool;
+	public HealthBar(Pool<HealthBar> pool) {
+		this.pool = pool;
+	}
+		
 	@Override
 	public void draw(Batch batch, float alpha) {
 		if (actor != null) {
@@ -71,11 +75,11 @@ public class HealthBar extends Actor implements Pool.Poolable {
 		if (actor.isDead() || actor == null) {
 			if (Logger.DEBUG)
 				System.out.println("Freeing Healthbar");
-			ActorFactory.healthPool.free(this);
+			pool.free(this);
 		}
 	}
 
-	public void setActor(GameActor actor) {
+	public void setActor(CombatActor actor) {
 		if (Logger.DEBUG)
 			System.out.println("Healthbar: Setting actor");
 		this.actor = actor;

@@ -11,9 +11,9 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.model.actor.ActorGroups;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.health.HealthBar;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
-import com.eric.mtd.game.model.actor.tower.Tower;
 import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.util.Logger;
@@ -40,12 +40,7 @@ public class TowerPlacement {
 	 * @return Boolean - tower is Rotatable
 	 */
 	public boolean isTowerRotatable() {
-		if (getCurrentTower() instanceof IRotatable) {
-			return true;
-		} else {
-			return false;
-
-		}
+		return (getCurrentTower() instanceof IRotatable);
 	}
 
 	/**
@@ -113,10 +108,8 @@ public class TowerPlacement {
 			if (!towerCollides()) {
 
 				currentTower.setShowRange(false);
-				currentTower.remove();
 				currentTower.setActive(true);
 				currentTower.setDead(false);
-				actorGroups.getTowerGroup().addActor(currentTower);
 				HealthBar healthBar = ActorFactory.loadHealthBar();
 				healthBar.setActor(currentTower);
 				actorGroups.getHealthBarGroup().addActor(healthBar);
@@ -148,7 +141,7 @@ public class TowerPlacement {
 	 * Remove the current tower
 	 */
 	public void removeCurrentTower() {
-		if (currentTower != null) {
+		if (isCurrentTower()) {
 			currentTower.freeActor();
 			currentTower = null;
 		}
@@ -160,11 +153,7 @@ public class TowerPlacement {
 	 * @return boolean
 	 */
 	public boolean isCurrentTower() {
-		if (currentTower == null) {
-			return false;
-		} else {
-			return true;
-		}
+		return (currentTower != null);
 	}
 
 	public Tower getCurrentTower() {
