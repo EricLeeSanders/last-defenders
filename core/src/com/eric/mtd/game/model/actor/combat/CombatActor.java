@@ -41,6 +41,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private float[] bodyPoints;
 	private CombatActor target;
 	private ShapeRenderer rangeShape = Resources.getShapeRenderer();
+	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private Color rangeColor = new Color(1.0f, 0f, 0f, 0.5f);
 	private boolean showRange, hasArmor, dead;
 	private Pool<CombatActor> pool;
@@ -109,13 +110,11 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 			rangeShape.end();
 
 		}
-		/*
-		 * debugBody.setProjectionMatrix(this.getParent().getStage().getCamera()
-		 * .combined); debugBody.begin(ShapeType.Line);
-		 * debugBody.setColor(rangeColor);
-		 * debugBody.polygon(this.getBody().getTransformedVertices());
-		 * debugBody.end();
-		 */
+		debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+		debugBody.begin(ShapeType.Line);
+		debugBody.setColor(Color.YELLOW);
+		debugBody.polygon(getBody().getTransformedVertices());
+		debugBody.end();
 		batch.begin();
 		super.draw(batch, alpha);
 	}
@@ -181,7 +180,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	}
 
 	public abstract void attackTarget();
-
+	
 	@Override
 	public Polygon getBody() {
 		Polygon poly = new Polygon(bodyPoints);
