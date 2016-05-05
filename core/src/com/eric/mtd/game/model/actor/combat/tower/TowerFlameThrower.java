@@ -21,8 +21,9 @@ public class TowerFlameThrower extends Tower implements IFlame {
 
 	public static final float HEALTH = 8;
 	public static final float ARMOR = 3;
-	public static final float ATTACK = 5;
+	public static final float ATTACK = 2; //Damage Per Tick
 	public static final float ATTACK_SPEED = 1f;
+	public static final float ATTACK_TICK_SPEED = 0.2f;
 	public static final float RANGE = 90;
 	public static final Vector2 FLAME_SIZE = new Vector2(20, 62);
 	public static final int COST = 600;
@@ -49,8 +50,13 @@ public class TowerFlameThrower extends Tower implements IFlame {
 			System.out.println("Tower Flame: Attacking target");
 		AudioUtil.playProjectileSound(ProjectileSound.FLAME_BURST);
 		Flame flame = ActorFactory.loadFlame();
-		flame.initialize(this, this.getTarget(), getEnemyGroup());
+		flame.initialize(this, this.getTarget(), getEnemyGroup(), getFlameSize(), getAttackTickSpeed());
 
+	}
+
+	@Override
+	public float getAttackTickSpeed() {
+		return ATTACK_TICK_SPEED;
 	}
 
 }
