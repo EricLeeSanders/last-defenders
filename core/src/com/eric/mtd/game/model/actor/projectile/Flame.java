@@ -33,6 +33,7 @@ import com.eric.mtd.util.Resources;
  *
  */
 public class Flame extends Actor implements Pool.Poolable {
+	private static final float NUM_OF_FRAMES = 25;
 	private Animation flameAnimation;
 	private TextureRegion currentFlame;
 	private float stateTime;
@@ -40,10 +41,11 @@ public class Flame extends Actor implements Pool.Poolable {
 	private CombatActor shooter, target;
 	private ShapeRenderer flameOutline = Resources.getShapeRenderer();
 	private Group targetGroup;
+	private Vector2 flameSize;
 	Polygon poly = null;
 	Polygon targetBodySnap = null;
 	private float attackCounter = 0;
-	private float attackTick, attackTickDamage;
+	private float attackTickSpeed, attackTickDamage;
 	private Pool<Flame> pool;
 
 	/**
@@ -63,17 +65,18 @@ public class Flame extends Actor implements Pool.Poolable {
 	 * @param shooter
 	 * @param target
 	 */
-	public void initialize(CombatActor shooter, CombatActor target, Group targetGroup) {
+	public void initialize(CombatActor shooter, CombatActor target, Group targetGroup, Vector2 flameSize, float attackTickSpeed) {
 		this.shooter = shooter;
 		this.target = target;
 		if (shooter.getStage() instanceof GameStage) {
 			((GameStage) shooter.getStage()).getActorGroups().getProjectileGroup().addActor(this);
 		}
 		stateTime = 0;
-		flameAnimation = new Animation(shooter.getAttackSpeed() / 25, flameRegions);
+		flameAnimation = new Animation(shooter.getAttackSpeed() / NUM_OF_FRAMES, flameRegions);
 		flameAnimation.setPlayMode(PlayMode.NORMAL);
 
-		attackTick = (shooter.getAttackSpeed() / shooter.getAttack());
+		this.attackTickSpeed = attackTickSpeed;
+		this.flameSize = flameSize;
 		attackTickDamage = 1; // Do a little bit of damage each tick
 		this.targetGroup = targetGroup;
 	}
@@ -91,7 +94,7 @@ public class Flame extends Actor implements Pool.Poolable {
 			System.out.println("Testing actor remove");
 			return;
 		}
-		if (attackCounter >= attackTick) {
+		if (attackCounter >= attackTickSpeed) {
 			attackCounter = 0;
 			Damage.dealFlameDamage(shooter, targetGroup, this, attackTickDamage);
 		} else {
@@ -134,7 +137,6 @@ public class Flame extends Actor implements Pool.Poolable {
 	 * @return
 	 */
 	public Polygon getFlameBody() {
-		Vector2 flameSize = ((IFlame) shooter).getFlameSize();
 		float[] bodyPoints = { 0, 0, 0, flameSize.y, flameSize.x, flameSize.y, flameSize.x, 0 };
 		Polygon flameBody = new Polygon(bodyPoints);
 		flameBody.setPosition(shooter.getGunPos().x - (flameSize.x / 2), shooter.getGunPos().y);
