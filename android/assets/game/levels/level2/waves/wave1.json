@@ -1,32 +1,12 @@
 {
 "wave": [
     {
-        "enemy": Rifle,
-        "delay": .50,
+        "enemy": FlameThrower,
+        "delay": 1.50,
         "armor": false
     },
     {
-        "enemy": Rifle,
-        "delay": .50,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .50,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .50,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .50,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
+        "enemy": Humvee,
         "delay": .50,
         "armor": false
     }
