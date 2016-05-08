@@ -25,7 +25,6 @@ public class TowerFlameThrower extends Tower implements IFlame {
 	public static final float ATTACK_SPEED = 1f;
 	public static final float ATTACK_TICK_SPEED = 0.2f;
 	public static final float RANGE = 90;
-	public static final Vector2 FLAME_SIZE = new Vector2(20, 62);
 	public static final int COST = 600;
 	public static final int ARMOR_COST = 5665;
 	public static final int RANGE_INCREASE_COST = 450;
@@ -34,14 +33,16 @@ public class TowerFlameThrower extends Tower implements IFlame {
 	public static final float[] BODY = { 5, 22, 5, 34, 26, 34, 26, 22 };
 	public static final Vector2 GUN_POS = new Vector2(4, 26);
 	public static final Vector2 TEXTURE_SIZE = new Vector2(32, 56);
-
+	public Vector2 flameSize = new Vector2(20, RANGE-26);
 	public TowerFlameThrower(TextureRegion actorRegion, CombatActorPool<CombatActor> pool) {
 		super(actorRegion, pool, BODY, TEXTURE_SIZE, GUN_POS, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 	}
 
+
 	@Override
 	public Vector2 getFlameSize() {
-		return FLAME_SIZE;
+		flameSize.set(flameSize.x, this.getRange()-GUN_POS.y);
+		return flameSize;
 	}
 
 	@Override
@@ -53,6 +54,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
 		flame.initialize(this, this.getTarget(), getEnemyGroup(), getFlameSize(), getAttackTickSpeed());
 
 	}
+	
 
 	@Override
 	public float getAttackTickSpeed() {
