@@ -162,7 +162,7 @@ public abstract class Tower extends CombatActor {
 
 	public void increaseSpeed() {
 		this.increaseSpeedLevel();
-		this.setAttackSpeed(this.getAttackSpeed() + (this.getAttackSpeed() * TOWER_SPEED_INCREASE_RATE));
+		this.setAttackSpeed(this.getAttackSpeed() - (this.getAttackSpeed() * TOWER_SPEED_INCREASE_RATE));
 	}
 
 	public void increaseAttack() {
