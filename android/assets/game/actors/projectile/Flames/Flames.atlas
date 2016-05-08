@@ -3,126 +3,126 @@ Flames.png
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-flame1
+Flame1
   rotate: false
   xy: 1, 761
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame10
+Flame10
   rotate: false
   xy: 1, 609
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame11
+Flame11
   rotate: false
   xy: 153, 761
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame12
+Flame12
   rotate: false
   xy: 1, 457
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame13
+Flame13
   rotate: false
   xy: 153, 609
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame14
+Flame14
   rotate: false
   xy: 305, 761
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame15
+Flame15
   rotate: false
   xy: 1, 305
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame16
+Flame16
   rotate: false
   xy: 153, 457
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame17
+Flame17
   rotate: false
   xy: 305, 609
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame18
+Flame18
   rotate: false
   xy: 457, 761
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame19
+Flame19
   rotate: false
   xy: 1, 153
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame2
+Flame2
   rotate: false
   xy: 153, 305
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame20
+Flame20
   rotate: false
   xy: 305, 457
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame21
+Flame21
   rotate: false
   xy: 457, 609
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame22
+Flame22
   rotate: false
   xy: 609, 761
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame23
+Flame23
   rotate: false
   xy: 1, 1
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame24
+Flame24
   rotate: false
   xy: 153, 153
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame25
+Flame25
   rotate: false
   xy: 305, 305
   size: 150, 150
@@ -157,49 +157,49 @@ flame29
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame3
+Flame3
   rotate: false
   xy: 305, 153
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame4
+Flame4
   rotate: false
   xy: 457, 305
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame5
+Flame5
   rotate: false
   xy: 609, 457
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame6
+Flame6
   rotate: false
   xy: 761, 609
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame7
+Flame7
   rotate: false
   xy: 305, 1
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame8
+Flame8
   rotate: false
   xy: 457, 153
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-flame9
+Flame9
   rotate: false
   xy: 609, 305
   size: 150, 150
