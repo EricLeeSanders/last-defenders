@@ -33,11 +33,11 @@ import com.eric.mtd.util.Resources;
  *
  */
 public class Flame extends Actor implements Pool.Poolable {
-	private static final float NUM_OF_FRAMES = 25;
+	private static final int NUM_OF_FRAMES = 29;
 	private Animation flameAnimation;
 	private TextureRegion currentFlame;
 	private float stateTime;
-	private TextureRegion[] flameRegions = new TextureRegion[25];
+	private TextureRegion[] flameRegions = new TextureRegion[NUM_OF_FRAMES];
 	private CombatActor shooter, target;
 	private ShapeRenderer flameOutline = Resources.getShapeRenderer();
 	private Group targetGroup;
@@ -54,8 +54,8 @@ public class Flame extends Actor implements Pool.Poolable {
 	public Flame(Pool<Flame> pool) {
 		this.pool = pool;
 		TextureAtlas flameAtlas = Resources.getAtlas(Resources.FLAMES_ATLAS);
-		for (int i = 0; i < 25; i++) {
-			flameRegions[i] = flameAtlas.findRegion("Flame" + (i + 1));
+		for (int i = 0; i < NUM_OF_FRAMES; i++) {
+			flameRegions[i] = flameAtlas.findRegion("flame" + (i + 1));
 		}
 	}
 
@@ -112,8 +112,8 @@ public class Flame extends Actor implements Pool.Poolable {
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		stateTime += (Gdx.graphics.getDeltaTime() * MTDGame.gameSpeed);
 		currentFlame = flameAnimation.getKeyFrame(stateTime, false);
-		this.setOrigin((currentFlame.getRegionWidth() / 2), 0);
-		this.setPosition(shooter.getGunPos().x - (currentFlame.getRegionWidth() / 2), shooter.getGunPos().y);
+		this.setOrigin((currentFlame.getRegionWidth() / 2)-5, 0);
+		this.setPosition(shooter.getGunPos().x - (currentFlame.getRegionWidth() / 2)-5, shooter.getGunPos().y);
 		setRotation(shooter.getRotation());
 		batch.end();
 		poly = getFlameBody();
@@ -125,7 +125,7 @@ public class Flame extends Actor implements Pool.Poolable {
 			flameOutline.end();
 		}
 		batch.begin();
-		batch.draw(currentFlame, this.getX(), this.getY(), this.getOriginX(), this.getOriginY(), currentFlame.getRegionWidth(), currentFlame.getRegionHeight(), 1, 1, this.getRotation());
+		batch.draw(currentFlame, this.getX(), this.getY(), this.getOriginX(), this.getOriginY(), currentFlame.getRegionWidth(), currentFlame.getRegionHeight(), 1,1, this.getRotation());
 		if (flameAnimation.isAnimationFinished(stateTime)) {
 			pool.free(this);
 		}
@@ -142,7 +142,6 @@ public class Flame extends Actor implements Pool.Poolable {
 		flameBody.setPosition(shooter.getGunPos().x - (flameSize.x / 2), shooter.getGunPos().y);
 		flameBody.setOrigin((flameSize.x / 2), 0);
 		flameBody.setRotation(this.getRotation());
-
 		return flameBody;
 	}
 
