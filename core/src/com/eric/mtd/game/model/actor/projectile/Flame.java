@@ -33,7 +33,7 @@ import com.eric.mtd.util.Resources;
  *
  */
 public class Flame extends Actor implements Pool.Poolable {
-	private static final int NUM_OF_FRAMES = 29;
+	private static final int NUM_OF_FRAMES = 25;
 	private Animation flameAnimation;
 	private TextureRegion currentFlame;
 	private float stateTime;
@@ -55,7 +55,7 @@ public class Flame extends Actor implements Pool.Poolable {
 		this.pool = pool;
 		TextureAtlas flameAtlas = Resources.getAtlas(Resources.FLAMES_ATLAS);
 		for (int i = 0; i < NUM_OF_FRAMES; i++) {
-			flameRegions[i] = flameAtlas.findRegion("flame" + (i + 1));
+			flameRegions[i] = flameAtlas.findRegion("Flame" + (i + 1));
 		}
 	}
 
@@ -112,8 +112,8 @@ public class Flame extends Actor implements Pool.Poolable {
 		Gdx.gl.glEnable(GL20.GL_BLEND);
 		stateTime += (Gdx.graphics.getDeltaTime() * MTDGame.gameSpeed);
 		currentFlame = flameAnimation.getKeyFrame(stateTime, false);
-		this.setOrigin((currentFlame.getRegionWidth() / 2)-5, 0);
-		this.setPosition(shooter.getGunPos().x - (currentFlame.getRegionWidth() / 2)-5, shooter.getGunPos().y);
+		this.setOrigin((currentFlame.getRegionWidth() / 2), 0);
+		this.setPosition(shooter.getGunPos().x - (currentFlame.getRegionWidth() / 2), shooter.getGunPos().y);
 		setRotation(shooter.getRotation());
 		batch.end();
 		poly = getFlameBody();
