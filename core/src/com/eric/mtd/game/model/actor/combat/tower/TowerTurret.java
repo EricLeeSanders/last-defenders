@@ -33,7 +33,7 @@ public class TowerTurret extends Tower implements IRotatable {
 	public static final float ARMOR = 10;
 	public static final float ATTACK = 3;
 	public static final float ATTACK_SPEED = .2f;
-	public static final float RANGE = 50;
+	public static final float RANGE = 70;
 	public static final Vector2 BULLET_SIZE = new Vector2(10, 10);
 	public static final int COST = 1300;
 	public static final int ARMOR_COST = 900;
@@ -42,11 +42,10 @@ public class TowerTurret extends Tower implements IRotatable {
 	public static final int ATTACK_INCREASE_COST = 500;
 
 	public static final float[] BODY = { 30, 0, 13, 3, 3, 14, 0, 23, 0, 35, 3, 43, 11, 51, 16, 55, 30, 56, 46, 54, 56, 43, 60, 35, 60, 23, 56, 14, 49, 5 };
-	public static final float[] RANGE_COORDS = { 30, 28, -10, 170, 70, 170 };
 	public static final Vector2 GUN_POS = new Vector2(4, 26);
 	public static final Vector2 TEXTURE_BODY_SIZE = new Vector2(60, 56);
 	public static final Vector2 TEXTURE_TURRET_SIZE = new Vector2(32, 56);
-
+	private float[] rangeCoords = { 30, 28, -10, RANGE, 70, RANGE };
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
 	private ShapeRenderer rangeShape = Resources.getShapeRenderer();
@@ -118,7 +117,8 @@ public class TowerTurret extends Tower implements IRotatable {
 
 	@Override
 	public Shape2D getRangeShape() {
-		Polygon poly = new Polygon(RANGE_COORDS);
+		changeRangeCoords();
+		Polygon poly = new Polygon(rangeCoords);
 		poly.setOrigin((TEXTURE_BODY_SIZE.x / 2), (TEXTURE_BODY_SIZE.y / 2));
 		poly.setRotation(bodyRotation);
 		poly.setPosition(getPositionCenter().x - (TEXTURE_BODY_SIZE.x / 2), getPositionCenter().y - (TEXTURE_BODY_SIZE.y / 2));
@@ -133,6 +133,9 @@ public class TowerTurret extends Tower implements IRotatable {
 		Bullet bullet = ActorFactory.loadBullet();
 		bullet.initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
 
+	}
+	private void changeRangeCoords(){
+		rangeCoords[3] = rangeCoords[5] = this.getRange() + (TEXTURE_BODY_SIZE.y / 2);
 	}
 
 }
