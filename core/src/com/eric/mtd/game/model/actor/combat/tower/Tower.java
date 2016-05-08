@@ -11,6 +11,7 @@ import com.eric.mtd.game.model.actor.ai.TowerTargetPriority;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.ICombatActorObserver;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
+import com.eric.mtd.util.Logger;
 
 /**
  * Represents a Tower
@@ -22,7 +23,7 @@ public abstract class Tower extends CombatActor {
 	public static final int TOWER_RANGE_LEVEL_MAX = 2;
 	public static final int TOWER_ATTACK_SPEED_LEVEL_MAX = 2;
 	public static final int TOWER_ATTACK_LEVEL_MAX = 2;
-	public static final float TOWER_RANGE_INCREASE_RATE = 0.333333f;
+	public static final float TOWER_RANGE_INCREASE_RATE = 0.25f;
 	public static final float TOWER_SPEED_INCREASE_RATE = 0.25f;
 	public static final float TOWER_ATTACK_INCREASE_RATE = 0.25f;
 	public static final float TOWER_SELL_RATE = 0.75f;
@@ -151,8 +152,11 @@ public abstract class Tower extends CombatActor {
 
 	public void increaseRange() {
 		if (this.getRangeLevel() < TOWER_RANGE_LEVEL_MAX) {
+			if(Logger.DEBUG)System.out.println("Old Range: " + this.getRange());
 			this.increaseRangeLevel();
 			this.setRange(this.getRange() + (this.getRange() * TOWER_RANGE_INCREASE_RATE));
+			//this.setRange(this.getRange() + 20);
+			if(Logger.DEBUG)System.out.println("New Range: " + this.getRange());
 		}
 	}
 

@@ -88,7 +88,6 @@ public class TowerPlacement {
 			currentTower.setRotation(currentTower.getRotation() - rotation);
 			if (Logger.DEBUG)
 				System.out.println(currentTower.getPositionCenter());
-			currentTower.setShowRange(true);
 			if (towerCollides()) {
 				currentTower.setRangeColor(1f, 0f, 0f, 0.5f);// Red
 
@@ -106,8 +105,6 @@ public class TowerPlacement {
 	public boolean placeTower() {
 		if (currentTower != null) {
 			if (!towerCollides()) {
-
-				currentTower.setShowRange(false);
 				currentTower.setActive(true);
 				currentTower.setDead(false);
 				HealthBar healthBar = ActorFactory.loadHealthBar();
