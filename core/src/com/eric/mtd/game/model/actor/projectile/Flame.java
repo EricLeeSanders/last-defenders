@@ -33,7 +33,7 @@ import com.eric.mtd.util.Resources;
  *
  */
 public class Flame extends Actor implements Pool.Poolable {
-	private static final int NUM_OF_FRAMES = 25;
+	private static final int NUM_OF_FRAMES = 29;
 	private Animation flameAnimation;
 	private TextureRegion currentFlame;
 	private float stateTime;
@@ -44,8 +44,6 @@ public class Flame extends Actor implements Pool.Poolable {
 	private Vector2 flameSize;
 	Polygon poly = null;
 	Polygon targetBodySnap = null;
-	private float attackCounter = 0;
-	private float attackTickSpeed, attackTickDamage;
 	private Pool<Flame> pool;
 
 	/**
@@ -65,20 +63,19 @@ public class Flame extends Actor implements Pool.Poolable {
 	 * @param shooter
 	 * @param target
 	 */
-	public void initialize(CombatActor shooter, CombatActor target, Group targetGroup, Vector2 flameSize, float attackTickSpeed) {
+	public void initialize(CombatActor shooter, CombatActor target, Group targetGroup, Vector2 flameSize) {
 		this.shooter = shooter;
 		this.target = target;
 		if (shooter.getStage() instanceof GameStage) {
 			((GameStage) shooter.getStage()).getActorGroups().getProjectileGroup().addActor(this);
 		}
 		stateTime = 0;
-		flameAnimation = new Animation(shooter.getAttackSpeed() / NUM_OF_FRAMES, flameRegions);
+		flameAnimation = new Animation((shooter.getAttackSpeed() * 0.75f) / NUM_OF_FRAMES, flameRegions);
 		flameAnimation.setPlayMode(PlayMode.NORMAL);
-
-		this.attackTickSpeed = attackTickSpeed;
 		this.flameSize = flameSize;
-		attackTickDamage = 1; // Do a little bit of damage each tick
 		this.targetGroup = targetGroup;
+		Damage.dealFlameTargetDamage(shooter, target);
+		Damage.dealFlameGroupDamage(shooter, target, targetGroup, this);
 	}
 
 
@@ -93,12 +90,6 @@ public class Flame extends Actor implements Pool.Poolable {
 			pool.free(this);
 			System.out.println("Testing actor remove");
 			return;
-		}
-		if (attackCounter >= attackTickSpeed) {
-			attackCounter = 0;
-			Damage.dealFlameDamage(shooter, targetGroup, this, attackTickDamage);
-		} else {
-			attackCounter += delta;
 		}
 	}
 
@@ -125,7 +116,8 @@ public class Flame extends Actor implements Pool.Poolable {
 			flameOutline.end();
 		}
 		batch.begin();
-		batch.draw(currentFlame, this.getX(), this.getY(), this.getOriginX(), this.getOriginY(), currentFlame.getRegionWidth(), currentFlame.getRegionHeight(), 1,1, this.getRotation());
+		batch.draw(currentFlame, this.getX(), this.getY(), this.getOriginX(), this.getOriginY(), currentFlame.getRegionWidth(), currentFlame.getRegionHeight()
+				, flameSize.y/currentFlame.getRegionWidth(),flameSize.y/currentFlame.getRegionHeight(), this.getRotation());
 		if (flameAnimation.isAnimationFinished(stateTime)) {
 			pool.free(this);
 		}
@@ -153,7 +145,6 @@ public class Flame extends Actor implements Pool.Poolable {
 		this.remove();
 		stateTime = 0;
 		flameAnimation = null;
-		attackCounter = 0;
 		targetGroup = null;
 	}
 

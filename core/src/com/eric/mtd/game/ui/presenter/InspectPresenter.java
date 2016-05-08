@@ -153,7 +153,6 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 			if (hitActor != null) {
 				if (hitActor instanceof Tower) {
 					selectedTower = (Tower) hitActor;
-					selectedTower.setShowRange(true);
 					selectedTower.attach(this);
 					uiStateManager.setState(GameUIState.INSPECTING);
 				}

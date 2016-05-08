@@ -47,9 +47,4 @@ public class EnemyFlameThrower extends Enemy implements IFlame {
 		return flameSize;
 	}
 
-	@Override
-	public float getAttackTickSpeed() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }

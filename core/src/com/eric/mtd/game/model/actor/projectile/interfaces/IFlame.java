@@ -10,5 +10,4 @@ import com.badlogic.gdx.math.Vector2;
  */
 public interface IFlame {
 	public Vector2 getFlameSize();
-	public float getAttackTickSpeed();
 }
