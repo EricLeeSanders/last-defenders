@@ -19,7 +19,7 @@ import com.eric.mtd.util.Logger;
  *
  */
 public class Damage {
-	public static void dealRpgDamage(IAttacker attacker, CombatActor target) {
+	private static void dealTargetDamage(IAttacker attacker, CombatActor target) {
 		if (target.isDead() == false) {
 			target.takeDamage(attacker.getAttack());
 			if (target.isDead() && attacker instanceof Tower) {
@@ -27,45 +27,36 @@ public class Damage {
 				if (((Tower)attacker).isDead() == false) {
 					((Tower) attacker).giveKill();
 					if (Logger.DEBUG)
-						System.out.println("RPG: giving kill to attacker");
+						System.out.println("Shooter: giving kill");
 				}
 			}
 		}
+	}
+	public static void dealRpgDamage(IAttacker attacker, CombatActor target) {
+		dealTargetDamage(attacker,target);
 	}
 
 	public static void dealBulletDamage(IAttacker attacker, CombatActor target) {
-		if ((!(target instanceof IPlatedArmor)) || (attacker instanceof IAoe)) {
-			if (target.isDead() == false) {
-				target.takeDamage(attacker.getAttack());
-				if (target.isDead() && attacker instanceof Tower) {
-					// Only give the tower a kill if it is alive.
-					if (((Tower)attacker).isDead() == false) {
-						((Tower) attacker).giveKill();
-						if (Logger.DEBUG)
-							System.out.println("Bullet: giving kill to attacker");
-					}
-				}
-			}
+		if (!(target instanceof IPlatedArmor)) {
+			dealTargetDamage(attacker, target);
 		}
 	}
-
-	public static void dealFlameDamage(CombatActor attacker, Group targetGroup, Flame flame, float attackDamage) {
+	public static void dealFlameTargetDamage(IAttacker attacker, CombatActor target) {
+		if (!(target instanceof IPlatedArmor)) {
+			dealTargetDamage(attacker, target);
+		}
+	}
+	public static void dealFlameGroupDamage(IAttacker attacker, CombatActor target, Group targetGroup, Flame flame) {
 		//Have to create a copy of the group otherwise when a target is killed, the iterator will skip
 		//over the next in the group.
 		Array<Actor> targetGroupArray = new Array<Actor>(targetGroup.getChildren());
 		for (Actor flameTarget : targetGroupArray) {
 			Polygon targetBody = ((CombatActor) flameTarget).getBody();
 			if (CollisionDetection.polygonAndPolygon(targetBody, flame.getFlameBody())) {
-				if (((CombatActor) flameTarget).isDead() == false) {
-					((CombatActor) flameTarget).takeDamage(attackDamage);
-					if (((CombatActor) flameTarget).isDead() && attacker instanceof Tower) {
-						// Only give the attacker a kill if it is alive.
-						if (((Tower)attacker).isDead() == false) {
-							((Tower) attacker).giveKill();
-							if (Logger.DEBUG)
-								System.out.println("Flame: giving kill to attacker");
-						}
-					}
+				if(!(flameTarget.equals(flameTarget))){
+					dealFlameTargetDamage(attacker, (CombatActor)flameTarget);
+				}else {
+					if(Logger.DEBUG)System.out.println("Target == flameTarget");
 				}
 			}
 		}
