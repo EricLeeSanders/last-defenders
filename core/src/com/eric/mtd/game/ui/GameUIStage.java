@@ -124,12 +124,10 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	 * 
 	 * @param showRanges
 	 */
-	public void showTowerRanges(boolean showRanges) {
-		if (showRanges){
-			for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
-				if (tower instanceof Tower) {
-					((CombatActor) tower).setShowRange(showRanges);
-				}
+	private void showTowerRanges(boolean showRanges) {
+		for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
+			if (tower instanceof Tower) {
+				((CombatActor) tower).setShowRange(showRanges);
 			}
 		}
 	}
