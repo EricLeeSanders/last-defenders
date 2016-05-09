@@ -117,20 +117,6 @@ public class EnlistPresenter implements IGameUIStateObserver {
 		}
 	}
 
-	/**
-	 * Show/Hide tower ranges for all towers
-	 * 
-	 * @param showRanges
-	 */
-	public void showTowerRanges(boolean showRanges) {
-		if (showRanges){
-			for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
-				if (tower instanceof Tower) {
-					((CombatActor) tower).setShowRange(showRanges);
-				}
-			}
-		}
-	}
 
 	/**
 	 * Determines if the tower can be purchased.
@@ -166,15 +152,12 @@ public class EnlistPresenter implements IGameUIStateObserver {
 		switch (state) {
 		case ENLISTING:
 			view.enlistingState();
-			showTowerRanges(false);
 			break;
 		case PLACING_TOWER:
 			view.placingTowerState();
-			showTowerRanges(true);
 			break;
 		default:
 			view.standByState();
-			showTowerRanges(false);
 			break;
 		}
 
