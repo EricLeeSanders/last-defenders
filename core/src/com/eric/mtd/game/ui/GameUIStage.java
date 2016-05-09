@@ -2,12 +2,15 @@ package com.eric.mtd.game.ui;
 
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
+import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.ui.presenter.EnlistPresenter;
@@ -17,6 +20,8 @@ import com.eric.mtd.game.ui.presenter.InspectPresenter;
 import com.eric.mtd.game.ui.presenter.OptionsPresenter;
 import com.eric.mtd.game.ui.presenter.SupportPresenter;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
+import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
+import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.view.EnlistView;
 import com.eric.mtd.game.ui.view.GameOverView;
 import com.eric.mtd.game.ui.view.HUDView;
@@ -33,7 +38,7 @@ import com.eric.mtd.util.Resources;
  * @author Eric
  *
  */
-public class GameUIStage extends Stage {
+public class GameUIStage extends Stage implements IGameUIStateObserver{
 	private HUDView hudView;
 	private InspectView inspectView;
 	private EnlistView enlistView;
@@ -68,6 +73,7 @@ public class GameUIStage extends Stage {
 		this.levelStateManager = levelStateManager;
 		this.gameStateManager = gameStateManager;
 		this.screenStateManager = screenStateManager;
+		uiStateManager.attach(this);
 		imp.addProcessor(this);
 		createUI();
 	}
@@ -111,6 +117,36 @@ public class GameUIStage extends Stage {
 		imp.addProcessor(enlistView);
 		imp.addProcessor(supportView);
 		imp.addProcessor(inspectView);
+	}
+	
+	/**
+	 * Show/Hide tower ranges for all towers
+	 * 
+	 * @param showRanges
+	 */
+	public void showTowerRanges(boolean showRanges) {
+		if (showRanges){
+			for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
+				if (tower instanceof Tower) {
+					((CombatActor) tower).setShowRange(showRanges);
+				}
+			}
+		}
+	}
+	@Override
+	public void changeUIState(GameUIState state) {
+		switch (state) {
+		case PLACING_SUPPORT:
+		case PLACING_AIRSTRIKE:
+		case INSPECTING:
+		case PLACING_TOWER:
+			showTowerRanges(true);
+			break;
+		default:
+			showTowerRanges(false);
+			break;
+		}
+		
 	}
 
 }
