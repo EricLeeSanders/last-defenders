@@ -161,20 +161,6 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	}
 
 	/**
-	 * Show/Hide tower ranges for all towers
-	 * 
-	 * @param showRanges
-	 *            - Boolean to show/hide tower ranges
-	 */
-	public void showTowerRanges(boolean showRanges) {
-		for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
-			if (tower instanceof Tower) {
-				((CombatActor) tower).setShowRange(showRanges);
-			}
-		}
-	}
-
-	/**
 	 * Determine if the the upgrade is affordable
 	 * 
 	 * @param upgradeCost
@@ -194,11 +180,9 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 		case INSPECTING:
 			view.inspectingState();
 			view.update(selectedTower);
-			showTowerRanges(true);
 			break;
 		case STANDBY:
 			view.standByState();
-			showTowerRanges(false);
 			break;
 		default:
 			break;
