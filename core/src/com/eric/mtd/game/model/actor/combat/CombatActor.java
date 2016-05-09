@@ -191,8 +191,8 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		return poly;
 	}
 
-	public void setShowRange(boolean bool) {
-		showRange = bool;
+	public void setShowRange(boolean showRange) {
+		this.showRange = showRange;
 	}
 
 	public boolean isShowRange() {
