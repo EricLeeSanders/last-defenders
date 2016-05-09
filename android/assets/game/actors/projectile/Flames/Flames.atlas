@@ -1,0 +1,208 @@
+
+Flames.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Flame1
+  rotate: false
+  xy: 1, 761
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame10
+  rotate: false
+  xy: 1, 609
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame11
+  rotate: false
+  xy: 153, 761
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame12
+  rotate: false
+  xy: 1, 457
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame13
+  rotate: false
+  xy: 153, 609
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame14
+  rotate: false
+  xy: 305, 761
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame15
+  rotate: false
+  xy: 1, 305
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame16
+  rotate: false
+  xy: 153, 457
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame17
+  rotate: false
+  xy: 305, 609
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame18
+  rotate: false
+  xy: 457, 761
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame19
+  rotate: false
+  xy: 1, 153
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame2
+  rotate: false
+  xy: 153, 305
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame20
+  rotate: false
+  xy: 305, 457
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame21
+  rotate: false
+  xy: 457, 609
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame22
+  rotate: false
+  xy: 609, 761
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame23
+  rotate: false
+  xy: 1, 1
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame24
+  rotate: false
+  xy: 153, 153
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame25
+  rotate: false
+  xy: 305, 305
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame26
+  rotate: false
+  xy: 457, 457
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame27
+  rotate: false
+  xy: 609, 609
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame28
+  rotate: false
+  xy: 761, 761
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame29
+  rotate: false
+  xy: 153, 1
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame3
+  rotate: false
+  xy: 305, 153
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame4
+  rotate: false
+  xy: 457, 305
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame5
+  rotate: false
+  xy: 609, 457
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame6
+  rotate: false
+  xy: 761, 609
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame7
+  rotate: false
+  xy: 305, 1
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame8
+  rotate: false
+  xy: 457, 153
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
+Flame9
+  rotate: false
+  xy: 609, 305
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
