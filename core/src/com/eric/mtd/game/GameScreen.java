@@ -59,8 +59,7 @@ public class GameScreen extends AbstractScreen {
 
 	@Override
 	public void show() {
-		if (Logger.DEBUG)
-			createFramesField();
+		createFramesField();
 	}
 	@Override
 	public void resize(int width, int height) {
@@ -74,8 +73,7 @@ public class GameScreen extends AbstractScreen {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		getCamera().update();
-		if (Logger.DEBUG)
-			framesLabel.setText(Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
+		framesLabel.setText(Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
 		renderElements(delta);
 
 	}
