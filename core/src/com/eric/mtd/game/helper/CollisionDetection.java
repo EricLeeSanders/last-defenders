@@ -87,8 +87,7 @@ public final class CollisionDetection {
 					}
 				}
 			}
-			if (actor instanceof Sandbag) { // Checks for collision with sand
-											// bags
+			if (actor instanceof Sandbag) { // Checks for collision with sandbags
 				if (!actor.equals(placeActor)) {
 					sandbagBody = ((Sandbag) actor).getBody();
 					if (placeBody instanceof Polygon) {
@@ -110,7 +109,7 @@ public final class CollisionDetection {
 		return false;
 	}
 	/**
-	 * Checks for collision bewteen a LandMine and an Enemy
+	 * Checks for collision between a LandMine and an Enemy
 	 * @param landMineBody
 	 * @param enemy
 	 * @return boolean - If there is a collision
@@ -193,19 +192,20 @@ public final class CollisionDetection {
 	public static boolean polygonAndCircle(Polygon polygon, Circle circle) {
 		float[] vertices = polygon.getTransformedVertices();
 		Vector2 center = new Vector2(circle.x, circle.y);
-		// Creating local variables for optimization
 		Vector2 vectorA = new Vector2();
 		Vector2 vectorB = new Vector2();
 		float squareRadius = circle.radius * circle.radius;
 		vectorA.set(vertices[vertices.length - 2], vertices[vertices.length - 1]);
 		vectorB.set(vertices[0], vertices[1]);
-		if (Intersector.intersectSegmentCircle(vectorA, vectorB, center, squareRadius))
+		if (Intersector.intersectSegmentCircle(vectorA, vectorB, center, squareRadius)){
 			return true;
+		}
 		for (int i = 2; i < vertices.length; i += 2) {
 			vectorA.set(vertices[i - 2], vertices[i - 1]);
 			vectorB.set(vertices[i], vertices[i + 1]);
-			if (Intersector.intersectSegmentCircle(vectorA, vectorB, center, squareRadius))
+			if (Intersector.intersectSegmentCircle(vectorA, vectorB, center, squareRadius)){
 				return true;
+			}
 		}
 		if (polygon.contains(circle.x, circle.y)) {
 			return true;

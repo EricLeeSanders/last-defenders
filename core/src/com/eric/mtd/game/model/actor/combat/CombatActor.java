@@ -43,6 +43,8 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private ShapeRenderer rangeShape = Resources.getShapeRenderer();
 	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private Color rangeColor = new Color(1.0f, 0f, 0f, 0.5f);
+	private Circle rangeCircle = new Circle();
+	private Polygon bodyPoly;
 	private boolean showRange, hasArmor, dead;
 	private Pool<CombatActor> pool;
 	private List<ICombatActorObserver> observers = new CopyOnWriteArrayList<ICombatActorObserver>();
@@ -58,6 +60,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.attackSpeed = attackSpeed;
 		this.attack = attack;
 		this.bodyPoints = bodyPoints;
+		this.bodyPoly = new Polygon(bodyPoints);
 		this.gunPos = gunPos;
 		this.range = range;
 		this.pool = pool;
@@ -96,7 +99,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		super.act(delta);
 	}
 
-	@Override
+	/*@Override
 	public void draw(Batch batch, float alpha) {
 		batch.end();
 		if (showRange) {
@@ -117,7 +120,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		debugBody.end();
 		batch.begin();
 		super.draw(batch, alpha);
-	}
+	}*/
 
 	public float getHealth() {
 		return health;
@@ -160,7 +163,9 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	}
 	@Override
 	public Shape2D getRangeShape() {
-		return new Circle(getPositionCenter().x, getPositionCenter().y, range);
+		rangeCircle.set(getPositionCenter().x, getPositionCenter().y, range);
+		return rangeCircle;
+		//return;// new Circle(getPositionCenter().x, getPositionCenter().y, range);
 	}
 
 	public float getAttackSpeed() {
@@ -183,12 +188,12 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	
 	@Override
 	public Polygon getBody() {
-		Polygon poly = new Polygon(bodyPoints);
-		poly.setOrigin((getTextureSize().x / 2), (getTextureSize().y / 2));
-		poly.setRotation(this.getRotation());
-		poly.setPosition(getPositionCenter().x - (getTextureSize().x / 2), getPositionCenter().y - (getTextureSize().y / 2));
+		
+		bodyPoly.setOrigin((getTextureSize().x / 2), (getTextureSize().y / 2));
+		bodyPoly.setRotation(this.getRotation());
+		bodyPoly.setPosition(getPositionCenter().x - (getTextureSize().x / 2), getPositionCenter().y - (getTextureSize().y / 2));
 
-		return poly;
+		return bodyPoly;
 	}
 
 	public void setShowRange(boolean showRange) {

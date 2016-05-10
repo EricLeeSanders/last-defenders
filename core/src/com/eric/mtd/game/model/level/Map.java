@@ -24,8 +24,8 @@ import com.eric.mtd.util.Resources;
  */
 public class Map {
 	private TiledMap tiledMap;
-	private Queue<Vector2> pathCoords = new LinkedList<Vector2>();;
-	private Array<Rectangle> pathBoundaries = new Array<Rectangle>();
+	private Queue<Vector2> pathCoords = new LinkedList<Vector2>();
+	private Array<Rectangle> pathBoundaries = new Array<Rectangle>(false, 16);
 	public Map(int intLevel) {
 		Resources.loadMap(intLevel);
 		tiledMap = Resources.getMap(intLevel);

@@ -59,9 +59,10 @@ public class GameActor extends Actor{
 	}
 	@Override
 	public void draw(Batch batch, float alpha) {
-		batch.end();
+		/*batch.end();
 		batch.begin();
 		batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getTextureSize().x, getTextureSize().y, 1, 1, getRotation());
+		*/
 	}
 	
 	public Vector2 getPositionCenter() {
