@@ -30,6 +30,7 @@ import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 import com.eric.mtd.util.AudioUtil.ProjectileSound;
+import com.eric.mtd.util.Dimension;
 
 public class Apache extends SupportActor{
 	private static final int COST = 2000;
@@ -39,7 +40,7 @@ public class Apache extends SupportActor{
 	private static final float ATTACK = 5f;
 	private static final float MOVE_SPEED = 200f;
 	private static final float TIME_ACTIVE_LIMIT = 15f;
-	private static final Vector2 BULLET_SIZE = new Vector2(10, 10);
+	private static final Dimension BULLET_SIZE = new Dimension(10, 10);
 	private static final Vector2 GUN_POS = new Vector2(0,0);
 	private TextureRegion [] textureRegions;
 	private boolean readyToAttack, exitingStage;
@@ -47,7 +48,7 @@ public class Apache extends SupportActor{
 	private int textureIndex; // Current texture index
 	private CombatActor target;
 	public Apache(Pool<SupportActor> pool, TextureRegion [] textureRegions) {
-		super(pool, textureRegions[0], new Vector2(textureRegions[0].getRegionWidth()*SCALE, textureRegions[0].getRegionHeight()*SCALE),
+		super(pool, textureRegions[0], new Dimension(textureRegions[0].getRegionWidth()*SCALE, textureRegions[0].getRegionHeight()*SCALE),
 				RANGE, ATTACK, GUN_POS, COST);
 		this.textureRegions = textureRegions;
 	}

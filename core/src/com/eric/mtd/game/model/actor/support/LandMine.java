@@ -12,13 +12,14 @@ import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.helper.Damage;
 import com.eric.mtd.game.model.actor.combat.enemy.Enemy;
+import com.eric.mtd.game.model.actor.interfaces.IRpg;
 import com.eric.mtd.game.model.actor.projectile.Explosion;
-import com.eric.mtd.game.model.actor.projectile.interfaces.IAoe;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
-public class LandMine extends SupportActor implements IAoe{
+public class LandMine extends SupportActor implements IRpg{
 	private static final int COST = 400;
 	private static final float ATTACK = 15f;
 	private static final float RANGE = 75;
@@ -26,7 +27,7 @@ public class LandMine extends SupportActor implements IAoe{
 	private static final float SCALE = 0.30f;
 	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	public LandMine(Pool<SupportActor> pool, TextureRegion textureRegion) {
-		super(pool, textureRegion, new Vector2(textureRegion.getRegionWidth()*SCALE, textureRegion.getRegionHeight()*SCALE)
+		super(pool, textureRegion, new Dimension(textureRegion.getRegionWidth()*SCALE, textureRegion.getRegionHeight()*SCALE)
 				,RANGE,ATTACK, GUN_POS, COST);
 		setRangeColor(0f, 0f, 0f, 0.5f);//black
 
@@ -62,17 +63,11 @@ public class LandMine extends SupportActor implements IAoe{
 		if(Logger.DEBUG)System.out.println("LandMine: Exploding");
 		Explosion explosion = ActorFactory.loadExplosion(); // Get an
 															// Explosion
-		explosion.initialize(this, null, getEnemyGroup(), this.getPositionCenter());
+		explosion.initialize(this,RANGE, null, getEnemyGroup(), this.getPositionCenter());
 		this.freeActor();
 	}
 	private Rectangle getBody(){
 		return new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
 	}
 	
-	@Override
-	public float getAoeRadius() {
-		// TODO Auto-generated method stub
-		return RANGE;
-	}
-
 }

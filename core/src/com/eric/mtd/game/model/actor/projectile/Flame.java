@@ -20,9 +20,12 @@ import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.helper.Damage;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
-import com.eric.mtd.game.model.actor.projectile.interfaces.IFlame;
+import com.eric.mtd.game.model.actor.interfaces.IAttacker;
+import com.eric.mtd.game.model.actor.interfaces.IFlame;
+import com.eric.mtd.game.model.actor.interfaces.ITargetable;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -38,14 +41,16 @@ public class Flame extends Actor implements Pool.Poolable {
 	private TextureRegion currentFlame;
 	private float stateTime;
 	private TextureRegion[] flameRegions = new TextureRegion[NUM_OF_FRAMES];
-	private CombatActor shooter, target;
+	private CombatActor shooter;
+	private ITargetable target;
 	private ShapeRenderer flameOutline = Resources.getShapeRenderer();
 	private Group targetGroup;
-	private Vector2 flameSize;
+	private Dimension flameSize;
 	Polygon poly = null;
 	Polygon targetBodySnap = null;
 	private Pool<Flame> pool;
-
+	private float[] bodyPoints = { 0, 0, 0, flameSize.getHeight(), flameSize.getWidth(), flameSize.getHeight(), flameSize.getWidth(), 0 };
+	private Polygon flameBody = new Polygon(bodyPoints);
 	/**
 	 * Constructs a flame
 	 */
@@ -63,19 +68,16 @@ public class Flame extends Actor implements Pool.Poolable {
 	 * @param shooter
 	 * @param target
 	 */
-	public void initialize(CombatActor shooter, CombatActor target, Group targetGroup, Vector2 flameSize) {
+	public void initialize(CombatActor shooter, ITargetable target, Group targetGroup, Dimension flameSize) {
 		this.shooter = shooter;
 		this.target = target;
-		if (shooter.getStage() instanceof GameStage) {
-			((GameStage) shooter.getStage()).getActorGroups().getProjectileGroup().addActor(this);
-		}
 		stateTime = 0;
 		flameAnimation = new Animation((shooter.getAttackSpeed() * 0.75f) / NUM_OF_FRAMES, flameRegions);
 		flameAnimation.setPlayMode(PlayMode.NORMAL);
 		this.flameSize = flameSize;
 		this.targetGroup = targetGroup;
 		Damage.dealFlameTargetDamage(shooter, target);
-		Damage.dealFlameGroupDamage(shooter, target, targetGroup, this);
+		Damage.dealFlameGroupDamage(shooter, target, targetGroup.getChildren(), getFlameBody());
 	}
 
 
@@ -117,7 +119,7 @@ public class Flame extends Actor implements Pool.Poolable {
 		}
 		batch.begin();
 		batch.draw(currentFlame, this.getX(), this.getY(), this.getOriginX(), this.getOriginY(), currentFlame.getRegionWidth(), currentFlame.getRegionHeight()
-				, flameSize.y/currentFlame.getRegionWidth(),flameSize.y/currentFlame.getRegionHeight(), this.getRotation());
+				, flameSize.getHeight()/currentFlame.getRegionWidth(),flameSize.getHeight()/currentFlame.getRegionHeight(), this.getRotation());
 		if (flameAnimation.isAnimationFinished(stateTime)) {
 			pool.free(this);
 		}
@@ -129,10 +131,8 @@ public class Flame extends Actor implements Pool.Poolable {
 	 * @return
 	 */
 	public Polygon getFlameBody() {
-		float[] bodyPoints = { 0, 0, 0, flameSize.y, flameSize.x, flameSize.y, flameSize.x, 0 };
-		Polygon flameBody = new Polygon(bodyPoints);
-		flameBody.setPosition(shooter.getGunPos().x - (flameSize.x / 2), shooter.getGunPos().y);
-		flameBody.setOrigin((flameSize.x / 2), 0);
+		flameBody.setPosition(shooter.getGunPos().x - (flameSize.getWidth() / 2), shooter.getGunPos().y);
+		flameBody.setOrigin((flameSize.getWidth() / 2), 0);
 		flameBody.setRotation(this.getRotation());
 		return flameBody;
 	}

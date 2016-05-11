@@ -9,6 +9,7 @@ import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
 import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.AudioUtil.ProjectileSound;
+import com.eric.mtd.util.Dimension;
 
 /**
  * Represents a Tower Sniper
@@ -29,10 +30,10 @@ public class TowerSniper extends Tower {
 	public static final int RANGE_INCREASE_COST = 100;
 	public static final int SPEED_INCREASE_COST = 100;
 	public static final int ATTACK_INCREASE_COST = 100;
-	public static final Vector2 BULLET_SIZE = new Vector2(10, 10);
+	public static final Dimension BULLET_SIZE = new Dimension(10, 10);
 	public static final float[] BODY = { 5, 22, 5, 34, 26, 34, 26, 22 };
 	public static final Vector2 GUN_POS = new Vector2(4, 26);
-	public static final Vector2 TEXTURE_SIZE = new Vector2(32, 56);
+	public static final Dimension TEXTURE_SIZE = new Dimension(32, 56);
 
 	public TowerSniper(TextureRegion actorRegion, CombatActorPool<CombatActor> pool) {
 		super(actorRegion, pool, BODY, TEXTURE_SIZE, GUN_POS, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
@@ -45,6 +46,7 @@ public class TowerSniper extends Tower {
 		AudioUtil.playProjectileSound(ProjectileSound.SNIPER);
 		Bullet bullet = ActorFactory.loadBullet();
 		bullet.initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
+		this.getStage().addActor(bullet);
 
 	}
 }

@@ -21,6 +21,7 @@ import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 import com.eric.mtd.util.AudioUtil.ProjectileSound;
+import com.eric.mtd.util.Dimension;
 
 public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	private Pool<SupportActor> pool;
@@ -32,7 +33,7 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	private boolean showRange;
 	private ShapeRenderer rangeShape = Resources.getShapeRenderer();
 	private Color rangeColor = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-	public SupportActor(Pool<SupportActor> pool, TextureRegion textureRegion, Vector2 textureSize
+	public SupportActor(Pool<SupportActor> pool, TextureRegion textureRegion, Dimension textureSize
 						, float range, float attack, Vector2 gunPos, int cost) {
 		super(textureRegion, textureSize);
 		this.pool = pool;

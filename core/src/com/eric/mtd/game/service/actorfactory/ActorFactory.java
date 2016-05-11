@@ -67,7 +67,7 @@ public class ActorFactory {
 	 *            - The type of tower
 	 * @return Tower
 	 */
-	public static Tower loadTower(Vector2 pos, String type, Group enemyGroup) {
+	public static Tower loadTower(Vector2 pos, String type, Group enemyGroup, Group projectileGroup) {
 		Tower tower = null;
 		if (type.equals("Rifle")) {
 			tower = (Tower) towerRiflePool.obtain();
@@ -86,6 +86,7 @@ public class ActorFactory {
 		}
 		tower.setPositionCenter(pos);
 		tower.setEnemyGroup(enemyGroup);
+		tower.setProjectileGroup(projectileGroup);
 		if (Logger.DEBUG)
 			System.out.println("Obtained : " + type);
 		return tower;
@@ -102,7 +103,7 @@ public class ActorFactory {
 	 *            - If the enemy has armor
 	 * @return Enemy
 	 */
-	public static Enemy loadEnemy(Queue<Vector2> path, String type, boolean armor, Group towerGroup) {
+	public static Enemy loadEnemy(Queue<Vector2> path, String type, boolean armor, Group towerGroup, Group projectileGroup) {
 		Enemy enemy = null;
 		if (type.equals("Rifle")) {
 			enemy = (Enemy) enemyRiflePool.obtain();
@@ -126,6 +127,7 @@ public class ActorFactory {
 		enemy.setHasArmor(armor);
 		enemy.setDead(false);
 		enemy.setTowerGroup(towerGroup);
+		enemy.setProjectileGroup(projectileGroup);
 		if (Logger.DEBUG)
 			System.out.println("Obtained : " + type);
 		return enemy;

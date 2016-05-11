@@ -16,8 +16,10 @@ import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.game.helper.Damage;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
+import com.eric.mtd.game.model.actor.interfaces.ITargetable;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -27,15 +29,14 @@ import com.eric.mtd.util.Resources;
  * @author Eric
  *
  */
-public class Bullet extends Projectile {
+public class Bullet extends Actor implements Pool.Poolable{
 	private static final float SPEED = 350f;
 	private ShapeRenderer bullet = Resources.getShapeRenderer();
-	private CombatActor target;
+	private ITargetable target;
 	private IAttacker attacker;
 	private Pool<Bullet> pool;
 	
 	public Bullet(Pool<Bullet> pool){
-		super(pool);
 		this.pool = pool;
 	}
 
@@ -49,15 +50,11 @@ public class Bullet extends Projectile {
 	 * @param size
 	 *            - Size of the bullet
 	 */
-	public void initialize(IAttacker attacker, CombatActor target, Vector2 pos, Vector2 size) {
+	public void initialize(IAttacker attacker, ITargetable target, Vector2 pos, Dimension size) {
 		this.target = target;
 		this.attacker = attacker;
 		this.setPosition(pos.x, pos.y);
-		this.setSize(size.x, size.y);
-		target.getStage();
-		if (target.getStage() instanceof GameStage) {
-			((GameStage) target.getStage()).getActorGroups().getProjectileGroup().addActor(this);
-		}
+		this.setSize(size.getWidth(), size.getHeight());
 		Vector2 end = target.getPositionCenter();
 		MoveToAction moveAction = new MoveToAction();
 		moveAction.setPosition(end.x, end.y);
@@ -113,12 +110,6 @@ public class Bullet extends Projectile {
 		target = null;
 		attacker = null;
 		this.remove();
-	}
-
-	@Override
-	public void initialize(CombatActor shooter, CombatActor target, Group targetGroup) {
-		// TODO Auto-generated method stub
-		
 	}
 
 
