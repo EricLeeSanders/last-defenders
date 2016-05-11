@@ -15,8 +15,11 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.game.helper.Damage;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.interfaces.IAttacker;
+import com.eric.mtd.game.model.actor.interfaces.ITargetable;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -29,10 +32,12 @@ import com.eric.mtd.util.Resources;
 public class RPG extends Actor implements Pool.Poolable {
 	private static final float SPEED = 350f;
 	private ShapeRenderer rpg = Resources.getShapeRenderer();
-	private CombatActor target, shooter;
+	private ITargetable target;
+	private IAttacker shooter;
 	private Group targetGroup;
 	private Vector2 destination;
 	private Pool<RPG> pool;
+	private float radius;
 	public RPG(Pool<RPG> pool){
 		this.pool = pool;
 	}
@@ -46,20 +51,19 @@ public class RPG extends Actor implements Pool.Poolable {
 	 * @param size
 	 *            - Size of the RPG
 	 */
-	public void initialize(CombatActor shooter, CombatActor target, Group targetGroup, Vector2 pos, Vector2 size) {
+	public Actor initialize(IAttacker shooter, ITargetable target, Group targetGroup, Vector2 pos, Dimension size, float radius) {
 		this.target = target;
 		this.shooter = shooter;
 		this.targetGroup = targetGroup;
+		this.radius = radius;
 		this.setPosition(pos.x, pos.y);
-		this.setSize(size.x, size.y);
-		if (shooter.getStage() instanceof GameStage) {
-			((GameStage) shooter.getStage()).getActorGroups().getProjectileGroup().addActor(this);
-		}
+		this.setSize(size.getWidth(), size.getHeight());
 		destination = target.getPositionCenter();
 		MoveToAction moveAction = new MoveToAction();
 		moveAction.setPosition(destination.x, destination.y);
 		moveAction.setDuration(destination.dst(pos) / SPEED);
 		addAction(moveAction);
+		return this;
 	}
 
 	/**
@@ -101,7 +105,7 @@ public class RPG extends Actor implements Pool.Poolable {
 			Damage.dealRpgDamage(shooter, target); // Deal damage
 			Explosion explosion = ActorFactory.loadExplosion(); // Get an
 																// Explosion
-			explosion.initialize(shooter, target, targetGroup, destination);
+			explosion.initialize(shooter, radius, target, targetGroup, destination);
 			pool.free(this);
 
 		}
@@ -116,6 +120,7 @@ public class RPG extends Actor implements Pool.Poolable {
 		target = null;
 		shooter = null;
 		destination = null;
+		radius = 0;
 		this.remove();
 	}
 

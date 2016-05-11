@@ -68,7 +68,7 @@ public class Level implements ILevelStateObserver {
 		delays = new LinkedList<Float>();
 		JsonValue enemiesJson = json.get("wave");
 		for (JsonValue enemyJson : enemiesJson.iterator()) {
-			Enemy enemy = ActorFactory.loadEnemy(map.getPath(), enemyJson.getString("enemy"), enemyJson.getBoolean("armor"), actorGroups.getTowerGroup());
+			Enemy enemy = ActorFactory.loadEnemy(map.getPath(), enemyJson.getString("enemy"), enemyJson.getBoolean("armor"), actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
 			enemies.add(enemy);
 			HealthBar healthBar = ActorFactory.loadHealthBar();
 			healthBar.setActor(enemy);

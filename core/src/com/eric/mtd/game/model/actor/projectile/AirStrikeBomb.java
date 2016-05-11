@@ -18,6 +18,7 @@ import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -34,6 +35,7 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 	private Vector2 destination;
 	private Group targetGroup;
 	private Pool<AirStrikeBomb> pool;
+	private float radius;
 	public AirStrikeBomb(Pool<AirStrikeBomb> pool){
 		this.pool = pool;
 	}
@@ -45,15 +47,13 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 	 * @param pos
 	 * @param size
 	 */
-	public void initialize(IAttacker attacker, Vector2 destination, Group targetGroup, Vector2 pos, Vector2 size) {
+	public void initialize(IAttacker attacker, Vector2 destination, Group targetGroup, Vector2 pos, Dimension size, float radius) {
 		this.targetGroup = targetGroup;
 		this.setPosition(pos.x, pos.y);
-		this.setSize(size.x, size.y);
+		this.setSize(size.getWidth(), size.getHeight());
+		this.radius = radius;
 		this.attacker = attacker;
 		this.destination = destination;
-		if (targetGroup.getStage() instanceof GameStage) {
-			((GameStage) targetGroup.getStage()).getActorGroups().getProjectileGroup().addActor(this);
-		}
 		MoveToAction moveAction = new MoveToAction();
 		moveAction.setPosition(destination.x, destination.y);
 		moveAction.setDuration(destination.dst(pos) / SPEED);
@@ -98,7 +98,7 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 		if (this.getActions().size == 0) {
 			Explosion explosion = ActorFactory.loadExplosion(); // Get an
 																// Explosion
-			explosion.initialize(attacker, null, targetGroup, destination);
+			explosion.initialize(attacker, radius,  null, targetGroup, destination);
 			pool.free(this);
 
 		}

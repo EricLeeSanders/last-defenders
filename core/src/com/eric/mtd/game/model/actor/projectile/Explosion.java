@@ -16,6 +16,7 @@ import com.eric.mtd.game.helper.Damage;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
+import com.eric.mtd.game.model.actor.interfaces.ITargetable;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.AudioUtil;
@@ -36,7 +37,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 											// animation to draw
 	private float stateTime; // counter for animation
 	private TextureRegion[] explosionRegions = new TextureRegion[16];
-	private CombatActor target;
+	private ITargetable target;
 	private IAttacker attacker;
 	private Pool<Explosion> pool;
 	/**
@@ -54,7 +55,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 	/**
 	 * Initializes an Explosion and deals Damage
 	 */
-	public void initialize(IAttacker attacker, CombatActor target, Group targetGroup, Vector2 position) {
+	public void initialize(IAttacker attacker, float radius, ITargetable target, Group targetGroup, Vector2 position) {
 		if (Logger.DEBUG)
 			System.out.println("Setting Explosion");
 		AudioUtil.playProjectileSound(ProjectileSound.RPG_EXPLOSION);
@@ -67,7 +68,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 		explosionAnimation = new Animation(0.05f, explosionRegions);
 		explosionAnimation.setPlayMode(PlayMode.NORMAL);
 		this.setPosition(position.x, position.y);
-		Damage.dealExplosionDamage(attacker, position, target, targetGroup);
+		Damage.dealExplosionDamage(attacker, radius, position, target, targetGroup.getChildren());
 	}
 
 	/**

@@ -8,7 +8,7 @@ import com.eric.mtd.game.model.actor.combat.enemy.Enemy;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.health.interfaces.IPlatedArmor;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
-import com.eric.mtd.game.model.actor.projectile.interfaces.IAoe;
+import com.eric.mtd.game.model.actor.interfaces.IRpg;
 
 /**
  * Contains Tower AI methods to find enemies.
@@ -32,18 +32,20 @@ public final class TowerSupportAI {
 		float lastEnemyDistance = Integer.MIN_VALUE;
 		Enemy lastEnemy = null;
 		Enemy platedLastEnemy = null;
-		for (Actor enemy : enemies) {
-			if (enemy instanceof Enemy) {
-				if (((Enemy) enemy).isDead() == false) {
-					if (CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(), attacker.getRangeShape())) {
-						if (((Enemy) enemy).lengthTillEnd() > lastEnemyDistance) {
-							if ((enemy instanceof IPlatedArmor == false) || (attacker instanceof IAoe)) {
-								lastEnemy = (Enemy) enemy;
-								lastEnemyDistance = ((Enemy) enemy).lengthTillEnd();
+		Enemy tempEnemy = null;
+		for (Actor actor : enemies) {
+			if (actor instanceof Enemy) {
+				tempEnemy = (Enemy)actor;
+				if (tempEnemy.isDead() == false) {
+					if (CollisionDetection.targetWithinRange(tempEnemy.getBody(), attacker.getRangeShape())) {
+						if (tempEnemy.lengthTillEnd() > lastEnemyDistance) {
+							if ((tempEnemy instanceof IPlatedArmor == false) || (attacker instanceof IRpg)) {
+								lastEnemy = tempEnemy;
+								lastEnemyDistance = tempEnemy.lengthTillEnd();
 							} else {
 								// Attack the plated enemy if there are no
 								// Other enemies to attack
-								platedLastEnemy = (Enemy) enemy;
+								platedLastEnemy = tempEnemy;
 							}
 						}
 					}
@@ -74,16 +76,18 @@ public final class TowerSupportAI {
 		float firstEnemyDistance = Integer.MAX_VALUE;
 		Enemy firstEnemy = null;
 		Enemy platedFirstEnemy = null;
-		for (Actor enemy : enemies) {
-			if (enemy instanceof Enemy) {
-				if (((Enemy) enemy).isDead() == false) {
-					if (CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(), attacker.getRangeShape())) {
-						if (((Enemy) enemy).lengthTillEnd() < firstEnemyDistance) {
-							if ((enemy instanceof IPlatedArmor == false) || (attacker instanceof IAoe)) {
-								firstEnemy = (Enemy) enemy;
-								firstEnemyDistance = ((Enemy) enemy).lengthTillEnd();
+		Enemy tempEnemy = null;
+		for (Actor actor : enemies) {
+			if (actor instanceof Enemy) {
+				tempEnemy = (Enemy) actor;
+				if (tempEnemy.isDead() == false) {
+					if (CollisionDetection.targetWithinRange(tempEnemy.getBody(), attacker.getRangeShape())) {
+						if (tempEnemy.lengthTillEnd() < firstEnemyDistance) {
+							if ((tempEnemy instanceof IPlatedArmor == false) || (attacker instanceof IRpg)) {
+								firstEnemy = tempEnemy;
+								firstEnemyDistance = tempEnemy.lengthTillEnd();
 							} else {
-								platedFirstEnemy = (Enemy) enemy;
+								platedFirstEnemy = tempEnemy;
 							}
 						}
 					}
@@ -109,19 +113,20 @@ public final class TowerSupportAI {
 			return null;
 		}
 		float lowestEnemyHealth = Integer.MAX_VALUE;
-		;
 		Enemy lowestHPEnemy = null;
 		Enemy platedLowestHPEnemy = null;
-		for (Actor enemy : enemies) {
-			if (enemy instanceof Enemy) {
-				if (((Enemy) enemy).isDead() == false) {
-					if (CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(), attacker.getRangeShape())) {
-						if (((Enemy) enemy).getHealth() < lowestEnemyHealth) {
-							if ((enemy instanceof IPlatedArmor == false) || (attacker instanceof IAoe)) {
-								lowestHPEnemy = (Enemy) enemy;
-								lowestEnemyHealth = ((Enemy) enemy).getHealth();
+		Enemy tempEnemy = null;
+		for (Actor actor : enemies) {
+			if (actor instanceof Enemy) {
+				tempEnemy = (Enemy) actor;
+				if (tempEnemy.isDead() == false) {
+					if (CollisionDetection.targetWithinRange(tempEnemy.getBody(), attacker.getRangeShape())) {
+						if (tempEnemy.getHealth() < lowestEnemyHealth) {
+							if ((tempEnemy instanceof IPlatedArmor == false) || (attacker instanceof IRpg)) {
+								lowestHPEnemy = tempEnemy;
+								lowestEnemyHealth = tempEnemy.getHealth();
 							} else {
-								platedLowestHPEnemy = (Enemy) enemy;
+								platedLowestHPEnemy = tempEnemy;
 							}
 						}
 					}
@@ -150,16 +155,18 @@ public final class TowerSupportAI {
 		float highestEnemyHealth = Integer.MIN_VALUE;
 		Enemy highestHPEnemy = null;
 		Enemy platedHighestHPEnemy = null;
-		for (Actor enemy : enemies) {
-			if (enemy instanceof Enemy) {
-				if (((Enemy) enemy).isDead() == false) {
-					if (CollisionDetection.targetWithinRange(((Enemy) enemy).getBody(), attacker.getRangeShape())) {
-						if (((Enemy) enemy).getHealth() > highestEnemyHealth) {
-							if ((enemy instanceof IPlatedArmor == false) || (attacker instanceof IAoe)) {
-								highestHPEnemy = (Enemy) enemy;
-								highestEnemyHealth = ((Enemy) enemy).getHealth();
+		Enemy tempEnemy;
+		for (Actor actor : enemies) {
+			if (actor instanceof Enemy) {
+				tempEnemy = (Enemy) actor;
+				if (tempEnemy.isDead() == false) {
+					if (CollisionDetection.targetWithinRange(tempEnemy.getBody(), attacker.getRangeShape())) {
+						if (tempEnemy.getHealth() > highestEnemyHealth) {
+							if ((tempEnemy instanceof IPlatedArmor == false) || (attacker instanceof IRpg)) {
+								highestHPEnemy = tempEnemy;
+								highestEnemyHealth = tempEnemy.getHealth();
 							} else {
-								platedHighestHPEnemy = (Enemy) enemy;
+								platedHighestHPEnemy = tempEnemy;
 							}
 						}
 					}

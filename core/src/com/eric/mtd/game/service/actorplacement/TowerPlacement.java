@@ -50,7 +50,7 @@ public class TowerPlacement {
 	 *            - Type of tower
 	 */
 	public void createTower(String type) {
-		currentTower = ActorFactory.loadTower(new Vector2(0, 0), type, actorGroups.getEnemyGroup());
+		currentTower = ActorFactory.loadTower(new Vector2(0, 0), type, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
 		actorGroups.getTowerGroup().addActor(currentTower);
 		currentTower.setVisible(false);
 	}

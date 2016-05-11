@@ -6,7 +6,7 @@ import com.eric.mtd.game.helper.CollisionDetection;
 import com.eric.mtd.game.model.actor.combat.enemy.Enemy;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.health.interfaces.IPlatedArmor;
-import com.eric.mtd.game.model.actor.projectile.interfaces.IAoe;
+import com.eric.mtd.game.model.actor.interfaces.IRpg;
 
 /**
  * Contains Enemy AI methods to find towers.
@@ -28,18 +28,19 @@ public class EnemyAI {
 		}
 		float firstTowerDistance = Integer.MAX_VALUE;
 		Tower firstTower = null;
-
-		for (Actor tower : towers) {
-			if (tower instanceof Tower) {
+		Tower tempTower = null;
+		for (Actor actor : towers) {
+			if(actor instanceof Tower){
+				tempTower = (Tower)actor;
 				// Tower is active and not dead
-				if (((Tower) tower).isDead() == false && ((Tower) tower).isActive()) {
-					if (CollisionDetection.targetWithinRange(((Tower) tower).getBody(), enemy.getRangeShape())) {
-						if (((Tower) tower).getPositionCenter().dst(enemy.getPositionCenter()) < firstTowerDistance) {
+				if (tempTower.isDead() == false && tempTower.isActive()) {
+					if (CollisionDetection.targetWithinRange(tempTower.getBody(), enemy.getRangeShape())) {
+						if (tempTower.getPositionCenter().dst(enemy.getPositionCenter()) < firstTowerDistance) {
 							// If the enemy is instanceof IRPG then it can
 							// attack plated towers.
-							if ((tower instanceof IPlatedArmor == false) || (enemy instanceof IAoe)) {
-								firstTower = (Tower) tower;
-								firstTowerDistance = ((Tower) tower).getPositionCenter().dst(enemy.getPositionCenter());
+							if ((tempTower instanceof IPlatedArmor == false) || (enemy instanceof IRpg)) {
+								firstTower = tempTower;
+								firstTowerDistance = tempTower.getPositionCenter().dst(enemy.getPositionCenter());
 							}
 						}
 					}
