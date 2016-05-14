@@ -43,7 +43,7 @@ public class TowerMachineGun extends Tower {
 		if (Logger.DEBUG)
 			System.out.println("Tower Macine: Attacking target");
 		AudioUtil.playProjectileSound(ProjectileSound.MACHINE);
-		ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
+		getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
 
 	}
 

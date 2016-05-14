@@ -12,7 +12,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.game.GameStage;
 import com.eric.mtd.screen.AbstractScreen;
 import com.eric.mtd.util.Resources;
 

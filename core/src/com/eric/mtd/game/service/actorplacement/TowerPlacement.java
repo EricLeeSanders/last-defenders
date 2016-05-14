@@ -69,10 +69,10 @@ public class TowerPlacement {
 				System.out.println(currentTower.getPositionCenter());
 			currentTower.setShowRange(true);
 			if (towerCollides()) {
-				currentTower.setRangeColor(1f, 0f, 0f, 0.5f);// Red
+				currentTower.setShowCollisionRange(true);
 
 			} else {
-				currentTower.setRangeColor(1f, 1f, 1f, .5f);
+				currentTower.setShowCollisionRange(false);
 			}
 		}
 	}
@@ -89,10 +89,10 @@ public class TowerPlacement {
 			if (Logger.DEBUG)
 				System.out.println(currentTower.getPositionCenter());
 			if (towerCollides()) {
-				currentTower.setRangeColor(1f, 0f, 0f, 0.5f);// Red
+				currentTower.setShowCollisionRange(true);
 
 			} else {
-				currentTower.setRangeColor(1f, 1f, 1f, .5f);
+				currentTower.setShowCollisionRange(false);
 			}
 		}
 	}

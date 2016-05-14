@@ -107,8 +107,7 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 
 	@Override
 	public Vector2 getGunPos() {
-		Vector2 pos = new Vector2((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y));
-		return getRotatedCoords(pos);
+		return getRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y));
 	}
 
 	@Override

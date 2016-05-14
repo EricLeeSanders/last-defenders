@@ -3,6 +3,7 @@ package com.eric.mtd.game.model.actor.combat.tower;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -31,11 +32,12 @@ public abstract class Tower extends CombatActor {
 	private int cost, armorCost, speedIncreaseCost, rangeIncreaseCost, attackIncreaseCost, rangeLevel, speedLevel,
 			attackLevel;
 	private TowerTargetPriority targetPriority = TowerTargetPriority.FIRST;
-	private boolean active = false; 
+	private boolean active, showRange, showCollisionRange; 
 	private CombatActorPool<CombatActor> pool;
 	private float attackCounter = 0;
 	private Group enemyTargetGroup;
 	private int kills;
+	private TextureRegion rangeTexture, rangeCollisionTexture;
 	public Tower(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost, int rangeIncreaseCost, int attackIncreaseCost) {
 		super(textureRegion, pool, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.pool = pool;
@@ -76,7 +78,48 @@ public abstract class Tower extends CombatActor {
 	public int getCost() {
 		return cost;
 	}
+	public void setRangeCollisionTexture(TextureRegion rangeCollisionTexture){
+		this.rangeCollisionTexture = rangeCollisionTexture;
+	}
+	public TextureRegion getRangeCollisionTexture(){
+		return rangeCollisionTexture;
+	}
+	public TextureRegion getCurrentRangeTexture(){
+		if(showCollisionRange){
+			return rangeCollisionTexture;
+		} else {
+			return rangeTexture;
+		}
+	}
+	public void setRangeTexture(TextureRegion rangeTexture){
+		this.rangeTexture = rangeTexture;
+	}
+	public TextureRegion getRangeTexture(){
+		return rangeTexture;
+	}
+	public void setShowCollisionRange(boolean showCollisionRange){
+		this.showCollisionRange = showCollisionRange;
+	}
+	public void setShowRange(boolean showRange) {
+		this.showRange = showRange;
+	}
 
+	public boolean isShowRange() {
+		return showRange;
+	}
+	@Override
+	public void draw(Batch batch, float alpha) {
+		if (showRange) {
+			drawRange(batch);
+		}
+		super.draw(batch, alpha);
+	}
+	protected void drawRange(Batch batch){
+		if(rangeCollisionTexture != null && rangeTexture != null){
+			batch.draw(getCurrentRangeTexture(), getPositionCenter().x - getRange(), getPositionCenter().y - getRange(), getOriginX(), getOriginY(), getRange()*2, getRange()*2, 1, 1, getRotation());
+			//batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getTextureSize().getWidth(), getTextureSize().getHeight(), 1, 1, getRotation());
+		}
+	}
 	/**
 	 * Finds targets while active. Always looks for a target.
 	 */
@@ -111,6 +154,7 @@ public abstract class Tower extends CombatActor {
 		speedLevel = 0;
 		attackLevel = 0;
 		kills = 0;
+		this.setShowRange(false);
 		setActive(false);
 	}
 

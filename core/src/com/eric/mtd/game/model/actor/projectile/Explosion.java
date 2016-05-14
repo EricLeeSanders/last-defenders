@@ -12,13 +12,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.MTDGame;
+import com.eric.mtd.game.GameStage;
 import com.eric.mtd.game.helper.Damage;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.model.actor.interfaces.ITargetable;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
-import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.AudioUtil.ProjectileSound;
 import com.eric.mtd.util.Logger;
@@ -45,9 +45,9 @@ public class Explosion extends Actor implements Pool.Poolable {
 	 */
 	public Explosion(Pool<Explosion> pool) {
 		this.pool = pool;
-		TextureAtlas explosionAtlas = Resources.getAtlas(Resources.EXPLOSION_ATLAS);
+		TextureAtlas actorAtlas = Resources.getAtlas(Resources.ACTOR_ATLAS);
 		for (int i = 0; i < 16; i++) {
-			explosionRegions[i] = explosionAtlas.findRegion("Explosion" + (i + 1));
+			explosionRegions[i] = actorAtlas.findRegion("Explosion" + (i + 1));
 		}
 
 	}
@@ -68,6 +68,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 		explosionAnimation = new Animation(0.05f, explosionRegions);
 		explosionAnimation.setPlayMode(PlayMode.NORMAL);
 		this.setPosition(position.x, position.y);
+		System.out.println("exp 1) enemy group size: " + targetGroup.getChildren().size);
 		Damage.dealExplosionDamage(attacker, radius, position, target, targetGroup.getChildren());
 	}
 

@@ -1,4 +1,4 @@
-package com.eric.mtd.game.stage;
+package com.eric.mtd.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
