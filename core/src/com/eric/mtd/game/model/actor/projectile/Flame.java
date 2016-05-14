@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.MTDGame;
+import com.eric.mtd.game.GameStage;
 import com.eric.mtd.game.helper.Damage;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
@@ -24,7 +25,6 @@ import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.model.actor.interfaces.IFlame;
 import com.eric.mtd.game.model.actor.interfaces.ITargetable;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
-import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -56,9 +56,9 @@ public class Flame extends Actor implements Pool.Poolable {
 	 */
 	public Flame(Pool<Flame> pool) {
 		this.pool = pool;
-		TextureAtlas flameAtlas = Resources.getAtlas(Resources.FLAMES_ATLAS);
+		TextureAtlas actorAtlas = Resources.getAtlas(Resources.ACTOR_ATLAS);
 		for (int i = 0; i < NUM_OF_FRAMES; i++) {
-			flameRegions[i] = flameAtlas.findRegion("Flame" + (i + 1));
+			flameRegions[i] = actorAtlas.findRegion("Flame" + (i + 1));
 		}
 	}
 
@@ -68,7 +68,7 @@ public class Flame extends Actor implements Pool.Poolable {
 	 * @param shooter
 	 * @param target
 	 */
-	public void initialize(CombatActor shooter, ITargetable target, Group targetGroup, Dimension flameSize) {
+	public Actor initialize(CombatActor shooter, ITargetable target, Group targetGroup, Dimension flameSize) {
 		this.shooter = shooter;
 		this.target = target;
 		stateTime = 0;
@@ -78,6 +78,7 @@ public class Flame extends Actor implements Pool.Poolable {
 		this.targetGroup = targetGroup;
 		Damage.dealFlameTargetDamage(shooter, target);
 		Damage.dealFlameGroupDamage(shooter, target, targetGroup.getChildren(), getFlameBody());
+		return this;
 	}
 
 

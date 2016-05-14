@@ -99,7 +99,12 @@ public class TowerTurret extends Tower implements IRotatable {
 		batch.draw(turretRegion, getX(), getY(), getOriginX(), getOriginY(), TEXTURE_TURRET_SIZE.getWidth(), TEXTURE_TURRET_SIZE.getHeight(), 1, 1, getRotation());
 
 	}
-
+	protected void drawRange(Batch batch){
+		if(getCurrentRangeTexture() != null){
+			batch.draw(getCurrentRangeTexture(), getPositionCenter().x - 45, getPositionCenter().y, getOriginX(), getOriginY(), 70, getRange(), 1, 1, getRotation());
+			//batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getTextureSize().getWidth(), getTextureSize().getHeight(), 1, 1, getRotation());
+		}
+	}
 	/**
 	 * Body of the Turret. CombatActor/Tower holds the Turret but not the body
 	 * Which we don't care about for collision detection.
@@ -133,7 +138,7 @@ public class TowerTurret extends Tower implements IRotatable {
 		if (Logger.DEBUG)
 			System.out.println("Tower Turret: Attacking target");
 		AudioUtil.playProjectileSound(ProjectileSound.MACHINE);
-		ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
+		getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
 
 	}
 	private void changeRangeCoords(){

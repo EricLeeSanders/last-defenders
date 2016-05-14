@@ -58,6 +58,7 @@ public class ActorFactory {
 	private static SupportActorPool<SupportActor> apachePool = new SupportActorPool<SupportActor>(Apache.class);
 	private static SupportActorPool<SupportActor> airStrikePool = new SupportActorPool<SupportActor>(AirStrike.class);
 	private static SupportActorPool<SupportActor> landMinePool = new SupportActorPool<SupportActor>(LandMine.class);
+	private static TextureAtlas actorAtlas = Resources.getAtlas(Resources.ACTOR_ATLAS);
 	/**
 	 * Obtains a tower from the pool
 	 * 
@@ -87,6 +88,8 @@ public class ActorFactory {
 		tower.setPositionCenter(pos);
 		tower.setEnemyGroup(enemyGroup);
 		tower.setProjectileGroup(projectileGroup);
+		tower.setRangeTexture(actorAtlas.findRegion("range"));
+		tower.setRangeCollisionTexture(actorAtlas.findRegion("rangeCollision"));
 		if (Logger.DEBUG)
 			System.out.println("Obtained : " + type);
 		return tower;
@@ -243,73 +246,71 @@ public class ActorFactory {
 	protected static CombatActor createCombatActor(Class<? extends CombatActor> type) {
 		if (Logger.DEBUG)
 			System.out.println("Creating new " + type.getSimpleName());
-		TextureAtlas towerAtlas = Resources.getAtlas(Resources.TOWER_ATLAS);
-		TextureAtlas enemyAtlas = Resources.getAtlas(Resources.ENEMY_ATLAS);
 		if (type.equals(TowerRifle.class)) {
-			TextureRegion rifleRegion = towerAtlas.findRegion("Rifle");
+			TextureRegion rifleRegion = actorAtlas.findRegion("Rifle");
 			return new TowerRifle(rifleRegion, towerRiflePool);
 		} else if (type.equals(TowerFlameThrower.class)) {
-			TextureRegion flameThrowerRegion = towerAtlas.findRegion("Rifle");
+			TextureRegion flameThrowerRegion = actorAtlas.findRegion("Rifle");
 			return new TowerFlameThrower(flameThrowerRegion, towerFlameThrowerPool);
 		} else if (type.equals(TowerSniper.class)) {
-			TextureRegion sniperRegion = towerAtlas.findRegion("Rifle");
+			TextureRegion sniperRegion = actorAtlas.findRegion("Rifle");
 			return new TowerSniper(sniperRegion, towerSniperPool);
 		} else if (type.equals(TowerMachineGun.class)) {
-			TextureRegion machineRegion = towerAtlas.findRegion("Rifle");
+			TextureRegion machineRegion = actorAtlas.findRegion("Rifle");
 			return new TowerMachineGun(machineRegion, towerMachinePool);
 		} else if (type.equals(TowerRocketLauncher.class)) {
-			TextureRegion rocketLauncherRegion = towerAtlas.findRegion("Rifle");
+			TextureRegion rocketLauncherRegion = actorAtlas.findRegion("Rifle");
 			return new TowerRocketLauncher(rocketLauncherRegion, towerRocketLauncherPool);
 		} else if (type.equals(TowerTank.class)) {
-			TextureRegion tankRegion = towerAtlas.findRegion("Tank");
-			TextureRegion turretRegion = towerAtlas.findRegion("TankTurret");
+			TextureRegion tankRegion = actorAtlas.findRegion("Tank");
+			TextureRegion turretRegion = actorAtlas.findRegion("TankTurret");
 			return new TowerTank(tankRegion, turretRegion, towerTankPool);
 		} else if (type.equals(TowerTurret.class)) {
-			TextureRegion machineRegion = towerAtlas.findRegion("TurretMachine");
-			TextureRegion bagsRegion = towerAtlas.findRegion("TurretBags");
+			TextureRegion machineRegion = actorAtlas.findRegion("TurretMachine");
+			TextureRegion bagsRegion = actorAtlas.findRegion("TurretBags");
 			return new TowerTurret(bagsRegion, machineRegion, towerTurretPool);
 		} else if (type.equals(EnemyRifle.class)) {
 			TextureRegion[] rifleRegions = new TextureRegion[3];
-			rifleRegions[0] = enemyAtlas.findRegion("RifleLeft");
-			rifleRegions[1] = enemyAtlas.findRegion("RifleRight");
-			rifleRegions[2] = enemyAtlas.findRegion("Rifle");
+			rifleRegions[0] = actorAtlas.findRegion("RifleLeft");
+			rifleRegions[1] = actorAtlas.findRegion("RifleRight");
+			rifleRegions[2] = actorAtlas.findRegion("Rifle");
 			return new EnemyRifle(rifleRegions, enemyRiflePool);
 		} else if (type.equals(EnemyFlameThrower.class)) {
 			TextureRegion[] flameThrowerRegions = new TextureRegion[3];
-			flameThrowerRegions[0] = enemyAtlas.findRegion("RifleLeft");
-			flameThrowerRegions[1] = enemyAtlas.findRegion("RifleRight");
-			flameThrowerRegions[2] = enemyAtlas.findRegion("Rifle");
+			flameThrowerRegions[0] = actorAtlas.findRegion("RifleLeft");
+			flameThrowerRegions[1] = actorAtlas.findRegion("RifleRight");
+			flameThrowerRegions[2] = actorAtlas.findRegion("Rifle");
 			return new EnemyFlameThrower(flameThrowerRegions, enemyFlameThrowerPool);
 		} else if (type.equals(EnemyHumvee.class)) {
-			TextureRegion humveeRegion = enemyAtlas.findRegion("Humvee");
+			TextureRegion humveeRegion = actorAtlas.findRegion("Humvee");
 			return new EnemyHumvee(humveeRegion, enemyHumveePool);
 		} else if (type.equals(EnemyMachineGun.class)) {
 			TextureRegion[] machineRegions = new TextureRegion[3];
-			machineRegions[0] = enemyAtlas.findRegion("RifleLeft");
-			machineRegions[1] = enemyAtlas.findRegion("RifleRight");
-			machineRegions[2] = enemyAtlas.findRegion("Rifle");
+			machineRegions[0] = actorAtlas.findRegion("RifleLeft");
+			machineRegions[1] = actorAtlas.findRegion("RifleRight");
+			machineRegions[2] = actorAtlas.findRegion("Rifle");
 			return new EnemyMachineGun(machineRegions, enemyMachinePool);
 		} else if (type.equals(EnemyRocketLauncher.class)) {
 			TextureRegion[] rocketLauncherRegions = new TextureRegion[3];
-			rocketLauncherRegions[0] = enemyAtlas.findRegion("RifleLeft");
-			rocketLauncherRegions[1] = enemyAtlas.findRegion("RifleRight");
-			rocketLauncherRegions[2] = enemyAtlas.findRegion("Rifle");
+			rocketLauncherRegions[0] = actorAtlas.findRegion("RifleLeft");
+			rocketLauncherRegions[1] = actorAtlas.findRegion("RifleRight");
+			rocketLauncherRegions[2] = actorAtlas.findRegion("Rifle");
 			return new EnemyRocketLauncher(rocketLauncherRegions, enemyRocketLauncherPool);
 		} else if (type.equals(EnemySniper.class)) {
 			TextureRegion[] sniperRegions = new TextureRegion[3];
-			sniperRegions[0] = enemyAtlas.findRegion("RifleLeft");
-			sniperRegions[1] = enemyAtlas.findRegion("RifleRight");
-			sniperRegions[2] = enemyAtlas.findRegion("Rifle");
+			sniperRegions[0] = actorAtlas.findRegion("RifleLeft");
+			sniperRegions[1] = actorAtlas.findRegion("RifleRight");
+			sniperRegions[2] = actorAtlas.findRegion("Rifle");
 			return new EnemySniper(sniperRegions, enemySniperPool);
 		} else if (type.equals(EnemySprinter.class)) {
 			TextureRegion[] sprinterRegions = new TextureRegion[3];
-			sprinterRegions[0] = enemyAtlas.findRegion("RifleLeft");
-			sprinterRegions[1] = enemyAtlas.findRegion("RifleRight");
-			sprinterRegions[2] = enemyAtlas.findRegion("Rifle");
+			sprinterRegions[0] = actorAtlas.findRegion("RifleLeft");
+			sprinterRegions[1] = actorAtlas.findRegion("RifleRight");
+			sprinterRegions[2] = actorAtlas.findRegion("Rifle");
 			return new EnemySprinter(sprinterRegions, enemySprinterPool);
 		} else if (type.equals(EnemyTank.class)) {
-			TextureRegion tankRegion = enemyAtlas.findRegion("Tank");
-			TextureRegion turretRegion = enemyAtlas.findRegion("TankTurret");
+			TextureRegion tankRegion = actorAtlas.findRegion("Tank");
+			TextureRegion turretRegion = actorAtlas.findRegion("TankTurret");
 			return new EnemyTank(tankRegion, turretRegion, enemyTankPool);
 		} else {
 			throw new NullPointerException("Actor factory couldn't create: " + type.getSimpleName());
@@ -336,7 +337,7 @@ public class ActorFactory {
 	 * @return Bullet
 	 */
 	protected static Bullet createBulletActor() {
-		Bullet bullet = new Bullet(bulletPool);
+		Bullet bullet = new Bullet(bulletPool, actorAtlas.findRegion("bullet"));
 		return bullet;
 
 	}
@@ -404,19 +405,18 @@ public class ActorFactory {
 	protected static SupportActor createSupportActor(Class<? extends SupportActor> type) {
 		if (Logger.DEBUG)
 			System.out.println("Creating new " + type.getSimpleName());
-		TextureAtlas supportAtlas = Resources.getAtlas(Resources.SUPPORT_ATLAS);
 		
 		if (type.equals(Apache.class)) {
 			TextureRegion [] textureRegions = new TextureRegion[3];
-			textureRegions[0] = supportAtlas.findRegion("apache1");
-			textureRegions[1] = supportAtlas.findRegion("apache2");
-			textureRegions[2] = supportAtlas.findRegion("apache3");
+			textureRegions[0] = actorAtlas.findRegion("apache1");
+			textureRegions[1] = actorAtlas.findRegion("apache2");
+			textureRegions[2] = actorAtlas.findRegion("apache3");
 			return new Apache(apachePool, textureRegions);
 		} else if(type.equals(AirStrike.class)){
-			TextureRegion textureRegion = supportAtlas.findRegion("airstrike");
+			TextureRegion textureRegion = actorAtlas.findRegion("airstrike");
 			return new AirStrike(airStrikePool, textureRegion);	
 		} else if (type.equals(LandMine.class)){
-			TextureRegion textureRegion = supportAtlas.findRegion("landmine");
+			TextureRegion textureRegion = actorAtlas.findRegion("landmine");
 			return new LandMine(landMinePool, textureRegion);	
 		} else {
 			throw new NullPointerException("Actor factory couldn't create: " + type.getSimpleName());

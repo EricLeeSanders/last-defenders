@@ -49,7 +49,6 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
 	private ShapeRenderer body = Resources.getShapeRenderer();
-	private ShapeRenderer rangeShape = Resources.getShapeRenderer();
 	private float bodyRotation;
 
 	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool) {
@@ -69,27 +68,19 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 		if (!isActive()) {
 			bodyRotation = getRotation();
 		}
-		batch.end();
-		if (isShowRange()) {
-			Gdx.gl.glClearColor(0, 0, 0, 0);
-			Gdx.gl.glEnable(GL20.GL_BLEND);
-
-			rangeShape.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			rangeShape.begin(ShapeType.Filled);
-			rangeShape.setColor(getRangeColor());
-			rangeShape.circle(((Circle) getRangeShape()).x, ((Circle) getRangeShape()).y, ((Circle) getRangeShape()).radius);
-			rangeShape.end();
-
+		if(isShowRange()){
+			drawRange(batch);
 		}
 		if (Logger.DEBUG) {
+			batch.end();
 			body.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			body.begin(ShapeType.Line);
 			body.setColor(Color.YELLOW);
 			body.polygon(getBody().getTransformedVertices());
 			body.end();
+			batch.begin();
 		}
 
-		batch.begin();
 		batch.draw(bodyRegion, this.getPositionCenter().x - (TEXTURE_BODY_SIZE.getWidth() / 2), this.getPositionCenter().y - (TEXTURE_BODY_SIZE.getHeight() / 2)
 				, TEXTURE_BODY_SIZE.getWidth() / 2, TEXTURE_BODY_SIZE.getHeight() / 2, TEXTURE_BODY_SIZE.getWidth(), TEXTURE_BODY_SIZE.getHeight()
 				, 1, 1, bodyRotation);
@@ -120,7 +111,7 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	public void attackTarget() {
 		if (Logger.DEBUG)
 			System.out.println("Tower Tank: Attacking target at " + getTarget().getPositionCenter());
-		this.getStage().addActor(ActorFactory.loadRPG().initialize(this, getTarget(), getEnemyGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
+		getProjectileGroup().addActor(ActorFactory.loadRPG().initialize(this, getTarget(), getEnemyGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
 	}
 
 }

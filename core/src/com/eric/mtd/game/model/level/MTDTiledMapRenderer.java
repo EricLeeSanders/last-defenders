@@ -6,7 +6,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Disposable;
-import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.game.GameStage;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -31,7 +31,6 @@ public class MTDTiledMapRenderer implements Disposable {
 	}
 
 	public void update() {
-		tiledMapRenderer.setView((OrthographicCamera) camera);
 		tiledMapRenderer.render();
 	}
 

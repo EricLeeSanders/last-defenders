@@ -34,6 +34,7 @@ public class Damage {
 		}
 	}
 	public static void dealRpgDamage(IAttacker attacker, ITargetable target) {
+		//System.out.println("rpg target group size: " + targetGroupArray.length);
 		dealTargetDamage(attacker,target);
 	}
 
@@ -72,13 +73,13 @@ public class Damage {
 		Circle aoeRadius = new Circle(position.x, position.y, radius);
 		//Have to create a copy of the group otherwise when a target is killed, the iterator will skip
 		//over the next in the group.
-		Actor [] targetGroupArray = targetGroup.begin();
+		SnapshotArray<Actor> targetGroupArray = new SnapshotArray<Actor>(targetGroup);
 		ITargetable aoeTarget;
 		float distance, damage, damagePercent;
 		for (Actor actor : targetGroupArray) {
 			aoeTarget = (ITargetable) actor;
 			distance = damage = damagePercent = 0;
-			if (aoeTarget != null && aoeTarget.isDead() == false) {
+			if (aoeTarget.isDead() == false) {
 				if (aoeTarget.equals(target) == false) {
 					distance = position.dst( aoeTarget.getPositionCenter());
 					if (CollisionDetection.polygonAndCircle( aoeTarget.getBody(), aoeRadius)) {
@@ -99,7 +100,6 @@ public class Damage {
 				}
 			}
 		}
-		targetGroup.end();
 	}
 
 }

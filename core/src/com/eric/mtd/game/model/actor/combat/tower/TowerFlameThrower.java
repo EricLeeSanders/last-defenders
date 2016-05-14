@@ -50,7 +50,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
 		if (Logger.DEBUG)
 			System.out.println("Tower Flame: Attacking target");
 		AudioUtil.playProjectileSound(ProjectileSound.FLAME_BURST);
-		ActorFactory.loadFlame().initialize(this, this.getTarget(), getEnemyGroup(), getFlameSize());
+		getProjectileGroup().addActor(ActorFactory.loadFlame().initialize(this, this.getTarget(), getEnemyGroup(), getFlameSize()));
 	}
 	
 

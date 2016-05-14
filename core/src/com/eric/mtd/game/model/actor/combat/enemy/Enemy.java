@@ -14,7 +14,7 @@ import com.eric.mtd.game.model.actor.ai.EnemyAI;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.interfaces.IPassiveEnemy;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
-import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.game.GameStage;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 

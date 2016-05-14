@@ -39,7 +39,7 @@ public class EnemyMachineGun extends Enemy {
 		if (Logger.DEBUG)
 			System.out.println("Enemy Machine: Attacking target at " + getTarget().getPositionCenter());
 		AudioUtil.playProjectileSound(ProjectileSound.MACHINE);
-		ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);;
+		getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
 
 	}
 }

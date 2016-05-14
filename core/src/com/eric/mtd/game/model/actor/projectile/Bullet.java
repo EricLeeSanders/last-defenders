@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
@@ -13,12 +14,12 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
+import com.eric.mtd.game.GameStage;
 import com.eric.mtd.game.helper.Damage;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.model.actor.interfaces.ITargetable;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
-import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -31,13 +32,14 @@ import com.eric.mtd.util.Resources;
  */
 public class Bullet extends Actor implements Pool.Poolable{
 	private static final float SPEED = 350f;
-	private ShapeRenderer bullet = Resources.getShapeRenderer();
+	private TextureRegion bullet;
 	private ITargetable target;
 	private IAttacker attacker;
 	private Pool<Bullet> pool;
 	
-	public Bullet(Pool<Bullet> pool){
+	public Bullet(Pool<Bullet> pool, TextureRegion bullet){
 		this.pool = pool;
+		this.bullet = bullet;
 	}
 
 	/**
@@ -50,7 +52,7 @@ public class Bullet extends Actor implements Pool.Poolable{
 	 * @param size
 	 *            - Size of the bullet
 	 */
-	public void initialize(IAttacker attacker, ITargetable target, Vector2 pos, Dimension size) {
+	public Actor initialize(IAttacker attacker, ITargetable target, Vector2 pos, Dimension size) {
 		this.target = target;
 		this.attacker = attacker;
 		this.setPosition(pos.x, pos.y);
@@ -60,6 +62,7 @@ public class Bullet extends Actor implements Pool.Poolable{
 		moveAction.setPosition(end.x, end.y);
 		moveAction.setDuration(end.dst(pos) / SPEED);
 		addAction(moveAction);
+		return this;
 	}
 
 	/**
@@ -67,24 +70,7 @@ public class Bullet extends Actor implements Pool.Poolable{
 	 */
 	@Override
 	public void draw(Batch batch, float alpha) {
-		batch.end();
-		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glEnable(GL20.GL_BLEND);
-		bullet.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-		bullet.begin(ShapeType.Filled);
-		bullet.setColor(Color.BLACK);
-		bullet.circle(getBody().x, getBody().y, 3);
-		bullet.end();
-		batch.begin();
-	}
-
-	/**
-	 * Get the body of the bullet
-	 * 
-	 * @return
-	 */
-	public Rectangle getBody() {
-		return new Rectangle(getX(), getY(), getWidth(), getHeight());
+		batch.draw(bullet, this.getX(), this.getY());
 	}
 
 	/**
