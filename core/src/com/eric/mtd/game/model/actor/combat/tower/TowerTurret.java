@@ -3,7 +3,11 @@ package com.eric.mtd.game.model.actor.combat.tower;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -46,12 +50,14 @@ public class TowerTurret extends Tower implements IRotatable {
 	public static final Vector2 GUN_POS = new Vector2(4, 26);
 	public static final Dimension TEXTURE_BODY_SIZE = new Dimension(60, 56);
 	public static final Dimension TEXTURE_TURRET_SIZE = new Dimension(32, 56);
-	private float[] rangeCoords = { 30, 28, -10, RANGE, 70, RANGE };
+	private float[] rangeCoords = { 30, 28, -10, RANGE + (TEXTURE_BODY_SIZE.getHeight() / 2), 70, RANGE + (TEXTURE_BODY_SIZE.getHeight() / 2)};
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
-	private ShapeRenderer rangeShape = Resources.getShapeRenderer();
 	private float[] rangeTransformedVertices;
 	private ShapeRenderer body = Resources.getShapeRenderer();
+	private ShapeRenderer rangeBody = Resources.getShapeRenderer();
+	private ShapeRenderer rangeOutline = Resources.getShapeRenderer();
+	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
 	private float bodyRotation;
 	private Polygon bodyPoly = new Polygon(BODY);
 	private Polygon rangePoly = new Polygon(rangeCoords);
@@ -73,37 +79,52 @@ public class TowerTurret extends Tower implements IRotatable {
 		if (!isActive()) {
 			bodyRotation = getRotation();
 		}
-		batch.end();
 		if (Logger.DEBUG) {
+			batch.end();
 			body.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			body.begin(ShapeType.Line);
 			body.setColor(Color.YELLOW);
 			body.polygon(getBody().getTransformedVertices());
 			body.end();
+			
+			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+			bodyOutline.begin(ShapeType.Line);
+			bodyOutline.setColor(Color.YELLOW);
+			bodyOutline.rect(getX(),getY(), TEXTURE_BODY_SIZE.getWidth(), TEXTURE_BODY_SIZE.getHeight());
+			bodyOutline.end();
+			
+			rangeBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+			rangeBody.begin(ShapeType.Line);
+			rangeBody.setColor(Color.YELLOW);
+			rangeBody.polygon(((Polygon)getRangeShape()).getTransformedVertices());
+			rangeBody.end();
+			batch.begin();
 		}
 		if (isShowRange()) {
-			Gdx.gl.glClearColor(0, 0, 0, 0);
-			Gdx.gl.glEnable(GL20.GL_BLEND);
-
-			rangeShape.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			rangeShape.begin(ShapeType.Filled);
-			rangeShape.setColor(getRangeColor());
-			rangeTransformedVertices = ((Polygon) getRangeShape()).getTransformedVertices();
-			rangeShape.triangle(rangeTransformedVertices[0], rangeTransformedVertices[1], rangeTransformedVertices[2], rangeTransformedVertices[3], rangeTransformedVertices[4], rangeTransformedVertices[5]);
-			rangeShape.end();
+			drawRange(batch);
 		}
-		batch.begin();
-		batch.draw(bodyRegion, this.getPositionCenter().x - (TEXTURE_BODY_SIZE.getWidth() / 2), this.getPositionCenter().y - (TEXTURE_BODY_SIZE.getHeight() / 2)
-				, TEXTURE_BODY_SIZE.getWidth() / 2, TEXTURE_BODY_SIZE.getHeight() / 2, TEXTURE_BODY_SIZE.getWidth(), TEXTURE_BODY_SIZE.getHeight()
-				, 1, 1, bodyRotation);
-		batch.draw(turretRegion, getX(), getY(), getOriginX(), getOriginY(), TEXTURE_TURRET_SIZE.getWidth(), TEXTURE_TURRET_SIZE.getHeight(), 1, 1, getRotation());
+		//batch.draw(bodyRegion, this.getPositionCenter().x - (TEXTURE_BODY_SIZE.getWidth() / 2), this.getPositionCenter().y - (TEXTURE_BODY_SIZE.getHeight() / 2)
+				//, TEXTURE_BODY_SIZE.getWidth() / 2, TEXTURE_BODY_SIZE.getHeight() / 2, TEXTURE_BODY_SIZE.getWidth(), TEXTURE_BODY_SIZE.getHeight()
+				//, 1, 1, bodyRotation);
+		//batch.draw(turretRegion, getX(), getY(), getOriginX(), getOriginY(), TEXTURE_TURRET_SIZE.getWidth(), TEXTURE_TURRET_SIZE.getHeight(), 1, 1, getRotation());
 
 	}
+	@Override
 	protected void drawRange(Batch batch){
-		if(getCurrentRangeTexture() != null){
-			batch.draw(getCurrentRangeTexture(), getPositionCenter().x - 45, getPositionCenter().y, getOriginX(), getOriginY(), 70, getRange(), 1, 1, getRotation());
-			//batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getTextureSize().getWidth(), getTextureSize().getHeight(), 1, 1, getRotation());
-		}
+		getRangeSprite().setPosition(getPositionCenter().x - (getRangeSprite().getWidth()/2), getPositionCenter().y);
+		getRangeSprite().setRotation(getRotation());
+		getRangeSprite().draw(batch);
+	}
+	@Override
+	protected void createRangeSprite(){
+		Pixmap rangePixmap = new Pixmap(400,400, Format.RGBA8888);
+		rangePixmap.setColor(1.0f, 1.0f, 1.0f, 0.5f);
+		rangePixmap.fillTriangle(400,400,200,0,0,400);
+		setRangeSprite(new Sprite(new Texture(rangePixmap)));
+		rangePixmap.dispose();
+		getRangeSprite().setOrigin(40,0);
+		getRangeSprite().flip(false, true);
+		getRangeSprite().setSize(80,70);
 	}
 	/**
 	 * Body of the Turret. CombatActor/Tower holds the Turret but not the body
@@ -126,7 +147,7 @@ public class TowerTurret extends Tower implements IRotatable {
 
 	@Override
 	public Shape2D getRangeShape() {
-		changeRangeCoords();
+		//changeRangeCoords();
 		rangePoly.setOrigin((TEXTURE_BODY_SIZE.getWidth() / 2), (TEXTURE_BODY_SIZE.getHeight() / 2));
 		rangePoly.setRotation(bodyRotation);
 		rangePoly.setPosition(getPositionCenter().x - (TEXTURE_BODY_SIZE.getWidth() / 2), getPositionCenter().y - (TEXTURE_BODY_SIZE.getHeight() / 2));
@@ -141,8 +162,14 @@ public class TowerTurret extends Tower implements IRotatable {
 		getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
 
 	}
+	@Override
+	public void increaseRange(){
+		super.increaseRange();
+		rangeCoords[3] = rangeCoords[5] = this.getRange() + (TEXTURE_BODY_SIZE.getHeight() / 2);
+		getRangeSprite().setSize(80, this.getRange());
+	}
 	private void changeRangeCoords(){
-		rangeCoords[3] = rangeCoords[5] = this.getRange() + (TEXTURE_BODY_SIZE.getWidth() / 2);
+		rangeCoords[3] = rangeCoords[5] = this.getRange() + (TEXTURE_BODY_SIZE.getHeight() / 2);
 	}
 
 }

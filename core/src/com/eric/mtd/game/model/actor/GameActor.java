@@ -1,6 +1,7 @@
 package com.eric.mtd.game.model.actor;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.eric.mtd.util.Dimension;
+import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 import com.badlogic.gdx.utils.Pool;
 
@@ -18,6 +20,7 @@ public class GameActor extends Actor{
 	private TextureRegion textureRegion;
 	private Dimension textureSize;
 	private Vector2 positionCenter = new Vector2();
+	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
 	public GameActor(TextureRegion textureRegion, Dimension textureSize){
 		this.setTextureRegion(textureRegion);
 		this.setTextureSize(textureSize);
@@ -74,6 +77,15 @@ public class GameActor extends Actor{
 	}
 	@Override
 	public void draw(Batch batch, float alpha) {
+		if(Logger.DEBUG == true){
+			batch.end();
+			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+			bodyOutline.begin(ShapeType.Line);
+			bodyOutline.setColor(Color.YELLOW);
+			bodyOutline.rect(getX(),getY(), textureSize.getWidth(), textureSize.getHeight());
+			bodyOutline.end();
+			batch.begin();
+		}
 		batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getTextureSize().getWidth(), getTextureSize().getHeight(), 1, 1, getRotation());
 	}
 	

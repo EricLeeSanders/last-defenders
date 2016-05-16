@@ -3,7 +3,9 @@ package com.eric.mtd.util;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Blending;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -70,6 +72,7 @@ public abstract class Resources {
 		Resources.loadAtlas(Resources.GAME_OVER_ATLAS);
 		Resources.loadAtlas(Resources.LEVEL_SELECT_ATLAS);
 		Resources.loadAtlas(ACTOR_ATLAS);
+		Pixmap.setBlending(Blending.None);
 	}
 
 	public static void loadMap(int level) {

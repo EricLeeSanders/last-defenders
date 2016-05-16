@@ -3,7 +3,11 @@ package com.eric.mtd.game.model.actor.projectile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -32,14 +36,22 @@ import com.eric.mtd.util.Resources;
  */
 public class Bullet extends Actor implements Pool.Poolable{
 	private static final float SPEED = 350f;
-	private TextureRegion bullet;
+	private Sprite bullet;
 	private ITargetable target;
 	private IAttacker attacker;
 	private Pool<Bullet> pool;
 	
-	public Bullet(Pool<Bullet> pool, TextureRegion bullet){
+	public Bullet(Pool<Bullet> pool){
 		this.pool = pool;
-		this.bullet = bullet;
+		createBulletSprite();
+	}
+	private void createBulletSprite(){
+		Pixmap bulletPixmap = new Pixmap(100, 100, Format.RGBA8888);
+		bulletPixmap.setColor(0,0,0,1f);
+		bulletPixmap.fillCircle(50, 50, 50);
+		bullet = (new Sprite(new Texture(bulletPixmap)));
+		bulletPixmap.dispose();
+		bullet.setSize(5, 5);
 	}
 
 	/**
@@ -70,7 +82,8 @@ public class Bullet extends Actor implements Pool.Poolable{
 	 */
 	@Override
 	public void draw(Batch batch, float alpha) {
-		batch.draw(bullet, this.getX(), this.getY());
+		bullet.setPosition(getX() - (bullet.getWidth()/2), getY() - (bullet.getHeight()/2));
+		bullet.draw(batch);
 	}
 
 	/**

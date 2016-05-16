@@ -88,8 +88,6 @@ public class ActorFactory {
 		tower.setPositionCenter(pos);
 		tower.setEnemyGroup(enemyGroup);
 		tower.setProjectileGroup(projectileGroup);
-		tower.setRangeTexture(actorAtlas.findRegion("range"));
-		tower.setRangeCollisionTexture(actorAtlas.findRegion("rangeCollision"));
 		if (Logger.DEBUG)
 			System.out.println("Obtained : " + type);
 		return tower;
@@ -337,7 +335,7 @@ public class ActorFactory {
 	 * @return Bullet
 	 */
 	protected static Bullet createBulletActor() {
-		Bullet bullet = new Bullet(bulletPool, actorAtlas.findRegion("bullet"));
+		Bullet bullet = new Bullet(bulletPool);
 		return bullet;
 
 	}

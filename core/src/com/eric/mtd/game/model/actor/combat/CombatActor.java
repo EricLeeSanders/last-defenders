@@ -45,7 +45,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private float[] bodyPoints;
 	private ITargetable target;
 	private ShapeRenderer debugBody = Resources.getShapeRenderer();
-	private Color rangeColor = new Color(1.0f, 0f, 0f, 0.5f);
 	private Circle rangeCircle = new Circle();
 	private Polygon bodyPoly;
 	private boolean hasArmor, dead;
@@ -91,7 +90,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		attackSpeed = RESET_ATTACK_SPEED;
 		range = RESET_RANGE;
 		target = null;
-		rangeColor.set(1.0f, 0f, 0f, 0.5f);
 		this.setRotation(0);
 		this.clear();
 		this.remove();
@@ -189,14 +187,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		return bodyPoly;
 	}
 
-
-	public void setRangeColor(float r, float g, float b, float a) {
-		rangeColor.set(r, g, b, a);
-	}
-
-	public Color getRangeColor() {
-		return rangeColor;
-	}
 
 	public void setDead(boolean dead) {
 		this.dead = dead;
