@@ -3,7 +3,11 @@ package com.eric.mtd.game.model.actor.projectile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
@@ -31,7 +35,7 @@ import com.eric.mtd.util.Resources;
  */
 public class RPG extends Actor implements Pool.Poolable {
 	private static final float SPEED = 350f;
-	private ShapeRenderer rpg = Resources.getShapeRenderer();
+	private Sprite rpg;
 	private ITargetable target;
 	private IAttacker shooter;
 	private Group targetGroup;
@@ -40,6 +44,15 @@ public class RPG extends Actor implements Pool.Poolable {
 	private float radius;
 	public RPG(Pool<RPG> pool){
 		this.pool = pool;
+		createRPGSprite();
+	}
+	private void createRPGSprite(){
+		Pixmap rpgPixmap = new Pixmap(100, 100, Format.RGBA8888);
+		rpgPixmap.setColor(0,0,0,1f);
+		rpgPixmap.fillCircle(50, 50, 50);
+		rpg = (new Sprite(new Texture(rpgPixmap)));
+		rpgPixmap.dispose();
+		rpg.setSize(10, 10);
 	}
 	/**
 	 * Initializes an RPG
@@ -71,15 +84,8 @@ public class RPG extends Actor implements Pool.Poolable {
 	 */
 	@Override
 	public void draw(Batch batch, float alpha) {
-		batch.end();
-		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glEnable(GL20.GL_BLEND);
-		rpg.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-		rpg.begin(ShapeType.Filled);
-		rpg.setColor(Color.BLACK);
-		rpg.circle(getBody().x, getBody().y, 3);
-		rpg.end();
-		batch.begin();
+		rpg.setPosition(getX() - (rpg.getWidth()/2), getY() - (rpg.getHeight()/2));
+		rpg.draw(batch);
 	}
 
 	/**

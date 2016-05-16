@@ -3,7 +3,11 @@ package com.eric.mtd.game.model.actor.projectile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
@@ -30,7 +34,7 @@ import com.eric.mtd.util.Resources;
  */
 public class AirStrikeBomb extends Actor implements Pool.Poolable {
 	private static final float SPEED = 600f;
-	private ShapeRenderer bomb = Resources.getShapeRenderer();
+	private Sprite bomb;
 	private IAttacker attacker;
 	private Vector2 destination;
 	private Group targetGroup;
@@ -38,6 +42,15 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 	private float radius;
 	public AirStrikeBomb(Pool<AirStrikeBomb> pool){
 		this.pool = pool;
+		createBombSprite();
+	}
+	private void createBombSprite(){
+		Pixmap bombPixmap = new Pixmap(100, 100, Format.RGBA8888);
+		bombPixmap.setColor(0,0,0,1f);
+		bombPixmap.fillCircle(50, 50, 50);
+		bomb = (new Sprite(new Texture(bombPixmap)));
+		bombPixmap.dispose();
+		bomb.setSize(10, 10);
 	}
 	/**
 	 * Initializes and AirStrike Bomb
@@ -65,15 +78,8 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 	 */
 	@Override
 	public void draw(Batch batch, float alpha) {
-		batch.end();
-		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glEnable(GL20.GL_BLEND);
-		bomb.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-		bomb.begin(ShapeType.Filled);
-		bomb.setColor(Color.BLACK);
-		bomb.circle(getBody().x, getBody().y, 3);
-		bomb.end();
-		batch.begin();
+		bomb.setPosition(getX() - (bomb.getWidth()/2), getY() - (bomb.getHeight()/2));
+		bomb.draw(batch);
 	}
 
 	/**

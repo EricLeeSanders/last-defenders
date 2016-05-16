@@ -3,7 +3,13 @@ package com.eric.mtd.game.model.actor.combat.tower;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Pixmap.Blending;
+import com.badlogic.gdx.graphics.Pixmap.Format;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -25,19 +31,19 @@ public abstract class Tower extends CombatActor {
 	public static final int TOWER_RANGE_LEVEL_MAX = 2;
 	public static final int TOWER_ATTACK_SPEED_LEVEL_MAX = 2;
 	public static final int TOWER_ATTACK_LEVEL_MAX = 2;
-	public static final float TOWER_RANGE_INCREASE_RATE = 0.25f;
+	public static final float TOWER_RANGE_INCREASE_RATE = (1/3f);
 	public static final float TOWER_SPEED_INCREASE_RATE = 0.25f;
 	public static final float TOWER_ATTACK_INCREASE_RATE = 0.25f;
 	public static final float TOWER_SELL_RATE = 0.75f;
 	private int cost, armorCost, speedIncreaseCost, rangeIncreaseCost, attackIncreaseCost, rangeLevel, speedLevel,
 			attackLevel;
 	private TowerTargetPriority targetPriority = TowerTargetPriority.FIRST;
-	private boolean active, showRange, showCollisionRange; 
+	private boolean active, showRange; 
 	private CombatActorPool<CombatActor> pool;
 	private float attackCounter = 0;
 	private Group enemyTargetGroup;
 	private int kills;
-	private TextureRegion rangeTexture, rangeCollisionTexture;
+	private Sprite rangeSprite;
 	public Tower(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost, int rangeIncreaseCost, int attackIncreaseCost) {
 		super(textureRegion, pool, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.pool = pool;
@@ -49,8 +55,15 @@ public abstract class Tower extends CombatActor {
 		rangeLevel = 0;
 		speedLevel = 0;
 		attackLevel = 0;
+		createRangeSprite();
 	}
-
+	protected void createRangeSprite(){
+		Pixmap rangePixmap = new Pixmap(600, 600, Format.RGBA8888);
+		rangePixmap.setColor(1.0f, 1.0f, 1.0f, 0.5f);
+		rangePixmap.fillCircle(300, 300, 300);
+		setRangeSprite(new Sprite(new Texture(rangePixmap)));
+		rangePixmap.dispose();
+	}
 	/**
 	 * Sets the Enemy Group
 	 */
@@ -78,28 +91,7 @@ public abstract class Tower extends CombatActor {
 	public int getCost() {
 		return cost;
 	}
-	public void setRangeCollisionTexture(TextureRegion rangeCollisionTexture){
-		this.rangeCollisionTexture = rangeCollisionTexture;
-	}
-	public TextureRegion getRangeCollisionTexture(){
-		return rangeCollisionTexture;
-	}
-	public TextureRegion getCurrentRangeTexture(){
-		if(showCollisionRange){
-			return rangeCollisionTexture;
-		} else {
-			return rangeTexture;
-		}
-	}
-	public void setRangeTexture(TextureRegion rangeTexture){
-		this.rangeTexture = rangeTexture;
-	}
-	public TextureRegion getRangeTexture(){
-		return rangeTexture;
-	}
-	public void setShowCollisionRange(boolean showCollisionRange){
-		this.showCollisionRange = showCollisionRange;
-	}
+
 	public void setShowRange(boolean showRange) {
 		this.showRange = showRange;
 	}
@@ -115,9 +107,9 @@ public abstract class Tower extends CombatActor {
 		super.draw(batch, alpha);
 	}
 	protected void drawRange(Batch batch){
-		if(rangeCollisionTexture != null && rangeTexture != null){
-			batch.draw(getCurrentRangeTexture(), getPositionCenter().x - getRange(), getPositionCenter().y - getRange(), getOriginX(), getOriginY(), getRange()*2, getRange()*2, 1, 1, getRotation());
-			//batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getTextureSize().getWidth(), getTextureSize().getHeight(), 1, 1, getRotation());
+		if( getRangeSprite() != null){
+			getRangeSprite().setBounds(getPositionCenter().x - getRange(), getPositionCenter().y - getRange(),getRange()*2, getRange()*2);
+			getRangeSprite().draw(batch);
 		}
 	}
 	/**
@@ -279,5 +271,13 @@ public abstract class Tower extends CombatActor {
 	public void setTargetPriority(TowerTargetPriority targetPriority) {
 		this.targetPriority = targetPriority;
 	}
-
+	public void setRangeColor(float r, float g, float b, float a){
+		getRangeSprite().setColor(r,g,b,a);
+	}
+	protected Sprite getRangeSprite() {
+		return rangeSprite;
+	}
+	protected void setRangeSprite(Sprite rangeSprite) {
+		this.rangeSprite = rangeSprite;
+	}
 }

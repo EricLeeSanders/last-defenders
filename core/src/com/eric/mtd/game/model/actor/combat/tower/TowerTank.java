@@ -48,6 +48,7 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	public static final Dimension TEXTURE_TURRET_SIZE = new Dimension(22, 120);
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
+	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
 	private ShapeRenderer body = Resources.getShapeRenderer();
 	private float bodyRotation;
 
@@ -78,6 +79,12 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 			body.setColor(Color.YELLOW);
 			body.polygon(getBody().getTransformedVertices());
 			body.end();
+			
+			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+			bodyOutline.begin(ShapeType.Line);
+			bodyOutline.setColor(Color.YELLOW);
+			bodyOutline.rect(getX(),getY(), getTextureSize().getWidth(), getTextureSize().getHeight());
+			bodyOutline.end();
 			batch.begin();
 		}
 
