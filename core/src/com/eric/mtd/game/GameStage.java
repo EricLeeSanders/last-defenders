@@ -58,6 +58,7 @@ public class GameStage extends Stage {
 	 * Create the actor groups
 	 */
 	public void createGroups() {
+		this.addActor(getActorGroups().getLandmineGroup());
 		this.addActor(getActorGroups().getEnemyGroup());
 		this.addActor(getActorGroups().getTowerGroup());
 		this.addActor(getActorGroups().getHealthBarGroup());
