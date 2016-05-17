@@ -3,7 +3,9 @@ package com.eric.mtd.util;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Blending;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -14,7 +16,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 //-agentlib:hprof=heap=dump,format=b
 public abstract class Resources {
 	public static final String MENU_ATLAS = "menu/menu.atlas";
-	public static final String ENEMY_ATLAS = "game/actors/enemy/EnemyActors.atlas";
+	public static final String ACTOR_ATLAS = "game/actors/actors.atlas";
 	public static final String LEVEL_SELECT_ATLAS = "level_select/level_select.atlas";
 	public static final String HUD_ATLAS = "game/ui/hud/hud.atlas";
 	public static final String ENLIST_ATLAS = "game/ui/enlist/enlist.atlas";
@@ -23,10 +25,6 @@ public abstract class Resources {
 	public static final String GAME_OVER_ATLAS = "game/ui/gameover/gameover.atlas";
 	public static final String INSPECT_ATLAS = "game/ui/inspect/inspect.atlas";
 	public static final String SKIN_JSON = "skin/uiskin.json";
-	public static final String TOWER_ATLAS = "game/actors/tower/TowerActors.atlas";
-	public static final String EXPLOSION_ATLAS = "game/actors/projectile/Explosion/Explosion.atlas";
-	public static final String FLAMES_ATLAS = "game/actors/projectile/Flames/Flames.atlas";
-	public static final String SUPPORT_ATLAS = "game/actors/support/support.atlas";
 
 	public static final float VIRTUAL_WIDTH = 640; // 16:9
 	public static final float VIRTUAL_HEIGHT = 360;
@@ -65,10 +63,6 @@ public abstract class Resources {
 			System.out.println("Loading Graphics");
 		Resources.loadUIMap();
 		Resources.loadSkin(Resources.SKIN_JSON);
-		Resources.loadAtlas(Resources.ENEMY_ATLAS);
-		Resources.loadAtlas(Resources.TOWER_ATLAS);
-		Resources.loadAtlas(Resources.EXPLOSION_ATLAS);
-		Resources.loadAtlas(Resources.FLAMES_ATLAS);
 		Resources.loadAtlas(Resources.MENU_ATLAS);
 		Resources.loadAtlas(Resources.HUD_ATLAS);
 		Resources.loadAtlas(Resources.ENLIST_ATLAS);
@@ -77,7 +71,8 @@ public abstract class Resources {
 		Resources.loadAtlas(Resources.OPTIONS_ATLAS);
 		Resources.loadAtlas(Resources.GAME_OVER_ATLAS);
 		Resources.loadAtlas(Resources.LEVEL_SELECT_ATLAS);
-		Resources.loadAtlas(Resources.SUPPORT_ATLAS);
+		Resources.loadAtlas(ACTOR_ATLAS);
+		Pixmap.setBlending(Blending.None);
 	}
 
 	public static void loadMap(int level) {

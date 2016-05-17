@@ -3,7 +3,12 @@ package com.eric.mtd.game.model.actor.projectile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
@@ -13,11 +18,13 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
+import com.eric.mtd.game.GameStage;
 import com.eric.mtd.game.helper.Damage;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
+import com.eric.mtd.game.model.actor.interfaces.ITargetable;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
-import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -27,16 +34,24 @@ import com.eric.mtd.util.Resources;
  * @author Eric
  *
  */
-public class Bullet extends Projectile {
+public class Bullet extends Actor implements Pool.Poolable{
 	private static final float SPEED = 350f;
-	private ShapeRenderer bullet = Resources.getShapeRenderer();
-	private CombatActor target;
+	private Sprite bullet;
+	private ITargetable target;
 	private IAttacker attacker;
 	private Pool<Bullet> pool;
 	
 	public Bullet(Pool<Bullet> pool){
-		super(pool);
 		this.pool = pool;
+		createBulletSprite();
+	}
+	private void createBulletSprite(){
+		Pixmap bulletPixmap = new Pixmap(100, 100, Format.RGBA8888);
+		bulletPixmap.setColor(0,0,0,1f);
+		bulletPixmap.fillCircle(50, 50, 50);
+		bullet = (new Sprite(new Texture(bulletPixmap)));
+		bulletPixmap.dispose();
+		bullet.setSize(5, 5);
 	}
 
 	/**
@@ -49,20 +64,17 @@ public class Bullet extends Projectile {
 	 * @param size
 	 *            - Size of the bullet
 	 */
-	public void initialize(IAttacker attacker, CombatActor target, Vector2 pos, Vector2 size) {
+	public Actor initialize(IAttacker attacker, ITargetable target, Vector2 pos, Dimension size) {
 		this.target = target;
 		this.attacker = attacker;
 		this.setPosition(pos.x, pos.y);
-		this.setSize(size.x, size.y);
-		target.getStage();
-		if (target.getStage() instanceof GameStage) {
-			((GameStage) target.getStage()).getActorGroups().getProjectileGroup().addActor(this);
-		}
+		this.setSize(size.getWidth(), size.getHeight());
 		Vector2 end = target.getPositionCenter();
 		MoveToAction moveAction = new MoveToAction();
 		moveAction.setPosition(end.x, end.y);
 		moveAction.setDuration(end.dst(pos) / SPEED);
 		addAction(moveAction);
+		return this;
 	}
 
 	/**
@@ -70,24 +82,8 @@ public class Bullet extends Projectile {
 	 */
 	@Override
 	public void draw(Batch batch, float alpha) {
-		batch.end();
-		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glEnable(GL20.GL_BLEND);
-		bullet.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-		bullet.begin(ShapeType.Filled);
-		bullet.setColor(Color.BLACK);
-		bullet.circle(getBody().x, getBody().y, 3);
-		bullet.end();
-		batch.begin();
-	}
-
-	/**
-	 * Get the body of the bullet
-	 * 
-	 * @return
-	 */
-	public Rectangle getBody() {
-		return new Rectangle(getX(), getY(), getWidth(), getHeight());
+		bullet.setPosition(getX() - (bullet.getWidth()/2), getY() - (bullet.getHeight()/2));
+		bullet.draw(batch);
 	}
 
 	/**
@@ -113,12 +109,6 @@ public class Bullet extends Projectile {
 		target = null;
 		attacker = null;
 		this.remove();
-	}
-
-	@Override
-	public void initialize(CombatActor shooter, CombatActor target, Group targetGroup) {
-		// TODO Auto-generated method stub
-		
 	}
 
 

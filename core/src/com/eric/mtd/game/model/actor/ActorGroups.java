@@ -18,6 +18,7 @@ public class ActorGroups{
 	private Group healthBarGroup = new Group();
 	private Group sandbagGroup = new Group();
 	private Group supportGroup = new Group();
+	private Group landmineGroup = new Group();
 
 	public Group getProjectileGroup() {
 		return projectileGroup;
@@ -65,6 +66,14 @@ public class ActorGroups{
 	
 	public void setSupportGroup(Group supportGroup){
 		this.supportGroup = supportGroup;
+	}
+
+	public Group getLandmineGroup() {
+		return landmineGroup;
+	}
+
+	public void setLandmineGroup(Group landmineGroup) {
+		this.landmineGroup = landmineGroup;
 	}
 
 }

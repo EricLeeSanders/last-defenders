@@ -20,7 +20,7 @@ public class AirStrikePlacement {
 		this.actorGroups = actorGroups;
 	}
 	public void createAirStrike() {
-		currentAirStrike = (AirStrike)ActorFactory.loadSupportActor(new Vector2(0, 0), "AirStrike", actorGroups.getEnemyGroup());
+		currentAirStrike = (AirStrike)ActorFactory.loadSupportActor(new Vector2(0, 0), "AirStrike", actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
 		actorGroups.getSupportGroup().addActor(currentAirStrike);
 		currentAirStrike.setActive(false);
 		currentAirStrike.setVisible(false);

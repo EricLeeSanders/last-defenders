@@ -3,7 +3,11 @@ package com.eric.mtd.game.model.actor.support;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
@@ -15,29 +19,29 @@ import com.eric.mtd.util.Resources;
 
 public class AirStrikeLocation extends Actor {
 	private Vector2 location;
-	private ShapeRenderer locShapeRenderer = Resources.getShapeRenderer();
-	private Color rangeColor = new Color(0f, 0f, 0f, 0.5f);
+	private Sprite locationSprite;
 	private float radius;
 	private boolean showRange = true;
 	public AirStrikeLocation(Vector2 location, float radius, Group group){
 		group.addActor(this);
 		this.location = location;
 		this.radius = radius;
+		createLocationSprite();
 	}
-	
+	private void createLocationSprite(){
+		Pixmap locationPixmap = new Pixmap(600, 600, Format.RGBA8888);
+		locationPixmap.setColor(0,0,0,0.5f);
+		locationPixmap.fillCircle(300,300,300);
+		locationSprite = (new Sprite(new Texture(locationPixmap)));
+		locationPixmap.dispose();
+		locationSprite.setSize(radius, radius);
+		locationSprite.setPosition(location.x - (locationSprite.getWidth()/2), location.y - (locationSprite.getHeight()/2));
+	}
 	@Override
 	public void draw(Batch batch, float alpha) {
-		batch.end();
-		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glEnable(GL20.GL_BLEND);
-		if(showRange){
-			locShapeRenderer.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			locShapeRenderer.begin(ShapeType.Filled);
-			locShapeRenderer.setColor(rangeColor);
-			locShapeRenderer.circle(((Circle) getRangeShape()).x, ((Circle) getRangeShape()).y, ((Circle) getRangeShape()).radius);
-			locShapeRenderer.end();
+		if(isShowRange()){
+			locationSprite.draw(batch);
 		}
-		batch.begin();
 		super.draw(batch, alpha);
 	}
 	
@@ -53,12 +57,12 @@ public class AirStrikeLocation extends Actor {
 		this.location = location;
 	}
 
-	public ShapeRenderer getLocShapeRenderer() {
-		return locShapeRenderer;
+	public Sprite getLocationSprite() {
+		return locationSprite;
 	}
 
-	public void setLocShapeRenderer(ShapeRenderer locShapeRenderer) {
-		this.locShapeRenderer = locShapeRenderer;
+	public void setLocationSprite(Sprite locShapeRenderer) {
+		this.locationSprite = locShapeRenderer;
 	}
 
 	public boolean isShowRange() {

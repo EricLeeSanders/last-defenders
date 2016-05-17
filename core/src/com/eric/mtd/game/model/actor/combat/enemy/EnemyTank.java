@@ -9,11 +9,12 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.health.interfaces.IPlatedArmor;
+import com.eric.mtd.game.model.actor.interfaces.IRpg;
 import com.eric.mtd.game.model.actor.interfaces.IVehicle;
 import com.eric.mtd.game.model.actor.projectile.RPG;
-import com.eric.mtd.game.model.actor.projectile.interfaces.IAoe;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
+import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -23,7 +24,7 @@ import com.eric.mtd.util.Resources;
  * @author Eric
  *
  */
-public class EnemyTank extends Enemy implements IPlatedArmor, IAoe, IVehicle {
+public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 
 	public static final float HEALTH = 20;
 	public static final float ARMOR = 10;
@@ -32,12 +33,12 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IAoe, IVehicle {
 	public static final float RANGE = 100;
 	public static final float SPEED = 45;
 	public static final float AOE_RADIUS = 75f;
-	public static final Vector2 BULLET_SIZE = new Vector2(10, 10);
+	public static final Dimension BULLET_SIZE = new Dimension(10, 10);
 	public static final float[] BODY = { 0, 0, 0, 75, 50, 75, 50, 0 };
 	public static final Vector2 GUN_POS = new Vector2(0, 57);
-	public static final Vector2 TEXTURE_BODY_SIZE = new Vector2(50, 76);
-	public static final Vector2 TEXTURE_TURRET_SIZE = new Vector2(22, 120);
-
+	public static final Dimension TEXTURE_BODY_SIZE = new Dimension(50, 76);
+	public static final Dimension TEXTURE_TURRET_SIZE = new Dimension(22, 120);
+	private Polygon bodyPoly = new Polygon(BODY);
 	private TextureRegion tankBodyRegion;
 	private ShapeRenderer body = Resources.getShapeRenderer();
 	private float bodyRotation; //
@@ -66,7 +67,9 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IAoe, IVehicle {
 		if (!isAttacking()) {
 			bodyRotation = getRotation();
 		}
-		batch.draw(tankBodyRegion, this.getPositionCenter().x - (TEXTURE_BODY_SIZE.x / 2), this.getPositionCenter().y - (TEXTURE_BODY_SIZE.y / 2), TEXTURE_BODY_SIZE.x / 2, TEXTURE_BODY_SIZE.y / 2, TEXTURE_BODY_SIZE.x, TEXTURE_BODY_SIZE.y, 1, 1, bodyRotation);
+		batch.draw(tankBodyRegion, this.getPositionCenter().x - (TEXTURE_BODY_SIZE.getWidth() / 2), this.getPositionCenter().y - (TEXTURE_BODY_SIZE.getHeight() / 2)
+				, TEXTURE_BODY_SIZE.getWidth() / 2, TEXTURE_BODY_SIZE.getHeight() / 2, TEXTURE_BODY_SIZE.getWidth(), TEXTURE_BODY_SIZE.getHeight()
+				, 1, 1, bodyRotation);
 		super.draw(batch, alpha);
 	}
 
@@ -76,17 +79,11 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IAoe, IVehicle {
 	 */
 	@Override
 	public Polygon getBody() {
-		Polygon poly = new Polygon(BODY);
-		poly.setOrigin((TEXTURE_BODY_SIZE.x / 2), (TEXTURE_BODY_SIZE.y / 2));
-		poly.setRotation(bodyRotation);
-		poly.setPosition(getPositionCenter().x - (TEXTURE_BODY_SIZE.x / 2), getPositionCenter().y - (TEXTURE_BODY_SIZE.y / 2));
+		bodyPoly.setOrigin((TEXTURE_BODY_SIZE.getWidth() / 2), (TEXTURE_BODY_SIZE.getHeight() / 2));
+		bodyPoly.setRotation(bodyRotation);
+		bodyPoly.setPosition(getPositionCenter().x - (TEXTURE_BODY_SIZE.getWidth() / 2), getPositionCenter().y - (TEXTURE_BODY_SIZE.getHeight() / 2));
 
-		return poly;
-	}
-
-	@Override
-	public float getAoeRadius() {
-		return AOE_RADIUS;
+		return bodyPoly;
 	}
 
 	@Override
@@ -99,8 +96,7 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IAoe, IVehicle {
 	public void attackTarget() {
 		if (Logger.DEBUG)
 			System.out.println("Enemy Tank: Attacking target at " + getTarget().getPositionCenter());
-		RPG rpg = ActorFactory.loadRPG();
-		rpg.initialize(this, getTarget(), getTowerGroup(), this.getGunPos(), BULLET_SIZE);
+		getProjectileGroup().addActor(ActorFactory.loadRPG().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
 	}
 
 }

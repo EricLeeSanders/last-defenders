@@ -9,12 +9,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.actor.ai.EnemyAI;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.interfaces.IPassiveEnemy;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
-import com.eric.mtd.game.stage.GameStage;
+import com.eric.mtd.game.GameStage;
+import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 
 /**
@@ -31,9 +33,8 @@ public abstract class Enemy extends CombatActor {
 	private static final float FIND_TARGET_DELAY = 3f; // Delay between finding
 														// Targets
 														// TODO: Randomize
-	private CombatActorPool<CombatActor> pool;
-	// Better to use a list for the LengthTillEnd Method
 	private List<MoveToAction> actionList = new ArrayList<MoveToAction>();
+	private Pool<CombatActor> pool;
 	private int actionIndex = 0; // Current index in the actionList
 	private float speed; // number of pixels it moves in a second
 	private float textureCounter; // Used to animate textures
@@ -41,35 +42,24 @@ public abstract class Enemy extends CombatActor {
 	private int textureIndex; // Current texture index
 	private boolean multipleTextures, attacking;
 	private TextureRegion[] textureRegions;
-	private Group towerTargetGroup;
 	private float delayCounter;
 	private float totalDistance; // Total distance from end
 									// Used to calculate in LengthTillEndMethod
 									// Class variable for optimization
 
-	public Enemy(TextureRegion[] textureRegions, CombatActorPool<CombatActor> pool, float[] bodyPoints, Vector2 textureSize, Vector2 gunPos, float speed, float health, float armor, float attack, float attackSpeed, float range) {
+	public Enemy(TextureRegion[] textureRegions, CombatActorPool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float speed, float health, float armor, float attack, float attackSpeed, float range) {
 		super(textureRegions[0], pool, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.textureRegions = textureRegions;
-		this.pool = pool;
 		this.speed = speed;
 		multipleTextures = true;
+		this.pool = pool;
 	}
 
-	public Enemy(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, float[] bodyPoints, Vector2 textureSize, Vector2 gunPos, float speed, float health, float armor, float attack, float attackSpeed, float range) {
+	public Enemy(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float speed, float health, float armor, float attack, float attackSpeed, float range) {
 		super(textureRegion, pool, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.speed = speed;
-		this.pool = pool;
 		multipleTextures = false;
-	}
-
-	/**
-	 * Sets the Tower Group
-	 */
-	public void setTowerGroup(Group towerGroup) {
-		this.towerTargetGroup = towerGroup;
-	}
-	public Group getTowerGroup(){
-		return towerTargetGroup;
+		this.pool = pool;
 	}
 	/**
 	 * Sets the path for the enemy. Starts of screen.
@@ -77,17 +67,17 @@ public abstract class Enemy extends CombatActor {
 	 * @param path
 	 */
 	public void setPath(Queue<Vector2> path) {
-		Vector2 prevWaypoint = new Vector2();
 		Vector2 newWaypoint = new Vector2();
 		newWaypoint = path.remove();
 		setPositionCenter(newWaypoint);
 		setRotation(calculateRotation(path.peek()));
-		Vector2 rotatedCoords = getRotatedCoords(new Vector2(this.getPositionCenter().x, getY() + this.getTextureSize().y));
+		Vector2 rotatedCoords = getRotatedCoords(this.getPositionCenter().x, getY() + this.getTextureSize().getHeight());
 		float newX = this.getPositionCenter().x + (this.getPositionCenter().x - rotatedCoords.x);
 		float newY = this.getPositionCenter().y + (this.getPositionCenter().y - rotatedCoords.y);
-		this.setPositionCenter(new Vector2(newX, newY)); // Start off screen
-		Vector2 moveVector = new Vector2();
+		this.setPositionCenter(newX, newY); // Start off screen
 		float moveDistance;
+		Vector2 moveVector = new Vector2();
+		Vector2 prevWaypoint = new Vector2();
 		while (!path.isEmpty()) {
 			prevWaypoint = newWaypoint;
 			newWaypoint = (path.remove());
@@ -102,7 +92,7 @@ public abstract class Enemy extends CombatActor {
 	 * Finds a tower to attack.
 	 */
 	public void findTarget() {
-		this.setTarget(EnemyAI.findNearestTower(this, towerTargetGroup.getChildren()));
+		this.setTarget(EnemyAI.findNearestTower(this, getTargetGroup().getChildren()));
 		if (getTarget() != null) {
 			findTargetCounter = 0;
 			this.setRotation(calculateRotation(super.getTarget().getPositionCenter()));
@@ -118,13 +108,6 @@ public abstract class Enemy extends CombatActor {
 	 */
 	@Override
 	public void act(float delta) {
-		// Best to have the FindTarget before the Super.act call
-		// That way, the enemy tries to find a target before moving.
-		// If the enemy moves then finds the target, it will attack the tower
-		// first
-		// which can cause the tower to not attack at all because the enemy will
-		// rotate to attack
-		// and can be out of range
 		// Find target if delay has expired.
 		if (!(this instanceof IPassiveEnemy)) {
 			if (findTargetCounter >= FIND_TARGET_DELAY) {
@@ -140,7 +123,7 @@ public abstract class Enemy extends CombatActor {
 			delayCounter += delta;
 			if (delayCounter > (ATTACK_DELAY / MTDGame.gameSpeed)) {
 				if (actionIndex > 0) {
-					setRotation(calculateRotation(new Vector2((actionList.get(actionIndex - 1)).getX() + (this.getOriginX()), (actionList.get(actionIndex - 1)).getY() + (this.getOriginY()))));
+					setRotation(calculateRotation((actionList.get(actionIndex - 1)).getX() + (this.getOriginX()), (actionList.get(actionIndex - 1)).getY() + (this.getOriginY())));
 				}
 				delayCounter = 0;
 				attacking = false;
@@ -153,8 +136,7 @@ public abstract class Enemy extends CombatActor {
 		if (!isDead() && !attacking) {
 			if (this.getActions().size == 0) {
 				if (actionIndex < actionList.size()) {
-					setRotation(calculateRotation(new Vector2((actionList.get(actionIndex)).getX() + (this.getOriginX()), (actionList.get(actionIndex)).getY() + (this.getOriginY()))));
-
+					setRotation(calculateRotation((actionList.get(actionIndex)).getX() + (this.getOriginX()), (actionList.get(actionIndex)).getY() + (this.getOriginY())));
 					this.addAction(actionList.get(actionIndex)); // Set Move TO
 					actionIndex++;
 				} else {
@@ -181,12 +163,12 @@ public abstract class Enemy extends CombatActor {
 				if (textureCounter >= 0.3f) {
 					textureCounter = 0;
 					textureIndex++;
-					super.setTextureRegion(textureRegions[textureIndex % 2]);
+					setTextureRegion(textureRegions[textureIndex % 2]);
 				} else {
 					textureCounter += delta;
 				}
 			} else {
-				super.setTextureRegion(textureRegions[2]); // Stationary when
+				setTextureRegion(textureRegions[2]); // Stationary when
 														// attacking
 			}
 		}

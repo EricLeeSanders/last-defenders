@@ -1,4 +1,4 @@
-package com.eric.mtd.game.stage;
+package com.eric.mtd.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -17,6 +17,7 @@ import com.eric.mtd.game.model.level.MTDTiledMapRenderer;
 import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.util.Logger;
@@ -48,6 +49,7 @@ public class GameStage extends Stage {
 		this.uiStateManager = uiStateManager;
 		this.intLevel = intLevel;
 		createGroups();
+		ActorFactory.initPools(actorGroups);
 		level = new Level(intLevel, levelStateManager, getActorGroups());
 		mapRenderer = new MTDTiledMapRenderer(intLevel, getCamera());
 
@@ -56,6 +58,7 @@ public class GameStage extends Stage {
 	 * Create the actor groups
 	 */
 	public void createGroups() {
+		this.addActor(getActorGroups().getLandmineGroup());
 		this.addActor(getActorGroups().getEnemyGroup());
 		this.addActor(getActorGroups().getTowerGroup());
 		this.addActor(getActorGroups().getHealthBarGroup());
