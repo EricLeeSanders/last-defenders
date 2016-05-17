@@ -14,6 +14,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.eric.mtd.game.GameStage;
 import com.eric.mtd.screen.AbstractScreen;
+import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
 /**
@@ -31,6 +32,8 @@ public class Map {
 		tiledMap = Resources.getMap(intLevel);
 		findPath();
 		findPathBoundary();
+		tiledMap.dispose();
+		tiledMap = null;
 	}
 
 	/**
@@ -49,8 +52,8 @@ public class Map {
 	}
 	
 	/**
-	 * Finds the path boundaries from the Tiled Map
-	 * 
+	 * Finds the path boundaries from the Tiled Map.
+	 *  * 
 	 * @param tiledMap
 	 */
 	private void findPathBoundary() {
@@ -58,9 +61,16 @@ public class Map {
 		for (MapObject boundry : boundaries) {
 			if (boundry instanceof RectangleMapObject) {
 				Rectangle rect = ((RectangleMapObject) boundry).getRectangle();
-				rect.set(rect.x*Resources.TILED_MAP_SCALE, rect.y*Resources.TILED_MAP_SCALE
-						, rect.width*Resources.TILED_MAP_SCALE, rect.height*Resources.TILED_MAP_SCALE);
-				pathBoundaries.add(rect);
+				if(Logger.DEBUG)System.out.println("Rect before: " + rect.x + "," + rect.y + ":" + rect.width + "," + rect.height);
+				Rectangle pathBoundary = new Rectangle(rect.x*Resources.TILED_MAP_SCALE, rect.y*Resources.TILED_MAP_SCALE
+						, rect.width*Resources.TILED_MAP_SCALE, rect.height*Resources.TILED_MAP_SCALE); //Required to create new Rectangle
+																										//Otherwise, rectangle properties of the MapObject
+																										//are altered and cached
+				pathBoundaries.add(pathBoundary);
+				if(Logger.DEBUG){
+					System.out.println("added path boundary: " + pathBoundary.x + "," + pathBoundary.y + ":" + pathBoundary.width + "," + pathBoundary.height);
+					System.out.println("Tiled Map Scale: " + Resources.TILED_MAP_SCALE);
+				}
 			}
 		}
 	}

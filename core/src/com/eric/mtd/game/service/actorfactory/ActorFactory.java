@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
+import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.enemy.*;
 import com.eric.mtd.game.model.actor.combat.tower.*;
@@ -33,21 +34,21 @@ import com.eric.mtd.util.Resources;
  */
 // TODO: Doing a lot of static things here
 public class ActorFactory {
-	private static CombatActorPool<CombatActor> towerRiflePool = new CombatActorPool<CombatActor>(TowerRifle.class);
-	private static CombatActorPool<CombatActor> towerTankPool = new CombatActorPool<CombatActor>(TowerTank.class);
-	private static CombatActorPool<CombatActor> towerFlameThrowerPool = new CombatActorPool<CombatActor>(TowerFlameThrower.class);
-	private static CombatActorPool<CombatActor> towerTurretPool = new CombatActorPool<CombatActor>(TowerTurret.class);
-	private static CombatActorPool<CombatActor> towerSniperPool = new CombatActorPool<CombatActor>(TowerSniper.class);
-	private static CombatActorPool<CombatActor> towerMachinePool = new CombatActorPool<CombatActor>(TowerMachineGun.class);
-	private static CombatActorPool<CombatActor> towerRocketLauncherPool = new CombatActorPool<CombatActor>(TowerRocketLauncher.class);
-	private static CombatActorPool<CombatActor> enemyRiflePool = new CombatActorPool<CombatActor>(EnemyRifle.class);
-	private static CombatActorPool<CombatActor> enemyTankPool = new CombatActorPool<CombatActor>(EnemyTank.class);
-	private static CombatActorPool<CombatActor> enemyFlameThrowerPool = new CombatActorPool<CombatActor>(EnemyFlameThrower.class);
-	private static CombatActorPool<CombatActor> enemyMachinePool = new CombatActorPool<CombatActor>(EnemyMachineGun.class);
-	private static CombatActorPool<CombatActor> enemyRocketLauncherPool = new CombatActorPool<CombatActor>(EnemyRocketLauncher.class);
-	private static CombatActorPool<CombatActor> enemySniperPool = new CombatActorPool<CombatActor>(EnemySniper.class);
-	private static CombatActorPool<CombatActor> enemySprinterPool = new CombatActorPool<CombatActor>(EnemySprinter.class);
-	private static CombatActorPool<CombatActor> enemyHumveePool = new CombatActorPool<CombatActor>(EnemyHumvee.class);
+	private static CombatActorPool<CombatActor> towerRiflePool;
+	private static CombatActorPool<CombatActor> towerTankPool;
+	private static CombatActorPool<CombatActor> towerFlameThrowerPool;
+	private static CombatActorPool<CombatActor> towerTurretPool;
+	private static CombatActorPool<CombatActor> towerSniperPool;
+	private static CombatActorPool<CombatActor> towerMachinePool;
+	private static CombatActorPool<CombatActor> towerRocketLauncherPool;
+	private static CombatActorPool<CombatActor> enemyRiflePool;
+	private static CombatActorPool<CombatActor> enemyTankPool;
+	private static CombatActorPool<CombatActor> enemyFlameThrowerPool;
+	private static CombatActorPool<CombatActor> enemyMachinePool;
+	private static CombatActorPool<CombatActor> enemyRocketLauncherPool;
+	private static CombatActorPool<CombatActor> enemySniperPool;
+	private static CombatActorPool<CombatActor> enemySprinterPool;
+	private static CombatActorPool<CombatActor> enemyHumveePool;
 	private static HealthPool healthPool = new HealthPool();
 	private static BulletPool bulletPool = new BulletPool();
 	private static RPGPool rpgPool = new RPGPool();
@@ -59,6 +60,24 @@ public class ActorFactory {
 	private static SupportActorPool<SupportActor> airStrikePool = new SupportActorPool<SupportActor>(AirStrike.class);
 	private static SupportActorPool<SupportActor> landMinePool = new SupportActorPool<SupportActor>(LandMine.class);
 	private static TextureAtlas actorAtlas = Resources.getAtlas(Resources.ACTOR_ATLAS);
+	
+	public static void  initPools(ActorGroups actorGroups){
+		towerRiflePool = new CombatActorPool<CombatActor>(TowerRifle.class, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
+		towerTankPool = new CombatActorPool<CombatActor>(TowerTank.class, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
+		towerFlameThrowerPool = new CombatActorPool<CombatActor>(TowerFlameThrower.class, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
+		towerTurretPool = new CombatActorPool<CombatActor>(TowerTurret.class, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
+		towerSniperPool = new CombatActorPool<CombatActor>(TowerSniper.class, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
+		towerMachinePool = new CombatActorPool<CombatActor>(TowerMachineGun.class, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
+		towerRocketLauncherPool = new CombatActorPool<CombatActor>(TowerRocketLauncher.class, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
+		enemyRiflePool = new CombatActorPool<CombatActor>(EnemyRifle.class, actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
+		enemyTankPool = new CombatActorPool<CombatActor>(EnemyTank.class, actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
+		enemyFlameThrowerPool = new CombatActorPool<CombatActor>(EnemyFlameThrower.class, actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
+		enemyMachinePool = new CombatActorPool<CombatActor>(EnemyMachineGun.class, actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
+		enemyRocketLauncherPool = new CombatActorPool<CombatActor>(EnemyRocketLauncher.class, actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
+		enemySniperPool = new CombatActorPool<CombatActor>(EnemySniper.class, actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
+		enemySprinterPool = new CombatActorPool<CombatActor>(EnemySprinter.class, actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
+		enemyHumveePool = new CombatActorPool<CombatActor>(EnemyHumvee.class, actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
+	}
 	/**
 	 * Obtains a tower from the pool
 	 * 
@@ -86,8 +105,6 @@ public class ActorFactory {
 			tower = (Tower) towerFlameThrowerPool.obtain();
 		}
 		tower.setPositionCenter(pos);
-		tower.setEnemyGroup(enemyGroup);
-		tower.setProjectileGroup(projectileGroup);
 		if (Logger.DEBUG)
 			System.out.println("Obtained : " + type);
 		return tower;
@@ -127,8 +144,6 @@ public class ActorFactory {
 		enemy.setPath(new LinkedList<Vector2>(path));
 		enemy.setHasArmor(armor);
 		enemy.setDead(false);
-		enemy.setTowerGroup(towerGroup);
-		enemy.setProjectileGroup(projectileGroup);
 		if (Logger.DEBUG)
 			System.out.println("Obtained : " + type);
 		return enemy;
@@ -218,7 +233,7 @@ public class ActorFactory {
 	 *            - Position to place the Support Actor
 	 * @return Support Actor
 	 */
-	public static SupportActor loadSupportActor(Vector2 pos, String type, Group enemyGroup) {
+	public static SupportActor loadSupportActor(Vector2 pos, String type, Group enemyGroup, Group projectileGroup) {
 		SupportActor supportActor = null;
 		if (type.equals("Apache")) {
 			supportActor = apachePool.obtain();
@@ -231,89 +246,92 @@ public class ActorFactory {
 			System.out.println("Obtained : " + type);
 		supportActor.setPositionCenter(pos);
 		supportActor.setEnemyGroup(enemyGroup);
+		supportActor.setProjectileGroup(projectileGroup);
 		return supportActor;
 	}
 	
 	/**
 	 * Create a Game Actor
 	 * 
-	 * @param type
-	 *            - Type of Game Actor
+	 * @param type - Type of Game Actor
 	 * @return CombatActor
 	 */
-	protected static CombatActor createCombatActor(Class<? extends CombatActor> type) {
+	protected static CombatActor createCombatActor(Class<? extends CombatActor> type, Group targetGroup, Group projectileGroup) {
+		CombatActor actor = null;
 		if (Logger.DEBUG)
 			System.out.println("Creating new " + type.getSimpleName());
 		if (type.equals(TowerRifle.class)) {
 			TextureRegion rifleRegion = actorAtlas.findRegion("Rifle");
-			return new TowerRifle(rifleRegion, towerRiflePool);
+			actor = new TowerRifle(rifleRegion, towerRiflePool);
 		} else if (type.equals(TowerFlameThrower.class)) {
 			TextureRegion flameThrowerRegion = actorAtlas.findRegion("Rifle");
-			return new TowerFlameThrower(flameThrowerRegion, towerFlameThrowerPool);
+			actor = new TowerFlameThrower(flameThrowerRegion, towerFlameThrowerPool);
 		} else if (type.equals(TowerSniper.class)) {
 			TextureRegion sniperRegion = actorAtlas.findRegion("Rifle");
-			return new TowerSniper(sniperRegion, towerSniperPool);
+			actor = new TowerSniper(sniperRegion, towerSniperPool);
 		} else if (type.equals(TowerMachineGun.class)) {
 			TextureRegion machineRegion = actorAtlas.findRegion("Rifle");
-			return new TowerMachineGun(machineRegion, towerMachinePool);
+			actor = new TowerMachineGun(machineRegion, towerMachinePool);
 		} else if (type.equals(TowerRocketLauncher.class)) {
 			TextureRegion rocketLauncherRegion = actorAtlas.findRegion("Rifle");
-			return new TowerRocketLauncher(rocketLauncherRegion, towerRocketLauncherPool);
+			actor = new TowerRocketLauncher(rocketLauncherRegion, towerRocketLauncherPool);
 		} else if (type.equals(TowerTank.class)) {
 			TextureRegion tankRegion = actorAtlas.findRegion("Tank");
 			TextureRegion turretRegion = actorAtlas.findRegion("TankTurret");
-			return new TowerTank(tankRegion, turretRegion, towerTankPool);
+			actor = new TowerTank(tankRegion, turretRegion, towerTankPool);
 		} else if (type.equals(TowerTurret.class)) {
 			TextureRegion machineRegion = actorAtlas.findRegion("TurretMachine");
 			TextureRegion bagsRegion = actorAtlas.findRegion("TurretBags");
-			return new TowerTurret(bagsRegion, machineRegion, towerTurretPool);
+			actor = new TowerTurret(bagsRegion, machineRegion, towerTurretPool);
 		} else if (type.equals(EnemyRifle.class)) {
 			TextureRegion[] rifleRegions = new TextureRegion[3];
 			rifleRegions[0] = actorAtlas.findRegion("RifleLeft");
 			rifleRegions[1] = actorAtlas.findRegion("RifleRight");
 			rifleRegions[2] = actorAtlas.findRegion("Rifle");
-			return new EnemyRifle(rifleRegions, enemyRiflePool);
+			actor = new EnemyRifle(rifleRegions, enemyRiflePool);
 		} else if (type.equals(EnemyFlameThrower.class)) {
 			TextureRegion[] flameThrowerRegions = new TextureRegion[3];
 			flameThrowerRegions[0] = actorAtlas.findRegion("RifleLeft");
 			flameThrowerRegions[1] = actorAtlas.findRegion("RifleRight");
 			flameThrowerRegions[2] = actorAtlas.findRegion("Rifle");
-			return new EnemyFlameThrower(flameThrowerRegions, enemyFlameThrowerPool);
+			actor = new EnemyFlameThrower(flameThrowerRegions, enemyFlameThrowerPool);
 		} else if (type.equals(EnemyHumvee.class)) {
 			TextureRegion humveeRegion = actorAtlas.findRegion("Humvee");
-			return new EnemyHumvee(humveeRegion, enemyHumveePool);
+			actor = new EnemyHumvee(humveeRegion, enemyHumveePool);
 		} else if (type.equals(EnemyMachineGun.class)) {
 			TextureRegion[] machineRegions = new TextureRegion[3];
 			machineRegions[0] = actorAtlas.findRegion("RifleLeft");
 			machineRegions[1] = actorAtlas.findRegion("RifleRight");
 			machineRegions[2] = actorAtlas.findRegion("Rifle");
-			return new EnemyMachineGun(machineRegions, enemyMachinePool);
+			actor = new EnemyMachineGun(machineRegions, enemyMachinePool);
 		} else if (type.equals(EnemyRocketLauncher.class)) {
 			TextureRegion[] rocketLauncherRegions = new TextureRegion[3];
 			rocketLauncherRegions[0] = actorAtlas.findRegion("RifleLeft");
 			rocketLauncherRegions[1] = actorAtlas.findRegion("RifleRight");
 			rocketLauncherRegions[2] = actorAtlas.findRegion("Rifle");
-			return new EnemyRocketLauncher(rocketLauncherRegions, enemyRocketLauncherPool);
+			actor = new EnemyRocketLauncher(rocketLauncherRegions, enemyRocketLauncherPool);
 		} else if (type.equals(EnemySniper.class)) {
 			TextureRegion[] sniperRegions = new TextureRegion[3];
 			sniperRegions[0] = actorAtlas.findRegion("RifleLeft");
 			sniperRegions[1] = actorAtlas.findRegion("RifleRight");
 			sniperRegions[2] = actorAtlas.findRegion("Rifle");
-			return new EnemySniper(sniperRegions, enemySniperPool);
+			actor = new EnemySniper(sniperRegions, enemySniperPool);
 		} else if (type.equals(EnemySprinter.class)) {
 			TextureRegion[] sprinterRegions = new TextureRegion[3];
 			sprinterRegions[0] = actorAtlas.findRegion("RifleLeft");
 			sprinterRegions[1] = actorAtlas.findRegion("RifleRight");
 			sprinterRegions[2] = actorAtlas.findRegion("Rifle");
-			return new EnemySprinter(sprinterRegions, enemySprinterPool);
+			actor = new EnemySprinter(sprinterRegions, enemySprinterPool);
 		} else if (type.equals(EnemyTank.class)) {
 			TextureRegion tankRegion = actorAtlas.findRegion("Tank");
 			TextureRegion turretRegion = actorAtlas.findRegion("TankTurret");
-			return new EnemyTank(tankRegion, turretRegion, enemyTankPool);
+			actor = new EnemyTank(tankRegion, turretRegion, enemyTankPool);
 		} else {
 			throw new NullPointerException("Actor factory couldn't create: " + type.getSimpleName());
 		}
-
+		actor.setTargetGroup(targetGroup);
+		actor.setProjectileGroup(projectileGroup);
+		return actor;
 	}
 
 	/**
@@ -424,14 +442,17 @@ public class ActorFactory {
 	
 	public static class CombatActorPool<T extends CombatActor> extends Pool<CombatActor> {
 		private final Class<? extends CombatActor> type;
-
-		public CombatActorPool(Class<? extends CombatActor> type) {
+		private final Group targetGroup;
+		private final Group projectileGroup;
+		public CombatActorPool(Class<? extends CombatActor> type, Group targetGroup, Group projectileGroup){
 			this.type = type;
+			this.targetGroup = targetGroup;
+			this.projectileGroup = projectileGroup;
 		}
 
 		@Override
 		protected CombatActor newObject() {
-			return createCombatActor(type);
+			return createCombatActor(type, targetGroup, projectileGroup);
 		}
 
 	}

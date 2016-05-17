@@ -44,7 +44,7 @@ public class TowerRocketLauncher extends Tower implements IRpg {
 		if (Logger.DEBUG)
 			System.out.println("Tower Rocket: Attacking target at " + getTarget().getPositionCenter());
 		AudioUtil.playProjectileSound(ProjectileSound.ROCKET_LAUNCH);
-		getProjectileGroup().addActor(ActorFactory.loadRPG().initialize(this, getTarget(), getEnemyGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
+		getProjectileGroup().addActor(ActorFactory.loadRPG().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
 
 	}
 

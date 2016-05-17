@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.game.model.actor.ai.TowerSupportAI;
 import com.eric.mtd.game.model.actor.ai.TowerTargetPriority;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
@@ -39,14 +40,12 @@ public abstract class Tower extends CombatActor {
 			attackLevel;
 	private TowerTargetPriority targetPriority = TowerTargetPriority.FIRST;
 	private boolean active, showRange; 
-	private CombatActorPool<CombatActor> pool;
 	private float attackCounter = 0;
-	private Group enemyTargetGroup;
 	private int kills;
 	private Sprite rangeSprite;
+	private Pool<CombatActor> pool;
 	public Tower(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost, int rangeIncreaseCost, int attackIncreaseCost) {
 		super(textureRegion, pool, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
-		this.pool = pool;
 		this.cost = cost;
 		this.armorCost = armorCost;
 		this.speedIncreaseCost = speedIncreaseCost;
@@ -56,6 +55,7 @@ public abstract class Tower extends CombatActor {
 		speedLevel = 0;
 		attackLevel = 0;
 		createRangeSprite();
+		this.pool = pool;
 	}
 	protected void createRangeSprite(){
 		Pixmap rangePixmap = new Pixmap(600, 600, Format.RGBA8888);
@@ -64,15 +64,7 @@ public abstract class Tower extends CombatActor {
 		setRangeSprite(new Sprite(new Texture(rangePixmap)));
 		rangePixmap.dispose();
 	}
-	/**
-	 * Sets the Enemy Group
-	 */
-	public void setEnemyGroup(Group enemyGroup) {
-		this.enemyTargetGroup = enemyGroup;
-	}
-	public Group getEnemyGroup(){
-		return enemyTargetGroup;
-	}
+
 	/**
 	 * Gets the selling price for the tower. Adds up the upgraded attributes and
 	 * their cost and multiplies by a rate.
@@ -141,7 +133,7 @@ public abstract class Tower extends CombatActor {
 	@Override
 	public void reset() {
 		super.reset();
-		System.out.println("Resetting Tower");
+		if(Logger.DEBUG)System.out.println("Resetting Tower");
 		rangeLevel = 0;
 		speedLevel = 0;
 		attackLevel = 0;
@@ -156,16 +148,16 @@ public abstract class Tower extends CombatActor {
 	public void findTarget() {
 		switch (getTargetPriority()) {
 		case FIRST:
-			setTarget(TowerSupportAI.findFirstEnemy(this, enemyTargetGroup.getChildren()));
+			setTarget(TowerSupportAI.findFirstEnemy(this, getTargetGroup().getChildren()));
 			break;
 		case LAST:
-			setTarget(TowerSupportAI.findLastEnemy(this, enemyTargetGroup.getChildren()));
+			setTarget(TowerSupportAI.findLastEnemy(this, getTargetGroup().getChildren()));
 			break;
 		case WEAKEST:
-			setTarget(TowerSupportAI.findLeastHPEnemy(this, enemyTargetGroup.getChildren()));
+			setTarget(TowerSupportAI.findLeastHPEnemy(this, getTargetGroup().getChildren()));
 			break;
 		case STRONGEST:
-			setTarget(TowerSupportAI.findMostHPEnemy(this, enemyTargetGroup.getChildren()));
+			setTarget(TowerSupportAI.findMostHPEnemy(this, getTargetGroup().getChildren()));
 			break;
 		}
 	}

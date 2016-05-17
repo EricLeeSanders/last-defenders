@@ -51,7 +51,7 @@ public class Damage {
 	public static void dealFlameGroupDamage(IAttacker attacker, ITargetable target, SnapshotArray<Actor>targetGroup, Polygon flameBody) {
 		//Have to create a copy of the group otherwise when a target is killed, the iterator will skip
 		//over the next in the group.
-		Actor [] targetGroupArray = targetGroup.begin();
+		SnapshotArray<Actor> targetGroupArray = new SnapshotArray<Actor>(targetGroup);
 		ITargetable flameTarget;
 		for (Actor actor : targetGroupArray) {
 			flameTarget = (ITargetable) actor;
@@ -66,7 +66,6 @@ public class Damage {
 				}
 			}
 		}
-		targetGroup.end();
 	}
 
 	public static void dealExplosionDamage(IAttacker attacker, float radius, Vector2 position, ITargetable target, SnapshotArray<Actor>targetGroup) {

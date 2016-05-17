@@ -38,7 +38,7 @@ public class AirStrike extends SupportActor implements IRpg{
 	public static final int COST = 1000;
 	public static final float ATTACK = 10f;
 	public static final float SPEED = 150f;
-	public static final float AIRSTRIKE_RADIUS = 50f;
+	public static final float AIRSTRIKE_RADIUS = 75;
 	public static final int MAX_AIRSTRIKES = 3;
 	public static final Vector2 GUN_POS = new Vector2(0,0);
 	public static final Dimension BULLET_SIZE = new Dimension(20,20);
@@ -77,8 +77,7 @@ public class AirStrike extends SupportActor implements IRpg{
 		if (Logger.DEBUG)
 			System.out.println("AirStrike: Dropping Bomb at " + location.getLocation());
 		AudioUtil.playProjectileSound(ProjectileSound.ROCKET_LAUNCH);
-		AirStrikeBomb bomb = ActorFactory.loadAirStrikeBomb();
-		bomb.initialize(this, location.getLocation(), this.getEnemyGroup(),this.getGunPos(), BULLET_SIZE, AIRSTRIKE_RADIUS); 
+		getProjectileGroup().addActor(ActorFactory.loadAirStrikeBomb().initialize(this, location.getLocation(), this.getEnemyGroup(),this.getGunPos(), BULLET_SIZE, AIRSTRIKE_RADIUS)); 
 		/*if(Logger.DEBUG)System.out.println("removing location at : " + location.getLocation());
 		airStrikeLocations.removeValue(location, false);
 		location.remove();

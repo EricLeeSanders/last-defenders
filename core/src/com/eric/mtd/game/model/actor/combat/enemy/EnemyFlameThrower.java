@@ -48,7 +48,7 @@ public class EnemyFlameThrower extends Enemy implements IFlame {
 		if (Logger.DEBUG)
 			System.out.println("Enemy Flame: Attacking target at " + getTarget().getPositionCenter());
 		AudioUtil.playProjectileSound(ProjectileSound.FLAME_BURST);
-		getProjectileGroup().addActor(ActorFactory.loadFlame().initialize(this, this.getTarget(), getTowerGroup(), getFlameSize()));
+		getProjectileGroup().addActor(ActorFactory.loadFlame().initialize(this, this.getTarget(), getTargetGroup(), getFlameSize()));
 	}
 	@Override
 	public Dimension getFlameSize() {
