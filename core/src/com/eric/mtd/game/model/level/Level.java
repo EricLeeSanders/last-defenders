@@ -6,6 +6,7 @@ import java.util.Queue;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.eric.mtd.game.GameStage;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.combat.enemy.Enemy;
 import com.eric.mtd.game.model.actor.health.HealthBar;
@@ -13,7 +14,6 @@ import com.eric.mtd.game.model.level.state.ILevelStateObserver;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
-import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.Logger;
 
 public class Level implements ILevelStateObserver {
@@ -68,7 +68,7 @@ public class Level implements ILevelStateObserver {
 		delays = new LinkedList<Float>();
 		JsonValue enemiesJson = json.get("wave");
 		for (JsonValue enemyJson : enemiesJson.iterator()) {
-			Enemy enemy = ActorFactory.loadEnemy(map.getPath(), enemyJson.getString("enemy"), enemyJson.getBoolean("armor"), actorGroups.getTowerGroup());
+			Enemy enemy = ActorFactory.loadEnemy(map.getPath(), enemyJson.getString("enemy"), enemyJson.getBoolean("armor"), actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
 			enemies.add(enemy);
 			HealthBar healthBar = ActorFactory.loadHealthBar();
 			healthBar.setActor(enemy);

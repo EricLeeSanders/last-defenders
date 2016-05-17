@@ -2,12 +2,12 @@ package com.eric.mtd.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.profiling.GLProfiler;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
-import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.game.ui.GameUIStage;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
@@ -59,8 +59,8 @@ public class GameScreen extends AbstractScreen {
 
 	@Override
 	public void show() {
-		if (Logger.DEBUG)
-			createFramesField();
+		GLProfiler.enable();
+		createFramesField();
 	}
 	@Override
 	public void resize(int width, int height) {
@@ -70,12 +70,19 @@ public class GameScreen extends AbstractScreen {
 	}
 	@Override
 	public void render(float delta) {
+	  /*  System.out.println(
+	            "  Drawcalls: " + GLProfiler.drawCalls +
+	                    ", Calls: " + GLProfiler.calls +
+	                    ", TextureBindings: " + GLProfiler.textureBindings +
+	                    ", ShaderSwitches:  " + GLProfiler.shaderSwitches +
+	                    ", vertexCount: " + GLProfiler.vertexCount.value
+	    );
+	    GLProfiler.reset();*/
 		delta = delta * MTDGame.gameSpeed;
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		getCamera().update();
-		if (Logger.DEBUG)
-			framesLabel.setText(Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
+		framesLabel.setText(Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
 		renderElements(delta);
 
 	}
@@ -107,6 +114,7 @@ public class GameScreen extends AbstractScreen {
 			System.out.println("Game Screen Dispose");
 		gameStage.dispose();
 		gameUIStage.dispose();
+	    GLProfiler.disable();
 	}
 
 }

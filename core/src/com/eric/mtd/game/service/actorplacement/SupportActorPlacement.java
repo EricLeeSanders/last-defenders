@@ -20,8 +20,12 @@ public class SupportActorPlacement {
 	}
 
 	public void createSupportActor(String type) {
-		currentSupportActor = ActorFactory.loadSupportActor(new Vector2(0, 0), type, actorGroups.getEnemyGroup());
-		actorGroups.getSupportGroup().addActor(currentSupportActor);
+		currentSupportActor = ActorFactory.loadSupportActor(new Vector2(0, 0), type, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
+		if(type.equals("LandMine")){
+			actorGroups.getLandmineGroup().addActor(currentSupportActor);
+		} else {
+			actorGroups.getSupportGroup().addActor(currentSupportActor);
+		}
 		currentSupportActor.setActive(false);
 		currentSupportActor.setVisible(false);
 		

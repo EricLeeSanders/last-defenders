@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Pool;
+import com.eric.mtd.game.GameStage;
 import com.eric.mtd.game.model.actor.ai.TowerSupportAI;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
@@ -25,21 +26,21 @@ import com.eric.mtd.game.model.actor.interfaces.ICollision;
 import com.eric.mtd.game.model.actor.projectile.Bullet;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.SandbagPool;
-import com.eric.mtd.game.stage.GameStage;
 import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 import com.eric.mtd.util.AudioUtil.ProjectileSound;
+import com.eric.mtd.util.Dimension;
 
 public class Apache extends SupportActor{
-	private static final int COST = 2000;
+	public static final int COST = 2000;
 	private static final float SCALE = 0.5f;
 	private static final float ATTACK_SPEED = 0.1f;
 	private static final float RANGE = 75f;
 	private static final float ATTACK = 5f;
 	private static final float MOVE_SPEED = 200f;
 	private static final float TIME_ACTIVE_LIMIT = 15f;
-	private static final Vector2 BULLET_SIZE = new Vector2(10, 10);
+	private static final Dimension BULLET_SIZE = new Dimension(10, 10);
 	private static final Vector2 GUN_POS = new Vector2(0,0);
 	private TextureRegion [] textureRegions;
 	private boolean readyToAttack, exitingStage;
@@ -47,7 +48,7 @@ public class Apache extends SupportActor{
 	private int textureIndex; // Current texture index
 	private CombatActor target;
 	public Apache(Pool<SupportActor> pool, TextureRegion [] textureRegions) {
-		super(pool, textureRegions[0], new Vector2(textureRegions[0].getRegionWidth()*SCALE, textureRegions[0].getRegionHeight()*SCALE),
+		super(pool, textureRegions[0], new Dimension(textureRegions[0].getRegionWidth()*SCALE, textureRegions[0].getRegionHeight()*SCALE),
 				RANGE, ATTACK, GUN_POS, COST);
 		this.textureRegions = textureRegions;
 	}
@@ -137,8 +138,7 @@ public class Apache extends SupportActor{
 		if (Logger.DEBUG)
 			System.out.println("Apache: Attacking target at " + getTarget().getPositionCenter());
 		AudioUtil.playProjectileSound(ProjectileSound.MACHINE);
-		Bullet bullet = ActorFactory.loadBullet();
-		bullet.initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
+		getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
 
 	}
 	

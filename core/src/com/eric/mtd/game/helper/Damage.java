@@ -6,12 +6,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.health.interfaces.IPlatedArmor;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
+import com.eric.mtd.game.model.actor.interfaces.ITargetable;
 import com.eric.mtd.game.model.actor.projectile.Flame;
-import com.eric.mtd.game.model.actor.projectile.interfaces.IAoe;
 import com.eric.mtd.util.Logger;
 /**
  * Class that deals damage
@@ -19,8 +20,8 @@ import com.eric.mtd.util.Logger;
  *
  */
 public class Damage {
-	private static void dealTargetDamage(IAttacker attacker, CombatActor target) {
-		if (target.isDead() == false) {
+	private static void dealTargetDamage(IAttacker attacker, ITargetable target) {
+		if (target != null && target.isDead() == false) {
 			target.takeDamage(attacker.getAttack());
 			if (target.isDead() && attacker instanceof Tower) {
 				// Only give the tower a kill if it is alive.
@@ -32,71 +33,62 @@ public class Damage {
 			}
 		}
 	}
-	public static void dealRpgDamage(IAttacker attacker, CombatActor target) {
+	public static void dealRpgDamage(IAttacker attacker, ITargetable target) {
+		//System.out.println("rpg target group size: " + targetGroupArray.length);
 		dealTargetDamage(attacker,target);
 	}
 
-	public static void dealBulletDamage(IAttacker attacker, CombatActor target) {
+	public static void dealBulletDamage(IAttacker attacker, ITargetable target) {
 		if (!(target instanceof IPlatedArmor)) {
 			dealTargetDamage(attacker, target);
 		}
 	}
-	public static void dealFlameTargetDamage(IAttacker attacker, CombatActor target) {
+	public static void dealFlameTargetDamage(IAttacker attacker, ITargetable target) {
 		if (!(target instanceof IPlatedArmor)) {
 			dealTargetDamage(attacker, target);
 		}
 	}
-	public static void dealFlameGroupDamage(IAttacker attacker, CombatActor target, Group targetGroup, Flame flame) {
+	public static void dealFlameGroupDamage(IAttacker attacker, ITargetable target, SnapshotArray<Actor>targetGroup, Polygon flameBody) {
 		//Have to create a copy of the group otherwise when a target is killed, the iterator will skip
 		//over the next in the group.
-		Array<Actor> targetGroupArray = new Array<Actor>(targetGroup.getChildren());
-		for (Actor flameTarget : targetGroupArray) {
-			Polygon targetBody = ((CombatActor) flameTarget).getBody();
-			if (CollisionDetection.polygonAndPolygon(targetBody, flame.getFlameBody())) {
-				if(!(flameTarget.equals(flameTarget))){
-					dealFlameTargetDamage(attacker, (CombatActor)flameTarget);
-				}else {
-					if(Logger.DEBUG)System.out.println("Target == flameTarget");
+		SnapshotArray<Actor> targetGroupArray = new SnapshotArray<Actor>(targetGroup);
+		ITargetable flameTarget;
+		for (Actor actor : targetGroupArray) {
+			flameTarget = (ITargetable) actor;
+			if (flameTarget != null && flameTarget.isDead() == false) {
+				Polygon targetBody = flameTarget.getBody();
+				if (CollisionDetection.polygonAndPolygon(targetBody, flameBody)) {
+					if(!(flameTarget.equals(target))){
+						dealFlameTargetDamage(attacker,flameTarget);
+					}else {
+						if(Logger.DEBUG)System.out.println("Target == flameTarget");
+					}
 				}
 			}
 		}
 	}
 
-	public static void dealExplosionDamage(IAttacker attacker, Vector2 position, CombatActor target, Group targetGroup) {
-		float radius = ((IAoe) attacker).getAoeRadius();
+	public static void dealExplosionDamage(IAttacker attacker, float radius, Vector2 position, ITargetable target, SnapshotArray<Actor>targetGroup) {
 		Circle aoeRadius = new Circle(position.x, position.y, radius);
 		//Have to create a copy of the group otherwise when a target is killed, the iterator will skip
 		//over the next in the group.
-		Array<Actor> targetGroupArray = new Array<Actor>(targetGroup.getChildren());
-		if (Logger.DEBUG){
-			System.out.println("=============================================================");
-			System.out.println("Circle center position = " + aoeRadius.x + "," + aoeRadius.y);
-		}
-		for (Actor aoeTarget : targetGroupArray) {
-			if (Logger.DEBUG){
-				System.out.println("AOE Actor pos: " + ((CombatActor) aoeTarget).getPositionCenter() + " group size" + targetGroup.getChildren().size);
-			}
-			if (((CombatActor) aoeTarget).isDead() == false) {
+		SnapshotArray<Actor> targetGroupArray = new SnapshotArray<Actor>(targetGroup);
+		ITargetable aoeTarget;
+		float distance, damage, damagePercent;
+		for (Actor actor : targetGroupArray) {
+			aoeTarget = (ITargetable) actor;
+			distance = damage = damagePercent = 0;
+			if (aoeTarget.isDead() == false) {
 				if (aoeTarget.equals(target) == false) {
-					float distance = position.dst(((CombatActor) aoeTarget).getPositionCenter());
-					if (Logger.DEBUG){
-						System.out.println("AOE Actor pos: " + ((CombatActor) aoeTarget).getPositionCenter() + " group size" + targetGroup.getChildren().size);
-						System.out.println("AOE Actor distance: " + distance + " aoe radius: " + aoeRadius.radius);
-					}
-					if (CollisionDetection.polygonAndCircle(((CombatActor) aoeTarget).getBody(), aoeRadius)) {
-						float damagePercent = (1000 / distance);// TODO: find
-																// better way to
-																// do this
+					distance = position.dst( aoeTarget.getPositionCenter());
+					if (CollisionDetection.polygonAndCircle( aoeTarget.getBody(), aoeRadius)) {
+						damagePercent = (1000 / distance);
 						if (damagePercent > 100) {
 							damagePercent = 100;
 						}
-						float damage = (attacker.getAttack() * (damagePercent / 100));
-						if (Logger.DEBUG)
-							System.out.println("Doing " + damagePercent + "% of damage for " + damage + " damage");
-						((CombatActor) aoeTarget).takeDamage(damage);
-						if (Logger.DEBUG)
-							System.out.println("Actors new health:" + ((CombatActor) aoeTarget).getHealth());
-						if (((CombatActor) aoeTarget).isDead() && attacker instanceof Tower) {
+						damage = (attacker.getAttack() * (damagePercent / 100));
+						aoeTarget.takeDamage(damage);
+						if (aoeTarget.isDead() && attacker instanceof Tower) {
 							if (((Tower)attacker).isDead() == false) {
 								if (Logger.DEBUG)
 									System.out.println("Explosion: giving kill to attacker");
@@ -105,14 +97,6 @@ public class Damage {
 						}
 					}
 				}
-				else{
-					if (Logger.DEBUG)
-						System.out.println("Explosion: AOE Actor = target");
-				}
-			}
-			else{
-				if (Logger.DEBUG)
-					System.out.println("AOE Target dead");
 			}
 		}
 	}

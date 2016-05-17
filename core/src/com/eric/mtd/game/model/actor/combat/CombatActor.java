@@ -7,6 +7,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -17,12 +18,15 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.model.actor.interfaces.ICollision;
+import com.eric.mtd.game.model.actor.interfaces.ITargetable;
 import com.eric.mtd.game.model.actor.interfaces.IVehicle;
 import com.eric.mtd.util.AudioUtil;
+import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 import com.badlogic.gdx.utils.Disposable;
@@ -34,19 +38,20 @@ import com.badlogic.gdx.utils.Pool;
  * @author Eric
  *
  */
-public abstract class CombatActor extends GameActor implements Pool.Poolable, ICollision, IAttacker {
+public abstract class CombatActor extends GameActor implements Pool.Poolable, ICollision, IAttacker, ITargetable {
 	private final float RESET_ATTACK_SPEED, RESET_RANGE, MAX_HEALTH, MAX_ARMOR, RESET_ATTACK;
 	private float attackSpeed, range, health, attack, armor;
 	private Vector2 gunPos;
 	private float[] bodyPoints;
-	private CombatActor target;
-	private ShapeRenderer rangeShape = Resources.getShapeRenderer();
+	private ITargetable target;
 	private ShapeRenderer debugBody = Resources.getShapeRenderer();
-	private Color rangeColor = new Color(1.0f, 0f, 0f, 0.5f);
-	private boolean showRange, hasArmor, dead;
+	private Circle rangeCircle = new Circle();
+	private Polygon bodyPoly;
+	private boolean hasArmor, dead;
 	private Pool<CombatActor> pool;
 	private List<ICombatActorObserver> observers = new CopyOnWriteArrayList<ICombatActorObserver>();
-	public CombatActor(TextureRegion textureRegion, Pool<CombatActor> pool, float[] bodyPoints, Vector2 textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range) {
+	private Group projectileGroup, targetGroup;
+	public CombatActor(TextureRegion textureRegion,Pool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range) {
 		super(textureRegion, textureSize);
 		this.MAX_HEALTH = health;
 		this.MAX_ARMOR = armor;
@@ -58,6 +63,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.attackSpeed = attackSpeed;
 		this.attack = attack;
 		this.bodyPoints = bodyPoints;
+		this.bodyPoly = new Polygon(bodyPoints);
 		this.gunPos = gunPos;
 		this.range = range;
 		this.pool = pool;
@@ -77,7 +83,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public void reset() {
 		if (Logger.DEBUG)
 			System.out.println("Resetting GameActor");
-		this.setShowRange(false);
 		health = MAX_HEALTH;
 		armor = MAX_ARMOR;
 		hasArmor = false;
@@ -85,7 +90,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		attackSpeed = RESET_ATTACK_SPEED;
 		range = RESET_RANGE;
 		target = null;
-		rangeColor.set(1.0f, 0f, 0f, 0.5f);
 		this.setRotation(0);
 		this.clear();
 		this.remove();
@@ -98,24 +102,16 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 	@Override
 	public void draw(Batch batch, float alpha) {
-		batch.end();
-		if (showRange) {
-			Gdx.gl.glClearColor(0, 0, 0, 0);
-			Gdx.gl.glEnable(GL20.GL_BLEND);
-
-			rangeShape.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			rangeShape.begin(ShapeType.Filled);
-			rangeShape.setColor(rangeColor);
-			rangeShape.circle(((Circle) getRangeShape()).x, ((Circle) getRangeShape()).y, ((Circle) getRangeShape()).radius);
-			rangeShape.end();
-
+		if(Logger.DEBUG && debugBody != null){
+			batch.end();
+			debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+			debugBody.begin(ShapeType.Line);
+			debugBody.setColor(Color.YELLOW);
+			debugBody.polygon(getBody().getTransformedVertices());
+			debugBody.end();
+			batch.begin();
 		}
-		debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-		debugBody.begin(ShapeType.Line);
-		debugBody.setColor(Color.YELLOW);
-		debugBody.polygon(getBody().getTransformedVertices());
-		debugBody.end();
-		batch.begin();
+
 		super.draw(batch, alpha);
 	}
 
@@ -152,15 +148,15 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.target = target;
 	}
 
-
 	public Vector2 getGunPos() {
-		Vector2 pos = new Vector2((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y));
-		return getRotatedCoords(pos);
+		return getRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y));
 
 	}
 	@Override
 	public Shape2D getRangeShape() {
-		return new Circle(getPositionCenter().x, getPositionCenter().y, range);
+		rangeCircle.set(getPositionCenter().x, getPositionCenter().y, range);
+		return rangeCircle;
+		//return;// new Circle(getPositionCenter().x, getPositionCenter().y, range);
 	}
 
 	public float getAttackSpeed() {
@@ -183,29 +179,14 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	
 	@Override
 	public Polygon getBody() {
-		Polygon poly = new Polygon(bodyPoints);
-		poly.setOrigin((getTextureSize().x / 2), (getTextureSize().y / 2));
-		poly.setRotation(this.getRotation());
-		poly.setPosition(getPositionCenter().x - (getTextureSize().x / 2), getPositionCenter().y - (getTextureSize().y / 2));
+		
+		bodyPoly.setOrigin((getTextureSize().getWidth() / 2), (getTextureSize().getHeight() / 2));
+		bodyPoly.setRotation(this.getRotation());
+		bodyPoly.setPosition(getPositionCenter().x - (getTextureSize().getWidth() / 2), getPositionCenter().y - (getTextureSize().getHeight() / 2));
 
-		return poly;
+		return bodyPoly;
 	}
 
-	public void setShowRange(boolean showRange) {
-		this.showRange = showRange;
-	}
-
-	public boolean isShowRange() {
-		return showRange;
-	}
-
-	public void setRangeColor(float r, float g, float b, float a) {
-		rangeColor.set(r, g, b, a);
-	}
-
-	public Color getRangeColor() {
-		return rangeColor;
-	}
 
 	public void setDead(boolean dead) {
 		this.dead = dead;
@@ -257,13 +238,26 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public void setHasArmor(boolean hasArmor) {
 		this.hasArmor = hasArmor;
 	}
-
-	public CombatActor getTarget() {
+	public void setProjectileGroup(Group projectileGroup){
+		this.projectileGroup = projectileGroup;
+	}
+	public Group getProjectileGroup(){
+		return projectileGroup;
+	}
+	public ITargetable getTarget() {
 		return target;
 	}
 	
 	public void freeActor(){
 		pool.free(this);
 	}
+	public Group getTargetGroup() {
+		return targetGroup;
+	}
+	public void setTargetGroup(Group targetGroup) {
+		this.targetGroup = targetGroup;
+	}
+	
+	
 
 }

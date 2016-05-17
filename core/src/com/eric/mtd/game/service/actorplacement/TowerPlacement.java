@@ -50,7 +50,7 @@ public class TowerPlacement {
 	 *            - Type of tower
 	 */
 	public void createTower(String type) {
-		currentTower = ActorFactory.loadTower(new Vector2(0, 0), type, actorGroups.getEnemyGroup());
+		currentTower = ActorFactory.loadTower(new Vector2(0, 0), type, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
 		actorGroups.getTowerGroup().addActor(currentTower);
 		currentTower.setVisible(false);
 	}
@@ -69,10 +69,10 @@ public class TowerPlacement {
 				System.out.println(currentTower.getPositionCenter());
 			currentTower.setShowRange(true);
 			if (towerCollides()) {
-				currentTower.setRangeColor(1f, 0f, 0f, 0.5f);// Red
+				currentTower.setRangeColor(1f, 0f, 0f, 0.75f);// Red
 
 			} else {
-				currentTower.setRangeColor(1f, 1f, 1f, .5f);
+				currentTower.setRangeColor(1f, 1f, 1f, 0.75f);
 			}
 		}
 	}
@@ -89,10 +89,10 @@ public class TowerPlacement {
 			if (Logger.DEBUG)
 				System.out.println(currentTower.getPositionCenter());
 			if (towerCollides()) {
-				currentTower.setRangeColor(1f, 0f, 0f, 0.5f);// Red
+				currentTower.setRangeColor(1f, 0f, 0f, 0.75f);// Red
 
 			} else {
-				currentTower.setRangeColor(1f, 1f, 1f, .5f);
+				currentTower.setRangeColor(1f, 1f, 1f, 0.75f);
 			}
 		}
 	}

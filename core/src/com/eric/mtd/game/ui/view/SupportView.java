@@ -48,12 +48,12 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		choosingGroup.addActor(pnlSupport);
 
 		btnLandmines = new MTDSupportButton("UI_Support", "btnLandmines", Resources.SUPPORT_UI_ATLAS, "landminesEnabled"
-										, "landminesDisabled", "Landmine", true, false);
+										, "landminesDisabled", "LandMine", true, false);
 		setLandminesListener();
 		choosingGroup.addActor(btnLandmines);
 
 		btnAirstrike = new MTDSupportButton("UI_Support", "btnAirstrike", Resources.SUPPORT_UI_ATLAS, "airstrikeEnabled"
-										, "airstrikeDisabled", "Airstrike", true, false);
+										, "airstrikeDisabled", "AirStrike", true, false);
 		setAirstrikeListener();
 		choosingGroup.addActor(btnAirstrike);
 
@@ -201,7 +201,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 
 	@Override
 	public void supportState() {
-		//updateSupportButtons();
+		updateSupportButtons();
 		choosingGroup.setVisible(true);
 		btnCancel.setVisible(true);
 		this.setVisible(true);
