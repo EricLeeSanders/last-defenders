@@ -22,7 +22,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
 
 	public static final float HEALTH = 8;
 	public static final float ARMOR = 3;
-	public static final float ATTACK = 10; 
+	public static final float ATTACK = 7; 
 	public static final float ATTACK_SPEED = 1f;
 	public static final float RANGE = 80;
 	public static final int COST = 600;
@@ -50,7 +50,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
 		if (Logger.DEBUG)
 			System.out.println("Tower Flame: Attacking target");
 		AudioUtil.playProjectileSound(ProjectileSound.FLAME_BURST);
-		getProjectileGroup().addActor(ActorFactory.loadFlame().initialize(this, this.getTarget(), getEnemyGroup(), getFlameSize()));
+		getProjectileGroup().addActor(ActorFactory.loadFlame().initialize(this, this.getTarget(), getTargetGroup(), getFlameSize()));
 	}
 	
 

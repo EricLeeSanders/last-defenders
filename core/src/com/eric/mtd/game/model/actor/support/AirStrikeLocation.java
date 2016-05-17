@@ -20,7 +20,6 @@ import com.eric.mtd.util.Resources;
 public class AirStrikeLocation extends Actor {
 	private Vector2 location;
 	private Sprite locationSprite;
-	private Color rangeColor = new Color(0f, 0f, 0f, 0.5f);
 	private float radius;
 	private boolean showRange = true;
 	public AirStrikeLocation(Vector2 location, float radius, Group group){
@@ -31,16 +30,18 @@ public class AirStrikeLocation extends Actor {
 	}
 	private void createLocationSprite(){
 		Pixmap locationPixmap = new Pixmap(600, 600, Format.RGBA8888);
-		locationPixmap.setColor(0,0,0,1f);
+		locationPixmap.setColor(0,0,0,0.5f);
 		locationPixmap.fillCircle(300,300,300);
 		locationSprite = (new Sprite(new Texture(locationPixmap)));
 		locationPixmap.dispose();
 		locationSprite.setSize(radius, radius);
+		locationSprite.setPosition(location.x - (locationSprite.getWidth()/2), location.y - (locationSprite.getHeight()/2));
 	}
 	@Override
 	public void draw(Batch batch, float alpha) {
-		locationSprite.setPosition(getX() - (locationSprite.getWidth()/2), getY() - (locationSprite.getHeight()/2));
-		locationSprite.draw(batch);
+		if(isShowRange()){
+			locationSprite.draw(batch);
+		}
 		super.draw(batch, alpha);
 	}
 	

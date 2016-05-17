@@ -138,8 +138,7 @@ public class Apache extends SupportActor{
 		if (Logger.DEBUG)
 			System.out.println("Apache: Attacking target at " + getTarget().getPositionCenter());
 		AudioUtil.playProjectileSound(ProjectileSound.MACHINE);
-		Bullet bullet = ActorFactory.loadBullet();
-		bullet.initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
+		getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
 
 	}
 	

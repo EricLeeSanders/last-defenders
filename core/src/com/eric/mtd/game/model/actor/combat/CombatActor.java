@@ -50,8 +50,8 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private boolean hasArmor, dead;
 	private Pool<CombatActor> pool;
 	private List<ICombatActorObserver> observers = new CopyOnWriteArrayList<ICombatActorObserver>();
-	private Group projectileGroup;
-	public CombatActor(TextureRegion textureRegion, Pool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range) {
+	private Group projectileGroup, targetGroup;
+	public CombatActor(TextureRegion textureRegion,Pool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range) {
 		super(textureRegion, textureSize);
 		this.MAX_HEALTH = health;
 		this.MAX_ARMOR = armor;
@@ -251,5 +251,13 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public void freeActor(){
 		pool.free(this);
 	}
+	public Group getTargetGroup() {
+		return targetGroup;
+	}
+	public void setTargetGroup(Group targetGroup) {
+		this.targetGroup = targetGroup;
+	}
+	
+	
 
 }

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.actor.ai.EnemyAI;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
@@ -32,8 +33,8 @@ public abstract class Enemy extends CombatActor {
 	private static final float FIND_TARGET_DELAY = 3f; // Delay between finding
 														// Targets
 														// TODO: Randomize
-	private CombatActorPool<CombatActor> pool;
 	private List<MoveToAction> actionList = new ArrayList<MoveToAction>();
+	private Pool<CombatActor> pool;
 	private int actionIndex = 0; // Current index in the actionList
 	private float speed; // number of pixels it moves in a second
 	private float textureCounter; // Used to animate textures
@@ -41,7 +42,6 @@ public abstract class Enemy extends CombatActor {
 	private int textureIndex; // Current texture index
 	private boolean multipleTextures, attacking;
 	private TextureRegion[] textureRegions;
-	private Group towerTargetGroup;
 	private float delayCounter;
 	private float totalDistance; // Total distance from end
 									// Used to calculate in LengthTillEndMethod
@@ -50,26 +50,16 @@ public abstract class Enemy extends CombatActor {
 	public Enemy(TextureRegion[] textureRegions, CombatActorPool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float speed, float health, float armor, float attack, float attackSpeed, float range) {
 		super(textureRegions[0], pool, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.textureRegions = textureRegions;
-		this.pool = pool;
 		this.speed = speed;
 		multipleTextures = true;
+		this.pool = pool;
 	}
 
 	public Enemy(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float speed, float health, float armor, float attack, float attackSpeed, float range) {
 		super(textureRegion, pool, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.speed = speed;
-		this.pool = pool;
 		multipleTextures = false;
-	}
-
-	/**
-	 * Sets the Tower Group
-	 */
-	public void setTowerGroup(Group towerGroup) {
-		this.towerTargetGroup = towerGroup;
-	}
-	public Group getTowerGroup(){
-		return towerTargetGroup;
+		this.pool = pool;
 	}
 	/**
 	 * Sets the path for the enemy. Starts of screen.
@@ -102,7 +92,7 @@ public abstract class Enemy extends CombatActor {
 	 * Finds a tower to attack.
 	 */
 	public void findTarget() {
-		this.setTarget(EnemyAI.findNearestTower(this, towerTargetGroup.getChildren()));
+		this.setTarget(EnemyAI.findNearestTower(this, getTargetGroup().getChildren()));
 		if (getTarget() != null) {
 			findTargetCounter = 0;
 			this.setRotation(calculateRotation(super.getTarget().getPositionCenter()));

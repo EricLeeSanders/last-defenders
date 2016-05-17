@@ -49,7 +49,7 @@ public class Flame extends Actor implements Pool.Poolable {
 	Polygon poly = null;
 	Polygon targetBodySnap = null;
 	private Pool<Flame> pool;
-	private float[] bodyPoints = { 0, 0, 0, flameSize.getHeight(), flameSize.getWidth(), flameSize.getHeight(), flameSize.getWidth(), 0 };
+	private float[] bodyPoints = { 0, 0, 0,0,0,0,0, 0 };
 	private Polygon flameBody = new Polygon(bodyPoints);
 	/**
 	 * Constructs a flame
@@ -75,6 +75,8 @@ public class Flame extends Actor implements Pool.Poolable {
 		flameAnimation = new Animation((shooter.getAttackSpeed() * 0.75f) / NUM_OF_FRAMES, flameRegions);
 		flameAnimation.setPlayMode(PlayMode.NORMAL);
 		this.flameSize = flameSize;
+		bodyPoints[3] = bodyPoints[5] = flameSize.getHeight();
+		bodyPoints[4] = bodyPoints[6] = flameSize.getWidth();
 		this.targetGroup = targetGroup;
 		Damage.dealFlameTargetDamage(shooter, target);
 		Damage.dealFlameGroupDamage(shooter, target, targetGroup.getChildren(), getFlameBody());

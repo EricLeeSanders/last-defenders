@@ -33,7 +33,7 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	private Vector2 gunPos;
 	private boolean active;
 	private int cost;
-	private Group enemyTargetGroup;
+	private Group enemyTargetGroup, projectileGroup;
 	private boolean showRange;
 	private Sprite rangeSprite;
 	private Color rangeColor = new Color(1.0f, 1.0f, 1.0f, 0.5f);
@@ -131,6 +131,12 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	}
 	public void setRangeSprite(Sprite rangeSprite) {
 		this.rangeSprite = rangeSprite;
+	}
+	public Group getProjectileGroup() {
+		return projectileGroup;
+	}
+	public void setProjectileGroup(Group projectileGroup) {
+		this.projectileGroup = projectileGroup;
 	}	
 	
 }

@@ -61,9 +61,8 @@ public class LandMine extends SupportActor implements IRpg{
 	}
 	private void explode(){
 		if(Logger.DEBUG)System.out.println("LandMine: Exploding");
-		Explosion explosion = ActorFactory.loadExplosion(); // Get an
-															// Explosion
-		explosion.initialize(this,RANGE, null, getEnemyGroup(), this.getPositionCenter());
+		Explosion explosion = ActorFactory.loadExplosion(); 
+		getProjectileGroup().addActor(ActorFactory.loadExplosion().initialize(this,RANGE, null, getEnemyGroup(), this.getPositionCenter()));
 		this.freeActor();
 	}
 	private Rectangle getBody(){

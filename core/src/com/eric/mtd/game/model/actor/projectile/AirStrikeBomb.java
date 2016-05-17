@@ -59,8 +59,9 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 	 * @param targetGroup
 	 * @param pos
 	 * @param size
+	 * @return 
 	 */
-	public void initialize(IAttacker attacker, Vector2 destination, Group targetGroup, Vector2 pos, Dimension size, float radius) {
+	public Actor initialize(IAttacker attacker, Vector2 destination, Group targetGroup, Vector2 pos, Dimension size, float radius) {
 		this.targetGroup = targetGroup;
 		this.setPosition(pos.x, pos.y);
 		this.setSize(size.getWidth(), size.getHeight());
@@ -71,6 +72,8 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 		moveAction.setPosition(destination.x, destination.y);
 		moveAction.setDuration(destination.dst(pos) / SPEED);
 		addAction(moveAction);
+		
+		return this;
 	}
 
 	/**
