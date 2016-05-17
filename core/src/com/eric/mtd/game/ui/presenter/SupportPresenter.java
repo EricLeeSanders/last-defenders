@@ -139,16 +139,16 @@ public class SupportPresenter implements IGameUIStateObserver {
 	}
 
 	/**
-	 * Determines if the tower can be purchased.
+	 * Determines if the support actor can be purchased.
 	 * 
-	 * @param tower
-	 *            - Tower to be purchased
+	 * @param supportActor
+	 *            - Support Actor to be purchased
 	 * @return boolean - if the tower can be purchased.
 	 */
-	public boolean canAffordTower(String tower) {
+	public boolean canAffordTower(String supportActor) {
 
 		try {
-			Class<?> myClass = Class.forName("com.eric.mtd.game.model.actor.tower.Tower" + tower);
+			Class<?> myClass = Class.forName("com.eric.mtd.game.model.actor.support." + supportActor);
 			Field field = ClassReflection.getDeclaredField(myClass, "COST");
 			field.setAccessible(true);
 			int cost = (Integer) field.get(null);

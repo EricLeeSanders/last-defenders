@@ -33,7 +33,7 @@ import com.eric.mtd.util.AudioUtil.ProjectileSound;
 import com.eric.mtd.util.Dimension;
 
 public class Apache extends SupportActor{
-	private static final int COST = 2000;
+	public static final int COST = 2000;
 	private static final float SCALE = 0.5f;
 	private static final float ATTACK_SPEED = 0.1f;
 	private static final float RANGE = 75f;

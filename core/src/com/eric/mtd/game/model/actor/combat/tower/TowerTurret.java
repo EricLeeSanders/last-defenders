@@ -112,7 +112,7 @@ public class TowerTurret extends Tower implements IRotatable {
 	@Override
 	protected void drawRange(Batch batch){
 		getRangeSprite().setPosition(getPositionCenter().x - (getRangeSprite().getWidth()/2), getPositionCenter().y);
-		getRangeSprite().setRotation(getRotation());
+		getRangeSprite().setRotation(bodyRotation);
 		getRangeSprite().draw(batch);
 	}
 	@Override
@@ -147,7 +147,7 @@ public class TowerTurret extends Tower implements IRotatable {
 
 	@Override
 	public Shape2D getRangeShape() {
-		//changeRangeCoords();
+		changeRangeCoords();
 		rangePoly.setOrigin((TEXTURE_BODY_SIZE.getWidth() / 2), (TEXTURE_BODY_SIZE.getHeight() / 2));
 		rangePoly.setRotation(bodyRotation);
 		rangePoly.setPosition(getPositionCenter().x - (TEXTURE_BODY_SIZE.getWidth() / 2), getPositionCenter().y - (TEXTURE_BODY_SIZE.getHeight() / 2));
