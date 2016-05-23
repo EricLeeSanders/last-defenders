@@ -4,5 +4,6 @@ Military Tower Defense (title in work) is a game that I've been working on for A
 
 http://i.imgur.com/akpUsNX.gifv
 
+![Demo](http://i.imgur.com/v6HCD1l.png)
 
 ![Demo](http://i.imgur.com/akpUsNX.gifv)
