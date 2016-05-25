@@ -127,7 +127,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 */
 	public boolean canAffordTower(String tower) {
 
-		try {
+	/*	try {
 			Class<?> myClass = Class.forName("com.eric.mtd.game.model.actor.combat.tower.Tower" + tower);
 			Field field = ClassReflection.getDeclaredField(myClass, "COST");
 			field.setAccessible(true);
@@ -144,7 +144,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return false;
+		return false;*/ return true;
 	}
 
 	@Override
