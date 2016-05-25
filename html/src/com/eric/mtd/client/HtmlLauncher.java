@@ -9,11 +9,12 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public GwtApplicationConfiguration getConfig () {
-                return new GwtApplicationConfiguration(480, 320);
+                return new GwtApplicationConfiguration(640, 360);
         }
 
-        @Override
-        public ApplicationListener getApplicationListener () {
-                return new MTDGame();
-        }
+		@Override
+		public ApplicationListener createApplicationListener() {
+			// TODO Auto-generated method stub
+			return new MTDGame();
+		}
 }
