@@ -4,3 +4,4 @@ Military Tower Defense (title in work) is a game that I've been working on for A
 
 
 ![Demo](https://j.gifs.com/qx98yD.gif)
+Actual game textures are much better than the gif.
