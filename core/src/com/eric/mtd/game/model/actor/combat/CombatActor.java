@@ -49,7 +49,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private Polygon bodyPoly;
 	private boolean hasArmor, dead;
 	private Pool<CombatActor> pool;
-	private List<ICombatActorObserver> observers = new CopyOnWriteArrayList<ICombatActorObserver>();
+	private List<ICombatActorObserver> observers = new ArrayList<ICombatActorObserver>();
 	private Group projectileGroup, targetGroup;
 	public CombatActor(TextureRegion textureRegion,Pool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range) {
 		super(textureRegion, textureSize);
