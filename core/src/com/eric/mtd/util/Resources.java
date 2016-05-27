@@ -1,18 +1,27 @@
 package com.eric.mtd.util;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Pixmap.Blending;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-
+import com.badlogic.gdx.utils.ObjectMap;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
 //-agentlib:hprof=heap=dump,format=b
 public abstract class Resources {
 	public static final String MENU_ATLAS = "menu/menu.atlas";
@@ -73,8 +82,20 @@ public abstract class Resources {
 		Resources.loadAtlas(Resources.LEVEL_SELECT_ATLAS);
 		Resources.loadAtlas(ACTOR_ATLAS);
 		Pixmap.setBlending(Blending.None);
+		
 	}
-
+	public static ObjectMap<String, Object> loadFont(){
+		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/palamecia titling.ttf"));
+		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+		parameter.size = 40;
+		parameter.borderColor = Color.BLACK;
+		parameter.borderWidth = 4f;
+		BitmapFont font = generator.generateFont(parameter); 
+		generator.dispose(); 
+		ObjectMap<String, Object> map = new ObjectMap<String, Object>();
+		map.put("default-font", font); 
+		return map;
+	}
 	public static void loadMap(int level) {
 		try {
 			MANAGER.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
@@ -108,7 +129,7 @@ public abstract class Resources {
 				System.out.println(atlas);
 			if (Logger.DEBUG)
 				System.out.println(skinJson);
-			MANAGER.load(skinJson, Skin.class, new SkinLoader.SkinParameter(atlas));
+			MANAGER.load(skinJson, Skin.class, new SkinLoader.SkinParameter(atlas, loadFont()));
 			MANAGER.finishLoading();
 			if (Logger.DEBUG)
 				System.out.println("Skin Loaded");
