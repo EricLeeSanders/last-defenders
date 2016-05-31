@@ -87,9 +87,11 @@ public abstract class Resources {
 	public static ObjectMap<String, Object> loadFont(){
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/palamecia titling.ttf"));
 		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 40;
+		parameter.size = 50;
 		parameter.borderColor = Color.BLACK;
 		parameter.borderWidth = 4f;
+		parameter.minFilter = Texture.TextureFilter.Linear;
+		parameter.magFilter = Texture.TextureFilter.Linear;
 		BitmapFont font = generator.generateFont(parameter); 
 		generator.dispose(); 
 		ObjectMap<String, Object> map = new ObjectMap<String, Object>();
