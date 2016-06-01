@@ -132,13 +132,12 @@ public abstract class Enemy extends CombatActor {
 				attacking = false;
 				attackCounter = 100; //Ready to attack
 				findTargetDelay = random.nextFloat()*2 + 1;
-				System.out.println("New Find Target Delay = " + findTargetDelay);
+				if(Logger.DEBUG) System.out.println("New Find Target Delay = " + findTargetDelay);
 			} else if( attackCounter >= this.getAttackSpeed()) {
 				if(this.getTarget() == null){
 					attacking = false;
 				} else {
 					this.setRotation(calculateRotation(super.getTarget().getPositionCenter()));
-					System.out.println("attacking target");
 					this.attackTarget();
 					attackCounter = 0;
 				}
