@@ -67,7 +67,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		grpTargetPriority.addActor(lblTargetPriority);
 		addActor(grpTargetPriority);
 
-		btnInspectClose = new MTDTextButton("UI_Inspect", "btnClose", "Close", Align.center, true);
+		btnInspectClose = new MTDTextButton("UI_Inspect", "btnClose", "Close", Align.center, 0.45f, true);
 		setUpgradeCloseListener();
 		addActor(btnInspectClose);
 

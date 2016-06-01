@@ -1,7 +1,7 @@
 
 gameover.png
 format: RGBA8888
-filter: Nearest,Nearest
+filter: MipMapLinearNearest,Nearest
 repeat: none
 panel
   rotate: false
