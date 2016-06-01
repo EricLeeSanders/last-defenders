@@ -1,7 +1,7 @@
 
 hud.png
 format: RGBA8888
-filter: Nearest,Nearest
+filter: MipMapLinearNearest,Nearest
 repeat: none
 Title_bg
   rotate: false
