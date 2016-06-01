@@ -39,15 +39,15 @@ public class GameOverView extends Group implements IGameOverView {
 		panel.getColor().set(1f, 1f, 1f, .75f);
 		addActor(panel);
 
-		btnNewGame = new MTDTextButton("UI_GameOver", "btnNewGame", "New Game", true);
+		btnNewGame = new MTDTextButton("UI_GameOver", "btnNewGame", "New Game", Align.center, 0.45f, true);
 		setBtnNewGameListener();
 		addActor(btnNewGame);
 
-		btnHighScores = new MTDTextButton("UI_GameOver", "btnHighScores", "High Scores", true);
+		btnHighScores = new MTDTextButton("UI_GameOver", "btnHighScores", "High Scores", Align.center, 0.45f, true);
 		setBtnHighScoresListener();
 		addActor(btnHighScores);
 
-		btnMainMenu = new MTDTextButton("UI_GameOver", "btnMainMenu", "Main Menu", true);
+		btnMainMenu = new MTDTextButton("UI_GameOver", "btnMainMenu", "Main Menu", Align.center, 0.45f, true);
 		setBtnMainMenuListener();
 		addActor(btnMainMenu);
 

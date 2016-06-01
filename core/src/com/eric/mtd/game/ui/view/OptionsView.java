@@ -3,6 +3,7 @@ package com.eric.mtd.game.ui.view;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.eric.mtd.game.ui.presenter.OptionsPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IOptionsView;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
@@ -34,15 +35,15 @@ public class OptionsView extends Group implements IOptionsView {
 		panel.getColor().set(1f, 1f, 1f, .75f);
 		addActor(panel);
 
-		btnResume = new MTDTextButton("UI_Options", "btnResume", "Resume", true);
+		btnResume = new MTDTextButton("UI_Options", "btnResume", "Resume", Align.center, 0.45f, true);
 		setBtnResumeListener();
 		addActor(btnResume);
 
-		btnNewGame = new MTDTextButton("UI_Options", "btnNewGame", "New Game", true);
+		btnNewGame = new MTDTextButton("UI_Options", "btnNewGame", "New Game", Align.center, 0.45f, true);
 		setBtnNewGameListener();
 		addActor(btnNewGame);
 
-		btnMainMenu = new MTDTextButton("UI_Options", "btnMainMenu", "Main Menu", true);
+		btnMainMenu = new MTDTextButton("UI_Options", "btnMainMenu", "Main Menu", Align.center, 0.45f, true);
 		setBtnMainMenuListener();
 		addActor(btnMainMenu);
 	}
