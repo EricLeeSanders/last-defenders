@@ -15,6 +15,7 @@ import com.eric.mtd.screen.AbstractScreen;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.state.GameStateManager;
 import com.eric.mtd.state.GameStateManager.GameState;
+import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -114,6 +115,7 @@ public class GameScreen extends AbstractScreen {
 			System.out.println("Game Screen Dispose");
 		gameStage.dispose();
 		gameUIStage.dispose();
+		AudioUtil.dispose();
 	    GLProfiler.disable();
 	}
 
