@@ -69,7 +69,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.pool = pool;
 	}
 	public void detach(ICombatActorObserver observer){
-		System.out.println(observers.remove(observer));
+		observers.remove(observer);
 	}
 	public void attach(ICombatActorObserver observer){
 		observers.add(observer);
