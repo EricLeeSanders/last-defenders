@@ -57,7 +57,7 @@ public abstract class AudioUtil {
 		case SNIPER:
 			sniperShot.play();
 			break;
-		case MACHINE:
+		case MACHINE_GUN:
 			machineGunShot.play();
 			break;
 		case RPG_EXPLOSION:
@@ -73,7 +73,7 @@ public abstract class AudioUtil {
 	}
 
 	public enum ProjectileSound {
-		RIFLE, SNIPER, MACHINE, RPG_EXPLOSION, ROCKET_LAUNCH, FLAME_BURST;
+		RIFLE, SNIPER, MACHINE_GUN, RPG_EXPLOSION, ROCKET_LAUNCH, FLAME_BURST;
 	}
 
 }

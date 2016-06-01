@@ -183,7 +183,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 				super.touchUp(event, x, y, pointer, button);
 				if (Logger.DEBUG)
 					System.out.println("Machine Button Pressed");
-				presenter.createTower("Machine");
+				presenter.createTower("MachineGun");
 			}
 		});
 	}
