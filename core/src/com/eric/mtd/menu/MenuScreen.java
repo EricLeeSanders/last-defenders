@@ -48,7 +48,7 @@ public class MenuScreen extends AbstractScreen {
 		if (Logger.DEBUG)
 			System.out.println("Disposing menu screen");
 		stage.dispose();
-		AudioUtil.dispose();
+		AudioUtil.disposeMusic();
 
 	}
 }

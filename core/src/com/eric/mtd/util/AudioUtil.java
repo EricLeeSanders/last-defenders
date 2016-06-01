@@ -29,6 +29,14 @@ public abstract class AudioUtil {
 		sniperShot = Gdx.audio.newSound(Gdx.files.internal(Resources.SNIPER_SHOT_SOUND));
 		machineGunShot = Gdx.audio.newSound(Gdx.files.internal(Resources.MACHINE_GUN_SHOT_SOUND));
 		vehicleExplosion = Gdx.audio.newSound(Gdx.files.internal(Resources.VEHICLE_EXPLOSION_SOUND));
+		
+		rpgExplosion.play(0);
+		rocketLaunch.play(0);
+		flameBurst.play(0);
+		rifleShot.play(0);
+		sniperShot.play(0);
+		machineGunShot.play(0);
+		vehicleExplosion.play(0);
 	}
 
 	public static void playVehicleExplosion() {
@@ -40,13 +48,26 @@ public abstract class AudioUtil {
 			System.out.println("Playing Music");
 		music.play();
 	}
-
-	public static void dispose() {
+	public static void disposeMusic() {
 		if (Logger.DEBUG)
 			System.out.println("Disposing Music");
 		music.dispose();
 	}
-
+	public static void disposeSound() {
+		if (Logger.DEBUG)
+			System.out.println("Disposing Sounds");
+		rpgExplosion.dispose();
+		rocketLaunch.dispose();
+		flameBurst.dispose();
+		rifleShot.dispose();
+		sniperShot.dispose();
+		machineGunShot.dispose();
+		vehicleExplosion.dispose();
+	}
+	public static void dispose(){
+		disposeMusic();
+		disposeSound();
+	}
 	public static void playProjectileSound(ProjectileSound sound) {
 		if (Logger.DEBUG)
 			System.out.println("Playing + " + sound.name());
