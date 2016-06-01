@@ -38,7 +38,9 @@ public class EnemyRifle extends Enemy {
 	public void attackTarget() {
 		if (Logger.DEBUG)
 			System.out.println("Enemy Rifle: Attacking target at " + getTarget().getPositionCenter());
-		AudioUtil.playProjectileSound(ProjectileSound.RIFLE);
-		getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
+		if(getTarget() != null){
+			AudioUtil.playProjectileSound(ProjectileSound.RIFLE);
+			getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
+		}
 	}
 }

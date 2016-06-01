@@ -97,7 +97,7 @@ public class ActorFactory {
 			tower = (Tower) towerTurretPool.obtain();
 		} else if (type.equals("Sniper")) {
 			tower = (Tower) towerSniperPool.obtain();
-		} else if (type.equals("Machine")) {
+		} else if (type.equals("MachineGun")) {
 			tower = (Tower) towerMachinePool.obtain();
 		} else if (type.equals("RocketLauncher")) {
 			tower = (Tower) towerRocketLauncherPool.obtain();
@@ -129,7 +129,7 @@ public class ActorFactory {
 			enemy = (Enemy) enemyTankPool.obtain();
 		} else if (type.equals("FlameThrower")) {
 			enemy = (Enemy) enemyFlameThrowerPool.obtain();
-		} else if (type.equals("Machine")) {
+		} else if (type.equals("MachineGun")) {
 			enemy = (Enemy) enemyMachinePool.obtain();
 		} else if (type.equals("RocketLauncher")) {
 			enemy = (Enemy) enemyRocketLauncherPool.obtain();

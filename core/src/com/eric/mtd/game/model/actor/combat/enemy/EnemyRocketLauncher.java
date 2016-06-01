@@ -40,8 +40,10 @@ public class EnemyRocketLauncher extends Enemy implements IRpg {
 	public void attackTarget() {
 		if (Logger.DEBUG)
 			System.out.println("Enemy Rocket: Attacking target at " + getTarget().getPositionCenter());
-		AudioUtil.playProjectileSound(ProjectileSound.ROCKET_LAUNCH);
-		getProjectileGroup().addActor(ActorFactory.loadRPG().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
+		if(getTarget() != null){
+			AudioUtil.playProjectileSound(ProjectileSound.ROCKET_LAUNCH);
+			getProjectileGroup().addActor(ActorFactory.loadRPG().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
+		}
 
 	}
 }
