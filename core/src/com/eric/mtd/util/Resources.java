@@ -1,6 +1,7 @@
 package com.eric.mtd.util;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
@@ -55,6 +56,8 @@ public abstract class Resources {
 	
 	private static final ShapeRenderer SHAPE_RENDERER = new ShapeRenderer();
 	
+	private static Preferences prefs;
+	
 	private static final AssetManager MANAGER = new AssetManager();
 
 	public static void dispose() {
@@ -67,7 +70,16 @@ public abstract class Resources {
 	public static void gameResume(){
 		MANAGER.finishLoading();
 	}
-	public static void loadGraphics() {
+	public static void loadGameAssets() {
+		loadPreferences();
+		loadGraphics();
+		loadAudio();
+		
+	}
+	public static void loadPreferences(){
+		prefs = Gdx.app.getPreferences("MTD_Preferences");
+	}
+	public static void loadGraphics(){
 		if (Logger.DEBUG)
 			System.out.println("Loading Graphics");
 		Resources.loadUIMap();
@@ -82,7 +94,11 @@ public abstract class Resources {
 		Resources.loadAtlas(Resources.LEVEL_SELECT_ATLAS);
 		Resources.loadAtlas(ACTOR_ATLAS);
 		Pixmap.setBlending(Blending.None);
-		
+	}
+	public static void loadAudio(){
+		if (Logger.DEBUG)
+			System.out.println("Loading Audio");
+		AudioUtil.load();
 	}
 	public static ObjectMap<String, Object> loadFont(){
 		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/palamecia titling.ttf"));
@@ -181,7 +197,9 @@ public abstract class Resources {
 	public static Skin getSkin(String file) {
 		return MANAGER.get(file, Skin.class);
 	}
-	
+	public static Preferences getPreferences(){
+		return prefs;
+	}
 	public static ShapeRenderer getShapeRenderer(){
 		return SHAPE_RENDERER;
 	}

@@ -25,7 +25,9 @@ public class MTDImageButton extends ImageButton {
 
 	public MTDImageButton(String layer, String objectName, String strAtlas, String enabledRegionName, String disabledRegionName, boolean visible, boolean useImgAsSize) {
 		this(layer, objectName, strAtlas, enabledRegionName, visible, useImgAsSize);
-		super.getStyle().imageDisabled = new TextureRegionDrawable(Resources.getAtlas(strAtlas).findRegion(disabledRegionName));
+		ImageButtonStyle style =  getStyle();
+		style.imageDisabled = new TextureRegionDrawable(Resources.getAtlas(strAtlas).findRegion(disabledRegionName));
+		setStyle(style);
 	}
 
 }

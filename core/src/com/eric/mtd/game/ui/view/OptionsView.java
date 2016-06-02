@@ -2,11 +2,14 @@ package com.eric.mtd.game.ui.view;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.eric.mtd.game.ui.presenter.OptionsPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IOptionsView;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
+import com.eric.mtd.game.ui.view.widget.MTDImageButton;
 import com.eric.mtd.game.ui.view.widget.MTDTextButton;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -20,6 +23,7 @@ import com.eric.mtd.util.Resources;
 public class OptionsView extends Group implements IOptionsView {
 	private OptionsPresenter presenter;
 	private MTDTextButton btnResume, btnNewGame, btnMainMenu;
+	private MTDImageButton btnSound, btnMusic;
 	private MTDImage panel;
 
 	public OptionsView(OptionsPresenter presenter) {
@@ -46,6 +50,20 @@ public class OptionsView extends Group implements IOptionsView {
 		btnMainMenu = new MTDTextButton("UI_Options", "btnMainMenu", "Main Menu", Align.center, 0.45f, true);
 		setBtnMainMenuListener();
 		addActor(btnMainMenu);
+		
+		btnMusic = new MTDImageButton("UI_Options", "btnMusic", Resources.OPTIONS_ATLAS,"musicOff","musicOff", true, false);
+		ImageButtonStyle btnMusicStyle = btnMusic.getStyle();
+		btnMusicStyle.imageChecked = new TextureRegionDrawable(Resources.getAtlas(Resources.OPTIONS_ATLAS).findRegion("musicOn"));
+		btnMusic.setStyle(btnMusicStyle);
+		setBtnMusicListener();
+		addActor(btnMusic);
+		
+		btnSound = new MTDImageButton("UI_Options", "btnSound", Resources.OPTIONS_ATLAS, "soundOff", "soundOff", true, false);
+		ImageButtonStyle btnSoundStyle = btnSound.getStyle();
+		btnSoundStyle.imageChecked = new TextureRegionDrawable(Resources.getAtlas(Resources.OPTIONS_ATLAS).findRegion("soundOn"));
+		btnSound.setStyle(btnSoundStyle);
+		setBtnSoundListener();
+		addActor(btnSound);
 	}
 
 	private void setBtnResumeListener() {
@@ -87,6 +105,28 @@ public class OptionsView extends Group implements IOptionsView {
 
 	}
 
+	private void setBtnSoundListener(){
+		btnSound.addListener(new ClickListener(){
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				presenter.soundPressed();
+				if (Logger.DEBUG) System.out.println("Sound Pressed");
+			}
+		});
+	}
+	
+	private void setBtnMusicListener(){
+		btnMusic.addListener(new ClickListener(){
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				presenter.musicPressed();
+				if (Logger.DEBUG) System.out.println("Music Pressed");
+			}
+		});
+	}
+	
 	@Override
 	public void optionsState() {
 		this.setVisible(true);
@@ -97,5 +137,17 @@ public class OptionsView extends Group implements IOptionsView {
 	public void standByState() {
 		this.setVisible(false);
 
+	}
+
+	@Override
+	public void setBtnSoundOn(boolean soundOn) {
+		btnSound.setChecked(soundOn);
+		
+	}
+
+	@Override
+	public void setBtnMusicOn(boolean musicOn) {
+		btnMusic.setChecked(musicOn);
+		
 	}
 }

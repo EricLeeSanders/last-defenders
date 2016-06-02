@@ -14,6 +14,7 @@ public abstract class AudioUtil {
 	private static Music music;
 	private static Sound rpgExplosion, rocketLaunch, flameBurst, rifleShot, sniperShot, machineGunShot,
 			vehicleExplosion;
+	private static boolean musicEnabled, soundEnabled;
 
 	/**
 	 * Load the sounds and music
@@ -37,6 +38,9 @@ public abstract class AudioUtil {
 		sniperShot.play(0);
 		machineGunShot.play(0);
 		vehicleExplosion.play(0);
+		
+		soundEnabled = Resources.getPreferences().getBoolean("soundEnabled", true);
+		musicEnabled = Resources.getPreferences().getBoolean("musicEnabled", true);
 	}
 
 	public static void playVehicleExplosion() {
@@ -44,9 +48,11 @@ public abstract class AudioUtil {
 	}
 
 	public static void playMusic() {
-		if (Logger.DEBUG)
-			System.out.println("Playing Music");
-		music.play();
+		if(musicEnabled){
+			if (Logger.DEBUG)
+				System.out.println("Playing Music");
+			music.play();
+		}
 	}
 	public static void disposeMusic() {
 		if (Logger.DEBUG)
@@ -69,32 +75,66 @@ public abstract class AudioUtil {
 		disposeSound();
 	}
 	public static void playProjectileSound(ProjectileSound sound) {
-		if (Logger.DEBUG)
-			System.out.println("Playing + " + sound.name());
-		switch (sound) {
-		case RIFLE:
-			rifleShot.play();
-			break;
-		case SNIPER:
-			sniperShot.play();
-			break;
-		case MACHINE_GUN:
-			machineGunShot.play();
-			break;
-		case RPG_EXPLOSION:
-			rpgExplosion.play();
-			break;
-		case ROCKET_LAUNCH:
-			rocketLaunch.play();
-			break;
-		case FLAME_BURST:
-			flameBurst.play();
-			break;
+		if(soundEnabled){
+			if (Logger.DEBUG)
+				System.out.println("Playing + " + sound.name());
+			switch (sound) {
+			case RIFLE:
+				rifleShot.play();
+				break;
+			case SNIPER:
+				sniperShot.play();
+				break;
+			case MACHINE_GUN:
+				machineGunShot.play();
+				break;
+			case RPG_EXPLOSION:
+				rpgExplosion.play();
+				break;
+			case ROCKET_LAUNCH:
+				rocketLaunch.play();
+				break;
+			case FLAME_BURST:
+				flameBurst.play();
+				break;
+			}
 		}
 	}
 
 	public enum ProjectileSound {
 		RIFLE, SNIPER, MACHINE_GUN, RPG_EXPLOSION, ROCKET_LAUNCH, FLAME_BURST;
+	}
+	public static void changeMusicEnabled(){
+		setMusicEnabled(musicEnabled ? false : true);
+	}
+	public static void setMusicEnabled(boolean enabled){
+		if(Logger.DEBUG)System.out.println("Setting music to " + enabled);
+		musicEnabled = enabled;
+		
+		if(enabled){
+			music.setVolume(0);
+		} else {
+			music.setVolume(100);
+		}
+		
+		Resources.getPreferences().putBoolean("musicEnabled", enabled);
+		Resources.getPreferences().flush();
+	}
+	public static void changeSoundEnabled(){
+		setSoundEnabled(soundEnabled ? false : true);
+	}
+	public static void setSoundEnabled(boolean enabled){
+		if(Logger.DEBUG)System.out.println("Setting sound to " + enabled);
+		soundEnabled = enabled;
+		Resources.getPreferences().putBoolean("soundEnabled", enabled);
+		Resources.getPreferences().flush();
+	}
+	
+	public static boolean isSoundEnabled(){
+		return soundEnabled;
+	}
+	public static boolean isMusicEnabled(){
+		return musicEnabled;
 	}
 
 }
