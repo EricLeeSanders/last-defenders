@@ -1,12 +1,40 @@
 
 menu.png
 format: RGBA8888
-filter: MipMapLinearNearest,Nearest
+filter: Nearest,Nearest
 repeat: none
 background
   rotate: false
-  xy: 1, 1
+  xy: 1, 103
   size: 640, 360
   orig: 640, 360
+  offset: 0, 0
+  index: -1
+musicOff
+  rotate: false
+  xy: 1, 1
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+musicOn
+  rotate: false
+  xy: 643, 363
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+soundOff
+  rotate: false
+  xy: 103, 1
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+soundOn
+  rotate: false
+  xy: 643, 261
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1

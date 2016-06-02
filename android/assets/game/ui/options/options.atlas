@@ -1,12 +1,40 @@
 
 options.png
 format: RGBA8888
-filter: MipMapLinearNearest,Nearest
+filter: Nearest,Nearest
 repeat: none
 panel
   rotate: false
-  xy: 1, 1
+  xy: 1, 103
   size: 152, 152
   orig: 152, 152
+  offset: 0, 0
+  index: -1
+musicOff
+  rotate: false
+  xy: 1, 1
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+musicOn
+  rotate: false
+  xy: 103, 1
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+soundOff
+  rotate: false
+  xy: 155, 155
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+soundOn
+  rotate: false
+  xy: 257, 155
+  size: 100, 100
+  orig: 100, 100
   offset: 0, 0
   index: -1
