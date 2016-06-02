@@ -37,8 +37,10 @@ public class EnemySniper extends Enemy {
 	public void attackTarget() {
 		if (Logger.DEBUG)
 			System.out.println("Enemy Sniper: Attacking target at " + getTarget().getPositionCenter());
-		AudioUtil.playProjectileSound(ProjectileSound.SNIPER);
-		getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
+		if(getTarget() != null){
+			AudioUtil.playProjectileSound(ProjectileSound.SNIPER);
+			getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
+		}
 
 	}
 }

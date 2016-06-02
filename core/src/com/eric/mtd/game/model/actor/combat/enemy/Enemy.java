@@ -3,6 +3,8 @@ package com.eric.mtd.game.model.actor.combat.enemy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
@@ -28,21 +30,21 @@ import com.eric.mtd.util.Logger;
  *
  */
 public abstract class Enemy extends CombatActor {
-	private static final float ATTACK_DELAY = 1f; // The delay to wait after
+	private static final float MOVEMENT_DELAY = 1f; // The delay to wait after
 													// attacking
-	private static final float FIND_TARGET_DELAY = 3f; // Delay between finding
-														// Targets
-														// TODO: Randomize
+	private Random random = new Random();
+	private float findTargetDelay = 2f;
 	private List<MoveToAction> actionList = new ArrayList<MoveToAction>();
 	private Pool<CombatActor> pool;
 	private int actionIndex = 0; // Current index in the actionList
 	private float speed; // number of pixels it moves in a second
 	private float textureCounter; // Used to animate textures
 	private float findTargetCounter = 0;
+	private float attackCounter = 100; //Ready to attack
 	private int textureIndex; // Current texture index
 	private boolean multipleTextures, attacking;
 	private TextureRegion[] textureRegions;
-	private float delayCounter;
+	private float movementDelayCounter;
 	private float totalDistance; // Total distance from end
 									// Used to calculate in LengthTillEndMethod
 									// Class variable for optimization
@@ -94,9 +96,9 @@ public abstract class Enemy extends CombatActor {
 	public void findTarget() {
 		this.setTarget(EnemyAI.findNearestTower(this, getTargetGroup().getChildren()));
 		if (getTarget() != null) {
-			findTargetCounter = 0;
 			this.setRotation(calculateRotation(super.getTarget().getPositionCenter()));
-			this.attackTarget();
+			findTargetCounter = 0;
+			attackCounter = 100; //Ready to attack
 			attacking = true;
 		}
 	}
@@ -109,8 +111,8 @@ public abstract class Enemy extends CombatActor {
 	@Override
 	public void act(float delta) {
 		// Find target if delay has expired.
-		if (!(this instanceof IPassiveEnemy)) {
-			if (findTargetCounter >= FIND_TARGET_DELAY) {
+		if (!(this instanceof IPassiveEnemy) && !attacking) {
+			if ((findTargetCounter >= findTargetDelay)) {
 				findTarget();
 			} else {
 				findTargetCounter += delta;
@@ -120,13 +122,26 @@ public abstract class Enemy extends CombatActor {
 		// animation has finished, then reset its rotation to the way point
 		// it was heading to before it began attacking
 		if (attacking) {
-			delayCounter += delta;
-			if (delayCounter > (ATTACK_DELAY / MTDGame.gameSpeed)) {
+			movementDelayCounter += delta;
+			attackCounter += delta;
+			if (movementDelayCounter >= MOVEMENT_DELAY ) {
 				if (actionIndex > 0) {
 					setRotation(calculateRotation((actionList.get(actionIndex - 1)).getX() + (this.getOriginX()), (actionList.get(actionIndex - 1)).getY() + (this.getOriginY())));
 				}
-				delayCounter = 0;
+				movementDelayCounter = 0;
 				attacking = false;
+				attackCounter = 100; //Ready to attack
+				findTargetDelay = random.nextFloat()*2 + 1;
+				if(Logger.DEBUG) System.out.println("New Find Target Delay = " + findTargetDelay);
+			} else if( attackCounter >= this.getAttackSpeed()) {
+				if(this.getTarget() == null){
+					attacking = false;
+				} else {
+					this.setRotation(calculateRotation(super.getTarget().getPositionCenter()));
+					this.attackTarget();
+					attackCounter = 0;
+				}
+				
 			}
 		} else {
 			super.act(delta); // Pause to create a delay if attacking
@@ -194,6 +209,8 @@ public abstract class Enemy extends CombatActor {
 		totalDistance = 0;
 		actionIndex = 0;
 		actionList.clear();
+		findTargetDelay = 2f;
+		attackCounter = 100; //Ready to attack
 	}
 
 	/**

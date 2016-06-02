@@ -44,7 +44,9 @@ public class TowerSniper extends Tower {
 		if (Logger.DEBUG)
 			System.out.println("Tower Sniper: Attacking target at " + getTarget().getPositionCenter());
 		AudioUtil.playProjectileSound(ProjectileSound.SNIPER);
-		getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
+		if(getTarget() != null){
+			getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
+		}
 
 	}
 }

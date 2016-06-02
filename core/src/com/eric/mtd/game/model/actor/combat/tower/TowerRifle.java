@@ -42,8 +42,10 @@ public class TowerRifle extends Tower {
 	public void attackTarget() {
 		if (Logger.DEBUG)
 			System.out.println("Tower Rifle: Attacking target at " + getTarget().getPositionCenter());
-		AudioUtil.playProjectileSound(ProjectileSound.RIFLE);
-		getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
+		if(getTarget() != null){
+			AudioUtil.playProjectileSound(ProjectileSound.RIFLE);
+			getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
+		}
 
 	}
 
