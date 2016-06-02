@@ -8,6 +8,7 @@ import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
 import com.eric.mtd.state.GameStateManager;
 import com.eric.mtd.state.GameStateManager.GameState;
+import com.eric.mtd.util.AudioUtil;
 
 /**
  * Presenter for the Options View
@@ -35,7 +36,13 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	 */
 	public void setView(IOptionsView view) {
 		this.view = view;
+		initView();
+	}
+	
+	private void initView(){
 		changeUIState(uiStateManager.getState());
+		view.setBtnMusicOn(AudioUtil.isMusicEnabled());
+		view.setBtnSoundOn(AudioUtil.isSoundEnabled());
 	}
 
 	/**
@@ -64,7 +71,17 @@ public class OptionsPresenter implements IGameUIStateObserver {
 		screenStateManager.setState(ScreenState.LEVEL_SELECTION);
 
 	}
-
+	
+	public void soundPressed() {
+		AudioUtil.changeSoundEnabled();
+		view.setBtnSoundOn(AudioUtil.isSoundEnabled());
+	}
+	
+	public void musicPressed() {
+		AudioUtil.changeMusicEnabled();
+		view.setBtnMusicOn(AudioUtil.isMusicEnabled());
+	}
+	
 	@Override
 	public void changeUIState(GameUIState state) {
 		switch (state) {
