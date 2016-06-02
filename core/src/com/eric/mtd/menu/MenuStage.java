@@ -29,6 +29,7 @@ public class MenuStage extends Stage {
 		createBackground();
 		presenter = new MenuPresenter(screenStateManager);
 		menuView = new MenuView(presenter);
+		presenter.setView(menuView);
 		this.addActor(menuView);
 	}
 

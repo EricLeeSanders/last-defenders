@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" nextobjectid="80">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" nextobjectid="81">
  <layer name="Tile Layer 1" width="40" height="23" visible="0">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -36,12 +36,13 @@
   <object id="8" name="lblWavesCompleted" x="224" y="87" width="192" height="32"/>
   <object id="11" name="lblWavesCompletedCount" x="224" y="123" width="192" height="32"/>
  </objectgroup>
- <objectgroup name="UI_Options" visible="0">
+ <objectgroup name="UI_Options">
   <object id="12" name="panel" x="208" y="32" width="223" height="304"/>
-  <object id="13" name="btnSound" x="296" y="272" width="48" height="48"/>
+  <object id="13" name="btnSound" x="257" y="272" width="48" height="48"/>
   <object id="14" name="btnNewGame" x="240" y="80" width="160" height="48"/>
   <object id="16" name="btnMainMenu" x="240" y="144" width="160" height="48"/>
   <object id="17" name="btnResume" x="240" y="208" width="160" height="48"/>
+  <object id="80" name="btnMusic" x="336" y="272" width="48" height="48"/>
  </objectgroup>
  <objectgroup name="UI_Inspect" visible="0">
   <object id="20" name="btnClose" x="486" y="313" width="147" height="45"/>
@@ -69,7 +70,7 @@
   <object id="42" name="lblSpeedCost" x="398" y="333" width="64" height="20"/>
   <object id="43" name="lblArmorLevel1" x="85" y="257" width="25" height="15"/>
  </objectgroup>
- <objectgroup name="UI_Enlist">
+ <objectgroup name="UI_Enlist" visible="0">
   <object id="44" name="btnTank" x="15" y="197" width="140" height="160"/>
   <object id="45" name="btnRifle" x="15" y="15" width="140" height="160"/>
   <object id="46" name="btnCancel" x="582" y="313" width="50" height="50"/>
@@ -82,7 +83,7 @@
   <object id="53" name="btnFlameThrower" x="334" y="197" width="140" height="160"/>
   <object id="54" name="btnRocketLauncher" x="491" y="15" width="140" height="160"/>
  </objectgroup>
- <objectgroup name="UI_HUD">
+ <objectgroup name="UI_HUD" visible="0">
   <object id="55" name="imgMoney" x="74" y="12" width="30" height="30"/>
   <object id="56" name="btnWave" x="69" y="313" width="50" height="50"/>
   <object id="57" name="lblMoney" x="109" y="17" width="72" height="19"/>

@@ -24,7 +24,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	private GameUIStateManager uiStateManager;
 	private GameStateManager gameStateManager;
 	private Player player;
-	private boolean normalSpeed = true;
+	private boolean normalSpeedEnabled = true;
 	private IHUDView view;
 
 	public HUDPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, GameStateManager gameStateManager, Player player) {
@@ -93,14 +93,14 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 * Change the speed of the game
 	 */
 	public void changeGameSpeed() {
-		if (normalSpeed) {
+		if (normalSpeedEnabled) {
 			MTDGame.gameSpeed = (Resources.DOUBLE_SPEED);
-			normalSpeed = false;
+			normalSpeedEnabled = false;
 		} else {
 			MTDGame.gameSpeed = (Resources.NORMAL_SPEED);
-			normalSpeed = true;
+			normalSpeedEnabled = true;
 		}
-		view.changeSpeed(normalSpeed);
+		view.changeSpeed(normalSpeedEnabled);
 
 	}
 
