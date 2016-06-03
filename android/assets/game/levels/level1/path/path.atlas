@@ -1,0 +1,330 @@
+
+path.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+dirt_path_horz
+  rotate: false
+  xy: 0, 384
+  size: 384, 128
+  orig: 384, 128
+  offset: 0, 0
+  index: -1
+dirt_path_vert
+  rotate: false
+  xy: 0, 0
+  size: 128, 384
+  orig: 128, 384
+  offset: 0, 0
+  index: -1
+bush_big
+  rotate: false
+  xy: 384, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+dirt_path_corner
+  rotate: false
+  xy: 128, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+dirt_path_corner
+  rotate: false
+  xy: 512, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 2
+dirt_path_corner
+  rotate: false
+  xy: 128, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 3
+dirt_path_corner
+  rotate: false
+  xy: 128, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 4
+grass
+  rotate: false
+  xy: 256, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+grass
+  rotate: false
+  xy: 640, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 2
+barrels
+  rotate: false
+  xy: 256, 192
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+barrels
+  rotate: false
+  xy: 384, 320
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+crates
+  rotate: false
+  xy: 768, 448
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+crates
+  rotate: false
+  xy: 256, 128
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+crates
+  rotate: false
+  xy: 320, 192
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+crates
+  rotate: false
+  xy: 384, 256
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
+rock
+  rotate: false
+  xy: 448, 320
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 1
+rock
+  rotate: false
+  xy: 768, 384
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 2
+rock
+  rotate: false
+  xy: 832, 448
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 3
+rock
+  rotate: false
+  xy: 256, 64
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 4
+rock
+  rotate: false
+  xy: 256, 0
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 5
+rock
+  rotate: false
+  xy: 320, 128
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 6
+rock
+  rotate: false
+  xy: 384, 192
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 7
+rock
+  rotate: false
+  xy: 448, 256
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 8
+rock
+  rotate: false
+  xy: 512, 320
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: 9
+
+path2.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Resize/dirt_road_vert
+  rotate: false
+  xy: 0, 0
+  size: 32, 256
+  orig: 32, 256
+  offset: 0, 0
+  index: -1
+Resize/dirt_grass_hor
+  rotate: false
+  xy: 32, 152
+  size: 128, 104
+  orig: 128, 104
+  offset: 0, 0
+  index: 1
+Resize/dirt_grass_hor
+  rotate: false
+  xy: 32, 48
+  size: 128, 104
+  orig: 128, 104
+  offset: 0, 0
+  index: 2
+Resize/dirt_grass_vert
+  rotate: false
+  xy: 160, 128
+  size: 104, 128
+  orig: 104, 128
+  offset: 0, 0
+  index: -1
+Resize/road_asphalt_clean_to_damaged_vert
+  rotate: false
+  xy: 160, 0
+  size: 100, 128
+  orig: 100, 128
+  offset: 0, 0
+  index: -1
+Resize/road_asphalt_clean_vert
+  rotate: false
+  xy: 260, 0
+  size: 100, 128
+  orig: 100, 128
+  offset: 0, 0
+  index: -1
+Resize/road_asphalt_damaged_to_clean_vert
+  rotate: false
+  xy: 264, 128
+  size: 100, 128
+  orig: 100, 128
+  offset: 0, 0
+  index: -1
+Resize/road_asphalt_damaged_vert
+  rotate: false
+  xy: 360, 0
+  size: 100, 128
+  orig: 100, 128
+  offset: 0, 0
+  index: -1
+Resize/road_asphalt_clean_hor
+  rotate: false
+  xy: 364, 156
+  size: 128, 100
+  orig: 128, 100
+  offset: 0, 0
+  index: -1
+Resize/road_asphalt_clean_to_damaged_hor
+  rotate: false
+  xy: 492, 156
+  size: 128, 100
+  orig: 128, 100
+  offset: 0, 0
+  index: -1
+Resize/road_asphalt_damaged_hor
+  rotate: false
+  xy: 620, 156
+  size: 128, 100
+  orig: 128, 100
+  offset: 0, 0
+  index: -1
+Resize/road_asphalt_damaged_to_clean_hor
+  rotate: false
+  xy: 748, 156
+  size: 128, 100
+  orig: 128, 100
+  offset: 0, 0
+  index: -1
+Resize/dirt
+  rotate: false
+  xy: 876, 188
+  size: 88, 68
+  orig: 88, 68
+  offset: 0, 0
+  index: 1
+Resize/dirt
+  rotate: false
+  xy: 460, 92
+  size: 88, 64
+  orig: 88, 64
+  offset: 0, 0
+  index: 2
+Resize/rock
+  rotate: false
+  xy: 460, 22
+  size: 66, 70
+  orig: 66, 70
+  offset: 0, 0
+  index: 10
+
+path3.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Resized/dirt_path_horz
+  rotate: false
+  xy: 0, 384
+  size: 384, 128
+  orig: 384, 128
+  offset: 0, 0
+  index: -1
+Resized/dirt_path_vert
+  rotate: false
+  xy: 0, 0
+  size: 128, 384
+  orig: 128, 384
+  offset: 0, 0
+  index: -1
+Resized/dirt_path_corner
+  rotate: false
+  xy: 384, 384
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 1
+Resized/dirt_path_corner
+  rotate: false
+  xy: 128, 256
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 2
+Resized/dirt_path_corner
+  rotate: false
+  xy: 128, 128
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 3
+Resized/dirt_path_corner
+  rotate: false
+  xy: 128, 0
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: 4
