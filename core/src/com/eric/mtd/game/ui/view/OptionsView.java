@@ -35,7 +35,7 @@ public class OptionsView extends Group implements IOptionsView {
 	 * Create controls with MTD Widgets
 	 */
 	public void createControls() {
-		panel = new MTDImage("UI_Options", "panel", Resources.OPTIONS_ATLAS, "panel", true, false);
+		panel = new MTDImage("UI_Options", "panel", Resources.SKIN_ATLAS, "panel", true, false);
 		panel.getColor().set(1f, 1f, 1f, .75f);
 		addActor(panel);
 
@@ -51,16 +51,16 @@ public class OptionsView extends Group implements IOptionsView {
 		setBtnMainMenuListener();
 		addActor(btnMainMenu);
 		
-		btnMusic = new MTDImageButton("UI_Options", "btnMusic", Resources.OPTIONS_ATLAS,"musicOff","musicOff", true, false);
+		btnMusic = new MTDImageButton("UI_Options", "btnMusic", Resources.SKIN_ATLAS,"musicOff","musicOff", true, false);
 		ImageButtonStyle btnMusicStyle = btnMusic.getStyle();
-		btnMusicStyle.imageChecked = new TextureRegionDrawable(Resources.getAtlas(Resources.OPTIONS_ATLAS).findRegion("musicOn"));
+		btnMusicStyle.imageChecked = new TextureRegionDrawable(Resources.getAtlas(Resources.SKIN_ATLAS).findRegion("musicOn"));
 		btnMusic.setStyle(btnMusicStyle);
 		setBtnMusicListener();
 		addActor(btnMusic);
 		
-		btnSound = new MTDImageButton("UI_Options", "btnSound", Resources.OPTIONS_ATLAS, "soundOff", "soundOff", true, false);
+		btnSound = new MTDImageButton("UI_Options", "btnSound", Resources.SKIN_ATLAS, "soundOff", "soundOff", true, false);
 		ImageButtonStyle btnSoundStyle = btnSound.getStyle();
-		btnSoundStyle.imageChecked = new TextureRegionDrawable(Resources.getAtlas(Resources.OPTIONS_ATLAS).findRegion("soundOn"));
+		btnSoundStyle.imageChecked = new TextureRegionDrawable(Resources.getAtlas(Resources.SKIN_ATLAS).findRegion("soundOn"));
 		btnSound.setStyle(btnSoundStyle);
 		setBtnSoundListener();
 		addActor(btnSound);

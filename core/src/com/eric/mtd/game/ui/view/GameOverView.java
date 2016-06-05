@@ -35,7 +35,7 @@ public class GameOverView extends Group implements IGameOverView {
 	 * Create controls using MTD widgets.
 	 */
 	public void createControls() {
-		panel = new MTDImage("UI_GameOver", "panel", Resources.GAME_OVER_ATLAS, "panel", true, false);
+		panel = new MTDImage("UI_GameOver", "panel", Resources.SKIN_ATLAS, "panel", true, false);
 		panel.getColor().set(1f, 1f, 1f, .75f);
 		addActor(panel);
 
