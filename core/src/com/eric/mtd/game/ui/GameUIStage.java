@@ -17,6 +17,7 @@ import com.eric.mtd.game.ui.presenter.EnlistPresenter;
 import com.eric.mtd.game.ui.presenter.GameOverPresenter;
 import com.eric.mtd.game.ui.presenter.HUDPresenter;
 import com.eric.mtd.game.ui.presenter.InspectPresenter;
+import com.eric.mtd.game.ui.presenter.LevelCompletedPresenter;
 import com.eric.mtd.game.ui.presenter.OptionsPresenter;
 import com.eric.mtd.game.ui.presenter.SupportPresenter;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
@@ -26,6 +27,7 @@ import com.eric.mtd.game.ui.view.EnlistView;
 import com.eric.mtd.game.ui.view.GameOverView;
 import com.eric.mtd.game.ui.view.HUDView;
 import com.eric.mtd.game.ui.view.InspectView;
+import com.eric.mtd.game.ui.view.LevelCompletedView;
 import com.eric.mtd.game.ui.view.OptionsView;
 import com.eric.mtd.game.ui.view.SupportView;
 import com.eric.mtd.screen.state.ScreenStateManager;
@@ -51,6 +53,8 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	private OptionsPresenter optionsPresenter;
 	private GameOverPresenter gameOverPresenter;
 	private GameOverView gameOverView;
+	private LevelCompletedPresenter levelCompletedPresenter;
+	private LevelCompletedView levelCompletedView;
 
 	private Player player;
 	private GameUIStateManager uiStateManager;
@@ -105,13 +109,18 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		this.gameOverPresenter = new GameOverPresenter(uiStateManager, screenStateManager, player);
 		this.gameOverView = new GameOverView(gameOverPresenter);
 		gameOverPresenter.setView(gameOverView);
-
+		
+		this.levelCompletedPresenter = new LevelCompletedPresenter(player, gameStateManager, uiStateManager, screenStateManager);
+		this.levelCompletedView = new LevelCompletedView(levelCompletedPresenter);
+		levelCompletedPresenter.setView(levelCompletedView);
+		
 		this.addActor(hudView);
 		this.addActor(enlistView);
 		this.addActor(supportView);
 		this.addActor(inspectView);
 		this.addActor(optionsView);
 		this.addActor(gameOverView);
+		this.addActor(levelCompletedView);
 
 		imp.addProcessor(this);
 		imp.addProcessor(enlistView);

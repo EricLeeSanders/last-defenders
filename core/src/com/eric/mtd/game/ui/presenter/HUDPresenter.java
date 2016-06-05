@@ -3,6 +3,7 @@ package com.eric.mtd.game.ui.presenter;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.IPlayerObserver;
 import com.eric.mtd.game.model.Player;
+import com.eric.mtd.game.model.level.Level;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
@@ -137,7 +138,16 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	public void playerAttributeChange() {
 		view.setLives(String.valueOf(player.getLives()));
 		view.setMoney(String.valueOf(player.getMoney()));
-		view.setWaveCount(String.valueOf(player.getWaveCount()));
+		setWaveCount();
+	}
+	
+	private void setWaveCount(){
+		int waveCount = player.getWavesCompleted();
+		if(waveCount >= Level.MAX_WAVES){
+			view.setWaveCount(String.valueOf(player.getWaveCount()));
+		} else {
+			view.setWaveCount(String.valueOf(player.getWaveCount()) + "/" + Level.MAX_WAVES);
+		}
 	}
 
 }

@@ -31,9 +31,8 @@ public abstract class Resources {
 	public static final String HUD_ATLAS = "game/ui/hud/hud.atlas";
 	public static final String ENLIST_ATLAS = "game/ui/enlist/enlist.atlas";
 	public static final String SUPPORT_UI_ATLAS = "game/ui/support/support.atlas";
-	public static final String OPTIONS_ATLAS = "game/ui/options/options.atlas";
-	public static final String GAME_OVER_ATLAS = "game/ui/gameover/gameover.atlas";
 	public static final String INSPECT_ATLAS = "game/ui/inspect/inspect.atlas";
+	public static final String SKIN_ATLAS = "skin/uiskin.atlas";
 	public static final String SKIN_JSON = "skin/uiskin.json";
 
 	public static final float VIRTUAL_WIDTH = 640; // 16:9
@@ -83,14 +82,12 @@ public abstract class Resources {
 		if (Logger.DEBUG)
 			System.out.println("Loading Graphics");
 		Resources.loadUIMap();
-		Resources.loadSkin(Resources.SKIN_JSON);
+		Resources.loadSkin(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
 		Resources.loadAtlas(Resources.MENU_ATLAS);
 		Resources.loadAtlas(Resources.HUD_ATLAS);
 		Resources.loadAtlas(Resources.ENLIST_ATLAS);
 		Resources.loadAtlas(Resources.SUPPORT_UI_ATLAS);
 		Resources.loadAtlas(Resources.INSPECT_ATLAS);
-		Resources.loadAtlas(Resources.OPTIONS_ATLAS);
-		Resources.loadAtlas(Resources.GAME_OVER_ATLAS);
 		Resources.loadAtlas(Resources.LEVEL_SELECT_ATLAS);
 		Resources.loadAtlas(ACTOR_ATLAS);
 		Pixmap.setBlending(Blending.None);
@@ -140,8 +137,7 @@ public abstract class Resources {
 		}
 	}
 
-	public static void loadSkin(String skinJson) {
-		String atlas = skinJson.substring(0, skinJson.lastIndexOf(".")) + ".atlas";
+	public static void loadSkin(String skinJson, String atlas) {
 		try {
 			if (Logger.DEBUG)
 				System.out.println(atlas);
