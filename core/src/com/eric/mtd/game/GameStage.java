@@ -96,18 +96,33 @@ public class GameStage extends Stage {
 	/**
 	 * Determine if the wave is over
 	 */
-	public void isWaveOver() {
-		//System.out.println("enemies size: " + actorGroups.getEnemyGroup().getChildren().size);
+	public boolean isWaveOver() {
 		if (getActorGroups().getEnemyGroup().getChildren().size <= 0) {
 			if (!(levelStateManager.getState().equals(LevelState.GAME_OVER))) {
 				player.giveMoney((int) (100 * (float) level.getCurrentWave()));
 				levelStateManager.setState(LevelState.STANDBY);
 				player.setWaveCount(player.getWaveCount() + 1);
 				healTowers();
+				isLevelCompleted();
+				return true;
 			}
 		}
+		return false;
 
 	}
+	
+	/**
+	 * Determine if the level is completed
+	 */
+	private boolean isLevelCompleted(){
+		if(player.getWavesCompleted() == Level.MAX_WAVES){
+			System.out.println("waves completed: " + player.getWavesCompleted());
+			uiStateManager.setState(GameUIState.LEVEL_COMPLETED);
+			return true;
+		}
+		return false;
+	}
+	
 	private void healTowers(){
 		for(Actor tower : actorGroups.getTowerGroup().getChildren()){
 			if (tower instanceof Tower){

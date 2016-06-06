@@ -1,7 +1,7 @@
 
 uiskin.png
 format: RGBA8888
-filter: Linear,Linear
+filter: Nearest,Nearest
 repeat: none
 default-round-down
   rotate: false
@@ -13,15 +13,51 @@ default-round-down
   index: -1
 default-round
   rotate: false
-  xy: 247, 37
+  xy: 248, 37
   size: 245, 90
   split: 0, 0, 0, 0
   orig: 245, 90
   offset: 0, 0
   index: -1
+musicOff
+  rotate: false
+  xy: 495, 27
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+musicOn
+  rotate: false
+  xy: 597, 27
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+soundOff
+  rotate: false
+  xy: 699, 27
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+soundOn
+  rotate: false
+  xy: 801, 27
+  size: 100, 100
+  orig: 100, 100
+  offset: 0, 0
+  index: -1
+panel
+  rotate: false
+  xy: 903, 63
+  size: 64, 64
+  split: 0, 64, 17, 15
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 default-window
   rotate: false
-  xy: 1, 7
+  xy: 1, 6
   size: 27, 29
   split: 4, 3, 20, 3
   orig: 27, 29
@@ -29,7 +65,7 @@ default-window
   index: -1
 default-select
   rotate: false
-  xy: 29, 16
+  xy: 903, 41
   size: 27, 20
   split: 4, 14, 4, 4
   orig: 27, 20
@@ -37,7 +73,7 @@ default-select
   index: -1
 default-round-large
   rotate: false
-  xy: 57, 16
+  xy: 969, 107
   size: 20, 20
   split: 5, 5, 5, 4
   orig: 20, 20
@@ -45,7 +81,7 @@ default-round-large
   index: -1
 default-scroll
   rotate: false
-  xy: 78, 16
+  xy: 30, 15
   size: 20, 20
   split: 2, 2, 2, 2
   orig: 20, 20
@@ -53,14 +89,14 @@ default-scroll
   index: -1
 check-off
   rotate: false
-  xy: 29, 1
+  xy: 932, 47
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 textfield
   rotate: false
-  xy: 29, 1
+  xy: 932, 47
   size: 14, 14
   split: 3, 3, 3, 3
   orig: 14, 14
@@ -68,51 +104,43 @@ textfield
   index: -1
 check-on
   rotate: false
-  xy: 44, 1
+  xy: 969, 91
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 tree-minus
   rotate: false
-  xy: 59, 1
+  xy: 991, 113
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 tree-plus
   rotate: false
-  xy: 74, 1
+  xy: 52, 21
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 default-slider-knob
   rotate: false
-  xy: 493, 109
+  xy: 969, 71
   size: 9, 18
   orig: 9, 18
   offset: 0, 0
   index: -1
 default-slider
   rotate: false
-  xy: 503, 119
+  xy: 903, 31
   size: 8, 8
   split: 2, 2, 2, 2
   orig: 8, 8
   offset: 0, 0
   index: -1
-default-splitpane-vertical
-  rotate: false
-  xy: 1, 1
-  size: 3, 5
-  split: 0, 0, 0, 5
-  orig: 3, 5
-  offset: 0, 0
-  index: -1
 default-pane
   rotate: false
-  xy: 99, 33
+  xy: 1, 1
   size: 5, 3
   split: 1, 1, 1, 1
   orig: 5, 3
@@ -120,7 +148,7 @@ default-pane
   index: -1
 default-rect-pad
   rotate: false
-  xy: 99, 33
+  xy: 1, 1
   size: 5, 3
   split: 1, 1, 1, 1
   orig: 5, 3
@@ -128,7 +156,7 @@ default-rect-pad
   index: -1
 default-splitpane
   rotate: false
-  xy: 89, 12
+  xy: 8, 1
   size: 5, 3
   split: 0, 5, 0, 0
   orig: 5, 3
@@ -136,7 +164,7 @@ default-splitpane
   index: -1
 cursor
   rotate: false
-  xy: 493, 105
+  xy: 15, 1
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -144,7 +172,7 @@ cursor
   index: -1
 default-rect-down
   rotate: false
-  xy: 503, 115
+  xy: 20, 1
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -152,15 +180,23 @@ default-rect-down
   index: -1
 default-rect
   rotate: false
-  xy: 5, 3
+  xy: 25, 1
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
   offset: 0, 0
   index: -1
+default-splitpane-vertical
+  rotate: false
+  xy: 30, 8
+  size: 3, 5
+  split: 0, 0, 0, 5
+  orig: 3, 5
+  offset: 0, 0
+  index: -1
 default-select-selection
   rotate: false
-  xy: 99, 29
+  xy: 932, 42
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -168,14 +204,14 @@ default-select-selection
   index: -1
 white
   rotate: false
-  xy: 105, 33
+  xy: 948, 58
   size: 3, 3
   orig: 3, 3
   offset: 0, 0
   index: -1
 default-pane-noborder
   rotate: false
-  xy: 5, 1
+  xy: 985, 104
   size: 1, 1
   split: 0, 0, 0, 0
   orig: 1, 1
@@ -183,7 +219,7 @@ default-pane-noborder
   index: -1
 selection
   rotate: false
-  xy: 7, 1
+  xy: 991, 110
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
