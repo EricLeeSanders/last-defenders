@@ -27,16 +27,16 @@ public final class CollisionDetection {
 	 * Checks for collision with the path boundaries when placing a tower or
 	 * sand bag
 	 * 
-	 * @param pathBoundary
+	 * @param boundaries
 	 *            - Array of rectangles from TiledMap that represent the path
 	 *            boundary
 	 * @param placeActor
 	 *            - The actor that is being places
 	 * @return boolean - If there is a collision
 	 */
-	public static boolean CollisionWithPath(Array<Rectangle> pathBoundary, ICollision placeActor) {
+	public static boolean CollisionWithPath(Array<Rectangle> boundaries, ICollision placeActor) {
 		Shape2D body = placeActor.getBody();
-		for (Rectangle boundry : pathBoundary) {
+		for (Rectangle boundry : boundaries) {
 			if (body instanceof Polygon) {
 				if (polygonAndRectangle((Polygon) body, boundry)) {
 					if (Logger.DEBUG)
