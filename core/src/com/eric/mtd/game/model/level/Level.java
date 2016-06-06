@@ -17,6 +17,7 @@ import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.util.Logger;
 
 public class Level implements ILevelStateObserver {
+	public static final int MAX_WAVES = 2;
 	private float delayCount = 0;
 	private float enemyDelay = 0f;
 	private Map map;
