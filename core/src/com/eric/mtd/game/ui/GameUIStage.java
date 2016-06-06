@@ -55,7 +55,6 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	private GameOverView gameOverView;
 	private LevelCompletedPresenter levelCompletedPresenter;
 	private LevelCompletedView levelCompletedView;
-
 	private Player player;
 	private GameUIStateManager uiStateManager;
 	private LevelStateManager levelStateManager;
