@@ -17,16 +17,16 @@ import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.util.Logger;
 
 public class Level implements ILevelStateObserver {
-	public static final int MAX_WAVES = 2;
+	public static final int MAX_WAVES = 3;
 	private float delayCount = 0;
 	private float enemyDelay = 0f;
 	private Map map;
 	private LevelStateManager levelStateManager;
-	private int currentWave = 1;
-	private Queue<Enemy> enemies;
-	private Queue<Float> delays;
+	private int currentWave = 0;
+	private Queue<SpawningEnemy> enemies;
 	private int intLevel;
 	private ActorGroups actorGroups;
+	private DynamicWaveGenerator waveGenerator;
 
 	public Level(int level, LevelStateManager levelStateManager, ActorGroups actorGroups) {
 		this.intLevel = level;
@@ -50,8 +50,9 @@ public class Level implements ILevelStateObserver {
 				enemyDelay = 0;
 			} else {
 				delayCount = 0;
-				actorGroups.getEnemyGroup().addActor(enemies.remove());
-				enemyDelay = delays.remove();
+				SpawningEnemy enemy = enemies.remove();
+				actorGroups.getEnemyGroup().addActor(enemy.getEnemy());
+				enemyDelay = enemy.getDelay();
 				if (Logger.DEBUG)
 					System.out.println("Spawning Enemy");
 			}
@@ -64,24 +65,40 @@ public class Level implements ILevelStateObserver {
 	 * Loads the wave
 	 */
 	public void loadWave() {
+		currentWave++;
+		if(currentWave > MAX_WAVES){
+			generateWave();
+			
+		}
+		else {
+			loadWaveFromJSON();
+			//If we are on the last wave, then construct
+			//The DynamicWaveGenerator
+			if(currentWave == MAX_WAVES){
+				waveGenerator = new DynamicWaveGenerator(enemies, map, actorGroups);
+			}
+		}
+	}
+	
+	private void generateWave(){
+		if(Logger.DEBUG)System.out.println("Dynamically generating wave");
+		enemies = waveGenerator.generateWave(currentWave);
+	}
+	private void loadWaveFromJSON(){
 		JsonValue json = new JsonReader().parse(Gdx.files.internal("game/levels/level" + intLevel + "/waves/wave" + currentWave + ".json"));
-		enemies = new LinkedList<Enemy>();
-		delays = new LinkedList<Float>();
+		enemies = new LinkedList<SpawningEnemy>();
 		JsonValue enemiesJson = json.get("wave");
 		for (JsonValue enemyJson : enemiesJson.iterator()) {
 			Enemy enemy = ActorFactory.loadEnemy(map.getPath(), enemyJson.getString("enemy"), enemyJson.getBoolean("armor"), actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
-			enemies.add(enemy);
+			float delay = enemyJson.getFloat("delay");
+			SpawningEnemy spawningEnemy = new SpawningEnemy(enemy, delay);
+			enemies.add(spawningEnemy);
 			HealthBar healthBar = ActorFactory.loadHealthBar();
 			healthBar.setActor(enemy);
 			actorGroups.getHealthBarGroup().addActor(healthBar);
-			delays.add(enemyJson.getFloat("delay"));
 
 		}
-		if (Logger.DEBUG)
-			System.out.println("Next Wave loaded");
-		currentWave++;
 	}
-
 	public int getCurrentWave() {
 		return currentWave;
 	}
