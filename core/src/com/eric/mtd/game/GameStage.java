@@ -116,7 +116,6 @@ public class GameStage extends Stage {
 	 */
 	private boolean isLevelCompleted(){
 		if(player.getWavesCompleted() == Level.MAX_WAVES){
-			System.out.println("waves completed: " + player.getWavesCompleted());
 			uiStateManager.setState(GameUIState.LEVEL_COMPLETED);
 			return true;
 		}
