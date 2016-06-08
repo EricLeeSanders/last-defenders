@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class Player {
 	private int money = 10000;
-	private int lives = 20;
+	private int lives = 200;
 	private int waveCount = 1;
 	private List<IPlayerObserver> observers = new ArrayList<IPlayerObserver>();
 
