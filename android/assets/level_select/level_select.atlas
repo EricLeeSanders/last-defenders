@@ -1,33 +1,47 @@
 
 level_select.png
 format: RGBA8888
-filter: MipMapLinearNearest,Nearest
+filter: Linear,Linear
 repeat: none
 background
   rotate: false
-  xy: 1, 150
+  xy: 1, 131
   size: 640, 360
   orig: 640, 360
   offset: 0, 0
   index: -1
+pointer
+  rotate: false
+  xy: 1, 1
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
 level1
   rotate: false
-  xy: 1, 78
+  xy: 643, 421
   size: 150, 70
   orig: 150, 70
   offset: 0, 0
   index: -1
 level2
   rotate: false
-  xy: 643, 440
+  xy: 131, 59
   size: 150, 70
   orig: 150, 70
   offset: 0, 0
   index: -1
 cancel
   rotate: false
-  xy: 1, 1
+  xy: 643, 344
   size: 75, 75
   orig: 75, 75
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 795, 441
+  size: 50, 50
+  orig: 50, 50
   offset: 0, 0
   index: -1
