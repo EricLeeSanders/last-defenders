@@ -16,6 +16,8 @@ import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.interfaces.IEnlistView;
+import com.eric.mtd.util.AudioUtil;
+import com.eric.mtd.util.AudioUtil.MTDSound;
 import com.eric.mtd.util.Resources;
 
 /**
@@ -66,9 +68,11 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	public void placeTower() {
 		int cost = towerPlacement.getCurrentTower().getCost();
 		if (towerPlacement.placeTower()) {
+			AudioUtil.playSound(MTDSound.ACTOR_PLACE);
 			uiStateManager.setStateReturn();
 			player.spendMoney(cost);
 			towerPlacement.removeCurrentTower();
+			
 
 		}
 	}
@@ -127,7 +131,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 */
 	public boolean canAffordTower(String tower) {
 
-	/*	try {
+		try {
 			Class<?> myClass = Class.forName("com.eric.mtd.game.model.actor.combat.tower.Tower" + tower);
 			Field field = ClassReflection.getDeclaredField(myClass, "COST");
 			field.setAccessible(true);
@@ -144,7 +148,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return false;*/ return true;
+		return false; 
 	}
 
 	@Override
