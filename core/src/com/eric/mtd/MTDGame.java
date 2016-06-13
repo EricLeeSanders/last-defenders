@@ -52,6 +52,9 @@ public class MTDGame extends Game implements IScreenStateObserver {
 			this.getScreen().dispose(); // dispose current screen
 			this.setScreen(new GameScreen(2, gameStateManager, screenStateManager));
 			break;
+		case LEVEL_3_SELECTED:
+			this.getScreen().dispose(); // dispose current screen
+			this.setScreen(new GameScreen(3, gameStateManager, screenStateManager));                                                
 		default:
 			break;
 		}

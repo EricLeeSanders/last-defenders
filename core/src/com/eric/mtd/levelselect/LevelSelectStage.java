@@ -1,7 +1,9 @@
 package com.eric.mtd.levelselect;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.eric.mtd.levelselect.ui.LevelSelectPresenter;
@@ -26,8 +28,16 @@ public class LevelSelectStage extends Stage {
 
 		presenter = new LevelSelectPresenter(screenStateManager);
 		levelSelectView = new LevelSelectView(presenter);
-
+		createBackground();
 		this.addActor(levelSelectView);
+	}
+
+	public void createBackground() {
+		TextureAtlas levelSelectAtlas = Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS);
+
+		Image background = new Image(levelSelectAtlas.findRegion("background"));
+		background.setFillParent(true);
+		this.addActor(background);
 	}
 
 }

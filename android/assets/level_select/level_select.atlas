@@ -1,33 +1,73 @@
 
 level_select.png
 format: RGBA8888
-filter: MipMapLinearNearest,Nearest
+filter: Linear,Linear
 repeat: none
-background
-  rotate: false
-  xy: 1, 150
-  size: 640, 360
-  orig: 640, 360
-  offset: 0, 0
-  index: -1
 level1
   rotate: false
-  xy: 1, 78
-  size: 150, 70
-  orig: 150, 70
+  xy: 1, 261
+  size: 1280, 720
+  orig: 1280, 720
   offset: 0, 0
   index: -1
-level2
+level2map
   rotate: false
-  xy: 643, 440
-  size: 150, 70
-  orig: 150, 70
+  xy: 1283, 567
+  size: 720, 414
+  orig: 720, 414
+  offset: 0, 0
+  index: -1
+level3map
+  rotate: false
+  xy: 1283, 151
+  size: 720, 414
+  orig: 720, 414
+  offset: 0, 0
+  index: -1
+map_icon
+  rotate: false
+  xy: 1, 131
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 1, 1
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+pointer
+  rotate: false
+  xy: 131, 131
+  size: 128, 128
+  orig: 128, 128
   offset: 0, 0
   index: -1
 cancel
   rotate: false
+  xy: 131, 65
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+
+level_select2.png
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+level3
+  rotate: false
   xy: 1, 1
-  size: 75, 75
-  orig: 75, 75
+  size: 1280, 720
+  orig: 1280, 720
+  offset: 0, 0
+  index: -1
+background
+  rotate: false
+  xy: 1283, 361
+  size: 640, 360
+  orig: 640, 360
   offset: 0, 0
   index: -1
