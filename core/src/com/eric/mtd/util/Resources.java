@@ -24,7 +24,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFont
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
 //-agentlib:hprof=heap=dump,format=b
-public abstract class Resources {
+public class Resources {
 	public static final String MENU_ATLAS = "menu/menu.atlas";
 	public static final String ACTOR_ATLAS = "game/actors/actors.atlas";
 	public static final String LEVEL_SELECT_ATLAS = "level_select/level_select.atlas";
@@ -51,6 +51,9 @@ public abstract class Resources {
 	public static final String MACHINE_GUN_SHOT_SOUND = "audio/machine_gun_shot.mp3";
 	public static final String SNIPER_SHOT_SOUND = "audio/sniper_shot.mp3";
 
+	
+	public static final String ACTOR_PLACE_SOUND = "audio/actor_place.mp3";
+	public static final String SELL_SOUND = "audio/sell.mp3";
 	public static final String VEHICLE_EXPLOSION_SOUND = "audio/vehicle_explosion.mp3";
 	
 	private static final ShapeRenderer SHAPE_RENDERER = new ShapeRenderer();

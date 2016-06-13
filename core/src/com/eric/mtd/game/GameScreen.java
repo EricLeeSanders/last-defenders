@@ -115,7 +115,6 @@ public class GameScreen extends AbstractScreen {
 			System.out.println("Game Screen Dispose");
 		gameStage.dispose();
 		gameUIStage.dispose();
-		AudioUtil.dispose();
 	    GLProfiler.disable();
 	}
 

@@ -16,7 +16,9 @@ import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.view.interfaces.IInspectView;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
+import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.AudioUtil.MTDSound;
 
 /**
  * Presenter for Inspect
@@ -132,6 +134,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 */
 	public void dishcharge() {
 		if (selectedTower != null) {
+			AudioUtil.playSound(MTDSound.SELL);
 			player.giveMoney(selectedTower.getSellCost());
 			selectedTower.sellTower();
 			closeInspect();

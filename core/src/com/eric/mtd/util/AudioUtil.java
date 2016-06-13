@@ -10,10 +10,10 @@ import com.badlogic.gdx.audio.Sound;
  * @author Eric
  *
  */
-public abstract class AudioUtil {
+public class AudioUtil {
 	private static Music music;
 	private static Sound rpgExplosion, rocketLaunch, flameBurst, rifleShot, sniperShot, machineGunShot,
-			vehicleExplosion;
+			vehicleExplosion, actorPlace, sell;
 	private static boolean musicEnabled, soundEnabled;
 
 	/**
@@ -30,6 +30,8 @@ public abstract class AudioUtil {
 		sniperShot = Gdx.audio.newSound(Gdx.files.internal(Resources.SNIPER_SHOT_SOUND));
 		machineGunShot = Gdx.audio.newSound(Gdx.files.internal(Resources.MACHINE_GUN_SHOT_SOUND));
 		vehicleExplosion = Gdx.audio.newSound(Gdx.files.internal(Resources.VEHICLE_EXPLOSION_SOUND));
+		actorPlace = Gdx.audio.newSound(Gdx.files.internal(Resources.ACTOR_PLACE_SOUND));
+		sell = Gdx.audio.newSound(Gdx.files.internal(Resources.SELL_SOUND));
 		
 		rpgExplosion.play(0);
 		rocketLaunch.play(0);
@@ -38,9 +40,11 @@ public abstract class AudioUtil {
 		sniperShot.play(0);
 		machineGunShot.play(0);
 		vehicleExplosion.play(0);
-		
-		soundEnabled = Resources.getPreferences().getBoolean("soundEnabled", true);
-		musicEnabled = Resources.getPreferences().getBoolean("musicEnabled", true);
+		actorPlace.play(0);
+		sell.play(0);
+				
+		setSoundEnabled(Resources.getPreferences().getBoolean("soundEnabled", true));
+		setMusicEnabled(Resources.getPreferences().getBoolean("musicEnabled", true));
 	}
 
 	public static void playVehicleExplosion() {
@@ -48,11 +52,9 @@ public abstract class AudioUtil {
 	}
 
 	public static void playMusic() {
-		if(musicEnabled){
-			if (Logger.DEBUG)
-				System.out.println("Playing Music");
-			music.play();
-		}
+		if (Logger.DEBUG)
+			System.out.println("Playing Music");
+		music.play();
 	}
 	public static void disposeMusic() {
 		if (Logger.DEBUG)
@@ -69,11 +71,29 @@ public abstract class AudioUtil {
 		sniperShot.dispose();
 		machineGunShot.dispose();
 		vehicleExplosion.dispose();
+		actorPlace.dispose();
+		sell.dispose();
 	}
 	public static void dispose(){
 		disposeMusic();
 		disposeSound();
 	}
+	
+	public static void playSound(MTDSound sound){
+		if(soundEnabled) {
+			if (Logger.DEBUG)
+				System.out.println("Playing + " + sound.name());
+			switch (sound) {
+			case ACTOR_PLACE:
+				actorPlace.play();
+				break;
+			case SELL:
+				sell.play();
+				break;
+			}
+		}
+	}
+	
 	public static void playProjectileSound(ProjectileSound sound) {
 		if(soundEnabled){
 			if (Logger.DEBUG)
@@ -100,7 +120,9 @@ public abstract class AudioUtil {
 			}
 		}
 	}
-
+	public enum MTDSound {
+		ACTOR_PLACE, SELL;
+	}
 	public enum ProjectileSound {
 		RIFLE, SNIPER, MACHINE_GUN, RPG_EXPLOSION, ROCKET_LAUNCH, FLAME_BURST;
 	}
@@ -112,9 +134,9 @@ public abstract class AudioUtil {
 		musicEnabled = enabled;
 		
 		if(enabled){
-			music.setVolume(0);
-		} else {
 			music.setVolume(100);
+		} else {
+			music.setVolume(0);
 		}
 		
 		Resources.getPreferences().putBoolean("musicEnabled", enabled);

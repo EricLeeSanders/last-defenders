@@ -147,7 +147,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 */
 	public boolean canAffordTower(String supportActor) {
 
-		/*try {
+		try {
 			Class<?> myClass = Class.forName("com.eric.mtd.game.model.actor.support." + supportActor);
 			Field field = ClassReflection.getDeclaredField(myClass, "COST");
 			field.setAccessible(true);
@@ -164,7 +164,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		return false;*/ return true;
+		return false;
 	}
 
 	@Override
