@@ -1,10 +1,13 @@
 package com.eric.mtd.levelselect.ui;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.eric.mtd.util.Logger;
@@ -16,55 +19,144 @@ import com.eric.mtd.util.Resources;
  * @author Eric
  *
  */
-public class LevelSelectView extends Table {
+public class LevelSelectView extends Group {
 	private LevelSelectPresenter presenter;
-	private ImageButton close, btnLevel1, btnLevel2;
-
+	//private ImageButton close, btnLevel1, btnLevel2;
+	private ImageButton btnLevel1, btnLevel2, btnLevel3;
+	//private ImageButton btnCancel, btnPlay;
+	private ImageButton btnMap, btnPlay;
+	private Label lblLevel;
+	private Group mapGroup = new Group();
+	private Image level1, level2, level3;
+	private int selectedLevel;
 	public LevelSelectView(LevelSelectPresenter presenter) {
 		this.presenter = presenter;
 		createControls();
+		createConfirmLevelControls();
+		this.addActor(mapGroup);
+		mapGroup.setVisible(false);
 	}
 
-	public void createControls() {
-		TextureAtlas levelAtlas = Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS);
+	private void createControls() {
+		TextureAtlas levelAtlas = Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS);		
+		
 
-		this.setFillParent(true);
-		Image background = new Image(new TextureRegionDrawable(levelAtlas.findRegion("background")));
-		this.setBackground(background.getDrawable());
+		btnLevel1 = new ImageButton(new TextureRegionDrawable(levelAtlas.findRegion("pointer")));
+		btnLevel1.setSize(64, 64);
+		btnLevel1.setPosition(253-(btnLevel1.getWidth()/2), 100);
+		this.addActor(btnLevel1); 
+		setBtnLevelListener(btnLevel1, 1);
 
-		btnLevel1 = new ImageButton(new TextureRegionDrawable(levelAtlas.findRegion("level1")));
-		this.add(btnLevel1).expand().center();
-		setBtnLevel1Listener();
-
-		btnLevel2 = new ImageButton(new TextureRegionDrawable(levelAtlas.findRegion("level2")));
-		this.add(btnLevel2).expand().center();
-		setBtnLevel2Listener();
-
+		btnLevel2 = new ImageButton(new TextureRegionDrawable(levelAtlas.findRegion("pointer")));
+		btnLevel2.setSize(64, 64);
+		btnLevel2.setPosition(528-(btnLevel2.getWidth()/2), 85);
+		this.addActor(btnLevel2);
+		setBtnLevelListener(btnLevel2, 2);
+		
+		//467 228
+		btnLevel3 = new ImageButton(new TextureRegionDrawable(levelAtlas.findRegion("pointer")));
+		btnLevel3.setSize(64, 64);
+		btnLevel3.setPosition(467-(btnLevel3.getWidth()/2), 228);
+		this.addActor(btnLevel3); 
+		setBtnLevelListener(btnLevel3, 3);
+		
 	}
-
-	private void setBtnLevel1Listener() {
-		btnLevel1.addListener(new ClickListener() {
+	
+	private void createConfirmLevelControls(){
+		
+		level1 = new Image(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("level1"));
+		//level1.setSize(360, 207);
+		//level1.setPosition((confirmBackground.getX()+20), (confirmBackground.getY()+60));
+		level1.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+		level1.setVisible(false);
+		mapGroup.addActor(level1);
+		
+		level2 = new Image(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("level2map"));
+		//level2.setSize(360, 207);
+		//level2.setPosition((confirmBackground.getX()+20), (confirmBackground.getY()+60));
+		level2.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+		level2.setVisible(false);
+		mapGroup.addActor(level2);
+		
+		level3 = new Image(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("level3"));
+		//level3.setSize(360, 207);
+		//level3.setPosition((confirmBackground.getX()+20), (confirmBackground.getY()+60));
+		level3.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+		level3.setVisible(false);
+		mapGroup.addActor(level3);
+		
+		btnMap = new ImageButton(new TextureRegionDrawable(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("map_icon")));
+		btnMap.setSize(64,64);
+		btnMap.setPosition(15,15);
+		mapGroup.addActor(btnMap);
+		setBtnMapListener();
+		
+		btnPlay = new ImageButton(new TextureRegionDrawable(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("play")));
+		btnPlay.setSize(64,64);
+		btnPlay.setPosition(Resources.VIRTUAL_WIDTH - btnPlay.getWidth() - 15 ,15);
+		mapGroup.addActor(btnPlay);
+		setBtnPlayListener();
+		
+		lblLevel = new Label("Level X", new LabelStyle(Resources.getSkin(Resources.SKIN_JSON).get(LabelStyle.class)));
+		lblLevel.setPosition((Resources.VIRTUAL_WIDTH/2)-(lblLevel.getWidth()/2)
+				, Resources.VIRTUAL_HEIGHT-lblLevel.getHeight() - 25);
+		mapGroup.addActor(lblLevel);
+	}
+	private void showConfirmWindow(boolean visible){
+		mapGroup.setVisible(visible);
+		if(visible){
+			if(selectedLevel == 1){
+				level1.setVisible(true);
+				lblLevel.setText("Level 1");
+				level2.setVisible(false);
+				level3.setVisible(false);
+			} else if(selectedLevel == 2){
+				level1.setVisible(false);
+				level2.setVisible(true);
+				lblLevel.setText("Level 2");
+				level3.setVisible(false);
+			} else if(selectedLevel == 3){
+				level1.setVisible(false);
+				level2.setVisible(false);
+				level3.setVisible(true);
+				lblLevel.setText("Level 3");
+			}
+		}
+	}
+	
+	private void setBtnLevelListener(ImageButton button, final int level) {
+		button.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
 				if (Logger.DEBUG)
-					System.out.println("Level 1 Pressed");
-				presenter.playLevel(1);
+					System.out.println("Level " + level + " Pressed");
+				selectedLevel = level;
+				showConfirmWindow(true);
+				
 			}
 		});
-
 	}
-
-	private void setBtnLevel2Listener() {
-		btnLevel2.addListener(new ClickListener() {
+	
+	private void setBtnMapListener() {
+		btnMap.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Level 2 Pressed");
-				presenter.playLevel(2);
+				showConfirmWindow(false);
+				
 			}
 		});
-
+	}
+	
+	private void setBtnPlayListener() {
+		btnPlay.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				presenter.playLevel(selectedLevel);
+				
+			}
+		});
 	}
 }
