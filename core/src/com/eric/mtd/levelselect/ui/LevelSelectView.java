@@ -5,7 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.eric.mtd.util.Logger;
@@ -21,15 +23,18 @@ public class LevelSelectView extends Group {
 	private LevelSelectPresenter presenter;
 	//private ImageButton close, btnLevel1, btnLevel2;
 	private ImageButton btnLevel1, btnLevel2, btnLevel3;
-	private ImageButton btnCancel, btnPlay;
-	private Group confirmLevelGroup = new Group();
-	private Image confirmBackground;
+	//private ImageButton btnCancel, btnPlay;
+	private ImageButton btnMap, btnPlay;
+	private Label lblLevel;
+	private Group mapGroup = new Group();
+	private Image level1, level2, level3;
+	private int selectedLevel;
 	public LevelSelectView(LevelSelectPresenter presenter) {
 		this.presenter = presenter;
 		createControls();
 		createConfirmLevelControls();
-		this.addActor(confirmLevelGroup);
-		confirmLevelGroup.setVisible(false);
+		this.addActor(mapGroup);
+		mapGroup.setVisible(false);
 	}
 
 	private void createControls() {
@@ -49,7 +54,6 @@ public class LevelSelectView extends Group {
 		setBtnLevelListener(btnLevel2, 2);
 		
 		//467 228
-		
 		btnLevel3 = new ImageButton(new TextureRegionDrawable(levelAtlas.findRegion("pointer")));
 		btnLevel3.setSize(64, 64);
 		btnLevel3.setPosition(467-(btnLevel3.getWidth()/2), 228);
@@ -59,23 +63,65 @@ public class LevelSelectView extends Group {
 	}
 	
 	private void createConfirmLevelControls(){
-		confirmBackground = new Image(Resources.getAtlas(Resources.SKIN_ATLAS).findRegion("panel"));
-		confirmBackground.setSize(300, 150);
-		confirmBackground.setPosition((Resources.VIRTUAL_WIDTH/2) - (confirmBackground.getWidth()/2)
-				, (Resources.VIRTUAL_HEIGHT/2) - (confirmBackground.getHeight()/2));
-		confirmLevelGroup.addActor(confirmBackground);
+		
+		level1 = new Image(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("level1"));
+		//level1.setSize(360, 207);
+		//level1.setPosition((confirmBackground.getX()+20), (confirmBackground.getY()+60));
+		level1.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+		level1.setVisible(false);
+		mapGroup.addActor(level1);
+		
+		level2 = new Image(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("level2map"));
+		//level2.setSize(360, 207);
+		//level2.setPosition((confirmBackground.getX()+20), (confirmBackground.getY()+60));
+		level2.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+		level2.setVisible(false);
+		mapGroup.addActor(level2);
+		
+		level3 = new Image(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("level3"));
+		//level3.setSize(360, 207);
+		//level3.setPosition((confirmBackground.getX()+20), (confirmBackground.getY()+60));
+		level3.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+		level3.setVisible(false);
+		mapGroup.addActor(level3);
+		
+		btnMap = new ImageButton(new TextureRegionDrawable(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("map_icon")));
+		btnMap.setSize(64,64);
+		btnMap.setPosition(15,15);
+		mapGroup.addActor(btnMap);
+		setBtnMapListener();
 		
 		btnPlay = new ImageButton(new TextureRegionDrawable(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("play")));
-		btnPlay.setSize(40,40);
-		btnPlay.setPosition(confirmBackground.getX() + (confirmBackground.getWidth()/2) - (btnPlay.getWidth()/2) - 40	
-				, confirmBackground.getY() +  5);
-		confirmLevelGroup.addActor(btnPlay);
+		btnPlay.setSize(64,64);
+		btnPlay.setPosition(Resources.VIRTUAL_WIDTH - btnPlay.getWidth() - 15 ,15);
+		mapGroup.addActor(btnPlay);
+		setBtnPlayListener();
 		
-		btnCancel = new ImageButton(new TextureRegionDrawable(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("cancel")));
-		btnCancel.setSize(40,40);
-		btnCancel.setPosition(confirmBackground.getX() + (confirmBackground.getWidth()/2) - (btnCancel.getWidth()/2) + 40	
-				, confirmBackground.getY() +  5);
-		confirmLevelGroup.addActor(btnCancel);
+		lblLevel = new Label("Level X", new LabelStyle(Resources.getSkin(Resources.SKIN_JSON).get(LabelStyle.class)));
+		lblLevel.setPosition((Resources.VIRTUAL_WIDTH/2)-(lblLevel.getWidth()/2)
+				, Resources.VIRTUAL_HEIGHT-lblLevel.getHeight() - 25);
+		mapGroup.addActor(lblLevel);
+	}
+	private void showConfirmWindow(boolean visible){
+		mapGroup.setVisible(visible);
+		if(visible){
+			if(selectedLevel == 1){
+				level1.setVisible(true);
+				lblLevel.setText("Level 1");
+				level2.setVisible(false);
+				level3.setVisible(false);
+			} else if(selectedLevel == 2){
+				level1.setVisible(false);
+				level2.setVisible(true);
+				lblLevel.setText("Level 2");
+				level3.setVisible(false);
+			} else if(selectedLevel == 3){
+				level1.setVisible(false);
+				level2.setVisible(false);
+				level3.setVisible(true);
+				lblLevel.setText("Level 3");
+			}
+		}
 	}
 	
 	private void setBtnLevelListener(ImageButton button, final int level) {
@@ -85,7 +131,31 @@ public class LevelSelectView extends Group {
 				super.touchUp(event, x, y, pointer, button);
 				if (Logger.DEBUG)
 					System.out.println("Level " + level + " Pressed");
-				presenter.levelSelected(level);
+				selectedLevel = level;
+				showConfirmWindow(true);
+				
+			}
+		});
+	}
+	
+	private void setBtnMapListener() {
+		btnMap.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				showConfirmWindow(false);
+				
+			}
+		});
+	}
+	
+	private void setBtnPlayListener() {
+		btnPlay.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				presenter.playLevel(selectedLevel);
+				
 			}
 		});
 	}
