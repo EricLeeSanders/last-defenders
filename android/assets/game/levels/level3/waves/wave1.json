@@ -1,0 +1,9 @@
+{
+"wave": [
+    {
+        "enemy": MachineGun,
+        "delay": .05,
+        "armor": false
+    }
+]
+}
