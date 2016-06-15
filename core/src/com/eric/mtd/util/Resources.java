@@ -54,6 +54,8 @@ public class Resources {
 	
 	public static final String ACTOR_PLACE_SOUND = "audio/actor_place.mp3";
 	public static final String SELL_SOUND = "audio/sell.mp3";
+	public static final String SMALL_CLICK = "audio/button_small_click.mp3";
+	public static final String LARGE_CLICK = "audio/button_large_click.mp3";
 	public static final String VEHICLE_EXPLOSION_SOUND = "audio/vehicle_explosion.mp3";
 	
 	private static final ShapeRenderer SHAPE_RENDERER = new ShapeRenderer();

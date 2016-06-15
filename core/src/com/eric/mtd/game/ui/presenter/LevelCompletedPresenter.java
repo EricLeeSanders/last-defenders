@@ -9,6 +9,8 @@ import com.eric.mtd.game.ui.view.interfaces.ILevelCompletedView;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
 import com.eric.mtd.state.GameStateManager;
+import com.eric.mtd.util.AudioUtil;
+import com.eric.mtd.util.AudioUtil.MTDSound;
 
 public class LevelCompletedPresenter implements IGameUIStateObserver{
 	private ILevelCompletedView view;
@@ -41,12 +43,14 @@ public class LevelCompletedPresenter implements IGameUIStateObserver{
 	 * Change to level select
 	 */
 	public void levelSelect() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		screenStateManager.setState(ScreenState.LEVEL_SELECTION);
 	}
 	/**
 	 * Continue the level
 	 */
 	public void continueLevel() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		uiStateManager.setState(GameUIState.STANDBY);
 	}
 	

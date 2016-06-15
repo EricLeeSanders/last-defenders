@@ -12,7 +12,9 @@ import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.view.interfaces.IHUDView;
 import com.eric.mtd.state.GameStateManager;
 import com.eric.mtd.state.GameStateManager.GameState;
+import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Resources;
+import com.eric.mtd.util.AudioUtil.MTDSound;
 
 /**
  * Presenter for the HUD
@@ -52,6 +54,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 * Show the options view. Also pause the Game.
 	 */
 	public void options() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		uiStateManager.setState(GameUIState.OPTIONS);
 		gameStateManager.setState(GameState.PAUSE);
 
@@ -69,6 +72,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 * Start the next wave
 	 */
 	public void startWave() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		levelStateManager.setState(LevelState.SPAWNING_ENEMIES);
 		uiStateManager.setState(GameUIState.WAVE_IN_PROGRESS);
 
@@ -78,6 +82,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 * Show the Enlist view
 	 */
 	public void enlist() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		uiStateManager.setState(GameUIState.ENLISTING);
 
 	}
@@ -86,6 +91,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 * Show the Support view
 	 */
 	public void support() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		uiStateManager.setState(GameUIState.SUPPORT);
 
 	}
@@ -94,6 +100,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 * Change the speed of the game
 	 */
 	public void changeGameSpeed() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		if (normalSpeedEnabled) {
 			MTDGame.gameSpeed = (Resources.DOUBLE_SPEED);
 			normalSpeedEnabled = false;

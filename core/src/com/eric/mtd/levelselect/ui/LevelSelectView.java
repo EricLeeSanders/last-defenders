@@ -10,8 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
+import com.eric.mtd.util.AudioUtil.MTDSound;
 
 /**
  * View for the Level Select Menu
@@ -132,6 +134,7 @@ public class LevelSelectView extends Group {
 				if (Logger.DEBUG)
 					System.out.println("Level " + level + " Pressed");
 				selectedLevel = level;
+				AudioUtil.playSound(MTDSound.SMALL_CLICK);
 				showConfirmWindow(true);
 				
 			}
@@ -143,6 +146,7 @@ public class LevelSelectView extends Group {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
+				AudioUtil.playSound(MTDSound.LARGE_CLICK);
 				showConfirmWindow(false);
 				
 			}
@@ -154,6 +158,7 @@ public class LevelSelectView extends Group {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
+				AudioUtil.playSound(MTDSound.LARGE_CLICK);
 				presenter.playLevel(selectedLevel);
 				
 			}

@@ -13,7 +13,7 @@ import com.badlogic.gdx.audio.Sound;
 public class AudioUtil {
 	private static Music music;
 	private static Sound rpgExplosion, rocketLaunch, flameBurst, rifleShot, sniperShot, machineGunShot,
-			vehicleExplosion, actorPlace, sell;
+			vehicleExplosion, actorPlace, sell, smallClick, largeClick;
 	private static boolean musicEnabled, soundEnabled;
 
 	/**
@@ -32,6 +32,8 @@ public class AudioUtil {
 		vehicleExplosion = Gdx.audio.newSound(Gdx.files.internal(Resources.VEHICLE_EXPLOSION_SOUND));
 		actorPlace = Gdx.audio.newSound(Gdx.files.internal(Resources.ACTOR_PLACE_SOUND));
 		sell = Gdx.audio.newSound(Gdx.files.internal(Resources.SELL_SOUND));
+		smallClick = Gdx.audio.newSound(Gdx.files.internal(Resources.SMALL_CLICK));
+		largeClick = Gdx.audio.newSound(Gdx.files.internal(Resources.LARGE_CLICK));
 		
 		rpgExplosion.play(0);
 		rocketLaunch.play(0);
@@ -42,6 +44,8 @@ public class AudioUtil {
 		vehicleExplosion.play(0);
 		actorPlace.play(0);
 		sell.play(0);
+		smallClick.play(0);
+		largeClick.play(0);
 				
 		setSoundEnabled(Resources.getPreferences().getBoolean("soundEnabled", true));
 		setMusicEnabled(Resources.getPreferences().getBoolean("musicEnabled", true));
@@ -73,6 +77,8 @@ public class AudioUtil {
 		vehicleExplosion.dispose();
 		actorPlace.dispose();
 		sell.dispose();
+		smallClick.dispose();
+		largeClick.dispose();
 	}
 	public static void dispose(){
 		disposeMusic();
@@ -89,6 +95,12 @@ public class AudioUtil {
 				break;
 			case SELL:
 				sell.play();
+				break;
+			case SMALL_CLICK:
+				smallClick.play();
+				break;
+			case LARGE_CLICK:
+				largeClick.play();
 				break;
 			}
 		}
@@ -121,7 +133,7 @@ public class AudioUtil {
 		}
 	}
 	public enum MTDSound {
-		ACTOR_PLACE, SELL;
+		ACTOR_PLACE, SELL, SMALL_CLICK, LARGE_CLICK;
 	}
 	public enum ProjectileSound {
 		RIFLE, SNIPER, MACHINE_GUN, RPG_EXPLOSION, ROCKET_LAUNCH, FLAME_BURST;

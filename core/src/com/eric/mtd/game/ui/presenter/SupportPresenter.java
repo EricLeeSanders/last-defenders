@@ -20,7 +20,9 @@ import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.interfaces.IEnlistView;
 import com.eric.mtd.game.ui.view.interfaces.ISupportView;
+import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Resources;
+import com.eric.mtd.util.AudioUtil.MTDSound;
 
 /**
  * Presenter for Enlist. Handles enlisting towers
@@ -59,6 +61,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 */
 	
 	public void createAirStrike(){
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		airStrikePlacement.createAirStrike();
 		uiStateManager.setState(GameUIState.PLACING_AIRSTRIKE);
 	}
@@ -67,6 +70,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Place an Air Strike Location
 	 */
 	public void placeAirStrikeLocation(Vector2 location){
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		if (!airStrikePlacement.getCurrentAirStrike().readyToBegin()) {
 			airStrikePlacement.addLocation(location);
 			if(airStrikePlacement.getCurrentAirStrike().readyToBegin()){
@@ -76,6 +80,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	}
 	
 	public void finishAirStrikePlacement(){
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		if (airStrikePlacement.isCurrentAirStrike() && uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)) {
 			airStrikePlacement.getCurrentAirStrike().beginAirStrike();
 			airStrikePlacement.finishCurrentAirStrike();
@@ -87,6 +92,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * 
 	 */
 	public void createSupportActor(String type) {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		supportActorPlacement.createSupportActor(type);
 		uiStateManager.setState(GameUIState.PLACING_SUPPORT);
 	}
@@ -95,6 +101,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Try to place a Support Actor
 	 */
 	public void placeSupportActor() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		int cost;
 		if(uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)){
 			cost = airStrikePlacement.getCurrentAirStrike().getCost();
@@ -115,6 +122,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Cancel Support
 	 */
 	public void cancelSupport() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		supportActorPlacement.removeCurrentSupportActor();
 		airStrikePlacement.removeCurrentAirStrike();		
 		uiStateManager.setStateReturn();

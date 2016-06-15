@@ -58,6 +58,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 * @param strEnlistTower
 	 */
 	public void createTower(String strEnlistTower) {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		towerPlacement.createTower(strEnlistTower);
 		uiStateManager.setState(GameUIState.PLACING_TOWER);
 	}
@@ -81,6 +82,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 * Cancel enlisting
 	 */
 	public void cancelEnlist() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		uiStateManager.setStateReturn();
 		towerPlacement.removeCurrentTower();
 	}
