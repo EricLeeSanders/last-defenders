@@ -55,13 +55,13 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 
 		btnDischarge = new MTDImageButton("UI_Inspect", "btnDischarge", Resources.INSPECT_ATLAS, "btnDischarge", true, false);
 		setDischargeListener();
-		lblDischargePrice = new MTDLabel("UI_Inspect", "lblDischargePrice", "", true, Color.WHITE, Align.left, 0.625f);
+		lblDischargePrice = new MTDLabel("UI_Inspect", "lblDischargePrice", "", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
 		grpDischarge.addActor(btnDischarge);
 		grpDischarge.addActor(lblDischargePrice);
 		addActor(grpDischarge);
 
 		btnTargetPriority = new MTDImageButton("UI_Inspect", "btnTargetPriority", Resources.INSPECT_ATLAS, "btnTargetPriority", true, false);
-		lblTargetPriority = new MTDLabel("UI_Inspect", "lblTargetPriority", TowerTargetPriority.values()[0].name(), true, Color.WHITE, Align.center, 0.5f);
+		lblTargetPriority = new MTDLabel("UI_Inspect", "lblTargetPriority", TowerTargetPriority.values()[0].name(), true, Color.WHITE, Align.center, Resources.getFont("default-font-22"));
 		setTargetPriorityListener();
 		grpTargetPriority.addActor(btnTargetPriority);
 		grpTargetPriority.addActor(lblTargetPriority);
@@ -73,7 +73,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 
 		imgKills = new MTDImage("UI_Inspect", "imgKills", Resources.INSPECT_ATLAS, "kills", true, true);
 		addActor(imgKills);
-		lblKills = new MTDLabel("UI_Inspect", "lblKills", "0 kills", true, Color.WHITE, Align.left, 0.5f);
+		lblKills = new MTDLabel("UI_Inspect", "lblKills", "0 kills", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
 		addActor(lblKills);
 
 		createUpgradeControls();
@@ -89,7 +89,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		grpAttack = new Group();
 
 		btnArmor = new MTDImageButton("UI_Inspect", "btnArmor", Resources.INSPECT_ATLAS, "btnArmor", "btnArmorDisabled", true, false);
-		lblArmorCost = new MTDLabel("UI_Inspect", "lblArmorCost", "5555", true, Color.WHITE, Align.left, 0.58f);
+		lblArmorCost = new MTDLabel("UI_Inspect", "lblArmorCost", "5555", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
 		lvlArmor = new UpgradeLevel("UI_Inspect", "lblArmorLevel", "", true, 1, Color.WHITE);
 		setArmorListener();
 		grpArmor.addActor(btnArmor);
@@ -97,7 +97,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		grpArmor.addActor(lvlArmor);
 
 		btnSpeed = new MTDImageButton("UI_Inspect", "btnSpeed", Resources.INSPECT_ATLAS, "btnSpeed", "btnSpeedDisabled", true, false);
-		lblSpeedCost = new MTDLabel("UI_Inspect", "lblSpeedCost", "6555", true, Color.WHITE, Align.left, 0.58f);
+		lblSpeedCost = new MTDLabel("UI_Inspect", "lblSpeedCost", "6555", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
 		lvlSpeed = new UpgradeLevel("UI_Inspect", "lblSpeedLevel", "", true, 2, Color.WHITE);
 		setIncreaseSpeedListener();
 		grpSpeed.addActor(btnSpeed);
@@ -105,7 +105,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		grpSpeed.addActor(lvlSpeed);
 
 		btnRange = new MTDImageButton("UI_Inspect", "btnRange", Resources.INSPECT_ATLAS, "btnRange", "btnRangeDisabled", true, false);
-		lblRangeCost = new MTDLabel("UI_Inspect", "lblRangeCost", "8888", true, Color.WHITE, Align.left, 0.58f);
+		lblRangeCost = new MTDLabel("UI_Inspect", "lblRangeCost", "8888", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
 		lvlRange = new UpgradeLevel("UI_Inspect", "lblRangeLevel", "", true, 2, Color.WHITE);
 		setIncreaseRangeListener();
 		grpRange.addActor(btnRange);
@@ -113,7 +113,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		grpRange.addActor(lvlRange);
 
 		btnAttack = new MTDImageButton("UI_Inspect", "btnAttack", Resources.INSPECT_ATLAS, "btnAttack", "btnAttackDisabled", true, false);
-		lblAttackCost = new MTDLabel("UI_Inspect", "lblAttackCost", "4789", true, Color.WHITE, Align.left, 0.58f);
+		lblAttackCost = new MTDLabel("UI_Inspect", "lblAttackCost", "4789", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
 		lvlAttack = new UpgradeLevel("UI_Inspect", "lblAttackLevel", "", true, 2, Color.WHITE);
 		setIncreaseAttackListener();
 		grpAttack.addActor(btnAttack);

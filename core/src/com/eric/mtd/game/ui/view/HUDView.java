@@ -4,6 +4,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.eric.mtd.game.ui.presenter.HUDPresenter;
@@ -19,7 +21,8 @@ import com.eric.mtd.util.Resources;
  *
  */
 public class HUDView extends Group implements IHUDView {
-	private MTDImage imgMoney, imgLife;
+	private Image imgMoney, imgLife;
+	
 	private MTDImageButton btnWave, btnEnlist, btnSupport, btnQuit, btnOptions, btnNormalSpeed, btnDoubleSpeed;
 	private MTDLabel lblMoney, lblLives, lblWaveCount;
 	private HUDPresenter presenter;
@@ -34,6 +37,7 @@ public class HUDView extends Group implements IHUDView {
 	 * Create the controls using MTD Widgets.
 	 */
 	public void createControls() {
+		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
 		btnWave = new MTDImageButton("UI_HUD", "btnWave", Resources.HUD_ATLAS, "wave", true, false);
 		setBtnWaveListener();
 		addActor(btnWave);
@@ -56,18 +60,18 @@ public class HUDView extends Group implements IHUDView {
 		setBtnSupportListener();
 		addActor(btnSupport);
 		
-		btnOptions = new MTDImageButton("UI_HUD", "btnOptions", Resources.HUD_ATLAS, "options", true, false);
+		btnOptions = new MTDImageButton("UI_HUD", "btnOptions", skin, "options", true, false);
 		setBtnOptionsListener();
 		addActor(btnOptions);
-		imgMoney = new MTDImage("UI_HUD", "imgMoney", Resources.HUD_ATLAS, "dollarsign", true, false);
+		imgMoney = new MTDImage("UI_HUD", "imgMoney", skin, "money", true, false);
 		addActor(imgMoney);
-		lblMoney = new MTDLabel("UI_HUD", "lblMoney", "0", true, Color.WHITE, Align.left, 0.5f);
+		lblMoney = new MTDLabel("UI_HUD", "lblMoney", "0", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
 		addActor(lblMoney);
-		imgLife = new MTDImage("UI_HUD", "imgLife", Resources.HUD_ATLAS, "lives", true, false);
+		imgLife = new MTDImage("UI_HUD", "imgLife", skin, "lives", true, false);
 		addActor(imgLife);
-		lblLives = new MTDLabel("UI_HUD", "lblLife", "0", true, Color.WHITE, Align.left, 0.5f);
+		lblLives = new MTDLabel("UI_HUD", "lblLife", "0", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
 		addActor(lblLives);
-		lblWaveCount = new MTDLabel("UI_HUD", "lblWaveCount", "0", true, Color.WHITE, Align.left, 0.5f);
+		lblWaveCount = new MTDLabel("UI_HUD", "lblWaveCount", "0", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
 		addActor(lblWaveCount);
 	}
 

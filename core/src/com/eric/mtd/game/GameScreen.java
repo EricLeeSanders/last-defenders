@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.profiling.GLProfiler;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
@@ -51,9 +52,10 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	public void createFramesField() {
-		framesLabel = new Label("0", Resources.getSkin(Resources.SKIN_JSON));
+		LabelStyle lblFramesStyle = new LabelStyle();
+		lblFramesStyle.font = Resources.getFont("default-font-22");
+		framesLabel = new Label("0", lblFramesStyle);
 		framesLabel.setColor(1f, 1f, 1f, 0.30f);
-		framesLabel.setFontScale(0.5f);
 		framesLabel.setPosition(200, 310);
 		gameUIStage.addActor(framesLabel);
 	}

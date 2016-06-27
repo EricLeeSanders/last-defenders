@@ -123,7 +123,9 @@ public class EnlistPresenter implements IGameUIStateObserver {
 		}
 	}
 
-
+	public int getPlayerMoney(){
+		return player.getMoney();
+	}
 	/**
 	 * Determines if the tower can be purchased.
 	 * 

@@ -86,7 +86,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	 */
 	public void createUI() {
 		this.enlistPresenter = new EnlistPresenter(uiStateManager, player, actorGroups, map);
-		this.enlistView = new EnlistView(enlistPresenter);
+		this.enlistView = new EnlistView(enlistPresenter, this);
 		enlistPresenter.setView(enlistView);
 		
 		this.supportPresenter = new SupportPresenter(uiStateManager, player, actorGroups);

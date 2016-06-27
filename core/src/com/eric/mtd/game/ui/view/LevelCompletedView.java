@@ -3,6 +3,8 @@ package com.eric.mtd.game.ui.view;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.eric.mtd.game.ui.presenter.LevelCompletedPresenter;
@@ -25,14 +27,17 @@ public class LevelCompletedView extends Group implements ILevelCompletedView{
 	}
 	
 	public void createControls(){
-		panel = new MTDImage("UI_LevelCompleted", "panel", Resources.SKIN_ATLAS, "panel", true, false);
+		Table table = new Table();
+		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
+		table.setBackground(skin.getDrawable("main-panel-vert"));
+		panel = new MTDImage("UI_LevelCompleted", "panel", Resources.SKIN_ATLAS, "main-panel-horz", true, false);
 		panel.getColor().set(1f, 1f, 1f, .75f);
 		addActor(panel);
 		
-		lblLevelCompleted = new MTDLabel("UI_LevelCompleted", "lblLevelCompleted", "Level Completed!", true, Color.valueOf("FF7F2A"), Align.center, 0.75f); //
+		lblLevelCompleted = new MTDLabel("UI_LevelCompleted", "lblLevelCompleted", "Level Completed!", true, Color.valueOf("FF7F2A"), Align.center, Resources.getFont("default-font-22")); //
 		addActor(lblLevelCompleted);
 
-		lblContinue = new MTDLabel("UI_LevelCompleted", "lblContinue", "Do you want to \n continue playing this \n level and compete \n for a high score?", true, Color.WHITE, Align.center, 0.55f);
+		lblContinue = new MTDLabel("UI_LevelCompleted", "lblContinue", "Do you want to \n continue playing this \n level and compete \n for a high score?", true, Color.WHITE, Align.center, Resources.getFont("default-font-22"));
 		addActor(lblContinue);
 		
 		btnContinueLevel = new MTDTextButton("UI_LevelCompleted", "btnContinueLevel", "Continue", Align.center, 0.45f, true);

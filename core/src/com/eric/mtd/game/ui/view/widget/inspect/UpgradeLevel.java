@@ -34,7 +34,7 @@ public class UpgradeLevel extends Group {
 		}
 		lblLevels = new MTDLabel[maxLevel];
 		for (int i = 0; i < maxLevel; i++) {
-			lblLevels[i] = new MTDLabel(layer, objectName + (i + 1), text, visible, fontColor, Align.center, 1f);
+			lblLevels[i] = new MTDLabel(layer, objectName + (i + 1), text, visible, fontColor, Align.center, Resources.getFont("default-font-22"));
 			lblLevels[i].getStyle().background = Resources.getSkin(Resources.SKIN_JSON).newDrawable("white", 0f, 0f, 0f, 1);
 			addActor(lblLevels[i]);
 		}
