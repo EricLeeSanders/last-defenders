@@ -3,6 +3,7 @@ package com.eric.mtd.game.ui.view.widget;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.eric.mtd.util.Resources;
 
 public class MTDImage extends Image {
@@ -12,6 +13,18 @@ public class MTDImage extends Image {
 		if (useImgAsSize) {
 			TextureRegion imageRegion = (Resources.getAtlas(strAtlas).findRegion(regionName));
 			setSize(imageRegion.getRegionWidth(), imageRegion.getRegionHeight());
+		} else {
+			setSize(rectangle.getRectangle().getWidth(), rectangle.getRectangle().getHeight());
+		}
+		setPosition(rectangle.getRectangle().x, rectangle.getRectangle().y);
+		setName(layer + "_" + objectName);
+		setVisible(visible);
+	}
+	public MTDImage(String layer, String objectName, Skin skin, String drawableName, boolean visible, boolean useImgAsSize) {
+		super(skin, drawableName);
+		RectangleMapObject rectangle = (RectangleMapObject) Resources.getUIMap().getLayers().get(layer).getObjects().get(objectName);
+		if (useImgAsSize) {
+			setSize(getImageWidth(), getImageHeight());
 		} else {
 			setSize(rectangle.getRectangle().getWidth(), rectangle.getRectangle().getHeight());
 		}

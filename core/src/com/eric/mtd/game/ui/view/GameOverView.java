@@ -35,7 +35,7 @@ public class GameOverView extends Group implements IGameOverView {
 	 * Create controls using MTD widgets.
 	 */
 	public void createControls() {
-		panel = new MTDImage("UI_GameOver", "panel", Resources.SKIN_ATLAS, "panel", true, false);
+		panel = new MTDImage("UI_GameOver", "panel", Resources.SKIN_ATLAS, "main-panel-vert", true, false);
 		panel.getColor().set(1f, 1f, 1f, .75f);
 		addActor(panel);
 
@@ -51,13 +51,13 @@ public class GameOverView extends Group implements IGameOverView {
 		setBtnMainMenuListener();
 		addActor(btnMainMenu);
 
-		lblGameOver = new MTDLabel("UI_GameOver", "lblGameOver", "Game Over!", true, Color.valueOf("FF7F2A"), Align.center, 0.75f); //
+		lblGameOver = new MTDLabel("UI_GameOver", "lblGameOver", "Game Over!", true, Color.valueOf("FF7F2A"), Align.center, Resources.getFont("default-font-22")); //
 		addActor(lblGameOver);
 
-		lblWavesCompleted = new MTDLabel("UI_GameOver", "lblWavesCompleted", "Waves Completed", true, Color.WHITE, Align.center, 0.55f);
+		lblWavesCompleted = new MTDLabel("UI_GameOver", "lblWavesCompleted", "Waves Completed", true, Color.WHITE, Align.center, Resources.getFont("default-font-22"));
 		addActor(lblWavesCompleted);
 
-		lblWavesCompletedCount = new MTDLabel("UI_GameOver", "lblWavesCompletedCount", "0", true, Color.WHITE, Align.center, .75f);
+		lblWavesCompletedCount = new MTDLabel("UI_GameOver", "lblWavesCompletedCount", "0", true, Color.WHITE, Align.center, Resources.getFont("default-font-22"));
 		addActor(lblWavesCompletedCount);
 	}
 

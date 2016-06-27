@@ -6,7 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.eric.mtd.game.ui.presenter.EnlistPresenter;
 import com.eric.mtd.game.ui.presenter.SupportPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IEnlistView;
@@ -27,11 +34,14 @@ import com.eric.mtd.util.Resources;
  */
 public class SupportView extends Group implements ISupportView, InputProcessor {
 	private MTDImage pnlSupport;
-	private MTDSupportButton btnLandmines, btnAirstrike, btnApache;
-	private MTDImageButton btnCancel, btnPlace;
+	private ImageButton btnLandmines, btnAirstrike, btnApache;
+	private ImageButton btnPlacingCancel, btnCancel;
+	private MTDImageButton btnPlace;
 	private SupportPresenter presenter;
 	private Group choosingGroup;
-
+	private Table container, supportTable;
+	private Label lblTitle, lblMoney, lblMoney_img;
+	
 	public SupportView(SupportPresenter presenter) {
 		this.presenter = presenter;
 		choosingGroup = new Group();
@@ -43,29 +53,72 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	 * Creates the controls with the MTD widgets
 	 */
 	public void createControls() {
-		pnlSupport = new MTDImage("UI_Support", "panel", Resources.SUPPORT_UI_ATLAS, "panel", true, false);
-		pnlSupport.getColor().set(1f, 1f, 1f, .75f);
-		choosingGroup.addActor(pnlSupport);
+		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
+		container = new Table();
+		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+		choosingGroup.addActor(container);
+		supportTable = new Table();
+		// table.debug();
 
-		btnLandmines = new MTDSupportButton("UI_Support", "btnLandmines", Resources.SUPPORT_UI_ATLAS, "landminesEnabled"
-										, "landminesDisabled", "LandMine", true, false);
-		setLandminesListener();
-		choosingGroup.addActor(btnLandmines);
+		final ScrollPane scroll = new ScrollPane(supportTable, skin);
+		//scroll.setVariableSizeKnobs(false);
+		supportTable.defaults().expandX();
+		
+		container.add(scroll).expand().fill().colspan(1);
+		container.setBackground(skin.getDrawable("main-panel-horz-padded"));
+		
+		LabelStyle lblTitleStyle = new LabelStyle();
+		lblTitleStyle.font = Resources.getFont("default-font-22");
+		lblTitle = new Label("SUPPORT", lblTitleStyle);
+		lblTitle.setPosition(container.getX() + (container.getWidth()/2) - (lblTitle.getWidth()/2)
+					,container.getY() + container.getHeight() - lblTitle.getHeight() - 20);
+		lblTitle.setAlignment(Align.center);
+		choosingGroup.addActor(lblTitle);
+		
+		//lblMoney_img creates the image for the label, while lblMoney has a transparent bg and is 
+		//placed on the lblMoney_img. Had to separate the image and the text to allow for better alignment
+		LabelStyle lblMoneyStyle_img = new LabelStyle(skin.get("money_label_img", LabelStyle.class));
+		lblMoneyStyle_img.font = Resources.getFont("default-font-22");
+		lblMoney_img = new Label("", lblMoneyStyle_img);
+		lblMoney_img.setSize(160, 59);
+		lblMoney_img.setPosition(container.getX() + 208 - (lblMoney_img.getWidth()/2)
+					,container.getY() + 37 - lblMoney_img.getHeight()/2);
+		lblMoney_img.setAlignment(Align.center);
+		choosingGroup.addActor(lblMoney_img);
+		
+		LabelStyle lblMoneyStyle = new LabelStyle(skin.get("default", LabelStyle.class));
+		lblMoneyStyle.font = Resources.getFont("default-font-22");
+		lblMoney = new Label("0", lblMoneyStyle);
+		lblMoney.setSize(160, 59);
+		System.out.println(lblMoney_img.getX());
+		lblMoney.setPosition(lblMoney_img.getX()+60, lblMoney_img.getY()-1);
+		lblMoney.setAlignment(Align.left);
+		choosingGroup.addActor(lblMoney);
+		
 
-		btnAirstrike = new MTDSupportButton("UI_Support", "btnAirstrike", Resources.SUPPORT_UI_ATLAS, "airstrikeEnabled"
-										, "airstrikeDisabled", "AirStrike", true, false);
-		setAirstrikeListener();
-		choosingGroup.addActor(btnAirstrike);
-
-		btnApache = new MTDSupportButton("UI_Support", "btnApache", Resources.SUPPORT_UI_ATLAS, "apacheEnabled"
-										, "apacheDisabled", "Apache", true, false);
+		btnApache = new ImageButton(skin, "support");
 		setApacheListener();
-		choosingGroup.addActor(btnApache);
+		supportTable.add(btnApache).size(109,128).spaceBottom(5);
+		
+		btnAirstrike = new ImageButton(skin, "support");
+		setAirstrikeListener();
+		supportTable.add(btnAirstrike).size(109,128).spaceBottom(5);
+		
+		btnLandmines = new ImageButton(skin, "support");
+		setLandminesListener();
+		supportTable.add(btnLandmines).size(109,128).spaceBottom(5);
 
-		btnCancel = new MTDImageButton("UI_Support", "btnCancel", Resources.SUPPORT_UI_ATLAS, "cancel", false, false);
+		btnCancel = new ImageButton(skin,"cancel");
 		setCancelListener();
-		addActor(btnCancel);
-		btnPlace = new MTDImageButton("UI_Support", "btnPlace", Resources.SUPPORT_UI_ATLAS, "place", false, false);
+		btnCancel.setSize(64, 64);
+		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 120, 28);
+		choosingGroup.addActor(btnCancel);
+		btnCancel.setVisible(true);
+		btnPlacingCancel = new MTDImageButton("UI_Support", "btnCancel", skin, "cancel", false, false);
+		setPlacingCancelListener();
+		addActor(btnPlacingCancel);
+		
+		btnPlace = new MTDImageButton("UI_Support", "btnPlace", skin, "select", false, false);
 		setPlaceListener();
 		addActor(btnPlace);
 
@@ -123,7 +176,17 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 			}
 		});
 	}
-
+	private void setPlacingCancelListener() {
+		btnPlacingCancel.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				if (Logger.DEBUG)
+					System.out.println("Placing Cancel Pressed");
+				presenter.cancelSupport();
+			}
+		});
+	}
 	private void setPlaceListener() {
 		btnPlace.addListener(new ClickListener() {
 			@Override
@@ -202,23 +265,23 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	@Override
 	public void supportState() {
 		updateSupportButtons();
+		lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
 		choosingGroup.setVisible(true);
-		btnCancel.setVisible(true);
+		btnPlacingCancel.setVisible(false);
 		this.setVisible(true);
 	}
 
 	@Override
 	public void placingSupportState() {
-		btnCancel.setVisible(true);
+		btnPlacingCancel.setVisible(true);
 		choosingGroup.setVisible(false);
 	}
 
 	@Override
 	public void standByState() {
-		btnCancel.setVisible(false);
+		btnPlacingCancel.setVisible(false);
 		choosingGroup.setVisible(false);
 		btnPlace.setVisible(false);
-		btnCancel.setVisible(false);
 		this.setVisible(false);
 		
 	}

@@ -128,6 +128,10 @@ public class SupportPresenter implements IGameUIStateObserver {
 		uiStateManager.setStateReturn();
 	}
 	
+	public int getPlayerMoney(){
+		return player.getMoney();
+	}
+	
 	/**
 	 * Move the Support Actor
 	 * 

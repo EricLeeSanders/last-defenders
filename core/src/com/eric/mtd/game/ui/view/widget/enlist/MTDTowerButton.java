@@ -1,5 +1,6 @@
 package com.eric.mtd.game.ui.view.widget.enlist;
 
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.eric.mtd.game.ui.view.widget.MTDImageButton;
 import com.eric.mtd.util.Resources;
@@ -11,15 +12,11 @@ import com.eric.mtd.util.Resources;
  * @author Eric
  *
  */
-public class MTDTowerButton extends MTDImageButton {
+public class MTDTowerButton extends ImageButton{
 	private String towerName;
-
-	public MTDTowerButton(String layer, String objectName, String strAtlas, String enabledRegionName
-			, String disabledRegionName, String towerName, boolean visible, boolean useImgAsSize) {
-		super(layer, objectName, strAtlas, enabledRegionName, visible, useImgAsSize);
-		super.getStyle().imageDisabled = new TextureRegionDrawable(Resources.getAtlas(strAtlas).findRegion(disabledRegionName));
+	public MTDTowerButton(String towerName){
+		super(new TextureRegionDrawable(Resources.getAtlas(Resources.ENLIST_ATLAS).findRegion("btnEnlist")));
 		this.towerName = towerName;
-
 	}
 
 	public String getTowerName() {

@@ -28,15 +28,15 @@ public class LevelSelectView extends Group {
 	//private ImageButton btnCancel, btnPlay;
 	private ImageButton btnMap, btnPlay;
 	private Label lblLevel;
-	private Group mapGroup = new Group();
+	private Group levelGroup = new Group();
 	private Image level1, level2, level3;
 	private int selectedLevel;
 	public LevelSelectView(LevelSelectPresenter presenter) {
 		this.presenter = presenter;
 		createControls();
 		createConfirmLevelControls();
-		this.addActor(mapGroup);
-		mapGroup.setVisible(false);
+		this.addActor(levelGroup);
+		levelGroup.setVisible(false);
 	}
 
 	private void createControls() {
@@ -71,41 +71,42 @@ public class LevelSelectView extends Group {
 		//level1.setPosition((confirmBackground.getX()+20), (confirmBackground.getY()+60));
 		level1.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 		level1.setVisible(false);
-		mapGroup.addActor(level1);
+		levelGroup.addActor(level1);
 		
 		level2 = new Image(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("level2map"));
 		//level2.setSize(360, 207);
 		//level2.setPosition((confirmBackground.getX()+20), (confirmBackground.getY()+60));
 		level2.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 		level2.setVisible(false);
-		mapGroup.addActor(level2);
+		levelGroup.addActor(level2);
 		
 		level3 = new Image(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("level3"));
 		//level3.setSize(360, 207);
 		//level3.setPosition((confirmBackground.getX()+20), (confirmBackground.getY()+60));
 		level3.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 		level3.setVisible(false);
-		mapGroup.addActor(level3);
+		levelGroup.addActor(level3);
 		
 		btnMap = new ImageButton(new TextureRegionDrawable(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("map_icon")));
 		btnMap.setSize(64,64);
 		btnMap.setPosition(15,15);
-		mapGroup.addActor(btnMap);
+		levelGroup.addActor(btnMap);
 		setBtnMapListener();
 		
 		btnPlay = new ImageButton(new TextureRegionDrawable(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("play")));
 		btnPlay.setSize(64,64);
 		btnPlay.setPosition(Resources.VIRTUAL_WIDTH - btnPlay.getWidth() - 15 ,15);
-		mapGroup.addActor(btnPlay);
+		levelGroup.addActor(btnPlay);
 		setBtnPlayListener();
-		
-		lblLevel = new Label("Level X", new LabelStyle(Resources.getSkin(Resources.SKIN_JSON).get(LabelStyle.class)));
+		LabelStyle lblLevelStyle = new LabelStyle();
+		lblLevelStyle.font = Resources.getFont("default-font-46");
+		lblLevel = new Label("Level X",lblLevelStyle );
 		lblLevel.setPosition((Resources.VIRTUAL_WIDTH/2)-(lblLevel.getWidth()/2)
 				, Resources.VIRTUAL_HEIGHT-lblLevel.getHeight() - 25);
-		mapGroup.addActor(lblLevel);
+		levelGroup.addActor(lblLevel);
 	}
 	private void showConfirmWindow(boolean visible){
-		mapGroup.setVisible(visible);
+		levelGroup.setVisible(visible);
 		if(visible){
 			if(selectedLevel == 1){
 				level1.setVisible(true);
