@@ -28,6 +28,7 @@ import com.eric.mtd.game.ui.presenter.EnlistPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IEnlistView;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
 import com.eric.mtd.game.ui.view.widget.MTDImageButton;
+import com.eric.mtd.game.ui.view.widget.MTDLabel;
 import com.eric.mtd.game.ui.view.widget.enlist.MTDTowerButton;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -41,13 +42,14 @@ import com.eric.mtd.util.Resources;
  */
 public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	private MTDImage pnlEnlist;
-	private MTDTowerButton btnTank, btnFlameThrower, btnTurret, btnSniper, btnMachine, btnRocketLauncher, btnRifle;
+	private ImageButton btnTank, btnFlameThrower, btnTurret, btnSniper, btnMachineGun, btnRocketLauncher, btnRifle;
 	private MTDImageButton btnPlacingCancel, btnPlace, btnRotate;
 	private ImageButton btnCancel;
 	private EnlistPresenter presenter;
 	private Group choosingGroup;
 	private Table container, enlistTable;
-	private Label lblTitle, lblMoney, lblMoney_img;
+	private Label lblTitle;
+	private MTDLabel lblMoney;
 
 	private Stage stage;
 	public EnlistView(EnlistPresenter presenter, Stage stage) {
@@ -85,55 +87,43 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		lblTitle.setAlignment(Align.center);
 		choosingGroup.addActor(lblTitle);
 		
-		//lblMoney_img creates the image for the label, while lblMoney has a transparent bg and is 
-		//placed on the lblMoney_img. Had to separate the image and the text to allow for better alignment
-		LabelStyle lblMoneyStyle_img = new LabelStyle(skin.get("money_label_img", LabelStyle.class));
-		lblMoneyStyle_img.font = Resources.getFont("default-font-22");
-		lblMoney_img = new Label("", lblMoneyStyle_img);
-		lblMoney_img.setSize(160, 59);
-		lblMoney_img.setPosition(container.getX() + 208 - (lblMoney_img.getWidth()/2)
-					,container.getY() + 37 - lblMoney_img.getHeight()/2);
-		lblMoney_img.setAlignment(Align.center);
-		choosingGroup.addActor(lblMoney_img);
-		
-		LabelStyle lblMoneyStyle = new LabelStyle(skin.get("default", LabelStyle.class));
-		lblMoneyStyle.font = Resources.getFont("default-font-22");
-		lblMoney = new Label("0", lblMoneyStyle);
-		lblMoney.setSize(160, 59);
-		System.out.println(lblMoney_img.getX());
-		lblMoney.setPosition(lblMoney_img.getX()+60, lblMoney_img.getY()-1);
-		lblMoney.setAlignment(Align.left);
+		lblMoney = new MTDLabel("0", skin, "money_label_img", "default-font-22", Align.left);
+		lblMoney.getLabel_img().setSize(160, 69);
+		lblMoney.getLabel_img().setPosition(208 - (lblMoney.getLabel_img().getWidth()/2)
+				,37 - lblMoney.getLabel_img().getHeight()/2);
+		lblMoney.getLabel_text().setSize(100, 59);
+		lblMoney.getLabel_text().setPosition(lblMoney.getLabel_img().getX()+60, lblMoney.getLabel_img().getY()+3);
 		choosingGroup.addActor(lblMoney);
 		
-		ImageButton rifle = new MTDTowerButton("Rifle");
-		enlistTable.add(rifle).size(116,156).spaceBottom(5);
-		setTowerListener(rifle,"Rifle");
+		btnRifle = new ImageButton(skin, "enlist");
+		enlistTable.add(btnRifle).size(116,156).spaceBottom(5);
+		setTowerListener(btnRifle,"Rifle");
 		
-		ImageButton sniper = new MTDTowerButton("Sniper");
-		enlistTable.add(sniper).size(116,156).spaceBottom(5);
-		setTowerListener(sniper,"Sniper");
+		btnSniper = new ImageButton(skin, "enlist");
+		enlistTable.add(btnSniper).size(116,156).spaceBottom(5);
+		setTowerListener(btnSniper,"Sniper");
 		
-		ImageButton machineGun = new MTDTowerButton("MachineGun");
-		enlistTable.add(machineGun).size(116,156).spaceBottom(5);
-		setTowerListener(machineGun,"MachineGun");
-		
-		enlistTable.row();
-		ImageButton flameThrower = new MTDTowerButton("FlameThrower");
-		enlistTable.add(flameThrower).size(116,156).spaceBottom(5);
-		setTowerListener(flameThrower,"FlameThrower");
-		
-		ImageButton rocketLauncher = new MTDTowerButton("RocketLauncher");
-		enlistTable.add(rocketLauncher).size(116,156).spaceBottom(5);
-		setTowerListener(rocketLauncher,"RocketLauncher");
-		
-		ImageButton turret = new MTDTowerButton("Turret");
-		enlistTable.add(turret).size(116,156).spaceBottom(5);
-		setTowerListener(turret,"Turret");
+		btnMachineGun = new ImageButton(skin, "enlist");
+		enlistTable.add(btnMachineGun).size(116,156).spaceBottom(5);
+		setTowerListener(btnMachineGun,"MachineGun");
 		
 		enlistTable.row();
-		ImageButton tank = new MTDTowerButton("Tank");
-		enlistTable.add(tank).size(116,156).spaceBottom(5);
-		setTowerListener(tank,"Tank");
+		btnFlameThrower = new ImageButton(skin, "enlist");
+		enlistTable.add(btnFlameThrower).size(116,156).spaceBottom(5);
+		setTowerListener(btnFlameThrower,"FlameThrower");
+		
+		btnRocketLauncher =  new ImageButton(skin, "enlist");
+		enlistTable.add(btnRocketLauncher).size(116,156).spaceBottom(5);
+		setTowerListener(btnRocketLauncher,"RocketLauncher");
+		
+		btnTurret = new ImageButton(skin, "enlist");
+		enlistTable.add(btnTurret).size(116,156).spaceBottom(5);
+		setTowerListener(btnTurret,"Turret");
+		
+		enlistTable.row();
+		btnTank = new ImageButton(skin, "enlist");
+		enlistTable.add(btnTank).size(116,156).spaceBottom(5);
+		setTowerListener(btnTank,"Tank");
 		
 		
 		btnCancel = new ImageButton(skin,"cancel");
@@ -300,7 +290,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	@Override
 	public void enlistingState() {
 		updateTowerButtons();
-		lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
+		lblMoney.getLabel_text().setText(String.valueOf(presenter.getPlayerMoney()));
 		choosingGroup.setVisible(true);
 		btnPlacingCancel.setVisible(false);
 		this.setVisible(true);

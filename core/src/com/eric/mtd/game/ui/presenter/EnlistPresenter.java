@@ -122,7 +122,10 @@ public class EnlistPresenter implements IGameUIStateObserver {
 			return false;
 		}
 	}
-
+	/**
+	 * Get the players amount of money
+	 * @return int - player money
+	 */
 	public int getPlayerMoney(){
 		return player.getMoney();
 	}

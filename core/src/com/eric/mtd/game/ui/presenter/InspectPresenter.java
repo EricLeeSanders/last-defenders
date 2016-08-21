@@ -169,7 +169,15 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 			}
 		}
 	}
-
+	
+	/**
+	 * Get the players amount of money
+	 * @return int - player money
+	 */
+	public int getPlayerMoney(){
+		return player.getMoney();
+	}
+	
 	/**
 	 * Determine if the the upgrade is affordable
 	 * 

@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Align;
 import com.eric.mtd.game.ui.presenter.GameOverPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IGameOverView;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
-import com.eric.mtd.game.ui.view.widget.MTDLabel;
+import com.eric.mtd.game.ui.view.widget.MTDLabelOld;
 import com.eric.mtd.game.ui.view.widget.MTDTextButton;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -23,7 +23,7 @@ import com.eric.mtd.util.Resources;
 public class GameOverView extends Group implements IGameOverView {
 	private GameOverPresenter presenter;
 	private MTDTextButton btnNewGame, btnHighScores, btnMainMenu;
-	private MTDLabel lblWavesCompleted, lblWavesCompletedCount, lblGameOver;
+	private MTDLabelOld lblWavesCompleted, lblWavesCompletedCount, lblGameOver;
 	private MTDImage panel;
 
 	public GameOverView(GameOverPresenter presenter) {
@@ -51,13 +51,13 @@ public class GameOverView extends Group implements IGameOverView {
 		setBtnMainMenuListener();
 		addActor(btnMainMenu);
 
-		lblGameOver = new MTDLabel("UI_GameOver", "lblGameOver", "Game Over!", true, Color.valueOf("FF7F2A"), Align.center, Resources.getFont("default-font-22")); //
+		lblGameOver = new MTDLabelOld("UI_GameOver", "lblGameOver", "Game Over!", true, Color.valueOf("FF7F2A"), Align.center, Resources.getFont("default-font-22")); //
 		addActor(lblGameOver);
 
-		lblWavesCompleted = new MTDLabel("UI_GameOver", "lblWavesCompleted", "Waves Completed", true, Color.WHITE, Align.center, Resources.getFont("default-font-22"));
+		lblWavesCompleted = new MTDLabelOld("UI_GameOver", "lblWavesCompleted", "Waves Completed", true, Color.WHITE, Align.center, Resources.getFont("default-font-22"));
 		addActor(lblWavesCompleted);
 
-		lblWavesCompletedCount = new MTDLabel("UI_GameOver", "lblWavesCompletedCount", "0", true, Color.WHITE, Align.center, Resources.getFont("default-font-22"));
+		lblWavesCompletedCount = new MTDLabelOld("UI_GameOver", "lblWavesCompletedCount", "0", true, Color.WHITE, Align.center, Resources.getFont("default-font-22"));
 		addActor(lblWavesCompletedCount);
 	}
 

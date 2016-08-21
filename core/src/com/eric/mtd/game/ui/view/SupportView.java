@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -147,7 +148,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	}
 
 	private void setLandminesListener() {
-		btnLandmines.addListener(new ClickListener() {
+		btnLandmines.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
@@ -158,7 +159,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	}
 
 	private void setAirstrikeListener() {
-		btnAirstrike.addListener(new ClickListener() {
+		btnAirstrike.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
@@ -168,7 +169,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	}
 
 	private void setApacheListener() {
-		btnApache.addListener(new ClickListener() {
+		btnApache.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);

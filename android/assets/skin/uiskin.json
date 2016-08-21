@@ -21,7 +21,15 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	cancel: {checked: cancel_normal, imageOver: cancel_hover, imageDown: cancel_click, imageUp: cancel_normal, disabled: cancel_locked},
 	rotate: {checked: rotate_normal, imageOver: rotate_hover, imageDown: rotate_click, imageUp: rotate_normal, disabled: rotate_locked},
 	options: {checked: options_normal, imageOver: options_hover, imageDown: options_click, imageUp: options_normal, disabled: options_locked},
-	support: {down: support, up: support, disabled: support}
+	support: {down: support, up: support, disabled: support},
+	upgrade: {down: upgrade, up: upgrade, disabled: upgrade},
+	discharge: {down: discharge, up: discharge, disabled: discharge},
+	enlist: {down: enlist, up: enlist, disabled: enlist},
+	speed: {checked: single-speed_normal, checkedOver: single-speed_hover, over: double-speed_hover, down: double-speed_click, up: double-speed_normal, disabled: single-speed_locked },
+	wave: {down: wave_click, up: wave_normal, over: wave_hover, disabled: wave_locked},
+	enlist_hud: {down: enlist_click, up: enlist_normal, over: enlist_hover, disabled: enlist_locked},
+	support_hud: {down: support_click, up: support_normal, over: support_hover, disabled: support_locked},
+	arrow_right: {down: arrow-right_click, up: arrow-right_normal, over: arrow-right_hover, disabled: arrow-right_locked}
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: { down: button_click, up: button_normal, over: button_hover, disabled: button_locked, font: default-font, fontColor: white },
@@ -60,9 +68,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 	default-vertical: { background: default-slider, knob: default-round-large }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-	default: { font: default-font, fontColor: white }
-	label_normal: {background: label_normal, font: default-font, fontColor: white}
-	money_label_img: {background: money_label_img, font: default-font, fontColor: white}
+	default: { font: default-font, fontColor: white },
+	label_normal: {background: label_normal, font: default-font, fontColor: white},
+	money_label_img: {background: money_label_img, font: default-font, fontColor: white},
+	kills_label_img: {background: kills_label_img, font: default-font, fontColor: white}
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: { selection: selection, background: textfield, font: default-font, fontColor: white, cursor: cursor }
