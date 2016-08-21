@@ -27,7 +27,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	private GameUIStateManager uiStateManager;
 	private GameStateManager gameStateManager;
 	private Player player;
-	private boolean normalSpeedEnabled = true;
+	private boolean doubleSpeedEnabled = false;
 	private IHUDView view;
 
 	public HUDPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, GameStateManager gameStateManager, Player player) {
@@ -57,14 +57,6 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		uiStateManager.setState(GameUIState.OPTIONS);
 		gameStateManager.setState(GameState.PAUSE);
-
-	}
-
-	/**
-	 * Quit the game
-	 */
-	public void quit() {
-		// gameStateManager.setState(LevelState.QUIT);
 
 	}
 
@@ -101,14 +93,14 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 */
 	public void changeGameSpeed() {
 		AudioUtil.playSound(MTDSound.SMALL_CLICK);
-		if (normalSpeedEnabled) {
-			MTDGame.gameSpeed = (Resources.DOUBLE_SPEED);
-			normalSpeedEnabled = false;
-		} else {
+		if (doubleSpeedEnabled) {
 			MTDGame.gameSpeed = (Resources.NORMAL_SPEED);
-			normalSpeedEnabled = true;
+			doubleSpeedEnabled = false;
+		} else {
+			MTDGame.gameSpeed = (Resources.DOUBLE_SPEED);
+			doubleSpeedEnabled = true;
 		}
-		view.changeSpeed(normalSpeedEnabled);
+		view.changeSpeed(doubleSpeedEnabled);
 
 	}
 

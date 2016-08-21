@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Align;
 import com.eric.mtd.game.ui.presenter.LevelCompletedPresenter;
 import com.eric.mtd.game.ui.view.interfaces.ILevelCompletedView;
 import com.eric.mtd.game.ui.view.widget.MTDImage;
-import com.eric.mtd.game.ui.view.widget.MTDLabel;
+import com.eric.mtd.game.ui.view.widget.MTDLabelOld;
 import com.eric.mtd.game.ui.view.widget.MTDTextButton;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -18,7 +18,7 @@ import com.eric.mtd.util.Resources;
 public class LevelCompletedView extends Group implements ILevelCompletedView{
 	private LevelCompletedPresenter presenter;
 	private MTDTextButton btnContinueLevel, btnNewGame;
-	private MTDLabel lblLevelCompleted, lblContinue;
+	private MTDLabelOld lblLevelCompleted, lblContinue;
 	private MTDImage panel;
 	
 	public LevelCompletedView(LevelCompletedPresenter presenter){
@@ -34,10 +34,10 @@ public class LevelCompletedView extends Group implements ILevelCompletedView{
 		panel.getColor().set(1f, 1f, 1f, .75f);
 		addActor(panel);
 		
-		lblLevelCompleted = new MTDLabel("UI_LevelCompleted", "lblLevelCompleted", "Level Completed!", true, Color.valueOf("FF7F2A"), Align.center, Resources.getFont("default-font-22")); //
+		lblLevelCompleted = new MTDLabelOld("UI_LevelCompleted", "lblLevelCompleted", "Level Completed!", true, Color.valueOf("FF7F2A"), Align.center, Resources.getFont("default-font-22")); //
 		addActor(lblLevelCompleted);
 
-		lblContinue = new MTDLabel("UI_LevelCompleted", "lblContinue", "Do you want to \n continue playing this \n level and compete \n for a high score?", true, Color.WHITE, Align.center, Resources.getFont("default-font-22"));
+		lblContinue = new MTDLabelOld("UI_LevelCompleted", "lblContinue", "Do you want to \n continue playing this \n level and compete \n for a high score?", true, Color.WHITE, Align.center, Resources.getFont("default-font-22"));
 		addActor(lblContinue);
 		
 		btnContinueLevel = new MTDTextButton("UI_LevelCompleted", "btnContinueLevel", "Continue", Align.center, 0.45f, true);
