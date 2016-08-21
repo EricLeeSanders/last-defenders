@@ -9,14 +9,14 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	dialogDim: { name: white, color: { r: 0, g: 0, b: 0, a: 0.45 } }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
-	default: { down: button_click, up: button_normal, over: button_hover, disabled: button_locked },
+	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_disabled },
 	toggle: { down: default-round-down, checked: default-round-down, up: default-round }
 },
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	default: { down: default-round-down, up: default-round },
 	toggle: { down: default-round-down, checked: default-round-down, up: default-round },
-	sound: {checked: sound_normal, checkedOver: sound_hover, down: sound_off, up: sound_off},
-	music: {checked: music_normal, checkedOver: music_hover, down: music_off, up: music_off},
+	sound: {checked: sound_normal, checkedOver: sound_over, down: sound_disabled, up: sound_disabled},
+	music: {checked: music_normal, checkedOver: music_over, down: music_disabled, up: music_disabled},
 	select: {checked: select_normal, imageOver: select_hover, imageDown: select_click, imageUp: select_normal, disabled: select_locked},
 	cancel: {checked: cancel_normal, imageOver: cancel_hover, imageDown: cancel_click, imageUp: cancel_normal, disabled: cancel_locked},
 	rotate: {checked: rotate_normal, imageOver: rotate_hover, imageDown: rotate_click, imageUp: rotate_normal, disabled: rotate_locked},
@@ -32,15 +32,15 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	arrow_right: {down: arrow-right_click, up: arrow-right_normal, over: arrow-right_hover, disabled: arrow-right_locked}
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
-	default: { down: button_click, up: button_normal, over: button_hover, disabled: button_locked, font: default-font, fontColor: white },
+	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_disabled, font: default-font, fontColor: white },
 	toggle: { down: default-round-down, up: default-round, checked: default-round-down, font: default-font, fontColor: white, downFontColor: red }
 },
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: { vScroll: scroll-bar-vert, hScrollKnob: scroll-bar-knob, background: null, hScroll: scroll-bar-horz, vScrollKnob: scroll-bar-knob }
 },
 com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable: {
-    main-panel-horz-padded: { region: main-panel-horz, leftWidth: 125, rightWidth: 125, topHeight: 98, bottomHeight: 70 }
-	main-panel-vert: { region: main-panel-vert}
+    main-panel-horz-padded: { region: base, leftWidth: 125, rightWidth: 125, topHeight: 98, bottomHeight: 70 }
+	main-panel-vert: { region: base}
 	money: { region: money}
 	lives: { region: lives}
 },
@@ -69,6 +69,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: { font: default-font, fontColor: white },
+	base_label: {background: base_label, font: default-font, fontColor: white},
 	label_normal: {background: label_normal, font: default-font, fontColor: white},
 	money_label_img: {background: money_label_img, font: default-font, fontColor: white},
 	kills_label_img: {background: kills_label_img, font: default-font, fontColor: white}

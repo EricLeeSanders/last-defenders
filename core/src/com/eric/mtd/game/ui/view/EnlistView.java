@@ -48,8 +48,8 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	private EnlistPresenter presenter;
 	private Group choosingGroup;
 	private Table container, enlistTable;
-	private Label lblTitle;
-	private MTDLabel lblMoney;
+	private Label lblTitle, lblMoney;
+	//private MTDLabel lblMoney;
 
 	private Stage stage;
 	public EnlistView(EnlistPresenter presenter, Stage stage) {
@@ -79,21 +79,30 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		container.add(scroll).expand().fill().colspan(1);
 		container.setBackground(skin.getDrawable("main-panel-horz-padded"));
 		
-		LabelStyle lblTitleStyle = new LabelStyle();
-		lblTitleStyle.font = Resources.getFont("default-font-22");
-		lblTitle = new Label("ENLIST", lblTitleStyle);
-		lblTitle.setPosition(container.getX() + (container.getWidth()/2) - (lblTitle.getWidth()/2)
-					,container.getY() + container.getHeight() - lblTitle.getHeight() - 20);
-		lblTitle.setAlignment(Align.center);
-		choosingGroup.addActor(lblTitle);
+//		LabelStyle lblTitleStyle = new LabelStyle();
+//		lblTitleStyle.font = Resources.getFont("default-font-22");
+//		lblTitle = new Label("ENLIST", lblTitleStyle);
+//		lblTitle.setPosition(container.getX() + (container.getWidth()/2) - (lblTitle.getWidth()/2)
+//					,container.getY() + container.getHeight() - lblTitle.getHeight() - 20);
+//		lblTitle.setAlignment(Align.center);
+//		choosingGroup.addActor(lblTitle);
+//		
+//		lblMoney = new MTDLabel("0", skin, "money_label_img", "default-font-22", Align.left);
+//		lblMoney.getLabel_img().setSize(160, 69);
+//		lblMoney.getLabel_img().setPosition(208 - (lblMoney.getLabel_img().getWidth()/2)
+//				,37 - lblMoney.getLabel_img().getHeight()/2);
+//		lblMoney.getLabel_text().setSize(100, 59);
+//		lblMoney.getLabel_text().setPosition(lblMoney.getLabel_img().getX()+60, lblMoney.getLabel_img().getY()+3);
+//		choosingGroup.addActor(lblMoney);
 		
-		lblMoney = new MTDLabel("0", skin, "money_label_img", "default-font-22", Align.left);
-		lblMoney.getLabel_img().setSize(160, 69);
-		lblMoney.getLabel_img().setPosition(208 - (lblMoney.getLabel_img().getWidth()/2)
-				,37 - lblMoney.getLabel_img().getHeight()/2);
-		lblMoney.getLabel_text().setSize(100, 59);
-		lblMoney.getLabel_text().setPosition(lblMoney.getLabel_img().getX()+60, lblMoney.getLabel_img().getY()+3);
+		
+		LabelStyle lblTitleStyle = new LabelStyle(skin.get("base_label", LabelStyle.class));
+		lblTitleStyle.font = Resources.getFont("default-font-22");
+		lblMoney = new Label("", lblTitleStyle);
+		lblMoney.setPosition(100,100);
+		lblMoney.setAlignment(Align.center);
 		choosingGroup.addActor(lblMoney);
+		
 		
 		btnRifle = new ImageButton(skin, "enlist");
 		enlistTable.add(btnRifle).size(116,156).spaceBottom(5);
@@ -290,7 +299,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	@Override
 	public void enlistingState() {
 		updateTowerButtons();
-		lblMoney.getLabel_text().setText(String.valueOf(presenter.getPlayerMoney()));
+		lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
 		choosingGroup.setVisible(true);
 		btnPlacingCancel.setVisible(false);
 		this.setVisible(true);
