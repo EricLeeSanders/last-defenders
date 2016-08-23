@@ -25,7 +25,7 @@ public class FreeTypeFontLoaderTest {
 		manager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
 		manager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
 
-		// load to fonts via the generator (implicitely done by the FreetypeFontLoader).
+		// load to fonts via the generator (implicitly done by the FreetypeFontLoader).
 		// Note: you MUST specify a FreetypeFontGenerator defining the ttf font file name and the size
 		// of the font to be generated. The names of the fonts are arbitrary and are not pointing
 		// to a file on disk!

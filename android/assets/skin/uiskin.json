@@ -17,31 +17,35 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	toggle: { down: default-round-down, checked: default-round-down, up: default-round },
 	sound: {checked: sound_normal, checkedOver: sound_over, down: sound_disabled, up: sound_disabled},
 	music: {checked: music_normal, checkedOver: music_over, down: music_disabled, up: music_disabled},
-	select: {checked: select_normal, imageOver: select_hover, imageDown: select_click, imageUp: select_normal, disabled: select_locked},
-	cancel: {checked: cancel_normal, imageOver: cancel_hover, imageDown: cancel_click, imageUp: cancel_normal, disabled: cancel_locked},
+	select: {checked: select_normal, imageOver: select_over, imageDown: select_pressed, imageUp: select_normal, disabled: select_disabled},
+	cancel: {checked: cancel_normal, imageOver: cancel_over, imageDown: cancel_pressed, imageUp: cancel_normal, disabled: cancel_disabled},
 	rotate: {checked: rotate_normal, imageOver: rotate_hover, imageDown: rotate_click, imageUp: rotate_normal, disabled: rotate_locked},
-	options: {checked: options_normal, imageOver: options_hover, imageDown: options_click, imageUp: options_normal, disabled: options_locked},
+	options: {checked: options_normal, imageOver: options_over, imageDown: options_pressed, imageUp: options_normal, disabled: options_disabled},
 	support: {down: support, up: support, disabled: support},
 	upgrade: {down: upgrade, up: upgrade, disabled: upgrade},
 	discharge: {down: discharge, up: discharge, disabled: discharge},
 	enlist: {down: enlist, up: enlist, disabled: enlist},
-	speed: {checked: single-speed_normal, checkedOver: single-speed_hover, over: double-speed_hover, down: double-speed_click, up: double-speed_normal, disabled: single-speed_locked },
-	wave: {down: wave_click, up: wave_normal, over: wave_hover, disabled: wave_locked},
-	enlist_hud: {down: enlist_click, up: enlist_normal, over: enlist_hover, disabled: enlist_locked},
-	support_hud: {down: support_click, up: support_normal, over: support_hover, disabled: support_locked},
-	arrow_right: {down: arrow-right_click, up: arrow-right_normal, over: arrow-right_hover, disabled: arrow-right_locked}
+	speed: {checked: single-speed_normal, checkedOver: single-speed_normal, over: double-speed_normal, down: double-speed_normal, up: double-speed_normal, disabled: single-speed_normal },
+	wave: {down: wave_normal, up: wave_normal, over: wave_normal, disabled: wave_normal},
+	enlist_hud: {down: enlist_normal, up: enlist_normal, over: enlist_normal, disabled: enlist_normal},
+	support_hud: {down: support_normal, up: support_normal, over: support_normal, disabled: support_normal},
+	arrow_right: {down: arrow-right_click, up: arrow-right_normal, over: arrow-right_hover, disabled: arrow-right_locked},
+	arrow_up: {down: up_pressed, up: up_normal, over: up_over, disabled: up_disabled},
+	arrow_down: {down: down_pressed, up: down_normal, over: down_over, disabled: down_disabled}
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_disabled, font: default-font, fontColor: white },
 	toggle: { down: default-round-down, up: default-round, checked: default-round-down, font: default-font, fontColor: white, downFontColor: red }
 },
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
-	default: { vScroll: scroll-bar-vert, hScrollKnob: scroll-bar-knob, background: null, hScroll: scroll-bar-horz, vScrollKnob: scroll-bar-knob }
+	default: { vScroll: null, hScrollKnob: null, background: hollow, hScroll: null, vScrollKnob: null }
 },
 com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable: {
-    main-panel-horz-padded: { region: base, leftWidth: 125, rightWidth: 125, topHeight: 98, bottomHeight: 70 }
-	main-panel-vert: { region: base}
-	money: { region: money}
+    main-panel-horz-padded: { region: main-panel, leftWidth: 50, rightWidth: 50, topHeight: 67, bottomHeight: 67 },
+	main-panel: { region: main-panel, leftWidth: 75, rightWidth: 75, topHeight: 67, bottomHeight: 67 },
+	main-panel-hollow: { region: main-panel-hollow, leftWidth: 75, rightWidth: 75, topHeight: 67, bottomHeight: 67 },
+	main-panel-vert: { region: main-panel},
+	money: { region: money},
 	lives: { region: lives}
 },
 com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
