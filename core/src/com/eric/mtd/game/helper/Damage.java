@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
@@ -52,6 +53,7 @@ public class Damage {
 		//Have to create a copy of the group otherwise when a target is killed, the iterator will skip
 		//over the next in the group.
 		SnapshotArray<Actor> targetGroupArray = new SnapshotArray<Actor>(targetGroup);
+		targetGroup.begin();
 		ITargetable flameTarget;
 		for (Actor actor : targetGroupArray) {
 			flameTarget = (ITargetable) actor;

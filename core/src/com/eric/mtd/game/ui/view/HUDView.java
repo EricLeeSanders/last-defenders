@@ -24,10 +24,11 @@ import com.eric.mtd.util.Resources;
 public class HUDView extends Group implements IHUDView {
 	private Image imgMoney, imgLife;
 	
-	private MTDImageButton btnEnlist, btnSupport, btnQuit, btnOptions;
+	private MTDImageButton btnEnlist, btnSupport, btnQuit;//, btnOptions;
 	private ImageButton btnSpeed, btnWave;
 	private MTDLabelOld lblMoney, lblLives, lblWaveCount;
 	private HUDPresenter presenter;
+	private ImageButton btnOptions;
 
 	public HUDView(HUDPresenter presenter) {
 		this.presenter = presenter;
@@ -56,7 +57,10 @@ public class HUDView extends Group implements IHUDView {
 		setBtnSupportListener();
 		addActor(btnSupport);
 		
-		btnOptions = new MTDImageButton("UI_HUD", "btnOptions", skin, "options", true, false);
+		//btnOptions = new MTDImageButton("UI_HUD", "btnOptions", skin, "options", true, false);
+		btnOptions = new ImageButton(skin, "options");
+		btnOptions.setSize(50, 50);
+		btnOptions.setPosition(Resources.VIRTUAL_WIDTH - 60, Resources.VIRTUAL_HEIGHT - 60);
 		setBtnOptionsListener();
 		addActor(btnOptions);
 		imgMoney = new MTDImage("UI_HUD", "imgMoney", skin, "money", true, false);
@@ -194,7 +198,7 @@ public class HUDView extends Group implements IHUDView {
 		btnSupport.setTouchable(Touchable.disabled);
 		btnWave.setTouchable(Touchable.disabled);
 		btnSpeed.setTouchable(Touchable.disabled);
-		btnOptions.setTouchable(Touchable.disabled);
+		//btnOptions.setTouchable(Touchable.disabled);
 	}
 
 	@Override

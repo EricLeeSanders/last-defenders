@@ -44,11 +44,12 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	private MTDImage pnlEnlist;
 	private ImageButton btnTank, btnFlameThrower, btnTurret, btnSniper, btnMachineGun, btnRocketLauncher, btnRifle;
 	private MTDImageButton btnPlacingCancel, btnPlace, btnRotate;
-	private ImageButton btnCancel;
+	private ImageButton btnCancel, btnScrollUp, btnScrollDown;
 	private EnlistPresenter presenter;
 	private Group choosingGroup;
 	private Table container, enlistTable;
 	private Label lblTitle, lblMoney;
+	private ScrollPane scroll;
 	//private MTDLabel lblMoney;
 
 	private Stage stage;
@@ -72,20 +73,20 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		enlistTable = new Table();
 		// table.debug();
 
-		final ScrollPane scroll = new ScrollPane(enlistTable, skin);
+		scroll = new ScrollPane(enlistTable, skin);
 		//scroll.setVariableSizeKnobs(false);
 		enlistTable.defaults().expandX();
 		
 		container.add(scroll).expand().fill().colspan(1);
-		container.setBackground(skin.getDrawable("main-panel-horz-padded"));
+		container.setBackground(skin.getDrawable("main-panel"));
 		
-//		LabelStyle lblTitleStyle = new LabelStyle();
-//		lblTitleStyle.font = Resources.getFont("default-font-22");
-//		lblTitle = new Label("ENLIST", lblTitleStyle);
-//		lblTitle.setPosition(container.getX() + (container.getWidth()/2) - (lblTitle.getWidth()/2)
-//					,container.getY() + container.getHeight() - lblTitle.getHeight() - 20);
-//		lblTitle.setAlignment(Align.center);
-//		choosingGroup.addActor(lblTitle);
+		LabelStyle lblTitleStyle = new LabelStyle();
+		lblTitleStyle.font = Resources.getFont("default-font-46");
+		lblTitle = new Label("ENLIST", lblTitleStyle);
+		lblTitle.setPosition(container.getX() + (container.getWidth()/2) - (lblTitle.getWidth()/2)
+					,container.getY() + container.getHeight() - lblTitle.getHeight() - 4);
+		lblTitle.setAlignment(Align.center);
+		choosingGroup.addActor(lblTitle);
 //		
 //		lblMoney = new MTDLabel("0", skin, "money_label_img", "default-font-22", Align.left);
 //		lblMoney.getLabel_img().setSize(160, 69);
@@ -96,11 +97,14 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 //		choosingGroup.addActor(lblMoney);
 		
 		
-		LabelStyle lblTitleStyle = new LabelStyle(skin.get("base_label", LabelStyle.class));
-		lblTitleStyle.font = Resources.getFont("default-font-22");
-		lblMoney = new Label("", lblTitleStyle);
-		lblMoney.setPosition(100,100);
-		lblMoney.setAlignment(Align.center);
+		LabelStyle lblMoneyStyle = new LabelStyle(skin.get("base_label", LabelStyle.class));
+		lblMoneyStyle.background.setLeftWidth(10);
+		lblMoneyStyle.font = Resources.getFont("default-font-46");
+		lblMoney = new Label("$0", lblMoneyStyle);
+		lblMoney.setSize(120, 35);
+		lblMoney.setPosition(100,15);
+		lblMoney.setAlignment(Align.left);
+		lblMoney.setFontScale(.5f);
 		choosingGroup.addActor(lblMoney);
 		
 		
@@ -138,9 +142,20 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		btnCancel = new ImageButton(skin,"cancel");
 		setCancelListener();
 		btnCancel.setSize(64, 64);
-		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 120, 28);
+		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
 		choosingGroup.addActor(btnCancel);
-		btnCancel.setVisible(true);
+		//btnCancel.setVisible(true);
+		
+		btnScrollUp = new ImageButton(skin,"arrow_up");
+		btnScrollUp.setSize(64, 64);
+		btnScrollUp.setPosition(Resources.VIRTUAL_WIDTH-75, (Resources.VIRTUAL_HEIGHT/2) + 20);
+		choosingGroup.addActor(btnScrollUp);
+		
+		btnScrollDown = new ImageButton(skin,"arrow_down");
+		btnScrollDown.setSize(64, 64);
+		btnScrollDown.setPosition(Resources.VIRTUAL_WIDTH-75, (Resources.VIRTUAL_HEIGHT/2) - 84);
+		choosingGroup.addActor(btnScrollDown);
+		
 		btnPlacingCancel = new MTDImageButton("UI_Enlist", "btnCancel", skin, "cancel", false, false);
 		setPlacingCancelListener();
 		addActor(btnPlacingCancel);
@@ -183,6 +198,12 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		super.act(delta);
 		if (btnRotate.isPressed()) {
 			presenter.rotateTower();
+		} 
+		if (btnScrollUp.isPressed()){
+			scroll.setScrollY(scroll.getScrollY() - 10);
+		}
+		if (btnScrollDown.isPressed()){
+			scroll.setScrollY(scroll.getScrollY() + 10);
 		}
 	}
 
@@ -229,6 +250,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 				if (Logger.DEBUG)
 					System.out.println("Cancel Pressed");
 				presenter.cancelEnlist();
+				
 			}
 		});
 	}
@@ -299,7 +321,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	@Override
 	public void enlistingState() {
 		updateTowerButtons();
-		lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
+		lblMoney.setText("$"+String.valueOf(presenter.getPlayerMoney()));
 		choosingGroup.setVisible(true);
 		btnPlacingCancel.setVisible(false);
 		this.setVisible(true);

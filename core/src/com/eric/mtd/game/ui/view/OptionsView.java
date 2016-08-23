@@ -47,7 +47,7 @@ public class OptionsView extends Group implements IOptionsView {
 		
 		Table table = new Table();
 		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
-		table.setBackground(skin.getDrawable("main-panel-vert"));
+		table.setBackground(skin.getDrawable("main-panel-hollow"));
 		table.setSize(322,360);
 		table.setPosition((Resources.VIRTUAL_WIDTH/2)-(table.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(table.getHeight()/2));
 		//table.debug();
@@ -57,7 +57,7 @@ public class OptionsView extends Group implements IOptionsView {
 		lblTitleStyle.font = Resources.getFont("default-font-22");
 		lblTitle = new Label("Options", lblTitleStyle);
 		lblTitle.setPosition(table.getX() + (table.getWidth()/2) - (lblTitle.getWidth()/2)
-					,table.getY() + table.getHeight() - lblTitle.getHeight() - 14);
+					,table.getY() + table.getHeight() - lblTitle.getHeight() - 20);
 		lblTitle.setAlignment(Align.center);
 		this.addActor(lblTitle);
 		
