@@ -16,7 +16,9 @@ import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.view.interfaces.IInspectView;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
+import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Logger;
+import com.eric.mtd.util.AudioUtil.MTDSound;
 
 /**
  * Presenter for Inspect
@@ -55,6 +57,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Close and finishing inspecting
 	 */
 	public void closeInspect() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		selectedTower.detach(this);
 		view.standByState();
 		uiStateManager.setStateReturn();
@@ -67,6 +70,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Change the target priority of the tower
 	 */
 	public void changeTargetPriority() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		if (selectedTower != null) {
 			TowerTargetPriority priority = TowerTargetPriority.values()[(selectedTower.getTargetPriority().getPosition() + 1) % 4];
 			selectedTower.setTargetPriority(priority);
@@ -79,6 +83,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Increase the tower's attack
 	 */
 	public void increaseAttack() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		if (selectedTower != null) {
 			if (selectedTower.getAttackLevel() < Tower.TOWER_ATTACK_LEVEL_MAX) {
 				player.spendMoney(selectedTower.getAttackIncreaseCost());
@@ -92,6 +97,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Give the tower armor
 	 */
 	public void giveArmor() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		if (selectedTower != null) {
 			if (!(selectedTower.hasArmor())) {
 				player.spendMoney(selectedTower.getArmorCost());
@@ -105,6 +111,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Increase the tower's range
 	 */
 	public void increaseRange() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		if (selectedTower != null) {
 			if (selectedTower.getRangeLevel() < Tower.TOWER_RANGE_LEVEL_MAX) {
 				player.spendMoney(selectedTower.getRangeIncreaseCost());
@@ -118,6 +125,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Increase the tower's attack speed
 	 */
 	public void increaseSpeed() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		if (selectedTower != null) {
 			if (selectedTower.getSpeedLevel() < Tower.TOWER_ATTACK_SPEED_LEVEL_MAX) {
 				player.spendMoney(selectedTower.getSpeedIncreaseCost());
@@ -131,7 +139,9 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Discharge and Sell the tower
 	 */
 	public void dishcharge() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		if (selectedTower != null) {
+			AudioUtil.playSound(MTDSound.SELL);
 			player.giveMoney(selectedTower.getSellCost());
 			selectedTower.sellTower();
 			closeInspect();
@@ -159,7 +169,22 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 			}
 		}
 	}
-
+	/**
+	 * Gets the type/name of the selected tower
+	 * @return
+	 */
+	public String getTowerName(){
+		return selectedTower.getName();
+	}
+	
+	/**
+	 * Get the players amount of money
+	 * @return int - player money
+	 */
+	public int getPlayerMoney(){
+		return player.getMoney();
+	}
+	
 	/**
 	 * Determine if the the upgrade is affordable
 	 * 

@@ -8,6 +8,7 @@ import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.screen.state.IScreenStateObserver;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
 import com.eric.mtd.state.GameStateManager;
+import com.eric.mtd.util.AudioUtil;
 import com.eric.mtd.util.Resources;
 
 public class MTDGame extends Game implements IScreenStateObserver {
@@ -27,6 +28,7 @@ public class MTDGame extends Game implements IScreenStateObserver {
 	@Override
 	public void dispose() {
 		Resources.dispose();
+		AudioUtil.dispose();
 		this.getScreen().dispose();
 		super.dispose();
 	}

@@ -7,6 +7,8 @@ import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.view.interfaces.IGameOverView;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
+import com.eric.mtd.util.AudioUtil;
+import com.eric.mtd.util.AudioUtil.MTDSound;
 
 /**
  * Presenter for Game Over.
@@ -48,6 +50,7 @@ public class GameOverPresenter implements IGameUIStateObserver {
 	 * Start a new game
 	 */
 	public void newGame() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		screenStateManager.setState(ScreenState.LEVEL_SELECTION);
 
 	}
@@ -56,6 +59,7 @@ public class GameOverPresenter implements IGameUIStateObserver {
 	 * Change to main menu
 	 */
 	public void mainMenu() {
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 		screenStateManager.setState(ScreenState.MENU);
 
 	}
@@ -64,7 +68,7 @@ public class GameOverPresenter implements IGameUIStateObserver {
 	 * Change to high scores
 	 */
 	public void highScores() {
-
+		AudioUtil.playSound(MTDSound.SMALL_CLICK);
 	}
 
 	@Override

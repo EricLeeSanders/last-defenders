@@ -106,7 +106,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 			batch.end();
 			debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			debugBody.begin(ShapeType.Line);
-			debugBody.setColor(Color.YELLOW);
+			debugBody.setColor(Color.RED);
 			debugBody.polygon(getBody().getTransformedVertices());
 			debugBody.end();
 			batch.begin();

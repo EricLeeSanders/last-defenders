@@ -13,6 +13,8 @@ public interface IHUDView {
 	public void supportState();
 
 	public void enlistingState();
+	
+	public void inspectingState();
 
 	public void optionsState();
 
