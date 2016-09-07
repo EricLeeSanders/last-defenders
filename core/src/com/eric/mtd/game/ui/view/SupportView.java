@@ -1,20 +1,29 @@
 package com.eric.mtd.game.ui.view;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.eric.mtd.game.ui.presenter.EnlistPresenter;
 import com.eric.mtd.game.ui.presenter.SupportPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IEnlistView;
 import com.eric.mtd.game.ui.view.interfaces.ISupportView;
-import com.eric.mtd.game.ui.view.widget.MTDImage;
-import com.eric.mtd.game.ui.view.widget.MTDImageButton;
-import com.eric.mtd.game.ui.view.widget.enlist.MTDTowerButton;
-import com.eric.mtd.game.ui.view.widget.support.MTDSupportButton;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -26,12 +35,12 @@ import com.eric.mtd.util.Resources;
  *
  */
 public class SupportView extends Group implements ISupportView, InputProcessor {
-	private MTDImage pnlSupport;
-	private MTDSupportButton btnLandmines, btnAirstrike, btnApache;
-	private MTDImageButton btnCancel, btnPlace;
+	private Map<ImageButton, String> supportButtons;
+	private ImageButton btnPlacingCancel, btnCancel, btnPlace;
 	private SupportPresenter presenter;
 	private Group choosingGroup;
-
+	private Label lblTitle, lblMoney;
+	
 	public SupportView(SupportPresenter presenter) {
 		this.presenter = presenter;
 		choosingGroup = new Group();
@@ -43,58 +52,98 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	 * Creates the controls with the MTD widgets
 	 */
 	public void createControls() {
-		pnlSupport = new MTDImage("UI_Support", "panel", Resources.SUPPORT_UI_ATLAS, "panel", true, false);
-		pnlSupport.getColor().set(1f, 1f, 1f, .75f);
-		choosingGroup.addActor(pnlSupport);
+		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
+		Table container = new Table();
+		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+		choosingGroup.addActor(container);
+		Table supportTable = new Table();
+		// table.debug();
 
-		btnLandmines = new MTDSupportButton("UI_Support", "btnLandmines", Resources.SUPPORT_UI_ATLAS, "landminesEnabled"
-										, "landminesDisabled", "LandMine", true, false);
-		setLandminesListener();
-		choosingGroup.addActor(btnLandmines);
+		final ScrollPane scroll = new ScrollPane(supportTable, skin);
+		//scroll.setVariableSizeKnobs(false);
+		supportTable.defaults().expandX();
+		
+		container.add(scroll).expand().fill().colspan(1);
+		container.setBackground(skin.getDrawable("main-panel"));
 
-		btnAirstrike = new MTDSupportButton("UI_Support", "btnAirstrike", Resources.SUPPORT_UI_ATLAS, "airstrikeEnabled"
-										, "airstrikeDisabled", "AirStrike", true, false);
-		setAirstrikeListener();
-		choosingGroup.addActor(btnAirstrike);
-
-		btnApache = new MTDSupportButton("UI_Support", "btnApache", Resources.SUPPORT_UI_ATLAS, "apacheEnabled"
-										, "apacheDisabled", "Apache", true, false);
-		setApacheListener();
-		choosingGroup.addActor(btnApache);
-
-		btnCancel = new MTDImageButton("UI_Support", "btnCancel", Resources.SUPPORT_UI_ATLAS, "cancel", false, false);
+		lblTitle = new Label("SUPPORT", skin);
+		lblTitle.setPosition(container.getX() + (container.getWidth()/2) - (lblTitle.getWidth()/2)
+					,container.getY() + container.getHeight() - lblTitle.getHeight() + 1 );
+		lblTitle.setAlignment(Align.center);
+		lblTitle.setFontScale(.9f);
+		choosingGroup.addActor(lblTitle);
+	
+		
+		LabelStyle lblMoneyStyle = new LabelStyle(skin.get("money_label", LabelStyle.class));
+		lblMoneyStyle.background.setLeftWidth(60);
+		lblMoneyStyle.background.setTopHeight(10);
+		lblMoney = new Label("0", lblMoneyStyle);
+		lblMoney.setSize(200, 52);
+		lblMoney.setPosition(100,10);
+		lblMoney.setAlignment(Align.left);
+		lblMoney.setFontScale(0.6f);
+		choosingGroup.addActor(lblMoney);
+		
+		
+		supportButtons = new HashMap<ImageButton, String>();
+		
+		ImageButton btnLandmine = new ImageButton(skin, "support_landmine");
+		setLandmineListener(btnLandmine);
+		supportTable.add(btnLandmine).size(140,116).spaceBottom(5);	
+		supportButtons.put(btnLandmine, "LandMine");
+		
+		ImageButton btnAirstrike = new ImageButton(skin, "support_airstrike");
+		setAirstrikeListener(btnAirstrike);
+		supportTable.add(btnAirstrike).size(140,116).spaceBottom(5);
+		supportButtons.put(btnAirstrike, "AirStrike");
+		
+		ImageButton btnApache = new ImageButton(skin, "support_apache");
+		setApacheListener(btnApache);
+		supportTable.add(btnApache).size(140,116).spaceBottom(5);
+		supportButtons.put(btnApache, "Apache");
+		
+		btnCancel = new ImageButton(skin,"cancel");
 		setCancelListener();
-		addActor(btnCancel);
-		btnPlace = new MTDImageButton("UI_Support", "btnPlace", Resources.SUPPORT_UI_ATLAS, "place", false, false);
+		btnCancel.setSize(64, 64);
+		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
+		choosingGroup.addActor(btnCancel);
+		
+		
+		btnPlace = new ImageButton(skin, "select");
+		btnPlace.setSize(50, 50);
+		btnPlace.setPosition(Resources.VIRTUAL_WIDTH - 60, 10);
 		setPlaceListener();
 		addActor(btnPlace);
+		
+		btnPlacingCancel = new ImageButton(skin, "cancel");
+		btnPlacingCancel.setSize(50, 50);
+		btnPlacingCancel.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlace.getY() + 60);
+		setPlacingCancelListener();
+		addActor(btnPlacingCancel);
 
 	}
+
 
 	/**
 	 * Updates the Support buttons to disable/enable.
 	 */
 	private void updateSupportButtons() {
-		for (Actor button : choosingGroup.getChildren()) {
-			if (button instanceof MTDSupportButton) {
-				if (presenter.canAffordTower(((MTDSupportButton) button).getSupportName())) {
-					if (Logger.DEBUG)
-						System.out.println("Setting " + ((MTDSupportButton) button).getSupportName() + " to Enabled");
-					((MTDSupportButton) button).setDisabled(false);
-					button.setTouchable(Touchable.enabled);
-				} else {
-					if (Logger.DEBUG)
-						System.out.println("Setting " + ((MTDSupportButton) button).getSupportName() + " to Disabled");
-					((MTDSupportButton) button).setDisabled(true);
-					button.setTouchable(Touchable.disabled);
-				}
-			}
-		}
+	    Iterator<Entry<ImageButton, String>> iter = supportButtons.entrySet().iterator();
+	    while(iter.hasNext()){
+	    	Map.Entry<ImageButton, String> support = iter.next();
+	    	boolean affordable = presenter.canAffordSupport(support.getValue());
+	    	support.getKey().setDisabled(!affordable);
+	    	if(affordable){
+	    		support.getKey().setTouchable(Touchable.enabled);
+	    	} else {
+	    		support.getKey().setTouchable(Touchable.disabled);
+	    	}
+	    }
 
 	}
 
-	private void setLandminesListener() {
-		btnLandmines.addListener(new ClickListener() {
+	private void setLandmineListener(ImageButton button) {
+		button.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
@@ -104,8 +153,8 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 
 	}
 
-	private void setAirstrikeListener() {
-		btnAirstrike.addListener(new ClickListener() {
+	private void setAirstrikeListener(ImageButton button) {
+		button.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
@@ -114,8 +163,8 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		});
 	}
 
-	private void setApacheListener() {
-		btnApache.addListener(new ClickListener() {
+	private void setApacheListener(ImageButton button) {
+		button.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
@@ -123,7 +172,17 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 			}
 		});
 	}
-
+	private void setPlacingCancelListener() {
+		btnPlacingCancel.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				if (Logger.DEBUG)
+					System.out.println("Placing Cancel Pressed");
+				presenter.cancelSupport();
+			}
+		});
+	}
 	private void setPlaceListener() {
 		btnPlace.addListener(new ClickListener() {
 			@Override
@@ -202,23 +261,23 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	@Override
 	public void supportState() {
 		updateSupportButtons();
+		lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
 		choosingGroup.setVisible(true);
-		btnCancel.setVisible(true);
+		btnPlacingCancel.setVisible(false);
 		this.setVisible(true);
 	}
 
 	@Override
 	public void placingSupportState() {
-		btnCancel.setVisible(true);
+		btnPlacingCancel.setVisible(true);
 		choosingGroup.setVisible(false);
 	}
 
 	@Override
 	public void standByState() {
-		btnCancel.setVisible(false);
+		btnPlacingCancel.setVisible(false);
 		choosingGroup.setVisible(false);
 		btnPlace.setVisible(false);
-		btnCancel.setVisible(false);
 		this.setVisible(false);
 		
 	}

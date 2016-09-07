@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -28,27 +29,25 @@ public class MenuView extends Group implements IMenuView {
 	}
 
 	public void createControls() {
-
-		btnPlay = new TextButton("Play", Resources.getSkin(Resources.SKIN_JSON));
+		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
+		
+		btnPlay = new TextButton("Play", skin);
 		btnPlay.setSize(200, 75);
 		btnPlay.setPosition(0 - btnPlay.getWidth(), 100);
 		btnPlay.addAction(Actions.moveTo(225, 100, PLAY_MOVE_DURATION));
 		this.addActor(btnPlay);
 		setBtnPlayListener();
 		
-		btnSound = new ImageButton(new TextureRegionDrawable(Resources.getAtlas(Resources.MENU_ATLAS).findRegion("soundOff")),
-				new TextureRegionDrawable(Resources.getAtlas(Resources.MENU_ATLAS).findRegion("soundOff")),
-				new TextureRegionDrawable(Resources.getAtlas(Resources.MENU_ATLAS).findRegion("soundOn")));
-		btnSound.setSize(48, 48);
+		btnSound = new ImageButton(skin, "sound");
+		btnSound.setSize(64, 64);
 		btnSound.setPosition(10, 10);
 		this.addActor(btnSound);
 		setBtnSoundListener();
 		
-		btnMusic = new ImageButton(new TextureRegionDrawable(Resources.getAtlas(Resources.MENU_ATLAS).findRegion("musicOff")),
-				new TextureRegionDrawable(Resources.getAtlas(Resources.MENU_ATLAS).findRegion("musicOff")),
-				new TextureRegionDrawable(Resources.getAtlas(Resources.MENU_ATLAS).findRegion("musicOn")));
-		btnMusic.setSize(48, 48);
-		btnMusic.setPosition(90,10);
+		
+		btnMusic = new ImageButton(skin, "music");
+		btnMusic.setSize(64, 64);
+		btnMusic.setPosition(110,10);
 		this.addActor(btnMusic);
 		setBtnMusicListener();
 	}

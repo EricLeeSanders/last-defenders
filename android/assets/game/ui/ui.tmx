@@ -36,7 +36,7 @@
   <object id="8" name="lblWavesCompleted" x="224" y="87" width="192" height="32"/>
   <object id="11" name="lblWavesCompletedCount" x="224" y="123" width="192" height="32"/>
  </objectgroup>
- <objectgroup name="UI_Options">
+ <objectgroup name="UI_Options" visible="0">
   <object id="12" name="panel" x="208" y="32" width="223" height="304"/>
   <object id="13" name="btnSound" x="257" y="272" width="48" height="48"/>
   <object id="14" name="btnNewGame" x="240" y="80" width="160" height="48"/>
@@ -70,13 +70,13 @@
   <object id="42" name="lblSpeedCost" x="398" y="333" width="64" height="20"/>
   <object id="43" name="lblArmorLevel1" x="85" y="257" width="25" height="15"/>
  </objectgroup>
- <objectgroup name="UI_Enlist" visible="0">
+ <objectgroup name="UI_Enlist">
   <object id="44" name="btnTank" x="15" y="197" width="140" height="160"/>
   <object id="45" name="btnRifle" x="15" y="15" width="140" height="160"/>
-  <object id="46" name="btnCancel" x="582" y="313" width="50" height="50"/>
+  <object id="46" name="btnCancel" x="582" y="313" width="50" height="45"/>
   <object id="47" name="panel" x="0" y="0" width="640" height="368"/>
-  <object id="48" name="btnRotate" x="582" y="192" width="50" height="50"/>
-  <object id="49" name="btnPlace" x="582" y="254" width="50" height="50"/>
+  <object id="48" name="btnRotate" x="582" y="192" width="50" height="45"/>
+  <object id="49" name="btnPlace" x="582" y="254" width="50" height="45"/>
   <object id="50" name="btnMachine" x="176" y="15" width="140" height="160"/>
   <object id="51" name="btnTurret" x="176" y="197" width="140" height="160"/>
   <object id="52" name="btnSniper" x="334" y="15" width="140" height="160"/>
@@ -84,15 +84,15 @@
   <object id="54" name="btnRocketLauncher" x="491" y="15" width="140" height="160"/>
  </objectgroup>
  <objectgroup name="UI_HUD" visible="0">
-  <object id="55" name="imgMoney" x="74" y="12" width="30" height="30"/>
-  <object id="56" name="btnWave" x="69" y="313" width="50" height="50"/>
+  <object id="55" name="imgMoney" x="74" y="12" width="32" height="32"/>
+  <object id="56" name="btnWave" x="69" y="313" width="50" height="45"/>
   <object id="57" name="lblMoney" x="109" y="17" width="72" height="19"/>
   <object id="58" name="lblLife" x="40" y="18" width="30" height="19"/>
-  <object id="59" name="btnOptions" x="582" y="12" width="50" height="50"/>
-  <object id="60" name="btnEnlist" x="582" y="313" width="50" height="50"/>
-  <object id="61" name="imgLife" x="5" y="12" width="30" height="30"/>
-  <object id="62" name="btnSupport" x="582" y="254" width="50" height="50"/>
-  <object id="63" name="btnSpeed" x="5" y="313" width="50" height="50"/>
+  <object id="59" name="btnOptions" x="582" y="12" width="50" height="45"/>
+  <object id="60" name="btnEnlist" x="582" y="313" width="50" height="45"/>
+  <object id="61" name="imgLife" x="5" y="12" width="32" height="32"/>
+  <object id="62" name="btnSupport" x="582" y="254" width="50" height="45"/>
+  <object id="63" name="btnSpeed" x="5" y="313" width="50" height="45"/>
   <object id="64" name="lblWaveCount" x="5" y="47" width="145" height="19"/>
  </objectgroup>
  <objectgroup name="UI_Support" visible="0">

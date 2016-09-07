@@ -25,7 +25,7 @@ public class TowerSniper extends Tower {
 	public static final float ATTACK_SPEED = 1;
 	public static final float RANGE = 100;
 
-	public static final int COST = 200;
+	public static final int COST = 400;
 	public static final int ARMOR_COST = 200;
 	public static final int RANGE_INCREASE_COST = 100;
 	public static final int SPEED_INCREASE_COST = 100;
@@ -48,5 +48,10 @@ public class TowerSniper extends Tower {
 			getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
 		}
 
+	}
+	
+	@Override
+	public String getName(){
+		return "Sniper";
 	}
 }

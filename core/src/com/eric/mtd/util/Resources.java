@@ -9,6 +9,7 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.Pixmap.Blending;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -21,10 +22,11 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
 //-agentlib:hprof=heap=dump,format=b
-public abstract class Resources {
+public class Resources {
 	public static final String MENU_ATLAS = "menu/menu.atlas";
 	public static final String ACTOR_ATLAS = "game/actors/actors.atlas";
 	public static final String LEVEL_SELECT_ATLAS = "level_select/level_select.atlas";
@@ -51,6 +53,11 @@ public abstract class Resources {
 	public static final String MACHINE_GUN_SHOT_SOUND = "audio/machine_gun_shot.mp3";
 	public static final String SNIPER_SHOT_SOUND = "audio/sniper_shot.mp3";
 
+	
+	public static final String ACTOR_PLACE_SOUND = "audio/actor_place.mp3";
+	public static final String SELL_SOUND = "audio/sell.mp3";
+	public static final String SMALL_CLICK = "audio/button_small_click.mp3";
+	public static final String LARGE_CLICK = "audio/button_large_click.mp3";
 	public static final String VEHICLE_EXPLOSION_SOUND = "audio/vehicle_explosion.mp3";
 	
 	private static final ShapeRenderer SHAPE_RENDERER = new ShapeRenderer();
@@ -81,6 +88,7 @@ public abstract class Resources {
 	public static void loadGraphics(){
 		if (Logger.DEBUG)
 			System.out.println("Loading Graphics");
+		loadFonts();
 		Resources.loadUIMap();
 		Resources.loadSkin(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
 		Resources.loadAtlas(Resources.MENU_ATLAS);
@@ -97,19 +105,47 @@ public abstract class Resources {
 			System.out.println("Loading Audio");
 		AudioUtil.load();
 	}
-	public static ObjectMap<String, Object> loadFont(){
-		FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("font/palamecia titling.ttf"));
-		FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-		parameter.size = 46;
-		parameter.borderColor = Color.BLACK;
-		parameter.borderWidth = 3f;
-		parameter.minFilter = Texture.TextureFilter.Linear;
-		parameter.magFilter = Texture.TextureFilter.Linear;
-		BitmapFont font = generator.generateFont(parameter); 
-		generator.dispose(); 
+	
+	/**
+	 * Creates the default font for the skin.json
+	 * Creates a copy of default-font-46.
+	 * @return
+	 */
+	public static ObjectMap<String, Object> createDefaultFont(){
+		// Creates a copy instead of using default-font-46 directly because
+		// using it directly causes on exception to be thrown. The exception is thrown because
+		// the font is disposed in two places
 		ObjectMap<String, Object> map = new ObjectMap<String, Object>();
-		map.put("default-font", font); 
+		BitmapFont font_46 = getFont("default-font-46");
+		BitmapFont defaultFont = new BitmapFont(font_46.getData(),font_46.getRegions(), false);
+		map.put("default-font", defaultFont); 
 		return map;
+	}
+	private static void loadFonts(){
+
+		FileHandleResolver resolver = new InternalFileHandleResolver();
+		MANAGER.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
+		MANAGER.setLoader(BitmapFont.class, new FreetypeFontLoader(resolver));
+		FreeTypeFontLoaderParameter parameter_16 = createFontParam("font/palamecia titling.ttf", 16, Color.BLACK, 1f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		MANAGER.load("default-font-16", BitmapFont.class, parameter_16 );
+		FreeTypeFontLoaderParameter parameter_22 = createFontParam("font/palamecia titling.ttf", 22, Color.BLACK, 1.3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		MANAGER.load("default-font-22", BitmapFont.class, parameter_22 );
+		FreeTypeFontLoaderParameter parameter_46 = createFontParam("font/palamecia titling.ttf", 46, Color.BLACK, 3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		MANAGER.load("default-font-46", BitmapFont.class, parameter_46 );
+		MANAGER.finishLoading(); 
+	}
+	
+	private static FreeTypeFontLoaderParameter createFontParam(String fontFileName, int size, Color borderColor, float borderWidth, TextureFilter minFilter, TextureFilter magFilter){
+		FreeTypeFontLoaderParameter parameter = new FreeTypeFontLoaderParameter();
+		parameter.fontParameters.size = size;
+		parameter.fontParameters.borderColor = borderColor;
+		parameter.fontParameters.borderWidth = borderWidth;
+		parameter.fontParameters.genMipMaps = true;
+		parameter.fontParameters.minFilter = minFilter;
+		parameter.fontParameters.magFilter = magFilter;
+		parameter.fontFileName = fontFileName;
+		
+		return parameter;
 	}
 	public static void loadMap(int level) {
 		try {
@@ -143,7 +179,7 @@ public abstract class Resources {
 				System.out.println(atlas);
 			if (Logger.DEBUG)
 				System.out.println(skinJson);
-			MANAGER.load(skinJson, Skin.class, new SkinLoader.SkinParameter(atlas, loadFont()));
+			MANAGER.load(skinJson, Skin.class, new SkinLoader.SkinParameter(atlas, createDefaultFont()));
 			MANAGER.finishLoading();
 			if (Logger.DEBUG)
 				System.out.println("Skin Loaded");
@@ -192,6 +228,10 @@ public abstract class Resources {
 
 	public static Skin getSkin(String file) {
 		return MANAGER.get(file, Skin.class);
+	}
+	
+	public static BitmapFont getFont(String font){
+		return MANAGER.get(font, BitmapFont.class);
 	}
 	public static Preferences getPreferences(){
 		return prefs;

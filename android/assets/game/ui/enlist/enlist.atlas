@@ -3,128 +3,135 @@ enlist.png
 format: RGBA8888
 filter: MipMapLinearNearest,Nearest
 repeat: none
+btnEnlist
+  rotate: false
+  xy: 1, 229
+  size: 191, 256
+  orig: 191, 256
+  offset: 0, 0
+  index: -1
 background
   rotate: false
-  xy: 1, 325
+  xy: 1, 75
   size: 152, 152
   orig: 152, 152
   offset: 0, 0
   index: -1
 flamethrowerDisabled
   rotate: false
-  xy: 1, 163
+  xy: 194, 325
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 flamethrowerEnabled
   rotate: false
-  xy: 1, 1
+  xy: 336, 325
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 machineDisabled
   rotate: false
-  xy: 155, 317
+  xy: 478, 325
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 machineEnabled
   rotate: false
-  xy: 297, 317
+  xy: 620, 325
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 rifleDisabled
   rotate: false
-  xy: 439, 317
+  xy: 762, 325
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 rifleEnabled
   rotate: false
-  xy: 581, 317
+  xy: 194, 163
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 rocketlauncherDisabled
   rotate: false
-  xy: 723, 317
+  xy: 336, 163
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 rocketlauncherEnabled
   rotate: false
-  xy: 865, 317
+  xy: 478, 163
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 sniperDisabled
   rotate: false
-  xy: 143, 155
+  xy: 620, 163
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 sniperEnabled
   rotate: false
-  xy: 285, 155
+  xy: 762, 163
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 tankDisabled
   rotate: false
-  xy: 427, 155
+  xy: 155, 1
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 tankEnabled
   rotate: false
-  xy: 569, 155
+  xy: 297, 1
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 turretDisabled
   rotate: false
-  xy: 711, 155
+  xy: 439, 1
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 turretEnabled
   rotate: false
-  xy: 853, 155
+  xy: 581, 1
   size: 140, 160
   orig: 140, 160
   offset: 0, 0
   index: -1
 cancel
   rotate: false
-  xy: 143, 78
+  xy: 904, 410
   size: 75, 75
   orig: 75, 75
   offset: 0, 0
   index: -1
 place
   rotate: false
-  xy: 143, 26
+  xy: 1, 23
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 rotate
   rotate: false
-  xy: 220, 103
+  xy: 723, 111
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
@@ -132,7 +139,7 @@ rotate
 
 enlist2.png
 format: RGBA8888
-filter: Nearest,Nearest
+filter: MipMapLinearNearest,Nearest
 repeat: none
 paint/iconHealth
   rotate: false

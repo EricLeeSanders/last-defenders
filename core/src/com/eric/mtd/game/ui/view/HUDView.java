@@ -4,11 +4,16 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.eric.mtd.game.ui.presenter.HUDPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IHUDView;
-import com.eric.mtd.game.ui.view.widget.*;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -19,11 +24,11 @@ import com.eric.mtd.util.Resources;
  *
  */
 public class HUDView extends Group implements IHUDView {
-	private MTDImage imgMoney, imgLife;
-	private MTDImageButton btnWave, btnEnlist, btnSupport, btnQuit, btnOptions, btnNormalSpeed, btnDoubleSpeed;
-	private MTDLabel lblMoney, lblLives, lblWaveCount;
+	private Image imgMoney, imgLife;
+	
+	private ImageButton btnSpeed, btnWave, btnEnlist, btnSupport, btnQuit, btnOptions;
+	private Label lblMoney, lblLives, lblWaveCount;
 	private HUDPresenter presenter;
-	private Group btnSpeedGroup = new Group();
 
 	public HUDView(HUDPresenter presenter) {
 		this.presenter = presenter;
@@ -34,66 +39,82 @@ public class HUDView extends Group implements IHUDView {
 	 * Create the controls using MTD Widgets.
 	 */
 	public void createControls() {
-		btnWave = new MTDImageButton("UI_HUD", "btnWave", Resources.HUD_ATLAS, "wave", true, false);
+		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
+		btnSpeed = new ImageButton(skin, "speed");
+		btnSpeed.setSize(50, 50);
+		btnSpeed.setPosition(10,10);
+		btnSpeed.setChecked(false);
+		setBtnSpeedListener();
+		addActor(btnSpeed);
+		
+	
+		btnWave = new ImageButton(skin, "wave");
+		btnWave.setSize(50, 50);
+		btnWave.setPosition(btnSpeed.getX() + 60, btnSpeed.getY());
 		setBtnWaveListener();
 		addActor(btnWave);
 
-		btnDoubleSpeed = new MTDImageButton("UI_HUD", "btnSpeed", Resources.HUD_ATLAS, "doubleSpeed", true, false);
-		setBtnDoubleSpeedListener();
-		btnSpeedGroup.addActor(btnDoubleSpeed);
-
-		btnNormalSpeed = new MTDImageButton("UI_HUD", "btnSpeed", Resources.HUD_ATLAS, "normalSpeed", false, false);
-		setBtnNormalSpeedListener();
-		btnSpeedGroup.addActor(btnNormalSpeed);
-		btnSpeedGroup.setVisible(true);
-		addActor(btnSpeedGroup);
-
-		btnEnlist = new MTDImageButton("UI_HUD", "btnEnlist", Resources.HUD_ATLAS, "enlist", true, true);
+		btnEnlist = new ImageButton(skin, "enlist_hud");
+		btnEnlist.setSize(50, 50);
+		btnEnlist.setPosition(Resources.VIRTUAL_WIDTH - 60, 10);
 		setBtnEnlistListener();
 		addActor(btnEnlist);
 
-		btnSupport = new MTDImageButton("UI_HUD", "btnSupport", Resources.HUD_ATLAS, "support", true, true);
+		btnSupport = new ImageButton(skin, "support_hud");
+		btnSupport.setSize(50, 50);
+		btnSupport.setPosition(Resources.VIRTUAL_WIDTH - 60, btnEnlist.getY() + 60);
 		setBtnSupportListener();
 		addActor(btnSupport);
 		
-		btnOptions = new MTDImageButton("UI_HUD", "btnOptions", Resources.HUD_ATLAS, "options", true, false);
+
+		btnOptions = new ImageButton(skin, "options");
+		btnOptions.setSize(50, 50);
+		btnOptions.setPosition(Resources.VIRTUAL_WIDTH - 60, Resources.VIRTUAL_HEIGHT - 60);
 		setBtnOptionsListener();
 		addActor(btnOptions);
-		imgMoney = new MTDImage("UI_HUD", "imgMoney", Resources.HUD_ATLAS, "dollarsign", true, false);
-		addActor(imgMoney);
-		lblMoney = new MTDLabel("UI_HUD", "lblMoney", "0", true, Color.WHITE, Align.left, 0.5f);
-		addActor(lblMoney);
-		imgLife = new MTDImage("UI_HUD", "imgLife", Resources.HUD_ATLAS, "lives", true, false);
-		addActor(imgLife);
-		lblLives = new MTDLabel("UI_HUD", "lblLife", "0", true, Color.WHITE, Align.left, 0.5f);
-		addActor(lblLives);
-		lblWaveCount = new MTDLabel("UI_HUD", "lblWaveCount", "0", true, Color.WHITE, Align.left, 0.5f);
-		addActor(lblWaveCount);
+		
+		Table statsTable = new Table();
+		statsTable.setFillParent(true);
+		addActor(statsTable);
+		
+		imgLife = new Image(skin, "lives");
+		statsTable.add(imgLife).size(32,32).padRight(3);
+
+		lblLives = new Label("0", skin);
+		lblLives.setAlignment(Align.left);
+		lblLives.setFontScale(0.5f);
+		statsTable.add(lblLives).size(30,19).spaceRight(10);
+		
+		imgMoney = new Image(skin, "money");
+		statsTable.add(imgMoney).size(32,32).padRight(3);
+		
+		lblMoney = new Label("0", skin);
+		lblMoney.setAlignment(Align.left);
+		lblMoney.setFontScale(0.5f);
+		statsTable.add(lblMoney).size(72,19);
+		
+		statsTable.row();
+		
+		lblWaveCount = new Label("0", skin);
+		lblWaveCount.setAlignment(Align.left);
+		lblWaveCount.setFontScale(0.5f);
+		statsTable.add(lblWaveCount).size(145,19).colspan(4).padTop(5);
+		statsTable.top().left();
+		this.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 	}
 
-	private void setBtnNormalSpeedListener() {
-		btnNormalSpeed.addListener(new ClickListener() {
+	private void setBtnSpeedListener() {
+		btnSpeed.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
 				if (Logger.DEBUG)
-					System.out.println("Normal Speed");
+					System.out.println("Speed button pressed");
 				presenter.changeGameSpeed();
 			}
 		});
 	}
 
-	private void setBtnDoubleSpeedListener() {
-		btnDoubleSpeed.addListener(new ClickListener() {
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Double Speed");
-				presenter.changeGameSpeed();
-			}
-		});
-	}
 
 	private void setBtnOptionsListener() {
 		btnOptions.addListener(new ClickListener() {
@@ -103,18 +124,6 @@ public class HUDView extends Group implements IHUDView {
 				if (Logger.DEBUG)
 					System.out.println("Button Options Pressed");
 				presenter.options();
-			}
-		});
-	}
-
-	private void setBtnQuitListener() {
-		btnQuit.addListener(new ClickListener() {
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Button Quit Pressed");
-				presenter.quit();
 			}
 		});
 	}
@@ -156,7 +165,13 @@ public class HUDView extends Group implements IHUDView {
 			}
 		});
 	}
-
+	private void setButtonsVisible(boolean visible){
+		btnEnlist.setVisible(visible);
+		btnSupport.setVisible(visible);
+		btnWave.setVisible(visible);
+		btnOptions.setVisible(visible);
+		btnSpeed.setVisible(visible);
+	}
 	@Override
 	public void setMoney(String money) {
 		lblMoney.setText(money);
@@ -176,14 +191,8 @@ public class HUDView extends Group implements IHUDView {
 	 * Change which speed button is showing
 	 */
 	@Override
-	public void changeSpeed(boolean isNormalSpeed) {
-		if (isNormalSpeed) {
-			btnNormalSpeed.setVisible(false);
-			btnDoubleSpeed.setVisible(true);
-		} else {
-			btnNormalSpeed.setVisible(true);
-			btnDoubleSpeed.setVisible(false);
-		}
+	public void changeSpeed(boolean isDoubleSpeed) {
+		btnSpeed.setChecked(isDoubleSpeed);
 	}
 
 	@Override
@@ -191,30 +200,23 @@ public class HUDView extends Group implements IHUDView {
 		btnEnlist.setTouchable(Touchable.enabled);
 		btnSupport.setTouchable(Touchable.enabled);
 		btnWave.setTouchable(Touchable.enabled);
-		btnSpeedGroup.setTouchable(Touchable.enabled);
+		btnSpeed.setTouchable(Touchable.enabled);
 		btnOptions.setTouchable(Touchable.enabled);
-		btnWave.setVisible(true);
-		btnEnlist.setVisible(true);
-		btnSupport.setVisible(true);
-		btnOptions.setVisible(true);
-		btnSpeedGroup.setVisible(true);
+		setButtonsVisible(true);
 	}
 	@Override
 	public void supportState() {
-		btnEnlist.setVisible(false);
-		btnSupport.setVisible(false);
-		btnWave.setVisible(false);
-		btnOptions.setVisible(false);
-		btnSpeedGroup.setVisible(false);
+		setButtonsVisible(false);
 	}
 	
 	@Override
 	public void enlistingState() {
-		btnEnlist.setVisible(false);
-		btnSupport.setVisible(false);
-		btnWave.setVisible(false);
-		btnOptions.setVisible(false);
-		btnSpeedGroup.setVisible(false);
+		setButtonsVisible(false);
+	}
+	
+	@Override
+	public void inspectingState() {
+		setButtonsVisible(false);
 	}
 
 	@Override
@@ -222,8 +224,8 @@ public class HUDView extends Group implements IHUDView {
 		btnEnlist.setTouchable(Touchable.disabled);
 		btnSupport.setTouchable(Touchable.disabled);
 		btnWave.setTouchable(Touchable.disabled);
-		btnSpeedGroup.setTouchable(Touchable.disabled);
-		btnOptions.setTouchable(Touchable.disabled);
+		btnSpeed.setTouchable(Touchable.disabled);
+		//btnOptions.setTouchable(Touchable.disabled);
 	}
 
 	@Override
@@ -236,12 +238,12 @@ public class HUDView extends Group implements IHUDView {
 		btnEnlist.setTouchable(Touchable.enabled);
 		btnSupport.setTouchable(Touchable.enabled);
 		btnWave.setTouchable(Touchable.enabled);
-		btnSpeedGroup.setTouchable(Touchable.enabled);
+		btnSpeed.setTouchable(Touchable.enabled);
 		btnOptions.setTouchable(Touchable.enabled);
 		btnWave.setVisible(false);
 		btnEnlist.setVisible(true);
 		btnSupport.setVisible(true);
 		btnOptions.setVisible(true);
-		btnSpeedGroup.setVisible(true);
+		btnSpeed.setVisible(true);
 	}
 }

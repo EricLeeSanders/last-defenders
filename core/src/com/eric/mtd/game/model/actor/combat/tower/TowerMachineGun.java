@@ -23,9 +23,9 @@ public class TowerMachineGun extends Tower {
 	public static final float ARMOR = 4;
 	public static final float ATTACK = 1;
 	public static final float ATTACK_SPEED = 0.2f;
-	public static final float RANGE = 30;
+	public static final float RANGE = 40;
 	public static final Dimension BULLET_SIZE = new Dimension(10, 10);
-	public static final int COST = 200;
+	public static final int COST = 300;
 	public static final int ARMOR_COST = 200;
 	public static final int RANGE_INCREASE_COST = 100;
 	public static final int SPEED_INCREASE_COST = 100;
@@ -47,6 +47,11 @@ public class TowerMachineGun extends Tower {
 			getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
 		}
 
+	}
+	
+	@Override
+	public String getName(){
+		return "Machine Gun";
 	}
 
 }

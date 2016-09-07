@@ -1,17 +1,38 @@
 package com.eric.mtd.game.ui.view;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.eric.mtd.game.ui.presenter.EnlistPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IEnlistView;
-import com.eric.mtd.game.ui.view.widget.MTDImage;
-import com.eric.mtd.game.ui.view.widget.MTDImageButton;
-import com.eric.mtd.game.ui.view.widget.enlist.MTDTowerButton;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -23,16 +44,22 @@ import com.eric.mtd.util.Resources;
  *
  */
 public class EnlistView extends Group implements IEnlistView, InputProcessor {
-	private MTDImage pnlEnlist;
-	private MTDTowerButton btnTank, btnFlameThrower, btnTurret, btnSniper, btnMachine, btnRocketLauncher, btnRifle;
-	private MTDImageButton btnCancel, btnPlace, btnRotate;
+	//private ImageButton btnTank, btnFlameThrower, btnTurret, btnSniper, btnMachineGun, btnRocketLauncher, btnRifle;
+	private Map<ImageButton, String> towerButtons;
+	private ImageButton btnPlacingCancel, btnPlace, btnRotate;
+	private ImageButton btnCancel, btnScrollUp, btnScrollDown;
 	private EnlistPresenter presenter;
 	private Group choosingGroup;
+	private Label lblTitle, lblMoney;
+	private ScrollPane scroll;
+	//private MTDLabel lblMoney;
 
-	public EnlistView(EnlistPresenter presenter) {
+	private Stage stage;
+	public EnlistView(EnlistPresenter presenter, Stage stage) {
 		this.presenter = presenter;
 		choosingGroup = new Group();
 		addActor(choosingGroup);
+		this.stage = stage;
 		createControls();
 	}
 
@@ -40,69 +67,117 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	 * Creates the controls with the MTD widgets
 	 */
 	public void createControls() {
-		pnlEnlist = new MTDImage("UI_Enlist", "panel", Resources.ENLIST_ATLAS, "background", true, false);
-		pnlEnlist.getColor().set(1f, 1f, 1f, 1f);
-		choosingGroup.addActor(pnlEnlist);
+		
+		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
+		Table container = new Table();
+		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+		choosingGroup.addActor(container);
+		Table enlistTable = new Table();
+		// table.debug();
 
-		btnRifle = new MTDTowerButton("UI_Enlist", "btnRifle", Resources.ENLIST_ATLAS, "rifleEnabled", "rifleDisabled", "Rifle", true, false);
-		setRifleListener();
-		choosingGroup.addActor(btnRifle);
-
-		btnTank = new MTDTowerButton("UI_Enlist", "btnTank", Resources.ENLIST_ATLAS, "tankEnabled", "tankDisabled", "Tank", true, false);
-		setTankListener();
-		choosingGroup.addActor(btnTank);
-
-		btnFlameThrower = new MTDTowerButton("UI_Enlist", "btnFlameThrower", Resources.ENLIST_ATLAS, "flamethrowerEnabled", "flamethrowerDisabled", "FlameThrower", true, false);
-		setFlameThrowerListener();
-		choosingGroup.addActor(btnFlameThrower);
-
-		btnTurret = new MTDTowerButton("UI_Enlist", "btnTurret", Resources.ENLIST_ATLAS, "turretEnabled", "turretDisabled", "Turret", true, false);
-		setTurretListener();
-		choosingGroup.addActor(btnTurret);
-
-		btnSniper = new MTDTowerButton("UI_Enlist", "btnSniper", Resources.ENLIST_ATLAS, "sniperEnabled", "sniperDisabled", "Sniper", true, false);
-		setSniperListener();
-		choosingGroup.addActor(btnSniper);
-
-		btnMachine = new MTDTowerButton("UI_Enlist", "btnMachine", Resources.ENLIST_ATLAS, "machineEnabled", "machineDisabled", "MachineGun", true, false);
-		setMachineListener();
-		choosingGroup.addActor(btnMachine);
-
-		btnRocketLauncher = new MTDTowerButton("UI_Enlist", "btnRocketLauncher", Resources.ENLIST_ATLAS, "rocketlauncherEnabled", "rocketlauncherDisabled", "RocketLauncher", true, false);
-		setRocketLauncherListener();
-		choosingGroup.addActor(btnRocketLauncher);
-
-		btnCancel = new MTDImageButton("UI_Enlist", "btnCancel", Resources.ENLIST_ATLAS, "cancel", false, false);
+		scroll = new ScrollPane(enlistTable, skin);
+		enlistTable.padTop(10);
+		//scroll.setVariableSizeKnobs(false);
+		enlistTable.defaults().expandX();
+		
+		container.add(scroll).expand().fill().colspan(1);
+		container.setBackground(skin.getDrawable("main-panel"));
+		
+		lblTitle = new Label("ENLIST", skin);
+		lblTitle.setPosition(container.getX() + (container.getWidth()/2) - (lblTitle.getWidth()/2)
+					,container.getY() + container.getHeight() - lblTitle.getHeight()+1);
+		lblTitle.setAlignment(Align.center);
+		lblTitle.setFontScale(.9f);
+		choosingGroup.addActor(lblTitle);
+	
+		
+		LabelStyle lblMoneyStyle = new LabelStyle(skin.get("money_label", LabelStyle.class));
+		lblMoneyStyle.background.setLeftWidth(60);
+		lblMoneyStyle.background.setTopHeight(10);
+		lblMoney = new Label("$0", lblMoneyStyle);
+		lblMoney.setSize(200, 52);
+		lblMoney.setPosition(100,10);
+		lblMoney.setAlignment(Align.left);
+		lblMoney.setFontScale(0.6f);
+		choosingGroup.addActor(lblMoney);
+		
+		towerButtons = new HashMap<ImageButton, String>();
+		createTowerButton(enlistTable, skin, "enlist_rifle", "Rifle");
+		createTowerButton(enlistTable, skin, "enlist_machine_gun", "MachineGun");
+		createTowerButton(enlistTable, skin, "enlist_sniper", "Sniper");
+		enlistTable.row();
+		createTowerButton(enlistTable, skin, "enlist_flame_thrower", "FlameThrower");
+		createTowerButton(enlistTable, skin, "enlist_rocket_launcher", "RocketLauncher");
+		createTowerButton(enlistTable, skin, "enlist_turret", "Turret");
+		enlistTable.row();
+		createTowerButton(enlistTable, skin, "enlist_tank", "Tank");
+		
+		
+		btnCancel = new ImageButton(skin,"cancel");
 		setCancelListener();
-		addActor(btnCancel);
-		btnPlace = new MTDImageButton("UI_Enlist", "btnPlace", Resources.ENLIST_ATLAS, "place", false, false);
+		btnCancel.setSize(64, 64);
+		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
+		choosingGroup.addActor(btnCancel);
+		//btnCancel.setVisible(true);
+		
+		btnScrollUp = new ImageButton(skin,"arrow_up");
+		btnScrollUp.setSize(64, 64);
+		btnScrollUp.setPosition(Resources.VIRTUAL_WIDTH-75, (Resources.VIRTUAL_HEIGHT/2) + 20);
+		choosingGroup.addActor(btnScrollUp);
+		
+		btnScrollDown = new ImageButton(skin,"arrow_down");
+		btnScrollDown.setSize(64, 64);
+		btnScrollDown.setPosition(Resources.VIRTUAL_WIDTH-75, (Resources.VIRTUAL_HEIGHT/2) - 84);
+		choosingGroup.addActor(btnScrollDown);
+		
+		btnPlace = new ImageButton(skin, "select");
+		btnPlace.setSize(50, 50);
+		btnPlace.setPosition(Resources.VIRTUAL_WIDTH - 60, 10);
 		setPlaceListener();
 		addActor(btnPlace);
-		btnRotate = new MTDImageButton("UI_Enlist", "btnRotate", Resources.ENLIST_ATLAS, "rotate", false, true);
+		
+		btnPlacingCancel = new ImageButton(skin, "cancel");
+		btnPlacingCancel.setSize(50, 50);
+		btnPlacingCancel.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlace.getY() + 60);
+		setPlacingCancelListener();
+		addActor(btnPlacingCancel);
+		
+		btnRotate = new ImageButton(skin, "rotate");
+		btnRotate.setSize(50, 50);
+		btnRotate.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlacingCancel.getY() + 60);
 		setRotateListener();
 		addActor(btnRotate);
 
+	}
+	/**
+	 * Creates a tower button and adds it to the map
+	 * @param enlistTable
+	 * @param skin
+	 * @param styleName
+	 * @param towerName
+	 */
+	private void createTowerButton(Table enlistTable, Skin skin, String styleName, String towerName){
+		ImageButton towerButton = new ImageButton(skin, styleName);
+		enlistTable.add(towerButton).size(116,156).spaceBottom(5);
+		setTowerListener(towerButton,towerName);
+		towerButtons.put(towerButton,towerName);
 	}
 
 	/**
 	 * Updates the tower buttons to disable/enable.
 	 */
 	private void updateTowerButtons() {
-		for (Actor button : choosingGroup.getChildren()) {
-			if (button instanceof MTDTowerButton) {
-				if (presenter.canAffordTower(((MTDTowerButton) button).getTowerName())) {
-					if (Logger.DEBUG)
-						System.out.println("Setting " + ((MTDTowerButton) button).getTowerName() + " to Enabled");
-					((MTDTowerButton) button).setDisabled(false);
-					button.setTouchable(Touchable.enabled);
-				} else {
-					if (Logger.DEBUG)
-						System.out.println("Setting " + ((MTDTowerButton) button).getTowerName() + " to Disabled");
-					((MTDTowerButton) button).setDisabled(true);
-					button.setTouchable(Touchable.disabled);
-				}
-			}
-		}
+	    Iterator<Entry<ImageButton, String>> iter = towerButtons.entrySet().iterator();
+	    while(iter.hasNext()){
+	    	Map.Entry<ImageButton, String> tower = iter.next();
+	    	boolean affordable = presenter.canAffordTower(tower.getValue());
+	    	tower.getKey().setDisabled(!affordable);
+	    	if(affordable){
+	    		tower.getKey().setTouchable(Touchable.enabled);
+	    	} else {
+	    		tower.getKey().setTouchable(Touchable.disabled);
+	    	}
+	    }
 
 	}
 
@@ -114,6 +189,12 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		super.act(delta);
 		if (btnRotate.isPressed()) {
 			presenter.rotateTower();
+		} 
+		if (btnScrollUp.isPressed()){
+			scroll.setScrollY(scroll.getScrollY() - 10);
+		}
+		if (btnScrollDown.isPressed()){
+			scroll.setScrollY(scroll.getScrollY() + 10);
 		}
 	}
 
@@ -128,90 +209,18 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 			}
 		});
 	}
-
-	private void setRifleListener() {
+	private void setTowerListener(ImageButton button, final String tower){
 		if (Logger.DEBUG)
-			System.out.println("creating rifle listener");
-		btnRifle.addListener(new ClickListener() {
+			System.out.println("creating " + tower + " listener");
+		button.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.createTower("Rifle");
-			}
-		});
-
-	}
-
-	private void setTankListener() {
-		btnTank.addListener(new ClickListener() {
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);
-				presenter.createTower("Tank");
+				presenter.createTower(tower);
 			}
 		});
 	}
-
-	private void setFlameThrowerListener() {
-		btnFlameThrower.addListener(new ClickListener() {
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Flame Thrower Button Pressed");
-				presenter.createTower("FlameThrower");
-			}
-		});
-	}
-
-	private void setSniperListener() {
-		btnSniper.addListener(new ClickListener() {
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Sniper Button Pressed");
-				presenter.createTower("Sniper");
-			}
-		});
-	}
-
-	private void setMachineListener() {
-		btnMachine.addListener(new ClickListener() {
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Machine Button Pressed");
-				presenter.createTower("MachineGun");
-			}
-		});
-	}
-
-	private void setRocketLauncherListener() {
-		btnRocketLauncher.addListener(new ClickListener() {
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("RocketLauncher Button Pressed");
-				presenter.createTower("RocketLauncher");
-			}
-		});
-	}
-
-	private void setTurretListener() {
-		btnTurret.addListener(new ClickListener() {
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Turret Button Pressed");
-				presenter.createTower("Turret");
-			}
-		});
-	}
-
+	
 	private void setPlaceListener() {
 		btnPlace.addListener(new ClickListener() {
 			@Override
@@ -231,6 +240,19 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 				super.touchUp(event, x, y, pointer, button);
 				if (Logger.DEBUG)
 					System.out.println("Cancel Pressed");
+				presenter.cancelEnlist();
+				
+			}
+		});
+	}
+	
+	private void setPlacingCancelListener() {
+		btnPlacingCancel.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				if (Logger.DEBUG)
+					System.out.println("Placing Cancel Pressed");
 				presenter.cancelEnlist();
 			}
 		});
@@ -290,25 +312,25 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	@Override
 	public void enlistingState() {
 		updateTowerButtons();
+		lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
 		choosingGroup.setVisible(true);
-		btnCancel.setVisible(true);
+		btnPlacingCancel.setVisible(false);
 		this.setVisible(true);
 	}
 
 	@Override
 	public void placingTowerState() {
-		btnCancel.setVisible(true);
+		btnPlacingCancel.setVisible(true);
 		choosingGroup.setVisible(false);
 
 	}
 
 	@Override
 	public void standByState() {
-		btnCancel.setVisible(false);
+		btnPlacingCancel.setVisible(false);
 		choosingGroup.setVisible(false);
 		btnRotate.setVisible(false);
 		btnPlace.setVisible(false);
-		btnCancel.setVisible(false);
 		this.setVisible(false);
 	}
 
