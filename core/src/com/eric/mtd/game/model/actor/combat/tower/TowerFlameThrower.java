@@ -21,7 +21,7 @@ import com.eric.mtd.util.Dimension;
 public class TowerFlameThrower extends Tower implements IFlame {
 
 	public static final float HEALTH = 8;
-	public static final float ARMOR = 3;
+	public static final float ARMOR = 4;
 	public static final float ATTACK = 7; 
 	public static final float ATTACK_SPEED = 1f;
 	public static final float RANGE = 80;
@@ -53,6 +53,11 @@ public class TowerFlameThrower extends Tower implements IFlame {
 			AudioUtil.playProjectileSound(ProjectileSound.FLAME_BURST);
 			getProjectileGroup().addActor(ActorFactory.loadFlame().initialize(this, this.getTarget(), getTargetGroup(), getFlameSize()));
 		}
+	}
+	
+	@Override
+	public String getName(){
+		return "Flame Thrower";
 	}
 	
 

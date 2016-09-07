@@ -122,5 +122,10 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 			getProjectileGroup().addActor(ActorFactory.loadRPG().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
 		}
 	}
+	
+	@Override
+	public String getName(){
+		return "Tank";
+	}
 
 }

@@ -48,5 +48,8 @@ public class TowerRifle extends Tower {
 		}
 
 	}
-
+	@Override
+	public String getName(){
+		return "Rifle";
+	}
 }

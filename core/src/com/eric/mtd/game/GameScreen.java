@@ -44,7 +44,6 @@ public class GameScreen extends AbstractScreen {
 		uiStateManager = new GameUIStateManager(levelStateManager);
 		this.gameStateManager = gameStateManager;
 		gameStage = new GameStage(intLevel, player, actorGroups, levelStateManager, uiStateManager, getViewport());
-		//gameStage.setViewport(getViewport());
 		gameUIStage = new GameUIStage(player, actorGroups, uiStateManager, levelStateManager, gameStateManager
 						, screenStateManager, super.getInputMultiplexer(), getViewport(), gameStage.getMap());
 		super.show();
@@ -52,11 +51,10 @@ public class GameScreen extends AbstractScreen {
 	}
 
 	public void createFramesField() {
-		LabelStyle lblFramesStyle = new LabelStyle();
-		lblFramesStyle.font = Resources.getFont("default-font-22");
-		framesLabel = new Label("0", lblFramesStyle);
+		framesLabel = new Label("0", Resources.getSkin(Resources.SKIN_JSON));
+		framesLabel.setFontScale(0.35f);
 		framesLabel.setColor(1f, 1f, 1f, 0.30f);
-		framesLabel.setPosition(200, 310);
+		framesLabel.setPosition(200, 320);
 		gameUIStage.addActor(framesLabel);
 	}
 
@@ -85,7 +83,7 @@ public class GameScreen extends AbstractScreen {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		getCamera().update();
-		framesLabel.setText(Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
+		framesLabel.setText("fps: " + Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
 		renderElements(delta);
 
 	}

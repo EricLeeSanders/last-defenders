@@ -96,6 +96,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		this.hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player);
 		this.hudView = new HUDView(hudPresenter);
 		hudPresenter.setView(hudView);
+		//hudView.setFillParent(true);
 
 		this.inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager, player, actorGroups);
 		this.inspectView = new InspectView(inspectPresenter);

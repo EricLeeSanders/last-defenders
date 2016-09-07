@@ -119,6 +119,9 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 		case ENLISTING:
 			view.enlistingState();
 			break;
+		case INSPECTING:
+			view.inspectingState();
+			break;
 		case WAVE_IN_PROGRESS:
 			view.waveInProgressState();
 			break;

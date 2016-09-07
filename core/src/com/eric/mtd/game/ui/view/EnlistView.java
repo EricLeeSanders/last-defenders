@@ -1,5 +1,12 @@
 package com.eric.mtd.game.ui.view;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -26,10 +33,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.eric.mtd.game.ui.presenter.EnlistPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IEnlistView;
-import com.eric.mtd.game.ui.view.widget.MTDImage;
-import com.eric.mtd.game.ui.view.widget.MTDImageButton;
-import com.eric.mtd.game.ui.view.widget.MTDLabel;
-import com.eric.mtd.game.ui.view.widget.enlist.MTDTowerButton;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -41,13 +44,12 @@ import com.eric.mtd.util.Resources;
  *
  */
 public class EnlistView extends Group implements IEnlistView, InputProcessor {
-	private MTDImage pnlEnlist;
-	private ImageButton btnTank, btnFlameThrower, btnTurret, btnSniper, btnMachineGun, btnRocketLauncher, btnRifle;
-	private MTDImageButton btnPlacingCancel, btnPlace, btnRotate;
+	//private ImageButton btnTank, btnFlameThrower, btnTurret, btnSniper, btnMachineGun, btnRocketLauncher, btnRifle;
+	private Map<ImageButton, String> towerButtons;
+	private ImageButton btnPlacingCancel, btnPlace, btnRotate;
 	private ImageButton btnCancel, btnScrollUp, btnScrollDown;
 	private EnlistPresenter presenter;
 	private Group choosingGroup;
-	private Table container, enlistTable;
 	private Label lblTitle, lblMoney;
 	private ScrollPane scroll;
 	//private MTDLabel lblMoney;
@@ -67,76 +69,48 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	public void createControls() {
 		
 		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
-		container = new Table();
+		Table container = new Table();
 		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 		choosingGroup.addActor(container);
-		enlistTable = new Table();
+		Table enlistTable = new Table();
 		// table.debug();
 
 		scroll = new ScrollPane(enlistTable, skin);
+		enlistTable.padTop(10);
 		//scroll.setVariableSizeKnobs(false);
 		enlistTable.defaults().expandX();
 		
 		container.add(scroll).expand().fill().colspan(1);
 		container.setBackground(skin.getDrawable("main-panel"));
 		
-		LabelStyle lblTitleStyle = new LabelStyle();
-		lblTitleStyle.font = Resources.getFont("default-font-46");
-		lblTitle = new Label("ENLIST", lblTitleStyle);
+		lblTitle = new Label("ENLIST", skin);
 		lblTitle.setPosition(container.getX() + (container.getWidth()/2) - (lblTitle.getWidth()/2)
-					,container.getY() + container.getHeight() - lblTitle.getHeight() - 4);
+					,container.getY() + container.getHeight() - lblTitle.getHeight()+1);
 		lblTitle.setAlignment(Align.center);
+		lblTitle.setFontScale(.9f);
 		choosingGroup.addActor(lblTitle);
-//		
-//		lblMoney = new MTDLabel("0", skin, "money_label_img", "default-font-22", Align.left);
-//		lblMoney.getLabel_img().setSize(160, 69);
-//		lblMoney.getLabel_img().setPosition(208 - (lblMoney.getLabel_img().getWidth()/2)
-//				,37 - lblMoney.getLabel_img().getHeight()/2);
-//		lblMoney.getLabel_text().setSize(100, 59);
-//		lblMoney.getLabel_text().setPosition(lblMoney.getLabel_img().getX()+60, lblMoney.getLabel_img().getY()+3);
-//		choosingGroup.addActor(lblMoney);
+	
 		
-		
-		LabelStyle lblMoneyStyle = new LabelStyle(skin.get("base_label", LabelStyle.class));
-		lblMoneyStyle.background.setLeftWidth(10);
-		lblMoneyStyle.font = Resources.getFont("default-font-46");
+		LabelStyle lblMoneyStyle = new LabelStyle(skin.get("money_label", LabelStyle.class));
+		lblMoneyStyle.background.setLeftWidth(60);
+		lblMoneyStyle.background.setTopHeight(10);
 		lblMoney = new Label("$0", lblMoneyStyle);
-		lblMoney.setSize(120, 35);
-		lblMoney.setPosition(100,15);
+		lblMoney.setSize(200, 52);
+		lblMoney.setPosition(100,10);
 		lblMoney.setAlignment(Align.left);
-		lblMoney.setFontScale(.5f);
+		lblMoney.setFontScale(0.6f);
 		choosingGroup.addActor(lblMoney);
 		
-		
-		btnRifle = new ImageButton(skin, "enlist");
-		enlistTable.add(btnRifle).size(116,156).spaceBottom(5);
-		setTowerListener(btnRifle,"Rifle");
-		
-		btnSniper = new ImageButton(skin, "enlist");
-		enlistTable.add(btnSniper).size(116,156).spaceBottom(5);
-		setTowerListener(btnSniper,"Sniper");
-		
-		btnMachineGun = new ImageButton(skin, "enlist");
-		enlistTable.add(btnMachineGun).size(116,156).spaceBottom(5);
-		setTowerListener(btnMachineGun,"MachineGun");
-		
+		towerButtons = new HashMap<ImageButton, String>();
+		createTowerButton(enlistTable, skin, "enlist_rifle", "Rifle");
+		createTowerButton(enlistTable, skin, "enlist_machine_gun", "MachineGun");
+		createTowerButton(enlistTable, skin, "enlist_sniper", "Sniper");
 		enlistTable.row();
-		btnFlameThrower = new ImageButton(skin, "enlist");
-		enlistTable.add(btnFlameThrower).size(116,156).spaceBottom(5);
-		setTowerListener(btnFlameThrower,"FlameThrower");
-		
-		btnRocketLauncher =  new ImageButton(skin, "enlist");
-		enlistTable.add(btnRocketLauncher).size(116,156).spaceBottom(5);
-		setTowerListener(btnRocketLauncher,"RocketLauncher");
-		
-		btnTurret = new ImageButton(skin, "enlist");
-		enlistTable.add(btnTurret).size(116,156).spaceBottom(5);
-		setTowerListener(btnTurret,"Turret");
-		
+		createTowerButton(enlistTable, skin, "enlist_flame_thrower", "FlameThrower");
+		createTowerButton(enlistTable, skin, "enlist_rocket_launcher", "RocketLauncher");
+		createTowerButton(enlistTable, skin, "enlist_turret", "Turret");
 		enlistTable.row();
-		btnTank = new ImageButton(skin, "enlist");
-		enlistTable.add(btnTank).size(116,156).spaceBottom(5);
-		setTowerListener(btnTank,"Tank");
+		createTowerButton(enlistTable, skin, "enlist_tank", "Tank");
 		
 		
 		btnCancel = new ImageButton(skin,"cancel");
@@ -156,37 +130,54 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		btnScrollDown.setPosition(Resources.VIRTUAL_WIDTH-75, (Resources.VIRTUAL_HEIGHT/2) - 84);
 		choosingGroup.addActor(btnScrollDown);
 		
-		btnPlacingCancel = new MTDImageButton("UI_Enlist", "btnCancel", skin, "cancel", false, false);
-		setPlacingCancelListener();
-		addActor(btnPlacingCancel);
-		btnPlace = new MTDImageButton("UI_Enlist", "btnPlace", skin, "select", false, false);
+		btnPlace = new ImageButton(skin, "select");
+		btnPlace.setSize(50, 50);
+		btnPlace.setPosition(Resources.VIRTUAL_WIDTH - 60, 10);
 		setPlaceListener();
 		addActor(btnPlace);
-		btnRotate = new MTDImageButton("UI_Enlist", "btnRotate", skin, "rotate", false, false);
+		
+		btnPlacingCancel = new ImageButton(skin, "cancel");
+		btnPlacingCancel.setSize(50, 50);
+		btnPlacingCancel.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlace.getY() + 60);
+		setPlacingCancelListener();
+		addActor(btnPlacingCancel);
+		
+		btnRotate = new ImageButton(skin, "rotate");
+		btnRotate.setSize(50, 50);
+		btnRotate.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlacingCancel.getY() + 60);
 		setRotateListener();
 		addActor(btnRotate);
 
+	}
+	/**
+	 * Creates a tower button and adds it to the map
+	 * @param enlistTable
+	 * @param skin
+	 * @param styleName
+	 * @param towerName
+	 */
+	private void createTowerButton(Table enlistTable, Skin skin, String styleName, String towerName){
+		ImageButton towerButton = new ImageButton(skin, styleName);
+		enlistTable.add(towerButton).size(116,156).spaceBottom(5);
+		setTowerListener(towerButton,towerName);
+		towerButtons.put(towerButton,towerName);
 	}
 
 	/**
 	 * Updates the tower buttons to disable/enable.
 	 */
 	private void updateTowerButtons() {
-		for (Actor button : enlistTable.getChildren()) {
-			if (button instanceof MTDTowerButton) {
-				if (presenter.canAffordTower(((MTDTowerButton) button).getTowerName())) {
-					if (Logger.DEBUG)
-						System.out.println("Setting " + ((MTDTowerButton) button).getTowerName() + " to Enabled");
-					((MTDTowerButton) button).setDisabled(false);
-					button.setTouchable(Touchable.enabled);
-				} else {
-					if (Logger.DEBUG)
-						System.out.println("Setting " + ((MTDTowerButton) button).getTowerName() + " to Disabled");
-					((MTDTowerButton) button).setDisabled(true);
-					button.setTouchable(Touchable.disabled);
-				}
-			}
-		}
+	    Iterator<Entry<ImageButton, String>> iter = towerButtons.entrySet().iterator();
+	    while(iter.hasNext()){
+	    	Map.Entry<ImageButton, String> tower = iter.next();
+	    	boolean affordable = presenter.canAffordTower(tower.getValue());
+	    	tower.getKey().setDisabled(!affordable);
+	    	if(affordable){
+	    		tower.getKey().setTouchable(Touchable.enabled);
+	    	} else {
+	    		tower.getKey().setTouchable(Touchable.disabled);
+	    	}
+	    }
 
 	}
 
@@ -321,7 +312,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	@Override
 	public void enlistingState() {
 		updateTowerButtons();
-		lblMoney.setText("$"+String.valueOf(presenter.getPlayerMoney()));
+		lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
 		choosingGroup.setVisible(true);
 		btnPlacingCancel.setVisible(false);
 		this.setVisible(true);

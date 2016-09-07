@@ -126,11 +126,11 @@ public class Resources {
 		FileHandleResolver resolver = new InternalFileHandleResolver();
 		MANAGER.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
 		MANAGER.setLoader(BitmapFont.class, new FreetypeFontLoader(resolver));
-		FreeTypeFontLoaderParameter parameter_16 = createFontParam("font/carbon_bl.otf", 16, Color.BLACK, 1f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		FreeTypeFontLoaderParameter parameter_16 = createFontParam("font/palamecia titling.ttf", 16, Color.BLACK, 1f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 		MANAGER.load("default-font-16", BitmapFont.class, parameter_16 );
-		FreeTypeFontLoaderParameter parameter_22 = createFontParam("font/carbon_bl.otf", 22, Color.BLACK, 1.3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		FreeTypeFontLoaderParameter parameter_22 = createFontParam("font/palamecia titling.ttf", 22, Color.BLACK, 1.3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 		MANAGER.load("default-font-22", BitmapFont.class, parameter_22 );
-		FreeTypeFontLoaderParameter parameter_46 = createFontParam("font/carbon_bl.otf", 46, Color.BLACK, 3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		FreeTypeFontLoaderParameter parameter_46 = createFontParam("font/palamecia titling.ttf", 46, Color.BLACK, 3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 		MANAGER.load("default-font-46", BitmapFont.class, parameter_46 );
 		MANAGER.finishLoading(); 
 	}

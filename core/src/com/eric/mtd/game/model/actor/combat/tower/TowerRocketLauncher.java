@@ -49,5 +49,8 @@ public class TowerRocketLauncher extends Tower implements IRpg {
 		}
 
 	}
-
+	@Override
+	public String getName(){
+		return "Rocket Launcher";
+	}
 }
