@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -19,12 +21,6 @@ import com.eric.mtd.game.model.actor.ai.TowerTargetPriority;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.ui.presenter.InspectPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IInspectView;
-import com.eric.mtd.game.ui.view.widget.MTDImage;
-import com.eric.mtd.game.ui.view.widget.MTDImageButton;
-import com.eric.mtd.game.ui.view.widget.MTDLabel;
-import com.eric.mtd.game.ui.view.widget.MTDLabelOld;
-import com.eric.mtd.game.ui.view.widget.MTDTextButton;
-import com.eric.mtd.game.ui.view.widget.inspect.UpgradeLevel;
 import com.eric.mtd.util.ActorUtil;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
@@ -38,15 +34,10 @@ import com.eric.mtd.util.Resources;
  */
 public class InspectView extends Group implements InputProcessor, IInspectView {
 	private InspectPresenter presenter;
-	private ImageButton btnChangeTarget, btnDischarge, btnArmor, btnSpeed, btnRange, btnAttack, btnCancel;
-	private MTDLabelOld lblArmorCost, lblSpeedCost, lblRangeCost, lblAttackCost;
-	private UpgradeLevel lvlArmor, lvlSpeed, lvlRange, lvlAttack;
-	private Group grpArmor, grpSpeed, grpRange, grpAttack, grpDischarge;
+	private ImageButton btnChangeTarget, btnCancel;
+	private TextButton btnDischarge, btnArmor, btnSpeed, btnRange, btnAttack;
 	private Group grpTargetPriority = new Group();
-	private Label lblTargetPriority, lblTitle, lblMoney_img, lblKills_img, lblDischargeMoney_img, lblDischarge;
-	MTDLabel lblMoney;
-	MTDLabel lblKills;
-	private Image background;
+	private Label lblTargetPriority, lblTitle, lblMoney, lblKills;
 	public InspectView(InspectPresenter presenter) {
 		this.presenter = presenter;
 		createControls();
@@ -57,158 +48,117 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	 */
 	public void createControls() {
 		
-		
 		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
-		background = new Image(skin.getDrawable("main-panel-horz-padded"));
-		background.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
-		addActor(background);
+		Table container = new Table();
+		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+		addActor(container);
+		container.setBackground(skin.getDrawable("main-panel-hollow"));
 		
-		LabelStyle lblTitleStyle = new LabelStyle();
-		lblTitleStyle.font = Resources.getFont("default-font-22");
-		lblTitle = new Label("INSPECT", lblTitleStyle);
-		lblTitle.setPosition((background.getWidth()/2) - (lblTitle.getWidth()/2)
-					,background.getY() + background.getHeight() - lblTitle.getHeight() - 20);
+		lblTitle = new Label("Tower", skin);
+		lblTitle.setPosition((container.getWidth()/2) - (lblTitle.getWidth()/2)
+					,container.getY() + container.getHeight() - lblTitle.getHeight());
 		lblTitle.setAlignment(Align.center);
+		lblTitle.setFontScale(0.7f);
 		addActor(lblTitle);
 		
-		lblMoney = new MTDLabel("0", skin, "money_label_img", "default-font-22", Align.left);
-		lblMoney.getLabel_img().setSize(160, 69);
-		lblMoney.getLabel_img().setPosition(background.getX() + 208 - (lblMoney.getLabel_img().getWidth()/2)
-				,background.getY() + 37 - lblMoney.getLabel_img().getHeight()/2);
-		lblMoney.getLabel_text().setSize(100, 59);
-		lblMoney.getLabel_text().setPosition(lblMoney.getLabel_img().getX()+60, lblMoney.getLabel_img().getY()+3);
+		
+		LabelStyle lblMoneyStyle = new LabelStyle(skin.get("money_label", LabelStyle.class));
+		lblMoneyStyle.background.setLeftWidth(60);
+		lblMoneyStyle.background.setTopHeight(10);
+		lblMoney = new Label("$0", lblMoneyStyle);
+		lblMoney.setSize(200, 52);
+		lblMoney.setPosition(75,5);
+		lblMoney.setAlignment(Align.left);
+		lblMoney.setFontScale(0.6f);
 		addActor(lblMoney);
-			
-		lblKills = new MTDLabel("0", skin, "kills_label_img", "default-font-22", Align.right);
-		lblKills.getLabel_img().setSize(160, 69);
-		lblKills.getLabel_img().setPosition(background.getX() + background.getWidth() - 208 - (lblKills.getLabel_img().getWidth()/2) 
-				, background.getY() + 37 - lblKills.getLabel_img().getHeight()/2);
-		lblKills.getLabel_text().setSize(100, 59);
-		lblKills.getLabel_text().setPosition(lblKills.getLabel_img().getX(), lblKills.getLabel_img().getY()+3);
+
+		LabelStyle lblKillsStyle = new LabelStyle(skin.get("kills_label", LabelStyle.class));
+		lblKillsStyle.background.setRightWidth(60);
+		lblKillsStyle.background.setTopHeight(10);
+		lblKills = new Label("0", lblKillsStyle);
+		lblKills.setSize(200, 52);
+		lblKills.setPosition(365,5);
+		lblKills.setAlignment(Align.right);
+		lblKills.setFontScale(0.6f);
 		addActor(lblKills);
 		
 		btnCancel = new ImageButton(skin,"cancel");
 		setCancelListener();
 		btnCancel.setSize(64, 64);
-		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 120, 28);
+		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
 		addActor(btnCancel);
-		/*------------------------------*/
-		/*grpDischarge = new Group();
-		grpTargetPriority = new Group();
-		pnlInspect = new MTDImage("UI_Inspect", "bottomPanel", Resources.INSPECT_ATLAS, "inspect_bg", true, false);
-		addActor(pnlInspect);
-		pnlSideInspect = new MTDImage("UI_Inspect", "sidePanel", Resources.INSPECT_ATLAS, "inspect_bg", true, false);
-		addActor(pnlSideInspect);
 
-		btnDischarge = new MTDImageButton("UI_Inspect", "btnDischarge", Resources.INSPECT_ATLAS, "btnDischarge", true, false);
-		setDischargeListener();
-		lblDischargePrice = new MTDLabel("UI_Inspect", "lblDischargePrice", "", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
-		grpDischarge.addActor(btnDischarge);
-		grpDischarge.addActor(lblDischargePrice);
-		addActor(grpDischarge);
-
-		btnTargetPriority = new MTDImageButton("UI_Inspect", "btnTargetPriority", Resources.INSPECT_ATLAS, "btnTargetPriority", true, false);
-		lblTargetPriority = new MTDLabel("UI_Inspect", "lblTargetPriority", TowerTargetPriority.values()[0].name(), true, Color.WHITE, Align.center, Resources.getFont("default-font-22"));
-		setTargetPriorityListener();
-		grpTargetPriority.addActor(btnTargetPriority);
-		grpTargetPriority.addActor(lblTargetPriority);
-		addActor(grpTargetPriority);
-
-		btnInspectClose = new MTDTextButton("UI_Inspect", "btnClose", "Close", Align.center, 0.45f, true);
-		setUpgradeCloseListener();
-		addActor(btnInspectClose);
-*/
 		Table upgradeTable = new Table();
-		
-		
-		btnArmor = new ImageButton(skin, "upgrade");
-		upgradeTable.add(btnArmor).size(90,106).spaceBottom(10);
+		btnArmor = createUpgradeButton("100",skin, "upgrade_armor");
+		upgradeTable.add(btnArmor).size(100,128).spaceBottom(10).spaceRight(10);
 		setArmorListener();
-		btnRange = new ImageButton(skin, "upgrade");
-		upgradeTable.add(btnRange).size(90,106).spaceBottom(10);
+		btnRange = createUpgradeButton("100",skin, "upgrade_range");
+		upgradeTable.add(btnRange).size(100,128).spaceBottom(10).spaceRight(10);
 		setIncreaseRangeListener();
 
-		btnSpeed = new ImageButton(skin, "upgrade");
-		upgradeTable.add(btnSpeed).size(90,106).spaceBottom(5);
+		btnSpeed = createUpgradeButton("100",skin, "upgrade_speed");
+		upgradeTable.add(btnSpeed).size(100,128).spaceBottom(5).spaceRight(10);
 		setIncreaseSpeedListener();
-		btnAttack = new ImageButton(skin, "upgrade");
-		upgradeTable.add(btnAttack).size(90,106).spaceBottom(5);
+		btnAttack = createUpgradeButton("100",skin, "upgrade_attack");
+		upgradeTable.add(btnAttack).size(100,128).spaceBottom(5).spaceRight(10);
 		setIncreaseAttackListener();
+
+		container.add(upgradeTable).colspan(2).padTop(25);
 		
-		
-		Vector2 bgCenter = ActorUtil.calcCenterFromBotLeft(background);
-		upgradeTable.setPosition(bgCenter.x, bgCenter.y+30);
-		addActor(upgradeTable);
-		
-		LabelStyle lblTargetStyle = new LabelStyle(skin.get("label_normal", LabelStyle.class));
-		lblTargetStyle.font = Resources.getFont("default-font-16");
-		lblTargetPriority = new Label("First", lblTargetStyle);
+		container.row();
+		LabelStyle lblTargetPriorityStyle = new LabelStyle(skin.get("hollow_label", LabelStyle.class));
+		lblTargetPriorityStyle.background.setLeftWidth(-2);
+		lblTargetPriority = new Label("First", lblTargetPriorityStyle);
 		lblTargetPriority.setAlignment(Align.center);
 		lblTargetPriority.setSize(140, 41);
-		lblTargetPriority.setPosition(140,85);
+		lblTargetPriority.setFontScale(0.45f);
 		grpTargetPriority.addActor(lblTargetPriority);
+		
+		
+		Label lblTarget = new Label("Priority", skin);
+		lblTarget.setPosition(lblTargetPriority.getX() + 20, lblTargetPriority.getY() + 25);
+		lblTarget.setFontScale(0.45f);
+		grpTargetPriority.addActor(lblTarget);
 		
 		btnChangeTarget = new ImageButton(skin, "arrow_right");
 		btnChangeTarget.setSize(50, 50);
-		btnChangeTarget.setPosition(lblTargetPriority.getX() + lblTargetPriority.getWidth() - 20, 81);
+		btnChangeTarget.setPosition(lblTargetPriority.getX() + lblTargetPriority.getWidth(), lblTargetPriority.getY() - 4);
 		grpTargetPriority.addActor(btnChangeTarget);
-			
-		btnDischarge = new ImageButton(skin, "discharge");
-		btnDischarge.setSize(90, 106);
-		btnDischarge.setPosition(btnChangeTarget.getX() + btnChangeTarget.getWidth() + 40, 77);
-		addActor(btnDischarge);
-		
-		addActor(grpTargetPriority);
+		container.add(grpTargetPriority).align(Align.left).padTop(45);
 		setTargetPriorityListener();
+		TextButtonStyle dischargeStyle = new TextButtonStyle(skin.get("discharge", TextButtonStyle.class));
+		dischargeStyle.pressedOffsetY = -27;
+		dischargeStyle.unpressedOffsetY = -27;
+		dischargeStyle.checkedOffsetY = -27;
+		dischargeStyle.pressedOffsetX = 40;
+		dischargeStyle.unpressedOffsetX = 40;
+		dischargeStyle.checkedOffsetX = 40;
+		btnDischarge = new TextButton("9999",dischargeStyle);
+		btnDischarge.getLabel().setAlignment(Align.left);
+		btnDischarge.getLabel().setFontScale(0.45f);
+		container.add(btnDischarge).align(Align.center).size(120,103).padTop(10);
+		setDischargeListener();
 	}
 
 	/**
 	 * Create the upgrade controls that are grouped together with Groups
 	 */
 
-	private void createUpgradeControls(Skin skin) {	
-		//addActor(btnArmor);
-		/*grpArmor = new Group();
-		grpSpeed = new Group();
-		grpRange = new Group();
-		grpAttack = new Group();
-
-		btnArmor = new MTDImageButton("UI_Inspect", "btnArmor", Resources.INSPECT_ATLAS, "btnArmor", "btnArmorDisabled", true, false);
-		lblArmorCost = new MTDLabel("UI_Inspect", "lblArmorCost", "5555", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
-		lvlArmor = new UpgradeLevel("UI_Inspect", "lblArmorLevel", "", true, 1, Color.WHITE);
-		setArmorListener();
-		grpArmor.addActor(btnArmor);
-		grpArmor.addActor(lblArmorCost);
-		grpArmor.addActor(lvlArmor);
-
-		btnSpeed = new MTDImageButton("UI_Inspect", "btnSpeed", Resources.INSPECT_ATLAS, "btnSpeed", "btnSpeedDisabled", true, false);
-		lblSpeedCost = new MTDLabel("UI_Inspect", "lblSpeedCost", "6555", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
-		lvlSpeed = new UpgradeLevel("UI_Inspect", "lblSpeedLevel", "", true, 2, Color.WHITE);
-		setIncreaseSpeedListener();
-		grpSpeed.addActor(btnSpeed);
-		grpSpeed.addActor(lblSpeedCost);
-		grpSpeed.addActor(lvlSpeed);
-
-		btnRange = new MTDImageButton("UI_Inspect", "btnRange", Resources.INSPECT_ATLAS, "btnRange", "btnRangeDisabled", true, false);
-		lblRangeCost = new MTDLabel("UI_Inspect", "lblRangeCost", "8888", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
-		lvlRange = new UpgradeLevel("UI_Inspect", "lblRangeLevel", "", true, 2, Color.WHITE);
-		setIncreaseRangeListener();
-		grpRange.addActor(btnRange);
-		grpRange.addActor(lblRangeCost);
-		grpRange.addActor(lvlRange);
-
-		btnAttack = new MTDImageButton("UI_Inspect", "btnAttack", Resources.INSPECT_ATLAS, "btnAttack", "btnAttackDisabled", true, false);
-		lblAttackCost = new MTDLabel("UI_Inspect", "lblAttackCost", "4789", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
-		lvlAttack = new UpgradeLevel("UI_Inspect", "lblAttackLevel", "", true, 2, Color.WHITE);
-		setIncreaseAttackListener();
-		grpAttack.addActor(btnAttack);
-		grpAttack.addActor(lblAttackCost);
-		grpAttack.addActor(lvlAttack);
-
-		addActor(grpArmor);
-		addActor(grpSpeed);
-		addActor(grpRange);
-		addActor(grpAttack);*/
+	private TextButton createUpgradeButton(String cost,Skin skin,String styleName) {	
+		TextButtonStyle upgradeStyle = new TextButtonStyle(skin.get(styleName, TextButtonStyle.class));
+		upgradeStyle.font = Resources.getFont("default-font-46");
+		upgradeStyle.pressedOffsetY = -49;
+		upgradeStyle.unpressedOffsetY = -49;
+		upgradeStyle.checkedOffsetY = -49;
+		upgradeStyle.pressedOffsetX = 35;
+		upgradeStyle.unpressedOffsetX = 35;
+		upgradeStyle.checkedOffsetX = 35;
+		
+		TextButton upgradeButton = new TextButton(cost, upgradeStyle);
+		upgradeButton.getLabel().setAlignment(Align.left);
+		upgradeButton.getLabel().setFontScale(0.45f);
+		return upgradeButton;
+		
 	}
 
 	@Override
@@ -223,14 +173,11 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	
 	@Override
 	public void dischargeEnabled(boolean enabled) {
+		btnDischarge.setDisabled(!enabled);
 		if (enabled){
 			btnDischarge.setTouchable(Touchable.enabled);
-			btnDischarge.setDisabled(false);
-			
 		} else {
-			btnDischarge.setTouchable(Touchable.disabled);
-			btnDischarge.setDisabled(true);
-			
+			btnDischarge.setTouchable(Touchable.disabled);			
 		}
 		
 	}
@@ -239,60 +186,36 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	 */
 	@Override
 	public void update(Tower selectedTower) {
-		lblKills.getLabel_text().setText(String.valueOf(selectedTower.getNumOfKills()));
-		lblMoney.getLabel_text().setText(String.valueOf(presenter.getPlayerMoney()));		
-		/*lblArmorCost.setText(String.valueOf(selectedTower.getArmorCost()));
-		lblSpeedCost.setText(String.valueOf(selectedTower.getSpeedIncreaseCost()));
-		lblRangeCost.setText(String.valueOf(selectedTower.getRangeIncreaseCost()));
-		lblAttackCost.setText(String.valueOf(selectedTower.getAttackIncreaseCost()));
-		lblDischargePrice.setText(String.valueOf(selectedTower.getSellCost()));
+		lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
 		lblKills.setText(String.valueOf(selectedTower.getNumOfKills()));
-		lvlArmor.resetLevels();
-		lvlSpeed.resetLevels();
-		lvlRange.resetLevels();
-		lvlAttack.resetLevels();
-
-		if (Logger.DEBUG) {
-			System.out.println("Armor: " + selectedTower.hasArmor());
-			System.out.println("Speed: " + selectedTower.getSpeedLevel());
-			System.out.println("Range: " + selectedTower.getRangeLevel());
-			System.out.println("Attack: " + selectedTower.getAttackLevel());
-		}
-		if (selectedTower.hasArmor()) {
-			lvlArmor.setLevel(1);
-		}
-		lvlSpeed.setLevel(selectedTower.getSpeedLevel());
-		lvlRange.setLevel(selectedTower.getRangeLevel());
-		lvlAttack.setLevel(selectedTower.getAttackLevel());
-
-
-
-		updateUpgradeControls(selectedTower.getRangeIncreaseCost(), grpRange, btnRange, lblRangeCost);
-		updateUpgradeControls(selectedTower.getSpeedIncreaseCost(), grpSpeed, btnSpeed, lblSpeedCost);
-		updateUpgradeControls(selectedTower.getAttackIncreaseCost(), grpAttack, btnAttack, lblAttackCost);
-		updateUpgradeControls(selectedTower.getArmorCost(), grpArmor, btnArmor, lblArmorCost);
-		*/
+		lblTitle.setText(selectedTower.getName());
+		btnArmor.getLabel().setText(String.valueOf(selectedTower.getArmorCost()));
+		btnSpeed.getLabel().setText(String.valueOf(selectedTower.getSpeedIncreaseCost()));
+		btnRange.getLabel().setText(String.valueOf(selectedTower.getRangeIncreaseCost()));
+		btnAttack.getLabel().setText(String.valueOf(selectedTower.getAttackIncreaseCost()));
+		btnDischarge.getLabel().setText(String.valueOf(selectedTower.getSellCost()));
 		lblTargetPriority.setText(selectedTower.getTargetPriority().name());
-		
+		updateUpgradeControls(btnArmor, selectedTower.getArmorCost());
+		updateUpgradeControls(btnSpeed, selectedTower.getSpeedIncreaseCost());
+		updateUpgradeControls(btnRange, selectedTower.getRangeIncreaseCost());
+		updateUpgradeControls(btnAttack, selectedTower.getAttackIncreaseCost());
 	}
 
 	/**
-	 * Updates the upgrade controlls
+	 * Updates the upgrade controls
 	 * 
 	 * @param towerCost
 	 * @param group
 	 * @param button
 	 * @param label
 	 */
-	private void updateUpgradeControls(int towerCost, Group group, MTDImageButton button, MTDLabelOld label) {
-		if (presenter.canAffordUpgrade(towerCost)) {
-			group.setTouchable(Touchable.enabled);
-			button.setDisabled(false);
-			label.getStyle().fontColor = Color.WHITE;
+	private void updateUpgradeControls(TextButton upgradeButton, int upgradeCost) {
+		boolean affordable = presenter.canAffordUpgrade(upgradeCost);
+		upgradeButton.setDisabled(!affordable);
+		if (affordable) {
+			upgradeButton.setTouchable(Touchable.enabled);
 		} else {
-			group.setTouchable(Touchable.disabled);
-			button.setDisabled(true);
-			label.getStyle().fontColor = Color.RED;
+			upgradeButton.setTouchable(Touchable.disabled);
 		}
 
 	}

@@ -16,9 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.eric.mtd.game.ui.presenter.OptionsPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IOptionsView;
-import com.eric.mtd.game.ui.view.widget.MTDImage;
-import com.eric.mtd.game.ui.view.widget.MTDImageButton;
-import com.eric.mtd.game.ui.view.widget.MTDTextButton;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -33,7 +30,6 @@ public class OptionsView extends Group implements IOptionsView {
 	private TextButton btnResume, btnNewGame, btnMainMenu;
 	private Label lblTitle;
 	private ImageButton btnSound, btnMusic;
-	private MTDImage panel;
 
 	public OptionsView(OptionsPresenter presenter) {
 		this.presenter = presenter;
@@ -53,35 +49,28 @@ public class OptionsView extends Group implements IOptionsView {
 		//table.debug();
 		this.addActor(table);
 		
-		LabelStyle lblTitleStyle = new LabelStyle();
-		lblTitleStyle.font = Resources.getFont("default-font-22");
-		lblTitle = new Label("Options", lblTitleStyle);
+		lblTitle = new Label("Options", skin);
 		lblTitle.setPosition(table.getX() + (table.getWidth()/2) - (lblTitle.getWidth()/2)
-					,table.getY() + table.getHeight() - lblTitle.getHeight() - 20);
+					,table.getY() + table.getHeight() - lblTitle.getHeight() );
 		lblTitle.setAlignment(Align.center);
+		lblTitle.setFontScale(0.7f);
 		this.addActor(lblTitle);
 		
 		table.row();
 		btnResume = new TextButton("Resume",skin);
-		LabelStyle btnResumeStyle = btnResume.getLabel().getStyle();
-		btnResumeStyle.font = Resources.getFont("default-font-16");
-		btnResume.getLabel().setStyle(btnResumeStyle);
+		btnResume.getLabel().setFontScale(0.45f);
 		table.add(btnResume).width(128).height(44).spaceBottom(10).padTop(30).colspan(2);
 		setBtnResumeListener();
 		
 		table.row();
 		btnNewGame = new TextButton("New Game",skin);
-		LabelStyle btnNewGameStyle = btnNewGame.getLabel().getStyle();
-		btnNewGameStyle.font = Resources.getFont("default-font-16");
-		btnNewGame.getLabel().setStyle(btnNewGameStyle);
+		btnNewGame.getLabel().setFontScale(0.45f);
 		table.add(btnNewGame).width(128).height(44).spaceBottom(10).colspan(2);
 		setBtnNewGameListener();
 
 		table.row();
 		btnMainMenu = new TextButton("Main Menu",skin);
-		LabelStyle btnMainMenuStyle = btnMainMenu.getLabel().getStyle();
-		btnMainMenuStyle.font = Resources.getFont("default-font-16");
-		btnMainMenu.getLabel().setStyle(btnMainMenuStyle);
+		btnMainMenu.getLabel().setFontScale(0.45f);
 		table.add(btnMainMenu).width(128).height(44).spaceBottom(10).colspan(2);
 		setBtnMainMenuListener();
 		

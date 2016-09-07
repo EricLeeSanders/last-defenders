@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -81,7 +82,7 @@ public class GameActor extends Actor{
 			batch.end();
 			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			bodyOutline.begin(ShapeType.Line);
-			bodyOutline.setColor(Color.YELLOW);
+			bodyOutline.setColor(Color.BLUE);
 			bodyOutline.rect(getX(),getY(), textureSize.getWidth(), textureSize.getHeight());
 			bodyOutline.end();
 			batch.begin();

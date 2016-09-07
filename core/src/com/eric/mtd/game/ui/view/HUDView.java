@@ -6,12 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.eric.mtd.game.ui.presenter.HUDPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IHUDView;
-import com.eric.mtd.game.ui.view.widget.*;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -24,11 +26,9 @@ import com.eric.mtd.util.Resources;
 public class HUDView extends Group implements IHUDView {
 	private Image imgMoney, imgLife;
 	
-	private MTDImageButton btnEnlist, btnSupport, btnQuit;//, btnOptions;
-	private ImageButton btnSpeed, btnWave;
-	private MTDLabelOld lblMoney, lblLives, lblWaveCount;
+	private ImageButton btnSpeed, btnWave, btnEnlist, btnSupport, btnQuit, btnOptions;
+	private Label lblMoney, lblLives, lblWaveCount;
 	private HUDPresenter presenter;
-	private ImageButton btnOptions;
 
 	public HUDView(HUDPresenter presenter) {
 		this.presenter = presenter;
@@ -40,39 +40,67 @@ public class HUDView extends Group implements IHUDView {
 	 */
 	public void createControls() {
 		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
-		btnWave = new MTDImageButton("UI_HUD", "btnWave", skin, "wave", true, false);
+		btnSpeed = new ImageButton(skin, "speed");
+		btnSpeed.setSize(50, 50);
+		btnSpeed.setPosition(10,10);
+		btnSpeed.setChecked(false);
+		setBtnSpeedListener();
+		addActor(btnSpeed);
+		
+	
+		btnWave = new ImageButton(skin, "wave");
+		btnWave.setSize(50, 50);
+		btnWave.setPosition(btnSpeed.getX() + 60, btnSpeed.getY());
 		setBtnWaveListener();
 		addActor(btnWave);
 
-		btnSpeed = new MTDImageButton("UI_HUD", "btnSpeed", skin, "speed", true, false);
-		setBtnSpeedListener();
-		btnSpeed.setChecked(false);
-		addActor(btnSpeed);
-		
-		btnEnlist = new MTDImageButton("UI_HUD", "btnEnlist", skin, "enlist_hud", true, false);
+		btnEnlist = new ImageButton(skin, "enlist_hud");
+		btnEnlist.setSize(50, 50);
+		btnEnlist.setPosition(Resources.VIRTUAL_WIDTH - 60, 10);
 		setBtnEnlistListener();
 		addActor(btnEnlist);
 
-		btnSupport = new MTDImageButton("UI_HUD", "btnSupport", skin, "support_hud", true, false);
+		btnSupport = new ImageButton(skin, "support_hud");
+		btnSupport.setSize(50, 50);
+		btnSupport.setPosition(Resources.VIRTUAL_WIDTH - 60, btnEnlist.getY() + 60);
 		setBtnSupportListener();
 		addActor(btnSupport);
 		
-		//btnOptions = new MTDImageButton("UI_HUD", "btnOptions", skin, "options", true, false);
+
 		btnOptions = new ImageButton(skin, "options");
 		btnOptions.setSize(50, 50);
 		btnOptions.setPosition(Resources.VIRTUAL_WIDTH - 60, Resources.VIRTUAL_HEIGHT - 60);
 		setBtnOptionsListener();
 		addActor(btnOptions);
-		imgMoney = new MTDImage("UI_HUD", "imgMoney", skin, "money", true, false);
-		addActor(imgMoney);
-		lblMoney = new MTDLabelOld("UI_HUD", "lblMoney", "0", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
-		addActor(lblMoney);
-		imgLife = new MTDImage("UI_HUD", "imgLife", skin, "lives", true, false);
-		addActor(imgLife);
-		lblLives = new MTDLabelOld("UI_HUD", "lblLife", "0", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
-		addActor(lblLives);
-		lblWaveCount = new MTDLabelOld("UI_HUD", "lblWaveCount", "0", true, Color.WHITE, Align.left, Resources.getFont("default-font-22"));
-		addActor(lblWaveCount);
+		
+		Table statsTable = new Table();
+		statsTable.setFillParent(true);
+		addActor(statsTable);
+		
+		imgLife = new Image(skin, "lives");
+		statsTable.add(imgLife).size(32,32).padRight(3);
+
+		lblLives = new Label("0", skin);
+		lblLives.setAlignment(Align.left);
+		lblLives.setFontScale(0.5f);
+		statsTable.add(lblLives).size(30,19).spaceRight(10);
+		
+		imgMoney = new Image(skin, "money");
+		statsTable.add(imgMoney).size(32,32).padRight(3);
+		
+		lblMoney = new Label("0", skin);
+		lblMoney.setAlignment(Align.left);
+		lblMoney.setFontScale(0.5f);
+		statsTable.add(lblMoney).size(72,19);
+		
+		statsTable.row();
+		
+		lblWaveCount = new Label("0", skin);
+		lblWaveCount.setAlignment(Align.left);
+		lblWaveCount.setFontScale(0.5f);
+		statsTable.add(lblWaveCount).size(145,19).colspan(4).padTop(5);
+		statsTable.top().left();
+		this.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 	}
 
 	private void setBtnSpeedListener() {
@@ -137,7 +165,13 @@ public class HUDView extends Group implements IHUDView {
 			}
 		});
 	}
-
+	private void setButtonsVisible(boolean visible){
+		btnEnlist.setVisible(visible);
+		btnSupport.setVisible(visible);
+		btnWave.setVisible(visible);
+		btnOptions.setVisible(visible);
+		btnSpeed.setVisible(visible);
+	}
 	@Override
 	public void setMoney(String money) {
 		lblMoney.setText(money);
@@ -168,28 +202,21 @@ public class HUDView extends Group implements IHUDView {
 		btnWave.setTouchable(Touchable.enabled);
 		btnSpeed.setTouchable(Touchable.enabled);
 		btnOptions.setTouchable(Touchable.enabled);
-		btnWave.setVisible(true);
-		btnEnlist.setVisible(true);
-		btnSupport.setVisible(true);
-		btnOptions.setVisible(true);
-		btnSpeed.setVisible(true);
+		setButtonsVisible(true);
 	}
 	@Override
 	public void supportState() {
-		btnEnlist.setVisible(false);
-		btnSupport.setVisible(false);
-		btnWave.setVisible(false);
-		btnOptions.setVisible(false);
-		btnSpeed.setVisible(false);
+		setButtonsVisible(false);
 	}
 	
 	@Override
 	public void enlistingState() {
-		btnEnlist.setVisible(false);
-		btnSupport.setVisible(false);
-		btnWave.setVisible(false);
-		btnOptions.setVisible(false);
-		btnSpeed.setVisible(false);
+		setButtonsVisible(false);
+	}
+	
+	@Override
+	public void inspectingState() {
+		setButtonsVisible(false);
 	}
 
 	@Override

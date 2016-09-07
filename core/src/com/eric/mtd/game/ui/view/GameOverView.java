@@ -3,13 +3,15 @@ package com.eric.mtd.game.ui.view;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.eric.mtd.game.ui.presenter.GameOverPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IGameOverView;
-import com.eric.mtd.game.ui.view.widget.MTDImage;
-import com.eric.mtd.game.ui.view.widget.MTDLabelOld;
-import com.eric.mtd.game.ui.view.widget.MTDTextButton;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -22,9 +24,9 @@ import com.eric.mtd.util.Resources;
  */
 public class GameOverView extends Group implements IGameOverView {
 	private GameOverPresenter presenter;
-	private MTDTextButton btnNewGame, btnHighScores, btnMainMenu;
-	private MTDLabelOld lblWavesCompleted, lblWavesCompletedCount, lblGameOver;
-	private MTDImage panel;
+	private TextButton btnNewGame, btnHighScores, btnMainMenu;
+	private Label lblWavesCompleted;
+	private Label lblTitle;
 
 	public GameOverView(GameOverPresenter presenter) {
 		this.presenter = presenter;
@@ -35,30 +37,45 @@ public class GameOverView extends Group implements IGameOverView {
 	 * Create controls using MTD widgets.
 	 */
 	public void createControls() {
-		panel = new MTDImage("UI_GameOver", "panel", Resources.SKIN_ATLAS, "main-panel-vert", true, false);
-		panel.getColor().set(1f, 1f, 1f, .75f);
-		addActor(panel);
+		Table table = new Table();
+		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
+		table.setBackground(skin.getDrawable("main-panel"));
+		table.setSize(250,300);
+		table.setPosition((Resources.VIRTUAL_WIDTH/2)-(table.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(table.getHeight()/2));
+		this.addActor(table);
+		
+		
+		lblTitle = new Label("Game Over", skin);
+		lblTitle.setFontScale(0.45f);
+		lblTitle.setAlignment(Align.center);
+		lblTitle.setPosition(table.getX() + (table.getWidth()/2) - (lblTitle.getWidth()/2)
+					,table.getY() + table.getHeight() - lblTitle.getHeight() + 4);
+		this.addActor(lblTitle);
+		
+		table.row();
+		lblWavesCompleted = new Label("0", skin, "hollow_label");
+		lblWavesCompleted.setFontScale(0.45f);
+		lblWavesCompleted.setAlignment(Align.center);
+		table.add(lblWavesCompleted).width(225).height(75).padTop(35);
 
-		btnNewGame = new MTDTextButton("UI_GameOver", "btnNewGame", "New Game", Align.center, 0.45f, true);
+		
+		table.row();
+		btnNewGame = new TextButton("New Game", skin);
+		btnNewGame.getLabel().setFontScale(0.45f);
+		table.add(btnNewGame).width(150).height(45).spaceTop(10);
 		setBtnNewGameListener();
-		addActor(btnNewGame);
-
-		btnHighScores = new MTDTextButton("UI_GameOver", "btnHighScores", "High Scores", Align.center, 0.45f, true);
+		
+		table.row();
+		btnHighScores = new TextButton("High Scores", skin);
+		btnHighScores.getLabel().setFontScale(0.45f);
+		table.add(btnHighScores).width(150).height(45).spaceTop(10);
 		setBtnHighScoresListener();
-		addActor(btnHighScores);
-
-		btnMainMenu = new MTDTextButton("UI_GameOver", "btnMainMenu", "Main Menu", Align.center, 0.45f, true);
+		
+		table.row();
+		btnMainMenu = new TextButton("Main Menu", skin);
+		btnMainMenu.getLabel().setFontScale(0.45f);
+		table.add(btnMainMenu).width(150).height(45).spaceTop(10);
 		setBtnMainMenuListener();
-		addActor(btnMainMenu);
-
-		lblGameOver = new MTDLabelOld("UI_GameOver", "lblGameOver", "Game Over!", true, Color.valueOf("FF7F2A"), Align.center, Resources.getFont("default-font-22")); //
-		addActor(lblGameOver);
-
-		lblWavesCompleted = new MTDLabelOld("UI_GameOver", "lblWavesCompleted", "Waves Completed", true, Color.WHITE, Align.center, Resources.getFont("default-font-22"));
-		addActor(lblWavesCompleted);
-
-		lblWavesCompletedCount = new MTDLabelOld("UI_GameOver", "lblWavesCompletedCount", "0", true, Color.WHITE, Align.center, Resources.getFont("default-font-22"));
-		addActor(lblWavesCompletedCount);
 	}
 
 	@Override
@@ -73,7 +90,7 @@ public class GameOverView extends Group implements IGameOverView {
 
 	@Override
 	public void setWavesCompleted(String wavesCompleted) {
-		lblWavesCompletedCount.setText(wavesCompleted);
+		lblWavesCompleted.setText("Waves Completed\n" + wavesCompleted);
 	}
 
 	private void setBtnNewGameListener() {

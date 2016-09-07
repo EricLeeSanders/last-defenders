@@ -20,7 +20,7 @@ import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
 public class LandMine extends SupportActor implements IRpg{
-	public static final int COST = 400;
+	public static final int COST = 300;
 	private static final float ATTACK = 15f;
 	private static final float RANGE = 50;
 	private static final Vector2 GUN_POS = new Vector2(0,0);

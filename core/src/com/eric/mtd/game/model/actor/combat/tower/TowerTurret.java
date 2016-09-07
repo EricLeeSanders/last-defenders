@@ -83,19 +83,19 @@ public class TowerTurret extends Tower implements IRotatable {
 			batch.end();
 			body.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			body.begin(ShapeType.Line);
-			body.setColor(Color.YELLOW);
+			body.setColor(Color.BLACK);
 			body.polygon(getBody().getTransformedVertices());
 			body.end();
 			
 			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			bodyOutline.begin(ShapeType.Line);
-			bodyOutline.setColor(Color.YELLOW);
+			bodyOutline.setColor(Color.BLUE);
 			bodyOutline.rect(getX(),getY(), TEXTURE_BODY_SIZE.getWidth(), TEXTURE_BODY_SIZE.getHeight());
 			bodyOutline.end();
 			
 			rangeBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			rangeBody.begin(ShapeType.Line);
-			rangeBody.setColor(Color.YELLOW);
+			rangeBody.setColor(Color.PURPLE);
 			rangeBody.polygon(((Polygon)getRangeShape()).getTransformedVertices());
 			rangeBody.end();
 			batch.begin();
@@ -172,6 +172,11 @@ public class TowerTurret extends Tower implements IRotatable {
 	}
 	private void changeRangeCoords(){
 		rangeCoords[3] = rangeCoords[5] = this.getRange() + (TEXTURE_BODY_SIZE.getHeight() / 2);
+	}
+	
+	@Override
+	public String getName(){
+		return "Turret";
 	}
 
 }

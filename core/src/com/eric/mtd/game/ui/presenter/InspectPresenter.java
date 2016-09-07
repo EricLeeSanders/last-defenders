@@ -169,6 +169,13 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 			}
 		}
 	}
+	/**
+	 * Gets the type/name of the selected tower
+	 * @return
+	 */
+	public String getTowerName(){
+		return selectedTower.getName();
+	}
 	
 	/**
 	 * Get the players amount of money

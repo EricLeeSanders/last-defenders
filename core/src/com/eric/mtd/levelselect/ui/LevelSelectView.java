@@ -73,7 +73,7 @@ public class LevelSelectView extends Group {
 		level1.setVisible(false);
 		levelGroup.addActor(level1);
 		
-		level2 = new Image(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("level2map"));
+		level2 = new Image(Resources.getAtlas(Resources.LEVEL_SELECT_ATLAS).findRegion("level2"));
 		//level2.setSize(360, 207);
 		//level2.setPosition((confirmBackground.getX()+20), (confirmBackground.getY()+60));
 		level2.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
