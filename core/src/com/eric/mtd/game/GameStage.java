@@ -97,7 +97,8 @@ public class GameStage extends Stage {
 	 * Determine if the wave is over
 	 */
 	public boolean isWaveOver() {
-		if (getActorGroups().getEnemyGroup().getChildren().size <= 0) {
+		if (getActorGroups().getEnemyGroup().getChildren().size <= 0
+			&& getActorGroups().getProjectileGroup().getChildren().size <= 0) {
 			if (!(levelStateManager.getState().equals(LevelState.GAME_OVER))) {
 				player.giveMoney((int) (100 * (float) level.getCurrentWave()));
 				levelStateManager.setState(LevelState.STANDBY);

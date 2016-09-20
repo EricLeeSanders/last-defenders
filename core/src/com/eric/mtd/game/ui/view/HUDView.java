@@ -225,12 +225,15 @@ public class HUDView extends Group implements IHUDView {
 		btnSupport.setTouchable(Touchable.disabled);
 		btnWave.setTouchable(Touchable.disabled);
 		btnSpeed.setTouchable(Touchable.disabled);
-		//btnOptions.setTouchable(Touchable.disabled);
 	}
 
 	@Override
 	public void gameOverState() {
-		optionsState();
+		btnEnlist.setTouchable(Touchable.disabled);
+		btnSupport.setTouchable(Touchable.disabled);
+		btnWave.setTouchable(Touchable.disabled);
+		btnSpeed.setTouchable(Touchable.disabled);
+		btnOptions.setTouchable(Touchable.disabled);
 	}
 
 	@Override
