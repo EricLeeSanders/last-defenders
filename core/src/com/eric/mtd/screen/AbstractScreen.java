@@ -52,7 +52,7 @@ public abstract class AbstractScreen implements Screen {
 
 	@Override
 	public void hide() {
-		if(Logger.DEBUG)System.out.println("Hiding");
+		Logger.info("Abstract Screen Hiding");
 	}
 
 	@Override
@@ -74,14 +74,11 @@ public abstract class AbstractScreen implements Screen {
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(imp);
-		if (Logger.DEBUG)
-			System.out.println("Processer Set");
 	}
 
 	@Override
 	public void dispose() {
-		if (Logger.DEBUG)
-			System.out.println("abstractscreen disposing");
+		Logger.info("Abstract Screen Disposing");
 
 	}
 

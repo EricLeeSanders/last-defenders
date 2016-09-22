@@ -103,8 +103,6 @@ public class Bullet extends Actor implements Pool.Poolable{
 
 	@Override
 	public void reset() {
-		if (Logger.DEBUG)
-			System.out.println("freeing bullet");
 		this.clear();
 		target = null;
 		attacker = null;

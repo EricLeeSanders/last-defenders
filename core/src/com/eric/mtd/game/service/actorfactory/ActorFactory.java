@@ -110,8 +110,6 @@ public class ActorFactory {
 			tower = (Tower) towerFlameThrowerPool.obtain();
 		}
 		tower.setPositionCenter(pos);
-		if (Logger.DEBUG)
-			System.out.println("Obtained : " + type);
 		return tower;
 	}
 
@@ -149,8 +147,6 @@ public class ActorFactory {
 		enemy.setPath(new LinkedList<Vector2>(path));
 		enemy.setHasArmor(armor);
 		enemy.setDead(false);
-		if (Logger.DEBUG)
-			System.out.println("Obtained : " + type);
 		return enemy;
 	}
 
@@ -161,8 +157,6 @@ public class ActorFactory {
 	 */
 	public HealthBar loadHealthBar() {
 		HealthBar healthBar = healthPool.obtain();
-		if (Logger.DEBUG)
-			System.out.println("Obtained healthbar");
 		return healthBar;
 	}
 
@@ -232,8 +226,6 @@ public class ActorFactory {
 		} else if(type.equals("LandMine")) {
 			supportActor = landMinePool.obtain();
 		}
-		if (Logger.DEBUG)
-			System.out.println("Obtained : " + type);
 		supportActor.setPositionCenter(pos);
 		supportActor.setEnemyGroup(enemyGroup);
 		supportActor.setProjectileGroup(projectileGroup);
@@ -248,8 +240,6 @@ public class ActorFactory {
 	 */
 	protected CombatActor createCombatActor(Class<? extends CombatActor> type, Group targetGroup, Group projectileGroup) {
 		CombatActor actor = null;
-		if (Logger.DEBUG)
-			System.out.println("Creating new " + type.getSimpleName());
 		if (type.equals(TowerRifle.class)) {
 			TextureRegion rifleRegion = actorAtlas.findRegion("Rifle");
 			actor = new TowerRifle(rifleRegion, towerRiflePool, bulletPool, audio);
@@ -331,8 +321,6 @@ public class ActorFactory {
 	 */
 	protected HealthBar createHealthBarActor() {
 		HealthBar healthBar = new HealthBar(healthPool);
-		if (Logger.DEBUG)
-			System.out.println("Created new healthbar");
 		return healthBar;
 
 	}
@@ -399,8 +387,6 @@ public class ActorFactory {
 	 * @return Apache
 	 */
 	protected SupportActor createSupportActor(Class<? extends SupportActor> type) {
-		if (Logger.DEBUG)
-			System.out.println("Creating new " + type.getSimpleName());
 		
 		if (type.equals(Apache.class)) {
 			TextureRegion [] textureRegions = new TextureRegion[3];

@@ -28,7 +28,6 @@ public class AirStrikePlacement {
 		currentAirStrike.setVisible(false);
 	}
 	public void addLocation(Vector2 location){
-		if(Logger.DEBUG)System.out.println("AirStrike added");
 		currentAirStrike.addLocation(location, actorGroups.getSupportGroup());
 	}
 	public void finishCurrentAirStrike() {

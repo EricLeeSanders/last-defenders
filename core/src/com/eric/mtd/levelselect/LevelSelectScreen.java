@@ -3,6 +3,7 @@ package com.eric.mtd.levelselect;
 import com.eric.mtd.screen.AbstractScreen;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.state.GameStateManager;
+import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Resources;
 
@@ -23,7 +24,6 @@ public class LevelSelectScreen extends AbstractScreen {
 	}
 	@Override
 	public void resize(int width, int height) {
-		//stage.getViewport().setScreenSize(width, height);
 	    super.resize(width, height);
 	}
 	
@@ -40,6 +40,7 @@ public class LevelSelectScreen extends AbstractScreen {
 
 	@Override
 	public void dispose() {
+		Logger.info("Level Select Screen Dispose");
 		super.dispose();
 		audio.turnOffMusic();
 		stage.dispose();

@@ -39,8 +39,6 @@ public class SupportActorPlacement {
 			}
 			currentSupportActor.setShowRange(true);
 			currentSupportActor.setPositionCenter(clickCoords);
-			if (Logger.DEBUG)
-				System.out.println(currentSupportActor.getPositionCenter());
 		}
 	}
 

@@ -198,15 +198,11 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchDown(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Rotate Pressed");
 				return true;
 			}
 		});
 	}
 	private void setTowerListener(ImageButton button, final String tower){
-		if (Logger.DEBUG)
-			System.out.println("creating " + tower + " listener");
 		button.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -221,8 +217,6 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Place Pressed");
 				presenter.placeTower();
 			}
 		});
@@ -233,8 +227,6 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Cancel Pressed");
 				presenter.cancelEnlist();
 				
 			}
@@ -246,8 +238,6 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Placing Cancel Pressed");
 				presenter.cancelEnlist();
 			}
 		});

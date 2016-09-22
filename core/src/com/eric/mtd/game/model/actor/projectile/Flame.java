@@ -90,7 +90,6 @@ public class Flame extends Actor implements Pool.Poolable {
 		if (shooter.isDead()) {
 			this.remove();
 			pool.free(this);
-			System.out.println("Testing actor remove");
 			return;
 		}
 	}
@@ -138,8 +137,6 @@ public class Flame extends Actor implements Pool.Poolable {
 
 	@Override
 	public void reset() {
-		if (Logger.DEBUG)
-			System.out.println("freeing flame");
 		this.clear();
 		this.remove();
 		stateTime = 0;

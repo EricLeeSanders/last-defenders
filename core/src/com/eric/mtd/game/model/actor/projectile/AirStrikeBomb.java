@@ -117,8 +117,6 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 
 	@Override
 	public void reset() {
-		if (Logger.DEBUG)
-			System.out.println("freeing RPG");
 		this.clear();
 		this.remove();
 	}

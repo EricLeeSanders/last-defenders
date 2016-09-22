@@ -58,7 +58,6 @@ public class Apache extends SupportActor{
 		this.bulletPool = bulletPool;
 	}
 	public void initialize(Vector2 position){
-		if(Logger.DEBUG) System.out.println("init apahce");
 		Vector2 destination = new Vector2(position.x - (this.getWidth()/2), position.y - (this.getHeight()/2));
 		setPositionCenter(new Vector2(0-this.getHeight(), Resources.VIRTUAL_HEIGHT/2));
 		float moveDistance = (destination.dst(this.getPositionCenter()) / MOVE_SPEED);
@@ -67,8 +66,6 @@ public class Apache extends SupportActor{
 	}
 	@Override
 	public void reset() {
-		if (Logger.DEBUG)
-			System.out.println("freeing apache");
 		setReadyToAttack(false);
 		timeActive = 0;
 		attackCounter = 0;
@@ -85,7 +82,6 @@ public class Apache extends SupportActor{
 		//then it is ready to attack
 		if(isActive() && !isReadyToAttack() && this.getActions().size <= 0){
 			setReadyToAttack(true);
-			if(Logger.DEBUG) System.out.println("Apache ready to attack");
 		}
 		if (isReadyToAttack()) {
 			findTarget();
@@ -117,7 +113,6 @@ public class Apache extends SupportActor{
 		}
 	}
 	private void exitStage(){
-		if (Logger.DEBUG)System.out.println("Apache exiting stage");
 		Vector2 destination = new Vector2(0-this.getHeight()-(this.getHeight()/2), Resources.VIRTUAL_HEIGHT/2 - this.getWidth()/2);
 		float moveDistance = (destination.dst(this.getPositionCenter()) / MOVE_SPEED);
 		this.setRotation(calculateRotation(destination));
@@ -140,8 +135,6 @@ public class Apache extends SupportActor{
 	}
 	
 	public void attackTarget() {
-		if (Logger.DEBUG)
-			System.out.println("Apache: Attacking target at " + getTarget().getPositionCenter());
 		if(getTarget() != null){
 			audio.playProjectileSound(ProjectileSound.MACHINE_GUN);
 			getProjectileGroup().addActor(bulletPool.obtain().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));

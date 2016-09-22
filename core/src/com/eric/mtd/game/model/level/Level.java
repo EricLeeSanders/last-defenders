@@ -55,8 +55,6 @@ public class Level implements ILevelStateObserver {
 				SpawningEnemy enemy = enemies.remove();
 				actorGroups.getEnemyGroup().addActor(enemy.getEnemy());
 				enemyDelay = enemy.getDelay();
-				if (Logger.DEBUG)
-					System.out.println("Spawning Enemy");
 			}
 		} else {
 			delayCount += delta;
@@ -83,7 +81,6 @@ public class Level implements ILevelStateObserver {
 	}
 	
 	private void generateWave(){
-		if(Logger.DEBUG)System.out.println("Dynamically generating wave");
 		enemies = waveGenerator.generateWave(currentWave);
 	}
 	private void loadWaveFromJSON(){
@@ -105,10 +102,6 @@ public class Level implements ILevelStateObserver {
 		return currentWave;
 	}
 	
-	public Map getMap(){
-		return map;
-	}
-
 	@Override
 	public void changeLevelState(LevelState state) {
 		switch (state) {

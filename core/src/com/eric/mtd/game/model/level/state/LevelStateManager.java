@@ -33,11 +33,9 @@ public class LevelStateManager {
 	 * Notify all observers of state change
 	 */
 	public void notifyObservers() {
-		if (Logger.DEBUG)
-			System.out.println("Level state: Notify Observers");
+		Logger.info("Level state: Notify Observers");
 		for (ILevelStateObserver observer : observers) {
-			if (Logger.DEBUG)
-				System.out.println("Level state: Notifying: " + observer.getClass().getName());
+			Logger.info("Level state: Notifying: " + observer.getClass().getName());
 			observer.changeLevelState(state);
 		}
 	}
@@ -48,8 +46,7 @@ public class LevelStateManager {
 	 * @param state
 	 */
 	public void setState(LevelState state) {
-		if (Logger.DEBUG)
-			System.out.println("Chaning Level state: " + this.getState() + " to state: " + state);
+		Logger.info("Chaning Level state: " + this.getState() + " to state: " + state);
 		this.state = state;
 		notifyObservers();
 	}

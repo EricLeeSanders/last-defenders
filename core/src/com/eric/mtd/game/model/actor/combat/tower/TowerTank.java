@@ -118,8 +118,6 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 
 	@Override
 	public void attackTarget() {
-		if (Logger.DEBUG)
-			System.out.println("Tower Tank: Attacking target at " + getTarget().getPositionCenter());
 		if(getTarget() != null){
 			getProjectileGroup().addActor(rpgPool.obtain().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
 		}

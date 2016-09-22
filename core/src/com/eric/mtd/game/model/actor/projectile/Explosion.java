@@ -58,8 +58,6 @@ public class Explosion extends Actor implements Pool.Poolable {
 	 * Initializes an Explosion and deals Damage
 	 */
 	public Actor initialize(IAttacker attacker, float radius, ITargetable target, Group targetGroup, Vector2 position) {
-		if (Logger.DEBUG)
-			System.out.println("Setting Explosion");
 		audio.playProjectileSound(ProjectileSound.RPG_EXPLOSION);
 		this.attacker = attacker;
 		this.target = target;
@@ -97,8 +95,6 @@ public class Explosion extends Actor implements Pool.Poolable {
 
 	@Override
 	public void reset() {
-		if (Logger.DEBUG)
-			System.out.println("freeing explosion");
 		this.clear();
 		this.remove();
 		explosionAnimation = null;
