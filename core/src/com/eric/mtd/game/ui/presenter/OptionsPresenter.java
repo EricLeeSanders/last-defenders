@@ -8,8 +8,8 @@ import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
 import com.eric.mtd.state.GameStateManager;
 import com.eric.mtd.state.GameStateManager.GameState;
-import com.eric.mtd.util.AudioUtil;
-import com.eric.mtd.util.AudioUtil.MTDSound;
+import com.eric.mtd.util.MTDAudio;
+import com.eric.mtd.util.MTDAudio.MTDSound;
 
 /**
  * Presenter for the Options View
@@ -22,12 +22,13 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	private GameUIStateManager uiStateManager;
 	private ScreenStateManager screenStateManager;
 	private IOptionsView view;
-
-	public OptionsPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager, ScreenStateManager screenStateManager) {
+	private MTDAudio audio;
+	public OptionsPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager, ScreenStateManager screenStateManager, MTDAudio audio) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.gameStateManager = gameStateManager;
 		this.screenStateManager = screenStateManager;
+		this.audio = audio;
 	}
 
 	/**
@@ -42,15 +43,15 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	
 	private void initView(){
 		changeUIState(uiStateManager.getState());
-		view.setBtnMusicOn(AudioUtil.isMusicEnabled());
-		view.setBtnSoundOn(AudioUtil.isSoundEnabled());
+		view.setBtnMusicOn(audio.isMusicEnabled());
+		view.setBtnSoundOn(audio.isSoundEnabled());
 	}
 
 	/**
 	 * Resume the game
 	 */
 	public void resumeGame() {
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
+		audio.playSound(MTDSound.SMALL_CLICK);
 		gameStateManager.setState(GameState.PLAY);
 		uiStateManager.setStateReturn();
 
@@ -60,7 +61,7 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	 * Go to main menu
 	 */
 	public void mainMenu() {
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
+		audio.playSound(MTDSound.SMALL_CLICK);
 		gameStateManager.setState(GameState.PLAY);
 		screenStateManager.setState(ScreenState.MENU);
 
@@ -70,22 +71,22 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	 * Start a new game
 	 */
 	public void newGame() {
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
+		audio.playSound(MTDSound.SMALL_CLICK);
 		gameStateManager.setState(GameState.PLAY);
 		screenStateManager.setState(ScreenState.LEVEL_SELECTION);
 
 	}
 	
 	public void soundPressed() {
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
-		AudioUtil.changeSoundEnabled();
-		view.setBtnSoundOn(AudioUtil.isSoundEnabled());
+		audio.playSound(MTDSound.SMALL_CLICK);
+		audio.changeSoundEnabled();
+		view.setBtnSoundOn(audio.isSoundEnabled());
 	}
 	
 	public void musicPressed() {
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
-		AudioUtil.changeMusicEnabled();
-		view.setBtnMusicOn(AudioUtil.isMusicEnabled());
+		audio.playSound(MTDSound.SMALL_CLICK);
+		audio.changeMusicEnabled();
+		view.setBtnMusicOn(audio.isMusicEnabled());
 	}
 	
 	@Override

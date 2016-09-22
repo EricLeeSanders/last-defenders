@@ -14,13 +14,14 @@ import com.eric.mtd.util.Logger;
 public class SupportActorPlacement {
 	private SupportActor currentSupportActor;
 	private ActorGroups actorGroups;
-
-	public SupportActorPlacement(ActorGroups actorGroups) {
+	private ActorFactory actorFactory;
+	public SupportActorPlacement(ActorGroups actorGroups, ActorFactory actorFactory) {
 		this.actorGroups = actorGroups;
+		this.actorFactory = actorFactory;
 	}
 
 	public void createSupportActor(String type) {
-		currentSupportActor = ActorFactory.loadSupportActor(new Vector2(0, 0), type, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
+		currentSupportActor = actorFactory.loadSupportActor(new Vector2(0, 0), type, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
 		if(type.equals("LandMine")){
 			actorGroups.getLandmineGroup().addActor(currentSupportActor);
 		} else {

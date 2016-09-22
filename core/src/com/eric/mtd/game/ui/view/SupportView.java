@@ -41,18 +41,19 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	private Group choosingGroup;
 	private Label lblTitle, lblMoney;
 	
-	public SupportView(SupportPresenter presenter) {
+	public SupportView(SupportPresenter presenter, Skin skin) {
 		this.presenter = presenter;
 		choosingGroup = new Group();
+		choosingGroup.setTransform(false);
+		this.setTransform(false);
 		addActor(choosingGroup);
-		createControls();
+		createControls(skin);
 	}
 
 	/**
 	 * Creates the controls with the MTD widgets
 	 */
-	public void createControls() {
-		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
+	public void createControls(Skin skin) {
 		Table container = new Table();
 		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 		choosingGroup.addActor(container);

@@ -13,7 +13,6 @@ import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.level.Level;
-import com.eric.mtd.game.model.level.MTDTiledMapRenderer;
 import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
@@ -38,22 +37,26 @@ public class GameStage extends Stage {
 	private Player player;
 	private int intLevel;
 	private ActorGroups actorGroups;
-	private MTDTiledMapRenderer mapRenderer;
-
-	public GameStage(int intLevel, Player player, ActorGroups actorGroups, LevelStateManager levelStateManager, GameUIStateManager uiStateManager, Viewport viewport) {
+	private Map mtdMap;
+	private Resources resources;
+	public GameStage(int intLevel, Player player, ActorGroups actorGroups, ActorFactory actorFactory, LevelStateManager levelStateManager, GameUIStateManager uiStateManager, Viewport viewport, Resources resources) {
 		super(viewport);
-		MTDGame.gameSpeed = (Resources.NORMAL_SPEED);
 		this.player = player;
 		this.actorGroups = actorGroups;
 		this.levelStateManager = levelStateManager;
 		this.uiStateManager = uiStateManager;
 		this.intLevel = intLevel;
+		this.resources = resources;
 		createGroups();
-		ActorFactory.initPools(actorGroups);
-		level = new Level(intLevel, levelStateManager, getActorGroups());
-		mapRenderer = new MTDTiledMapRenderer(intLevel, getCamera());
+		mtdMap = new Map(intLevel, getCamera(), resources.getMap(intLevel));
+		level = new Level(intLevel, levelStateManager, getActorGroups(),actorFactory, mtdMap);
 
 	}
+	
+	public void loadAssets(){
+		resources.loadMap(intLevel);
+	}
+	
 	/**
 	 * Create the actor groups
 	 */
@@ -63,7 +66,6 @@ public class GameStage extends Stage {
 		this.addActor(getActorGroups().getTowerGroup());
 		this.addActor(getActorGroups().getHealthBarGroup());
 		this.addActor(getActorGroups().getProjectileGroup());
-		this.addActor(getActorGroups().getSandbagGroup());
 		this.addActor(getActorGroups().getSupportGroup());
 	}
 
@@ -81,7 +83,7 @@ public class GameStage extends Stage {
 
 	@Override
 	public void draw() {
-		mapRenderer.update();
+		mtdMap.update();
 		super.draw();
 	}	
 
@@ -89,7 +91,8 @@ public class GameStage extends Stage {
 	public void dispose() {
 		if (Logger.DEBUG)
 			System.out.println("Game Stage Dispose");
-		mapRenderer.dispose();
+		mtdMap.dispose();
+		resources.unloadMap(intLevel);
 		super.dispose();
 	}
 

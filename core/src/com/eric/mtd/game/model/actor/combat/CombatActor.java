@@ -25,7 +25,7 @@ import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.model.actor.interfaces.ICollision;
 import com.eric.mtd.game.model.actor.interfaces.ITargetable;
 import com.eric.mtd.game.model.actor.interfaces.IVehicle;
-import com.eric.mtd.util.AudioUtil;
+import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -75,7 +75,8 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		observers.add(observer);
 	}
 	protected void notifyObservers(){
-		for(ICombatActorObserver observer: observers){
+		//Need to create a copy and iterate over the copy in the case that an observer is detached. 
+		for(ICombatActorObserver observer: new ArrayList<ICombatActorObserver>(observers)){
 			observer.notifty();
 		}
 	}
@@ -191,9 +192,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public void setDead(boolean dead) {
 		this.dead = dead;
 		if (isDead()) {
-			if (this instanceof IVehicle) {
-				AudioUtil.playVehicleExplosion();
-			}
 			pool.free(this);
 		}
 		notifyObservers();

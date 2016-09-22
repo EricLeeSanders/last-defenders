@@ -54,9 +54,8 @@ public class Flame extends Actor implements Pool.Poolable {
 	/**
 	 * Constructs a flame
 	 */
-	public Flame(Pool<Flame> pool) {
+	public Flame(Pool<Flame> pool, TextureAtlas actorAtlas) {
 		this.pool = pool;
-		TextureAtlas actorAtlas = Resources.getAtlas(Resources.ACTOR_ATLAS);
 		for (int i = 0; i < NUM_OF_FRAMES; i++) {
 			flameRegions[i] = actorAtlas.findRegion("Flame" + (i + 1));
 		}
@@ -84,12 +83,10 @@ public class Flame extends Actor implements Pool.Poolable {
 	}
 
 
-	/**
-	 * Attacks the Target Group with AOE Damage
-	 */
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		stateTime += delta;
 		if (shooter.isDead()) {
 			this.remove();
 			pool.free(this);
@@ -106,7 +103,6 @@ public class Flame extends Actor implements Pool.Poolable {
 	public void draw(Batch batch, float alpha) {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glEnable(GL20.GL_BLEND);
-		stateTime += (Gdx.graphics.getDeltaTime() * MTDGame.gameSpeed);
 		currentFlame = flameAnimation.getKeyFrame(stateTime, false);
 		this.setOrigin((currentFlame.getRegionWidth() / 2), 0);
 		this.setPosition(shooter.getGunPos().x - (currentFlame.getRegionWidth() / 2), shooter.getGunPos().y);

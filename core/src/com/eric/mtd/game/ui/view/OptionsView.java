@@ -31,18 +31,17 @@ public class OptionsView extends Group implements IOptionsView {
 	private Label lblTitle;
 	private ImageButton btnSound, btnMusic;
 
-	public OptionsView(OptionsPresenter presenter) {
+	public OptionsView(OptionsPresenter presenter, Skin skin) {
 		this.presenter = presenter;
-		createControls();
+		this.setTransform(false);
+		createControls(skin);
 	}
 
 	/**
 	 * Create controls with MTD Widgets
 	 */
-	public void createControls() {
-		
+	public void createControls(Skin skin) {
 		Table table = new Table();
-		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
 		table.setBackground(skin.getDrawable("main-panel-hollow"));
 		table.setSize(322,360);
 		table.setPosition((Resources.VIRTUAL_WIDTH/2)-(table.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(table.getHeight()/2));

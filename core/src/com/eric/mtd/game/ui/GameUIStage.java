@@ -4,6 +4,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -13,6 +14,7 @@ import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.ui.presenter.EnlistPresenter;
 import com.eric.mtd.game.ui.presenter.GameOverPresenter;
 import com.eric.mtd.game.ui.presenter.HUDPresenter;
@@ -32,6 +34,7 @@ import com.eric.mtd.game.ui.view.OptionsView;
 import com.eric.mtd.game.ui.view.SupportView;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.state.GameStateManager;
+import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Resources;
 
 /**
@@ -61,57 +64,60 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	private GameStateManager gameStateManager;
 	private ScreenStateManager screenStateManager;
 	private ActorGroups actorGroups;
+	private ActorFactory actorFactory;
 	private InputMultiplexer imp;
 	private Map map;
-	public GameUIStage(Player player, ActorGroups actorGroups
+	public GameUIStage(Player player, ActorGroups actorGroups, ActorFactory actorFactory
 			, GameUIStateManager uiStateManager, LevelStateManager levelStateManager
 			, GameStateManager gameStateManager, ScreenStateManager screenStateManager
-			, InputMultiplexer imp, Viewport viewport, Map map) {
+			, InputMultiplexer imp, Viewport viewport, Map map, Resources resources, MTDAudio audio) {
 		super(viewport);
 		this.map = map;
 		this.imp = imp;
 		this.player = player;
 		this.actorGroups = actorGroups;
+		this.actorFactory = actorFactory;
 		this.uiStateManager = uiStateManager;
 		this.levelStateManager = levelStateManager;
 		this.gameStateManager = gameStateManager;
 		this.screenStateManager = screenStateManager;
 		uiStateManager.attach(this);
 		imp.addProcessor(this);
-		createUI();
+		createUI(resources, audio);
 	}
 
 	/**
 	 * Create and initialize the views and presenters of the Game UI
 	 */
-	public void createUI() {
-		this.enlistPresenter = new EnlistPresenter(uiStateManager, player, actorGroups, map);
-		this.enlistView = new EnlistView(enlistPresenter, this);
+	public void createUI(Resources resources, MTDAudio audio) {
+		Skin skin = resources.getSkin(Resources.SKIN_JSON);
+		this.enlistPresenter = new EnlistPresenter(uiStateManager, player, actorGroups, actorFactory, map, audio);
+		this.enlistView = new EnlistView(enlistPresenter, skin);
 		enlistPresenter.setView(enlistView);
 		
-		this.supportPresenter = new SupportPresenter(uiStateManager, player, actorGroups);
-		this.supportView = new SupportView(supportPresenter);
+		this.supportPresenter = new SupportPresenter(uiStateManager, player, actorGroups, actorFactory, audio);
+		this.supportView = new SupportView(supportPresenter, skin);
 		supportPresenter.setView(supportView);
 		
-		this.hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player);
-		this.hudView = new HUDView(hudPresenter);
+		this.hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player, resources, audio);
+		this.hudView = new HUDView(hudPresenter, skin);
 		hudPresenter.setView(hudView);
 		//hudView.setFillParent(true);
 
-		this.inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager, player, actorGroups);
-		this.inspectView = new InspectView(inspectPresenter);
+		this.inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager, player, actorGroups, audio);
+		this.inspectView = new InspectView(inspectPresenter, skin);
 		inspectPresenter.setView(inspectView);
 
-		this.optionsPresenter = new OptionsPresenter(uiStateManager, gameStateManager, screenStateManager);
-		this.optionsView = new OptionsView(optionsPresenter);
+		this.optionsPresenter = new OptionsPresenter(uiStateManager, gameStateManager, screenStateManager, audio);
+		this.optionsView = new OptionsView(optionsPresenter, skin);
 		optionsPresenter.setView(optionsView);
 
-		this.gameOverPresenter = new GameOverPresenter(uiStateManager, screenStateManager, player);
-		this.gameOverView = new GameOverView(gameOverPresenter);
+		this.gameOverPresenter = new GameOverPresenter(uiStateManager, screenStateManager, player, audio);
+		this.gameOverView = new GameOverView(gameOverPresenter, skin);
 		gameOverPresenter.setView(gameOverView);
 		
-		this.levelCompletedPresenter = new LevelCompletedPresenter(player, gameStateManager, uiStateManager, screenStateManager);
-		this.levelCompletedView = new LevelCompletedView(levelCompletedPresenter);
+		this.levelCompletedPresenter = new LevelCompletedPresenter(player, gameStateManager, uiStateManager, screenStateManager, audio);
+		this.levelCompletedView = new LevelCompletedView(levelCompletedPresenter, skin);
 		levelCompletedPresenter.setView(levelCompletedView);
 		
 		this.addActor(hudView);

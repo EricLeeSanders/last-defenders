@@ -26,14 +26,16 @@ public class Level implements ILevelStateObserver {
 	private Queue<SpawningEnemy> enemies;
 	private int intLevel;
 	private ActorGroups actorGroups;
+	private ActorFactory actorFactory;
 	private DynamicWaveGenerator waveGenerator;
 
-	public Level(int level, LevelStateManager levelStateManager, ActorGroups actorGroups) {
+	public Level(int level, LevelStateManager levelStateManager, ActorGroups actorGroups, ActorFactory actorFactory, Map map) {
 		this.intLevel = level;
 		this.levelStateManager = levelStateManager;
 		levelStateManager.attach(this);
 		this.actorGroups = actorGroups;
-		map = new Map(level);
+		this.actorFactory = actorFactory;
+		this.map = map;
 	}
 
 	/**
@@ -75,7 +77,7 @@ public class Level implements ILevelStateObserver {
 			//If we are on the last wave, then construct
 			//The DynamicWaveGenerator
 			if(currentWave == MAX_WAVES){
-				waveGenerator = new DynamicWaveGenerator(enemies, map, actorGroups);
+				waveGenerator = new DynamicWaveGenerator(enemies, map, actorGroups, actorFactory);
 			}
 		}
 	}
@@ -89,11 +91,11 @@ public class Level implements ILevelStateObserver {
 		enemies = new LinkedList<SpawningEnemy>();
 		JsonValue enemiesJson = json.get("wave");
 		for (JsonValue enemyJson : enemiesJson.iterator()) {
-			Enemy enemy = ActorFactory.loadEnemy(map.getPath(), enemyJson.getString("enemy"), enemyJson.getBoolean("armor"), actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
+			Enemy enemy = actorFactory.loadEnemy(map.getPath(), enemyJson.getString("enemy"), enemyJson.getBoolean("armor"), actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
 			float delay = enemyJson.getFloat("delay");
 			SpawningEnemy spawningEnemy = new SpawningEnemy(enemy, delay);
 			enemies.add(spawningEnemy);
-			HealthBar healthBar = ActorFactory.loadHealthBar();
+			HealthBar healthBar = actorFactory.loadHealthBar();
 			healthBar.setActor(enemy);
 			actorGroups.getHealthBarGroup().addActor(healthBar);
 

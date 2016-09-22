@@ -62,16 +62,13 @@ public abstract class AbstractScreen implements Screen {
 
 	@Override
 	public void resume() {
-		Resources.gameResume();
 		gameStateManager.setState(GameState.PLAY);
 		
 	}
 
 	@Override
 	public void resize(int width, int height) {
-	    //camera.setToOrtho(false, (float)(width*aspectRatio), height);
-	    //camera.update();
-	    viewport.update(width, height, true); // Changes viewport
+	    viewport.update(width, height, true);
 	}
 
 	@Override
