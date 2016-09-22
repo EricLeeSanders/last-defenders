@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.SnapshotArray;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.interfaces.ICollision;
-import com.eric.mtd.game.model.actor.support.Sandbag;
 import com.eric.mtd.util.Logger;
 import com.badlogic.gdx.math.Shape2D;
 
@@ -27,11 +26,9 @@ public final class CollisionDetection {
 	 * Checks for collision with the path boundaries when placing a tower or
 	 * sand bag
 	 * 
-	 * @param boundaries
-	 *            - Array of rectangles from TiledMap that represent the path
-	 *            boundary
-	 * @param placeActor
-	 *            - The actor that is being places
+	 * @param boundaries - Array of rectangles from TiledMap that represent the
+	 *            path boundary
+	 * @param placeActor - The actor that is being places
 	 * @return boolean - If there is a collision
 	 */
 	public static boolean CollisionWithPath(Array<Rectangle> boundaries, ICollision placeActor) {
@@ -55,21 +52,17 @@ public final class CollisionDetection {
 	}
 
 	/**
-	 * Checks for collisions with actors when placing a tower or sand bag
+	 * Checks for collisions with actors when placing a tower
 	 * 
-	 * @param Actors
-	 *            - A collection of Actors that implement ICollision (towers and
-	 *            sand bags)
-	 * @param placeActor
-	 *            - The actor that is being placed
+	 * @param Actors - A collection of Actors that implement ICollision
+	 * @param placeActor - The actor that is being placed
 	 * @return boolean - If there is a collision
 	 */
 	public static boolean CollisionWithActors(SnapshotArray<Actor> Actors, ICollision placeActor) {
 		Polygon towerBody;
-		Rectangle sandbagBody;
 		Shape2D placeBody = placeActor.getBody();
 		for (Actor actor : Actors) {
-			if (actor instanceof Tower) { // Checks for collision with towers
+			if (actor instanceof Tower) {
 				towerBody = ((CombatActor) actor).getBody();
 				if (!actor.equals(placeActor)) {
 					if (placeBody instanceof Polygon) {
@@ -81,25 +74,7 @@ public final class CollisionDetection {
 					} else if (placeBody instanceof Rectangle) {
 						if (polygonAndRectangle(towerBody, (Rectangle) placeBody)) {
 							if (Logger.DEBUG)
-								System.out.println("intersect with Sandbag!");
-							return true;
-						}
-					}
-				}
-			}
-			if (actor instanceof Sandbag) { // Checks for collision with sandbags
-				if (!actor.equals(placeActor)) {
-					sandbagBody = ((Sandbag) actor).getBody();
-					if (placeBody instanceof Polygon) {
-						if (polygonAndRectangle((Polygon) placeBody, sandbagBody)) {
-							if (Logger.DEBUG)
 								System.out.println("intersect with tower!");
-							return true;
-						}
-					} else if (placeBody instanceof Rectangle) {
-						if (rectangleAndRectangle(sandbagBody, (Rectangle) placeBody)) {
-							if (Logger.DEBUG)
-								System.out.println("intersect with Sandbag!");
 							return true;
 						}
 					}
@@ -108,13 +83,15 @@ public final class CollisionDetection {
 		}
 		return false;
 	}
+
 	/**
 	 * Checks for collision between a LandMine and an Enemy
+	 * 
 	 * @param landMineBody
 	 * @param enemy
 	 * @return boolean - If there is a collision
 	 */
-	public static boolean landMineAndEnemy(Rectangle landMineBody, Polygon enemy){
+	public static boolean landMineAndEnemy(Rectangle landMineBody, Polygon enemy) {
 		if (polygonAndRectangle(enemy, landMineBody)) {
 			if (Logger.DEBUG)
 				System.out.println("target hit!");
@@ -122,6 +99,7 @@ public final class CollisionDetection {
 		}
 		return false;
 	}
+
 	/**
 	 * Checks for collision between a bullet and its target
 	 * 
@@ -141,10 +119,8 @@ public final class CollisionDetection {
 	/**
 	 * Checks to see if a tower was hit when the user clicks
 	 * 
-	 * @param Towers
-	 *            - Collection of Towers that are active
-	 * @param clickCoord
-	 *            - The coords where the player clicked
+	 * @param Towers - Collection of Towers that are active
+	 * @param clickCoord - The coords where the player clicked
 	 * @return boolean - If a tower was hit.
 	 */
 	public static CombatActor towerHit(SnapshotArray<Actor> Towers, Vector2 clickCoord) {
@@ -197,13 +173,13 @@ public final class CollisionDetection {
 		float squareRadius = circle.radius * circle.radius;
 		vectorA.set(vertices[vertices.length - 2], vertices[vertices.length - 1]);
 		vectorB.set(vertices[0], vertices[1]);
-		if (Intersector.intersectSegmentCircle(vectorA, vectorB, center, squareRadius)){
+		if (Intersector.intersectSegmentCircle(vectorA, vectorB, center, squareRadius)) {
 			return true;
 		}
 		for (int i = 2; i < vertices.length; i += 2) {
 			vectorA.set(vertices[i - 2], vertices[i - 1]);
 			vectorB.set(vertices[i], vertices[i + 1]);
-			if (Intersector.intersectSegmentCircle(vectorA, vectorB, center, squareRadius)){
+			if (Intersector.intersectSegmentCircle(vectorA, vectorB, center, squareRadius)) {
 				return true;
 			}
 		}

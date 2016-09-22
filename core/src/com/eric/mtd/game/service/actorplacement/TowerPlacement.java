@@ -29,9 +29,11 @@ public class TowerPlacement {
 	private Tower currentTower;
 	private ActorGroups actorGroups;
 	private Map map;
-	public TowerPlacement(Map map, ActorGroups actorGroups) {
+	private ActorFactory actorFactory;
+	public TowerPlacement(Map map, ActorGroups actorGroups, ActorFactory actorFactory) {
 		this.map = map;
 		this.actorGroups = actorGroups;
+		this.actorFactory = actorFactory;
 	}
 
 	/**
@@ -50,7 +52,7 @@ public class TowerPlacement {
 	 *            - Type of tower
 	 */
 	public void createTower(String type) {
-		currentTower = ActorFactory.loadTower(new Vector2(0, 0), type, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
+		currentTower = actorFactory.loadTower(new Vector2(0, 0), type, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
 		actorGroups.getTowerGroup().addActor(currentTower);
 		currentTower.setVisible(false);
 	}
@@ -107,7 +109,7 @@ public class TowerPlacement {
 			if (!towerCollides()) {
 				currentTower.setActive(true);
 				currentTower.setDead(false);
-				HealthBar healthBar = ActorFactory.loadHealthBar();
+				HealthBar healthBar = actorFactory.loadHealthBar();
 				healthBar.setActor(currentTower);
 				actorGroups.getHealthBarGroup().addActor(healthBar);
 				currentTower = null;

@@ -28,17 +28,17 @@ public class GameOverView extends Group implements IGameOverView {
 	private Label lblWavesCompleted;
 	private Label lblTitle;
 
-	public GameOverView(GameOverPresenter presenter) {
+	public GameOverView(GameOverPresenter presenter, Skin skin) {
 		this.presenter = presenter;
-		createControls();
+		this.setTransform(false);
+		createControls(skin);
 	}
 
 	/**
 	 * Create controls using MTD widgets.
 	 */
-	public void createControls() {
+	public void createControls(Skin skin) {
 		Table table = new Table();
-		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
 		table.setBackground(skin.getDrawable("main-panel"));
 		table.setSize(250,300);
 		table.setPosition((Resources.VIRTUAL_WIDTH/2)-(table.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(table.getHeight()/2));

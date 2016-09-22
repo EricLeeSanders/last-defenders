@@ -12,6 +12,7 @@ import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.model.actor.support.Apache;
 import com.eric.mtd.game.model.level.Map;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorplacement.AirStrikePlacement;
 import com.eric.mtd.game.service.actorplacement.SupportActorPlacement;
 import com.eric.mtd.game.service.actorplacement.TowerPlacement;
@@ -20,9 +21,9 @@ import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.interfaces.IEnlistView;
 import com.eric.mtd.game.ui.view.interfaces.ISupportView;
-import com.eric.mtd.util.AudioUtil;
+import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Resources;
-import com.eric.mtd.util.AudioUtil.MTDSound;
+import com.eric.mtd.util.MTDAudio.MTDSound;
 
 /**
  * Presenter for Enlist. Handles enlisting towers
@@ -37,14 +38,15 @@ public class SupportPresenter implements IGameUIStateObserver {
 	private Player player;
 	private ISupportView view;
 	private ActorGroups actorGroups;
-
-	public SupportPresenter(GameUIStateManager uiStateManager, Player player, ActorGroups actorGroups) {
+	private MTDAudio audio;
+	public SupportPresenter(GameUIStateManager uiStateManager, Player player, ActorGroups actorGroups, ActorFactory actorFactory, MTDAudio audio) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
+		this.audio = audio;
 		this.player = player;
 		this.actorGroups = actorGroups;
-		supportActorPlacement = new SupportActorPlacement(actorGroups);
-		airStrikePlacement = new AirStrikePlacement(actorGroups);
+		supportActorPlacement = new SupportActorPlacement(actorGroups, actorFactory);
+		airStrikePlacement = new AirStrikePlacement(actorGroups, actorFactory);
 	}
 
 	/**
@@ -61,7 +63,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 */
 	
 	public void createAirStrike(){
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
+		audio.playSound(MTDSound.SMALL_CLICK);
 		airStrikePlacement.createAirStrike();
 		uiStateManager.setState(GameUIState.PLACING_AIRSTRIKE);
 	}
@@ -70,7 +72,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Place an Air Strike Location
 	 */
 	public void placeAirStrikeLocation(Vector2 location){
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
+		audio.playSound(MTDSound.SMALL_CLICK);
 		if (!airStrikePlacement.getCurrentAirStrike().readyToBegin()) {
 			airStrikePlacement.addLocation(location);
 			if(airStrikePlacement.getCurrentAirStrike().readyToBegin()){
@@ -80,7 +82,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	}
 	
 	public void finishAirStrikePlacement(){
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
+		audio.playSound(MTDSound.SMALL_CLICK);
 		if (airStrikePlacement.isCurrentAirStrike() && uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)) {
 			airStrikePlacement.getCurrentAirStrike().beginAirStrike();
 			airStrikePlacement.finishCurrentAirStrike();
@@ -92,7 +94,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * 
 	 */
 	public void createSupportActor(String type) {
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
+		audio.playSound(MTDSound.SMALL_CLICK);
 		supportActorPlacement.createSupportActor(type);
 		uiStateManager.setState(GameUIState.PLACING_SUPPORT);
 	}
@@ -101,7 +103,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Try to place a Support Actor
 	 */
 	public void placeSupportActor() {
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
+		audio.playSound(MTDSound.SMALL_CLICK);
 		int cost;
 		if(uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)){
 			cost = airStrikePlacement.getCurrentAirStrike().getCost();
@@ -122,7 +124,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Cancel Support
 	 */
 	public void cancelSupport() {
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
+		audio.playSound(MTDSound.SMALL_CLICK);
 		supportActorPlacement.removeCurrentSupportActor();
 		airStrikePlacement.removeCurrentAirStrike();		
 		uiStateManager.setStateReturn();

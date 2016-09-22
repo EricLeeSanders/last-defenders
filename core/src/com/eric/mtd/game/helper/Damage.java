@@ -50,12 +50,9 @@ public class Damage {
 		}
 	}
 	public static void dealFlameGroupDamage(IAttacker attacker, ITargetable target, SnapshotArray<Actor>targetGroup, Polygon flameBody) {
-		//Have to create a copy of the group otherwise when a target is killed, the iterator will skip
-		//over the next in the group.
-		SnapshotArray<Actor> targetGroupArray = new SnapshotArray<Actor>(targetGroup);
-		targetGroup.begin();
 		ITargetable flameTarget;
-		for (Actor actor : targetGroupArray) {
+		for(int i = targetGroup.size - 1; i >= 0; i--){
+			Actor actor = targetGroup.get(i);
 			flameTarget = (ITargetable) actor;
 			if (flameTarget != null && flameTarget.isDead() == false) {
 				Polygon targetBody = flameTarget.getBody();
@@ -72,12 +69,10 @@ public class Damage {
 
 	public static void dealExplosionDamage(IAttacker attacker, float radius, Vector2 position, ITargetable target, SnapshotArray<Actor>targetGroup) {
 		Circle aoeRadius = new Circle(position.x, position.y, radius);
-		//Have to create a copy of the group otherwise when a target is killed, the iterator will skip
-		//over the next in the group.
-		SnapshotArray<Actor> targetGroupArray = new SnapshotArray<Actor>(targetGroup);
 		ITargetable aoeTarget;
 		float distance, damage, damagePercent;
-		for (Actor actor : targetGroupArray) {
+		for(int i = targetGroup.size - 1; i >= 0; i--){
+			Actor actor = targetGroup.get(i);
 			aoeTarget = (ITargetable) actor;
 			distance = damage = damagePercent = 0;
 			if (aoeTarget.isDead() == false) {

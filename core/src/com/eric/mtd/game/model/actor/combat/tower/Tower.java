@@ -29,15 +29,12 @@ import com.eric.mtd.util.Logger;
  *
  */
 public abstract class Tower extends CombatActor {
-	public static final int TOWER_RANGE_LEVEL_MAX = 2;
-	public static final int TOWER_ATTACK_SPEED_LEVEL_MAX = 2;
-	public static final int TOWER_ATTACK_LEVEL_MAX = 2;
-	public static final float TOWER_RANGE_INCREASE_RATE = (1/3f);
-	public static final float TOWER_SPEED_INCREASE_RATE = 0.25f;
-	public static final float TOWER_ATTACK_INCREASE_RATE = 0.25f;
+	public static final float TOWER_RANGE_INCREASE_RATE = (1/2f);
+	public static final float TOWER_SPEED_INCREASE_RATE = 0.33f;
+	public static final float TOWER_ATTACK_INCREASE_RATE = 0.33f;
 	public static final float TOWER_SELL_RATE = 0.75f;
-	private int cost, armorCost, speedIncreaseCost, rangeIncreaseCost, attackIncreaseCost, rangeLevel, speedLevel,
-			attackLevel;
+	private int cost, armorCost, speedIncreaseCost, rangeIncreaseCost, attackIncreaseCost;
+	private boolean rangeIncreaseEnabled, speedIncreaseEnabled, attackIncreaseEnabled;
 	private TowerTargetPriority targetPriority = TowerTargetPriority.FIRST;
 	private boolean active, showRange; 
 	private float attackCounter = 0;
@@ -51,9 +48,6 @@ public abstract class Tower extends CombatActor {
 		this.speedIncreaseCost = speedIncreaseCost;
 		this.rangeIncreaseCost = rangeIncreaseCost;
 		this.attackIncreaseCost = attackIncreaseCost;
-		rangeLevel = 0;
-		speedLevel = 0;
-		attackLevel = 0;
 		createRangeSprite();
 		this.pool = pool;
 	}
@@ -72,7 +66,16 @@ public abstract class Tower extends CombatActor {
 	 * @return
 	 */
 	public int getSellCost() {
-		float networth = (cost + (speedLevel * speedIncreaseCost) + (rangeLevel * rangeIncreaseCost) + (attackLevel * attackIncreaseCost));
+		int networth = cost;
+		if(speedIncreaseEnabled){
+			networth += speedIncreaseCost;
+		}
+		if(attackIncreaseEnabled){
+			networth += attackIncreaseCost;
+		}
+		if(rangeIncreaseEnabled){
+			networth += rangeIncreaseCost;
+		}
 		if (hasArmor()) {
 			networth = networth + armorCost;
 		}
@@ -134,9 +137,9 @@ public abstract class Tower extends CombatActor {
 	public void reset() {
 		super.reset();
 		if(Logger.DEBUG)System.out.println("Resetting Tower");
-		rangeLevel = 0;
-		speedLevel = 0;
-		attackLevel = 0;
+		rangeIncreaseEnabled = false;
+		speedIncreaseEnabled = false;
+		attackIncreaseEnabled = false;
 		kills = 0;
 		this.setShowRange(false);
 		setActive(false);
@@ -180,47 +183,36 @@ public abstract class Tower extends CombatActor {
 	}
 
 	public void increaseRange() {
-		if (this.getRangeLevel() < TOWER_RANGE_LEVEL_MAX) {
-			if(Logger.DEBUG)System.out.println("Old Range: " + this.getRange());
-			this.increaseRangeLevel();
+		if(!rangeIncreaseEnabled){
+			rangeIncreaseEnabled = true;
 			this.setRange(this.getRange() + (this.getRange() * TOWER_RANGE_INCREASE_RATE));
-			//this.setRange(this.getRange() + 20);
-			if(Logger.DEBUG)System.out.println("New Range: " + this.getRange());
 		}
 	}
 
 	public void increaseSpeed() {
-		this.increaseSpeedLevel();
-		this.setAttackSpeed(this.getAttackSpeed() - (this.getAttackSpeed() * TOWER_SPEED_INCREASE_RATE));
+		if(!speedIncreaseEnabled){
+			speedIncreaseEnabled = true;
+			this.setAttackSpeed(this.getAttackSpeed() - (this.getAttackSpeed() * TOWER_SPEED_INCREASE_RATE));
+		}
 	}
 
 	public void increaseAttack() {
-		this.increaseAttackLevel();
-		this.setAttack(this.getAttack() + (this.getAttack() * TOWER_ATTACK_INCREASE_RATE));
+		if(!attackIncreaseEnabled){
+			attackIncreaseEnabled = true;
+			this.setAttack(this.getAttack() + (this.getAttack() * TOWER_ATTACK_INCREASE_RATE));
+		}
 	}
 
-	public void increaseRangeLevel() {
-		rangeLevel++;
+	public boolean hasIncreasedRange() {
+		return rangeIncreaseEnabled;
 	}
 
-	public int getRangeLevel() {
-		return rangeLevel;
+	public boolean hasIncreasedAttack() {
+		return attackIncreaseEnabled;
 	}
 
-	public void increaseAttackLevel() {
-		attackLevel++;
-	}
-
-	public void increaseSpeedLevel() {
-		speedLevel++;
-	}
-
-	public int getAttackLevel() {
-		return attackLevel;
-	}
-
-	public int getSpeedLevel() {
-		return speedLevel;
+	public boolean hasIncreasedSpeed() {
+		return speedIncreaseEnabled;
 	}
 
 	public int getAttackIncreaseCost() {

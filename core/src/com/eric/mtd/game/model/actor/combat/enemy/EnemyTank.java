@@ -14,6 +14,7 @@ import com.eric.mtd.game.model.actor.interfaces.IVehicle;
 import com.eric.mtd.game.model.actor.projectile.RPG;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.RPGPool;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -42,10 +43,11 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	private TextureRegion tankBodyRegion;
 	private ShapeRenderer body = Resources.getShapeRenderer();
 	private float bodyRotation; //
-
-	public EnemyTank(TextureRegion tankRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool) {
+	private RPGPool rpgPool;
+	public EnemyTank(TextureRegion tankRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, RPGPool rpgPool) {
 		super(turretRegion, pool, BODY, TEXTURE_TURRET_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
 		this.tankBodyRegion = tankRegion;
+		this.rpgPool = rpgPool;
 	}
 
 	/**
@@ -97,7 +99,7 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 		if (Logger.DEBUG)
 			System.out.println("Enemy Tank: Attacking target at " + getTarget().getPositionCenter());
 		if(getTarget() != null){
-			getProjectileGroup().addActor(ActorFactory.loadRPG().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
+			getProjectileGroup().addActor(rpgPool.obtain().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
 		}
 	}
 

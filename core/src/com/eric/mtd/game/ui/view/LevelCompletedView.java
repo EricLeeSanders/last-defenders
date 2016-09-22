@@ -20,14 +20,14 @@ public class LevelCompletedView extends Group implements ILevelCompletedView{
 	private TextButton btnContinueLevel, btnNewGame;
 	private Label lblTitle, lblContinue;
 	
-	public LevelCompletedView(LevelCompletedPresenter presenter){
+	public LevelCompletedView(LevelCompletedPresenter presenter, Skin skin){
 		this.presenter = presenter;
-		createControls();
+		this.setTransform(false);
+		createControls(skin);
 	}
 	
-	public void createControls(){
+	public void createControls(Skin skin){
 		Table table = new Table();
-		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
 		table.setBackground(skin.getDrawable("main-panel"));
 		table.setSize(400,260);
 		table.setPosition((Resources.VIRTUAL_WIDTH/2)-(table.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(table.getHeight()/2));

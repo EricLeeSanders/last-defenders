@@ -9,8 +9,8 @@ import com.eric.mtd.game.ui.view.interfaces.ILevelCompletedView;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
 import com.eric.mtd.state.GameStateManager;
-import com.eric.mtd.util.AudioUtil;
-import com.eric.mtd.util.AudioUtil.MTDSound;
+import com.eric.mtd.util.MTDAudio;
+import com.eric.mtd.util.MTDAudio.MTDSound;
 
 public class LevelCompletedPresenter implements IGameUIStateObserver{
 	private ILevelCompletedView view;
@@ -18,13 +18,15 @@ public class LevelCompletedPresenter implements IGameUIStateObserver{
 	private GameStateManager gameStateManager;
 	private GameUIStateManager uiStateManager;
 	private Player player;
+	private MTDAudio audio;
 	public LevelCompletedPresenter(Player player, GameStateManager gameStateManager
-			, GameUIStateManager uiStateManager, ScreenStateManager screenStateManager){
+			, GameUIStateManager uiStateManager, ScreenStateManager screenStateManager, MTDAudio audio){
 		
 		this.player = player;
 		this.screenStateManager = screenStateManager;
 		this.gameStateManager = gameStateManager;
 		this.uiStateManager = uiStateManager;
+		this.audio = audio;
 		
 		uiStateManager.attach(this);
 	}
@@ -43,14 +45,14 @@ public class LevelCompletedPresenter implements IGameUIStateObserver{
 	 * Change to level select
 	 */
 	public void levelSelect() {
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
+		audio.playSound(MTDSound.SMALL_CLICK);
 		screenStateManager.setState(ScreenState.LEVEL_SELECTION);
 	}
 	/**
 	 * Continue the level
 	 */
 	public void continueLevel() {
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
+		audio.playSound(MTDSound.SMALL_CLICK);
 		uiStateManager.setState(GameUIState.STANDBY);
 	}
 	

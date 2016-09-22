@@ -1,6 +1,7 @@
 package com.eric.mtd.game.model.actor.projectile;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -19,8 +20,8 @@ import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.model.actor.interfaces.ITargetable;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
-import com.eric.mtd.util.AudioUtil;
-import com.eric.mtd.util.AudioUtil.ProjectileSound;
+import com.eric.mtd.util.MTDAudio;
+import com.eric.mtd.util.MTDAudio.ProjectileSound;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -40,12 +41,13 @@ public class Explosion extends Actor implements Pool.Poolable {
 	private ITargetable target;
 	private IAttacker attacker;
 	private Pool<Explosion> pool;
+	private MTDAudio audio;
 	/**
 	 * Constructs an Explosion.
 	 */
-	public Explosion(Pool<Explosion> pool) {
+	public Explosion(Pool<Explosion> pool, TextureAtlas actorAtlas, MTDAudio audio) {
 		this.pool = pool;
-		TextureAtlas actorAtlas = Resources.getAtlas(Resources.ACTOR_ATLAS);
+		this.audio = audio;
 		for (int i = 0; i < 16; i++) {
 			explosionRegions[i] = actorAtlas.findRegion("Explosion" + (i + 1));
 		}
@@ -58,7 +60,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 	public Actor initialize(IAttacker attacker, float radius, ITargetable target, Group targetGroup, Vector2 position) {
 		if (Logger.DEBUG)
 			System.out.println("Setting Explosion");
-		AudioUtil.playProjectileSound(ProjectileSound.RPG_EXPLOSION);
+		audio.playProjectileSound(ProjectileSound.RPG_EXPLOSION);
 		this.attacker = attacker;
 		this.target = target;
 		if (targetGroup.getStage() instanceof GameStage) {
@@ -71,6 +73,12 @@ public class Explosion extends Actor implements Pool.Poolable {
 		Damage.dealExplosionDamage(attacker, radius, position, target, targetGroup.getChildren());
 		return this;
 	}
+	
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		stateTime += delta;
+	}
 
 	/**
 	 * Draws the explosion and frees it when it is done.
@@ -79,7 +87,6 @@ public class Explosion extends Actor implements Pool.Poolable {
 	public void draw(Batch batch, float alpha) {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glEnable(GL20.GL_BLEND);
-		stateTime += (Gdx.graphics.getDeltaTime() * MTDGame.gameSpeed);
 		currentExplosion = explosionAnimation.getKeyFrame(stateTime, false);
 
 		batch.draw(currentExplosion, this.getX() - (currentExplosion.getRegionWidth() / 2), this.getY() - (currentExplosion.getRegionHeight() / 2));

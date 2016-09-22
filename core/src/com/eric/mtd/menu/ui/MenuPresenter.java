@@ -2,8 +2,8 @@ package com.eric.mtd.menu.ui;
 
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.screen.state.ScreenStateManager.ScreenState;
-import com.eric.mtd.util.AudioUtil;
-import com.eric.mtd.util.AudioUtil.MTDSound;
+import com.eric.mtd.util.MTDAudio;
+import com.eric.mtd.util.MTDAudio.MTDSound;
 
 /**
  * Presenter class for the Main Menu
@@ -14,34 +14,35 @@ import com.eric.mtd.util.AudioUtil.MTDSound;
 public class MenuPresenter {
 	private ScreenStateManager screenStateManager;
 	private IMenuView view;
-
-	public MenuPresenter(ScreenStateManager screenStateManager) {
+	private MTDAudio audio;
+	public MenuPresenter(ScreenStateManager screenStateManager, MTDAudio audio) {
 		this.screenStateManager = screenStateManager;
+		this.audio = audio;
 	}
 	public void setView(IMenuView view){
 		this.view = view;
 		initView();
 	}
 	private void initView(){
-		view.setBtnMusicOn(AudioUtil.isMusicEnabled());
-		view.setBtnSoundOn(AudioUtil.isSoundEnabled());
+		view.setBtnMusicOn(audio.isMusicEnabled());
+		view.setBtnSoundOn(audio.isSoundEnabled());
 	}
 	public void playGame() {
-		AudioUtil.playSound(MTDSound.LARGE_CLICK);
+		audio.playSound(MTDSound.LARGE_CLICK);
 		screenStateManager.setState(ScreenState.LEVEL_SELECTION);
 
 	}
 	
 	public void soundPressed() {
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
-		AudioUtil.changeSoundEnabled();
-		view.setBtnSoundOn(AudioUtil.isSoundEnabled());
+		audio.playSound(MTDSound.SMALL_CLICK);
+		audio.changeSoundEnabled();
+		view.setBtnSoundOn(audio.isSoundEnabled());
 	}
 	
 	public void musicPressed() {
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
-		AudioUtil.changeMusicEnabled();
-		view.setBtnMusicOn(AudioUtil.isMusicEnabled());
+		audio.playSound(MTDSound.SMALL_CLICK);
+		audio.changeMusicEnabled();
+		view.setBtnMusicOn(audio.isMusicEnabled());
 	}
 
 }

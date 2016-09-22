@@ -32,7 +32,6 @@ public class LoadingScreen extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
-		Resources.loadGameAssets();
 		// atlas = Resources.getAtlas(Resources.IMAGES_ATLAS);
 		logoRegion = atlas.findRegion("logo");
 		logoImage = new Image(logoRegion);
