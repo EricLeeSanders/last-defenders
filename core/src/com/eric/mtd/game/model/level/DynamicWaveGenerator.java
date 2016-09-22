@@ -24,9 +24,11 @@ public class DynamicWaveGenerator {
 	private int numOfTanks;
 	private Map map;
 	private ActorGroups actorGroups;
-	public DynamicWaveGenerator(Queue<SpawningEnemy> enemies, Map map, ActorGroups actorGroups){
+	private ActorFactory actorFactory;
+	public DynamicWaveGenerator(Queue<SpawningEnemy> enemies, Map map, ActorGroups actorGroups, ActorFactory actorFactory){
 		this.map = map;
 		this.actorGroups = actorGroups;
+		this.actorFactory = actorFactory;
 		Enemy enemy;
 		for(SpawningEnemy spawningEnemy : enemies){
 			enemy = spawningEnemy.getEnemy();
@@ -137,7 +139,7 @@ public class DynamicWaveGenerator {
 			if(Logger.DEBUG)System.out.println("randArmor: " + randArmor);
 			armor = (randArmor == 0) ? true : false;
 			if(Logger.DEBUG)System.out.println("Armor: " + armor);
-			enemies.add(ActorFactory.loadEnemy(map.getPath(), type, armor, actorGroups.getTowerGroup(), actorGroups.getProjectileGroup()));
+			enemies.add(actorFactory.loadEnemy(map.getPath(), type, armor, actorGroups.getTowerGroup(), actorGroups.getProjectileGroup()));
 		}
 		if(Logger.DEBUG)System.out.println(n + " " + type + " created");
 		return enemies;

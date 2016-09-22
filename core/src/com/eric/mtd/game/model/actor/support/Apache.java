@@ -25,11 +25,12 @@ import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.model.actor.interfaces.ICollision;
 import com.eric.mtd.game.model.actor.projectile.Bullet;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
-import com.eric.mtd.game.service.actorfactory.ActorFactory.SandbagPool;
-import com.eric.mtd.util.AudioUtil;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.BulletPool;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.SupportActorPool;
+import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
-import com.eric.mtd.util.AudioUtil.ProjectileSound;
+import com.eric.mtd.util.MTDAudio.ProjectileSound;
 import com.eric.mtd.util.Dimension;
 
 public class Apache extends SupportActor{
@@ -47,10 +48,14 @@ public class Apache extends SupportActor{
 	private float textureCounter, attackCounter, timeActive;
 	private int textureIndex; // Current texture index
 	private CombatActor target;
-	public Apache(Pool<SupportActor> pool, TextureRegion [] textureRegions) {
+	private BulletPool bulletPool;
+	private MTDAudio audio;
+	public Apache(SupportActorPool<Apache> pool, BulletPool bulletPool, TextureRegion [] textureRegions, MTDAudio audio) {
 		super(pool, textureRegions[0], new Dimension(textureRegions[0].getRegionWidth()*SCALE, textureRegions[0].getRegionHeight()*SCALE),
 				RANGE, ATTACK, GUN_POS, COST);
 		this.textureRegions = textureRegions;
+		this.audio = audio;
+		this.bulletPool = bulletPool;
 	}
 	public void initialize(Vector2 position){
 		if(Logger.DEBUG) System.out.println("init apahce");
@@ -138,8 +143,8 @@ public class Apache extends SupportActor{
 		if (Logger.DEBUG)
 			System.out.println("Apache: Attacking target at " + getTarget().getPositionCenter());
 		if(getTarget() != null){
-			AudioUtil.playProjectileSound(ProjectileSound.MACHINE_GUN);
-			getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
+			audio.playProjectileSound(ProjectileSound.MACHINE_GUN);
+			getProjectileGroup().addActor(bulletPool.obtain().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
 		}
 
 	}

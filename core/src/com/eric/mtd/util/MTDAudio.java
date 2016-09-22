@@ -10,16 +10,22 @@ import com.badlogic.gdx.audio.Sound;
  * @author Eric
  *
  */
-public class AudioUtil {
-	private static Music music;
-	private static Sound rpgExplosion, rocketLaunch, flameBurst, rifleShot, sniperShot, machineGunShot,
+public class MTDAudio {
+	private Music music;
+	private Sound rpgExplosion, rocketLaunch, flameBurst, rifleShot, sniperShot, machineGunShot,
 			vehicleExplosion, actorPlace, sell, smallClick, largeClick;
-	private static boolean musicEnabled, soundEnabled;
+	private boolean musicEnabled, soundEnabled;
+	private UserPreferences userPreferences;
+	
+	public MTDAudio(UserPreferences userPreferences){
+		this.userPreferences = userPreferences;
+		load();
+	}
 
 	/**
 	 * Load the sounds and music
 	 */
-	public static void load() {
+	public void load() {
 		music = Gdx.audio.newMusic(Gdx.files.internal(Resources.MENU_MUSIC));
 		music.setLooping(true);
 
@@ -47,25 +53,32 @@ public class AudioUtil {
 		smallClick.play(0);
 		largeClick.play(0);
 				
-		setSoundEnabled(Resources.getPreferences().getBoolean("soundEnabled", true));
-		setMusicEnabled(Resources.getPreferences().getBoolean("musicEnabled", true));
+		setSoundEnabled(userPreferences.getPreferences().getBoolean("soundEnabled", true));
+		setMusicEnabled(userPreferences.getPreferences().getBoolean("musicEnabled", true));
 	}
 
-	public static void playVehicleExplosion() {
+	public void playVehicleExplosion() {
 		vehicleExplosion.play();
 	}
 
-	public static void playMusic() {
+	public void playMusic() {
 		if (Logger.DEBUG)
 			System.out.println("Playing Music");
 		music.play();
 	}
-	public static void disposeMusic() {
+	
+	public void turnOffMusic(){
+		if (Logger.DEBUG)
+			System.out.println("Turning off Music");
+		music.stop();
+	}
+	
+	public void disposeMusic() {
 		if (Logger.DEBUG)
 			System.out.println("Disposing Music");
 		music.dispose();
 	}
-	public static void disposeSound() {
+	public void disposeSound() {
 		if (Logger.DEBUG)
 			System.out.println("Disposing Sounds");
 		rpgExplosion.dispose();
@@ -80,12 +93,12 @@ public class AudioUtil {
 		smallClick.dispose();
 		largeClick.dispose();
 	}
-	public static void dispose(){
+	public void dispose(){
 		disposeMusic();
 		disposeSound();
 	}
 	
-	public static void playSound(MTDSound sound){
+	public void playSound(MTDSound sound){
 		if(soundEnabled) {
 			if (Logger.DEBUG)
 				System.out.println("Playing + " + sound.name());
@@ -106,7 +119,7 @@ public class AudioUtil {
 		}
 	}
 	
-	public static void playProjectileSound(ProjectileSound sound) {
+	public void playProjectileSound(ProjectileSound sound) {
 		if(soundEnabled){
 			if (Logger.DEBUG)
 				System.out.println("Playing + " + sound.name());
@@ -138,10 +151,10 @@ public class AudioUtil {
 	public enum ProjectileSound {
 		RIFLE, SNIPER, MACHINE_GUN, RPG_EXPLOSION, ROCKET_LAUNCH, FLAME_BURST;
 	}
-	public static void changeMusicEnabled(){
+	public void changeMusicEnabled(){
 		setMusicEnabled(musicEnabled ? false : true);
 	}
-	public static void setMusicEnabled(boolean enabled){
+	public void setMusicEnabled(boolean enabled){
 		if(Logger.DEBUG)System.out.println("Setting music to " + enabled);
 		musicEnabled = enabled;
 		
@@ -151,23 +164,23 @@ public class AudioUtil {
 			music.setVolume(0);
 		}
 		
-		Resources.getPreferences().putBoolean("musicEnabled", enabled);
-		Resources.getPreferences().flush();
+		userPreferences.getPreferences().putBoolean("musicEnabled", enabled);
+		userPreferences.getPreferences().flush();
 	}
-	public static void changeSoundEnabled(){
+	public void changeSoundEnabled(){
 		setSoundEnabled(soundEnabled ? false : true);
 	}
-	public static void setSoundEnabled(boolean enabled){
+	public void setSoundEnabled(boolean enabled){
 		if(Logger.DEBUG)System.out.println("Setting sound to " + enabled);
 		soundEnabled = enabled;
-		Resources.getPreferences().putBoolean("soundEnabled", enabled);
-		Resources.getPreferences().flush();
+		userPreferences.getPreferences().putBoolean("soundEnabled", enabled);
+		userPreferences.getPreferences().flush();
 	}
 	
-	public static boolean isSoundEnabled(){
+	public boolean isSoundEnabled(){
 		return soundEnabled;
 	}
-	public static boolean isMusicEnabled(){
+	public boolean isMusicEnabled(){
 		return musicEnabled;
 	}
 

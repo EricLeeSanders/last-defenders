@@ -22,6 +22,7 @@ import com.eric.mtd.game.helper.Damage;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.ExplosionPool;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -40,8 +41,10 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 	private Group targetGroup;
 	private Pool<AirStrikeBomb> pool;
 	private float radius;
-	public AirStrikeBomb(Pool<AirStrikeBomb> pool){
+	private ExplosionPool explosionPool;
+	public AirStrikeBomb(Pool<AirStrikeBomb> pool, ExplosionPool explosionPool){
 		this.pool = pool;
+		this.explosionPool = explosionPool;
 		createBombSprite();
 	}
 	private void createBombSprite(){
@@ -105,9 +108,7 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 	public void act(float delta) {
 		super.act(delta);
 		if (this.getActions().size == 0) {
-			Explosion explosion = ActorFactory.loadExplosion(); // Get an
-																// Explosion
-			explosion.initialize(attacker, radius,  null, targetGroup, destination);
+			explosionPool.obtain().initialize(attacker, radius,  null, targetGroup, destination);
 			pool.free(this);
 
 		}

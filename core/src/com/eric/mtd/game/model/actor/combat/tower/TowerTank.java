@@ -18,6 +18,7 @@ import com.eric.mtd.game.model.actor.interfaces.IVehicle;
 import com.eric.mtd.game.model.actor.projectile.RPG;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.RPGPool;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -51,11 +52,12 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
 	private ShapeRenderer body = Resources.getShapeRenderer();
 	private float bodyRotation;
-
-	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool) {
+	private RPGPool rpgPool;
+	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, RPGPool rpgPool) {
 		super(turretRegion, pool, BODY, TEXTURE_TURRET_SIZE, GUN_POS, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.bodyRegion = bodyRegion;
 		this.turretRegion = turretRegion;
+		this.rpgPool = rpgPool;
 	}
 
 	/**
@@ -119,7 +121,7 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 		if (Logger.DEBUG)
 			System.out.println("Tower Tank: Attacking target at " + getTarget().getPositionCenter());
 		if(getTarget() != null){
-			getProjectileGroup().addActor(ActorFactory.loadRPG().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
+			getProjectileGroup().addActor(rpgPool.obtain().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
 		}
 	}
 	

@@ -16,11 +16,13 @@ import com.eric.mtd.util.Logger;
 public class AirStrikePlacement {
 	private AirStrike currentAirStrike;
 	private ActorGroups actorGroups;
-	public AirStrikePlacement(ActorGroups actorGroups) {
+	private ActorFactory actorFactory;
+	public AirStrikePlacement(ActorGroups actorGroups, ActorFactory actorFactory) {
 		this.actorGroups = actorGroups;
+		this.actorFactory = actorFactory;
 	}
 	public void createAirStrike() {
-		currentAirStrike = (AirStrike)ActorFactory.loadSupportActor(new Vector2(0, 0), "AirStrike", actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
+		currentAirStrike = (AirStrike)actorFactory.loadSupportActor(new Vector2(0, 0), "AirStrike", actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
 		actorGroups.getSupportGroup().addActor(currentAirStrike);
 		currentAirStrike.setActive(false);
 		currentAirStrike.setVisible(false);

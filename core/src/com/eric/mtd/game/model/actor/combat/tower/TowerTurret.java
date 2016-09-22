@@ -18,11 +18,12 @@ import com.eric.mtd.game.model.actor.projectile.Bullet;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.BulletPool;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
-import com.eric.mtd.util.AudioUtil;
+import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
-import com.eric.mtd.util.AudioUtil.ProjectileSound;
+import com.eric.mtd.util.MTDAudio.ProjectileSound;
 import com.eric.mtd.util.Dimension;
 
 /**
@@ -61,11 +62,14 @@ public class TowerTurret extends Tower implements IRotatable {
 	private float bodyRotation;
 	private Polygon bodyPoly = new Polygon(BODY);
 	private Polygon rangePoly = new Polygon(rangeCoords);
-
-	public TowerTurret(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool) {
+	private BulletPool bulletPool;
+	private MTDAudio audio;
+	public TowerTurret(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, BulletPool bulletPool, MTDAudio audio) {
 		super(turretRegion, pool, BODY, TEXTURE_TURRET_SIZE, GUN_POS, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.bodyRegion = bodyRegion;
 		this.turretRegion = turretRegion;
+		this.bulletPool = bulletPool;
+		this.audio = audio;
 	}
 
 	/**
@@ -159,8 +163,8 @@ public class TowerTurret extends Tower implements IRotatable {
 		if (Logger.DEBUG)
 			System.out.println("Tower Turret: Attacking target");
 		if(getTarget() != null){
-			AudioUtil.playProjectileSound(ProjectileSound.MACHINE_GUN);
-			getProjectileGroup().addActor(ActorFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
+			audio.playProjectileSound(ProjectileSound.MACHINE_GUN);
+			getProjectileGroup().addActor(bulletPool.obtain().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
 		}
 
 	}

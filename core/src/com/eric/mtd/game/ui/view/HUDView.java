@@ -26,20 +26,20 @@ import com.eric.mtd.util.Resources;
 public class HUDView extends Group implements IHUDView {
 	private Image imgMoney, imgLife;
 	
-	private ImageButton btnSpeed, btnWave, btnEnlist, btnSupport, btnQuit, btnOptions;
+	private ImageButton btnSpeed, btnWave, btnEnlist, btnSupport, btnOptions;
 	private Label lblMoney, lblLives, lblWaveCount;
 	private HUDPresenter presenter;
 
-	public HUDView(HUDPresenter presenter) {
+	public HUDView(HUDPresenter presenter,Skin skin) {
 		this.presenter = presenter;
-		createControls();
+		this.setTransform(false);
+		createControls(skin);
 	}
 
 	/**
 	 * Create the controls using MTD Widgets.
 	 */
-	public void createControls() {
-		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
+	public void createControls(Skin skin) {
 		btnSpeed = new ImageButton(skin, "speed");
 		btnSpeed.setSize(50, 50);
 		btnSpeed.setPosition(10,10);

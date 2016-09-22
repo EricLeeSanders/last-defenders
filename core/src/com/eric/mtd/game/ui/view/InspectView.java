@@ -36,19 +36,20 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	private InspectPresenter presenter;
 	private ImageButton btnChangeTarget, btnCancel;
 	private TextButton btnDischarge, btnArmor, btnSpeed, btnRange, btnAttack;
-	private Group grpTargetPriority = new Group();
+	private Group grpTargetPriority;
 	private Label lblTargetPriority, lblTitle, lblMoney, lblKills;
-	public InspectView(InspectPresenter presenter) {
+	public InspectView(InspectPresenter presenter, Skin skin) {
 		this.presenter = presenter;
-		createControls();
+		grpTargetPriority = new Group();
+		grpTargetPriority.setTransform(false);
+		this.setTransform(false);
+		createControls(skin);
 	}
 
 	/**
 	 * Create the controls using MTD Widgets
 	 */
-	public void createControls() {
-		
-		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
+	public void createControls(Skin skin) {
 		Table container = new Table();
 		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 		addActor(container);
@@ -146,7 +147,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 
 	private TextButton createUpgradeButton(String cost,Skin skin,String styleName) {	
 		TextButtonStyle upgradeStyle = new TextButtonStyle(skin.get(styleName, TextButtonStyle.class));
-		upgradeStyle.font = Resources.getFont("default-font-46");
+		//upgradeStyle.font = Resources.getFont("default-font-46");
 		upgradeStyle.pressedOffsetY = -49;
 		upgradeStyle.unpressedOffsetY = -49;
 		upgradeStyle.checkedOffsetY = -49;
@@ -195,10 +196,10 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		btnAttack.getLabel().setText(String.valueOf(selectedTower.getAttackIncreaseCost()));
 		btnDischarge.getLabel().setText(String.valueOf(selectedTower.getSellCost()));
 		lblTargetPriority.setText(selectedTower.getTargetPriority().name());
-		updateUpgradeControls(btnArmor, selectedTower.getArmorCost());
-		updateUpgradeControls(btnSpeed, selectedTower.getSpeedIncreaseCost());
-		updateUpgradeControls(btnRange, selectedTower.getRangeIncreaseCost());
-		updateUpgradeControls(btnAttack, selectedTower.getAttackIncreaseCost());
+		updateUpgradeControl(btnArmor, selectedTower.hasArmor(), selectedTower.getArmorCost());
+		updateUpgradeControl(btnSpeed, selectedTower.hasIncreasedSpeed(), selectedTower.getSpeedIncreaseCost());
+		updateUpgradeControl(btnRange, selectedTower.hasIncreasedRange(), selectedTower.getRangeIncreaseCost());
+		updateUpgradeControl(btnAttack, selectedTower.hasIncreasedAttack(), selectedTower.getAttackIncreaseCost());
 	}
 
 	/**
@@ -209,13 +210,15 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	 * @param button
 	 * @param label
 	 */
-	private void updateUpgradeControls(TextButton upgradeButton, int upgradeCost) {
+	private void updateUpgradeControl(TextButton upgradeButton, boolean towerHasUpgrade, int upgradeCost) {
 		boolean affordable = presenter.canAffordUpgrade(upgradeCost);
 		upgradeButton.setDisabled(!affordable);
-		if (affordable) {
+		if (affordable && !towerHasUpgrade) {
 			upgradeButton.setTouchable(Touchable.enabled);
+			upgradeButton.setDisabled(false);
 		} else {
 			upgradeButton.setTouchable(Touchable.disabled);
+			upgradeButton.setDisabled(true);
 		}
 
 	}
