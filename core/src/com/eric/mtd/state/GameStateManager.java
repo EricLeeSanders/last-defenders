@@ -32,11 +32,9 @@ public class GameStateManager {
 	 * Notify all observers of state change
 	 */
 	public void notifyObservers() {
-		if (Logger.DEBUG)
-			System.out.println("Notify Observers");
+		Logger.info("Game State: Notify Observers");
 		for (IGameStateObserver observer : observers) {
-			if (Logger.DEBUG)
-				System.out.println("Notifying: " + observer.getClass().getName());
+			Logger.info("Game State Notifying: " + observer.getClass().getName());
 			observer.changeGameState(state);
 		}
 	}
@@ -47,8 +45,7 @@ public class GameStateManager {
 	 * @param state
 	 */
 	public void setState(GameState state) {
-		if (Logger.DEBUG)
-			System.out.println("Chaning Game state: " + this.getState() + " to state: " + state);
+		Logger.info("Chaning Game state: " + this.getState() + " to state: " + state);
 		this.state = state;
 		notifyObservers();
 	}

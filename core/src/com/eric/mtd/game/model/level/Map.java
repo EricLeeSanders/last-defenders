@@ -70,16 +70,11 @@ public class Map implements Disposable{
 		for (MapObject boundry : boundaries) {
 			if (boundry instanceof RectangleMapObject) {
 				Rectangle rect = ((RectangleMapObject) boundry).getRectangle();
-				if(Logger.DEBUG)System.out.println("Rect before: " + rect.x + "," + rect.y + ":" + rect.width + "," + rect.height);
+				
+				//Required to create new Rectangle otherwise rectangle properties of the MapObject are altered and cached
 				Rectangle boundary = new Rectangle(rect.x*Resources.TILED_MAP_SCALE, rect.y*Resources.TILED_MAP_SCALE
-						, rect.width*Resources.TILED_MAP_SCALE, rect.height*Resources.TILED_MAP_SCALE); //Required to create new Rectangle
-																										//Otherwise, rectangle properties of the MapObject
-																										//are altered and cached
+						, rect.width*Resources.TILED_MAP_SCALE, rect.height*Resources.TILED_MAP_SCALE); 
 				pathBoundaries.add(boundary);
-				if(Logger.DEBUG){
-					System.out.println("added path boundary: " + boundary.x + "," + boundary.y + ":" + boundary.width + "," + boundary.height);
-					System.out.println("Tiled Map Scale: " + Resources.TILED_MAP_SCALE);
-				}
 			}
 		}
 	}
@@ -92,8 +87,7 @@ public class Map implements Disposable{
 	
 	@Override
 	public void dispose() {
-		if (Logger.DEBUG)
-			System.out.println("MTDTiledMapRenderer Dispose");
+		Logger.info("Map Disposed");
 		tiledMap.dispose();
 
 	}

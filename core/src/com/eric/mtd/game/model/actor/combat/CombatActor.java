@@ -82,8 +82,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	}
 	@Override
 	public void reset() {
-		if (Logger.DEBUG)
-			System.out.println("Resetting GameActor");
 		health = MAX_HEALTH;
 		armor = MAX_ARMOR;
 		hasArmor = false;
@@ -141,10 +139,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 	}
 
-	public String getAttackType() {
-		return "Nearest";
-	}
-
 	public void setTarget(CombatActor target) {
 		this.target = target;
 	}
@@ -157,7 +151,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public Shape2D getRangeShape() {
 		rangeCircle.set(getPositionCenter().x, getPositionCenter().y, range);
 		return rangeCircle;
-		//return;// new Circle(getPositionCenter().x, getPositionCenter().y, range);
 	}
 
 	public float getAttackSpeed() {

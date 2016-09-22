@@ -89,8 +89,7 @@ public class GameStage extends Stage {
 
 	@Override
 	public void dispose() {
-		if (Logger.DEBUG)
-			System.out.println("Game Stage Dispose");
+		Logger.info("Game Stage Dispose");
 		mtdMap.dispose();
 		resources.unloadMap(intLevel);
 		super.dispose();
@@ -103,6 +102,7 @@ public class GameStage extends Stage {
 		if (getActorGroups().getEnemyGroup().getChildren().size <= 0
 			&& getActorGroups().getProjectileGroup().getChildren().size <= 0) {
 			if (!(levelStateManager.getState().equals(LevelState.GAME_OVER))) {
+				Logger.info("Wave over");
 				player.giveMoney((int) (100 * (float) level.getCurrentWave()));
 				levelStateManager.setState(LevelState.STANDBY);
 				player.setWaveCount(player.getWaveCount() + 1);
@@ -120,6 +120,7 @@ public class GameStage extends Stage {
 	 */
 	private boolean isLevelCompleted(){
 		if(player.getWavesCompleted() == Level.MAX_WAVES){
+			Logger.info("Level Over");
 			uiStateManager.setState(GameUIState.LEVEL_COMPLETED);
 			return true;
 		}
@@ -159,7 +160,7 @@ public class GameStage extends Stage {
 	}
 	
 	public Map getMap(){
-		return level.getMap();
+		return mtdMap;
 	}
 
 }

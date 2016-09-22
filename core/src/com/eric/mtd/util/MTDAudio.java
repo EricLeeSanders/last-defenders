@@ -62,25 +62,21 @@ public class MTDAudio {
 	}
 
 	public void playMusic() {
-		if (Logger.DEBUG)
-			System.out.println("Playing Music");
+		Logger.info("Playing Music");
 		music.play();
 	}
 	
 	public void turnOffMusic(){
-		if (Logger.DEBUG)
-			System.out.println("Turning off Music");
+		Logger.info("Turning off Music");
 		music.stop();
 	}
 	
 	public void disposeMusic() {
-		if (Logger.DEBUG)
-			System.out.println("Disposing Music");
+		Logger.info("Disposing Music");
 		music.dispose();
 	}
 	public void disposeSound() {
-		if (Logger.DEBUG)
-			System.out.println("Disposing Sounds");
+		Logger.info("Disposing Sounds");
 		rpgExplosion.dispose();
 		rocketLaunch.dispose();
 		flameBurst.dispose();
@@ -100,8 +96,7 @@ public class MTDAudio {
 	
 	public void playSound(MTDSound sound){
 		if(soundEnabled) {
-			if (Logger.DEBUG)
-				System.out.println("Playing + " + sound.name());
+		
 			switch (sound) {
 			case ACTOR_PLACE:
 				actorPlace.play();
@@ -121,8 +116,7 @@ public class MTDAudio {
 	
 	public void playProjectileSound(ProjectileSound sound) {
 		if(soundEnabled){
-			if (Logger.DEBUG)
-				System.out.println("Playing + " + sound.name());
+			
 			switch (sound) {
 			case RIFLE:
 				rifleShot.play();
@@ -155,7 +149,7 @@ public class MTDAudio {
 		setMusicEnabled(musicEnabled ? false : true);
 	}
 	public void setMusicEnabled(boolean enabled){
-		if(Logger.DEBUG)System.out.println("Setting music to " + enabled);
+		Logger.info("Setting music to " + enabled);
 		musicEnabled = enabled;
 		
 		if(enabled){
@@ -171,7 +165,7 @@ public class MTDAudio {
 		setSoundEnabled(soundEnabled ? false : true);
 	}
 	public void setSoundEnabled(boolean enabled){
-		if(Logger.DEBUG)System.out.println("Setting sound to " + enabled);
+		Logger.info("Setting sound to " + enabled);
 		soundEnabled = enabled;
 		userPreferences.getPreferences().putBoolean("soundEnabled", enabled);
 		userPreferences.getPreferences().flush();

@@ -45,8 +45,6 @@ public class TowerSniper extends Tower {
 
 	@Override
 	public void attackTarget() {
-		if (Logger.DEBUG)
-			System.out.println("Tower Sniper: Attacking target at " + getTarget().getPositionCenter());
 		audio.playProjectileSound(ProjectileSound.SNIPER);
 		if(getTarget() != null){
 			getProjectileGroup().addActor(bulletPool.obtain().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));

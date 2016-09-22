@@ -65,7 +65,6 @@ public class MenuView extends Group implements IMenuView {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
 				presenter.playGame();
-				if (Logger.DEBUG) System.out.println("Play Pressed");
 			}
 		});
 
@@ -77,7 +76,6 @@ public class MenuView extends Group implements IMenuView {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
 				presenter.soundPressed();
-				if (Logger.DEBUG) System.out.println("Sound Pressed");
 			}
 		});
 	}
@@ -88,7 +86,6 @@ public class MenuView extends Group implements IMenuView {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
 				presenter.musicPressed();
-				if (Logger.DEBUG) System.out.println("Music Pressed");
 			}
 		});
 	}

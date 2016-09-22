@@ -160,8 +160,6 @@ public class TowerTurret extends Tower implements IRotatable {
 
 	@Override
 	public void attackTarget() {
-		if (Logger.DEBUG)
-			System.out.println("Tower Turret: Attacking target");
 		if(getTarget() != null){
 			audio.playProjectileSound(ProjectileSound.MACHINE_GUN);
 			getProjectileGroup().addActor(bulletPool.obtain().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));

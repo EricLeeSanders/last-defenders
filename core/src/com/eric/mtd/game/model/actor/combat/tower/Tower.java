@@ -136,7 +136,6 @@ public abstract class Tower extends CombatActor {
 	@Override
 	public void reset() {
 		super.reset();
-		if(Logger.DEBUG)System.out.println("Resetting Tower");
 		rangeIncreaseEnabled = false;
 		speedIncreaseEnabled = false;
 		attackIncreaseEnabled = false;

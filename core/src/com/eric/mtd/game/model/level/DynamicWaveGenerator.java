@@ -50,17 +50,6 @@ public class DynamicWaveGenerator {
 				numOfTanks++;
 			}
 		}
-		if(Logger.DEBUG) {
-			System.out.println("Dynamic Wave Generator Created");
-			System.out.println(numOfFlameThrowers + " flame throwers created");
-			System.out.println(numOfHumvees + " humvees created");
-			System.out.println(numOfMachineGuns + " machine guns created");
-			System.out.println(numOfRifles + " rifles created");
-			System.out.println(numOfRocketLaunchers + " rocket launchers created");
-			System.out.println(numOfSnipers + " snipers created");
-			System.out.println(numOfSprinters + " sprinters created");
-			System.out.println(numOfTanks + " tanks created");
-		}
 	}
 	
 	/**
@@ -76,7 +65,6 @@ public class DynamicWaveGenerator {
 		int currentGeneratedWave = currentWave - Level.MAX_WAVES;
 		if((currentGeneratedWave % 3) == 0) {
 			int rnd = random.nextInt(2); // 0 or 1
-			if(Logger.DEBUG)System.out.println("% 3 rnd: " + rnd);
 			//0 - 2 sprinters
 			//1 - 1 humvee
 			if(rnd == 0){
@@ -88,7 +76,6 @@ public class DynamicWaveGenerator {
 		
 		if((currentGeneratedWave % 4) == 0 ){
 			int rnd = random.nextInt(2); // 0 or 1
-			if(Logger.DEBUG)System.out.println("% 4 rnd: " + rnd);
 			//0 - 1 rocket launcher
 			//1 - 1 flame thrower & 1 sniper
 			if(rnd == 0){
@@ -104,7 +91,6 @@ public class DynamicWaveGenerator {
 		
 		//Every wave
 		int rnd = random.nextInt(3); // 0-2
-		if(Logger.DEBUG)System.out.println("% 1 rnd: " + rnd);
 		//0 - 3 rifles
 		//1 - 3 machine guns
 		//2 - 2 snipers
@@ -136,12 +122,9 @@ public class DynamicWaveGenerator {
 		boolean armor;
 		for(int i = 0; i < n; i++){
 			randArmor = random.nextInt(3); //0-2
-			if(Logger.DEBUG)System.out.println("randArmor: " + randArmor);
 			armor = (randArmor == 0) ? true : false;
-			if(Logger.DEBUG)System.out.println("Armor: " + armor);
 			enemies.add(actorFactory.loadEnemy(map.getPath(), type, armor, actorGroups.getTowerGroup(), actorGroups.getProjectileGroup()));
 		}
-		if(Logger.DEBUG)System.out.println(n + " " + type + " created");
 		return enemies;
 	}
 	private Queue<SpawningEnemy> createSpawningEnemies(){
@@ -150,7 +133,6 @@ public class DynamicWaveGenerator {
 		float randDelay;
 		for(Enemy enemy : enemies){
 			randDelay = random.nextFloat() * 1.5f + 0.25f; // .25 - 1.75
-			if(Logger.DEBUG)System.out.println("randDelay: " + randDelay);
 			spawningEnemies.add(new SpawningEnemy(enemy, randDelay));
 		}
 		return spawningEnemies;

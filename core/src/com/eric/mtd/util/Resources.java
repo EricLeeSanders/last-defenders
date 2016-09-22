@@ -70,8 +70,7 @@ public class Resources {
 		Pixmap.setBlending(Blending.None);
 	}
 	public void dispose() {
-		if (Logger.DEBUG)
-			System.out.println("Resources dispose");
+		Logger.info("Resources dispose");
 		manager.dispose();
 		shapeRenderer.dispose();
 
@@ -127,51 +126,28 @@ public class Resources {
 			manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
 			manager.load("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
 			manager.finishLoading();
-			if (Logger.DEBUG)
-				System.out.println("Map Loaded: " + "game/levels/level" + level + "/level" + level + ".tmx");
+			Logger.info("Map Loaded: " + "game/levels/level" + level + "/level" + level + ".tmx");
 		} catch (GdxRuntimeException e) {
-			if (Logger.DEBUG)
-				System.out.println("Map load error " + e);
-		}
-	}
-
-	public void loadUIMap() {
-		try {
-			manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-			manager.load("game/ui/ui.tmx", TiledMap.class);
-			manager.finishLoading();
-			if (Logger.DEBUG)
-				System.out.println("UI Map Loaded");
-		} catch (GdxRuntimeException e) {
-			if (Logger.DEBUG)
-				System.out.println("UI Map load error " + e);
+			Logger.error("Map load error", e);
 		}
 	}
 
 	public void loadSkin(String skinJson, String atlas) {
 		try {
-			if (Logger.DEBUG)
-				System.out.println(atlas);
-			if (Logger.DEBUG)
-				System.out.println(skinJson);
 			manager.load(skinJson, Skin.class, new SkinLoader.SkinParameter(atlas, createDefaultFont()));
 			manager.finishLoading();
-			if (Logger.DEBUG)
-				System.out.println("Skin Loaded");
+			Logger.info("Skin Loaded");
 		} catch (GdxRuntimeException e) {
-			if (Logger.DEBUG)
-				System.out.println("Load Skin Error " + e);
+			Logger.error("Load Skin Error", e);
 		}
 	}
 	public void loadAtlas(String file) {
 		try {
 			manager.load(file, TextureAtlas.class);
 			manager.finishLoading();
-			if (Logger.DEBUG)
-				System.out.println(file + " Atlas Loaded");
+			Logger.info(file + " Atlas Loaded");
 		} catch (GdxRuntimeException e) {
-			if (Logger.DEBUG)
-				System.out.println("Load Atlas Error " + e);
+			Logger.error("Load Atlas Error", e);
 		}
 	}
 
@@ -180,13 +156,13 @@ public class Resources {
 			manager.load(file, Texture.class);
 			manager.finishLoading();
 		} catch (GdxRuntimeException e) {
-			if (Logger.DEBUG)
-				System.out.println("Load Texture Error " + e);
+			Logger.error("Load Texture Error", e);
 		}
 	}
 
 	public TiledMap getMap(int level) {
 		if(!manager.isLoaded("game/levels/level" + level + "/level" + level + ".tmx")){
+			Logger.info("Map " + level + " is not loaded. Loading...");
 			loadMap(level);
 		}
 		return manager.get("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
@@ -198,9 +174,7 @@ public class Resources {
 
 	public TextureAtlas getAtlas(String file) {
 		if(!manager.isLoaded(file)){
-			if(Logger.DEBUG){
-				System.out.println("File not loaded");
-			}
+			Logger.info(file + " not loaded. Loading...");
 			loadAtlas(file);
 		}
 		return manager.get(file, TextureAtlas.class);
@@ -212,6 +186,7 @@ public class Resources {
 
 	public Skin getSkin(String file) {
 		if(!manager.isLoaded(file)){
+			Logger.info(file + " (skin) not loaded. Loading");
 			loadSkin(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
 		}
 		return manager.get(file, Skin.class);
@@ -237,17 +212,13 @@ public class Resources {
 	public void unloadAsset(String file){
 		if(manager.isLoaded(file)){
 			manager.unload(file);
-			if(Logger.DEBUG){
-				System.out.println(file + " unloaded");
-			}
+			Logger.info(file + " unloaded");
 		}
 	}
 	public void unloadMap(int level){
 		if(manager.isLoaded("game/levels/level" + level + "/level" + level + ".tmx")){
 			manager.unload("game/levels/level" + level + "/level" + level + ".tmx");
-			if(Logger.DEBUG){
-				System.out.println("level " + level + " unloaded");
-			}
+			Logger.info("Map " + level + " unloaded");
 		}
 	}
 }

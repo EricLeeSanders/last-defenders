@@ -44,8 +44,7 @@ public class MenuScreen extends AbstractScreen {
 	@Override
 	public void dispose() {
 		super.dispose();
-		if (Logger.DEBUG)
-			System.out.println("Disposing menu screen");
+		Logger.info("Menu Screen Dispose");
 		stage.dispose();
 
 	}
