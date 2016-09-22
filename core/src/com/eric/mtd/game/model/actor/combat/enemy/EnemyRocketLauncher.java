@@ -7,8 +7,9 @@ import com.eric.mtd.game.model.actor.interfaces.IRpg;
 import com.eric.mtd.game.model.actor.projectile.RPG;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
-import com.eric.mtd.util.AudioUtil;
-import com.eric.mtd.util.AudioUtil.ProjectileSound;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.RPGPool;
+import com.eric.mtd.util.MTDAudio;
+import com.eric.mtd.util.MTDAudio.ProjectileSound;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 
@@ -31,9 +32,12 @@ public class EnemyRocketLauncher extends Enemy implements IRpg {
 	public static final float[] BODY = { 5, 22, 5, 34, 26, 34, 26, 22 };
 	public static final Vector2 GUN_POS = new Vector2(4, 26);
 	public static final Dimension TEXTURE_SIZE = new Dimension(32, 56);
-
-	public EnemyRocketLauncher(TextureRegion[] actorRegions, CombatActorPool<CombatActor> pool) {
+	private RPGPool rpgPool;
+	private MTDAudio audio;
+	public EnemyRocketLauncher(TextureRegion[] actorRegions, CombatActorPool<CombatActor> pool, RPGPool rpgPool, MTDAudio audio) {
 		super(actorRegions, pool, BODY, TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
+		this.rpgPool = rpgPool;
+		this.audio = audio;
 	}
 
 	@Override
@@ -41,8 +45,8 @@ public class EnemyRocketLauncher extends Enemy implements IRpg {
 		if (Logger.DEBUG)
 			System.out.println("Enemy Rocket: Attacking target at " + getTarget().getPositionCenter());
 		if(getTarget() != null){
-			AudioUtil.playProjectileSound(ProjectileSound.ROCKET_LAUNCH);
-			getProjectileGroup().addActor(ActorFactory.loadRPG().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
+			audio.playProjectileSound(ProjectileSound.ROCKET_LAUNCH);
+			getProjectileGroup().addActor(rpgPool.obtain().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
 		}
 
 	}

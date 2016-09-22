@@ -15,6 +15,8 @@ import com.eric.mtd.game.model.actor.combat.enemy.Enemy;
 import com.eric.mtd.game.model.actor.interfaces.IRpg;
 import com.eric.mtd.game.model.actor.projectile.Explosion;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.ExplosionPool;
+import com.eric.mtd.game.service.actorfactory.ActorFactory.SupportActorPool;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -26,9 +28,11 @@ public class LandMine extends SupportActor implements IRpg{
 	private static final Vector2 GUN_POS = new Vector2(0,0);
 	private static final float SCALE = 0.30f;
 	private ShapeRenderer debugBody = Resources.getShapeRenderer();
-	public LandMine(Pool<SupportActor> pool, TextureRegion textureRegion) {
+	private ExplosionPool explosionPool;
+	public LandMine(SupportActorPool<LandMine> pool, ExplosionPool explosionPool, TextureRegion textureRegion) {
 		super(pool, textureRegion, new Dimension(textureRegion.getRegionWidth()*SCALE, textureRegion.getRegionHeight()*SCALE)
 				,RANGE,ATTACK, GUN_POS, COST);
+		this.explosionPool = explosionPool;
 
 	}
 	@Override
@@ -60,7 +64,7 @@ public class LandMine extends SupportActor implements IRpg{
 	}
 	private void explode(){
 		if(Logger.DEBUG)System.out.println("LandMine: Exploding");
-		getProjectileGroup().addActor(ActorFactory.loadExplosion().initialize(this,RANGE, null, getEnemyGroup(), this.getPositionCenter()));
+		getProjectileGroup().addActor(explosionPool.obtain().initialize(this,RANGE, null, getEnemyGroup(), this.getPositionCenter()));
 		this.freeActor();
 	}
 	private Rectangle getBody(){

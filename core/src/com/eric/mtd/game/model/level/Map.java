@@ -3,15 +3,20 @@ package com.eric.mtd.game.model.level;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.eric.mtd.game.GameStage;
 import com.eric.mtd.screen.AbstractScreen;
 import com.eric.mtd.util.Logger;
@@ -23,19 +28,23 @@ import com.eric.mtd.util.Resources;
  * @author Eric
  *
  */
-public class Map {
-	private TiledMap tiledMap;
+public class Map implements Disposable{
 	private Queue<Vector2> pathCoords = new LinkedList<Vector2>();
 	private Array<Rectangle> pathBoundaries = new Array<Rectangle>(false, 16);
-	public Map(int intLevel) {
-		Resources.loadMap(intLevel);
-		tiledMap = Resources.getMap(intLevel);
+	private TiledMapRenderer tiledMapRenderer;
+	private TiledMap tiledMap;
+	public Map(int intLevel, Camera camera, TiledMap tiledMap) {
+		this.tiledMap = tiledMap;
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap,Resources.TILED_MAP_SCALE);
+		tiledMapRenderer.setView((OrthographicCamera) camera);
 		findPath();
 		findBoundaries();
-		tiledMap.dispose();
-		tiledMap = null;
 	}
 
+	public void update() {
+		tiledMapRenderer.render();
+	}
+	
 	/**
 	 * Finds the path for the enemies to follow
 	 */
@@ -79,6 +88,14 @@ public class Map {
 	}
 	public Queue<Vector2> getPath() {
 		return pathCoords;
+	}
+	
+	@Override
+	public void dispose() {
+		if (Logger.DEBUG)
+			System.out.println("MTDTiledMapRenderer Dispose");
+		tiledMap.dispose();
+
 	}
 
 }

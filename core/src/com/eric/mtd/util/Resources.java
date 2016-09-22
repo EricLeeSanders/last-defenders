@@ -1,5 +1,7 @@
 package com.eric.mtd.util;
 
+import java.util.HashMap;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
@@ -30,10 +32,6 @@ public class Resources {
 	public static final String MENU_ATLAS = "menu/menu.atlas";
 	public static final String ACTOR_ATLAS = "game/actors/actors.atlas";
 	public static final String LEVEL_SELECT_ATLAS = "level_select/level_select.atlas";
-	public static final String HUD_ATLAS = "game/ui/hud/hud.atlas";
-	public static final String ENLIST_ATLAS = "game/ui/enlist/enlist.atlas";
-	public static final String SUPPORT_UI_ATLAS = "game/ui/support/support.atlas";
-	public static final String INSPECT_ATLAS = "game/ui/inspect/inspect.atlas";
 	public static final String SKIN_ATLAS = "skin/uiskin.atlas";
 	public static final String SKIN_JSON = "skin/uiskin.json";
 
@@ -59,51 +57,24 @@ public class Resources {
 	public static final String SMALL_CLICK = "audio/button_small_click.mp3";
 	public static final String LARGE_CLICK = "audio/button_large_click.mp3";
 	public static final String VEHICLE_EXPLOSION_SOUND = "audio/vehicle_explosion.mp3";
+	private float gameSpeed = 1;
+	private static ShapeRenderer shapeRenderer = new ShapeRenderer();
+	private UserPreferences userPreferences;
+	private AssetManager manager = new AssetManager();
+	private java.util.Map<String, BitmapFont> fonts;
 	
-	private static final ShapeRenderer SHAPE_RENDERER = new ShapeRenderer();
-	
-	private static Preferences prefs;
-	
-	private static final AssetManager MANAGER = new AssetManager();
-
-	public static void dispose() {
-		if (Logger.DEBUG)
-			System.out.println("Resources dispose");
-		MANAGER.dispose();
-		SHAPE_RENDERER.dispose();
-
-	}
-	public static void gameResume(){
-		MANAGER.finishLoading();
-	}
-	public static void loadGameAssets() {
-		loadPreferences();
-		loadGraphics();
-		loadAudio();
-		
-	}
-	public static void loadPreferences(){
-		prefs = Gdx.app.getPreferences("MTD_Preferences");
-	}
-	public static void loadGraphics(){
-		if (Logger.DEBUG)
-			System.out.println("Loading Graphics");
+	public Resources(UserPreferences userPreferences){
+		this.userPreferences = userPreferences;
 		loadFonts();
-		Resources.loadUIMap();
-		Resources.loadSkin(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
-		Resources.loadAtlas(Resources.MENU_ATLAS);
-		Resources.loadAtlas(Resources.HUD_ATLAS);
-		Resources.loadAtlas(Resources.ENLIST_ATLAS);
-		Resources.loadAtlas(Resources.SUPPORT_UI_ATLAS);
-		Resources.loadAtlas(Resources.INSPECT_ATLAS);
-		Resources.loadAtlas(Resources.LEVEL_SELECT_ATLAS);
-		Resources.loadAtlas(ACTOR_ATLAS);
+		loadSkin(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
 		Pixmap.setBlending(Blending.None);
 	}
-	public static void loadAudio(){
+	public void dispose() {
 		if (Logger.DEBUG)
-			System.out.println("Loading Audio");
-		AudioUtil.load();
+			System.out.println("Resources dispose");
+		manager.dispose();
+		shapeRenderer.dispose();
+
 	}
 	
 	/**
@@ -111,7 +82,7 @@ public class Resources {
 	 * Creates a copy of default-font-46.
 	 * @return
 	 */
-	public static ObjectMap<String, Object> createDefaultFont(){
+	public ObjectMap<String, Object> createDefaultFont(){
 		// Creates a copy instead of using default-font-46 directly because
 		// using it directly causes on exception to be thrown. The exception is thrown because
 		// the font is disposed in two places
@@ -121,21 +92,25 @@ public class Resources {
 		map.put("default-font", defaultFont); 
 		return map;
 	}
-	private static void loadFonts(){
+	private void loadFonts(){
 
 		FileHandleResolver resolver = new InternalFileHandleResolver();
-		MANAGER.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
-		MANAGER.setLoader(BitmapFont.class, new FreetypeFontLoader(resolver));
+		manager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
+		manager.setLoader(BitmapFont.class, new FreetypeFontLoader(resolver));
 		FreeTypeFontLoaderParameter parameter_16 = createFontParam("font/palamecia titling.ttf", 16, Color.BLACK, 1f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-		MANAGER.load("default-font-16", BitmapFont.class, parameter_16 );
+		manager.load("default-font-16", BitmapFont.class, parameter_16 );
 		FreeTypeFontLoaderParameter parameter_22 = createFontParam("font/palamecia titling.ttf", 22, Color.BLACK, 1.3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-		MANAGER.load("default-font-22", BitmapFont.class, parameter_22 );
+		manager.load("default-font-22", BitmapFont.class, parameter_22 );
 		FreeTypeFontLoaderParameter parameter_46 = createFontParam("font/palamecia titling.ttf", 46, Color.BLACK, 3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-		MANAGER.load("default-font-46", BitmapFont.class, parameter_46 );
-		MANAGER.finishLoading(); 
+		manager.load("default-font-46", BitmapFont.class, parameter_46 );
+		manager.finishLoading(); 
+		fonts = new HashMap<String, BitmapFont>();
+		fonts.put("default-font-16", getFont("default-font-16"));
+		fonts.put("default-font-22", getFont("default-font-22"));
+		fonts.put("default-font-46", getFont("default-font-46"));
 	}
 	
-	private static FreeTypeFontLoaderParameter createFontParam(String fontFileName, int size, Color borderColor, float borderWidth, TextureFilter minFilter, TextureFilter magFilter){
+	private FreeTypeFontLoaderParameter createFontParam(String fontFileName, int size, Color borderColor, float borderWidth, TextureFilter minFilter, TextureFilter magFilter){
 		FreeTypeFontLoaderParameter parameter = new FreeTypeFontLoaderParameter();
 		parameter.fontParameters.size = size;
 		parameter.fontParameters.borderColor = borderColor;
@@ -147,11 +122,11 @@ public class Resources {
 		
 		return parameter;
 	}
-	public static void loadMap(int level) {
+	public void loadMap(int level) {
 		try {
-			MANAGER.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-			MANAGER.load("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
-			MANAGER.finishLoading();
+			manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+			manager.load("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
+			manager.finishLoading();
 			if (Logger.DEBUG)
 				System.out.println("Map Loaded: " + "game/levels/level" + level + "/level" + level + ".tmx");
 		} catch (GdxRuntimeException e) {
@@ -160,11 +135,11 @@ public class Resources {
 		}
 	}
 
-	public static void loadUIMap() {
+	public void loadUIMap() {
 		try {
-			MANAGER.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-			MANAGER.load("game/ui/ui.tmx", TiledMap.class);
-			MANAGER.finishLoading();
+			manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+			manager.load("game/ui/ui.tmx", TiledMap.class);
+			manager.finishLoading();
 			if (Logger.DEBUG)
 				System.out.println("UI Map Loaded");
 		} catch (GdxRuntimeException e) {
@@ -173,14 +148,14 @@ public class Resources {
 		}
 	}
 
-	public static void loadSkin(String skinJson, String atlas) {
+	public void loadSkin(String skinJson, String atlas) {
 		try {
 			if (Logger.DEBUG)
 				System.out.println(atlas);
 			if (Logger.DEBUG)
 				System.out.println(skinJson);
-			MANAGER.load(skinJson, Skin.class, new SkinLoader.SkinParameter(atlas, createDefaultFont()));
-			MANAGER.finishLoading();
+			manager.load(skinJson, Skin.class, new SkinLoader.SkinParameter(atlas, createDefaultFont()));
+			manager.finishLoading();
 			if (Logger.DEBUG)
 				System.out.println("Skin Loaded");
 		} catch (GdxRuntimeException e) {
@@ -188,10 +163,10 @@ public class Resources {
 				System.out.println("Load Skin Error " + e);
 		}
 	}
-	public static void loadAtlas(String file) {
+	public void loadAtlas(String file) {
 		try {
-			MANAGER.load(file, TextureAtlas.class);
-			MANAGER.finishLoading();
+			manager.load(file, TextureAtlas.class);
+			manager.finishLoading();
 			if (Logger.DEBUG)
 				System.out.println(file + " Atlas Loaded");
 		} catch (GdxRuntimeException e) {
@@ -200,44 +175,79 @@ public class Resources {
 		}
 	}
 
-	public static void loadTexture(String file) {
+	public void loadTexture(String file) {
 		try {
-			MANAGER.load(file, Texture.class);
-			MANAGER.finishLoading();
+			manager.load(file, Texture.class);
+			manager.finishLoading();
 		} catch (GdxRuntimeException e) {
 			if (Logger.DEBUG)
 				System.out.println("Load Texture Error " + e);
 		}
 	}
 
-	public static TiledMap getMap(int level) {
-		return MANAGER.get("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
+	public TiledMap getMap(int level) {
+		if(!manager.isLoaded("game/levels/level" + level + "/level" + level + ".tmx")){
+			loadMap(level);
+		}
+		return manager.get("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
 	}
 
-	public static TiledMap getUIMap() {
-		return MANAGER.get("game/ui/ui.tmx", TiledMap.class);
+	public TiledMap getUIMap() {
+		return manager.get("game/ui/ui.tmx", TiledMap.class);
 	}
 
-	public static TextureAtlas getAtlas(String file) {
-		return MANAGER.get(file, TextureAtlas.class);
+	public TextureAtlas getAtlas(String file) {
+		if(!manager.isLoaded(file)){
+			if(Logger.DEBUG){
+				System.out.println("File not loaded");
+			}
+			loadAtlas(file);
+		}
+		return manager.get(file, TextureAtlas.class);
 	}
 
-	public static Texture getTexture(String file) {
-		return MANAGER.get(file, Texture.class);
+	public Texture getTexture(String file) {
+		return manager.get(file, Texture.class);
 	}
 
-	public static Skin getSkin(String file) {
-		return MANAGER.get(file, Skin.class);
+	public Skin getSkin(String file) {
+		if(!manager.isLoaded(file)){
+			loadSkin(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
+		}
+		return manager.get(file, Skin.class);
 	}
-	
-	public static BitmapFont getFont(String font){
-		return MANAGER.get(font, BitmapFont.class);
+	public java.util.Map<String, BitmapFont> getFonts(){
+		if(fonts == null){
+			loadFonts();
+		}
+		return fonts;
 	}
-	public static Preferences getPreferences(){
-		return prefs;
+	public BitmapFont getFont(String font){
+		return manager.get(font, BitmapFont.class);
 	}
 	public static ShapeRenderer getShapeRenderer(){
-		return SHAPE_RENDERER;
+		return shapeRenderer;
 	}
-
+	public float getGameSpeed() {
+		return gameSpeed;
+	}
+	public void setGameSpeed(float gameSpeed) {
+		this.gameSpeed = gameSpeed;
+	}
+	public void unloadAsset(String file){
+		if(manager.isLoaded(file)){
+			manager.unload(file);
+			if(Logger.DEBUG){
+				System.out.println(file + " unloaded");
+			}
+		}
+	}
+	public void unloadMap(int level){
+		if(manager.isLoaded("game/levels/level" + level + "/level" + level + ".tmx")){
+			manager.unload("game/levels/level" + level + "/level" + level + ".tmx");
+			if(Logger.DEBUG){
+				System.out.println("level " + level + " unloaded");
+			}
+		}
+	}
 }

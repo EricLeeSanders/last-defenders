@@ -11,13 +11,14 @@ import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.model.level.Map;
+import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.game.service.actorplacement.TowerPlacement;
 import com.eric.mtd.game.ui.state.IGameUIStateObserver;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.game.ui.view.interfaces.IEnlistView;
-import com.eric.mtd.util.AudioUtil;
-import com.eric.mtd.util.AudioUtil.MTDSound;
+import com.eric.mtd.util.MTDAudio;
+import com.eric.mtd.util.MTDAudio.MTDSound;
 import com.eric.mtd.util.Resources;
 
 /**
@@ -32,14 +33,15 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	private Player player;
 	private IEnlistView view;
 	private ActorGroups actorGroups;
-
+	private MTDAudio audio;
 	public EnlistPresenter(GameUIStateManager uiStateManager, Player player
-			, ActorGroups actorGroups, Map map) {
+			, ActorGroups actorGroups, ActorFactory actorFactory, Map map, MTDAudio audio) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.player = player;
+		this.audio = audio;
 		this.actorGroups = actorGroups;
-		towerPlacement = new TowerPlacement(map, actorGroups);
+		towerPlacement = new TowerPlacement(map, actorGroups, actorFactory);
 	}
 
 	/**
@@ -58,7 +60,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 * @param strEnlistTower
 	 */
 	public void createTower(String strEnlistTower) {
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
+		audio.playSound(MTDSound.SMALL_CLICK);
 		towerPlacement.createTower(strEnlistTower);
 		uiStateManager.setState(GameUIState.PLACING_TOWER);
 	}
@@ -69,7 +71,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	public void placeTower() {
 		int cost = towerPlacement.getCurrentTower().getCost();
 		if (towerPlacement.placeTower()) {
-			AudioUtil.playSound(MTDSound.ACTOR_PLACE);
+			audio.playSound(MTDSound.ACTOR_PLACE);
 			uiStateManager.setStateReturn();
 			player.spendMoney(cost);
 			towerPlacement.removeCurrentTower();
@@ -82,7 +84,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 * Cancel enlisting
 	 */
 	public void cancelEnlist() {
-		AudioUtil.playSound(MTDSound.SMALL_CLICK);
+		audio.playSound(MTDSound.SMALL_CLICK);
 		uiStateManager.setStateReturn();
 		towerPlacement.removeCurrentTower();
 	}

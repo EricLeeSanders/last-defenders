@@ -3,6 +3,8 @@ package com.eric.mtd.levelselect;
 import com.eric.mtd.screen.AbstractScreen;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.state.GameStateManager;
+import com.eric.mtd.util.MTDAudio;
+import com.eric.mtd.util.Resources;
 
 /**
  * Screen for Level Select Menu
@@ -11,18 +13,17 @@ import com.eric.mtd.state.GameStateManager;
  *
  */
 public class LevelSelectScreen extends AbstractScreen {
-	private ScreenStateManager screenStateManager;
 	private LevelSelectStage stage;
-
-	public LevelSelectScreen(ScreenStateManager screenStateManager, GameStateManager gameStateManager) {
+	private MTDAudio audio;
+	public LevelSelectScreen(ScreenStateManager screenStateManager, GameStateManager gameStateManager, Resources resources, MTDAudio audio) {
 		super(gameStateManager);
-		this.screenStateManager = screenStateManager;
-		this.stage = new LevelSelectStage(screenStateManager);
+		this.audio = audio;
+		this.stage = new LevelSelectStage(screenStateManager,resources, audio);
 		super.addInputProcessor(stage);
 	}
 	@Override
 	public void resize(int width, int height) {
-		stage.getViewport().setScreenSize(width, height); // update the size of ViewPort
+		//stage.getViewport().setScreenSize(width, height);
 	    super.resize(width, height);
 	}
 	
@@ -35,13 +36,12 @@ public class LevelSelectScreen extends AbstractScreen {
 	public void renderElements(float delta) {
 		stage.act(delta);
 		stage.draw();
-
 	}
 
 	@Override
 	public void dispose() {
 		super.dispose();
+		audio.turnOffMusic();
 		stage.dispose();
-
 	}
 }

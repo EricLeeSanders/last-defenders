@@ -44,7 +44,6 @@ import com.eric.mtd.util.Resources;
  *
  */
 public class EnlistView extends Group implements IEnlistView, InputProcessor {
-	//private ImageButton btnTank, btnFlameThrower, btnTurret, btnSniper, btnMachineGun, btnRocketLauncher, btnRifle;
 	private Map<ImageButton, String> towerButtons;
 	private ImageButton btnPlacingCancel, btnPlace, btnRotate;
 	private ImageButton btnCancel, btnScrollUp, btnScrollDown;
@@ -52,23 +51,20 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	private Group choosingGroup;
 	private Label lblTitle, lblMoney;
 	private ScrollPane scroll;
-	//private MTDLabel lblMoney;
 
-	private Stage stage;
-	public EnlistView(EnlistPresenter presenter, Stage stage) {
+	public EnlistView(EnlistPresenter presenter, Skin skin) {
 		this.presenter = presenter;
 		choosingGroup = new Group();
+		choosingGroup.setTransform(false);
+		this.setTransform(false);
 		addActor(choosingGroup);
-		this.stage = stage;
-		createControls();
+		createControls(skin);
 	}
 
 	/**
 	 * Creates the controls with the MTD widgets
 	 */
-	public void createControls() {
-		
-		Skin skin = Resources.getSkin(Resources.SKIN_JSON);
+	public void createControls(Skin skin) {
 		Table container = new Table();
 		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 		choosingGroup.addActor(container);
@@ -77,7 +73,6 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 
 		scroll = new ScrollPane(enlistTable, skin);
 		enlistTable.padTop(10);
-		//scroll.setVariableSizeKnobs(false);
 		enlistTable.defaults().expandX();
 		
 		container.add(scroll).expand().fill().colspan(1);

@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.eric.mtd.menu.ui.MenuPresenter;
 import com.eric.mtd.menu.ui.MenuView;
 import com.eric.mtd.screen.state.ScreenStateManager;
+import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Resources;
 
 /**
@@ -21,24 +22,22 @@ public class MenuStage extends Stage {
 	private ScreenStateManager screenStatemanager;
 	private MenuPresenter presenter;
 	private MenuView menuView;
-
-	public MenuStage(ScreenStateManager screenStateManager) {
+	private Resources resources;
+	public MenuStage(ScreenStateManager screenStateManager, Resources resources, MTDAudio audio) {
 		super(new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, new OrthographicCamera()));
 		this.screenStatemanager = screenStateManager;
-
-		createBackground();
-		presenter = new MenuPresenter(screenStateManager);
-		menuView = new MenuView(presenter);
+		this.resources = resources;
+		resources.loadAtlas(Resources.MENU_ATLAS);
+		presenter = new MenuPresenter(screenStateManager, audio);
+		menuView = new MenuView(presenter, resources.getAtlas(Resources.MENU_ATLAS), resources.getSkin(Resources.SKIN_JSON));
 		presenter.setView(menuView);
 		this.addActor(menuView);
+		menuView.setBackground(resources.getAtlas(Resources.MENU_ATLAS));
 	}
-
-	public void createBackground() {
-		TextureAtlas menuAtlas = Resources.getAtlas(Resources.MENU_ATLAS);
-
-		Image background = new Image(menuAtlas.findRegion("background"));
-		background.setFillParent(true);
-		this.addActor(background);
+	
+	@Override
+	public void dispose(){
+		resources.unloadAsset(Resources.MENU_ATLAS);
 	}
 
 }
