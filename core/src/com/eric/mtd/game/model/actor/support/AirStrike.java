@@ -55,12 +55,10 @@ public class AirStrike extends SupportActor implements IRpg{
 
 	}
 	public void addLocation(Vector2 location, Group group){
-		if (Logger.DEBUG)
-			System.out.println("Adding AirStrike Location at " + location.x + "," + location.y);
 		airStrikeLocations.add(new AirStrikeLocation(location,AIRSTRIKE_RADIUS, group ));
 	}
 	public void beginAirStrike(){
-		if(Logger.DEBUG)System.out.println("Beginning Air Strike Run");
+		Logger.info("Beginning Air Strike Run");
 		setActive(true);
 		this.setRotation(-90);
 		setPositionCenter(new Vector2(0-this.getHeight(), Resources.VIRTUAL_HEIGHT/2));
@@ -80,14 +78,8 @@ public class AirStrike extends SupportActor implements IRpg{
 		}
 	}
 	private void dropBomb(AirStrikeLocation location){
-		if (Logger.DEBUG)
-			System.out.println("AirStrike: Dropping Bomb at " + location.getLocation());
 		audio.playProjectileSound(ProjectileSound.ROCKET_LAUNCH);
 		getProjectileGroup().addActor(bombPool.obtain().initialize(this, location.getLocation(), this.getEnemyGroup(),this.getGunPos(), BULLET_SIZE, AIRSTRIKE_RADIUS)); 
-		/*if(Logger.DEBUG)System.out.println("removing location at : " + location.getLocation());
-		airStrikeLocations.removeValue(location, false);
-		location.remove();
-		location.clear();*/
 		
 		
 	}
@@ -96,8 +88,6 @@ public class AirStrike extends SupportActor implements IRpg{
 	}
 	@Override
 	public void reset() {
-		if (Logger.DEBUG)
-			System.out.println("freeing AirStrike");
 		for(AirStrikeLocation location : airStrikeLocations){
 			location.remove();
 			location.clear();

@@ -41,8 +41,6 @@ public class EnemyMachineGun extends Enemy {
 
 	@Override
 	public void attackTarget() {
-		if (Logger.DEBUG)
-			System.out.println("Enemy Machine: Attacking target at " + getTarget().getPositionCenter());
 		if(getTarget() != null){
 			audio.playProjectileSound(ProjectileSound.MACHINE_GUN);
 			getProjectileGroup().addActor(bulletPool.obtain().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));

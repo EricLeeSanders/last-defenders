@@ -98,8 +98,6 @@ public class GameOverView extends Group implements IGameOverView {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("New Game Pressed");
 				presenter.newGame();
 			}
 		});
@@ -111,8 +109,6 @@ public class GameOverView extends Group implements IGameOverView {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("High Scores Pressed");
 				presenter.highScores();
 			}
 		});
@@ -124,8 +120,6 @@ public class GameOverView extends Group implements IGameOverView {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Main Menu Pressed");
 				presenter.mainMenu();
 			}
 		});

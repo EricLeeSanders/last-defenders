@@ -118,11 +118,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 * @return
 	 */
 	public boolean isTowerRotatable() {
-		if (towerPlacement.getCurrentTower() instanceof IRotatable) {
-			return true;
-		} else {
-			return false;
-		}
+		return towerPlacement.getCurrentTower() instanceof IRotatable;
 	}
 	/**
 	 * Get the players amount of money

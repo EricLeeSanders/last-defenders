@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.eric.mtd.levelselect.ui.LevelSelectPresenter;
 import com.eric.mtd.levelselect.ui.LevelSelectView;
 import com.eric.mtd.screen.state.ScreenStateManager;
+import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Resources;
 
@@ -34,6 +35,7 @@ public class LevelSelectStage extends Stage {
 	}
 	@Override
 	public void dispose(){
+		Logger.info("Level Select Stage Dispose");
 		resources.unloadAsset(Resources.LEVEL_SELECT_ATLAS);
 	}
 

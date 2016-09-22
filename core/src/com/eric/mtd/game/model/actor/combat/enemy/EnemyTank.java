@@ -96,8 +96,6 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 
 	@Override
 	public void attackTarget() {
-		if (Logger.DEBUG)
-			System.out.println("Enemy Tank: Attacking target at " + getTarget().getPositionCenter());
 		if(getTarget() != null){
 			getProjectileGroup().addActor(rpgPool.obtain().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
 		}

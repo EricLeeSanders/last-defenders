@@ -121,8 +121,6 @@ public class RPG extends Actor implements Pool.Poolable {
 
 	@Override
 	public void reset() {
-		if (Logger.DEBUG)
-			System.out.println("freeing RPG");
 		this.clear();
 		target = null;
 		shooter = null;

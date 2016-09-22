@@ -67,8 +67,6 @@ public class TowerPlacement {
 		if (currentTower != null) {
 			currentTower.setVisible(true);
 			currentTower.setPositionCenter(clickCoords);
-			if (Logger.DEBUG)
-				System.out.println(currentTower.getPositionCenter());
 			currentTower.setShowRange(true);
 			if (towerCollides()) {
 				currentTower.setRangeColor(1f, 0f, 0f, 0.75f);// Red
@@ -88,8 +86,6 @@ public class TowerPlacement {
 	public void rotateTower(float rotation) {
 		if (currentTower != null) {
 			currentTower.setRotation(currentTower.getRotation() - rotation);
-			if (Logger.DEBUG)
-				System.out.println(currentTower.getPositionCenter());
 			if (towerCollides()) {
 				currentTower.setRangeColor(1f, 0f, 0f, 0.75f);// Red
 

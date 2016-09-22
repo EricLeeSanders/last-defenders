@@ -34,11 +34,9 @@ public class ScreenStateManager {
 	 * Notify all observers of state change
 	 */
 	public void notifyObservers() {
-		if (Logger.DEBUG)
-			System.out.println("Notify Observers");
+		Logger.info("Notify Observers");
 		for (IScreenStateObserver observer : observers) {
-			if (Logger.DEBUG)
-				System.out.println("Notifying: " + observer.getClass().getName());
+			Logger.info("Notifying: " + observer.getClass().getName());
 			observer.changeScreenState(state);
 		}
 	}
@@ -49,8 +47,7 @@ public class ScreenStateManager {
 	 * @param state
 	 */
 	public void setState(ScreenState state) {
-		if (Logger.DEBUG)
-			System.out.println("Chaning Screen state: " + this.getState() + " to state: " + state);
+		Logger.info("Chaning Screen state: " + this.getState() + " to state: " + state);
 		this.state = state;
 		notifyObservers();
 	}

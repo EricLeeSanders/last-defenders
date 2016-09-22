@@ -108,8 +108,6 @@ public class HUDView extends Group implements IHUDView {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Speed button pressed");
 				presenter.changeGameSpeed();
 			}
 		});
@@ -121,8 +119,6 @@ public class HUDView extends Group implements IHUDView {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Button Options Pressed");
 				presenter.options();
 			}
 		});
@@ -133,8 +129,6 @@ public class HUDView extends Group implements IHUDView {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Button Wave Pressed");
 				presenter.startWave();
 			}
 		});
@@ -145,8 +139,6 @@ public class HUDView extends Group implements IHUDView {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Button Enlist Pressed");
 				presenter.enlist();
 
 			}
@@ -158,8 +150,6 @@ public class HUDView extends Group implements IHUDView {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Button Support Pressed");
 				presenter.support();
 
 			}

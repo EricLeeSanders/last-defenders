@@ -64,8 +64,6 @@ public class LevelCompletedView extends Group implements ILevelCompletedView{
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Continue Level Pressed");
 				presenter.continueLevel();
 			}
 		});
@@ -77,8 +75,6 @@ public class LevelCompletedView extends Group implements ILevelCompletedView{
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Level Select Pressed");
 				presenter.levelSelect();
 			}
 		});

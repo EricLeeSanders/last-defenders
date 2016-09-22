@@ -85,7 +85,6 @@ public abstract class Enemy extends CombatActor {
 			newWaypoint = (path.remove());
 			moveVector.set((newWaypoint.x - (this.getOriginX())), (newWaypoint.y - (this.getOriginY())));
 			moveDistance = (newWaypoint.dst(prevWaypoint) / speed);
-			// Question: Need to do this interpolation
 			actionList.add(Actions.moveTo(moveVector.x, moveVector.y, moveDistance, Interpolation.linear));
 		}
 	}
@@ -132,7 +131,6 @@ public abstract class Enemy extends CombatActor {
 				attacking = false;
 				attackCounter = 100; //Ready to attack
 				findTargetDelay = random.nextFloat()*2 + 1;
-				if(Logger.DEBUG) System.out.println("New Find Target Delay = " + findTargetDelay);
 			} else if( attackCounter >= this.getAttackSpeed()) {
 				if(this.getTarget() == null){
 					attacking = false;
@@ -183,8 +181,7 @@ public abstract class Enemy extends CombatActor {
 					textureCounter += delta;
 				}
 			} else {
-				setTextureRegion(textureRegions[2]); // Stationary when
-														// attacking
+				setTextureRegion(textureRegions[2]); // Stationary when attacking
 			}
 		}
 	}
@@ -199,8 +196,6 @@ public abstract class Enemy extends CombatActor {
 	@Override
 	public void reset() {
 		super.reset();
-		if (Logger.DEBUG)
-			System.out.println("Resetting Enemy");
 		this.setRotation(0);
 		attacking = false;
 		textureIndex = 0;

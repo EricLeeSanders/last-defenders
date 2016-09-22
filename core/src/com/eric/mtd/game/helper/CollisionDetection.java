@@ -23,8 +23,7 @@ import com.badlogic.gdx.math.Shape2D;
  */
 public final class CollisionDetection {
 	/**
-	 * Checks for collision with the path boundaries when placing a tower or
-	 * sand bag
+	 * Checks for collision with the path boundaries when placing a tower
 	 * 
 	 * @param boundaries - Array of rectangles from TiledMap that represent the
 	 *            path boundary
@@ -36,14 +35,10 @@ public final class CollisionDetection {
 		for (Rectangle boundry : boundaries) {
 			if (body instanceof Polygon) {
 				if (polygonAndRectangle((Polygon) body, boundry)) {
-					if (Logger.DEBUG)
-						System.out.println("intersect with path!");
 					return true;
 				}
 			} else if (body instanceof Rectangle) {
 				if (rectangleAndRectangle((Rectangle) body, boundry)) {
-					if (Logger.DEBUG)
-						System.out.println("intersect with path!");
 					return true;
 				}
 			}
@@ -67,14 +62,10 @@ public final class CollisionDetection {
 				if (!actor.equals(placeActor)) {
 					if (placeBody instanceof Polygon) {
 						if (polygonAndPolygon(towerBody, (Polygon) placeBody)) {
-							if (Logger.DEBUG)
-								System.out.println("intersect with tower!");
 							return true;
 						}
 					} else if (placeBody instanceof Rectangle) {
 						if (polygonAndRectangle(towerBody, (Rectangle) placeBody)) {
-							if (Logger.DEBUG)
-								System.out.println("intersect with tower!");
 							return true;
 						}
 					}
@@ -93,8 +84,6 @@ public final class CollisionDetection {
 	 */
 	public static boolean landMineAndEnemy(Rectangle landMineBody, Polygon enemy) {
 		if (polygonAndRectangle(enemy, landMineBody)) {
-			if (Logger.DEBUG)
-				System.out.println("target hit!");
 			return true;
 		}
 		return false;
@@ -109,8 +98,6 @@ public final class CollisionDetection {
 	 */
 	public static boolean bulletAndTarget(Rectangle bullet, Polygon target) {
 		if (polygonAndRectangle(target, bullet)) {
-			if (Logger.DEBUG)
-				System.out.println("target hit!");
 			return true;
 		}
 		return false;
@@ -150,7 +137,7 @@ public final class CollisionDetection {
 		} else if (attackerRange instanceof Polygon) {
 			return polygonAndPolygon(targetBody, (Polygon) attackerRange);
 		} else {
-			return true;
+			return false;
 		}
 	}
 
