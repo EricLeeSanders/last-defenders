@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.eric.mtd.menu.ui.MenuPresenter;
 import com.eric.mtd.menu.ui.MenuView;
 import com.eric.mtd.screen.state.ScreenStateManager;
+import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Resources;
 
@@ -37,6 +38,7 @@ public class MenuStage extends Stage {
 	
 	@Override
 	public void dispose(){
+		Logger.info("Menu Stage Dispose");
 		resources.unloadAsset(Resources.MENU_ATLAS);
 	}
 

@@ -24,9 +24,6 @@ import com.eric.mtd.util.Resources;
  */
 public class HealthBar extends Actor implements Pool.Poolable {
 	private CombatActor actor = null;
-	/*private ShapeRenderer backgroundBar = Resources.getShapeRenderer();;
-	private ShapeRenderer healthBar = Resources.getShapeRenderer();;
-	private ShapeRenderer armorBar = Resources.getShapeRenderer();;*/
 	private Sprite backgroundBar, healthBar, armorBar;
 	private float healthPercentage;
 	private float armorPercentage;
@@ -86,15 +83,11 @@ public class HealthBar extends Actor implements Pool.Poolable {
 	public void act(float delta) {
 		super.act(delta);
 		if (actor.isDead() || actor == null) {
-			if (Logger.DEBUG)
-				System.out.println("Freeing Healthbar");
 			pool.free(this);
 		}
 	}
 
 	public void setActor(CombatActor actor) {
-		if (Logger.DEBUG)
-			System.out.println("Healthbar: Setting actor");
 		this.actor = actor;
 		this.setSize(30, 4);
 
@@ -102,8 +95,6 @@ public class HealthBar extends Actor implements Pool.Poolable {
 
 	@Override
 	public void reset() {
-		if (Logger.DEBUG)
-			System.out.println("Resetting healthbar");
 		this.actor = null;
 		this.remove();
 		healthPercentage = 100;

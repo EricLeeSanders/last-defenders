@@ -158,8 +158,6 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	public void inspectTower(Vector2 coords) {
 		if (uiStateManager.getState().equals(GameUIState.STANDBY) || uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)) {
 			Actor hitActor = CollisionDetection.towerHit(actorGroups.getTowerGroup().getChildren(), coords);
-			if (Logger.DEBUG)
-				System.out.println("Screen X:" + coords.x + " Screen Y:" + coords.y);
 			if (hitActor != null) {
 				if (hitActor instanceof Tower) {
 					selectedTower = (Tower) hitActor;

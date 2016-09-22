@@ -61,7 +61,6 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		// table.debug();
 
 		final ScrollPane scroll = new ScrollPane(supportTable, skin);
-		//scroll.setVariableSizeKnobs(false);
 		supportTable.defaults().expandX();
 		
 		container.add(scroll).expand().fill().colspan(1);
@@ -178,8 +177,6 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Placing Cancel Pressed");
 				presenter.cancelSupport();
 			}
 		});
@@ -189,8 +186,6 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Place Pressed");
 				presenter.placeSupportActor();
 			}
 		});
@@ -201,8 +196,6 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Cancel Pressed");
 				presenter.cancelSupport();
 			}
 		});

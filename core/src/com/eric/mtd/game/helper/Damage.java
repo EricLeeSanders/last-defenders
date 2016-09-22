@@ -28,14 +28,11 @@ public class Damage {
 				// Only give the tower a kill if it is alive.
 				if (((Tower)attacker).isDead() == false) {
 					((Tower) attacker).giveKill();
-					if (Logger.DEBUG)
-						System.out.println("Shooter: giving kill");
 				}
 			}
 		}
 	}
 	public static void dealRpgDamage(IAttacker attacker, ITargetable target) {
-		//System.out.println("rpg target group size: " + targetGroupArray.length);
 		dealTargetDamage(attacker,target);
 	}
 
@@ -59,8 +56,6 @@ public class Damage {
 				if (CollisionDetection.polygonAndPolygon(targetBody, flameBody)) {
 					if(!(flameTarget.equals(target))){
 						dealFlameTargetDamage(attacker,flameTarget);
-					}else {
-						if(Logger.DEBUG)System.out.println("Target == flameTarget");
 					}
 				}
 			}
@@ -87,8 +82,6 @@ public class Damage {
 						aoeTarget.takeDamage(damage);
 						if (aoeTarget.isDead() && attacker instanceof Tower) {
 							if (((Tower)attacker).isDead() == false) {
-								if (Logger.DEBUG)
-									System.out.println("Explosion: giving kill to attacker");
 								((Tower) attacker).giveKill();
 							}
 						}

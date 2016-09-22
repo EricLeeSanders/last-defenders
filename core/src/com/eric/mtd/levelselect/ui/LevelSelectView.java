@@ -135,8 +135,6 @@ public class LevelSelectView extends Group {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				if (Logger.DEBUG)
-					System.out.println("Level " + level + " Pressed");
 				selectedLevel = level;
 				audio.playSound(MTDSound.SMALL_CLICK);
 				showConfirmWindow(true);

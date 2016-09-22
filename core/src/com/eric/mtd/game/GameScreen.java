@@ -110,8 +110,7 @@ public class GameScreen extends AbstractScreen {
 	}
 	@Override
 	public void dispose() {
-		if (Logger.DEBUG)
-			System.out.println("Game Screen Dispose");
+		Logger.info("Game Screen Dispose");
 		gameStage.dispose();
 		gameUIStage.dispose();
 	    GLProfiler.disable();
