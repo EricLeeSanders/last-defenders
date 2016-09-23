@@ -27,6 +27,7 @@ public class Damage {
 			if (target.isDead() && attacker instanceof Tower) {
 				// Only give the tower a kill if it is alive.
 				if (((Tower)attacker).isDead() == false) {
+					Logger.debug("Target: giving kill to shooter");
 					((Tower) attacker).giveKill();
 				}
 			}
@@ -70,6 +71,7 @@ public class Damage {
 			Actor actor = targetGroup.get(i);
 			aoeTarget = (ITargetable) actor;
 			distance = damage = damagePercent = 0;
+			Logger.debug("AOE Actor distance: " + distance + " aoe radius: " + aoeRadius.radius);
 			if (aoeTarget.isDead() == false) {
 				if (aoeTarget.equals(target) == false) {
 					distance = position.dst( aoeTarget.getPositionCenter());
@@ -79,9 +81,12 @@ public class Damage {
 							damagePercent = 100;
 						}
 						damage = (attacker.getAttack() * (damagePercent / 100));
+						Logger.debug("Doing " + damagePercent + "% of damage for " + damage + " damage");
 						aoeTarget.takeDamage(damage);
+						Logger.debug("Actors new health:" + ((CombatActor) aoeTarget).getHealth());
 						if (aoeTarget.isDead() && attacker instanceof Tower) {
 							if (((Tower)attacker).isDead() == false) {
+								Logger.debug("Explosion: giving kill to shooter");
 								((Tower) attacker).giveKill();
 							}
 						}
