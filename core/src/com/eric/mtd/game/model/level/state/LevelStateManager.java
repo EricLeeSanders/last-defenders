@@ -56,6 +56,6 @@ public class LevelStateManager {
 	}
 
 	public enum LevelState {
-		WAVE_IN_PROGRESS, STANDBY, GAME_OVER, SPAWNING_ENEMIES;
+		WAVE_IN_PROGRESS, STANDBY, GAME_OVER;
 	}
 }

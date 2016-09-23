@@ -1,6 +1,8 @@
 package com.eric.mtd;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.eric.mtd.game.GameScreen;
 import com.eric.mtd.levelselect.LevelSelectScreen;
 import com.eric.mtd.menu.MenuScreen;
@@ -21,6 +23,7 @@ public class MTDGame extends Game implements IScreenStateObserver {
 
 	@Override
 	public void create() {
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		userPreferences = new UserPreferences();
 		resources = new Resources(userPreferences);
 		audio = new MTDAudio(userPreferences);

@@ -59,14 +59,22 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 */
 	public void closeInspect() {
 		audio.playSound(MTDSound.SMALL_CLICK);
-		selectedTower.detach(this);
-		view.standByState();
+		resetInspect();
 		uiStateManager.setStateReturn();
-		
-		selectedTower = null;
 
 	}
 
+	/**
+	 * Resets the inspect
+	 */
+	private void resetInspect(){
+		Logger.info("Detaching Inspect from Tower");
+		if(selectedTower != null){
+			selectedTower.detach(this);
+			selectedTower = null;
+		}
+	}
+	
 	/**
 	 * Change the target priority of the tower
 	 */
@@ -203,10 +211,9 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 			view.inspectingState();
 			view.update(selectedTower);
 			break;
-		case STANDBY:
-			view.standByState();
-			break;
 		default:
+			resetInspect();
+			view.standByState();
 			break;
 		}
 
@@ -215,7 +222,6 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	@Override
 	public void changeLevelState(LevelState state) {
 		switch(state){
-		case SPAWNING_ENEMIES:
 		case WAVE_IN_PROGRESS:
 			view.dischargeEnabled(false);
 			break;
@@ -223,6 +229,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 			view.dischargeEnabled(true);
 			break;
 		default:
+			resetInspect();
 			view.standByState();
 			break;
 		}
@@ -231,8 +238,8 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 
 	@Override
 	public void notifty() {
-		if(selectedTower.isDead()
-			|| selectedTower == null){
+		if(selectedTower == null
+			|| selectedTower.isDead()){
 			closeInspect();
 		}
 		else{

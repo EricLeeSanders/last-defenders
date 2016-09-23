@@ -16,26 +16,24 @@ import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.util.Logger;
 
-public class Level implements ILevelStateObserver {
+public class Level{
 	public static final int MAX_WAVES = 1;
 	private float delayCount = 0;
 	private float enemyDelay = 0f;
 	private Map map;
-	private LevelStateManager levelStateManager;
 	private int currentWave = 0;
-	private Queue<SpawningEnemy> enemies;
+	private Queue<SpawningEnemy> spawningEnemyQueue;
 	private int intLevel;
 	private ActorGroups actorGroups;
 	private ActorFactory actorFactory;
 	private DynamicWaveGenerator waveGenerator;
 
-	public Level(int level, LevelStateManager levelStateManager, ActorGroups actorGroups, ActorFactory actorFactory, Map map) {
+	public Level(int level, ActorGroups actorGroups, ActorFactory actorFactory, Map map) {
 		this.intLevel = level;
-		this.levelStateManager = levelStateManager;
-		levelStateManager.attach(this);
 		this.actorGroups = actorGroups;
 		this.actorFactory = actorFactory;
 		this.map = map;
+		loadWave();
 	}
 
 	/**
@@ -45,19 +43,15 @@ public class Level implements ILevelStateObserver {
 	 * @param delta
 	 */
 	public void update(float delta) {
-		if (delayCount >= enemyDelay && (levelStateManager.getState().equals(LevelState.SPAWNING_ENEMIES))) {
-			if (enemies.isEmpty()) {
-				levelStateManager.setState(LevelState.WAVE_IN_PROGRESS);
+		if(spawningEnemyQueue.size() > 0){
+			if (delayCount >= enemyDelay ) {
 				delayCount = 0;
-				enemyDelay = 0;
-			} else {
-				delayCount = 0;
-				SpawningEnemy enemy = enemies.remove();
+				SpawningEnemy enemy = spawningEnemyQueue.remove();
 				actorGroups.getEnemyGroup().addActor(enemy.getEnemy());
 				enemyDelay = enemy.getDelay();
+			} else {
+				delayCount += delta;
 			}
-		} else {
-			delayCount += delta;
 		}
 	}
 
@@ -66,32 +60,33 @@ public class Level implements ILevelStateObserver {
 	 */
 	public void loadWave() {
 		currentWave++;
+		delayCount = 0;
+		enemyDelay = 0;
 		if(currentWave > MAX_WAVES){
 			generateWave();
-			
 		}
 		else {
 			loadWaveFromJSON();
 			//If we are on the last wave, then construct
 			//The DynamicWaveGenerator
 			if(currentWave == MAX_WAVES){
-				waveGenerator = new DynamicWaveGenerator(enemies, map, actorGroups, actorFactory);
+				waveGenerator = new DynamicWaveGenerator(spawningEnemyQueue, map, actorGroups, actorFactory);
 			}
 		}
 	}
 	
 	private void generateWave(){
-		enemies = waveGenerator.generateWave(currentWave);
+		spawningEnemyQueue = waveGenerator.generateWave(currentWave);
 	}
 	private void loadWaveFromJSON(){
 		JsonValue json = new JsonReader().parse(Gdx.files.internal("game/levels/level" + intLevel + "/waves/wave" + currentWave + ".json"));
-		enemies = new LinkedList<SpawningEnemy>();
+		spawningEnemyQueue = new LinkedList<SpawningEnemy>();
 		JsonValue enemiesJson = json.get("wave");
 		for (JsonValue enemyJson : enemiesJson.iterator()) {
 			Enemy enemy = actorFactory.loadEnemy(map.getPath(), enemyJson.getString("enemy"), enemyJson.getBoolean("armor"), actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
 			float delay = enemyJson.getFloat("delay");
 			SpawningEnemy spawningEnemy = new SpawningEnemy(enemy, delay);
-			enemies.add(spawningEnemy);
+			spawningEnemyQueue.add(spawningEnemy);
 			HealthBar healthBar = actorFactory.loadHealthBar();
 			healthBar.setActor(enemy);
 			actorGroups.getHealthBarGroup().addActor(healthBar);
@@ -100,17 +95,5 @@ public class Level implements ILevelStateObserver {
 	}
 	public int getCurrentWave() {
 		return currentWave;
-	}
-	
-	@Override
-	public void changeLevelState(LevelState state) {
-		switch (state) {
-		case SPAWNING_ENEMIES:
-			loadWave();
-			break;
-		default:
-			break;
-		}
-
 	}
 }
