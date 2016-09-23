@@ -68,7 +68,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 */
 	public void startWave() {
 		audio.playSound(MTDSound.SMALL_CLICK);
-		levelStateManager.setState(LevelState.SPAWNING_ENEMIES);
+		levelStateManager.setState(LevelState.WAVE_IN_PROGRESS);
 		uiStateManager.setState(GameUIState.WAVE_IN_PROGRESS);
 
 	}

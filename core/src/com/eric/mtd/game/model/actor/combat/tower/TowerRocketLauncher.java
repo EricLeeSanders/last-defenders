@@ -41,6 +41,7 @@ public class TowerRocketLauncher extends Tower implements IRpg {
 	public TowerRocketLauncher(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, RPGPool rpgPool, MTDAudio audio) {
 		super(actorRegion, pool, BODY, TEXTURE_SIZE, GUN_POS, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.rpgPool = rpgPool;
+		this.audio = audio;
 	}
 	@Override
 	public void attackTarget() {

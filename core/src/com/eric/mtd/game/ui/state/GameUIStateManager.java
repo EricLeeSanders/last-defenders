@@ -24,9 +24,9 @@ public class GameUIStateManager implements ILevelStateObserver {
 	}
 
 	public void notifyObservers() {
-		Logger.info("Notify Observers");
+		Logger.info("Game UI State: Notify Observers");
 		for (IGameUIStateObserver observer : observers) {
-			Logger.info("Notifying: " + observer.getClass().getName());
+			Logger.info("Game UI State Notifying: " + observer.getClass().getName());
 			observer.changeUIState(state);
 		}
 	}
@@ -39,7 +39,6 @@ public class GameUIStateManager implements ILevelStateObserver {
 	private void syncWithLevelState() {
 		switch (levelStateManager.getState()) {
 		case WAVE_IN_PROGRESS:
-		case SPAWNING_ENEMIES:
 			this.setState(GameUIState.WAVE_IN_PROGRESS);
 			break;
 		case STANDBY:

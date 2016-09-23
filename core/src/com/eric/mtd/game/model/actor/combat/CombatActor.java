@@ -69,14 +69,18 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.pool = pool;
 	}
 	public void detach(ICombatActorObserver observer){
+		Logger.info("Combat Actor Detach: " + observer.getClass().getName());
 		observers.remove(observer);
 	}
 	public void attach(ICombatActorObserver observer){
+		Logger.info("Combat Actor Attach: " + observer.getClass().getName());
 		observers.add(observer);
 	}
 	protected void notifyObservers(){
+		Logger.info("Combat Actor: Notify Observers");
 		//Need to create a copy and iterate over the copy in the case that an observer is detached. 
 		for(ICombatActorObserver observer: new ArrayList<ICombatActorObserver>(observers)){
+			Logger.info("Combat Actor Notifying: " + observer.getClass().getName());
 			observer.notifty();
 		}
 	}

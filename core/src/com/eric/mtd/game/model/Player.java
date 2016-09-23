@@ -12,7 +12,7 @@ import java.util.List;
 public class Player {
 	private int money = 2000;
 	private int lives = 20;
-	private int waveCount = 10;
+	private int waveCount = 1;
 	private List<IPlayerObserver> observers = new ArrayList<IPlayerObserver>();
 
 	public void attachObserver(IPlayerObserver observer) {
