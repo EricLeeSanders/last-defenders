@@ -49,7 +49,7 @@ public class GameStage extends Stage {
 		this.resources = resources;
 		createGroups();
 		mtdMap = new Map(intLevel, getCamera(), resources.getMap(intLevel));
-		level = new Level(intLevel, levelStateManager, getActorGroups(),actorFactory, mtdMap);
+		level = new Level(intLevel, getActorGroups(),actorFactory, mtdMap);
 
 	}
 	
@@ -75,8 +75,8 @@ public class GameStage extends Stage {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		level.update(delta);
 		if (levelStateManager.getState().equals(LevelState.WAVE_IN_PROGRESS)) {
+			level.update(delta);
 			isWaveOver();
 		}
 	}
@@ -106,6 +106,7 @@ public class GameStage extends Stage {
 				player.giveMoney((int) (100 * (float) level.getCurrentWave()));
 				levelStateManager.setState(LevelState.STANDBY);
 				player.setWaveCount(player.getWaveCount() + 1);
+				level.loadWave(); //load the next wave
 				healTowers();
 				isLevelCompleted();
 				return true;

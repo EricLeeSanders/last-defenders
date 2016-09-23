@@ -9,6 +9,7 @@ import java.util.Random;
 
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.combat.enemy.*;
+import com.eric.mtd.game.model.actor.health.HealthBar;
 import com.eric.mtd.game.service.actorfactory.ActorFactory;
 import com.eric.mtd.util.Logger;
 
@@ -123,7 +124,11 @@ public class DynamicWaveGenerator {
 		for(int i = 0; i < n; i++){
 			randArmor = random.nextInt(3); //0-2
 			armor = (randArmor == 0) ? true : false;
-			enemies.add(actorFactory.loadEnemy(map.getPath(), type, armor, actorGroups.getTowerGroup(), actorGroups.getProjectileGroup()));
+			Enemy enemy = actorFactory.loadEnemy(map.getPath(), type, armor, actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
+			HealthBar healthBar = actorFactory.loadHealthBar();
+			healthBar.setActor(enemy);
+			actorGroups.getHealthBarGroup().addActor(healthBar);
+			enemies.add(enemy);
 		}
 		return enemies;
 	}
