@@ -71,6 +71,9 @@ public class Resources {
 	}
 	public void dispose() {
 		Logger.info("Resources dispose");
+		//Need to reset Pixmap blending otherwise blending
+		//for fonts on restart are screwed up
+		Pixmap.setBlending(Blending.SourceOver);
 		manager.dispose();
 		shapeRenderer.dispose();
 
@@ -92,7 +95,8 @@ public class Resources {
 		return map;
 	}
 	private void loadFonts(){
-
+		Blending prevBlend = Pixmap.getBlending();
+		Pixmap.setBlending(Blending.SourceOver);
 		FileHandleResolver resolver = new InternalFileHandleResolver();
 		manager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
 		manager.setLoader(BitmapFont.class, new FreetypeFontLoader(resolver));
@@ -107,6 +111,7 @@ public class Resources {
 		fonts.put("default-font-16", getFont("default-font-16"));
 		fonts.put("default-font-22", getFont("default-font-22"));
 		fonts.put("default-font-46", getFont("default-font-46"));
+		Pixmap.setBlending(prevBlend);
 	}
 	
 	private FreeTypeFontLoaderParameter createFontParam(String fontFileName, int size, Color borderColor, float borderWidth, TextureFilter minFilter, TextureFilter magFilter){
