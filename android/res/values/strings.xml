@@ -2,4 +2,5 @@
 <resources>
 
     <string name="app_name">MilitaryTowerDefense</string>
+    <string name="toast_crash">Sorry, something went wrong. We\'re working on it.</string>
 </resources>
