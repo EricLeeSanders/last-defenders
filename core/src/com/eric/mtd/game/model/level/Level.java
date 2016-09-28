@@ -83,7 +83,7 @@ public class Level{
 		spawningEnemyQueue = new LinkedList<SpawningEnemy>();
 		JsonValue enemiesJson = json.get("wave");
 		for (JsonValue enemyJson : enemiesJson.iterator()) {
-			Enemy enemy = actorFactory.loadEnemy(map.getPath(), enemyJson.getString("enemy"), enemyJson.getBoolean("armor"), actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
+			Enemy enemy = actorFactory.loadEnemy(map.getPath(), "Enemy" + enemyJson.getString("enemy"), enemyJson.getBoolean("armor"), actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
 			float delay = enemyJson.getFloat("delay");
 			SpawningEnemy spawningEnemy = new SpawningEnemy(enemy, delay);
 			spawningEnemyQueue.add(spawningEnemy);
@@ -93,6 +93,11 @@ public class Level{
 
 		}
 	}
+	
+	public int getSpawningEnemiesCount(){
+		return spawningEnemyQueue.size();
+	}
+	
 	public int getCurrentWave() {
 		return currentWave;
 	}
