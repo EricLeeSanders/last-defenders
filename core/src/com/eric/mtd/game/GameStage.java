@@ -100,8 +100,10 @@ public class GameStage extends Stage {
 	 */
 	public boolean isWaveOver() {
 		if (getActorGroups().getEnemyGroup().getChildren().size <= 0
-			&& getActorGroups().getProjectileGroup().getChildren().size <= 0) {
-			if (!(levelStateManager.getState().equals(LevelState.GAME_OVER))) {
+			&& level.getSpawningEnemiesCount() <= 0
+			&& getActorGroups().getProjectileGroup().getChildren().size <= 0
+			&& !(levelStateManager.getState().equals(LevelState.GAME_OVER))) {
+			
 				Logger.info("Wave over");
 				player.giveMoney((int) (100 * (float) level.getCurrentWave()));
 				levelStateManager.setState(LevelState.STANDBY);
@@ -110,7 +112,6 @@ public class GameStage extends Stage {
 				healTowers();
 				isLevelCompleted();
 				return true;
-			}
 		}
 		return false;
 

@@ -71,10 +71,10 @@ public class Damage {
 			Actor actor = targetGroup.get(i);
 			aoeTarget = (ITargetable) actor;
 			distance = damage = damagePercent = 0;
-			Logger.debug("AOE Actor distance: " + distance + " aoe radius: " + aoeRadius.radius);
 			if (aoeTarget.isDead() == false) {
 				if (aoeTarget.equals(target) == false) {
 					distance = position.dst( aoeTarget.getPositionCenter());
+					Logger.debug("AOE Actor distance: " + distance + " aoe radius: " + aoeRadius.radius);
 					if (CollisionDetection.polygonAndCircle( aoeTarget.getBody(), aoeRadius)) {
 						damagePercent = (1000 / distance);
 						if (damagePercent > 100) {
