@@ -126,21 +126,21 @@ public class ActorFactory {
 	 */
 	public Enemy loadEnemy(Queue<Vector2> path, String type, boolean armor, Group towerGroup, Group projectileGroup) {
 		Enemy enemy = null;
-		if (type.equals("Rifle")) {
+		if (type.equals("EnemyRifle")) {
 			enemy = (Enemy) enemyRiflePool.obtain();
-		} else if (type.equals("Tank")) {
+		} else if (type.equals("EnemyTank")) {
 			enemy = (Enemy) enemyTankPool.obtain();
-		} else if (type.equals("FlameThrower")) {
+		} else if (type.equals("EnemyFlameThrower")) {
 			enemy = (Enemy) enemyFlameThrowerPool.obtain();
-		} else if (type.equals("MachineGun")) {
+		} else if (type.equals("EnemyMachineGun")) {
 			enemy = (Enemy) enemyMachinePool.obtain();
-		} else if (type.equals("RocketLauncher")) {
+		} else if (type.equals("EnemyRocketLauncher")) {
 			enemy = (Enemy) enemyRocketLauncherPool.obtain();
-		} else if (type.equals("Sniper")) {
+		} else if (type.equals("EnemySniper")) {
 			enemy = (Enemy) enemySniperPool.obtain();
-		} else if (type.equals("Sprinter")) {
+		} else if (type.equals("EnemySprinter")) {
 			enemy = (Enemy) enemySprinterPool.obtain();
-		} else if (type.equals("Humvee")) {
+		} else if (type.equals("EnemyHumvee")) {
 			enemy = (Enemy) enemyHumveePool.obtain();
 		}
 
