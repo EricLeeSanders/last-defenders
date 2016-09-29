@@ -132,13 +132,14 @@ public abstract class Enemy extends CombatActor {
 				attackCounter = 100; //Ready to attack
 				findTargetDelay = random.nextFloat()*2 + 1;
 			} else if( attackCounter >= this.getAttackSpeed()) {
-				if(this.getTarget() == null){
+				if(this.getTarget() == null || this.getTarget().isDead()){
 					attacking = false;
+					setRotation(calculateRotation((actionList.get(actionIndex - 1)).getX() + (this.getOriginX()), (actionList.get(actionIndex - 1)).getY() + (this.getOriginY())));
 				} else {
 					this.setRotation(calculateRotation(super.getTarget().getPositionCenter()));
 					this.attackTarget();
-					attackCounter = 0;
 				}
+				attackCounter = 0;
 				
 			}
 		} else {
