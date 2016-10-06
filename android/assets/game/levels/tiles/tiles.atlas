@@ -2,7 +2,7 @@
 tiles.png
 size: 512,512
 format: RGBA8888
-filter: Nearest,Nearest
+filter: MipMapLinearNearest,Nearest
 repeat: none
 Bridge-0-0
   rotate: false
