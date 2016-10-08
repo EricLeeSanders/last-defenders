@@ -48,7 +48,7 @@
  </layer>
  <objectgroup name="Path">
   <object id="118" name="PathLine" x="432" y="735">
-   <polyline points="0,0 1,-209 -257,-209 -257,-400 -1,-400 0,-657 514,-657 514,-431 192,-431 192,-268 514,-268 514,-108 191,-108 191,-1"/>
+   <polyline points="0,0 0,-209 -257,-209 -257,-400 -1,-400 0,-657 514,-657 514,-431 192,-431 192,-268 514,-268 514,-108 191,-108 191,-1"/>
   </object>
  </objectgroup>
  <objectgroup name="Boundary" visible="0">
