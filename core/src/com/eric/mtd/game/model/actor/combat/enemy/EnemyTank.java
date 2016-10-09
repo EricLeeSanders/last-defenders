@@ -7,14 +7,18 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.deatheffect.DeathEffectType;
 import com.eric.mtd.game.model.actor.health.interfaces.IPlatedArmor;
 import com.eric.mtd.game.model.actor.interfaces.IRpg;
 import com.eric.mtd.game.model.actor.interfaces.IVehicle;
 import com.eric.mtd.game.model.actor.projectile.RPG;
-import com.eric.mtd.game.service.actorfactory.ActorFactory;
-import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
-import com.eric.mtd.game.service.actorfactory.ActorFactory.RPGPool;
+import com.eric.mtd.game.service.factory.ActorFactory;
+import com.eric.mtd.game.service.factory.ActorFactory.CombatActorPool;
+import com.eric.mtd.game.service.factory.ActorFactory.RPGPool;
+import com.eric.mtd.game.service.factory.interfaces.IDeathEffectFactory;
+import com.eric.mtd.game.service.factory.interfaces.IProjectileFactory;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -42,12 +46,14 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	private Polygon bodyPoly = new Polygon(BODY);
 	private TextureRegion tankBodyRegion;
 	private ShapeRenderer body = Resources.getShapeRenderer();
-	private float bodyRotation; //
-	private RPGPool rpgPool;
-	public EnemyTank(TextureRegion tankRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, RPGPool rpgPool) {
-		super(turretRegion, pool, BODY, TEXTURE_TURRET_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
+	private float bodyRotation; 
+	private IDeathEffectFactory deathEffectFactory;
+	private IProjectileFactory projectileFactory;
+	public EnemyTank(TextureRegion tankRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory) {
+		super(turretRegion, pool, targetGroup, BODY, TEXTURE_TURRET_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
 		this.tankBodyRegion = tankRegion;
-		this.rpgPool = rpgPool;
+		this.deathEffectFactory = deathEffectFactory;
+		this.projectileFactory = projectileFactory;
 	}
 
 	/**
@@ -97,8 +103,14 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	@Override
 	public void attackTarget() {
 		if(getTarget() != null){
-			getProjectileGroup().addActor(rpgPool.obtain().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS));
+			projectileFactory.loadRPG().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS);
 		}
+	}
+
+	@Override
+	protected void deathAnimation() {
+		deathEffectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());;
+		
 	}
 
 }
