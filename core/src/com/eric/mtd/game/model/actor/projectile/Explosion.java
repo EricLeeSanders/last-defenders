@@ -74,8 +74,6 @@ public class Explosion extends Actor implements Pool.Poolable {
 	 */
 	@Override
 	public void draw(Batch batch, float alpha) {
-		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glEnable(GL20.GL_BLEND);
 		TextureRegion currentExplosion = explosionAnimation.getKeyFrame(stateTime, true);
 		
 		if (explosionAnimation.isAnimationFinished(stateTime)) {
