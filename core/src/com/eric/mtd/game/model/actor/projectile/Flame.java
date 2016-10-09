@@ -24,7 +24,7 @@ import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.model.actor.interfaces.IFlame;
 import com.eric.mtd.game.model.actor.interfaces.ITargetable;
-import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.factory.ActorFactory;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;

@@ -8,7 +8,7 @@ import com.eric.mtd.game.model.Player;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.support.Apache;
 import com.eric.mtd.game.model.actor.support.SupportActor;
-import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.factory.ActorFactory;
 import com.eric.mtd.util.Logger;
 
 public class SupportActorPlacement {
@@ -21,7 +21,8 @@ public class SupportActorPlacement {
 	}
 
 	public void createSupportActor(String type) {
-		currentSupportActor = actorFactory.loadSupportActor(new Vector2(0, 0), type, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
+		currentSupportActor = actorFactory.loadSupportActor(type);
+		currentSupportActor.setPosition(0, 0);
 		if(type.equals("LandMine")){
 			actorGroups.getLandmineGroup().addActor(currentSupportActor);
 		} else {

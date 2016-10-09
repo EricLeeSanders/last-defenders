@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.model.actor.projectile.Bullet;
-import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.factory.ActorFactory;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;

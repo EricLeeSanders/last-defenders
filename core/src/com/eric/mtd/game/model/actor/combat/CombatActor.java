@@ -21,10 +21,13 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.eric.mtd.game.model.actor.GameActor;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
+import com.eric.mtd.game.model.actor.deatheffect.DeathEffect;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.model.actor.interfaces.ICollision;
 import com.eric.mtd.game.model.actor.interfaces.ITargetable;
 import com.eric.mtd.game.model.actor.interfaces.IVehicle;
+import com.eric.mtd.game.service.factory.interfaces.IDeathEffectFactory;
+import com.eric.mtd.game.service.factory.interfaces.IProjectileFactory;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
@@ -50,8 +53,9 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private boolean hasArmor, dead;
 	private Pool<CombatActor> pool;
 	private List<ICombatActorObserver> observers = new ArrayList<ICombatActorObserver>();
-	private Group projectileGroup, targetGroup;
-	public CombatActor(TextureRegion textureRegion,Pool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range) {
+	private Group targetGroup;
+	public CombatActor(TextureRegion textureRegion,Pool<CombatActor> pool, Group targetGroup, float[] bodyPoints, Dimension textureSize, Vector2 gunPos,
+						float health, float armor, float attack, float attackSpeed, float range) {
 		super(textureRegion, textureSize);
 		this.MAX_HEALTH = health;
 		this.MAX_ARMOR = armor;
@@ -67,6 +71,8 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.gunPos = gunPos;
 		this.range = range;
 		this.pool = pool;
+		this.targetGroup = targetGroup;
+		
 	}
 	public void detach(ICombatActorObserver observer){
 		Logger.info("Combat Actor Detach: " + observer.getClass().getName());
@@ -173,7 +179,9 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.range = range;
 	}
 
-	public abstract void attackTarget();
+	protected abstract void attackTarget();
+	
+	protected abstract void deathAnimation();
 	
 	@Override
 	public Polygon getBody() {
@@ -189,6 +197,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public void setDead(boolean dead) {
 		this.dead = dead;
 		if (isDead()) {
+			deathAnimation();
 			pool.free(this);
 		}
 		notifyObservers();
@@ -233,12 +242,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public void setHasArmor(boolean hasArmor) {
 		this.hasArmor = hasArmor;
 	}
-	public void setProjectileGroup(Group projectileGroup){
-		this.projectileGroup = projectileGroup;
-	}
-	public Group getProjectileGroup(){
-		return projectileGroup;
-	}
+	
 	public ITargetable getTarget() {
 		return target;
 	}
@@ -246,11 +250,9 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public void freeActor(){
 		pool.free(this);
 	}
-	public Group getTargetGroup() {
+	
+	public Group getTargetGroup(){
 		return targetGroup;
-	}
-	public void setTargetGroup(Group targetGroup) {
-		this.targetGroup = targetGroup;
 	}
 	
 	
