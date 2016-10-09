@@ -14,7 +14,7 @@ import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
-import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.factory.ActorFactory;
 import com.eric.mtd.game.ui.presenter.EnlistPresenter;
 import com.eric.mtd.game.ui.presenter.GameOverPresenter;
 import com.eric.mtd.game.ui.presenter.HUDPresenter;

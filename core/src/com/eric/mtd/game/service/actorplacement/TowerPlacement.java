@@ -15,7 +15,7 @@ import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.health.HealthBar;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.model.level.Map;
-import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.factory.ActorFactory;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -48,11 +48,11 @@ public class TowerPlacement {
 	/**
 	 * Create a tower
 	 * 
-	 * @param type
-	 *            - Type of tower
+	 * @param type - Type of tower
 	 */
 	public void createTower(String type) {
-		currentTower = actorFactory.loadTower(new Vector2(0, 0), type, actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
+		currentTower = actorFactory.loadTower(type);
+		currentTower.setPosition(0, 0);
 		actorGroups.getTowerGroup().addActor(currentTower);
 		currentTower.setVisible(false);
 	}
@@ -60,8 +60,7 @@ public class TowerPlacement {
 	/**
 	 * Move the tower that is still being placed (not an active tower)
 	 * 
-	 * @param clickCoords
-	 *            - Where to move the tower to
+	 * @param clickCoords - Where to move the tower to
 	 */
 	public void moveTower(Vector2 clickCoords) {
 		if (currentTower != null) {
@@ -80,8 +79,7 @@ public class TowerPlacement {
 	/**
 	 * Rotates the tower
 	 * 
-	 * @param rotation
-	 *            - amount to rotate
+	 * @param rotation - amount to rotate
 	 */
 	public void rotateTower(float rotation) {
 		if (currentTower != null) {
@@ -107,7 +105,6 @@ public class TowerPlacement {
 				currentTower.setDead(false);
 				HealthBar healthBar = actorFactory.loadHealthBar();
 				healthBar.setActor(currentTower);
-				actorGroups.getHealthBarGroup().addActor(healthBar);
 				currentTower = null;
 				return true;
 			}
