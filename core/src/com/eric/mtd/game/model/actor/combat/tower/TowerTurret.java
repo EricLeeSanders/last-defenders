@@ -14,12 +14,16 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.eric.mtd.game.model.actor.projectile.Bullet;
+import com.eric.mtd.game.service.factory.ActorFactory;
+import com.eric.mtd.game.service.factory.ActorFactory.BulletPool;
+import com.eric.mtd.game.service.factory.ActorFactory.CombatActorPool;
+import com.eric.mtd.game.service.factory.interfaces.IDeathEffectFactory;
+import com.eric.mtd.game.service.factory.interfaces.IProjectileFactory;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.deatheffect.DeathEffectType;
 import com.eric.mtd.game.model.actor.interfaces.IRotatable;
-import com.eric.mtd.game.service.actorfactory.ActorFactory;
-import com.eric.mtd.game.service.actorfactory.ActorFactory.BulletPool;
-import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -62,14 +66,16 @@ public class TowerTurret extends Tower implements IRotatable {
 	private float bodyRotation;
 	private Polygon bodyPoly = new Polygon(BODY);
 	private Polygon rangePoly = new Polygon(rangeCoords);
-	private BulletPool bulletPool;
 	private MTDAudio audio;
-	public TowerTurret(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, BulletPool bulletPool, MTDAudio audio) {
-		super(turretRegion, pool, BODY, TEXTURE_TURRET_SIZE, GUN_POS, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
+	private IDeathEffectFactory deathEffectFactory;
+	private IProjectileFactory projectileFactory;
+	public TowerTurret(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, MTDAudio audio) {
+		super(turretRegion, pool, targetGroup, BODY, TEXTURE_TURRET_SIZE, GUN_POS, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.bodyRegion = bodyRegion;
 		this.turretRegion = turretRegion;
-		this.bulletPool = bulletPool;
 		this.audio = audio;
+		this.deathEffectFactory = deathEffectFactory;
+		this.projectileFactory = projectileFactory;
 	}
 
 	/**
@@ -162,7 +168,7 @@ public class TowerTurret extends Tower implements IRotatable {
 	public void attackTarget() {
 		if(getTarget() != null){
 			audio.playProjectileSound(ProjectileSound.MACHINE_GUN);
-			getProjectileGroup().addActor(bulletPool.obtain().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
+			projectileFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
 		}
 
 	}
@@ -179,6 +185,12 @@ public class TowerTurret extends Tower implements IRotatable {
 	@Override
 	public String getName(){
 		return "Turret";
+	}
+
+	@Override
+	protected void deathAnimation() {
+		deathEffectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());;
+		
 	}
 
 }

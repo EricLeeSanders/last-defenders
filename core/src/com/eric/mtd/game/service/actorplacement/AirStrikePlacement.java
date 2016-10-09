@@ -10,7 +10,7 @@ import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.support.AirStrike;
 import com.eric.mtd.game.model.actor.support.AirStrikeLocation;
 import com.eric.mtd.game.model.actor.support.SupportActor;
-import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.factory.ActorFactory;
 import com.eric.mtd.util.Logger;
 
 public class AirStrikePlacement {
@@ -22,7 +22,8 @@ public class AirStrikePlacement {
 		this.actorFactory = actorFactory;
 	}
 	public void createAirStrike() {
-		currentAirStrike = (AirStrike)actorFactory.loadSupportActor(new Vector2(0, 0), "AirStrike", actorGroups.getEnemyGroup(), actorGroups.getProjectileGroup());
+		currentAirStrike = (AirStrike)actorFactory.loadSupportActor("AirStrike");
+		currentAirStrike.setPosition(0, 0);
 		actorGroups.getSupportGroup().addActor(currentAirStrike);
 		currentAirStrike.setActive(false);
 		currentAirStrike.setVisible(false);

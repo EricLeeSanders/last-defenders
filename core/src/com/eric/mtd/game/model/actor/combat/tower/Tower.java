@@ -18,7 +18,7 @@ import com.eric.mtd.game.model.actor.ai.TowerSupportAI;
 import com.eric.mtd.game.model.actor.ai.TowerTargetPriority;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.ICombatActorObserver;
-import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
+import com.eric.mtd.game.service.factory.ActorFactory.CombatActorPool;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 
@@ -41,8 +41,9 @@ public abstract class Tower extends CombatActor {
 	private int kills;
 	private Sprite rangeSprite;
 	private Pool<CombatActor> pool;
-	public Tower(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float health, float armor, float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost, int rangeIncreaseCost, int attackIncreaseCost) {
-		super(textureRegion, pool, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
+	public Tower(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, Group targetGroup, float[] bodyPoints, Dimension textureSize, Vector2 gunPos,
+					float health, float armor, float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost, int rangeIncreaseCost, int attackIncreaseCost) {
+		super(textureRegion, pool, targetGroup, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.cost = cost;
 		this.armorCost = armorCost;
 		this.speedIncreaseCost = speedIncreaseCost;
