@@ -16,7 +16,9 @@ import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.actor.ai.EnemyAI;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.interfaces.IPassiveEnemy;
-import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
+import com.eric.mtd.game.service.factory.ActorFactory.CombatActorPool;
+import com.eric.mtd.game.service.factory.interfaces.IDeathEffectFactory;
+import com.eric.mtd.game.service.factory.interfaces.IProjectileFactory;
 import com.eric.mtd.game.GameStage;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
@@ -45,26 +47,25 @@ public abstract class Enemy extends CombatActor {
 	private boolean multipleTextures, attacking;
 	private TextureRegion[] textureRegions;
 	private float movementDelayCounter;
-	private float totalDistance; // Total distance from end
-									// Used to calculate in LengthTillEndMethod
-									// Class variable for optimization
 
-	public Enemy(TextureRegion[] textureRegions, CombatActorPool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float speed, float health, float armor, float attack, float attackSpeed, float range) {
-		super(textureRegions[0], pool, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
+	public Enemy(TextureRegion[] textureRegions, CombatActorPool<CombatActor> pool, Group targetGroup, float[] bodyPoints, Dimension textureSize, Vector2 gunPos,
+					float speed, float health, float armor, float attack, float attackSpeed, float range) {
+		super(textureRegions[0], pool, targetGroup, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.textureRegions = textureRegions;
 		this.speed = speed;
 		multipleTextures = true;
 		this.pool = pool;
 	}
 
-	public Enemy(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, float[] bodyPoints, Dimension textureSize, Vector2 gunPos, float speed, float health, float armor, float attack, float attackSpeed, float range) {
-		super(textureRegion, pool, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
+	public Enemy(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, Group targetGroup, float[] bodyPoints, Dimension textureSize, Vector2 gunPos,
+					float speed, float health, float armor, float attack, float attackSpeed, float range) {
+		super(textureRegion, pool, targetGroup, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.speed = speed;
 		multipleTextures = false;
 		this.pool = pool;
 	}
 	/**
-	 * Sets the path for the enemy. Starts of screen.
+	 * Sets the path for the enemy. Starts off screen.
 	 * 
 	 * @param path
 	 */
@@ -77,14 +78,13 @@ public abstract class Enemy extends CombatActor {
 		float newX = this.getPositionCenter().x + (this.getPositionCenter().x - rotatedCoords.x);
 		float newY = this.getPositionCenter().y + (this.getPositionCenter().y - rotatedCoords.y);
 		this.setPositionCenter(newX, newY); // Start off screen
-		float moveDistance;
 		Vector2 moveVector = new Vector2();
 		Vector2 prevWaypoint = new Vector2();
 		while (!path.isEmpty()) {
 			prevWaypoint = newWaypoint;
 			newWaypoint = (path.remove());
 			moveVector.set((newWaypoint.x - (this.getOriginX())), (newWaypoint.y - (this.getOriginY())));
-			moveDistance = (newWaypoint.dst(prevWaypoint) / speed);
+			float moveDistance = (newWaypoint.dst(prevWaypoint) / speed);
 			actionList.add(Actions.moveTo(moveVector.x, moveVector.y, moveDistance, Interpolation.linear));
 		}
 	}
@@ -202,7 +202,6 @@ public abstract class Enemy extends CombatActor {
 		textureIndex = 0;
 		textureCounter = 0;
 		findTargetCounter = 0;
-		totalDistance = 0;
 		actionIndex = 0;
 		actionList.clear();
 		findTargetDelay = 2f;
@@ -215,7 +214,7 @@ public abstract class Enemy extends CombatActor {
 	 * @return boolean - Total Distance till the end
 	 */
 	public float lengthTillEnd() {
-		totalDistance = 0;
+		float totalDistance = 0;
 		if (actionIndex > 0) {
 			totalDistance = Vector2.dst(this.getX(), this.getY(), actionList.get(actionIndex - 1).getX(), actionList.get(actionIndex - 1).getY());
 			for (int i = actionIndex - 1; i < actionList.size() - 1; i++) {

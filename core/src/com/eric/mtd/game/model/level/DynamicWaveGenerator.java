@@ -10,10 +10,11 @@ import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Random;
 
+import com.badlogic.gdx.math.Vector2;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.combat.enemy.*;
 import com.eric.mtd.game.model.actor.health.HealthBar;
-import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.factory.ActorFactory;
 import com.eric.mtd.util.Logger;
 
 public class DynamicWaveGenerator {
@@ -34,7 +35,7 @@ public class DynamicWaveGenerator {
 	/**
 	 * Generate a wave.
 	 * Every wave generate 3 more rifles, or 3 more machine guns, or 2 more snipers.
-	 * Every 3 waves generate 2 sprinters or a humvee.
+	 * Every 3 waves generate a humvee.
 	 * Every 4 waves generate a rocket launcher or a FlameThrower & sniper.
 	 * Every 6 waves, generate a Tank.
 	 * 
@@ -43,14 +44,8 @@ public class DynamicWaveGenerator {
 	public Queue<SpawningEnemy> generateWave(int currentWave){
 		int currentGeneratedWave = currentWave - Level.MAX_WAVES;
 		if((currentGeneratedWave % 3) == 0) {
-			int rnd = random.nextInt(2); // 0 or 1
-			//0 - 2 sprinters
-			//1 - 1 humvee
-			if(rnd == 0){
-				incrementTowerMapCount(EnemySprinter.class, 2);
-			} else {
-				incrementTowerMapCount(EnemyHumvee.class, 1);
-			}
+			//Add humvee
+			incrementTowerMapCount(EnemyHumvee.class, 1);
 		}
 		
 		if((currentGeneratedWave % 4) == 0 ){
@@ -105,16 +100,16 @@ public class DynamicWaveGenerator {
 	}
 	private List<Enemy> createEnemiesByType(int n, Class<? extends Enemy> enemyClass) {
 		List<Enemy> enemies = new ArrayList<Enemy>();
-		int randArmor;
-		boolean armor;
+		Queue<Vector2> enemyPath = map.getPath();
 		for(int i = 0; i < n; i++){
 			String type = enemyClass.getSimpleName();
-			randArmor = random.nextInt(3); //0-2
-			armor = (randArmor == 0) ? true : false;
-			Enemy enemy = actorFactory.loadEnemy(map.getPath(), type, armor, actorGroups.getTowerGroup(), actorGroups.getProjectileGroup());
+			int randArmor = random.nextInt(3); //0-2
+			boolean armor = (randArmor == 0) ? true : false;
+			Enemy enemy = actorFactory.loadEnemy(type);
+			enemy.setPath(new LinkedList<Vector2>(enemyPath));
+			enemy.setHasArmor(armor);
 			HealthBar healthBar = actorFactory.loadHealthBar();
 			healthBar.setActor(enemy);
-			actorGroups.getHealthBarGroup().addActor(healthBar);
 			enemies.add(enemy);
 		}
 		return enemies;

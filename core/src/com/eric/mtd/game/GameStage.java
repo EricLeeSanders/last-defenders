@@ -16,7 +16,7 @@ import com.eric.mtd.game.model.level.Level;
 import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
-import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.factory.ActorFactory;
 import com.eric.mtd.game.ui.state.GameUIStateManager;
 import com.eric.mtd.game.ui.state.GameUIStateManager.GameUIState;
 import com.eric.mtd.util.Logger;
@@ -61,11 +61,13 @@ public class GameStage extends Stage {
 	 * Create the actor groups
 	 */
 	public void createGroups() {
+		//Order matters
+		this.addActor(getActorGroups().getDeathEffectGroup());
 		this.addActor(getActorGroups().getLandmineGroup());
 		this.addActor(getActorGroups().getEnemyGroup());
 		this.addActor(getActorGroups().getTowerGroup());
-		this.addActor(getActorGroups().getHealthBarGroup());
 		this.addActor(getActorGroups().getProjectileGroup());
+		this.addActor(getActorGroups().getHealthBarGroup());
 		this.addActor(getActorGroups().getSupportGroup());
 	}
 

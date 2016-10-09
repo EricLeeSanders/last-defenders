@@ -865,9 +865,44 @@ tree_large
   orig: 32, 32
   offset: 0, 0
   index: 4
-tree_small
+tree_palm_large
   rotate: false
   xy: 69, 273
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 1
+tree_palm_large
+  rotate: false
+  xy: 103, 273
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 2
+tree_palm_large
+  rotate: false
+  xy: 137, 273
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 3
+tree_palm_large
+  rotate: false
+  xy: 171, 273
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: 4
+tree_palm_small
+  rotate: false
+  xy: 205, 273
+  size: 32, 28
+  orig: 32, 28
+  offset: 0, 0
+  index: -1
+tree_small
+  rotate: false
+  xy: 239, 273
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
