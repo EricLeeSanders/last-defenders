@@ -87,7 +87,6 @@ public abstract class Enemy extends CombatActor {
 			float moveDistance = (newWaypoint.dst(prevWaypoint) / speed);
 			actionList.add(Actions.moveTo(moveVector.x, moveVector.y, moveDistance, Interpolation.linear));
 		}
-		System.out.println(actionList);
 	}
 
 	/**
@@ -122,7 +121,6 @@ public abstract class Enemy extends CombatActor {
 		// animation has finished, then reset its rotation to the way point
 		// it was heading to before it began attacking
 		if (attacking) {
-			System.out.println(getTarget().getPositionCenter());
 			movementDelayCounter += delta;
 			attackCounter += delta;
 			if (movementDelayCounter >= MOVEMENT_DELAY ) {
@@ -198,7 +196,6 @@ public abstract class Enemy extends CombatActor {
 	 */
 	@Override
 	public void reset() {
-		System.out.println("resetting");
 		super.reset();
 		this.setRotation(0);
 		attacking = false;

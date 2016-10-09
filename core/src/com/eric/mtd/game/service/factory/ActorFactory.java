@@ -143,6 +143,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		} else if (type.equals("EnemyHumvee")) {
 			enemy = (Enemy) enemyHumveePool.obtain();
 		}
+		enemy.setDead(false);
 		return enemy;
 	}
 	
@@ -395,7 +396,8 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	 * @return Flame
 	 */
 	protected Flame createFlameActor() {
-		Flame flame = new Flame(flamePool, actorAtlas);
+		Array<AtlasRegion> atlasRegions = actorAtlas.findRegions("flame");
+		Flame flame = new Flame(flamePool, atlasRegions);
 		return flame;
 
 	}
@@ -412,7 +414,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 			Array<AtlasRegion> atlasRegions = actorAtlas.findRegions("blood-splatter");
 			return new BloodSplatter(bloodPool, atlasRegions);
 		} else if(type.equals(VehicleExplosion.class)){
-			Array<AtlasRegion> atlasRegions = actorAtlas.findRegions("smoke_ring_");
+			Array<AtlasRegion> atlasRegions = actorAtlas.findRegions("smoke-ring");
 			return new VehicleExplosion(vehicleExplosionPool, atlasRegions);	
 		} else {
 			throw new NullPointerException("Actor factory couldn't create: " + type.getSimpleName());

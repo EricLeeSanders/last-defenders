@@ -23,7 +23,7 @@ public abstract class DeathEffect extends GameActor implements Pool.Poolable {
 		super(regions.get(0),size);
 		this.pool = pool;
 		this.size = size;
-		animation = new Animation(0.15f, regions);
+		animation = new Animation(0.05f, regions);
 		animation.setPlayMode(PlayMode.NORMAL);
 	}
 	public Actor initialize(Vector2 pos){
@@ -42,8 +42,6 @@ public abstract class DeathEffect extends GameActor implements Pool.Poolable {
 	 */
 	@Override
 	public void draw(Batch batch, float alpha) {
-		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glEnable(GL20.GL_BLEND);
 		TextureRegion currentFrame = animation.getKeyFrame(stateTime, false);
 		batch.draw(currentFrame, this.getX(), this.getY(), size.getWidth(), size.getHeight());
 		if (animation.isAnimationFinished(stateTime)) {

@@ -9,6 +9,6 @@ import com.eric.mtd.util.Dimension;
 
 public class VehicleExplosion extends DeathEffect{
 	public VehicleExplosion(Pool<DeathEffect> pool, Array<AtlasRegion> atlasRegions){
-		super(pool, atlasRegions, new Dimension(48,48));
+		super(pool, atlasRegions, new Dimension(128,128));
 	}
 }
