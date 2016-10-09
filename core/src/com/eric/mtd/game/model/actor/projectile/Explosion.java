@@ -9,8 +9,10 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.GameStage;
@@ -19,7 +21,7 @@ import com.eric.mtd.game.model.actor.combat.CombatActor;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
 import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.model.actor.interfaces.ITargetable;
-import com.eric.mtd.game.service.actorfactory.ActorFactory;
+import com.eric.mtd.game.service.factory.ActorFactory;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.MTDAudio.ProjectileSound;
 import com.eric.mtd.util.Logger;
@@ -34,24 +36,18 @@ import com.eric.mtd.util.Resources;
  */
 public class Explosion extends Actor implements Pool.Poolable {
 	private Animation explosionAnimation;
-	private TextureRegion currentExplosion; // current explosion from the
-											// animation to draw
 	private float stateTime; // counter for animation
-	private TextureRegion[] explosionRegions = new TextureRegion[16];
-	private ITargetable target;
-	private IAttacker attacker;
 	private Pool<Explosion> pool;
 	private MTDAudio audio;
 	/**
 	 * Constructs an Explosion.
 	 */
-	public Explosion(Pool<Explosion> pool, TextureAtlas actorAtlas, MTDAudio audio) {
+	public Explosion(Pool<Explosion> pool, Array<AtlasRegion> regions, MTDAudio audio) {
 		this.pool = pool;
 		this.audio = audio;
-		for (int i = 0; i < 16; i++) {
-			explosionRegions[i] = actorAtlas.findRegion("Explosion" + (i + 1));
-		}
-
+	
+		explosionAnimation = new Animation(0.05f, regions);
+		explosionAnimation.setPlayMode(PlayMode.LOOP);
 	}
 
 	/**
@@ -59,14 +55,9 @@ public class Explosion extends Actor implements Pool.Poolable {
 	 */
 	public Actor initialize(IAttacker attacker, float radius, ITargetable target, Group targetGroup, Vector2 position) {
 		audio.playProjectileSound(ProjectileSound.RPG_EXPLOSION);
-		this.attacker = attacker;
-		this.target = target;
 		if (targetGroup.getStage() instanceof GameStage) {
 			((GameStage) targetGroup.getStage()).getActorGroups().getProjectileGroup().addActor(this);
 		}
-		stateTime = 0;
-		explosionAnimation = new Animation(0.05f, explosionRegions);
-		explosionAnimation.setPlayMode(PlayMode.NORMAL);
 		this.setPosition(position.x, position.y);
 		Damage.dealExplosionDamage(attacker, radius, position, target, targetGroup.getChildren());
 		return this;
@@ -83,21 +74,20 @@ public class Explosion extends Actor implements Pool.Poolable {
 	 */
 	@Override
 	public void draw(Batch batch, float alpha) {
-		Gdx.gl.glClearColor(0, 0, 0, 0);
-		Gdx.gl.glEnable(GL20.GL_BLEND);
-		currentExplosion = explosionAnimation.getKeyFrame(stateTime, false);
-
-		batch.draw(currentExplosion, this.getX() - (currentExplosion.getRegionWidth() / 2), this.getY() - (currentExplosion.getRegionHeight() / 2));
+		TextureRegion currentExplosion = explosionAnimation.getKeyFrame(stateTime, true);
+		
 		if (explosionAnimation.isAnimationFinished(stateTime)) {
 			pool.free(this);
 		}
+		
+		batch.draw(currentExplosion, this.getX() - (currentExplosion.getRegionWidth() / 2), this.getY() - (currentExplosion.getRegionHeight() / 2));
 	}
 
 	@Override
 	public void reset() {
 		this.clear();
 		this.remove();
-		explosionAnimation = null;
+		stateTime = 0;
 	}
 	
 	

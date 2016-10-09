@@ -2,12 +2,16 @@ package com.eric.mtd.game.model.actor.combat.enemy;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
+import com.eric.mtd.game.model.actor.deatheffect.DeathEffectType;
 import com.eric.mtd.game.model.actor.interfaces.IFlame;
 import com.eric.mtd.game.model.actor.projectile.Flame;
-import com.eric.mtd.game.service.actorfactory.ActorFactory;
-import com.eric.mtd.game.service.actorfactory.ActorFactory.CombatActorPool;
-import com.eric.mtd.game.service.actorfactory.ActorFactory.FlamePool;
+import com.eric.mtd.game.service.factory.ActorFactory;
+import com.eric.mtd.game.service.factory.ActorFactory.CombatActorPool;
+import com.eric.mtd.game.service.factory.ActorFactory.FlamePool;
+import com.eric.mtd.game.service.factory.interfaces.IDeathEffectFactory;
+import com.eric.mtd.game.service.factory.interfaces.IProjectileFactory;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.MTDAudio.ProjectileSound;
@@ -30,25 +34,33 @@ public class EnemyFlameThrower extends Enemy implements IFlame {
 	public static final Vector2 GUN_POS = new Vector2(4, 26);
 	public static final Dimension TEXTURE_SIZE = new Dimension(32, 56);
 	private Dimension flameSize = new Dimension(20, RANGE-26);
-	private FlamePool flamePool;
 	private MTDAudio audio;
-	public EnemyFlameThrower(TextureRegion[] actorRegions, CombatActorPool<CombatActor> pool, FlamePool flamePool, MTDAudio audio) {
-		super(actorRegions, pool, BODY, TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
-		this.flamePool = flamePool;
+	private IDeathEffectFactory deathEffectFactory;
+	private IProjectileFactory projectileFactory;
+	public EnemyFlameThrower(TextureRegion[] actorRegions, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, MTDAudio audio) {
+		super(actorRegions, pool, targetGroup, BODY, TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
 		this.audio = audio;
+		this.deathEffectFactory = deathEffectFactory;
+		this.projectileFactory = projectileFactory;
 	}
 
 	@Override
 	public void attackTarget() {
 		if(getTarget() != null){
 			audio.playProjectileSound(ProjectileSound.FLAME_BURST);
-			getProjectileGroup().addActor(flamePool.obtain().initialize(this, this.getTarget(), getTargetGroup(), getFlameSize()));
+			projectileFactory.loadFlame().initialize(this, this.getTarget(), getTargetGroup(), getFlameSize());
 		}
 	}
 	@Override
 	public Dimension getFlameSize() {
 		flameSize.set(flameSize.getWidth(), this.getRange()-GUN_POS.y);
 		return flameSize;
+	}
+
+	@Override
+	protected void deathAnimation() {
+		deathEffectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());
+		
 	}
 
 }
