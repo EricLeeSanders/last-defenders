@@ -27,6 +27,7 @@ import com.eric.mtd.game.model.actor.projectile.Bullet;
 import com.eric.mtd.game.service.factory.ActorFactory;
 import com.eric.mtd.game.service.factory.ActorFactory.BulletPool;
 import com.eric.mtd.game.service.factory.ActorFactory.SupportActorPool;
+import com.eric.mtd.game.service.factory.interfaces.IProjectileFactory;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -48,14 +49,14 @@ public class Apache extends SupportActor{
 	private float textureCounter, attackCounter, timeActive;
 	private int textureIndex; // Current texture index
 	private CombatActor target;
-	private BulletPool bulletPool;
+	private IProjectileFactory projectileFactory;
 	private MTDAudio audio;
-	public Apache(SupportActorPool<Apache> pool, BulletPool bulletPool, TextureRegion [] textureRegions, MTDAudio audio) {
-		super(pool, textureRegions[0], new Dimension(textureRegions[0].getRegionWidth()*SCALE, textureRegions[0].getRegionHeight()*SCALE),
+	public Apache(SupportActorPool<Apache> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion [] textureRegions, MTDAudio audio) {
+		super(pool, targetGroup, textureRegions[0], new Dimension(textureRegions[0].getRegionWidth()*SCALE, textureRegions[0].getRegionHeight()*SCALE),
 				RANGE, ATTACK, GUN_POS, COST);
 		this.textureRegions = textureRegions;
 		this.audio = audio;
-		this.bulletPool = bulletPool;
+		this.projectileFactory = projectileFactory;
 	}
 	public void initialize(Vector2 position){
 		Vector2 destination = new Vector2(position.x - (this.getWidth()/2), position.y - (this.getHeight()/2));
@@ -124,7 +125,7 @@ public class Apache extends SupportActor{
 	 * Find a target using TowerAI First Enemy
 	 */
 	public void findTarget() {
-		setTarget(TowerSupportAI.findFirstEnemy(this, getEnemyGroup().getChildren()));
+		setTarget(TowerSupportAI.findFirstEnemy(this, getTargetGroup().getChildren()));
 
 	}
 	public void setTarget(CombatActor target) {
@@ -137,7 +138,7 @@ public class Apache extends SupportActor{
 	public void attackTarget() {
 		if(getTarget() != null){
 			audio.playProjectileSound(ProjectileSound.MACHINE_GUN);
-			getProjectileGroup().addActor(bulletPool.obtain().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE));
+			projectileFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
 		}
 
 	}

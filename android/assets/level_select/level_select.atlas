@@ -6,67 +6,73 @@ filter: MipMapLinearNearest,Nearest
 repeat: none
 background
   rotate: false
-  xy: 1283, 1213
+  xy: 1283, 1343
   size: 640, 360
   orig: 640, 360
   offset: 0, 0
   index: -1
 level1
   rotate: false
-  xy: 1, 1269
+  xy: 1, 983
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 level2
   rotate: false
-  xy: 1, 547
+  xy: 1, 261
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
-level2map
-  rotate: false
-  xy: 1283, 1575
-  size: 720, 414
-  orig: 720, 414
-  offset: 0, 0
-  index: -1
-level3map
-  rotate: false
-  xy: 1, 131
-  size: 720, 414
-  orig: 720, 414
-  offset: 0, 0
-  index: -1
 map_icon
   rotate: false
-  xy: 1, 1
+  xy: 1, 131
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 play
   rotate: false
-  xy: 723, 417
+  xy: 1283, 1213
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 pointer
   rotate: false
-  xy: 1283, 1083
+  xy: 1, 1
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 
 level_select2.png
-size: 2048,1024
+size: 2048,2048
 format: RGBA8888
 filter: MipMapLinearNearest,Nearest
 repeat: none
 level3
+  rotate: false
+  xy: 1, 723
+  size: 1280, 720
+  orig: 1280, 720
+  offset: 0, 0
+  index: -1
+level4
+  rotate: false
+  xy: 1, 1
+  size: 1280, 720
+  orig: 1280, 720
+  offset: 0, 0
+  index: -1
+
+level_select3.png
+size: 2048,1024
+format: RGBA8888
+filter: MipMapLinearNearest,Nearest
+repeat: none
+level5
   rotate: false
   xy: 1, 1
   size: 1280, 720

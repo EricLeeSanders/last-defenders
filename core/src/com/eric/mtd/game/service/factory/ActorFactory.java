@@ -428,18 +428,19 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	 * @return SupportActor
 	 */
 	protected SupportActor createSupportActor(Class<? extends SupportActor> type) {
+		Group targetGroup = actorGroups.getEnemyGroup();
 		if (type.equals(Apache.class)) {
 			TextureRegion [] textureRegions = new TextureRegion[3];
 			textureRegions[0] = actorAtlas.findRegion("apache1");
 			textureRegions[1] = actorAtlas.findRegion("apache2");
 			textureRegions[2] = actorAtlas.findRegion("apache3");
-			return new Apache(apachePool, bulletPool, textureRegions, audio);
+			return new Apache(apachePool, targetGroup, this, textureRegions, audio);
 		} else if(type.equals(AirStrike.class)){
 			TextureRegion textureRegion = actorAtlas.findRegion("airstrike");
-			return new AirStrike(airStrikePool, airStrikeBombPool, textureRegion, audio);	
+			return new AirStrike(airStrikePool, targetGroup, this, textureRegion, audio);	
 		} else if (type.equals(LandMine.class)){
 			TextureRegion textureRegion = actorAtlas.findRegion("landmine");
-			return new LandMine(landMinePool,explosionPool, textureRegion);	
+			return new LandMine(landMinePool, targetGroup, this, textureRegion);	
 		} else {
 			throw new NullPointerException("Actor factory couldn't create: " + type.getSimpleName());
 		}
