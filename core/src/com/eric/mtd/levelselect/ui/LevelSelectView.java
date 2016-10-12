@@ -29,7 +29,7 @@ import com.eric.mtd.util.MTDAudio.MTDSound;
 public class LevelSelectView extends Group {
 	private LevelSelectPresenter presenter;
 	private Label lblLevel;
-	private Image level1, level2, level3;
+	private Image level1, level2, level3, level4, level5;
 	private Group levelGroup;
 	private int selectedLevel;
 	private MTDAudio audio;
@@ -46,25 +46,37 @@ public class LevelSelectView extends Group {
 	}
 
 	private void createControls(TextureAtlas levelSelectAtlas) {
+	
 		
 		ImageButton btnLevel1 = new ImageButton(new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
 		btnLevel1.setSize(64, 64);
-		btnLevel1.setPosition(253-(btnLevel1.getWidth()/2), 100);
+		btnLevel1.setPosition(240-(btnLevel1.getWidth()/2), 40);
 		this.addActor(btnLevel1); 
 		setBtnLevelListener(btnLevel1, 1);
-
+		
 		ImageButton btnLevel2 = new ImageButton(new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
 		btnLevel2.setSize(64, 64);
-		btnLevel2.setPosition(528-(btnLevel2.getWidth()/2), 85);
-		this.addActor(btnLevel2);
+		btnLevel2.setPosition(280-(btnLevel2.getWidth()/2), 100);
+		this.addActor(btnLevel2); 
 		setBtnLevelListener(btnLevel2, 2);
-		
-		//467 228
+
 		ImageButton btnLevel3 = new ImageButton(new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
 		btnLevel3.setSize(64, 64);
-		btnLevel3.setPosition(467-(btnLevel3.getWidth()/2), 228);
-		this.addActor(btnLevel3); 
+		btnLevel3.setPosition(528-(btnLevel3.getWidth()/2), 85);
+		this.addActor(btnLevel3);
 		setBtnLevelListener(btnLevel3, 3);
+
+		ImageButton btnLevel4 = new ImageButton(new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
+		btnLevel4.setSize(64, 64);
+		btnLevel4.setPosition(467-(btnLevel4.getWidth()/2), 228);
+		this.addActor(btnLevel4); 
+		setBtnLevelListener(btnLevel4, 4);
+		
+		ImageButton btnLevel5 = new ImageButton(new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
+		btnLevel5.setSize(64, 64);
+		btnLevel5.setPosition(380-(btnLevel5.getWidth()/2), 300);
+		this.addActor(btnLevel5); 
+		setBtnLevelListener(btnLevel5, 5);
 		
 	}
 	public void setBackground(TextureAtlas levelSelectAtlas){
@@ -90,6 +102,16 @@ public class LevelSelectView extends Group {
 		level3.setVisible(false);
 		levelGroup.addActor(level3);
 		
+		level4 = new Image(levelSelectAtlas.findRegion("level4"));
+		level4.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+		level4.setVisible(false);
+		levelGroup.addActor(level4);
+		
+		level5 = new Image(levelSelectAtlas.findRegion("level5"));
+		level5.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+		level5.setVisible(false);
+		levelGroup.addActor(level5);
+		
 		ImageButton btnMap = new ImageButton(new TextureRegionDrawable(levelSelectAtlas.findRegion("map_icon")));
 		btnMap.setSize(64,64);
 		btnMap.setPosition(15,15);
@@ -112,20 +134,40 @@ public class LevelSelectView extends Group {
 		levelGroup.setVisible(visible);
 		if(visible){
 			if(selectedLevel == 1){
-				level1.setVisible(true);
 				lblLevel.setText("Level 1");
+				level1.setVisible(true);
 				level2.setVisible(false);
 				level3.setVisible(false);
+				level4.setVisible(false);
+				level5.setVisible(false);
 			} else if(selectedLevel == 2){
+				lblLevel.setText("Level 2");
 				level1.setVisible(false);
 				level2.setVisible(true);
-				lblLevel.setText("Level 2");
 				level3.setVisible(false);
+				level4.setVisible(false);
+				level5.setVisible(false);
 			} else if(selectedLevel == 3){
+				lblLevel.setText("Level 3");
 				level1.setVisible(false);
 				level2.setVisible(false);
 				level3.setVisible(true);
-				lblLevel.setText("Level 3");
+				level4.setVisible(false);
+				level5.setVisible(false);
+			} else if(selectedLevel == 4){
+				lblLevel.setText("Level 4");
+				level1.setVisible(false);
+				level2.setVisible(false);
+				level3.setVisible(false);
+				level4.setVisible(true);
+				level5.setVisible(false);
+			} else if(selectedLevel == 5){
+				lblLevel.setText("Level 5");
+				level1.setVisible(false);
+				level2.setVisible(false);
+				level3.setVisible(false);
+				level4.setVisible(false);
+				level5.setVisible(true);
 			}
 		}
 	}
