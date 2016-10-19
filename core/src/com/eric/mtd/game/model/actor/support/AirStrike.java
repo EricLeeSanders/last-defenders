@@ -29,6 +29,7 @@ import com.eric.mtd.game.model.actor.projectile.Bullet;
 import com.eric.mtd.game.service.factory.ActorFactory;
 import com.eric.mtd.game.service.factory.ActorFactory.AirStrikeBombPool;
 import com.eric.mtd.game.service.factory.ActorFactory.SupportActorPool;
+import com.eric.mtd.game.service.factory.interfaces.IProjectileFactory;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -45,13 +46,13 @@ public class AirStrike extends SupportActor implements IRpg{
 	public static final Vector2 GUN_POS = new Vector2(0,0);
 	public static final Dimension BULLET_SIZE = new Dimension(20,20);
 	private Array<AirStrikeLocation> airStrikeLocations = new Array<AirStrikeLocation>();
-	private AirStrikeBombPool bombPool;
+	private IProjectileFactory projectileFactory;
 	private MTDAudio audio;
-	public AirStrike(SupportActorPool<AirStrike> pool, AirStrikeBombPool bombPool, TextureRegion textureRegion, MTDAudio audio) {
-		super(pool, textureRegion, new Dimension(textureRegion.getRegionWidth(), textureRegion.getRegionHeight())
+	public AirStrike(SupportActorPool<AirStrike> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion textureRegion, MTDAudio audio) {
+		super(pool, targetGroup, textureRegion, new Dimension(textureRegion.getRegionWidth(), textureRegion.getRegionHeight())
 				,0f,ATTACK, GUN_POS, COST);
 		this.audio = audio;
-		this.bombPool = bombPool;
+		this.projectileFactory = projectileFactory;
 
 	}
 	public void addLocation(Vector2 location, Group group){
@@ -79,7 +80,7 @@ public class AirStrike extends SupportActor implements IRpg{
 	}
 	private void dropBomb(AirStrikeLocation location){
 		audio.playProjectileSound(ProjectileSound.ROCKET_LAUNCH);
-		getProjectileGroup().addActor(bombPool.obtain().initialize(this, location.getLocation(), this.getEnemyGroup(),this.getGunPos(), BULLET_SIZE, AIRSTRIKE_RADIUS)); 
+		projectileFactory.loadAirStrikeBomb().initialize(this, location.getLocation(), this.getTargetGroup(),this.getGunPos(), BULLET_SIZE, AIRSTRIKE_RADIUS); 
 		
 		
 	}
