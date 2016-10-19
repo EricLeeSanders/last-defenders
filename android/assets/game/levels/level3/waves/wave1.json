@@ -1,8 +1,53 @@
 {
 "wave": [
     {
-        "enemy": MachineGun,
-        "delay": .05,
+        "enemy": Rifle,
+        "delay": .45,
+        "armor": false
+    },
+    {
+        "enemy": Rifle,
+        "delay": .60,
+        "armor": false
+    },
+    {
+        "enemy": Rifle,
+        "delay": .75,
+        "armor": false
+    },
+    {
+        "enemy": Rifle,
+        "delay": .30,
+        "armor": false
+    },
+    {
+        "enemy": Rifle,
+        "delay": .9,
+        "armor": false
+    },
+        {
+        "enemy": Rifle,
+        "delay": .5,
+        "armor": false
+    },
+    {
+        "enemy": Rifle,
+        "delay": .5,
+        "armor": false
+    },
+    {
+        "enemy": Rifle,
+        "delay": .5,
+        "armor": false
+    },
+    {
+        "enemy": Rifle,
+        "delay": .5,
+        "armor": false
+    },
+    {
+        "enemy": Rifle,
+        "delay": .5,
         "armor": false
     }
 ]
