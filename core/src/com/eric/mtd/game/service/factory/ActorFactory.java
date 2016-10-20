@@ -27,6 +27,8 @@ import com.eric.mtd.game.model.actor.projectile.RPG;
 import com.eric.mtd.game.model.actor.support.AirStrike;
 import com.eric.mtd.game.model.actor.support.Apache;
 import com.eric.mtd.game.model.actor.support.LandMine;
+import com.eric.mtd.game.model.actor.support.SupplyDrop;
+import com.eric.mtd.game.model.actor.support.SupplyDropCrate;
 import com.eric.mtd.game.model.actor.support.SupportActor;
 import com.eric.mtd.game.service.factory.interfaces.*;
 import com.eric.mtd.util.Logger;
@@ -40,7 +42,7 @@ import com.eric.mtd.util.Resources;
  *
  */
 // TODO: Doing a lot of things here
-public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISupportActorFactory, IProjectileFactory, IDeathEffectFactory {
+public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISupportActorFactory, IProjectileFactory, IDeathEffectFactory, ISupplyDropFactory {
 	private CombatActorPool<CombatActor> towerRiflePool;
 	private CombatActorPool<CombatActor> towerTankPool;
 	private CombatActorPool<CombatActor> towerFlameThrowerPool;
@@ -63,6 +65,8 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	private AirStrikeBombPool airStrikeBombPool = new AirStrikeBombPool();
 	private ExplosionPool explosionPool = new ExplosionPool();
 	private FlamePool flamePool = new FlamePool();
+	private SupplyDropPool supplyDropPool = new SupplyDropPool();
+	private SupplyDropCratePool supplyDropCratePool = new SupplyDropCratePool();
 	private SupportActorPool<Apache> apachePool = new SupportActorPool<Apache>(Apache.class);
 	private SupportActorPool<AirStrike> airStrikePool = new SupportActorPool<AirStrike>(AirStrike.class);
 	private SupportActorPool<LandMine> landMinePool = new SupportActorPool<LandMine>(LandMine.class);
@@ -239,7 +243,33 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		actorGroups.getProjectileGroup().addActor(flame);
 		return flame;
 	}
+	
+	/**
+	 * Obtains a Supply Drop from the pool
+	 * 
+	 * @return SupplyDrop
+	 */
+	@Override
+	public SupplyDrop loadSupplyDrop() {
+		Logger.info("Loading Supply Drop actor from the pool");
+		SupplyDrop supplyDrop = supplyDropPool.obtain();
+		actorGroups.getSupportGroup().addActor(supplyDrop);
+		return supplyDrop;
+	}
 
+	/**
+	 * Obtains a Supply Drop Crate from the pool
+	 * 
+	 * @return SupplyDropCrate
+	 */
+	@Override
+	public SupplyDropCrate loadSupplyDropCrate() {
+		Logger.info("Loading Supply Drop Crate actor from the pool");
+		SupplyDropCrate supplyDropCrate = supplyDropCratePool.obtain();
+		actorGroups.getSupportGroup().addActor(supplyDropCrate);
+		return supplyDropCrate;
+	}
+	
 	/**
 	 * Obtain a Support Actor from the pool
 	 * 
@@ -401,7 +431,32 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		return flame;
 
 	}
+	
+	/**
+	 * Create a SupplyDrop
+	 * 
+	 * @return SupplyDrop
+	 */
+	protected SupplyDrop createSupplyDropActor() {
+		Logger.info("Creating Supply Drop Actor");
+		TextureRegion supplyDropRegion = actorAtlas.findRegion("supply-drop");
+		SupplyDrop supplyDrop = new SupplyDrop(supplyDropRegion, supplyDropPool, this);
+		return supplyDrop;
 
+	}
+	
+	/**
+	 * Create a SupplyDropCrate
+	 * 
+	 * @return SupplyDropCrate
+	 */
+	protected SupplyDropCrate createSupplyDropCrateActor() {
+		Logger.info("Creating Supply Drop Crate Actor");
+		TextureRegion supplyDropCrateRegion = actorAtlas.findRegion("supply-drop-crate");
+		SupplyDropCrate supplyDropCrate = new SupplyDropCrate(supplyDropCrateRegion, supplyDropCratePool, actorGroups.getTowerGroup());
+		return supplyDropCrate;
+
+	}
 	
 	/**
 	 * Create a Death Effect
@@ -501,6 +556,20 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		@Override
 		protected Flame newObject() {
 			return createFlameActor();
+		}
+	}
+	
+	public class SupplyDropPool extends Pool<SupplyDrop> {
+		@Override
+		protected SupplyDrop newObject() {
+			return createSupplyDropActor();
+		}
+	}
+	
+	public class SupplyDropCratePool extends Pool<SupplyDropCrate> {
+		@Override
+		protected SupplyDropCrate newObject() {
+			return createSupplyDropCrateActor();
 		}
 	}
 	

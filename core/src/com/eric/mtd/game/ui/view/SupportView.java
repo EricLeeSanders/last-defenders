@@ -87,20 +87,27 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		
 		supportButtons = new HashMap<ImageButton, String>();
 		
-		ImageButton btnLandmine = new ImageButton(skin, "support_landmine");
-		setLandmineListener(btnLandmine);
-		supportTable.add(btnLandmine).size(140,116).spaceBottom(5);	
-		supportButtons.put(btnLandmine, "LandMine");
+		ImageButton landmineButton = new ImageButton(skin, "support_landmine");
+		supportTable.add(landmineButton).size(133,110).spaceBottom(5);
+		supportButtons.put(landmineButton,"LandMine");
+		setLandmineListener(landmineButton);
 		
-		ImageButton btnAirstrike = new ImageButton(skin, "support_airstrike");
-		setAirstrikeListener(btnAirstrike);
-		supportTable.add(btnAirstrike).size(140,116).spaceBottom(5);
-		supportButtons.put(btnAirstrike, "AirStrike");
+		ImageButton supplydropButton = new ImageButton(skin, "support_supplydrop");
+		supportTable.add(supplydropButton).size(133,110).spaceBottom(5);
+		supportButtons.put(supplydropButton,"SupplyDropCrate");
+		setSupplyDropListener(supplydropButton);
 		
-		ImageButton btnApache = new ImageButton(skin, "support_apache");
-		setApacheListener(btnApache);
-		supportTable.add(btnApache).size(140,116).spaceBottom(5);
-		supportButtons.put(btnApache, "Apache");
+		ImageButton airstrikeButton = new ImageButton(skin, "support_airstrike");
+		supportTable.add(airstrikeButton).size(133,110).spaceBottom(5);
+		supportButtons.put(airstrikeButton,"AirStrike");
+		setAirStrikeListener(airstrikeButton);
+		
+		supportTable.row();
+		
+		ImageButton apacheButton = new ImageButton(skin, "support_apache");
+		supportTable.add(apacheButton).size(133,110).spaceBottom(5);
+		supportButtons.put(apacheButton,"Apache");
+		setApacheListener(apacheButton);
 		
 		btnCancel = new ImageButton(skin,"cancel");
 		setCancelListener();
@@ -152,8 +159,16 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		});
 
 	}
-
-	private void setAirstrikeListener(ImageButton button) {
+	private void setSupplyDropListener(ImageButton button) {
+		button.addListener(new ActorGestureListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				presenter.createSupplyDrop();
+			}
+		});
+	}
+	private void setAirStrikeListener(ImageButton button) {
 		button.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {

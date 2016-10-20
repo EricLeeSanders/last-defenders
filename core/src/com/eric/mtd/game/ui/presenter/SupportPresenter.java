@@ -13,6 +13,7 @@ import com.eric.mtd.game.model.actor.interfaces.IRotatable;
 import com.eric.mtd.game.model.actor.support.Apache;
 import com.eric.mtd.game.model.level.Map;
 import com.eric.mtd.game.service.actorplacement.AirStrikePlacement;
+import com.eric.mtd.game.service.actorplacement.SupplyDropPlacement;
 import com.eric.mtd.game.service.actorplacement.SupportActorPlacement;
 import com.eric.mtd.game.service.actorplacement.TowerPlacement;
 import com.eric.mtd.game.service.factory.ActorFactory;
@@ -34,6 +35,7 @@ import com.eric.mtd.util.MTDAudio.MTDSound;
 public class SupportPresenter implements IGameUIStateObserver {
 	private SupportActorPlacement supportActorPlacement;
 	private AirStrikePlacement airStrikePlacement;
+	private SupplyDropPlacement supplyDropPlacement;
 	private GameUIStateManager uiStateManager;
 	private Player player;
 	private ISupportView view;
@@ -47,6 +49,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 		this.actorGroups = actorGroups;
 		supportActorPlacement = new SupportActorPlacement(actorGroups, actorFactory);
 		airStrikePlacement = new AirStrikePlacement(actorGroups, actorFactory);
+		supplyDropPlacement = new SupplyDropPlacement(actorFactory);
 	}
 
 	/**
@@ -58,6 +61,33 @@ public class SupportPresenter implements IGameUIStateObserver {
 		this.view = view;
 		changeUIState(uiStateManager.getState());
 	}
+	
+	/** 
+	 * Create a Supply Drop
+	 */
+	public void createSupplyDrop(){
+		audio.playSound(MTDSound.SMALL_CLICK);
+		supplyDropPlacement.createSupplyDrop();
+		uiStateManager.setState(GameUIState.PLACING_SUPPLYDROP);
+	}
+	
+	
+	/**
+	 * Place a supply drop
+	 */
+	public void placeSupplyDrop(Vector2 location){
+		audio.playSound(MTDSound.SMALL_CLICK);
+		supplyDropPlacement.setLocation(location);
+		view.showBtnPlace();
+	}
+	
+	private void finishSupplyDropPlacement(){
+		audio.playSound(MTDSound.SMALL_CLICK);
+		if(supplyDropPlacement.isCurrentSupplyDropCrate() && uiStateManager.getState().equals(GameUIState.PLACING_SUPPLYDROP)){
+			supplyDropPlacement.finishPlacement();
+		}
+	}
+	
 	/**
 	 * Create an AirStrike
 	 */
@@ -84,7 +114,6 @@ public class SupportPresenter implements IGameUIStateObserver {
 	public void finishAirStrikePlacement(){
 		audio.playSound(MTDSound.SMALL_CLICK);
 		if (airStrikePlacement.isCurrentAirStrike() && uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)) {
-			airStrikePlacement.getCurrentAirStrike().beginAirStrike();
 			airStrikePlacement.finishCurrentAirStrike();
 		}
 	}
@@ -104,29 +133,34 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 */
 	public void placeSupportActor() {
 		audio.playSound(MTDSound.SMALL_CLICK);
-		int cost;
 		if(uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)){
-			cost = airStrikePlacement.getCurrentAirStrike().getCost();
+			int cost = airStrikePlacement.getCurrentAirStrike().getCost();
 			player.spendMoney(cost);
 			finishAirStrikePlacement();
 			uiStateManager.setStateReturn();
-		}else if (uiStateManager.getState().equals(GameUIState.PLACING_SUPPORT)){
-			cost = supportActorPlacement.getCurrentSupportActor().getCost();
+		} else if (uiStateManager.getState().equals(GameUIState.PLACING_SUPPORT)){
+			int cost = supportActorPlacement.getCurrentSupportActor().getCost();
 			if (supportActorPlacement.placeSupportActor()) {
 				player.spendMoney(cost);
 				supportActorPlacement.removeCurrentSupportActor();
 				uiStateManager.setStateReturn();
 			}
+		} else if (uiStateManager.getState().equals(GameUIState.PLACING_SUPPLYDROP)){
+			int cost = supplyDropPlacement.getCurrentSupplyDropCrate().getCost();
+			player.spendMoney(cost);
+			finishSupplyDropPlacement();
+			uiStateManager.setStateReturn();
 		}
 	}
-
+	
 	/**
 	 * Cancel Support
 	 */
 	public void cancelSupport() {
 		audio.playSound(MTDSound.SMALL_CLICK);
 		supportActorPlacement.removeCurrentSupportActor();
-		airStrikePlacement.removeCurrentAirStrike();		
+		airStrikePlacement.removeCurrentAirStrike();	
+		supplyDropPlacement.removeCurrentSupplyDropCrate();
 		uiStateManager.setStateReturn();
 	}
 	
@@ -144,11 +178,11 @@ public class SupportPresenter implements IGameUIStateObserver {
 		if (supportActorPlacement.isCurrentSupportActor() && uiStateManager.getState().equals(GameUIState.PLACING_SUPPORT)) {
 			supportActorPlacement.moveSupportActor(coords);
 			view.showBtnPlace();
-		}
-		if (airStrikePlacement.isCurrentAirStrike() && uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)
+		} else if (airStrikePlacement.isCurrentAirStrike() && uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)
 				&& touchType.equals("TouchDown")) {
 			this.placeAirStrikeLocation(coords);
-			
+		} else if (supplyDropPlacement.isCurrentSupplyDropCrate() && uiStateManager.getState().equals(GameUIState.PLACING_SUPPLYDROP)){
+			this.placeSupplyDrop(coords);
 		}
 	}
 
@@ -190,6 +224,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 			view.placingSupportState();
 			break;
 		case PLACING_AIRSTRIKE:
+		case PLACING_SUPPLYDROP:
 			view.placingSupportState();
 			break;
 		default:

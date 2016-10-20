@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.eric.mtd.game.model.actor.combat.tower.Tower;
+import com.eric.mtd.util.ActorUtil;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -87,11 +88,11 @@ public class GameActor extends Actor{
 			bodyOutline.end();
 			batch.begin();
 		}
-		batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getTextureSize().getWidth(), getTextureSize().getHeight(), 1, 1, getRotation());
+		batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getTextureSize().getWidth(), getTextureSize().getHeight(), getScaleX(), getScaleY(), getRotation());
 	}
 	
 	public Vector2 getPositionCenter() {
-		positionCenter.set(getX() + (getTextureSize().getWidth() / 2), getY() + (getTextureSize().getHeight() / 2));
+		positionCenter.set(ActorUtil.calcXCenterFromBotLeft(getX(), getTextureSize().getWidth()), ActorUtil.calcYCenterFromBotLeft(getY(), getTextureSize().getHeight()));
 		return positionCenter;
 	}
 	
@@ -100,7 +101,7 @@ public class GameActor extends Actor{
 	}
 	
 	public void setPositionCenter(float x, float y){
-		this.setPosition(x - (getTextureSize().getWidth() / 2), y - (getTextureSize().getHeight() / 2));
+		this.setPosition(ActorUtil.calcXBotLeftFromCenter(x, getTextureSize().getWidth()), ActorUtil.calcYBotLeftFromCenter(y, getTextureSize().getHeight()));
 	}
 
 	public Dimension getTextureSize() {
