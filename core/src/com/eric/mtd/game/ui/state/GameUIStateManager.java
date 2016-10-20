@@ -49,7 +49,7 @@ public class GameUIStateManager implements ILevelStateObserver {
 	}
 
 	public void setState(GameUIState state) {
-		Logger.info("Chaning UI state: " + this.getState() + " to state: " + state);
+		Logger.info("Changing UI state: " + this.getState() + " to state: " + state);
 		this.state = state;
 		notifyObservers();
 	}
@@ -60,7 +60,7 @@ public class GameUIStateManager implements ILevelStateObserver {
 
 	public enum GameUIState {
 		ENLISTING, SUPPORT, INSPECTING, HIGH_SCORES, OPTIONS, STANDBY, GAME_OVER
-		, PLACING_TOWER, PLACING_SUPPORT, PLACING_AIRSTRIKE, WAVE_IN_PROGRESS, LEVEL_COMPLETED;
+		, PLACING_TOWER, PLACING_SUPPORT, PLACING_AIRSTRIKE, PLACING_SUPPLYDROP, WAVE_IN_PROGRESS, LEVEL_COMPLETED;
 
 	}
 
