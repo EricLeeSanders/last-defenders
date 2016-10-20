@@ -33,11 +33,11 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	private Vector2 gunPos;
 	private boolean active;
 	private int cost;
-	private Group enemyTargetGroup, projectileGroup;
+	private Group getTargetGroup;
 	private boolean showRange;
 	private Sprite rangeSprite;
 	private Color rangeColor = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-	public SupportActor(Pool<SupportActor> pool, TextureRegion textureRegion, Dimension textureSize
+	public SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion, Dimension textureSize
 						, float range, float attack, Vector2 gunPos, int cost) {
 		super(textureRegion, textureSize);
 		this.pool = pool;
@@ -45,6 +45,7 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 		this.attack = attack;
 		this.gunPos = gunPos;
 		this.cost = cost;
+		this.getTargetGroup = targetGroup;
 		createRangeSprite();
 	}
 	protected void createRangeSprite(){
@@ -63,14 +64,9 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 		}
 		super.draw(batch, alpha);
 	}
-	/**
-	 * Sets the Enemy Group
-	 */
-	public void setEnemyGroup(Group enemyGroup) {
-		this.enemyTargetGroup = enemyGroup;
-	}
-	public Group getEnemyGroup(){
-		return enemyTargetGroup;
+
+	public Group getTargetGroup(){
+		return getTargetGroup;
 	}
 	
 	public void freeActor() {
@@ -132,11 +128,5 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	public void setRangeSprite(Sprite rangeSprite) {
 		this.rangeSprite = rangeSprite;
 	}
-	public Group getProjectileGroup() {
-		return projectileGroup;
-	}
-	public void setProjectileGroup(Group projectileGroup) {
-		this.projectileGroup = projectileGroup;
-	}	
 	
 }
