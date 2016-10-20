@@ -400,7 +400,7 @@ cancel_over
   index: -1
 cancel_pressed
   rotate: false
-  xy: 1104, 1045
+  xy: 1123, 691
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
@@ -435,35 +435,35 @@ discharge_disabled
   index: -1
 down_disabled
   rotate: false
-  xy: 1390, 1492
+  xy: 1123, 591
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 down_normal
   rotate: false
-  xy: 1390, 1392
+  xy: 1223, 691
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 down_over
   rotate: false
-  xy: 1204, 1045
+  xy: 1123, 491
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 down_pressed
   rotate: false
-  xy: 863, 333
+  xy: 1223, 591
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 enlist_normal
   rotate: false
-  xy: 963, 333
+  xy: 1223, 491
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
@@ -512,175 +512,175 @@ money_label
   index: -1
 music_disabled
   rotate: false
-  xy: 1063, 333
+  xy: 1390, 1492
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 music_normal
   rotate: false
-  xy: 1792, 1741
+  xy: 1390, 1392
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 music_over
   rotate: false
-  xy: 1892, 1753
+  xy: 1123, 391
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 music_pressed
   rotate: false
-  xy: 1274, 1303
+  xy: 1223, 391
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 options_disabled
   rotate: false
-  xy: 1274, 1203
+  xy: 863, 333
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 options_normal
   rotate: false
-  xy: 1374, 1292
+  xy: 963, 333
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 options_over
   rotate: false
-  xy: 1374, 1192
+  xy: 1792, 1741
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 options_pressed
   rotate: false
-  xy: 1123, 945
+  xy: 1892, 1753
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 right_disabled
   rotate: false
-  xy: 1123, 845
+  xy: 1274, 1303
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 right_normal
   rotate: false
-  xy: 1123, 745
+  xy: 1274, 1203
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 right_over
   rotate: false
-  xy: 1123, 645
+  xy: 1374, 1292
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 right_pressed
   rotate: false
-  xy: 1123, 545
+  xy: 1374, 1192
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 rotate_disabled
   rotate: false
-  xy: 1123, 445
+  xy: 1474, 1292
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 rotate_normal
   rotate: false
-  xy: 1223, 945
+  xy: 1474, 1192
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 rotate_over
   rotate: false
-  xy: 1223, 845
+  xy: 1323, 691
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 rotate_pressed
   rotate: false
-  xy: 1223, 745
+  xy: 1323, 591
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 select_disabled
   rotate: false
-  xy: 1223, 645
+  xy: 1323, 491
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 select_normal
   rotate: false
-  xy: 1223, 545
+  xy: 1323, 391
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 select_normal
   rotate: false
-  xy: 1223, 445
+  xy: 1892, 1653
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: 2
 select_over
   rotate: false
-  xy: 1163, 345
+  xy: 1836, 1553
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 select_pressed
   rotate: false
-  xy: 1263, 345
+  xy: 1936, 1553
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 sound_disabled
   rotate: false
-  xy: 1474, 1292
+  xy: 1490, 1483
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 sound_normal
   rotate: false
-  xy: 1474, 1192
+  xy: 1590, 1483
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 sound_over
   rotate: false
-  xy: 1892, 1653
+  xy: 1690, 1483
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 sound_pressed
   rotate: false
-  xy: 1836, 1553
+  xy: 1790, 1453
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
@@ -736,9 +736,23 @@ support_landmine_disabled
   index: -1
 support_normal
   rotate: false
-  xy: 1936, 1553
+  xy: 1890, 1453
   size: 98, 98
   orig: 98, 98
+  offset: 0, 0
+  index: -1
+support_supplydrop
+  rotate: false
+  xy: 1104, 968
+  size: 212, 175
+  orig: 212, 175
+  offset: 0, 0
+  index: -1
+support_supplydrop_disabled
+  rotate: false
+  xy: 1123, 791
+  size: 212, 175
+  orig: 212, 175
   offset: 0, 0
   index: -1
 text_button_disabled
@@ -771,28 +785,28 @@ text_button_normal_hollow
   index: -1
 up_disabled
   rotate: false
-  xy: 1163, 245
+  xy: 1574, 1383
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 up_normal
   rotate: false
-  xy: 1263, 245
+  xy: 1574, 1283
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 up_over
   rotate: false
-  xy: 1490, 1483
+  xy: 1674, 1383
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 up_pressed
   rotate: false
-  xy: 1590, 1483
+  xy: 1674, 1283
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
@@ -855,7 +869,7 @@ upgrade_speed_disabled
   index: -1
 wave_normal
   rotate: false
-  xy: 1690, 1483
+  xy: 1574, 1183
   size: 98, 98
   orig: 98, 98
   offset: 0, 0

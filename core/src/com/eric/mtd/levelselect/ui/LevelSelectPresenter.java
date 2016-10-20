@@ -32,6 +32,12 @@ public class LevelSelectPresenter {
 		case 3:
 			screenStateManager.setState(ScreenState.LEVEL_3_SELECTED);
 			break;
+		case 4:
+			screenStateManager.setState(ScreenState.LEVEL_4_SELECTED);
+			break;
+		case 5:
+			screenStateManager.setState(ScreenState.LEVEL_5_SELECTED);
+			break;
 		}
 	}
 }

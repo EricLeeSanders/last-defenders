@@ -24,6 +24,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	support_apache: {down: support_apache, up: support_apache, disabled: support_apache_disabled},
 	support_airstrike: {down: support_airstrike, up: support_airstrike, disabled: support_airstrike_disabled},
 	support_landmine: {down: support_landmine, up: support_landmine, disabled: support_landmine_disabled},
+	support_supplydrop: {down: support_supplydrop, up: support_supplydrop, disabled: support_supplydrop_disabled},
 	enlist_rifle: {down: enlist_rifle, up: enlist_rifle, disabled: enlist_rifle_disabled},
 	enlist_sniper: {down: enlist_sniper, up: enlist_sniper, disabled: enlist_sniper_disabled},
 	enlist_machine_gun: {down: enlist_machine_gun, up: enlist_machine_gun, disabled: enlist_machine_gun_disabled},

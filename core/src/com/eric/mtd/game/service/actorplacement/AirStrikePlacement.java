@@ -33,6 +33,7 @@ public class AirStrikePlacement {
 	}
 	public void finishCurrentAirStrike() {
 		if (isCurrentAirStrike()) {
+			currentAirStrike.beginAirStrike();
 			currentAirStrike.setVisible(true);
 			currentAirStrike = null;
 		}

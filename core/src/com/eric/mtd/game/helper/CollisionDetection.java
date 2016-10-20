@@ -125,17 +125,17 @@ public final class CollisionDetection {
 	}
 
 	/**
-	 * Checks to see if the target is within range of the attacker
+	 * Checks to see if the target is within range
 	 * 
 	 * @param targetBody
-	 * @param attackerRange
+	 * @param range
 	 * @return boolean - If the target is within range
 	 */
-	public static boolean targetWithinRange(Polygon targetBody, Shape2D attackerRange) {
-		if (attackerRange instanceof Circle) {
-			return polygonAndCircle(targetBody, (Circle) attackerRange);
-		} else if (attackerRange instanceof Polygon) {
-			return polygonAndPolygon(targetBody, (Polygon) attackerRange);
+	public static boolean targetWithinRange(Polygon targetBody, Shape2D range) {
+		if (range instanceof Circle) {
+			return polygonAndCircle(targetBody, (Circle) range);
+		} else if (range instanceof Polygon) {
+			return polygonAndPolygon(targetBody, (Polygon) range);
 		} else {
 			return false;
 		}
