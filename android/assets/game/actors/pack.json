@@ -30,7 +30,7 @@
     premultiplyAlpha: false,
     useIndexes: true,
     limitMemory: true,
-    grid: true,
+    grid: false,
     scale: [ 1 ],
     scaleSuffix: [ "" ]
 }

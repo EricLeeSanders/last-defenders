@@ -129,7 +129,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	}
 
 	public void takeDamage(float damage) {
-		if (hasArmor) {
+		if (hasArmor && armor > 0) {
 			if ((armor - damage) < 0) {
 				health = health - (damage - armor);
 				armor = 0;
@@ -137,9 +137,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 				armor = armor - damage;
 			}
 
-			if (armor <= 0) {
-				hasArmor = false;
-			}
 		} else {
 			health = health - damage;
 		}
