@@ -45,7 +45,7 @@ public class GameStateManager {
 	 * @param state
 	 */
 	public void setState(GameState state) {
-		Logger.info("Chaning Game state: " + this.getState() + " to state: " + state);
+		Logger.info("Changing Game state: " + this.getState() + " to state: " + state);
 		this.state = state;
 		notifyObservers();
 	}

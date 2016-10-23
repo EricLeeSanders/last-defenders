@@ -4,7 +4,11 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.eric.mtd.game.GameScreen;
+import com.eric.mtd.game.model.actor.ActorGroups;
+import com.eric.mtd.game.service.factory.ActorFactory;
 import com.eric.mtd.levelselect.LevelSelectScreen;
+import com.eric.mtd.load.GameLoadingScreen;
+import com.eric.mtd.load.LevelLoadingScreen;
 import com.eric.mtd.menu.MenuScreen;
 import com.eric.mtd.screen.state.ScreenStateManager;
 import com.eric.mtd.screen.state.IScreenStateObserver;
@@ -27,10 +31,11 @@ public class MTDGame extends Game implements IScreenStateObserver {
 		userPreferences = new UserPreferences();
 		resources = new Resources(userPreferences);
 		audio = new MTDAudio(userPreferences);
-		screenStateManager = new ScreenStateManager();
-		screenStateManager.attach(this);
 		gameStateManager = new GameStateManager();
-		setScreen(new MenuScreen(screenStateManager, gameStateManager, resources, audio));
+		screenStateManager = new ScreenStateManager();
+		GameLoadingScreen loadingScreen = new GameLoadingScreen(gameStateManager, screenStateManager, resources, audio);
+		setScreen(loadingScreen);
+		screenStateManager.attach(this);
 
 	}
 
@@ -44,36 +49,46 @@ public class MTDGame extends Game implements IScreenStateObserver {
 
 	@Override
 	public void changeScreenState(ScreenState state) {
+		this.getScreen().dispose(); // dispose current screen
 		switch (state) {
 		case LEVEL_SELECTION:
-			this.getScreen().dispose(); // dispose current screen
 			this.setScreen(new LevelSelectScreen(screenStateManager,gameStateManager,resources, audio));
 			break;
 		case MENU:
-			this.getScreen().dispose(); 
 			this.setScreen(new MenuScreen(screenStateManager,gameStateManager, resources, audio));
 			break;
-		case LEVEL_1_SELECTED:
-			this.getScreen().dispose(); 
+		case PLAY_LEVEL_1:
 			this.setScreen(new GameScreen(1, gameStateManager, screenStateManager, resources, audio));
 			break;
-		case LEVEL_2_SELECTED:
-			this.getScreen().dispose(); 
+		case PLAY_LEVEL_2:
 			this.setScreen(new GameScreen(2, gameStateManager, screenStateManager, resources, audio));
 			break;
-		case LEVEL_3_SELECTED:
-			this.getScreen().dispose();
+		case PLAY_LEVEL_3:
 			this.setScreen(new GameScreen(3, gameStateManager, screenStateManager, resources, audio)); 
 			break;
-		case LEVEL_4_SELECTED:
-			this.getScreen().dispose();
+		case PLAY_LEVEL_4:
 			this.setScreen(new GameScreen(4, gameStateManager, screenStateManager, resources, audio));
 			break;
-		case LEVEL_5_SELECTED:
-			this.getScreen().dispose();
+		case PLAY_LEVEL_5:
 			this.setScreen(new GameScreen(5, gameStateManager, screenStateManager, resources, audio));    
 			break;
+		case LOAD_LEVEL_1:
+			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_1, 1));
+			break;
+		case LOAD_LEVEL_2:
+			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_2, 2));
+			break;
+		case LOAD_LEVEL_3:
+			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_3, 3)); 
+			break;
+		case LOAD_LEVEL_4:
+			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_4, 4));
+			break;
+		case LOAD_LEVEL_5:
+			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_5, 5));
+			break;
 		default:
+			this.setScreen(new MenuScreen(screenStateManager,gameStateManager, resources, audio));
 			break;
 		}
 
