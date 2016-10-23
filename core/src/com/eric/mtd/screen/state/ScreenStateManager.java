@@ -18,7 +18,7 @@ public class ScreenStateManager {
 
 	public ScreenStateManager() {
 		// this.setState(ScreenState.LOADING);
-		this.setState(ScreenState.MENU);
+		//this.setState(ScreenState.MENU);
 	}
 
 	/**
@@ -47,7 +47,7 @@ public class ScreenStateManager {
 	 * @param state
 	 */
 	public void setState(ScreenState state) {
-		Logger.info("Chaning Screen state: " + this.getState() + " to state: " + state);
+		Logger.info("Changing Screen state: " + this.getState() + " to state: " + state);
 		this.state = state;
 		notifyObservers();
 	}
@@ -57,7 +57,9 @@ public class ScreenStateManager {
 	}
 
 	public enum ScreenState {
-		LEVEL_1_SELECTED, LEVEL_2_SELECTED, LEVEL_3_SELECTED, LEVEL_4_SELECTED, LEVEL_5_SELECTED, SETTINGS, QUIT, HIGH_SCORES, LOADING, MENU, LEVEL_SELECTION;
+		PLAY_LEVEL_1, PLAY_LEVEL_2, PLAY_LEVEL_3, PLAY_LEVEL_4, PLAY_LEVEL_5
+		, LOAD_LEVEL_1, LOAD_LEVEL_2, LOAD_LEVEL_3, LOAD_LEVEL_4, LOAD_LEVEL_5
+		, SETTINGS, QUIT, HIGH_SCORES, LOADING, MENU, LEVEL_SELECTION;
 
 	}
 }

@@ -53,10 +53,6 @@ public class GameStage extends Stage {
 
 	}
 	
-	public void loadAssets(){
-		resources.loadMap(intLevel);
-	}
-	
 	/**
 	 * Create the actor groups
 	 */

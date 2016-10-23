@@ -39,7 +39,6 @@ public class MenuStage extends Stage {
 	@Override
 	public void dispose(){
 		Logger.info("Menu Stage Dispose");
-		resources.unloadAsset(Resources.MENU_ATLAS);
 	}
 
 }

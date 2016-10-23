@@ -1,6 +1,8 @@
 package com.eric.mtd.util;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -29,6 +31,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
 //-agentlib:hprof=heap=dump,format=b
 public class Resources {
+	public static final String LOAD_ATLAS = "load/load.atlas";
 	public static final String MENU_ATLAS = "menu/menu.atlas";
 	public static final String ACTOR_ATLAS = "game/actors/actors.atlas";
 	public static final String LEVEL_SELECT_ATLAS = "level_select/level_select.atlas";
@@ -61,12 +64,11 @@ public class Resources {
 	private static ShapeRenderer shapeRenderer = new ShapeRenderer();
 	private UserPreferences userPreferences;
 	private AssetManager manager = new AssetManager();
-	private java.util.Map<String, BitmapFont> fonts;
 	
 	public Resources(UserPreferences userPreferences){
 		this.userPreferences = userPreferences;
-		loadFonts();
-		loadSkin(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
+//		loadFonts();
+//		loadSkin(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
 		Pixmap.setBlending(Blending.None);
 	}
 	public void dispose() {
@@ -78,7 +80,7 @@ public class Resources {
 		shapeRenderer.dispose();
 
 	}
-	
+
 	/**
 	 * Creates the default font for the skin.json
 	 * Creates a copy of default-font-46.
@@ -94,7 +96,7 @@ public class Resources {
 		map.put("default-font", defaultFont); 
 		return map;
 	}
-	private void loadFonts(){
+	public void loadFontsSync(){
 		Blending prevBlend = Pixmap.getBlending();
 		Pixmap.setBlending(Blending.SourceOver);
 		FileHandleResolver resolver = new InternalFileHandleResolver();
@@ -107,10 +109,21 @@ public class Resources {
 		FreeTypeFontLoaderParameter parameter_46 = createFontParam("font/palamecia titling.ttf", 46, Color.BLACK, 3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 		manager.load("default-font-46", BitmapFont.class, parameter_46 );
 		manager.finishLoading(); 
-		fonts = new HashMap<String, BitmapFont>();
-		fonts.put("default-font-16", getFont("default-font-16"));
-		fonts.put("default-font-22", getFont("default-font-22"));
-		fonts.put("default-font-46", getFont("default-font-46"));
+		Pixmap.setBlending(prevBlend);
+	}
+	
+	public void loadFonts(){
+		Blending prevBlend = Pixmap.getBlending();
+		Pixmap.setBlending(Blending.SourceOver);
+		FileHandleResolver resolver = new InternalFileHandleResolver();
+		manager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
+		manager.setLoader(BitmapFont.class, new FreetypeFontLoader(resolver));
+		FreeTypeFontLoaderParameter parameter_16 = createFontParam("font/palamecia titling.ttf", 16, Color.BLACK, 1f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		manager.load("default-font-16", BitmapFont.class, parameter_16 );
+		FreeTypeFontLoaderParameter parameter_22 = createFontParam("font/palamecia titling.ttf", 22, Color.BLACK, 1.3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		manager.load("default-font-22", BitmapFont.class, parameter_22 );
+		FreeTypeFontLoaderParameter parameter_46 = createFontParam("font/palamecia titling.ttf", 46, Color.BLACK, 3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+		manager.load("default-font-46", BitmapFont.class, parameter_46 );
 		Pixmap.setBlending(prevBlend);
 	}
 	
@@ -126,49 +139,69 @@ public class Resources {
 		
 		return parameter;
 	}
+	public void loadMapSync(int level) {
+		loadMap(level);
+		manager.finishLoading();
+	}
+	
 	public void loadMap(int level) {
 		try {
 			manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
 			manager.load("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
-			manager.finishLoading();
 			Logger.info("Map Loaded: " + "game/levels/level" + level + "/level" + level + ".tmx");
 		} catch (GdxRuntimeException e) {
 			Logger.error("Map load error", e);
 		}
 	}
 
+	public void loadSkinSync(String skinJson, String atlas) {
+		loadSkin(skinJson, atlas);
+		manager.finishLoading();
+	}
+	
 	public void loadSkin(String skinJson, String atlas) {
 		try {
 			manager.load(skinJson, Skin.class, new SkinLoader.SkinParameter(atlas, createDefaultFont()));
-			manager.finishLoading();
 			Logger.info("Skin Loaded");
 		} catch (GdxRuntimeException e) {
 			Logger.error("Load Skin Error", e);
 		}
 	}
+	public void loadAtlasSync(String file) {
+		loadAtlas(file);
+		manager.finishLoading();
+	}
+	
 	public void loadAtlas(String file) {
-		try {
-			manager.load(file, TextureAtlas.class);
-			manager.finishLoading();
-			Logger.info(file + " Atlas Loaded");
-		} catch (GdxRuntimeException e) {
-			Logger.error("Load Atlas Error", e);
+		if(!manager.isLoaded(file)){
+			try {
+				manager.load(file, TextureAtlas.class);
+				Logger.info(file + " Atlas Loaded");
+			} catch (GdxRuntimeException e) {
+				Logger.error("Load Atlas Error", e);
+			}
 		}
 	}
 
+	public void loadTextureSync(String file) {
+		loadTexture(file);
+		manager.finishLoading();
+	}
+	
 	public void loadTexture(String file) {
-		try {
-			manager.load(file, Texture.class);
-			manager.finishLoading();
-		} catch (GdxRuntimeException e) {
-			Logger.error("Load Texture Error", e);
+		if(!manager.isLoaded(file)){
+			try {
+				manager.load(file, Texture.class);
+				manager.finishLoading();
+			} catch (GdxRuntimeException e) {
+				Logger.error("Load Texture Error", e);
+			}
 		}
 	}
-
 	public TiledMap getMap(int level) {
 		if(!manager.isLoaded("game/levels/level" + level + "/level" + level + ".tmx")){
 			Logger.info("Map " + level + " is not loaded. Loading...");
-			loadMap(level);
+			loadMapSync(level);
 		}
 		return manager.get("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
 	}
@@ -180,7 +213,7 @@ public class Resources {
 	public TextureAtlas getAtlas(String file) {
 		if(!manager.isLoaded(file)){
 			Logger.info(file + " not loaded. Loading...");
-			loadAtlas(file);
+			loadAtlasSync(file);
 		}
 		return manager.get(file, TextureAtlas.class);
 	}
@@ -192,19 +225,23 @@ public class Resources {
 	public Skin getSkin(String file) {
 		if(!manager.isLoaded(file)){
 			Logger.info(file + " (skin) not loaded. Loading");
-			loadSkin(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
+			loadSkinSync(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
 		}
 		return manager.get(file, Skin.class);
 	}
-	public java.util.Map<String, BitmapFont> getFonts(){
-		if(fonts == null){
-			loadFonts();
-		}
-		return fonts;
-	}
+
 	public BitmapFont getFont(String font){
 		return manager.get(font, BitmapFont.class);
 	}
+	
+	public java.util.Map<String, BitmapFont> getFonts(){
+		java.util.Map<String, BitmapFont> fonts = new HashMap<String, BitmapFont>();
+		fonts.put("default-font-16", getFont("default-font-16"));
+		fonts.put("default-font-22", getFont("default-font-22"));
+		fonts.put("default-font-46", getFont("default-font-46"));
+		return fonts;
+	}
+	
 	public static ShapeRenderer getShapeRenderer(){
 		return shapeRenderer;
 	}
@@ -226,4 +263,12 @@ public class Resources {
 			Logger.info("Map " + level + " unloaded");
 		}
 	}
+	public AssetManager getManager(){
+		return manager;
+	}
+	public void finishLoading(){
+		manager.finishLoading();
+	}
+
+	
 }
