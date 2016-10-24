@@ -36,7 +36,6 @@ public class LevelSelectStage extends Stage {
 	@Override
 	public void dispose(){
 		Logger.info("Level Select Stage Dispose");
-		resources.unloadAsset(Resources.LEVEL_SELECT_ATLAS);
 	}
 
 }

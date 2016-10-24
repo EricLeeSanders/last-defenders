@@ -30,7 +30,7 @@ public class MenuStage extends Stage {
 		this.resources = resources;
 		resources.loadAtlas(Resources.MENU_ATLAS);
 		presenter = new MenuPresenter(screenStateManager, audio);
-		menuView = new MenuView(presenter, resources.getAtlas(Resources.MENU_ATLAS), resources.getSkin(Resources.SKIN_JSON));
+		menuView = new MenuView(presenter, resources);
 		presenter.setView(menuView);
 		this.addActor(menuView);
 		menuView.setBackground(resources.getAtlas(Resources.MENU_ATLAS));
@@ -39,7 +39,6 @@ public class MenuStage extends Stage {
 	@Override
 	public void dispose(){
 		Logger.info("Menu Stage Dispose");
-		resources.unloadAsset(Resources.MENU_ATLAS);
 	}
 
 }

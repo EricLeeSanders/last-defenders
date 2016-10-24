@@ -14,7 +14,7 @@ import com.eric.mtd.game.service.factory.interfaces.IDeathEffectFactory;
 import com.eric.mtd.game.service.factory.interfaces.IProjectileFactory;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Logger;
-import com.eric.mtd.util.MTDAudio.ProjectileSound;
+import com.eric.mtd.util.MTDAudio.MTDSound;
 import com.eric.mtd.util.Dimension;
 
 /**
@@ -52,7 +52,7 @@ public class TowerRocketLauncher extends Tower implements IRpg {
 	@Override
 	public void attackTarget() {
 		if(getTarget() != null){
-			audio.playProjectileSound(ProjectileSound.ROCKET_LAUNCH);
+			audio.playSound(MTDSound.ROCKET_LAUNCH);
 			projectileFactory.loadRPG().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS);
 		}
 	}
