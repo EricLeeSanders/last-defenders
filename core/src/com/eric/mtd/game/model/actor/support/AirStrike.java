@@ -33,7 +33,7 @@ import com.eric.mtd.game.service.factory.interfaces.IProjectileFactory;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
-import com.eric.mtd.util.MTDAudio.ProjectileSound;
+import com.eric.mtd.util.MTDAudio.MTDSound;
 import com.eric.mtd.util.Dimension;
 
 public class AirStrike extends SupportActor implements IRpg{
@@ -79,7 +79,7 @@ public class AirStrike extends SupportActor implements IRpg{
 		}
 	}
 	private void dropBomb(AirStrikeLocation location){
-		audio.playProjectileSound(ProjectileSound.ROCKET_LAUNCH);
+		audio.playSound(MTDSound.ROCKET_LAUNCH);
 		projectileFactory.loadAirStrikeBomb().initialize(this, location.getLocation(), this.getTargetGroup(),this.getGunPos(), BULLET_SIZE, AIRSTRIKE_RADIUS); 
 		
 		

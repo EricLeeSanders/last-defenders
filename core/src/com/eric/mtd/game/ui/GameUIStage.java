@@ -109,7 +109,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		inspectPresenter.setView(inspectView);
 
 		this.optionsPresenter = new OptionsPresenter(uiStateManager, gameStateManager, screenStateManager, audio);
-		this.optionsView = new OptionsView(optionsPresenter, skin);
+		this.optionsView = new OptionsView(optionsPresenter, resources);
 		optionsPresenter.setView(optionsView);
 
 		this.gameOverPresenter = new GameOverPresenter(uiStateManager, screenStateManager, player, audio);

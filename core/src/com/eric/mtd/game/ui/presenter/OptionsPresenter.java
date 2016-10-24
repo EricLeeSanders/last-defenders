@@ -89,6 +89,14 @@ public class OptionsPresenter implements IGameUIStateObserver {
 		view.setBtnMusicOn(audio.isMusicEnabled());
 	}
 	
+	public void volumeChanged(float vol){
+		audio.setMasterVolume(vol);
+	}
+	
+	public float getMasterVolume(){
+		return audio.getMasterVolume();
+	}
+	
 	@Override
 	public void changeUIState(GameUIState state) {
 		switch (state) {
@@ -96,6 +104,7 @@ public class OptionsPresenter implements IGameUIStateObserver {
 			view.optionsState();
 			break;
 		default:
+			audio.saveMasterVolume();
 			view.standByState();
 			break;
 		}
