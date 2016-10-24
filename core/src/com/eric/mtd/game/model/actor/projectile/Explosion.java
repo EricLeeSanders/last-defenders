@@ -23,7 +23,7 @@ import com.eric.mtd.game.model.actor.interfaces.IAttacker;
 import com.eric.mtd.game.model.actor.interfaces.ITargetable;
 import com.eric.mtd.game.service.factory.ActorFactory;
 import com.eric.mtd.util.MTDAudio;
-import com.eric.mtd.util.MTDAudio.ProjectileSound;
+import com.eric.mtd.util.MTDAudio.MTDSound;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 
@@ -54,7 +54,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 	 * Initializes an Explosion and deals Damage
 	 */
 	public Actor initialize(IAttacker attacker, float radius, ITargetable target, Group targetGroup, Vector2 position) {
-		audio.playProjectileSound(ProjectileSound.RPG_EXPLOSION);
+		audio.playSound(MTDSound.RPG_EXPLOSION);
 		if (targetGroup.getStage() instanceof GameStage) {
 			((GameStage) targetGroup.getStage()).getActorGroups().getProjectileGroup().addActor(this);
 		}

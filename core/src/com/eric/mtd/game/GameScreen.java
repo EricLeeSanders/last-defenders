@@ -51,6 +51,7 @@ public class GameScreen extends AbstractScreen {
 		gameUIStage = new GameUIStage(player, actorGroups, actorFactory, uiStateManager, levelStateManager, gameStateManager
 						, screenStateManager, super.getInputMultiplexer(), getViewport(), gameStage.getMap(), resources, audio);
 		super.show();
+		audio.turnOffMusic();
 		GLProfiler.enable();
 		createFramesField(resources.getSkin(Resources.SKIN_JSON));
 	}

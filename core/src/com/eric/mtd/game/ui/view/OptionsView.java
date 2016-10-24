@@ -2,9 +2,14 @@ package com.eric.mtd.game.ui.view;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -28,59 +33,122 @@ import com.eric.mtd.util.Resources;
 public class OptionsView extends Group implements IOptionsView {
 	private OptionsPresenter presenter;
 	private TextButton btnResume, btnNewGame, btnMainMenu;
-	private Label lblTitle;
-	private ImageButton btnSound, btnMusic;
-
-	public OptionsView(OptionsPresenter presenter, Skin skin) {
+	private CheckBox btnShowRanges, btnSound, btnMusic;
+	private Image volSliderBg;
+	private float sliderEndPos, sliderStartPos;
+	public OptionsView(OptionsPresenter presenter, Resources resources) {
 		this.presenter = presenter;
 		this.setTransform(false);
-		createControls(skin);
+		createControls(resources);
+	}
+	
+	public void act(float delta){
+		super.act(delta);
+		//This is a bit of a hack, but I need this here for the initial load of the screen.
+        float startX = sliderStartPos + sliderEndPos * presenter.getMasterVolume();
+        volSliderBg.setX(startX);
+        volSliderBg.setWidth(sliderEndPos - sliderEndPos * presenter.getMasterVolume());
 	}
 
 	/**
 	 * Create controls with MTD Widgets
 	 */
-	public void createControls(Skin skin) {
-		Table table = new Table();
-		table.setBackground(skin.getDrawable("main-panel-hollow"));
-		table.setSize(322,360);
-		table.setPosition((Resources.VIRTUAL_WIDTH/2)-(table.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(table.getHeight()/2));
+	public void createControls(Resources resources) {
+		Skin skin = resources.getSkin(Resources.SKIN_JSON);
+		Table mainTable = new Table();
+		mainTable.setBackground(skin.getDrawable("main-panel-hollow"));
+		mainTable.setSize(500,360);
+		mainTable.setPosition((Resources.VIRTUAL_WIDTH/2)-(mainTable.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(mainTable.getHeight()/2));
 		//table.debug();
-		this.addActor(table);
+		this.addActor(mainTable);
 		
-		lblTitle = new Label("Options", skin);
-		lblTitle.setPosition(table.getX() + (table.getWidth()/2) - (lblTitle.getWidth()/2)
-					,table.getY() + table.getHeight() - lblTitle.getHeight() );
+		Label lblTitle = new Label("Options", skin);
+		lblTitle.setPosition(mainTable.getX() + (mainTable.getWidth()/2) - (lblTitle.getWidth()/2)
+					,mainTable.getY() + mainTable.getHeight() - lblTitle.getHeight() );
 		lblTitle.setAlignment(Align.center);
 		lblTitle.setFontScale(0.7f);
 		this.addActor(lblTitle);
 		
-		table.row();
+		//mainTable.row();
+
 		btnResume = new TextButton("Resume",skin);
 		btnResume.getLabel().setFontScale(0.45f);
-		table.add(btnResume).width(128).height(44).spaceBottom(10).padTop(30).colspan(2);
 		setBtnResumeListener();
 		
-		table.row();
 		btnNewGame = new TextButton("New Game",skin);
 		btnNewGame.getLabel().setFontScale(0.45f);
-		table.add(btnNewGame).width(128).height(44).spaceBottom(10).colspan(2);
 		setBtnNewGameListener();
 
-		table.row();
 		btnMainMenu = new TextButton("Main Menu",skin);
 		btnMainMenu.getLabel().setFontScale(0.45f);
-		table.add(btnMainMenu).width(128).height(44).spaceBottom(10).colspan(2);
 		setBtnMainMenuListener();
 		
-		table.row();
-		btnSound = new ImageButton(skin, "sound");
-		setBtnSoundListener();
-		table.add(btnSound).width(64).height(64);
+		btnSound = new CheckBox(" Sound On", skin);
+		btnSound.getLabel().setFontScale(0.45f);
+		btnSound.getImageCell().width(32).height(32);
+		setBtnSoundListener(btnSound);
 		
-		btnMusic = new ImageButton(skin, "music");
-		setBtnMusicListener();
-		table.add(btnMusic).width(64).height(64).spaceRight(10);
+		btnMusic = new CheckBox(" Music On", skin);
+		btnMusic.getLabel().setFontScale(0.45f);
+		btnMusic.getImageCell().width(32).height(32);
+		setBtnMusicListener(btnMusic);
+		
+		btnShowRanges = new CheckBox(" Show Ranges", skin);
+		btnShowRanges.getLabel().setFontScale(0.45f);
+		btnShowRanges.getImageCell().width(32).height(32);
+		setBtnShowRangesListener(btnShowRanges);
+		
+		Label lblVol = new Label("Volume", skin);
+		lblVol.setFontScale(0.5f);
+		
+		Stack volumeStack = new Stack();
+		volumeStack.setTransform(false);
+		
+		
+		Slider volumeSlider = new Slider(0, 1f, 0.01f, false, skin);
+		volumeSlider.getStyle().knob.setMinWidth(33);
+		volumeSlider.getStyle().knob.setMinHeight(24);
+		volumeSlider.getStyle().background.setMinHeight(22);
+		volumeSlider.getStyle().background.setMinWidth(300);
+		volumeSlider.setValue(presenter.getMasterVolume());
+		volSliderListener(volumeSlider);
+	
+		
+		Image volSliderFull = new Image(resources.getAtlas(Resources.SKIN_ATLAS).findRegion("slider-full"));
+		volSliderFull.setSize(300, 22);
+		
+		volSliderBg = new Image(resources.getAtlas(Resources.SKIN_ATLAS).findRegion("slider-bg"));
+		volSliderBg.setSize(300, 22);
+	
+		
+		this.sliderStartPos = volSliderBg.getX();
+		this.sliderEndPos = volSliderBg.getX() + volSliderBg.getWidth() - 4;
+		
+		volumeStack.add(volSliderFull);
+		volumeStack.add(volSliderBg);
+		volumeStack.add(volumeSlider);
+		
+		mainTable.add(btnResume).width(128).height(44).spaceBottom(10);
+		mainTable.add(btnShowRanges).left().spaceLeft(15).spaceBottom(10);
+		
+		mainTable.row();
+		
+		mainTable.add(btnNewGame).width(128).height(44).spaceBottom(10);
+		mainTable.add(btnMusic).left().spaceLeft(15).spaceBottom(10);
+		
+		mainTable.row();
+		
+		mainTable.add(btnMainMenu).width(128).height(44).spaceBottom(10);
+		mainTable.add(btnSound).left().spaceLeft(15).spaceBottom(10);
+		
+		mainTable.row();
+		
+		mainTable.add(lblVol).colspan(2);
+		
+		mainTable.row();
+		
+		mainTable.add(volumeStack).colspan(2).width(300).height(18);
+        
 	}
 
 	private void setBtnResumeListener() {
@@ -115,8 +183,20 @@ public class OptionsView extends Group implements IOptionsView {
 		});
 
 	}
+	
+	private void setBtnShowRangesListener(Button btnShowRanges) {
+		btnShowRanges.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				presenter.showRangesPressed();
+			}
+		});
 
-	private void setBtnSoundListener(){
+	}
+
+
+	private void setBtnSoundListener(Button btnSound){
 		btnSound.addListener(new ClickListener(){
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -126,7 +206,7 @@ public class OptionsView extends Group implements IOptionsView {
 		});
 	}
 	
-	private void setBtnMusicListener(){
+	private void setBtnMusicListener(Button btnMusic){
 		btnMusic.addListener(new ClickListener(){
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -136,10 +216,31 @@ public class OptionsView extends Group implements IOptionsView {
 		});
 	}
 	
+	private void volSliderListener(final Slider slider){
+		slider.addListener(new ClickListener(){
+			@Override
+			public void touchDragged (InputEvent event, float x, float y, int pointer) {
+				super.touchDragged(event, x, y, pointer);
+				moveSlider();
+			}
+			@Override
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				super.touchDown(event, x, y, pointer, button);
+				moveSlider();
+				return true;
+			}
+			
+			private void moveSlider(){
+		        float startX = sliderStartPos + sliderEndPos * slider.getValue();
+		        presenter.volumeChanged(slider.getValue());
+		        volSliderBg.setX(startX);
+		        volSliderBg.setWidth(sliderEndPos - sliderEndPos * slider.getValue());
+			}
+		});
+	}
 	@Override
 	public void optionsState() {
 		this.setVisible(true);
-
 	}
 
 	@Override
@@ -147,7 +248,13 @@ public class OptionsView extends Group implements IOptionsView {
 		this.setVisible(false);
 
 	}
-
+	
+	@Override
+	public void setBtnShowRangesOn(boolean showRangesOn) {
+		btnShowRanges.setChecked(showRangesOn);
+		
+	}
+	
 	@Override
 	public void setBtnSoundOn(boolean soundOn) {
 		btnSound.setChecked(soundOn);

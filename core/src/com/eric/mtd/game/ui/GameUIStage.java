@@ -67,6 +67,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	private ActorFactory actorFactory;
 	private InputMultiplexer imp;
 	private Map map;
+	private Resources resources;
 	public GameUIStage(Player player, ActorGroups actorGroups, ActorFactory actorFactory
 			, GameUIStateManager uiStateManager, LevelStateManager levelStateManager
 			, GameStateManager gameStateManager, ScreenStateManager screenStateManager
@@ -80,6 +81,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		this.uiStateManager = uiStateManager;
 		this.levelStateManager = levelStateManager;
 		this.gameStateManager = gameStateManager;
+		this.resources = resources;
 		this.screenStateManager = screenStateManager;
 		uiStateManager.attach(this);
 		imp.addProcessor(this);
@@ -108,8 +110,8 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		this.inspectView = new InspectView(inspectPresenter, skin);
 		inspectPresenter.setView(inspectView);
 
-		this.optionsPresenter = new OptionsPresenter(uiStateManager, gameStateManager, screenStateManager, audio);
-		this.optionsView = new OptionsView(optionsPresenter, skin);
+		this.optionsPresenter = new OptionsPresenter(uiStateManager, gameStateManager, screenStateManager, resources, audio);
+		this.optionsView = new OptionsView(optionsPresenter, resources);
 		optionsPresenter.setView(optionsView);
 
 		this.gameOverPresenter = new GameOverPresenter(uiStateManager, screenStateManager, player, audio);
@@ -148,6 +150,10 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	}
 	@Override
 	public void changeUIState(GameUIState state) {
+		if(resources.getUserPreferences().getPreferences().getBoolean("showRanges", false)){
+			showTowerRanges(true);
+			return;
+		}
 		switch (state) {
 		case PLACING_SUPPORT:
 		case PLACING_AIRSTRIKE:

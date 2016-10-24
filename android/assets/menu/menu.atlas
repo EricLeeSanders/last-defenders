@@ -1,13 +1,20 @@
 
 menu.png
-size: 1024,512
+size: 2048,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 background
   rotate: false
-  xy: 1, 1
+  xy: 1283, 1
   size: 640, 360
   orig: 640, 360
+  offset: 0, 0
+  index: -1
+menu_bottom
+  rotate: false
+  xy: 1, 155
+  size: 1280, 206
+  orig: 1280, 206
   offset: 0, 0
   index: -1
