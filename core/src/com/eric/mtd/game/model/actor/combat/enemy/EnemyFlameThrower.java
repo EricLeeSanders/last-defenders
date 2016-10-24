@@ -14,7 +14,7 @@ import com.eric.mtd.game.service.factory.interfaces.IDeathEffectFactory;
 import com.eric.mtd.game.service.factory.interfaces.IProjectileFactory;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Logger;
-import com.eric.mtd.util.MTDAudio.ProjectileSound;
+import com.eric.mtd.util.MTDAudio.MTDSound;
 import com.eric.mtd.util.Dimension;
 
 /**
@@ -47,7 +47,7 @@ public class EnemyFlameThrower extends Enemy implements IFlame {
 	@Override
 	public void attackTarget() {
 		if(getTarget() != null){
-			audio.playProjectileSound(ProjectileSound.FLAME_BURST);
+			audio.playSound(MTDSound.FLAME_BURST);
 			projectileFactory.loadFlame().initialize(this, this.getTarget(), getTargetGroup(), getFlameSize());
 		}
 	}

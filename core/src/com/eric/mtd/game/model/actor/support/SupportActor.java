@@ -24,7 +24,6 @@ import com.eric.mtd.game.service.factory.ActorFactory;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
-import com.eric.mtd.util.MTDAudio.ProjectileSound;
 import com.eric.mtd.util.Dimension;
 
 public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{

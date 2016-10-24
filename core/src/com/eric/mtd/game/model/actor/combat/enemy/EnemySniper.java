@@ -12,7 +12,7 @@ import com.eric.mtd.game.service.factory.ActorFactory.CombatActorPool;
 import com.eric.mtd.game.service.factory.interfaces.IDeathEffectFactory;
 import com.eric.mtd.game.service.factory.interfaces.IProjectileFactory;
 import com.eric.mtd.util.MTDAudio;
-import com.eric.mtd.util.MTDAudio.ProjectileSound;
+import com.eric.mtd.util.MTDAudio.MTDSound;
 import com.eric.mtd.util.Dimension;
 import com.eric.mtd.util.Logger;
 
@@ -48,7 +48,7 @@ public class EnemySniper extends Enemy {
 	@Override
 	public void attackTarget() {
 		if(getTarget() != null){
-			audio.playProjectileSound(ProjectileSound.SNIPER);
+			audio.playSound(MTDSound.SNIPER);
 			projectileFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
 		}
 	}

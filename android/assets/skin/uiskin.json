@@ -10,11 +10,11 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_disabled },
-	toggle: { down: default-round-down, checked: default-round-down, up: default-round }
+	toggle: { down: text_button_normal, checked: text_button_normal, up: text_button_normal }
 },
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
-	default: { down: default-round-down, up: default-round },
-	toggle: { down: default-round-down, checked: default-round-down, up: default-round },
+	default: { down: text_button_normal, up: text_button_normal },
+	toggle: { down: text_button_normal, checked: text_button_normal, up: text_button_normal },
 	sound: {checked: sound_normal, checkedOver: sound_over, down: sound_disabled, up: sound_disabled},
 	music: {checked: music_normal, checkedOver: music_over, down: music_disabled, up: music_disabled},
 	select: {checked: select_normal, imageOver: select_over, imageDown: select_pressed, imageUp: select_normal, disabled: select_disabled},
@@ -38,11 +38,12 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	support_hud: {down: support_normal, up: support_normal, over: support_normal, disabled: support_normal},
 	arrow_right: {down: right_pressed, up: right_normal, over: right_over, disabled: right_disabled},
 	arrow_up: {down: up_pressed, up: up_normal, over: up_over, disabled: up_disabled},
-	arrow_down: {down: down_pressed, up: down_normal, over: down_over, disabled: down_disabled}
+	arrow_down: {down: down_pressed, up: down_normal, over: down_over, disabled: down_disabled},
+	play: {down: play_normal, up: play_normal, over: play_normal, disabled: play_normal}
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_disabled, font: default-font, fontColor: white },
-	toggle: { down: default-round-down, up: default-round, checked: default-round-down, font: default-font, fontColor: white, downFontColor: red },
+	toggle: { down: text_button_normal, up: text_button_normal, checked: text_button_normal, font: default-font, fontColor: white, downFontColor: red },
 	discharge: { down: discharge, up: discharge, disabled: discharge_disabled, font: default-font, fontColor: white},
 	upgrade_attack: {down: upgrade_attack, up: upgrade_attack, disabled: upgrade_attack_disabled, font: default-font, fontColor: white},
 	upgrade_speed: {down: upgrade_speed, up: upgrade_speed, disabled: upgrade_speed_disabled, font: default-font, fontColor: white},
@@ -72,20 +73,20 @@ com.badlogic.gdx.scenes.scene2d.ui.SplitPane$SplitPaneStyle: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	default: { titleFont: default-font, background: default-window, titleFontColor: white },
-	dialog: { titleFont: default-font, background: main-panel-horz, titleFontColor: white, stageBackground: dialogDim }
+	dialog: { titleFont: default-font, background: main-panel, titleFontColor: white, stageBackground: dialogDim }
 },
 com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle: {
 	default-horizontal: { background: default-slider, knob: default-slider-knob },
 	default-vertical: { background: default-slider, knob: default-round-large }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
-	default-horizontal: { background: default-slider, knob: default-slider-knob },
+	default-horizontal: { background: slider-frame, knob: slider-knob },
 	default-vertical: { background: default-slider, knob: default-round-large }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: { font: default-font, fontColor: white },
 	hollow_label: {background: hollow_label, font: default-font, fontColor: white},
-	label_normal: {background: label_normal, font: default-font, fontColor: white},
+	label_normal: {background: hollow_label, font: default-font, fontColor: white},
 	money_label: {background: money_label, font: default-font, fontColor: white},
 	kills_label: {background: kills_label, font: default-font, fontColor: white}
 },

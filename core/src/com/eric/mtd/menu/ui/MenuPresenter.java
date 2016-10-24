@@ -44,5 +44,12 @@ public class MenuPresenter {
 		audio.changeMusicEnabled();
 		view.setBtnMusicOn(audio.isMusicEnabled());
 	}
+	public void volumeChanged(float vol){
+		audio.setMasterVolume(vol);
+	}
+	
+	public float getMasterVolume(){
+		return audio.getMasterVolume();
+	}
 
 }
