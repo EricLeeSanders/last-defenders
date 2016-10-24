@@ -224,9 +224,10 @@ public class OptionsView extends Group implements IOptionsView {
 				moveSlider();
 			}
 			@Override
-			public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				super.touchDown(event, x, y, pointer, button);
 				moveSlider();
+				return true;
 			}
 			
 			private void moveSlider(){
