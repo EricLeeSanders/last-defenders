@@ -38,7 +38,8 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	support_hud: {down: support_normal, up: support_normal, over: support_normal, disabled: support_normal},
 	arrow_right: {down: right_pressed, up: right_normal, over: right_over, disabled: right_disabled},
 	arrow_up: {down: up_pressed, up: up_normal, over: up_over, disabled: up_disabled},
-	arrow_down: {down: down_pressed, up: down_normal, over: down_over, disabled: down_disabled}
+	arrow_down: {down: down_pressed, up: down_normal, over: down_over, disabled: down_disabled},
+	play: {down: play_normal, up: play_normal, over: play_normal, disabled: play_normal}
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_disabled, font: default-font, fontColor: white },

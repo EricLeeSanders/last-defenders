@@ -32,11 +32,9 @@ import com.eric.mtd.util.Resources;
 public class OptionsView extends Group implements IOptionsView {
 	private OptionsPresenter presenter;
 	private TextButton btnResume, btnNewGame, btnMainMenu;
-	private Label lblTitle;
 	private CheckBox btnRanges, btnSound, btnMusic;
 	private Image volSliderBg;
 	private float sliderEndPos, sliderStartPos;
-	private boolean firstRun = true;
 	public OptionsView(OptionsPresenter presenter, Resources resources) {
 		this.presenter = presenter;
 		this.setTransform(false);
@@ -63,7 +61,7 @@ public class OptionsView extends Group implements IOptionsView {
 		//table.debug();
 		this.addActor(mainTable);
 		
-		lblTitle = new Label("Options", skin);
+		Label lblTitle = new Label("Options", skin);
 		lblTitle.setPosition(mainTable.getX() + (mainTable.getWidth()/2) - (lblTitle.getWidth()/2)
 					,mainTable.getY() + mainTable.getHeight() - lblTitle.getHeight() );
 		lblTitle.setAlignment(Align.center);
