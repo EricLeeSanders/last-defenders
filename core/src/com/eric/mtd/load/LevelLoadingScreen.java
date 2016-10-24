@@ -38,14 +38,12 @@ public class LevelLoadingScreen extends AbstractScreen{
 	private float endPos = 528;
 	private float startPos = 55;
 	private int intTip;
-	private MTDAudio audio;
-	public LevelLoadingScreen(GameStateManager gameStateManager, ScreenStateManager screenStateManager, Resources resources, ScreenState nextScreen, int level, MTDAudio audio ) {
+	public LevelLoadingScreen(GameStateManager gameStateManager, ScreenStateManager screenStateManager, Resources resources, ScreenState nextScreen, int level ) {
 		super(gameStateManager);
 		this.resources = resources;
 		this.screenStateManager = screenStateManager;
 		this.nextScreen = nextScreen;
 		this.level = level;
-		this.audio = audio;
 		this.stage = new Stage(new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, new OrthographicCamera()));
 		super.addInputProcessor(stage);
 	}
@@ -53,8 +51,8 @@ public class LevelLoadingScreen extends AbstractScreen{
 	@Override
 	public void show() {
 		super.show();
-		audio.turnOffMusic();
 		loadTime = 0;
+		
 		resources.unloadAsset(Resources.LEVEL_SELECT_ATLAS);
 		resources.unloadAsset(Resources.MENU_ATLAS);
 		
