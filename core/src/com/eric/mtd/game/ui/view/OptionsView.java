@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.eric.mtd.game.ui.presenter.OptionsPresenter;
 import com.eric.mtd.game.ui.view.interfaces.IOptionsView;
 import com.eric.mtd.util.Logger;
@@ -86,16 +87,19 @@ public class OptionsView extends Group implements IOptionsView {
 		btnSound = new CheckBox(" Sound On", skin);
 		btnSound.getLabel().setFontScale(0.45f);
 		btnSound.getImageCell().width(32).height(32);
+		btnSound.getImage().setScaling(Scaling.stretch);
 		setBtnSoundListener(btnSound);
 		
 		btnMusic = new CheckBox(" Music On", skin);
 		btnMusic.getLabel().setFontScale(0.45f);
 		btnMusic.getImageCell().width(32).height(32);
+		btnMusic.getImage().setScaling(Scaling.stretch);
 		setBtnMusicListener(btnMusic);
 		
 		btnShowRanges = new CheckBox(" Show Ranges", skin);
 		btnShowRanges.getLabel().setFontScale(0.45f);
 		btnShowRanges.getImageCell().width(32).height(32);
+		btnShowRanges.getImage().setScaling(Scaling.stretch);
 		setBtnShowRangesListener(btnShowRanges);
 		
 		Label lblVol = new Label("Volume", skin);

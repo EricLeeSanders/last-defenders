@@ -69,7 +69,7 @@ public class MTDAudio {
 		smallClick.play(0);
 		largeClick.play(0);
 
-		setMasterVolume(userPreferences.getPreferences().getFloat("masterVolume", 100));
+		setMasterVolume(userPreferences.getPreferences().getFloat("masterVolume", 1));
 		setSoundEnabled(userPreferences.getPreferences().getBoolean("soundEnabled", true));
 		setMusicEnabled(userPreferences.getPreferences().getBoolean("musicEnabled", true));
 

@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.eric.mtd.util.ActorUtil;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
@@ -110,11 +111,12 @@ public class MenuView extends Group implements IMenuView {
 		chkBoxSound = new CheckBox(" Sound On", skin);
 		chkBoxSound.getLabel().setFontScale(0.45f);
 		chkBoxSound.getImageCell().width(32).height(32);
+		chkBoxSound.getImage().setScaling(Scaling.stretch);
 		
 		chkBoxMusic = new CheckBox(" Music On", skin);
 		chkBoxMusic.getLabel().setFontScale(0.45f);
 		chkBoxMusic.getImageCell().width(32).height(32);
-
+		chkBoxMusic.getImage().setScaling(Scaling.stretch);
 		
 		Label lblVol = new Label("Volume", skin);
 		lblVol.setFontScale(0.5f);
