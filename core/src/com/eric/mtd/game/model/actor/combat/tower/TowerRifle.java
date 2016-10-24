@@ -12,8 +12,8 @@ import com.eric.mtd.game.service.factory.ActorFactory.CombatActorPool;
 import com.eric.mtd.game.service.factory.interfaces.IDeathEffectFactory;
 import com.eric.mtd.game.service.factory.interfaces.IProjectileFactory;
 import com.eric.mtd.util.MTDAudio;
+import com.eric.mtd.util.MTDAudio.MTDSound;
 import com.eric.mtd.util.Logger;
-import com.eric.mtd.util.MTDAudio.ProjectileSound;
 import com.eric.mtd.util.Dimension;
 
 /**
@@ -51,7 +51,7 @@ public class TowerRifle extends Tower {
 	@Override
 	public void attackTarget() {
 		if(getTarget() != null){
-			audio.playProjectileSound(ProjectileSound.RIFLE);
+			audio.playSound(MTDSound.RIFLE);
 			projectileFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
 		}
 

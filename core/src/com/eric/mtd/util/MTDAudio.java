@@ -1,5 +1,8 @@
 package com.eric.mtd.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -12,14 +15,15 @@ import com.badlogic.gdx.audio.Sound;
  */
 public class MTDAudio {
 	private Music music;
-	private Sound rpgExplosion, rocketLaunch, flameBurst, rifleShot, sniperShot, machineGunShot,
-			vehicleExplosion, actorPlace, sell, smallClick, largeClick;
+	private Map<MTDSound, Sound> sounds = new HashMap<MTDSound, Sound>();
+	//private Sound rpgExplosion, rocketLaunch, flameBurst, rifleShot, sniperShot, machineGunShot,
+			//vehicleExplosion, actorPlace, sell, smallClick, largeClick;
 	private boolean musicEnabled, soundEnabled;
 	private UserPreferences userPreferences;
+	private float volume;
 	
 	public MTDAudio(UserPreferences userPreferences){
 		this.userPreferences = userPreferences;
-		load();
 	}
 
 	/**
@@ -29,17 +33,29 @@ public class MTDAudio {
 		music = Gdx.audio.newMusic(Gdx.files.internal(Resources.MENU_MUSIC));
 		music.setLooping(true);
 
-		rpgExplosion = Gdx.audio.newSound(Gdx.files.internal(Resources.RPG_EXPLOSION_SOUND));
-		rocketLaunch = Gdx.audio.newSound(Gdx.files.internal(Resources.ROCKET_LAUNCH_SOUND));
-		flameBurst = Gdx.audio.newSound(Gdx.files.internal(Resources.FLAME_SOUND));
-		rifleShot = Gdx.audio.newSound(Gdx.files.internal(Resources.RIFLE_SHOT_SOUND));
-		sniperShot = Gdx.audio.newSound(Gdx.files.internal(Resources.SNIPER_SHOT_SOUND));
-		machineGunShot = Gdx.audio.newSound(Gdx.files.internal(Resources.MACHINE_GUN_SHOT_SOUND));
-		vehicleExplosion = Gdx.audio.newSound(Gdx.files.internal(Resources.VEHICLE_EXPLOSION_SOUND));
-		actorPlace = Gdx.audio.newSound(Gdx.files.internal(Resources.ACTOR_PLACE_SOUND));
-		sell = Gdx.audio.newSound(Gdx.files.internal(Resources.SELL_SOUND));
-		smallClick = Gdx.audio.newSound(Gdx.files.internal(Resources.SMALL_CLICK));
-		largeClick = Gdx.audio.newSound(Gdx.files.internal(Resources.LARGE_CLICK));
+		Sound rpgExplosion = Gdx.audio.newSound(Gdx.files.internal(Resources.RPG_EXPLOSION_SOUND));
+		Sound rocketLaunch = Gdx.audio.newSound(Gdx.files.internal(Resources.ROCKET_LAUNCH_SOUND));
+		Sound flameBurst = Gdx.audio.newSound(Gdx.files.internal(Resources.FLAME_SOUND));
+		Sound rifleShot = Gdx.audio.newSound(Gdx.files.internal(Resources.RIFLE_SHOT_SOUND));
+		Sound sniperShot = Gdx.audio.newSound(Gdx.files.internal(Resources.SNIPER_SHOT_SOUND));
+		Sound machineGunShot = Gdx.audio.newSound(Gdx.files.internal(Resources.MACHINE_GUN_SHOT_SOUND));
+		Sound vehicleExplosion = Gdx.audio.newSound(Gdx.files.internal(Resources.VEHICLE_EXPLOSION_SOUND));
+		Sound actorPlace = Gdx.audio.newSound(Gdx.files.internal(Resources.ACTOR_PLACE_SOUND));
+		Sound sell = Gdx.audio.newSound(Gdx.files.internal(Resources.SELL_SOUND));
+		Sound smallClick = Gdx.audio.newSound(Gdx.files.internal(Resources.SMALL_CLICK));
+		Sound largeClick = Gdx.audio.newSound(Gdx.files.internal(Resources.LARGE_CLICK));
+		
+		sounds.put(MTDSound.RPG_EXPLOSION, rpgExplosion);
+		sounds.put(MTDSound.ROCKET_LAUNCH, rocketLaunch);
+		sounds.put(MTDSound.FLAME_BURST, flameBurst);
+		sounds.put(MTDSound.RIFLE, rifleShot);
+		sounds.put(MTDSound.SNIPER, sniperShot);
+		sounds.put(MTDSound.MACHINE_GUN, machineGunShot);
+		sounds.put(MTDSound.VEHICLE_EXPLOSION, vehicleExplosion);
+		sounds.put(MTDSound.ACTOR_PLACE, actorPlace);
+		sounds.put(MTDSound.SELL, sell);
+		sounds.put(MTDSound.SMALL_CLICK, smallClick);
+		sounds.put(MTDSound.LARGE_CLICK, largeClick);
 		
 		rpgExplosion.play(0);
 		rocketLaunch.play(0);
@@ -52,15 +68,30 @@ public class MTDAudio {
 		sell.play(0);
 		smallClick.play(0);
 		largeClick.play(0);
-				
+
+		setMasterVolume(userPreferences.getPreferences().getFloat("masterVolume", 100));
 		setSoundEnabled(userPreferences.getPreferences().getBoolean("soundEnabled", true));
 		setMusicEnabled(userPreferences.getPreferences().getBoolean("musicEnabled", true));
+
+	}
+	
+	public float getMasterVolume(){
+		return volume;
 	}
 
-	public void playVehicleExplosion() {
-		vehicleExplosion.play();
+	public void setMasterVolume(float volume){
+		this.volume = volume;
+		if(musicEnabled){
+			music.setVolume(volume);
+		}
 	}
-
+	
+	public void saveMasterVolume(){
+		Logger.info("Saving master volume");
+		userPreferences.getPreferences().putFloat("masterVolume", volume);
+		userPreferences.getPreferences().flush();
+	}
+	
 	public void playMusic() {
 		Logger.info("Playing Music");
 		music.play();
@@ -77,17 +108,10 @@ public class MTDAudio {
 	}
 	public void disposeSound() {
 		Logger.info("Disposing Sounds");
-		rpgExplosion.dispose();
-		rocketLaunch.dispose();
-		flameBurst.dispose();
-		rifleShot.dispose();
-		sniperShot.dispose();
-		machineGunShot.dispose();
-		vehicleExplosion.dispose();
-		actorPlace.dispose();
-		sell.dispose();
-		smallClick.dispose();
-		largeClick.dispose();
+		for (MTDSound key : sounds.keySet()) {
+		    Sound sound = sounds.get(key);
+		    sound.dispose();
+		}
 	}
 	public void dispose(){
 		disposeMusic();
@@ -95,55 +119,17 @@ public class MTDAudio {
 	}
 	
 	public void playSound(MTDSound sound){
-		if(soundEnabled) {
-		
-			switch (sound) {
-			case ACTOR_PLACE:
-				actorPlace.play();
-				break;
-			case SELL:
-				sell.play();
-				break;
-			case SMALL_CLICK:
-				smallClick.play();
-				break;
-			case LARGE_CLICK:
-				largeClick.play();
-				break;
-			}
+		if(!soundEnabled){
+			return;
 		}
-	}
-	
-	public void playProjectileSound(ProjectileSound sound) {
-		if(soundEnabled){
-			
-			switch (sound) {
-			case RIFLE:
-				rifleShot.play();
-				break;
-			case SNIPER:
-				sniperShot.play();
-				break;
-			case MACHINE_GUN:
-				machineGunShot.play();
-				break;
-			case RPG_EXPLOSION:
-				rpgExplosion.play();
-				break;
-			case ROCKET_LAUNCH:
-				rocketLaunch.play();
-				break;
-			case FLAME_BURST:
-				flameBurst.play();
-				break;
-			}
+		
+		Sound playSound = sounds.get(sound);
+		if(playSound != null){
+			playSound.play(volume);
 		}
 	}
 	public enum MTDSound {
-		ACTOR_PLACE, SELL, SMALL_CLICK, LARGE_CLICK;
-	}
-	public enum ProjectileSound {
-		RIFLE, SNIPER, MACHINE_GUN, RPG_EXPLOSION, ROCKET_LAUNCH, FLAME_BURST;
+		ACTOR_PLACE, SELL, SMALL_CLICK, LARGE_CLICK, RIFLE, SNIPER, MACHINE_GUN, RPG_EXPLOSION, VEHICLE_EXPLOSION, ROCKET_LAUNCH, FLAME_BURST;
 	}
 	public void changeMusicEnabled(){
 		setMusicEnabled(musicEnabled ? false : true);
@@ -151,12 +137,7 @@ public class MTDAudio {
 	public void setMusicEnabled(boolean enabled){
 		Logger.info("Setting music to " + enabled);
 		musicEnabled = enabled;
-		
-		if(enabled){
-			music.setVolume(100);
-		} else {
-			music.setVolume(0);
-		}
+		music.setVolume(enabled ? volume : 0);
 		
 		userPreferences.getPreferences().putBoolean("musicEnabled", enabled);
 		userPreferences.getPreferences().flush();
