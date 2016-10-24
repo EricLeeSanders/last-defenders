@@ -80,6 +80,10 @@ public class Resources {
 		shapeRenderer.dispose();
 
 	}
+	
+	public UserPreferences getUserPreferences(){
+		return userPreferences;
+	}
 
 	/**
 	 * Creates the default font for the skin.json

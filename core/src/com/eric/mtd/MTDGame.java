@@ -73,19 +73,19 @@ public class MTDGame extends Game implements IScreenStateObserver {
 			this.setScreen(new GameScreen(5, gameStateManager, screenStateManager, resources, audio));    
 			break;
 		case LOAD_LEVEL_1:
-			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_1, 1));
+			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_1, 1, audio));
 			break;
 		case LOAD_LEVEL_2:
-			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_2, 2));
+			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_2, 2, audio));
 			break;
 		case LOAD_LEVEL_3:
-			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_3, 3)); 
+			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_3, 3, audio)); 
 			break;
 		case LOAD_LEVEL_4:
-			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_4, 4));
+			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_4, 4, audio));
 			break;
 		case LOAD_LEVEL_5:
-			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_5, 5));
+			this.setScreen(new LevelLoadingScreen(gameStateManager, screenStateManager, resources, ScreenState.PLAY_LEVEL_5, 5, audio));
 			break;
 		default:
 			this.setScreen(new MenuScreen(screenStateManager,gameStateManager, resources, audio));

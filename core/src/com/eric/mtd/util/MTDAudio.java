@@ -94,7 +94,9 @@ public class MTDAudio {
 	
 	public void playMusic() {
 		Logger.info("Playing Music");
-		music.play();
+		if(!music.isPlaying()){
+			music.play();
+		}
 	}
 	
 	public void turnOffMusic(){

@@ -2,6 +2,7 @@ package com.eric.mtd.game.ui.view;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -32,7 +33,7 @@ import com.eric.mtd.util.Resources;
 public class OptionsView extends Group implements IOptionsView {
 	private OptionsPresenter presenter;
 	private TextButton btnResume, btnNewGame, btnMainMenu;
-	private CheckBox btnRanges, btnSound, btnMusic;
+	private CheckBox btnShowRanges, btnSound, btnMusic;
 	private Image volSliderBg;
 	private float sliderEndPos, sliderStartPos;
 	public OptionsView(OptionsPresenter presenter, Resources resources) {
@@ -85,16 +86,17 @@ public class OptionsView extends Group implements IOptionsView {
 		btnSound = new CheckBox(" Sound On", skin);
 		btnSound.getLabel().setFontScale(0.45f);
 		btnSound.getImageCell().width(32).height(32);
+		setBtnSoundListener(btnSound);
 		
 		btnMusic = new CheckBox(" Music On", skin);
 		btnMusic.getLabel().setFontScale(0.45f);
 		btnMusic.getImageCell().width(32).height(32);
-
+		setBtnMusicListener(btnMusic);
 		
-		btnRanges = new CheckBox(" Show Ranges", skin);
-		btnRanges.getLabel().setFontScale(0.45f);
-		btnRanges.getImageCell().width(32).height(32);
-
+		btnShowRanges = new CheckBox(" Show Ranges", skin);
+		btnShowRanges.getLabel().setFontScale(0.45f);
+		btnShowRanges.getImageCell().width(32).height(32);
+		setBtnShowRangesListener(btnShowRanges);
 		
 		Label lblVol = new Label("Volume", skin);
 		lblVol.setFontScale(0.5f);
@@ -127,7 +129,7 @@ public class OptionsView extends Group implements IOptionsView {
 		volumeStack.add(volumeSlider);
 		
 		mainTable.add(btnResume).width(128).height(44).spaceBottom(10);
-		mainTable.add(btnRanges).left().spaceLeft(15).spaceBottom(10);
+		mainTable.add(btnShowRanges).left().spaceLeft(15).spaceBottom(10);
 		
 		mainTable.row();
 		
@@ -181,8 +183,20 @@ public class OptionsView extends Group implements IOptionsView {
 		});
 
 	}
+	
+	private void setBtnShowRangesListener(Button btnShowRanges) {
+		btnShowRanges.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				presenter.showRangesPressed();
+			}
+		});
 
-	private void setBtnSoundListener(){
+	}
+
+
+	private void setBtnSoundListener(Button btnSound){
 		btnSound.addListener(new ClickListener(){
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -192,7 +206,7 @@ public class OptionsView extends Group implements IOptionsView {
 		});
 	}
 	
-	private void setBtnMusicListener(){
+	private void setBtnMusicListener(Button btnMusic){
 		btnMusic.addListener(new ClickListener(){
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -233,7 +247,13 @@ public class OptionsView extends Group implements IOptionsView {
 		this.setVisible(false);
 
 	}
-
+	
+	@Override
+	public void setBtnShowRangesOn(boolean showRangesOn) {
+		btnShowRanges.setChecked(showRangesOn);
+		
+	}
+	
 	@Override
 	public void setBtnSoundOn(boolean soundOn) {
 		btnSound.setChecked(soundOn);
