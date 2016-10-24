@@ -76,13 +76,11 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Place a supply drop
 	 */
 	public void placeSupplyDrop(Vector2 location){
-		audio.playSound(MTDSound.SMALL_CLICK);
 		supplyDropPlacement.setLocation(location);
 		view.showBtnPlace();
 	}
 	
 	private void finishSupplyDropPlacement(){
-		audio.playSound(MTDSound.SMALL_CLICK);
 		if(supplyDropPlacement.isCurrentSupplyDropCrate() && uiStateManager.getState().equals(GameUIState.PLACING_SUPPLYDROP)){
 			supplyDropPlacement.finishPlacement();
 		}
@@ -102,7 +100,6 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Place an Air Strike Location
 	 */
 	public void placeAirStrikeLocation(Vector2 location){
-		audio.playSound(MTDSound.SMALL_CLICK);
 		if (!airStrikePlacement.getCurrentAirStrike().readyToBegin()) {
 			airStrikePlacement.addLocation(location);
 			if(airStrikePlacement.getCurrentAirStrike().readyToBegin()){
@@ -112,7 +109,6 @@ public class SupportPresenter implements IGameUIStateObserver {
 	}
 	
 	public void finishAirStrikePlacement(){
-		audio.playSound(MTDSound.SMALL_CLICK);
 		if (airStrikePlacement.isCurrentAirStrike() && uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)) {
 			airStrikePlacement.finishCurrentAirStrike();
 		}
