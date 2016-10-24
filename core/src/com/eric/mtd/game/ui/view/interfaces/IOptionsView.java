@@ -12,6 +12,8 @@ public interface IOptionsView {
 
 	public void standByState();
 	
+	public void setBtnShowRangesOn(boolean showRangesOn);
+	
 	public void setBtnSoundOn(boolean soundOn);
 	
 	public void setBtnMusicOn(boolean musicOn);

@@ -42,7 +42,6 @@ public class LevelSelectScreen extends AbstractScreen {
 	public void dispose() {
 		Logger.info("Level Select Screen Dispose");
 		super.dispose();
-		audio.turnOffMusic();
 		stage.dispose();
 	}
 }

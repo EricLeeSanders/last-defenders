@@ -35,12 +35,14 @@ public class MenuView extends Group implements IMenuView {
 	private Image volSliderBg, menuBottom;
 	private float sliderEndPos, sliderStartPos;
 	private Table optionsTable;
+	private Label lblOptionsTitle;
 	public MenuView(MenuPresenter presenter, Resources resources) {
 		this.presenter = presenter;
 		this.setTransform(false);
 		createControls(resources);
 		createOptionControls(resources);
 		optionsTable.setVisible(false);
+		lblOptionsTitle.setVisible(false);
 	}
 
 	public void act(float delta){
@@ -98,12 +100,12 @@ public class MenuView extends Group implements IMenuView {
 		//table.debug();
 		this.addActor(optionsTable);
 		
-		Label lblTitle = new Label("Options", skin);
-		lblTitle.setPosition(optionsTable.getX() + (optionsTable.getWidth()/2) - (lblTitle.getWidth()/2)
-					,optionsTable.getY() + optionsTable.getHeight() - lblTitle.getHeight() );
-		lblTitle.setAlignment(Align.center);
-		lblTitle.setFontScale(0.7f);
-		this.addActor(lblTitle);
+		lblOptionsTitle = new Label("Options", skin);
+		lblOptionsTitle.setPosition(optionsTable.getX() + (optionsTable.getWidth()/2) - (lblOptionsTitle.getWidth()/2)
+					,optionsTable.getY() + optionsTable.getHeight() - lblOptionsTitle.getHeight() );
+		lblOptionsTitle.setAlignment(Align.center);
+		lblOptionsTitle.setFontScale(0.7f);
+		this.addActor(lblOptionsTitle);
 	
 		chkBoxSound = new CheckBox(" Sound On", skin);
 		chkBoxSound.getLabel().setFontScale(0.45f);
@@ -191,6 +193,7 @@ public class MenuView extends Group implements IMenuView {
 				super.touchUp(event, x, y, pointer, button);
 				optionsTable.setVisible(true);
 				menuBottom.setVisible(false);
+				lblOptionsTitle.setVisible(true);
 			}
 		});
 
