@@ -31,7 +31,7 @@ import com.eric.mtd.game.service.factory.interfaces.IProjectileFactory;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
-import com.eric.mtd.util.MTDAudio.ProjectileSound;
+import com.eric.mtd.util.MTDAudio.MTDSound;
 import com.eric.mtd.util.Dimension;
 
 public class Apache extends SupportActor{
@@ -137,7 +137,7 @@ public class Apache extends SupportActor{
 	
 	public void attackTarget() {
 		if(getTarget() != null){
-			audio.playProjectileSound(ProjectileSound.MACHINE_GUN);
+			audio.playSound(MTDSound.MACHINE_GUN);
 			projectileFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
 		}
 

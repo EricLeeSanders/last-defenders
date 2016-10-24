@@ -32,16 +32,23 @@ map_icon
   orig: 128, 128
   offset: 0, 0
   index: -1
-play
+menu
   rotate: false
   xy: 1283, 1213
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-pointer
+play
   rotate: false
   xy: 1, 1
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+pointer
+  rotate: false
+  xy: 131, 131
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

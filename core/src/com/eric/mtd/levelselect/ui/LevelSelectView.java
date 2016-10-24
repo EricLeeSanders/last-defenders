@@ -78,6 +78,13 @@ public class LevelSelectView extends Group {
 		this.addActor(btnLevel5); 
 		setBtnLevelListener(btnLevel5, 5);
 		
+		ImageButton btnMenu = new ImageButton(new TextureRegionDrawable(levelSelectAtlas.findRegion("menu")));
+		btnMenu.setSize(64,64);
+		btnMenu.setPosition(15,15);
+		this.addActor(btnMenu);
+		setBtnMenuListener(btnMenu);
+		
+		
 	}
 	public void setBackground(TextureAtlas levelSelectAtlas){
 		Image background = new Image(levelSelectAtlas.findRegion("background"));
@@ -172,6 +179,18 @@ public class LevelSelectView extends Group {
 		}
 	}
 	
+	private void setBtnMenuListener(Button btnMenu) {
+		btnMenu.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				audio.playSound(MTDSound.LARGE_CLICK);
+				presenter.mainMenu();
+				
+			}
+		});
+	}
+	
 	private void setBtnLevelListener(Button button, final int level) {
 		button.addListener(new ClickListener() {
 			@Override
@@ -203,7 +222,7 @@ public class LevelSelectView extends Group {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
 				audio.playSound(MTDSound.LARGE_CLICK);
-				presenter.playLevel(selectedLevel);
+				presenter.loadLevel(selectedLevel);
 				
 			}
 		});

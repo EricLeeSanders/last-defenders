@@ -1,40 +1,20 @@
 
 menu.png
+size: 2048,512
 format: RGBA8888
-filter: Nearest,Nearest
+filter: Linear,Linear
 repeat: none
 background
   rotate: false
-  xy: 1, 103
+  xy: 1283, 1
   size: 640, 360
   orig: 640, 360
   offset: 0, 0
   index: -1
-musicOff
+menu_bottom
   rotate: false
-  xy: 1, 1
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-musicOn
-  rotate: false
-  xy: 643, 363
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-soundOff
-  rotate: false
-  xy: 103, 1
-  size: 100, 100
-  orig: 100, 100
-  offset: 0, 0
-  index: -1
-soundOn
-  rotate: false
-  xy: 643, 261
-  size: 100, 100
-  orig: 100, 100
+  xy: 1, 155
+  size: 1280, 206
+  orig: 1280, 206
   offset: 0, 0
   index: -1

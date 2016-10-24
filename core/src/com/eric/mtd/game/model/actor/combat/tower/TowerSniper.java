@@ -13,7 +13,7 @@ import com.eric.mtd.game.service.factory.interfaces.IDeathEffectFactory;
 import com.eric.mtd.game.service.factory.interfaces.IProjectileFactory;
 import com.eric.mtd.util.MTDAudio;
 import com.eric.mtd.util.Logger;
-import com.eric.mtd.util.MTDAudio.ProjectileSound;
+import com.eric.mtd.util.MTDAudio.MTDSound;
 import com.eric.mtd.util.Dimension;
 
 /**
@@ -52,7 +52,7 @@ public class TowerSniper extends Tower {
 
 	@Override
 	public void attackTarget() {
-		audio.playProjectileSound(ProjectileSound.SNIPER);
+		audio.playSound(MTDSound.SNIPER);
 		if(getTarget() != null){
 			projectileFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
 		}

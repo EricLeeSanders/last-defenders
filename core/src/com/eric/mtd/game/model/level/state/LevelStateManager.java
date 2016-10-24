@@ -46,7 +46,7 @@ public class LevelStateManager {
 	 * @param state
 	 */
 	public void setState(LevelState state) {
-		Logger.info("Chaning Level state: " + this.getState() + " to state: " + state);
+		Logger.info("Changing Level state: " + this.getState() + " to state: " + state);
 		this.state = state;
 		notifyObservers();
 	}
