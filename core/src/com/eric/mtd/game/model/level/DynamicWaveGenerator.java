@@ -11,6 +11,7 @@ import java.util.Queue;
 import java.util.Random;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.eric.mtd.game.model.actor.ActorGroups;
 import com.eric.mtd.game.model.actor.combat.enemy.*;
 import com.eric.mtd.game.model.actor.health.HealthBar;
@@ -88,18 +89,18 @@ public class DynamicWaveGenerator {
 		towerMap.put(enemyClass, count);
 	}
 	
-	private List<Enemy> createEnemies(){
-		List<Enemy> enemies = new ArrayList<Enemy>();
+	private SnapshotArray<Enemy> createEnemies(){
+		SnapshotArray<Enemy> enemies = new SnapshotArray<Enemy>();
 		Iterator<Entry<Class<? extends Enemy>, Integer>> iter = towerMap.entrySet().iterator();
 		while(iter.hasNext()){
 	        java.util.Map.Entry<Class<? extends Enemy>, Integer> entry = iter.next();
 	        enemies.addAll(createEnemiesByType(entry.getValue(), entry.getKey()));
 		}
-		Collections.shuffle(enemies);
+		shuffle(enemies);
 		return enemies;
 	}
-	private List<Enemy> createEnemiesByType(int n, Class<? extends Enemy> enemyClass) {
-		List<Enemy> enemies = new ArrayList<Enemy>();
+	private SnapshotArray<Enemy> createEnemiesByType(int n, Class<? extends Enemy> enemyClass) {
+		SnapshotArray<Enemy> enemies = new SnapshotArray<Enemy>();
 		Queue<Vector2> enemyPath = map.getPath();
 		for(int i = 0; i < n; i++){
 			String type = enemyClass.getSimpleName();
@@ -116,12 +117,24 @@ public class DynamicWaveGenerator {
 	}
 	private Queue<SpawningEnemy> createSpawningEnemies(){
 		Queue<SpawningEnemy> spawningEnemies = new LinkedList<SpawningEnemy>();
-		List<Enemy> enemies = createEnemies();
+		SnapshotArray<Enemy> enemies = createEnemies();
 		float randDelay;
 		for(Enemy enemy : enemies){
 			randDelay = random.nextFloat() * 1.5f + 0.25f; // .25 - 1.75
 			spawningEnemies.add(new SpawningEnemy(enemy, randDelay));
 		}
 		return spawningEnemies;
+	}
+	
+	public void shuffle(SnapshotArray<Enemy> enemies) {
+		int n = enemies.size;
+		for (int i = 0; i < n; i++) {
+			int rand = i + (int) (Math.random() * (n - i)); // between i and n-1
+			swap(enemies, i, rand);
+		}
+	}
+
+	private void swap(SnapshotArray<Enemy> enemies, int i, int j) {
+		enemies.swap(i, j);
 	}
 }

@@ -3,6 +3,7 @@ package com.eric.mtd.game.ui.state;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.eric.mtd.game.model.level.state.ILevelStateObserver;
 import com.eric.mtd.game.model.level.state.LevelStateManager;
 import com.eric.mtd.game.model.level.state.LevelStateManager.LevelState;
@@ -11,7 +12,7 @@ import com.eric.mtd.util.Logger;
 public class GameUIStateManager implements ILevelStateObserver {
 	private LevelStateManager levelStateManager;
 	private GameUIState state;
-	private List<IGameUIStateObserver> observers = new ArrayList<IGameUIStateObserver>();
+	private SnapshotArray<IGameUIStateObserver> observers = new SnapshotArray<IGameUIStateObserver>();
 
 	public GameUIStateManager(LevelStateManager levelStateManager) {
 		this.levelStateManager = levelStateManager;

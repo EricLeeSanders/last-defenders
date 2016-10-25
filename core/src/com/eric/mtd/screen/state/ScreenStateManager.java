@@ -2,6 +2,8 @@ package com.eric.mtd.screen.state;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.eric.mtd.util.Logger;
 
 /**
@@ -14,7 +16,7 @@ import com.eric.mtd.util.Logger;
 public class ScreenStateManager {
 
 	private ScreenState state;
-	private List<IScreenStateObserver> observers = new ArrayList<IScreenStateObserver>();
+	private SnapshotArray<IScreenStateObserver> observers = new SnapshotArray<IScreenStateObserver>();
 
 	public ScreenStateManager() {
 		// this.setState(ScreenState.LOADING);

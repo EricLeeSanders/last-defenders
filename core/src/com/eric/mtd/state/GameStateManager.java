@@ -2,6 +2,8 @@ package com.eric.mtd.state;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.eric.mtd.util.Logger;
 
 /**
@@ -13,7 +15,7 @@ import com.eric.mtd.util.Logger;
 public class GameStateManager {
 
 	private GameState state;
-	private List<IGameStateObserver> observers = new ArrayList<IGameStateObserver>();
+	private SnapshotArray<IGameStateObserver> observers = new SnapshotArray<IGameStateObserver>();
 
 	public GameStateManager() {
 		this.setState(GameState.PLAY);

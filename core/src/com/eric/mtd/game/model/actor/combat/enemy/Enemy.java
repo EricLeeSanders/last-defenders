@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.eric.mtd.MTDGame;
 import com.eric.mtd.game.model.actor.ai.EnemyAI;
 import com.eric.mtd.game.model.actor.combat.CombatActor;
@@ -36,7 +37,7 @@ public abstract class Enemy extends CombatActor {
 													// attacking
 	private Random random = new Random();
 	private float findTargetDelay = 2f;
-	private List<MoveToAction> actionList = new ArrayList<MoveToAction>();
+	private SnapshotArray<MoveToAction> actionList = new SnapshotArray<MoveToAction>();
 	private Pool<CombatActor> pool;
 	private int actionIndex = 0; // Current index in the actionList
 	private float speed; // number of pixels it moves in a second
@@ -149,7 +150,7 @@ public abstract class Enemy extends CombatActor {
 		// Find the next way point when at the end of a way point
 		if (!isDead() && !attacking) {
 			if (this.getActions().size == 0) {
-				if (actionIndex < actionList.size()) {
+				if (actionIndex < actionList.size) {
 					setRotation(calculateRotation((actionList.get(actionIndex)).getX() + (this.getOriginX()), (actionList.get(actionIndex)).getY() + (this.getOriginY())));
 					this.addAction(actionList.get(actionIndex)); // Set Move TO
 					actionIndex++;
@@ -217,11 +218,11 @@ public abstract class Enemy extends CombatActor {
 		float totalDistance = 0;
 		if (actionIndex > 0) {
 			totalDistance = Vector2.dst(this.getX(), this.getY(), actionList.get(actionIndex - 1).getX(), actionList.get(actionIndex - 1).getY());
-			for (int i = actionIndex - 1; i < actionList.size() - 1; i++) {
+			for (int i = actionIndex - 1; i < actionList.size - 1; i++) {
 				totalDistance = totalDistance + Vector2.dst(actionList.get(i).getX(), actionList.get(i).getY(), actionList.get(i + 1).getX(), actionList.get(i + 1).getY());
 			}
 		} else {
-			for (int i = 0; i < actionList.size() - 1; i++) {
+			for (int i = 0; i < actionList.size - 1; i++) {
 				totalDistance = totalDistance + Vector2.dst(actionList.get(i).getX(), actionList.get(i).getY(), actionList.get(i + 1).getX(), actionList.get(i + 1).getY());
 			}
 		}

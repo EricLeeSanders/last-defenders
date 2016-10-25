@@ -34,6 +34,7 @@ import com.eric.mtd.util.Logger;
 import com.eric.mtd.util.Resources;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.SnapshotArray;
 
 /**
  * Represents both a Tower and Enemy.
@@ -52,7 +53,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private Polygon bodyPoly;
 	private boolean hasArmor, dead;
 	private Pool<CombatActor> pool;
-	private List<ICombatActorObserver> observers = new ArrayList<ICombatActorObserver>();
+	private SnapshotArray<ICombatActorObserver> observers = new SnapshotArray<ICombatActorObserver>();
 	private Group targetGroup;
 	public CombatActor(TextureRegion textureRegion,Pool<CombatActor> pool, Group targetGroup, float[] bodyPoints, Dimension textureSize, Vector2 gunPos,
 						float health, float armor, float attack, float attackSpeed, float range) {
@@ -73,10 +74,11 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.pool = pool;
 		this.targetGroup = targetGroup;
 		
+		
 	}
 	public void detach(ICombatActorObserver observer){
 		Logger.info("Combat Actor Detach: " + observer.getClass().getName());
-		observers.remove(observer);
+		observers.removeValue(observer, false);
 	}
 	public void attach(ICombatActorObserver observer){
 		Logger.info("Combat Actor Attach: " + observer.getClass().getName());
@@ -84,11 +86,13 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	}
 	protected void notifyObservers(){
 		Logger.info("Combat Actor: Notify Observers");
-		//Need to create a copy and iterate over the copy in the case that an observer is detached. 
-		for(ICombatActorObserver observer: new ArrayList<ICombatActorObserver>(observers)){
+		Object[] items = observers.begin();
+		for(int i = 0, n = observers.size; i < n; i++){
+			ICombatActorObserver observer = (ICombatActorObserver) items[i];
 			Logger.info("Combat Actor Notifying: " + observer.getClass().getName());
 			observer.notifty();
 		}
+		observers.end();
 	}
 	@Override
 	public void reset() {

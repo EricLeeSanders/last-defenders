@@ -3,6 +3,8 @@ package com.eric.mtd.game.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.utils.SnapshotArray;
+
 /**
  * Represents the player
  * 
@@ -13,7 +15,7 @@ public class Player {
 	private int money = 20000;
 	private int lives = 20;
 	private int waveCount = 1;
-	private List<IPlayerObserver> observers = new ArrayList<IPlayerObserver>();
+	private SnapshotArray<IPlayerObserver> observers = new SnapshotArray<IPlayerObserver>();
 
 	public void attachObserver(IPlayerObserver observer) {
 		observers.add(observer);
