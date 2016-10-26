@@ -15,7 +15,7 @@ android {
         instrumentTest.setRoot('tests')
     }
     defaultConfig {
-        applicationId "com.mtd.game"
+        applicationId "com.foxholedefense.game"
         minSdkVersion 9
         targetSdkVersion 20
     }
@@ -68,7 +68,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.mtd.game/com.mtd.game.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.foxholedefense.game/com.foxholedefense.game.AndroidLauncher'
 }
 
 // sets up the Android Eclipse project, using the old Ant based build.
