@@ -1,6 +1,6 @@
 android {
     buildToolsVersion "23.0.1"
-    compileSdkVersion 20
+    compileSdkVersion 25
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -16,7 +16,7 @@ android {
     }
     defaultConfig {
         applicationId "com.mtd.game"
-        minSdkVersion 8
+        minSdkVersion 9
         targetSdkVersion 20
     }
 }
