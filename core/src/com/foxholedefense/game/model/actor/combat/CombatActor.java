@@ -31,6 +31,7 @@ import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.model.actor.interfaces.IVehicle;
 import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
+import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
@@ -46,16 +47,14 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private final float RESET_ATTACK_SPEED, RESET_RANGE, MAX_HEALTH, MAX_ARMOR, RESET_ATTACK;
 	private float attackSpeed, range, health, attack, armor;
 	private Vector2 gunPos;
-	private float[] bodyPoints;
 	private ITargetable target;
 	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private Circle rangeCircle = new Circle();
-	private Polygon bodyPoly;
 	private boolean hasArmor, dead;
 	private Pool<CombatActor> pool;
 	private SnapshotArray<ICombatActorObserver> observers = new SnapshotArray<ICombatActorObserver>();
 	private Group targetGroup;
-	public CombatActor(TextureRegion textureRegion,Pool<CombatActor> pool, Group targetGroup, float[] bodyPoints, Dimension textureSize, Vector2 gunPos,
+	public CombatActor(TextureRegion textureRegion,Pool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
 						float health, float armor, float attack, float attackSpeed, float range) {
 		super(textureRegion, textureSize);
 		this.MAX_HEALTH = health;
@@ -67,8 +66,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.armor = armor;
 		this.attackSpeed = attackSpeed;
 		this.attack = attack;
-		this.bodyPoints = bodyPoints;
-		this.bodyPoly = new Polygon(bodyPoints);
 		this.gunPos = gunPos;
 		this.range = range;
 		this.pool = pool;
@@ -120,7 +117,14 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 			debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			debugBody.begin(ShapeType.Line);
 			debugBody.setColor(Color.RED);
-			debugBody.polygon(getBody().getTransformedVertices());
+			Shape2D body = getBody();
+			if(body instanceof Polygon) {
+				Polygon polyBody = (Polygon) body;
+				debugBody.polygon(polyBody.getTransformedVertices());
+			} else if (body instanceof Circle) {
+				Circle circleBody = (Circle) body;
+				debugBody.circle(circleBody.x, circleBody.y, circleBody.radius);
+			}
 			debugBody.end();
 			batch.begin();
 		}
@@ -183,16 +187,8 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	protected abstract void attackTarget();
 	
 	protected abstract void deathAnimation();
-	
-	@Override
-	public Polygon getBody() {
-		
-		bodyPoly.setOrigin((getTextureSize().getWidth() / 2), (getTextureSize().getHeight() / 2));
-		bodyPoly.setRotation(this.getRotation());
-		bodyPoly.setPosition(getPositionCenter().x - (getTextureSize().getWidth() / 2), getPositionCenter().y - (getTextureSize().getHeight() / 2));
 
-		return bodyPoly;
-	}
+	public abstract Shape2D getBody();
 
 
 	public void setDead(boolean dead) {

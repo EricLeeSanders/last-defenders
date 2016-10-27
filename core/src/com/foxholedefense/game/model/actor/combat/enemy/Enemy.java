@@ -49,18 +49,18 @@ public abstract class Enemy extends CombatActor {
 	private TextureRegion[] textureRegions;
 	private float movementDelayCounter;
 
-	public Enemy(TextureRegion[] textureRegions, CombatActorPool<CombatActor> pool, Group targetGroup, float[] bodyPoints, Dimension textureSize, Vector2 gunPos,
+	public Enemy(TextureRegion[] textureRegions, CombatActorPool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
 					float speed, float health, float armor, float attack, float attackSpeed, float range) {
-		super(textureRegions[0], pool, targetGroup, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
+		super(textureRegions[0], pool, targetGroup, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.textureRegions = textureRegions;
 		this.speed = speed;
 		multipleTextures = true;
 		this.pool = pool;
 	}
 
-	public Enemy(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, Group targetGroup, float[] bodyPoints, Dimension textureSize, Vector2 gunPos,
+	public Enemy(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
 					float speed, float health, float armor, float attack, float attackSpeed, float range) {
-		super(textureRegion, pool, targetGroup, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
+		super(textureRegion, pool, targetGroup, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.speed = speed;
 		multipleTextures = false;
 		this.pool = pool;
