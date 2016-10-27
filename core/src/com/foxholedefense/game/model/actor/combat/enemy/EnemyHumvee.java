@@ -1,6 +1,7 @@
 package com.foxholedefense.game.model.actor.combat.enemy;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
@@ -12,6 +13,7 @@ import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.ActorFactory.DeathEffectPool;
 import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
+import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
 
 /**
@@ -29,15 +31,17 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 	public static final float RANGE = 0;
 	public static final float SPEED = 140f;
 
-	public static final float[] BODY = {0,0, 0,79, 40, 79, 40, 0 };
 	public static final Vector2 GUN_POS = new Vector2(0, 0);
 	public static final Dimension TEXTURE_SIZE = new Dimension(40, 79);
 	
 	private IDeathEffectFactory deathEffectFactory;
+	private float[] bodyPoints = {0,0, 0,79, 40, 79, 40, 0 };
+	private Polygon body;
 	
 	public EnemyHumvee(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, IDeathEffectFactory deathEffectFactory) {
-		super(actorRegion, pool, null, BODY, TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
+		super(actorRegion, pool, null, TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
 		this.deathEffectFactory = deathEffectFactory;
+		this.body = new Polygon(bodyPoints);
 	}
 
 	@Override
@@ -50,5 +54,13 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 	protected void deathAnimation() {
 		deathEffectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());;
 		
+	}
+
+	@Override
+	public Polygon getBody() {
+		body.setOrigin((this.getWidth() / 2), (this.getHeight() / 2));
+		body.setRotation(this.getRotation());
+		body.setPosition(ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, this.getWidth()), ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, this.getHeight()));
+		return body;
 	}
 }

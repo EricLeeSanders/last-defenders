@@ -41,9 +41,9 @@ public abstract class Tower extends CombatActor {
 	private int kills;
 	private Sprite rangeSprite;
 	private Pool<CombatActor> pool;
-	public Tower(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, Group targetGroup, float[] bodyPoints, Dimension textureSize, Vector2 gunPos,
+	public Tower(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
 					float health, float armor, float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost, int rangeIncreaseCost, int attackIncreaseCost) {
-		super(textureRegion, pool, targetGroup, bodyPoints, textureSize, gunPos, health, armor, attack, attackSpeed, range);
+		super(textureRegion, pool, targetGroup, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.cost = cost;
 		this.armorCost = armorCost;
 		this.speedIncreaseCost = speedIncreaseCost;
