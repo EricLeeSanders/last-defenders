@@ -1,35 +1,16 @@
 package com.foxholedefense.game.model.actor.support;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.utils.Pool;
-import com.foxholedefense.game.GameStage;
-import com.foxholedefense.game.model.actor.ai.TowerSupportAI;
+import com.foxholedefense.game.model.actor.ai.towerai.ITowerAI;
+import com.foxholedefense.game.model.actor.ai.towerai.FirstEnemyAI;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.interfaces.IAttacker;
-import com.foxholedefense.game.model.actor.interfaces.ICollision;
-import com.foxholedefense.game.model.actor.projectile.Bullet;
-import com.foxholedefense.game.service.factory.ActorFactory;
-import com.foxholedefense.game.service.factory.ActorFactory.BulletPool;
 import com.foxholedefense.game.service.factory.ActorFactory.SupportActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
 import com.foxholedefense.util.Dimension;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
@@ -51,6 +32,7 @@ public class Apache extends SupportActor{
 	private CombatActor target;
 	private IProjectileFactory projectileFactory;
 	private FHDAudio audio;
+	private ITowerAI ai = new FirstEnemyAI();
 	public Apache(SupportActorPool<Apache> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion [] textureRegions, FHDAudio audio) {
 		super(pool, targetGroup, textureRegions[0], new Dimension(textureRegions[0].getRegionWidth()*SCALE, textureRegions[0].getRegionHeight()*SCALE),
 				RANGE, ATTACK, GUN_POS, COST);
@@ -125,7 +107,7 @@ public class Apache extends SupportActor{
 	 * Find a target using TowerAI First Enemy
 	 */
 	public void findTarget() {
-		setTarget(TowerSupportAI.findFirstEnemy(this, getTargetGroup().getChildren()));
+		setTarget(ai.findTarget(this, getTargetGroup().getChildren()));
 
 	}
 	public void setTarget(CombatActor target) {

@@ -45,8 +45,7 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	public static final Dimension TEXTURE_TURRET_SIZE = new Dimension(22, 120);
 	private TextureRegion tankBodyRegion;
 	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
-	private ShapeRenderer turretOutline = Resources.getShapeRenderer();
-	private float[] bodyPoints = { 0, 0, 0, 75, 50, 75, 50, 0 };
+	float[] bodyPoints = { 0, 0, 0, 75, 50, 75, 50, 0 };
 	private float bodyRotation;
 	private Polygon body;
 	private IDeathEffectFactory deathEffectFactory;
@@ -56,7 +55,7 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 		this.tankBodyRegion = tankRegion;
 		this.deathEffectFactory = deathEffectFactory;
 		this.projectileFactory = projectileFactory;
-		this.body = new Polygon(bodyPoints);
+		body = new Polygon(bodyPoints);
 	}
 
 	/**
@@ -72,12 +71,6 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 			bodyOutline.setColor(Color.YELLOW);
 			bodyOutline.polygon(getBody().getTransformedVertices());
 			bodyOutline.end();
-
-			turretOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			turretOutline.begin(ShapeType.Line);
-			turretOutline.setColor(Color.YELLOW);
-			turretOutline.rect(getX(),getY(), getTextureSize().getWidth(), getTextureSize().getHeight());
-			turretOutline.end();
 		}
 		batch.begin();
 		// If the tank is not attacking, then rotate the body as well

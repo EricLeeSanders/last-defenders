@@ -23,8 +23,6 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.GameActor;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.deatheffect.DeathEffect;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.ICollision;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
@@ -184,12 +182,11 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.range = range;
 	}
 
-	protected abstract void attackTarget();
+	public abstract void attackTarget();
 	
 	protected abstract void deathAnimation();
 
 	public abstract Shape2D getBody();
-
 
 	public void setDead(boolean dead) {
 		this.dead = dead;

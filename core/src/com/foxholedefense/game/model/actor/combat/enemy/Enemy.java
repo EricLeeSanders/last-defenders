@@ -1,8 +1,5 @@
 package com.foxholedefense.game.model.actor.combat.enemy;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
 import java.util.Random;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,18 +8,15 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.foxholedefense.FHDGame;
 import com.foxholedefense.game.GameStage;
 import com.foxholedefense.game.model.actor.ai.EnemyAI;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
-import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
-import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
 import com.foxholedefense.util.Dimension;
-import com.foxholedefense.util.Logger;
 
 /**
  * An abstract class that represents an Enemy. Enemies are created from the
@@ -48,7 +42,9 @@ public abstract class Enemy extends CombatActor {
 	private boolean multipleTextures, attacking;
 	private TextureRegion[] textureRegions;
 	private float movementDelayCounter;
-
+	private Vector2 currentWaypoint = new Vector2();
+	private float lengthToEnd;
+	private boolean lengthToEndCalculated;
 	public Enemy(TextureRegion[] textureRegions, CombatActorPool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
 					float speed, float health, float armor, float attack, float attackSpeed, float range) {
 		super(textureRegions[0], pool, targetGroup, textureSize, gunPos, health, armor, attack, attackSpeed, range);
@@ -65,29 +61,38 @@ public abstract class Enemy extends CombatActor {
 		multipleTextures = false;
 		this.pool = pool;
 	}
+
 	/**
 	 * Sets the path for the enemy. Starts off screen.
 	 * 
 	 * @param path
 	 */
-	public void setPath(Queue<Vector2> path) {
-		Vector2 newWaypoint = new Vector2();
-		newWaypoint = path.remove();
+	public void setPath(Array<Vector2> path) {
+		if(path == null | path.size <= 1){
+			return;
+		}
+
+		//position
+		Vector2 newWaypoint = path.get(0);
 		setPositionCenter(newWaypoint);
-		setRotation(calculateRotation(path.peek()));
+		setRotation(calculateRotation(path.get(1)));
 		Vector2 rotatedCoords = getRotatedCoords(this.getPositionCenter().x, getY() + this.getTextureSize().getHeight());
 		float newX = this.getPositionCenter().x + (this.getPositionCenter().x - rotatedCoords.x);
 		float newY = this.getPositionCenter().y + (this.getPositionCenter().y - rotatedCoords.y);
 		this.setPositionCenter(newX, newY); // Start off screen
+
+		//create MoveTo actions
 		Vector2 moveVector = new Vector2();
-		Vector2 prevWaypoint = new Vector2();
-		while (!path.isEmpty()) {
-			prevWaypoint = newWaypoint;
-			newWaypoint = (path.remove());
+		for (int i = 1; i < path.size; i++) {
+			Vector2 prevWaypoint = newWaypoint;
+			newWaypoint = path.get(i);
 			moveVector.set((newWaypoint.x - (this.getOriginX())), (newWaypoint.y - (this.getOriginY())));
-			float moveDistance = (newWaypoint.dst(prevWaypoint) / speed);
-			actionList.add(Actions.moveTo(moveVector.x, moveVector.y, moveDistance, Interpolation.linear));
+			float distance = newWaypoint.dst(prevWaypoint);
+			float duration = (distance / speed);
+			actionList.add(Actions.moveTo(moveVector.x, moveVector.y, duration, Interpolation.linear));
 		}
+
+		moveToNextWaypoint();
 	}
 
 	/**
@@ -110,63 +115,76 @@ public abstract class Enemy extends CombatActor {
 	 */
 	@Override
 	public void act(float delta) {
+		//System.out.println(getLengthToEnd());
+		lengthToEndCalculated = false;
 		// Find target if delay has expired.
 		if (!(this instanceof IPassiveEnemy) && !attacking) {
-			if ((findTargetCounter >= findTargetDelay)) {
-				findTarget();
-			} else {
-				findTargetCounter += delta;
-			}
+			findTargetHandler(delta);
 		}
 		// If the enemy is attacking and the duration to pause for the attack
 		// animation has finished, then reset its rotation to the way point
 		// it was heading to before it began attacking
 		if (attacking) {
-			movementDelayCounter += delta;
-			attackCounter += delta;
-			if (movementDelayCounter >= MOVEMENT_DELAY ) {
-				if (actionIndex > 0) {
-					setRotation(calculateRotation((actionList.get(actionIndex - 1)).getX() + (this.getOriginX()), (actionList.get(actionIndex - 1)).getY() + (this.getOriginY())));
-				}
-				movementDelayCounter = 0;
-				attacking = false;
-				attackCounter = 100; //Ready to attack
-				findTargetDelay = random.nextFloat()*2 + 1;
-			} else if( attackCounter >= this.getAttackSpeed()) {
-				if(this.getTarget() == null || this.getTarget().isDead()){
-					attacking = false;
-					setRotation(calculateRotation((actionList.get(actionIndex - 1)).getX() + (this.getOriginX()), (actionList.get(actionIndex - 1)).getY() + (this.getOriginY())));
-				} else {
-					this.setRotation(calculateRotation(super.getTarget().getPositionCenter()));
-					this.attackTarget();
-				}
-				attackCounter = 0;
-				
-			}
+			attackHandler(delta);
 		} else {
 			super.act(delta); // Pause to create a delay if attacking
 		}
 
 		// Find the next way point when at the end of a way point
 		if (!isDead() && !attacking) {
-			if (this.getActions().size == 0) {
-				if (actionIndex < actionList.size) {
-					setRotation(calculateRotation((actionList.get(actionIndex)).getX() + (this.getOriginX()), (actionList.get(actionIndex)).getY() + (this.getOriginY())));
-					this.addAction(actionList.get(actionIndex)); // Set Move TO
-					actionIndex++;
-				} else {
-					if (getStage() instanceof GameStage) {
-						((GameStage) getStage()).enemyReachedEnd();
-					}
-					pool.free(this);
-					return;
-				}
-			}
 			changeTextures(delta);
-
+			nextWaypointHandler();
 		}
 	}
 
+	private void findTargetHandler(float delta){
+		if ((findTargetCounter >= findTargetDelay)) {
+			findTarget();
+		} else {
+			findTargetCounter += delta;
+		}
+	}
+
+	private void moveToNextWaypoint(){
+		setRotation(calculateRotation((actionList.get(actionIndex)).getX() + (this.getOriginX()), (actionList.get(actionIndex)).getY() + (this.getOriginY())));
+		this.addAction(actionList.get(actionIndex)); // Set Move TO
+	}
+
+	private void nextWaypointHandler(){
+		if (this.getActions().size == 0) {
+			actionIndex++;
+			if (actionIndex < actionList.size) {
+				moveToNextWaypoint();
+			} else {
+				if (getStage() instanceof GameStage) {
+					((GameStage) getStage()).enemyReachedEnd();
+				}
+				pool.free(this);
+			}
+		}
+	}
+
+	private void attackHandler(float delta){
+		movementDelayCounter += delta;
+		attackCounter += delta;
+		if (movementDelayCounter >= MOVEMENT_DELAY ){
+			finishAttacking();
+		} else if(this.getTarget() == null || this.getTarget().isDead()){
+			findTargetHandler(delta);
+		} else if( attackCounter >= this.getAttackSpeed()) {
+			this.setRotation(calculateRotation(super.getTarget().getPositionCenter()));
+			this.attackTarget();
+			attackCounter = 0;
+		}
+	}
+
+	private void finishAttacking(){
+		setRotation(calculateRotation((actionList.get(actionIndex)).getX() + (this.getOriginX()), (actionList.get(actionIndex)).getY() + (this.getOriginY())));
+		movementDelayCounter = 0;
+		attacking = false;
+		attackCounter = 100; //Ready to attack
+		findTargetDelay = random.nextFloat()*2 + 1;
+	}
 	/**
 	 * Handles the changing of textures
 	 * 
@@ -207,6 +225,7 @@ public abstract class Enemy extends CombatActor {
 		actionList.clear();
 		findTargetDelay = 2f;
 		attackCounter = 100; //Ready to attack
+		lengthToEnd = 0;
 	}
 
 	/**
@@ -214,19 +233,22 @@ public abstract class Enemy extends CombatActor {
 	 * 
 	 * @return boolean - Total Distance till the end
 	 */
-	public float lengthTillEnd() {
+	public void calcLengthToEnd() {
+		lengthToEndCalculated = true;
 		float totalDistance = 0;
-		if (actionIndex > 0) {
-			totalDistance = Vector2.dst(this.getX(), this.getY(), actionList.get(actionIndex - 1).getX(), actionList.get(actionIndex - 1).getY());
-			for (int i = actionIndex - 1; i < actionList.size - 1; i++) {
-				totalDistance = totalDistance + Vector2.dst(actionList.get(i).getX(), actionList.get(i).getY(), actionList.get(i + 1).getX(), actionList.get(i + 1).getY());
-			}
-		} else {
-			for (int i = 0; i < actionList.size - 1; i++) {
-				totalDistance = totalDistance + Vector2.dst(actionList.get(i).getX(), actionList.get(i).getY(), actionList.get(i + 1).getX(), actionList.get(i + 1).getY());
-			}
+		totalDistance = Vector2.dst(this.getX(), this.getY(), actionList.get(actionIndex).getX(), actionList.get(actionIndex).getY());
+		for (int i = actionIndex; i < actionList.size - 1; i++) {
+			totalDistance += Vector2.dst(actionList.get(i).getX(), actionList.get(i).getY()
+					, actionList.get(i + 1).getX(), actionList.get(i + 1).getY());
 		}
-		return totalDistance;
+		lengthToEnd = totalDistance;
+	}
+
+	public float getLengthToEnd() {
+		if(!lengthToEndCalculated) {
+			calcLengthToEnd();
+		}
+		return lengthToEnd;
 	}
 
 }
