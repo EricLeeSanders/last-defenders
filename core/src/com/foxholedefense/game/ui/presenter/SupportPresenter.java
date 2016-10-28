@@ -185,29 +185,11 @@ public class SupportPresenter implements IGameUIStateObserver {
 	/**
 	 * Determines if the support actor can be purchased.
 	 * 
-	 * @param supportActor - Support Actor to be purchased
+	 * @param supportCost - Cost of the support actor
 	 * @return boolean - if the tower can be purchased.
 	 */
-	public boolean canAffordSupport(String supportActor) {
-
-		try {
-			Class<?> myClass = Class.forName("com.foxholedefense.game.model.actor.support." + supportActor);
-			Field field = ClassReflection.getDeclaredField(myClass, "COST");
-			field.setAccessible(true);
-			int cost = (Integer) field.get(null);
-			if (cost > player.getMoney()) {
-				return false;
-			} else {
-				return true;
-			}
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (ReflectionException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return false;
+	public boolean canAffordSupport(int supportCost) {
+		return (supportCost <= player.getMoney());
 	}
 
 	@Override
