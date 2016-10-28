@@ -13,6 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.foxholedefense.game.model.actor.support.AirStrike;
+import com.foxholedefense.game.model.actor.support.Apache;
+import com.foxholedefense.game.model.actor.support.LandMine;
+import com.foxholedefense.game.model.actor.support.SupplyDrop;
+import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
 import com.foxholedefense.game.ui.presenter.EnlistPresenter;
 import com.foxholedefense.game.ui.presenter.SupportPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
@@ -35,7 +40,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
  *
  */
 public class SupportView extends Group implements ISupportView, InputProcessor {
-	private Map<ImageButton, String> supportButtons;
+	private Map<ImageButton, Integer> supportCosts;
 	private ImageButton btnPlacingCancel, btnCancel, btnPlace;
 	private SupportPresenter presenter;
 	private Group choosingGroup;
@@ -85,28 +90,28 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		choosingGroup.addActor(lblMoney);
 		
 		
-		supportButtons = new HashMap<ImageButton, String>();
+		supportCosts = new HashMap<ImageButton, Integer>();
 		
 		ImageButton landmineButton = new ImageButton(skin, "support_landmine");
 		supportTable.add(landmineButton).size(133,110).spaceBottom(5);
-		supportButtons.put(landmineButton,"LandMine");
+		supportCosts.put(landmineButton, LandMine.COST);
 		setLandmineListener(landmineButton);
 		
 		ImageButton supplydropButton = new ImageButton(skin, "support_supplydrop");
 		supportTable.add(supplydropButton).size(133,110).spaceBottom(5);
-		supportButtons.put(supplydropButton,"SupplyDropCrate");
+		supportCosts.put(supplydropButton, SupplyDropCrate.COST);
 		setSupplyDropListener(supplydropButton);
 		
 		ImageButton airstrikeButton = new ImageButton(skin, "support_airstrike");
 		supportTable.add(airstrikeButton).size(133,110).spaceBottom(5);
-		supportButtons.put(airstrikeButton,"AirStrike");
+		supportCosts.put(airstrikeButton, AirStrike.COST);
 		setAirStrikeListener(airstrikeButton);
 		
 		supportTable.row();
 		
 		ImageButton apacheButton = new ImageButton(skin, "support_apache");
 		supportTable.add(apacheButton).size(133,110).spaceBottom(5);
-		supportButtons.put(apacheButton,"Apache");
+		supportCosts.put(apacheButton, Apache.COST);
 		setApacheListener(apacheButton);
 		
 		btnCancel = new ImageButton(skin,"cancel");
@@ -135,9 +140,9 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	 * Updates the Support buttons to disable/enable.
 	 */
 	private void updateSupportButtons() {
-	    Iterator<Entry<ImageButton, String>> iter = supportButtons.entrySet().iterator();
+	    Iterator<Entry<ImageButton, Integer>> iter = supportCosts.entrySet().iterator();
 	    while(iter.hasNext()){
-	    	Map.Entry<ImageButton, String> support = iter.next();
+	    	Map.Entry<ImageButton, Integer> support = iter.next();
 	    	boolean affordable = presenter.canAffordSupport(support.getValue());
 	    	support.getKey().setDisabled(!affordable);
 	    	if(affordable){

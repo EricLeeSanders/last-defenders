@@ -26,7 +26,7 @@ import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
 public class SupplyDropCrate extends GameActor implements Pool.Poolable{
-	private static final int COST = 1000;
+	public static final int COST = 1000;
 	private static final float SUPPLYDROP_DURATION = 1f;
 	private static final float RANGE = 300f;
 	private Circle rangeCircle = new Circle();

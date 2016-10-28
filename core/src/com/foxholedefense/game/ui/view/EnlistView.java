@@ -1,40 +1,34 @@
 package com.foxholedefense.game.ui.view;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.foxholedefense.game.model.actor.combat.tower.TowerFlameThrower;
+import com.foxholedefense.game.model.actor.combat.tower.TowerMachineGun;
+import com.foxholedefense.game.model.actor.combat.tower.TowerRifle;
+import com.foxholedefense.game.model.actor.combat.tower.TowerRocketLauncher;
+import com.foxholedefense.game.model.actor.combat.tower.TowerSniper;
+import com.foxholedefense.game.model.actor.combat.tower.TowerTank;
+import com.foxholedefense.game.model.actor.combat.tower.TowerTurret;
 import com.foxholedefense.game.ui.presenter.EnlistPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 
 /**
  * View class for Enlisting. Shows Enlisting window as well as the options to
@@ -44,7 +38,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
  *
  */
 public class EnlistView extends Group implements IEnlistView, InputProcessor {
-	private Map<ImageButton, String> towerButtons;
+	private Map<ImageButton, Integer> towerCosts;
 	private ImageButton btnPlacingCancel, btnPlace, btnRotate;
 	private ImageButton btnCancel, btnScrollUp, btnScrollDown;
 	private EnlistPresenter presenter;
@@ -96,16 +90,16 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		lblMoney.setFontScale(0.6f);
 		choosingGroup.addActor(lblMoney);
 		
-		towerButtons = new HashMap<ImageButton, String>();
-		createTowerButton(enlistTable, skin, "enlist_rifle", "Rifle");
-		createTowerButton(enlistTable, skin, "enlist_machine_gun", "MachineGun");
-		createTowerButton(enlistTable, skin, "enlist_sniper", "Sniper");
+		towerCosts = new HashMap<ImageButton, Integer>();
+		createTowerButton(enlistTable, skin, "enlist_rifle", "Rifle", TowerRifle.COST);
+		createTowerButton(enlistTable, skin, "enlist_machine_gun", "MachineGun", TowerMachineGun.COST);
+		createTowerButton(enlistTable, skin, "enlist_sniper", "Sniper", TowerSniper.COST);
 		enlistTable.row();
-		createTowerButton(enlistTable, skin, "enlist_flame_thrower", "FlameThrower");
-		createTowerButton(enlistTable, skin, "enlist_rocket_launcher", "RocketLauncher");
-		createTowerButton(enlistTable, skin, "enlist_turret", "Turret");
+		createTowerButton(enlistTable, skin, "enlist_flame_thrower", "FlameThrower", TowerFlameThrower.COST);
+		createTowerButton(enlistTable, skin, "enlist_rocket_launcher", "RocketLauncher", TowerRocketLauncher.COST);
+		createTowerButton(enlistTable, skin, "enlist_turret", "Turret", TowerTurret.COST);
 		enlistTable.row();
-		createTowerButton(enlistTable, skin, "enlist_tank", "Tank");
+		createTowerButton(enlistTable, skin, "enlist_tank", "Tank", TowerTank.COST);
 		
 		
 		btnCancel = new ImageButton(skin,"cancel");
@@ -151,20 +145,20 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	 * @param styleName
 	 * @param towerName
 	 */
-	private void createTowerButton(Table enlistTable, Skin skin, String styleName, String towerName){
+	private void createTowerButton(Table enlistTable, Skin skin, String styleName, String towerName, Integer towerCost){
 		ImageButton towerButton = new ImageButton(skin, styleName);
 		enlistTable.add(towerButton).size(116,156).spaceBottom(5);
 		setTowerListener(towerButton,towerName);
-		towerButtons.put(towerButton,towerName);
+		towerCosts.put(towerButton,towerCost);
 	}
 
 	/**
 	 * Updates the tower buttons to disable/enable.
 	 */
 	private void updateTowerButtons() {
-	    Iterator<Entry<ImageButton, String>> iter = towerButtons.entrySet().iterator();
+	    Iterator<Entry<ImageButton, Integer>> iter = towerCosts.entrySet().iterator();
 	    while(iter.hasNext()){
-	    	Map.Entry<ImageButton, String> tower = iter.next();
+	    	Map.Entry<ImageButton, Integer> tower = iter.next();
 	    	boolean affordable = presenter.canAffordTower(tower.getValue());
 	    	tower.getKey().setDisabled(!affordable);
 	    	if(affordable){
