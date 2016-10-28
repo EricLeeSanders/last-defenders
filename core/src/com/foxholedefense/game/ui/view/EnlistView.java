@@ -183,13 +183,13 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	public void act(float delta) {
 		super.act(delta);
 		if (btnRotate.isPressed()) {
-			presenter.rotateTower();
+			presenter.rotateTower(delta);
 		} 
 		if (btnScrollUp.isPressed()){
-			scroll.setScrollY(scroll.getScrollY() - 10);
+			scroll.setScrollY(scroll.getScrollY() - (scroll.getHeight() * delta));
 		}
 		if (btnScrollDown.isPressed()){
-			scroll.setScrollY(scroll.getScrollY() + 10);
+			scroll.setScrollY(scroll.getScrollY() + (scroll.getHeight() * delta));
 		}
 	}
 
