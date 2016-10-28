@@ -86,7 +86,7 @@
  </objectgroup>
  <objectgroup name="Path">
   <object id="90" name="PathLine" x="559" y="736">
-   <polyline points="0,0 1,-240 -384,-239 -382,-432 195,-431 194,-237 418,-238 417,-591 65,-591 66,-737"/>
+   <polyline points="0,0 1,-240 -384,-240 -384,-432 195,-432 195,-238 418,-238 418,-591 65,-591 65,-737"/>
   </object>
  </objectgroup>
 </map>

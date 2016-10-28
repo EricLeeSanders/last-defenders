@@ -1,15 +1,12 @@
 package com.foxholedefense.game.ui.view;
 
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -17,13 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.foxholedefense.game.model.actor.ai.TowerTargetPriority;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.ui.presenter.InspectPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IInspectView;
-import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.Dimension;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
 /**
@@ -195,7 +188,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		btnRange.getLabel().setText(String.valueOf(selectedTower.getRangeIncreaseCost()));
 		btnAttack.getLabel().setText(String.valueOf(selectedTower.getAttackIncreaseCost()));
 		btnDischarge.getLabel().setText(String.valueOf(selectedTower.getSellCost()));
-		lblTargetPriority.setText(selectedTower.getTargetPriority().name());
+		lblTargetPriority.setText(selectedTower.getAI().name().replace('_', ' '));
 		updateUpgradeControl(btnArmor, selectedTower.hasArmor(), selectedTower.getArmorCost());
 		updateUpgradeControl(btnSpeed, selectedTower.hasIncreasedSpeed(), selectedTower.getSpeedIncreaseCost());
 		updateUpgradeControl(btnRange, selectedTower.hasIncreasedRange(), selectedTower.getRangeIncreaseCost());
@@ -204,11 +197,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 
 	/**
 	 * Updates the upgrade controls
-	 * 
-	 * @param towerCost
-	 * @param group
-	 * @param button
-	 * @param label
+	 *
 	 */
 	private void updateUpgradeControl(TextButton upgradeButton, boolean towerHasUpgrade, int upgradeCost) {
 		boolean affordable = presenter.canAffordUpgrade(upgradeCost);

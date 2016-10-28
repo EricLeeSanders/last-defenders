@@ -1,11 +1,6 @@
 package com.foxholedefense.game.model.actor.combat.tower;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Blending;
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -14,13 +9,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
-import com.foxholedefense.game.model.actor.ai.TowerSupportAI;
-import com.foxholedefense.game.model.actor.ai.TowerTargetPriority;
+import com.foxholedefense.game.model.actor.ai.TowerAI;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.util.Dimension;
-import com.foxholedefense.util.Logger;
 
 /**
  * Represents a Tower
@@ -35,7 +27,7 @@ public abstract class Tower extends CombatActor {
 	public static final float TOWER_SELL_RATE = 0.75f;
 	private int cost, armorCost, speedIncreaseCost, rangeIncreaseCost, attackIncreaseCost;
 	private boolean rangeIncreaseEnabled, speedIncreaseEnabled, attackIncreaseEnabled;
-	private TowerTargetPriority targetPriority = TowerTargetPriority.FIRST;
+	private TowerAI ai = TowerAI.FIRST;
 	private boolean active, showRange; 
 	private float attackCounter = 0;
 	private int kills;
@@ -149,20 +141,7 @@ public abstract class Tower extends CombatActor {
 	 * Find a target based on the Target Priority
 	 */
 	public void findTarget() {
-		switch (getTargetPriority()) {
-		case FIRST:
-			setTarget(TowerSupportAI.findFirstEnemy(this, getTargetGroup().getChildren()));
-			break;
-		case LAST:
-			setTarget(TowerSupportAI.findLastEnemy(this, getTargetGroup().getChildren()));
-			break;
-		case WEAKEST:
-			setTarget(TowerSupportAI.findLeastHPEnemy(this, getTargetGroup().getChildren()));
-			break;
-		case STRONGEST:
-			setTarget(TowerSupportAI.findMostHPEnemy(this, getTargetGroup().getChildren()));
-			break;
-		}
+		setTarget(getAI().findTarget(this, getTargetGroup().getChildren()));
 	}
 
 	public boolean isActive() {
@@ -248,12 +227,13 @@ public abstract class Tower extends CombatActor {
 		pool.free(this);
 	}
 
-	public TowerTargetPriority getTargetPriority() {
-		return targetPriority;
+	public TowerAI getAI() {
+		return ai;
 	}
 
-	public void setTargetPriority(TowerTargetPriority targetPriority) {
-		this.targetPriority = targetPriority;
+	public void setAI(TowerAI ai) {
+		this.ai = ai;
+		//this.targetPriority = targetPriority;
 	}
 	public void setRangeColor(float r, float g, float b, float a){
 		getRangeSprite().setColor(r,g,b,a);
