@@ -19,6 +19,7 @@ import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.ActorFactory.RPGPool;
 import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
+import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -35,25 +36,26 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	public static final float ARMOR = 10;
 	public static final float ATTACK = 10;
 	public static final float ATTACK_SPEED = 0.9f;
-	public static final float RANGE = 100;
+	public static final float RANGE = 80;
 	public static final float SPEED = 45;
 	public static final float AOE_RADIUS = 75f;
 	public static final Dimension BULLET_SIZE = new Dimension(10, 10);
-	public static final float[] BODY = { 0, 0, 0, 75, 50, 75, 50, 0 };
 	public static final Vector2 GUN_POS = new Vector2(0, 57);
 	public static final Dimension TEXTURE_BODY_SIZE = new Dimension(50, 76);
 	public static final Dimension TEXTURE_TURRET_SIZE = new Dimension(22, 120);
-	private Polygon bodyPoly = new Polygon(BODY);
 	private TextureRegion tankBodyRegion;
-	private ShapeRenderer body = Resources.getShapeRenderer();
-	private float bodyRotation; 
+	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
+	float[] bodyPoints = { 0, 0, 0, 75, 50, 75, 50, 0 };
+	private float bodyRotation;
+	private Polygon body;
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
 	public EnemyTank(TextureRegion tankRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory) {
-		super(turretRegion, pool, targetGroup, BODY, TEXTURE_TURRET_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
+		super(turretRegion, pool, targetGroup, TEXTURE_TURRET_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
 		this.tankBodyRegion = tankRegion;
 		this.deathEffectFactory = deathEffectFactory;
 		this.projectileFactory = projectileFactory;
+		body = new Polygon(bodyPoints);
 	}
 
 	/**
@@ -64,11 +66,11 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	public void draw(Batch batch, float alpha) {
 		batch.end();
 		if (Logger.DEBUG) {
-			body.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			body.begin(ShapeType.Line);
-			body.setColor(Color.YELLOW);
-			body.polygon(getBody().getTransformedVertices());
-			body.end();
+			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+			bodyOutline.begin(ShapeType.Line);
+			bodyOutline.setColor(Color.YELLOW);
+			bodyOutline.polygon(getBody().getTransformedVertices());
+			bodyOutline.end();
 		}
 		batch.begin();
 		// If the tank is not attacking, then rotate the body as well
@@ -87,11 +89,10 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	 */
 	@Override
 	public Polygon getBody() {
-		bodyPoly.setOrigin((TEXTURE_BODY_SIZE.getWidth() / 2), (TEXTURE_BODY_SIZE.getHeight() / 2));
-		bodyPoly.setRotation(bodyRotation);
-		bodyPoly.setPosition(getPositionCenter().x - (TEXTURE_BODY_SIZE.getWidth() / 2), getPositionCenter().y - (TEXTURE_BODY_SIZE.getHeight() / 2));
-
-		return bodyPoly;
+		body.setOrigin((TEXTURE_BODY_SIZE.getWidth() / 2), (TEXTURE_BODY_SIZE.getHeight() / 2));
+		body.setRotation(bodyRotation);
+		body.setPosition(ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, TEXTURE_BODY_SIZE.getWidth()), ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, TEXTURE_BODY_SIZE.getHeight()));
+		return body;
 	}
 
 	@Override

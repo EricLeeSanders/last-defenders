@@ -108,8 +108,8 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	/**
 	 * Rotate the tower
 	 */
-	public void rotateTower() {
-		towerPlacement.rotateTower(1);
+	public void rotateTower(float delta) {
+		towerPlacement.rotateTower(60 * delta);
 	}
 
 	/**
@@ -130,30 +130,11 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	/**
 	 * Determines if the tower can be purchased.
 	 * 
-	 * @param tower
-	 *            - Tower to be purchased
+	 * @param towerCost - Cost of the tower
 	 * @return boolean - if the tower can be purchased.
 	 */
-	public boolean canAffordTower(String tower) {
-
-		try {
-			Class<?> myClass = Class.forName("com.foxholedefense.game.model.actor.combat.tower.Tower" + tower);
-			Field field = ClassReflection.getDeclaredField(myClass, "COST");
-			field.setAccessible(true);
-			int cost = (Integer) field.get(null);
-			if (cost > player.getMoney()) {
-				return false;
-			} else {
-				return true;
-			}
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		} catch (ReflectionException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		return false; 
+	public boolean canAffordTower(int towerCost) {
+		return (towerCost <= player.getMoney());
 	}
 
 	@Override

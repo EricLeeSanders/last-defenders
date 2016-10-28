@@ -19,7 +19,7 @@ public class EnemyAI {
 	 * Finds the nearest tower relative to the enemy
 	 * 
 	 * @param enemy
-	 * @param towerGroup
+	 * @param towers
 	 * @return Tower
 	 */
 	public static Tower findNearestTower(Enemy enemy, SnapshotArray<Actor> towers) {
@@ -28,19 +28,18 @@ public class EnemyAI {
 		}
 		float firstTowerDistance = Integer.MAX_VALUE;
 		Tower firstTower = null;
-		Tower tempTower = null;
 		for (Actor actor : towers) {
 			if(actor instanceof Tower){
-				tempTower = (Tower)actor;
+				Tower tower = (Tower)actor;
 				// Tower is active and not dead
-				if (tempTower.isDead() == false && tempTower.isActive()) {
-					if (CollisionDetection.targetWithinRange(tempTower.getBody(), enemy.getRangeShape())) {
-						if (tempTower.getPositionCenter().dst(enemy.getPositionCenter()) < firstTowerDistance) {
+				if (tower.isDead() == false && tower.isActive()) {
+					if (CollisionDetection.targetWithinRange(tower.getBody(), enemy.getRangeShape())) {
+						if (tower.getPositionCenter().dst(enemy.getPositionCenter()) < firstTowerDistance) {
 							// If the enemy is instanceof IRPG then it can
 							// attack plated towers.
-							if ((tempTower instanceof IPlatedArmor == false) || (enemy instanceof IRpg)) {
-								firstTower = tempTower;
-								firstTowerDistance = tempTower.getPositionCenter().dst(enemy.getPositionCenter());
+							if ((tower instanceof IPlatedArmor == false) || (enemy instanceof IRpg)) {
+								firstTower = tower;
+								firstTowerDistance = tower.getPositionCenter().dst(enemy.getPositionCenter());
 							}
 						}
 					}

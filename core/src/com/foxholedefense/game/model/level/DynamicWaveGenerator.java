@@ -11,6 +11,7 @@ import java.util.Queue;
 import java.util.Random;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.enemy.*;
@@ -101,13 +102,13 @@ public class DynamicWaveGenerator {
 	}
 	private SnapshotArray<Enemy> createEnemiesByType(int n, Class<? extends Enemy> enemyClass) {
 		SnapshotArray<Enemy> enemies = new SnapshotArray<Enemy>();
-		Queue<Vector2> enemyPath = map.getPath();
+		Array<Vector2> enemyPath = map.getPath();
 		for(int i = 0; i < n; i++){
 			String type = enemyClass.getSimpleName();
 			int randArmor = random.nextInt(3); //0-2
 			boolean armor = (randArmor == 0) ? true : false;
 			Enemy enemy = actorFactory.loadEnemy(type);
-			enemy.setPath(new LinkedList<Vector2>(enemyPath));
+			enemy.setPath(new SnapshotArray<Vector2>(enemyPath));
 			enemy.setHasArmor(armor);
 			HealthBar healthBar = actorFactory.loadHealthBar();
 			healthBar.setActor(enemy);

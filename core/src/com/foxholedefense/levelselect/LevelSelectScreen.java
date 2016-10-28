@@ -24,7 +24,8 @@ public class LevelSelectScreen extends AbstractScreen {
 	}
 	@Override
 	public void resize(int width, int height) {
-	    super.resize(width, height);
+		stage.getViewport().setScreenSize(width, height); // update the size of Viewport
+		super.resize(width, height);
 	}
 	
 	@Override
