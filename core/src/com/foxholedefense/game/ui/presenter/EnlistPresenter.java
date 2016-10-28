@@ -108,8 +108,8 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	/**
 	 * Rotate the tower
 	 */
-	public void rotateTower() {
-		towerPlacement.rotateTower(1);
+	public void rotateTower(float delta) {
+		towerPlacement.rotateTower(60 * delta);
 	}
 
 	/**
