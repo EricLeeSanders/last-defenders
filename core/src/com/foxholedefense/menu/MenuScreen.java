@@ -31,7 +31,7 @@ public class MenuScreen extends AbstractScreen {
 	}
 	@Override
 	public void resize(int width, int height) {
-		stage.getViewport().setScreenSize(width, height); // update the size of ViewPortS
+		stage.getViewport().setScreenSize(width, height); // update the size of Viewport
 	    super.resize(width, height);
 	}
 	@Override

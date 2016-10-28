@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -19,6 +20,7 @@ import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.game.service.factory.ActorFactory.ExplosionPool;
 import com.foxholedefense.game.service.factory.ActorFactory.SupportActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
+import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -29,13 +31,14 @@ public class LandMine extends SupportActor implements IRpg{
 	private static final float RANGE = 50;
 	private static final Vector2 GUN_POS = new Vector2(0,0);
 	private static final float SCALE = 0.30f;
+	private Circle body;
 	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private IProjectileFactory projectileFactory;
 	public LandMine(SupportActorPool<LandMine> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion textureRegion) {
 		super(pool, targetGroup, textureRegion, new Dimension(textureRegion.getRegionWidth()*SCALE, textureRegion.getRegionHeight()*SCALE)
 				,RANGE,ATTACK, GUN_POS, COST);
 		this.projectileFactory = projectileFactory;
-
+		this.body = new Circle(this.getPositionCenter(), this.getWidth()/2);
 	}
 	@Override
 	public void act(float delta) {
@@ -43,7 +46,7 @@ public class LandMine extends SupportActor implements IRpg{
 		if(isActive()){
 			for(Actor enemy : getTargetGroup().getChildren()){
 				if(enemy instanceof Enemy){
-					if(CollisionDetection.landMineAndEnemy(getBody(), ((Enemy)enemy).getBody())){
+					if(CollisionDetection.landMineAndEnemy(((Enemy)enemy).getBody(),getBody())){
 						explode();
 						return;
 					}
@@ -58,7 +61,7 @@ public class LandMine extends SupportActor implements IRpg{
 			debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			debugBody.begin(ShapeType.Line);
 			debugBody.setColor(Color.YELLOW);
-			debugBody.rect(getBody().x,getBody().y,getBody().width,getBody().height);
+			debugBody.circle(this.getPositionCenter().x, this.getPositionCenter().y, this.getWidth() / 2);
 			debugBody.end();
 		}
 		batch.begin();
@@ -68,8 +71,9 @@ public class LandMine extends SupportActor implements IRpg{
 		projectileFactory.loadExplosion().initialize(this,RANGE, null, getTargetGroup(), this.getPositionCenter());
 		this.freeActor();
 	}
-	private Rectangle getBody(){
-		return new Rectangle(this.getX(),this.getY(),this.getWidth(),this.getHeight());
+	private Circle getBody(){
+		body.setPosition(getPositionCenter().x, getPositionCenter().y);
+		return body;
 	}
 	
 }

@@ -1,6 +1,5 @@
 package com.foxholedefense.game.helper;
 
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
@@ -17,14 +16,14 @@ import com.badlogic.gdx.math.Shape2D;
 
 /**
  * A static class to handle all collisions that can occur during the game
- * 
+ *
  * @author Eric
  *
  */
 public final class CollisionDetection {
 	/**
 	 * Checks for collision with the path boundaries when placing a tower
-	 * 
+	 *
 	 * @param boundaries - Array of rectangles from TiledMap that represent the
 	 *            path boundary
 	 * @param placeActor - The actor that is being places
@@ -32,13 +31,13 @@ public final class CollisionDetection {
 	 */
 	public static boolean CollisionWithPath(Array<Rectangle> boundaries, ICollision placeActor) {
 		Shape2D body = placeActor.getBody();
-		for (Rectangle boundry : boundaries) {
+		for (Rectangle boundary : boundaries) {
 			if (body instanceof Polygon) {
-				if (polygonAndRectangle((Polygon) body, boundry)) {
+				if (polygonAndRectangle((Polygon) body, boundary)){
 					return true;
 				}
-			} else if (body instanceof Rectangle) {
-				if (rectangleAndRectangle((Rectangle) body, boundry)) {
+			} else if (body instanceof Circle) {
+				if(circleAndRectangle((Circle) body, boundary)) {
 					return true;
 				}
 			}
@@ -48,24 +47,33 @@ public final class CollisionDetection {
 
 	/**
 	 * Checks for collisions with actors when placing a tower
-	 * 
+	 *
 	 * @param Actors - A collection of Actors that implement ICollision
 	 * @param placeActor - The actor that is being placed
 	 * @return boolean - If there is a collision
 	 */
 	public static boolean CollisionWithActors(SnapshotArray<Actor> Actors, ICollision placeActor) {
-		Polygon towerBody;
 		Shape2D placeBody = placeActor.getBody();
 		for (Actor actor : Actors) {
-			if (actor instanceof Tower) {
-				towerBody = ((CombatActor) actor).getBody();
-				if (!actor.equals(placeActor)) {
-					if (placeBody instanceof Polygon) {
-						if (polygonAndPolygon(towerBody, (Polygon) placeBody)) {
+			if (!actor.equals(placeActor) && actor instanceof Tower) {
+				Shape2D towerBody = ((CombatActor) actor).getBody();
+				if (placeBody instanceof Circle) {
+					if (towerBody instanceof Circle) {
+						if (circleAndCircle((Circle) towerBody, (Circle) placeBody)) {
 							return true;
 						}
-					} else if (placeBody instanceof Rectangle) {
-						if (polygonAndRectangle(towerBody, (Rectangle) placeBody)) {
+					} else if (towerBody instanceof Polygon){
+						if(polygonAndCircle((Polygon) towerBody, (Circle) placeBody)) {
+							return true;
+						}
+					}
+				} else if (placeBody instanceof Polygon) {
+					if (towerBody instanceof Circle) {
+						if (polygonAndCircle((Polygon) placeBody, (Circle) towerBody)) {
+							return true;
+						}
+					} else if (towerBody instanceof Polygon){
+						if (polygonAndPolygon((Polygon) placeBody, (Polygon) towerBody)) {
 							return true;
 						}
 					}
@@ -77,47 +85,75 @@ public final class CollisionDetection {
 
 	/**
 	 * Checks for collision between a LandMine and an Enemy
-	 * 
-	 * @param landMineBody
-	 * @param enemy
+	 *
+	 * @param targetBody - The body of the enemy
+	 * @param landMineBody - the body of the landmine
 	 * @return boolean - If there is a collision
 	 */
-	public static boolean landMineAndEnemy(Rectangle landMineBody, Polygon enemy) {
-		if (polygonAndRectangle(enemy, landMineBody)) {
-			return true;
+	public static boolean landMineAndEnemy(Shape2D targetBody, Circle landMineBody){
+		if (targetBody instanceof Polygon) {
+			return (polygonAndCircle((Polygon)targetBody, landMineBody));
+		} else if(targetBody instanceof Circle){
+			return (circleAndCircle((Circle)targetBody, landMineBody));
 		}
+
+		return false;
+	}
+
+
+	public static boolean explosionAndTarget(Shape2D targetBody, Circle explosion){
+		if (targetBody instanceof Polygon) {
+			return (polygonAndCircle((Polygon)targetBody, explosion));
+		} else if(targetBody instanceof Circle){
+			return (circleAndCircle((Circle)targetBody, explosion));
+		}
+
+		return false;
+	}
+
+	public static boolean flameAndTarget(Shape2D targetBody, Polygon flame) {
+		if (targetBody instanceof Polygon) {
+			return (polygonAndPolygon(flame, (Polygon)targetBody));
+		} else if(targetBody instanceof Circle){
+			return (polygonAndCircle(flame, (Circle)targetBody));
+		}
+
 		return false;
 	}
 
 	/**
 	 * Checks for collision between a bullet and its target
-	 * 
-	 * @param bullet
-	 * @param target
+	 *
+	 * @param targetBody - The body of the target
+	 * @param bullet - The bullet
 	 * @return boolean - If there is a collision
 	 */
-	public static boolean bulletAndTarget(Rectangle bullet, Polygon target) {
-		if (polygonAndRectangle(target, bullet)) {
-			return true;
+	public static boolean bulletAndTarget(Shape2D targetBody, Circle bullet) {
+		if (targetBody instanceof Polygon) {
+			return (polygonAndCircle((Polygon)targetBody, bullet));
+		} else if(targetBody instanceof Circle){
+			return (circleAndCircle((Circle)targetBody, bullet));
 		}
+
 		return false;
 	}
 
 	/**
 	 * Checks to see if a tower was hit when the user clicks
-	 * 
+	 *
 	 * @param Towers - Collection of Towers that are active
 	 * @param clickCoord - The coords where the player clicked
-	 * @return boolean - If a tower was hit.
+	 * @return CombatActor - CombatActor that was hit or null if none were hit
 	 */
-	public static CombatActor towerHit(SnapshotArray<Actor> Towers, Vector2 clickCoord) {
+	public static Tower towerHit(SnapshotArray<Actor> Towers, Vector2 clickCoord) {
 		Rectangle clickRect = new Rectangle(clickCoord.x, clickCoord.y, 1, 1);
 		for (Actor tower : Towers) {
 			if (tower instanceof Tower) {
-				Polygon towerBody = ((CombatActor) tower).getBody();
-				towerBody.getTransformedVertices();
-				if (polygonAndRectangle(towerBody, clickRect)) {
-					return (CombatActor) tower;
+				Shape2D towerBody = ((CombatActor) tower).getBody();
+				if (towerBody instanceof Polygon && polygonAndRectangle((Polygon) towerBody, clickRect)) {
+					return (Tower) tower;
+				} else if(towerBody instanceof Circle && circleAndRectangle((Circle) towerBody, clickRect)){
+					return (Tower) tower;
 				}
 			}
 		}
@@ -126,19 +162,26 @@ public final class CollisionDetection {
 
 	/**
 	 * Checks to see if the target is within range
-	 * 
-	 * @param targetBody
-	 * @param range
+	 *
+	 * @param targetBody - The target body
+	 * @param range - The range shape
 	 * @return boolean - If the target is within range
 	 */
-	public static boolean targetWithinRange(Polygon targetBody, Shape2D range) {
-		if (range instanceof Circle) {
-			return polygonAndCircle(targetBody, (Circle) range);
-		} else if (range instanceof Polygon) {
-			return polygonAndPolygon(targetBody, (Polygon) range);
-		} else {
-			return false;
+	public static boolean targetWithinRange(Shape2D targetBody, Shape2D range) {
+		if (targetBody instanceof Circle) {
+			if (range instanceof Circle) {
+				return circleAndCircle((Circle) targetBody, (Circle) range);
+			} else if (range instanceof Polygon) {
+				return polygonAndCircle((Polygon) range, (Circle) targetBody);
+			}
+		} else if (targetBody instanceof Polygon) {
+			if (range instanceof Circle) {
+				return polygonAndCircle((Polygon) targetBody, (Circle) range);
+			} else if (range instanceof Polygon) {
+				return polygonAndPolygon((Polygon) targetBody, (Polygon) range);
+			}
 		}
+		return false;
 	}
 
 	// Create lines between 2 vertices for each vertex. Check whether that line
@@ -147,12 +190,12 @@ public final class CollisionDetection {
 	 * Checks for collision with a polygon and circle. Libgdx does not have a
 	 * native way to do this. This method creates a line between 2 vertices for
 	 * each vertex. Then checks to see if that line intersects the circle.
-	 * 
+	 *
 	 * @param polygon
 	 * @param circle
 	 * @return boolean - If there is an intersection
 	 */
-	public static boolean polygonAndCircle(Polygon polygon, Circle circle) {
+	private static boolean polygonAndCircle(Polygon polygon, Circle circle) {
 		float[] vertices = polygon.getTransformedVertices();
 		Vector2 center = new Vector2(circle.x, circle.y);
 		Vector2 vectorA = new Vector2();
@@ -170,21 +213,18 @@ public final class CollisionDetection {
 				return true;
 			}
 		}
-		if (polygon.contains(circle.x, circle.y)) {
-			return true;
-		}
-		return false;
+		return (polygon.contains(circle.x, circle.y));
 	}
 
 	/**
 	 * Checks for collision with a polygon and rectangle. Works by making the
 	 * rectangle a polygon.
-	 * 
+	 *
 	 * @param polygon
 	 * @param rectangle
 	 * @return boolean - If there is a collision
 	 */
-	public static boolean polygonAndRectangle(Polygon polygon, Rectangle rectangle) {
+	private static boolean polygonAndRectangle(Polygon polygon, Rectangle rectangle) {
 		Polygon rectPoly = new Polygon(new float[] { 0, 0, rectangle.width, 0, rectangle.width, rectangle.height, 0, rectangle.height });
 		rectPoly.setPosition(rectangle.x, rectangle.y);
 		return Intersector.overlapConvexPolygons(rectPoly, polygon);
@@ -193,23 +233,32 @@ public final class CollisionDetection {
 
 	/**
 	 * Checks for a collision between 2 polygons
-	 * 
+	 *
 	 * @param poly1
 	 * @param poly2
 	 * @return boolean - If there is a collision
 	 */
-	public static boolean polygonAndPolygon(Polygon poly1, Polygon poly2) {
+	private static boolean polygonAndPolygon(Polygon poly1, Polygon poly2) {
 		return Intersector.overlapConvexPolygons(poly1, poly2);
 	}
 
 	/**
 	 * Checks for a collision between 2 rectangles
-	 * 
+	 *
 	 * @param rect1
 	 * @param rect2
 	 * @return boolean - If there is a collision
 	 */
-	public static boolean rectangleAndRectangle(Rectangle rect1, Rectangle rect2) {
+	private static boolean rectangleAndRectangle(Rectangle rect1, Rectangle rect2) {
 		return Intersector.overlaps(rect1, rect2);
 	}
+
+	private static boolean circleAndRectangle(Circle circle, Rectangle rect){
+		return Intersector.overlaps(circle, rect);
+	}
+
+	private static boolean circleAndCircle(Circle circle1, Circle circle2){
+		return Intersector.overlaps(circle1, circle2);
+	}
+
 }

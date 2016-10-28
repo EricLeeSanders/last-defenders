@@ -2,6 +2,7 @@ package com.foxholedefense.game.helper;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -53,8 +54,8 @@ public class Damage {
 			Actor actor = targetGroup.get(i);
 			flameTarget = (ITargetable) actor;
 			if (flameTarget != null && flameTarget.isDead() == false) {
-				Polygon targetBody = flameTarget.getBody();
-				if (CollisionDetection.polygonAndPolygon(targetBody, flameBody)) {
+				Shape2D targetBody = flameTarget.getBody();
+				if (CollisionDetection.flameAndTarget(targetBody, flameBody)) {
 					if(!(flameTarget.equals(target))){
 						dealFlameTargetDamage(attacker,flameTarget);
 					}
@@ -75,7 +76,7 @@ public class Damage {
 				if (aoeTarget.equals(target) == false) {
 					distance = position.dst( aoeTarget.getPositionCenter());
 					Logger.debug("AOE Actor distance: " + distance + " aoe radius: " + aoeRadius.radius);
-					if (CollisionDetection.polygonAndCircle( aoeTarget.getBody(), aoeRadius)) {
+					if (CollisionDetection.explosionAndTarget( aoeTarget.getBody(), aoeRadius)) {
 						damagePercent = (1000 / distance);
 						if (damagePercent > 100) {
 							damagePercent = 100;

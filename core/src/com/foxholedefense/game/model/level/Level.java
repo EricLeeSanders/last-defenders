@@ -5,8 +5,10 @@ import java.util.Queue;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.GameStage;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
@@ -83,10 +85,10 @@ public class Level{
 		JsonValue json = new JsonReader().parse(Gdx.files.internal("game/levels/level" + intLevel + "/waves/wave" + currentWave + ".json"));
 		spawningEnemyQueue = new LinkedList<SpawningEnemy>();
 		JsonValue enemiesJson = json.get("wave");
-		Queue<Vector2> enemyPath = map.getPath();
+		Array<Vector2> enemyPath = map.getPath();
 		for (JsonValue enemyJson : enemiesJson.iterator()) {
 			Enemy enemy = actorFactory.loadEnemy("Enemy" + enemyJson.getString("enemy"));
-			enemy.setPath(new LinkedList<Vector2>(enemyPath));
+			enemy.setPath(new SnapshotArray<Vector2>(enemyPath));
 			enemy.setHasArmor(enemyJson.getBoolean("armor"));
 			float delay = enemyJson.getFloat("delay");
 			SpawningEnemy spawningEnemy = new SpawningEnemy(enemy, delay);

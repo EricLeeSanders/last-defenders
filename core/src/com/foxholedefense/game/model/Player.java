@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.SnapshotArray;
  *
  */
 public class Player {
-	private int money = 20000;
+	private int money = 2000;
 	private int lives = 20;
 	private int waveCount = 1;
 	private SnapshotArray<IPlayerObserver> observers = new SnapshotArray<IPlayerObserver>();
