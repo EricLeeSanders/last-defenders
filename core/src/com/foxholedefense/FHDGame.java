@@ -24,6 +24,14 @@ public class FHDGame extends Game implements IScreenStateObserver {
 	private Resources resources;
 	private UserPreferences userPreferences;
 	private FHDAudio audio;
+	private IPlayServices playServices;
+	public FHDGame(IPlayServices playServices){
+		this.playServices = playServices;
+		playServices.signIn();
+	}
+	public FHDGame(){
+
+	}
 
 	@Override
 	public void create() {
