@@ -19,7 +19,7 @@ public class LevelSelectScreen extends AbstractScreen {
 	public LevelSelectScreen(ScreenStateManager screenStateManager, GameStateManager gameStateManager, Resources resources, FHDAudio audio) {
 		super(gameStateManager);
 		this.audio = audio;
-		this.stage = new LevelSelectStage(screenStateManager,resources, audio);
+		this.stage = new LevelSelectStage(screenStateManager,resources, audio, getViewport());
 		super.addInputProcessor(stage);
 	}
 	@Override
