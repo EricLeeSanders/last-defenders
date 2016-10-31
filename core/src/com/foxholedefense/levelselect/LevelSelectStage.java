@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.foxholedefense.levelselect.ui.LevelSelectPresenter;
 import com.foxholedefense.levelselect.ui.LevelSelectView;
 import com.foxholedefense.screen.state.ScreenStateManager;
@@ -24,8 +25,8 @@ import com.foxholedefense.util.Resources;
  */
 public class LevelSelectStage extends Stage {
 	private Resources resources;
-	public LevelSelectStage(ScreenStateManager screenStateManager, Resources resources, FHDAudio audio) {
-		super(new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, new OrthographicCamera()));
+	public LevelSelectStage(ScreenStateManager screenStateManager, Resources resources, FHDAudio audio, Viewport viewport) {
+		super(viewport);
 		this.resources = resources;
 		LevelSelectPresenter presenter = new LevelSelectPresenter(screenStateManager);
 		resources.loadAtlas(Resources.LEVEL_SELECT_ATLAS);
