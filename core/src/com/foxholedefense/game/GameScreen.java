@@ -72,14 +72,14 @@ public class GameScreen extends AbstractScreen {
 	}
 	@Override
 	public void render(float delta) {
-//	    System.out.println(
-//	            "  Drawcalls: " + GLProfiler.drawCalls +
-//	                    ", Calls: " + GLProfiler.calls +
-//	                    ", TextureBindings: " + GLProfiler.textureBindings +
-//	                    ", ShaderSwitches:  " + GLProfiler.shaderSwitches +
-//	                    ", vertexCount: " + GLProfiler.vertexCount.value
-//	    );
-//	    GLProfiler.reset();
+	    System.out.println(
+	            "  Drawcalls: " + GLProfiler.drawCalls +
+	                    ", Calls: " + GLProfiler.calls +
+	                    ", TextureBindings: " + GLProfiler.textureBindings +
+	                    ", ShaderSwitches:  " + GLProfiler.shaderSwitches +
+	                    ", vertexCount: " + GLProfiler.vertexCount.value
+	    );
+	    GLProfiler.reset();
 		delta = delta * resources.getGameSpeed();
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

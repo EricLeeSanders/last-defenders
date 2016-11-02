@@ -12,15 +12,24 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_disabled },
 	toggle: { down: text_button_normal, checked: text_button_normal, up: text_button_normal }
 },
+
+			
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
-	default: { down: text_button_normal, up: text_button_normal },
+	default: {checked: button_normal, imageOver: button_over, imageDown: button_press, imageUp: button_normal, disabled: button_disabled},
 	toggle: { down: text_button_normal, checked: text_button_normal, up: text_button_normal },
-	sound: {checked: sound_normal, checkedOver: sound_over, down: sound_disabled, up: sound_disabled},
-	music: {checked: music_normal, checkedOver: music_over, down: music_disabled, up: music_disabled},
-	select: {checked: select_normal, imageOver: select_over, imageDown: select_pressed, imageUp: select_normal, disabled: select_disabled},
-	cancel: {checked: cancel_normal, imageOver: cancel_over, imageDown: cancel_pressed, imageUp: cancel_normal, disabled: cancel_disabled},
-	rotate: {checked: rotate_normal, imageOver: rotate_over, imageDown: rotate_pressed, imageUp: rotate_normal, disabled: rotate_disabled},
-	options: {checked: options_normal, imageOver: options_over, imageDown: options_pressed, imageUp: options_normal, disabled: options_disabled},
+	music: {imageUp: music, checked: button_normal, checkedOver: button_over, down: button_disabled, up: button_disabled, disabled: button_disabled},
+	sound: {imageUp: sound, checked: button_normal, checkedOver: button_over, down: button_disabled, up: button_disabled, disabled: button_disabled},
+	select: {imageUp: select, over: button_over, down: button_press, up: button_press, disabled: button_disabled},
+	cancel: {imageUp: cancel, over: button_over, down: button_press, up: button_red, disabled: button_disabled},
+	rotate: {imageUp: rotate, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
+	options: {imageUp: options, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
+	wave: {imageUp: wave, over: button_over, down: button_press, up: button_blue, disabled: button_disabled},
+	arrow-left: {imageUp: arrow-left, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
+	arrow-right: {imageUp: arrow-right, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
+	arrow-small-down: {imageUp: arrow-small-down, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
+	arrow-small-up: {imageUp: arrow-small-up, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
+	enlist_hud: {imageUp: shield, over: button_over, down: button_press, up: button_blue, disabled: button_disabled},
+	support_hud: {imageUp: bomb, over: button_over, down: button_press, up: button_blue, disabled: button_disabled},
 	support_apache: {down: support_apache, up: support_apache, disabled: support_apache_disabled},
 	support_airstrike: {down: support_airstrike, up: support_airstrike, disabled: support_airstrike_disabled},
 	support_landmine: {down: support_landmine, up: support_landmine, disabled: support_landmine_disabled},
@@ -32,13 +41,6 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	enlist_flame_thrower: {down: enlist_flame_thrower, up: enlist_flame_thrower, disabled: enlist_flame_thrower_disabled},
 	enlist_tank: {down: enlist_tank, up: enlist_tank, disabled: enlist_tank_disabled},
 	enlist_turret: {down: enlist_turret, up: enlist_turret, disabled: enlist_turret_disabled},
-	speed: {checked: single-speed_normal, checkedOver: single-speed_normal, over: double-speed_normal, down: double-speed_normal, up: double-speed_normal, disabled: single-speed_normal },
-	wave: {down: wave_normal, up: wave_normal, over: wave_normal, disabled: wave_normal},
-	enlist_hud: {down: enlist_normal, up: enlist_normal, over: enlist_normal, disabled: enlist_normal},
-	support_hud: {down: support_normal, up: support_normal, over: support_normal, disabled: support_normal},
-	arrow_right: {down: right_pressed, up: right_normal, over: right_over, disabled: right_disabled},
-	arrow_up: {down: up_pressed, up: up_normal, over: up_over, disabled: up_disabled},
-	arrow_down: {down: down_pressed, up: down_normal, over: down_over, disabled: down_disabled},
 	play: {down: play_normal, up: play_normal, over: play_normal, disabled: play_normal}
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
@@ -54,7 +56,6 @@ com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: { vScroll: null, hScrollKnob: null, background: hollow, hScroll: null, vScrollKnob: null }
 },
 com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable: {
-    main-panel-horz-padded: { region: main-panel, leftWidth: 50, rightWidth: 50, topHeight: 67, bottomHeight: 67 },
 	main-panel: { region: main-panel, leftWidth: 75, rightWidth: 75, topHeight: 67, bottomHeight: 67 },
 	main-panel-hollow: { region: main-panel-hollow, leftWidth: 75, rightWidth: 75, topHeight: 67, bottomHeight: 67 },
 	money: { region: money},

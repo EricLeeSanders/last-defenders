@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.ui.presenter.InspectPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IInspectView;
@@ -79,6 +80,8 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		btnCancel = new ImageButton(skin,"cancel");
 		setCancelListener();
 		btnCancel.setSize(64, 64);
+		btnCancel.getImageCell().size(35,36);
+		btnCancel.getImage().setScaling(Scaling.stretch);
 		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
 		addActor(btnCancel);
 
@@ -114,12 +117,16 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		lblTarget.setFontScale(0.45f);
 		grpTargetPriority.addActor(lblTarget);
 		
-		btnChangeTarget = new ImageButton(skin, "arrow_right");
+		btnChangeTarget = new ImageButton(skin, "arrow-right");
 		btnChangeTarget.setSize(50, 50);
+		btnChangeTarget.getImageCell().size(32,22);
+		btnChangeTarget.getImage().setScaling(Scaling.stretch);
 		btnChangeTarget.setPosition(lblTargetPriority.getX() + lblTargetPriority.getWidth(), lblTargetPriority.getY() - 4);
 		grpTargetPriority.addActor(btnChangeTarget);
 		container.add(grpTargetPriority).align(Align.left).padTop(45);
 		setTargetPriorityListener();
+
+
 		TextButtonStyle dischargeStyle = new TextButtonStyle(skin.get("discharge", TextButtonStyle.class));
 		dischargeStyle.pressedOffsetY = -27;
 		dischargeStyle.unpressedOffsetY = -27;
