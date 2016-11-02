@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.game.model.actor.support.AirStrike;
 import com.foxholedefense.game.model.actor.support.Apache;
 import com.foxholedefense.game.model.actor.support.LandMine;
@@ -117,18 +118,24 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		btnCancel = new ImageButton(skin,"cancel");
 		setCancelListener();
 		btnCancel.setSize(64, 64);
+		btnCancel.getImageCell().size(35,36);
+		btnCancel.getImage().setScaling(Scaling.stretch);
 		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
 		choosingGroup.addActor(btnCancel);
 		
 		
 		btnPlace = new ImageButton(skin, "select");
 		btnPlace.setSize(50, 50);
+		btnPlace.getImageCell().size(30,23);
+		btnPlace.getImage().setScaling(Scaling.stretch);
 		btnPlace.setPosition(Resources.VIRTUAL_WIDTH - 60, 10);
 		setPlaceListener();
 		addActor(btnPlace);
-		
+
 		btnPlacingCancel = new ImageButton(skin, "cancel");
 		btnPlacingCancel.setSize(50, 50);
+		btnPlacingCancel.getImageCell().size(25,25);
+		btnPlacingCancel.getImage().setScaling(Scaling.stretch);
 		btnPlacingCancel.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlace.getY() + 60);
 		setPlacingCancelListener();
 		addActor(btnPlacingCancel);

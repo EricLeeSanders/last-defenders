@@ -74,6 +74,7 @@ public class MenuView extends Group implements IMenuView {
 		
 		btnSound = new ImageButton(skin, "sound");
 		btnSound.setSize(64, 64);
+		btnSound.getImageCell().size(34,32);
 		btnSound.setPosition(84, 25);
 		addActor(btnSound);
 		setBtnSoundListener(btnSound);
@@ -81,12 +82,14 @@ public class MenuView extends Group implements IMenuView {
 		
 		btnMusic = new ImageButton(skin, "music");
 		btnMusic.setSize(64, 64);
+		btnMusic.getImageCell().size(36,36);
 		btnMusic.setPosition(172,36);
 		addActor(btnMusic);
 		setBtnMusicListener(btnMusic);
 		
 		ImageButton btnOptions = new ImageButton(skin, "options");
 		btnOptions.setSize(64, 64);
+		btnOptions.getImageCell().size(34,35);
 		btnOptions.setPosition(407, 36);
 		addActor(btnOptions);
 		setBtnOptionsListener(btnOptions);

@@ -91,21 +91,6 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 
 	}
 
-	/**
-	 * Change the speed of the game
-	 */
-	public void changeGameSpeed() {
-		audio.playSound(FHDSound.SMALL_CLICK);
-		if (doubleSpeedEnabled) {
-			resources.setGameSpeed(Resources.NORMAL_SPEED);
-			doubleSpeedEnabled = false;
-		} else {
-			resources.setGameSpeed(Resources.DOUBLE_SPEED);
-			doubleSpeedEnabled = true;
-		}
-		view.changeSpeed(doubleSpeedEnabled);
-
-	}
 
 	@Override
 	public void changeUIState(GameUIState state) {

@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.game.model.actor.combat.tower.TowerFlameThrower;
 import com.foxholedefense.game.model.actor.combat.tower.TowerMachineGun;
 import com.foxholedefense.game.model.actor.combat.tower.TowerRifle;
@@ -105,34 +106,46 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		btnCancel = new ImageButton(skin,"cancel");
 		setCancelListener();
 		btnCancel.setSize(64, 64);
+		btnCancel.getImageCell().size(35,36);
+		btnCancel.getImage().setScaling(Scaling.stretch);
 		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
 		choosingGroup.addActor(btnCancel);
 		//btnCancel.setVisible(true);
 		
-		btnScrollUp = new ImageButton(skin,"arrow_up");
+		btnScrollUp = new ImageButton(skin,"arrow-small-up");
 		btnScrollUp.setSize(64, 64);
+		btnScrollUp.getImageCell().size(35,30);
+		btnScrollUp.getImage().setScaling(Scaling.stretch);
 		btnScrollUp.setPosition(Resources.VIRTUAL_WIDTH-75, (Resources.VIRTUAL_HEIGHT/2) + 20);
 		choosingGroup.addActor(btnScrollUp);
 		
-		btnScrollDown = new ImageButton(skin,"arrow_down");
+		btnScrollDown = new ImageButton(skin,"arrow-small-down");
 		btnScrollDown.setSize(64, 64);
+		btnScrollDown.getImageCell().size(35,30);
+		btnScrollDown.getImage().setScaling(Scaling.stretch);
 		btnScrollDown.setPosition(Resources.VIRTUAL_WIDTH-75, (Resources.VIRTUAL_HEIGHT/2) - 84);
 		choosingGroup.addActor(btnScrollDown);
 		
 		btnPlace = new ImageButton(skin, "select");
 		btnPlace.setSize(50, 50);
+		btnPlace.getImageCell().size(30,23);
+		btnPlace.getImage().setScaling(Scaling.stretch);
 		btnPlace.setPosition(Resources.VIRTUAL_WIDTH - 60, 10);
 		setPlaceListener();
 		addActor(btnPlace);
 		
 		btnPlacingCancel = new ImageButton(skin, "cancel");
 		btnPlacingCancel.setSize(50, 50);
+		btnPlacingCancel.getImageCell().size(25,25);
+		btnPlacingCancel.getImage().setScaling(Scaling.stretch);
 		btnPlacingCancel.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlace.getY() + 60);
 		setPlacingCancelListener();
 		addActor(btnPlacingCancel);
 		
 		btnRotate = new ImageButton(skin, "rotate");
 		btnRotate.setSize(50, 50);
+		btnRotate.getImageCell().size(34,32);
+		btnRotate.getImage().setScaling(Scaling.stretch);
 		btnRotate.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlacingCancel.getY() + 60);
 		setRotateListener();
 		addActor(btnRotate);

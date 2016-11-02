@@ -30,7 +30,7 @@ public class LevelSelectStage extends Stage {
 		this.resources = resources;
 		LevelSelectPresenter presenter = new LevelSelectPresenter(screenStateManager);
 		resources.loadAtlas(Resources.LEVEL_SELECT_ATLAS);
-		LevelSelectView levelSelectView = new LevelSelectView(presenter, resources.getAtlas(Resources.LEVEL_SELECT_ATLAS), resources.getFonts(), audio);
+		LevelSelectView levelSelectView = new LevelSelectView(presenter, resources, audio);
 		this.addActor(levelSelectView);
 		levelSelectView.setBackground(resources.getAtlas(Resources.LEVEL_SELECT_ATLAS));
 	}
