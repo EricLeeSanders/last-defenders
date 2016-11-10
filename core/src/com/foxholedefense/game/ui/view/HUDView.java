@@ -167,7 +167,7 @@ public class HUDView extends Group implements IHUDView {
 
 	@Override
 	public void setWaveCount(String waveCount) {
-		lblWaveCount.setText("Wave: " + waveCount);
+		lblWaveCount.setText("WAVE: " + waveCount);
 	}
 
 	@Override

@@ -63,7 +63,7 @@ public class OptionsView extends Group implements IOptionsView {
 		//table.debug();
 		this.addActor(mainTable);
 		
-		Label lblTitle = new Label("Options", skin);
+		Label lblTitle = new Label("OPTIONS", skin);
 		lblTitle.setPosition(mainTable.getX() + (mainTable.getWidth()/2) - (lblTitle.getWidth()/2)
 					,mainTable.getY() + mainTable.getHeight() - lblTitle.getHeight() );
 		lblTitle.setAlignment(Align.center);
@@ -72,37 +72,37 @@ public class OptionsView extends Group implements IOptionsView {
 		
 		//mainTable.row();
 
-		btnResume = new TextButton("Resume",skin);
+		btnResume = new TextButton("RESUME",skin);
 		btnResume.getLabel().setFontScale(0.45f);
 		setBtnResumeListener();
 		
-		btnNewGame = new TextButton("New Game",skin);
+		btnNewGame = new TextButton("NEW GAME",skin);
 		btnNewGame.getLabel().setFontScale(0.45f);
 		setBtnNewGameListener();
 
-		btnMainMenu = new TextButton("Main Menu",skin);
+		btnMainMenu = new TextButton("MAIN MENU",skin);
 		btnMainMenu.getLabel().setFontScale(0.45f);
 		setBtnMainMenuListener();
 		
-		btnSound = new CheckBox(" Sound On", skin);
+		btnSound = new CheckBox(" SOUND ON", skin);
 		btnSound.getLabel().setFontScale(0.45f);
 		btnSound.getImageCell().width(32).height(32);
 		btnSound.getImage().setScaling(Scaling.stretch);
 		setBtnSoundListener(btnSound);
 		
-		btnMusic = new CheckBox(" Music On", skin);
+		btnMusic = new CheckBox(" MUSIC ON", skin);
 		btnMusic.getLabel().setFontScale(0.45f);
 		btnMusic.getImageCell().width(32).height(32);
 		btnMusic.getImage().setScaling(Scaling.stretch);
 		setBtnMusicListener(btnMusic);
 		
-		btnShowRanges = new CheckBox(" Show Ranges", skin);
+		btnShowRanges = new CheckBox(" SHOW RANGES", skin);
 		btnShowRanges.getLabel().setFontScale(0.45f);
 		btnShowRanges.getImageCell().width(32).height(32);
 		btnShowRanges.getImage().setScaling(Scaling.stretch);
 		setBtnShowRangesListener(btnShowRanges);
 		
-		Label lblVol = new Label("Volume", skin);
+		Label lblVol = new Label("VOLUME", skin);
 		lblVol.setFontScale(0.5f);
 		
 		Stack volumeStack = new Stack();
