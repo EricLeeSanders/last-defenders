@@ -69,7 +69,7 @@ public class LevelLoadingScreen extends AbstractScreen{
 		loadingBarBg.setPosition(startPos, ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()) + 6);
 
 		
-		loadingLabel = new Label("Loading: 0%", resources.getSkin(Resources.SKIN_JSON));
+		loadingLabel = new Label("LOADING: 0%", resources.getSkin(Resources.SKIN_JSON));
 		loadingLabel.setFontScale(0.75f);
 		loadingLabel.setAlignment(Align.left);
 		loadingLabel.setColor(1f, 1f, 1f, 1f);
