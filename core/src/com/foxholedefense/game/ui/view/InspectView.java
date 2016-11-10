@@ -47,7 +47,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		Table container = new Table();
 		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 		addActor(container);
-		container.setBackground(skin.getDrawable("main-panel-hollow"));
+		container.setBackground(skin.getDrawable("main-panel"));
 		
 		lblTitle = new Label("Tower", skin);
 		lblTitle.setPosition((container.getWidth()/2) - (lblTitle.getWidth()/2)
@@ -137,7 +137,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		btnDischarge = new TextButton("9999",dischargeStyle);
 		btnDischarge.getLabel().setAlignment(Align.left);
 		btnDischarge.getLabel().setFontScale(0.45f);
-		container.add(btnDischarge).align(Align.center).size(120,103).padTop(10);
+		container.add(btnDischarge).align(Align.center).size(120,99).padTop(10);
 		setDischargeListener();
 	}
 

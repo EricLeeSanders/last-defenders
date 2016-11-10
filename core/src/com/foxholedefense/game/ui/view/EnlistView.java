@@ -22,6 +22,7 @@ import com.foxholedefense.game.model.actor.combat.tower.TowerTank;
 import com.foxholedefense.game.model.actor.combat.tower.TowerTurret;
 import com.foxholedefense.game.ui.presenter.EnlistPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
+import com.foxholedefense.game.ui.view.widgets.EnlistButton;
 import com.foxholedefense.util.Resources;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -39,7 +40,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
  *
  */
 public class EnlistView extends Group implements IEnlistView, InputProcessor {
-	private Map<ImageButton, Integer> towerCosts;
+	private Map<EnlistButton, Integer> towerCosts;
 	private ImageButton btnPlacingCancel, btnPlace, btnRotate;
 	private ImageButton btnCancel, btnScrollUp, btnScrollDown;
 	private EnlistPresenter presenter;
@@ -91,16 +92,16 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		lblMoney.setFontScale(0.6f);
 		choosingGroup.addActor(lblMoney);
 		
-		towerCosts = new HashMap<ImageButton, Integer>();
-		createTowerButton(enlistTable, skin, "enlist_rifle", "Rifle", TowerRifle.COST);
-		createTowerButton(enlistTable, skin, "enlist_machine_gun", "MachineGun", TowerMachineGun.COST);
-		createTowerButton(enlistTable, skin, "enlist_sniper", "Sniper", TowerSniper.COST);
+		towerCosts = new HashMap<EnlistButton, Integer>();
+		createTowerButton(enlistTable, skin, "Rifle", TowerRifle.COST, 4, 4, 5, 3);
+		createTowerButton(enlistTable, skin, "MachineGun", TowerMachineGun.COST, 1, 4, 4, 8);
+		createTowerButton(enlistTable, skin, "Sniper", TowerSniper.COST, 7, 8, 10, 1);
 		enlistTable.row();
-		createTowerButton(enlistTable, skin, "enlist_flame_thrower", "FlameThrower", TowerFlameThrower.COST);
-		createTowerButton(enlistTable, skin, "enlist_rocket_launcher", "RocketLauncher", TowerRocketLauncher.COST);
-		createTowerButton(enlistTable, skin, "enlist_turret", "Turret", TowerTurret.COST);
+		createTowerButton(enlistTable, skin, "FlameThrower", TowerFlameThrower.COST, 7,4,6,2);
+		createTowerButton(enlistTable, skin, "RocketLauncher", TowerRocketLauncher.COST, 10, 4, 6, 1);
+		createTowerButton(enlistTable, skin, "Turret", TowerTurret.COST, 3, 7, 7, 8);
 		enlistTable.row();
-		createTowerButton(enlistTable, skin, "enlist_tank", "Tank", TowerTank.COST);
+		createTowerButton(enlistTable, skin, "Tank", TowerTank.COST, 10, 10, 8, 10);
 		
 		
 		btnCancel = new ImageButton(skin,"cancel");
@@ -155,12 +156,11 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	 * Creates a tower button and adds it to the map
 	 * @param enlistTable
 	 * @param skin
-	 * @param styleName
 	 * @param towerName
 	 */
-	private void createTowerButton(Table enlistTable, Skin skin, String styleName, String towerName, Integer towerCost){
-		ImageButton towerButton = new ImageButton(skin, styleName);
-		enlistTable.add(towerButton).size(116,156).spaceBottom(5);
+	private void createTowerButton(Table enlistTable, Skin skin, String towerName, Integer towerCost, int attack, int health, int range, int speed){
+		EnlistButton towerButton = new EnlistButton(skin, attack, health, range, speed);
+		enlistTable.add(towerButton).size(116,178).spaceBottom(5);
 		setTowerListener(towerButton,towerName);
 		towerCosts.put(towerButton,towerCost);
 	}
@@ -169,11 +169,11 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	 * Updates the tower buttons to disable/enable.
 	 */
 	private void updateTowerButtons() {
-	    Iterator<Entry<ImageButton, Integer>> iter = towerCosts.entrySet().iterator();
+	    Iterator<Entry<EnlistButton, Integer>> iter = towerCosts.entrySet().iterator();
 	    while(iter.hasNext()){
-	    	Map.Entry<ImageButton, Integer> tower = iter.next();
+	    	Map.Entry<EnlistButton, Integer> tower = iter.next();
 	    	boolean affordable = presenter.canAffordTower(tower.getValue());
-	    	tower.getKey().setDisabled(!affordable);
+	    	tower.getKey().button.setDisabled(!affordable);
 	    	if(affordable){
 	    		tower.getKey().setTouchable(Touchable.enabled);
 	    	} else {
@@ -209,7 +209,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 			}
 		});
 	}
-	private void setTowerListener(ImageButton button, final String tower){
+	private void setTowerListener(EnlistButton button, final String tower){
 		button.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {

@@ -125,24 +125,24 @@ public class OptionsView extends Group implements IOptionsView {
 		volSliderBg.setSize(300, 22);
 	
 		
-		this.sliderStartPos = volSliderBg.getX();
-		this.sliderEndPos = volSliderBg.getX() + volSliderBg.getWidth() - 4;
+		this.sliderStartPos = volSliderBg.getX() + 2;
+		this.sliderEndPos = volSliderBg.getX() + volSliderBg.getWidth() - 6;
 		
 		volumeStack.add(volSliderFull);
 		volumeStack.add(volSliderBg);
 		volumeStack.add(volumeSlider);
 		
-		mainTable.add(btnResume).width(128).height(44).spaceBottom(10);
+		mainTable.add(btnResume).width(128).height(41).spaceBottom(10);
 		mainTable.add(btnShowRanges).left().spaceLeft(15).spaceBottom(10);
 		
 		mainTable.row();
 		
-		mainTable.add(btnNewGame).width(128).height(44).spaceBottom(10);
+		mainTable.add(btnNewGame).width(128).height(41).spaceBottom(10);
 		mainTable.add(btnMusic).left().spaceLeft(15).spaceBottom(10);
 		
 		mainTable.row();
 		
-		mainTable.add(btnMainMenu).width(128).height(44).spaceBottom(10);
+		mainTable.add(btnMainMenu).width(128).height(41).spaceBottom(10);
 		mainTable.add(btnSound).left().spaceLeft(15).spaceBottom(10);
 		
 		mainTable.row();

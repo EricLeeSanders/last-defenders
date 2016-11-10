@@ -1,6 +1,7 @@
 package com.foxholedefense.menu.ui;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -21,6 +22,9 @@ import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * View for the Main Menu
