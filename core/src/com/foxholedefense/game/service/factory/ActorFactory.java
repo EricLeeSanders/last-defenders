@@ -1,6 +1,8 @@
 package com.foxholedefense.game.service.factory;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Queue;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -73,6 +75,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	private TextureAtlas actorAtlas;
 	private FHDAudio audio;
 	private ActorGroups actorGroups;
+	private Map<Class, TextureRegion> loadedTextures = new HashMap<Class, TextureRegion>();
 	public ActorFactory(ActorGroups actorGroups, TextureAtlas actorAtlas, FHDAudio audio){
 		this.actorAtlas = actorAtlas;
 		this.actorGroups = actorGroups;

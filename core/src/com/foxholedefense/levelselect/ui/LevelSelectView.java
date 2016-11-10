@@ -38,7 +38,6 @@ public class LevelSelectView extends Group {
 	public LevelSelectView(LevelSelectPresenter presenter, Resources resources, FHDAudio audio) {
 		this.presenter = presenter;
 		this.audio = audio;
-		Map<String,BitmapFont> fonts = resources.getFonts();
 		TextureAtlas levelSelectAtlas = resources.getAtlas(Resources.LEVEL_SELECT_ATLAS);
 		Skin skin = resources.getSkin(Resources.SKIN_JSON);
 		createControls(levelSelectAtlas, skin);
@@ -47,7 +46,7 @@ public class LevelSelectView extends Group {
 		levelGroup.setVisible(false);
 		levelGroup.setTransform(false);
 		this.setTransform(false);
-		createConfirmLevelControls(levelSelectAtlas, fonts, skin);
+		createConfirmLevelControls(levelSelectAtlas, skin);
 	}
 
 	private void createControls(TextureAtlas levelSelectAtlas, Skin skin) {
@@ -99,7 +98,7 @@ public class LevelSelectView extends Group {
 		this.getStage().addActor(background);
 		background.setZIndex(0);
 	}
-	private void createConfirmLevelControls(TextureAtlas levelSelectAtlas, Map<String,BitmapFont> fonts, Skin skin){
+	private void createConfirmLevelControls(TextureAtlas levelSelectAtlas, Skin skin){
 		
 		level1 = new Image(levelSelectAtlas.findRegion("level1"));
 		level1.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
@@ -141,9 +140,7 @@ public class LevelSelectView extends Group {
 		setBtnPlayListener(btnPlay);
 
 
-		LabelStyle lblLevelStyle = new LabelStyle();
-		lblLevelStyle.font =fonts.get("default-font-46");
-		lblLevel = new Label("Level X",lblLevelStyle );
+		lblLevel = new Label("Level X", skin);
 		lblLevel.setPosition((Resources.VIRTUAL_WIDTH/2)-(lblLevel.getWidth()/2)
 				, Resources.VIRTUAL_HEIGHT-lblLevel.getHeight() - 25);
 		levelGroup.addActor(lblLevel);

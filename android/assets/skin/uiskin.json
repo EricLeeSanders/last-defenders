@@ -1,4 +1,5 @@
 {
+com.badlogic.gdx.graphics.g2d.BitmapFont: { default-font: { file: default-font.fnt } },
 com.badlogic.gdx.graphics.Color: {
 	green: { a: 1, b: 0, g: 1, r: 0 },
 	white: { a: 1, b: 1, g: 1, r: 1 },
@@ -9,7 +10,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 	dialogDim: { name: white, color: { r: 0, g: 0, b: 0, a: 0.45 } }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
-	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_disabled },
+	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_normal },
 	toggle: { down: text_button_normal, checked: text_button_normal, up: text_button_normal }
 },
 
@@ -34,17 +35,11 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	support_airstrike: {down: support_airstrike, up: support_airstrike, disabled: support_airstrike_disabled},
 	support_landmine: {down: support_landmine, up: support_landmine, disabled: support_landmine_disabled},
 	support_supplydrop: {down: support_supplydrop, up: support_supplydrop, disabled: support_supplydrop_disabled},
-	enlist_rifle: {down: enlist_rifle, up: enlist_rifle, disabled: enlist_rifle_disabled},
-	enlist_sniper: {down: enlist_sniper, up: enlist_sniper, disabled: enlist_sniper_disabled},
-	enlist_machine_gun: {down: enlist_machine_gun, up: enlist_machine_gun, disabled: enlist_machine_gun_disabled},
-	enlist_rocket_launcher: {down: enlist_rocket_launcher, up: enlist_rocket_launcher, disabled: enlist_rocket_launcher_disabled},
-	enlist_flame_thrower: {down: enlist_flame_thrower, up: enlist_flame_thrower, disabled: enlist_flame_thrower_disabled},
-	enlist_tank: {down: enlist_tank, up: enlist_tank, disabled: enlist_tank_disabled},
-	enlist_turret: {down: enlist_turret, up: enlist_turret, disabled: enlist_turret_disabled},
+	enlist: {down: enlist, up: enlist, disabled: enlist_disabled},
 	play: {down: play_normal, up: play_normal, over: play_normal, disabled: play_normal}
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
-	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_disabled, font: default-font, fontColor: white },
+	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_normal, font: default-font, fontColor: white },
 	toggle: { down: text_button_normal, up: text_button_normal, checked: text_button_normal, font: default-font, fontColor: white, downFontColor: red },
 	discharge: { down: discharge, up: discharge, disabled: discharge_disabled, font: default-font, fontColor: white},
 	upgrade_attack: {down: upgrade_attack, up: upgrade_attack, disabled: upgrade_attack_disabled, font: default-font, fontColor: white},
@@ -53,13 +48,11 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	upgrade_armor: {down: upgrade_armor, up: upgrade_armor, disabled: upgrade_armor_disabled, font: default-font, fontColor: white},
 },
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
-	default: { vScroll: null, hScrollKnob: null, background: hollow, hScroll: null, vScrollKnob: null }
+	default: { background: hollow }
 },
 com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable: {
 	main-panel: { region: main-panel, leftWidth: 75, rightWidth: 75, topHeight: 67, bottomHeight: 67 },
-	main-panel-hollow: { region: main-panel-hollow, leftWidth: 75, rightWidth: 75, topHeight: 67, bottomHeight: 67 },
-	money: { region: money},
-	lives: { region: lives}
+	main-panel-hollow: { region: main-panel-hollow, leftWidth: 75, rightWidth: 75, topHeight: 67, bottomHeight: 67 }
 },
 com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
 	default: {
@@ -89,7 +82,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	hollow_label: {background: hollow_label, font: default-font, fontColor: white},
 	label_normal: {background: hollow_label, font: default-font, fontColor: white},
 	money_label: {background: money_label, font: default-font, fontColor: white},
-	kills_label: {background: kills_label, font: default-font, fontColor: white}
+	kills_label: {background: kills_label, font: default-font, fontColor: white},
+	test_label: { }
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
 	default: { selection: selection, background: textfield, font: default-font, fontColor: white, cursor: cursor }

@@ -1,6 +1,7 @@
 package com.foxholedefense.game.ui.view;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -30,10 +31,12 @@ public class HUDView extends Group implements IHUDView {
 	private ImageButton btnWave, btnEnlist, btnSupport, btnOptions;
 	private Label lblMoney, lblLives, lblWaveCount;
 	private HUDPresenter presenter;
+	private Resources resources;
 
-	public HUDView(HUDPresenter presenter,Skin skin) {
+	public HUDView(HUDPresenter presenter,Skin skin, Resources resources) {
 		this.presenter = presenter;
 		this.setTransform(false);
+		this.resources = resources;
 		createControls(skin);
 	}
 
@@ -41,7 +44,6 @@ public class HUDView extends Group implements IHUDView {
 	 * Create the controls
 	 */
 	public void createControls(Skin skin) {
-
 
 		btnWave = new ImageButton(skin, "wave");
 		btnWave.setSize(64, 64);
@@ -80,15 +82,14 @@ public class HUDView extends Group implements IHUDView {
 		statsTable.setFillParent(true);
 		addActor(statsTable);
 		
-		imgLife = new Image(skin, "lives");
+		imgLife = new Image(skin.getAtlas().findRegion("heart"));
 		statsTable.add(imgLife).size(32,32).padRight(3);
-
 		lblLives = new Label("0", skin);
 		lblLives.setAlignment(Align.left);
 		lblLives.setFontScale(0.5f);
 		statsTable.add(lblLives).size(30,19).spaceRight(10);
 		
-		imgMoney = new Image(skin, "money");
+		imgMoney = new Image(skin.getAtlas().findRegion("money"));
 		statsTable.add(imgMoney).size(32,32).padRight(3);
 		
 		lblMoney = new Label("0", skin);
@@ -161,7 +162,7 @@ public class HUDView extends Group implements IHUDView {
 
 	@Override
 	public void setLives(String lives) {
-		lblLives.setText(lives);
+		//lblLives.setText(lives);
 	}
 
 	@Override
