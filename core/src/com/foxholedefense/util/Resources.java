@@ -114,6 +114,19 @@ public class Resources {
 			Logger.error("Load Skin Error", e);
 		}
 	}
+
+	public void initFont(){
+		BitmapFont font = getSkin(SKIN_JSON).getFont("default-font");
+		font.setUseIntegerPositions(false);
+		font.getData().setLineHeight(55);
+		font.getData().ascent = 11;
+		font.getData().capHeight = 30;
+		font.getData().descent = -14;
+		font.getData().scaleX = 1.0f;
+		font.getData().scaleY = 1.0f;
+		font.getData().spaceWidth = 12.0f;
+		font.getData().xHeight = 30.0f;
+	}
 	public void loadAtlasSync(String file) {
 		loadAtlas(file);
 		manager.finishLoading();

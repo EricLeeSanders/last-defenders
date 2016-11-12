@@ -83,6 +83,7 @@ public class GameLoadingScreen extends AbstractScreen{
 	}
 
 	public void finishedLoading() {
+		resources.initFont();
         screenStateManager.setState(ScreenState.MENU);
 		
 	}
