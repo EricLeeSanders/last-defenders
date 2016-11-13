@@ -94,11 +94,11 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		
 		towerCosts = new HashMap<EnlistButton, Integer>();
 		createTowerButton(enlistTable, skin, "Rifle", TowerRifle.COST, 4, 4, 5, 3);
-		createTowerButton(enlistTable, skin, "MachineGun", TowerMachineGun.COST, 1, 4, 4, 8);
+		createTowerButton(enlistTable, skin, "Machine Gun", TowerMachineGun.COST, 1, 4, 4, 8);
 		createTowerButton(enlistTable, skin, "Sniper", TowerSniper.COST, 7, 8, 10, 1);
 		enlistTable.row();
-		createTowerButton(enlistTable, skin, "FlameThrower", TowerFlameThrower.COST, 7,4,6,2);
-		createTowerButton(enlistTable, skin, "RocketLauncher", TowerRocketLauncher.COST, 10, 4, 6, 1);
+		createTowerButton(enlistTable, skin, "Flame Thrower", TowerFlameThrower.COST, 7,4,6,2);
+		createTowerButton(enlistTable, skin, "Rocket Launcher", TowerRocketLauncher.COST, 10, 4, 6, 1);
 		createTowerButton(enlistTable, skin, "Turret", TowerTurret.COST, 3, 7, 7, 8);
 		enlistTable.row();
 		createTowerButton(enlistTable, skin, "Tank", TowerTank.COST, 10, 10, 8, 10);
@@ -159,7 +159,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	 * @param towerName
 	 */
 	private void createTowerButton(Table enlistTable, Skin skin, String towerName, Integer towerCost, int attack, int health, int range, int speed){
-		EnlistButton towerButton = new EnlistButton(skin, attack, health, range, speed);
+		EnlistButton towerButton = new EnlistButton(skin, attack, health, range, speed, towerName, towerCost);
 		enlistTable.add(towerButton).size(116,178).spaceBottom(5);
 		setTowerListener(towerButton,towerName);
 		towerCosts.put(towerButton,towerCost);

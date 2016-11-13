@@ -1,7 +1,9 @@
 package com.foxholedefense.game.ui.view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -23,6 +25,7 @@ import com.foxholedefense.game.ui.presenter.EnlistPresenter;
 import com.foxholedefense.game.ui.presenter.SupportPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
 import com.foxholedefense.game.ui.view.interfaces.ISupportView;
+import com.foxholedefense.game.ui.view.widgets.SupportButton;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -41,7 +44,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
  *
  */
 public class SupportView extends Group implements ISupportView, InputProcessor {
-	private Map<ImageButton, Integer> supportCosts;
+	private List<SupportButton> supportButtons = new ArrayList<SupportButton>(4);
 	private ImageButton btnPlacingCancel, btnCancel, btnPlace;
 	private SupportPresenter presenter;
 	private Group choosingGroup;
@@ -90,29 +93,28 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		lblMoney.setFontScale(0.6f);
 		choosingGroup.addActor(lblMoney);
 		
-		
-		supportCosts = new HashMap<ImageButton, Integer>();
-		
-		ImageButton landmineButton = new ImageButton(skin, "support_landmine");
+
+
+		SupportButton landmineButton = new SupportButton(skin, "Landmine", LandMine.COST);
+		supportButtons.add(landmineButton);
 		supportTable.add(landmineButton).size(133,110).spaceBottom(5);
-		supportCosts.put(landmineButton, LandMine.COST);
 		setLandmineListener(landmineButton);
-		
-		ImageButton supplydropButton = new ImageButton(skin, "support_supplydrop");
+
+		SupportButton supplydropButton = new SupportButton(skin, "Supply Drop", SupplyDropCrate.COST);
+		supportButtons.add(supplydropButton);
 		supportTable.add(supplydropButton).size(133,110).spaceBottom(5);
-		supportCosts.put(supplydropButton, SupplyDropCrate.COST);
 		setSupplyDropListener(supplydropButton);
-		
-		ImageButton airstrikeButton = new ImageButton(skin, "support_airstrike");
+
+		SupportButton airstrikeButton = new SupportButton(skin, "Airstrike", AirStrike.COST);
+		supportButtons.add(airstrikeButton);
 		supportTable.add(airstrikeButton).size(133,110).spaceBottom(5);
-		supportCosts.put(airstrikeButton, AirStrike.COST);
 		setAirStrikeListener(airstrikeButton);
 		
 		supportTable.row();
-		
-		ImageButton apacheButton = new ImageButton(skin, "support_apache");
+
+		SupportButton apacheButton = new SupportButton(skin, "Apache", Apache.COST);
+		supportButtons.add(apacheButton);
 		supportTable.add(apacheButton).size(133,110).spaceBottom(5);
-		supportCosts.put(apacheButton, Apache.COST);
 		setApacheListener(apacheButton);
 		
 		btnCancel = new ImageButton(skin,"cancel");
@@ -147,21 +149,20 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	 * Updates the Support buttons to disable/enable.
 	 */
 	private void updateSupportButtons() {
-	    Iterator<Entry<ImageButton, Integer>> iter = supportCosts.entrySet().iterator();
-	    while(iter.hasNext()){
-	    	Map.Entry<ImageButton, Integer> support = iter.next();
-	    	boolean affordable = presenter.canAffordSupport(support.getValue());
-	    	support.getKey().setDisabled(!affordable);
-	    	if(affordable){
-	    		support.getKey().setTouchable(Touchable.enabled);
-	    	} else {
-	    		support.getKey().setTouchable(Touchable.disabled);
-	    	}
-	    }
+		for(Actor actor : supportButtons){
+			SupportButton supportButton = (SupportButton) actor;
+			boolean affordable = presenter.canAffordSupport(supportButton.cost);
+			supportButton.button.setDisabled(!affordable);
+			if(affordable){
+				supportButton.setTouchable(Touchable.enabled);
+			} else {
+				supportButton.setTouchable(Touchable.disabled);
+			}
 
+		}
 	}
 
-	private void setLandmineListener(ImageButton button) {
+	private void setLandmineListener(SupportButton button) {
 		button.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -171,7 +172,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		});
 
 	}
-	private void setSupplyDropListener(ImageButton button) {
+	private void setSupplyDropListener(SupportButton button) {
 		button.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -180,7 +181,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 			}
 		});
 	}
-	private void setAirStrikeListener(ImageButton button) {
+	private void setAirStrikeListener(SupportButton button) {
 		button.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -190,7 +191,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		});
 	}
 
-	private void setApacheListener(ImageButton button) {
+	private void setApacheListener(SupportButton button) {
 		button.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
