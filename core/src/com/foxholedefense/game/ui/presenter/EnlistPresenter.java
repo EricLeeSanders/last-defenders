@@ -61,7 +61,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 */
 	public void createTower(String strEnlistTower) {
 		audio.playSound(FHDSound.SMALL_CLICK);
-		towerPlacement.createTower(strEnlistTower);
+		towerPlacement.createTower(strEnlistTower.replaceAll(" ", ""));
 		uiStateManager.setState(GameUIState.PLACING_TOWER);
 	}
 

@@ -31,21 +31,15 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	arrow-small-up: {imageUp: arrow-small-up, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
 	enlist_hud: {imageUp: shield, over: button_over, down: button_press, up: button_blue, disabled: button_disabled},
 	support_hud: {imageUp: bomb, over: button_over, down: button_press, up: button_blue, disabled: button_disabled},
-	support_apache: {down: support_apache, up: support_apache, disabled: support_apache_disabled},
-	support_airstrike: {down: support_airstrike, up: support_airstrike, disabled: support_airstrike_disabled},
-	support_landmine: {down: support_landmine, up: support_landmine, disabled: support_landmine_disabled},
-	support_supplydrop: {down: support_supplydrop, up: support_supplydrop, disabled: support_supplydrop_disabled},
+	support: {down: support, up: support, disabled: support_disabled},
 	enlist: {down: enlist, up: enlist, disabled: enlist_disabled},
+	upgrade: {down: upgrade, up: upgrade, checked: upgrade_purchased, disabled: upgrade_disabled},
 	play: {down: play_normal, up: play_normal, over: play_normal, disabled: play_normal}
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_normal, font: default-font, fontColor: white },
 	toggle: { down: text_button_normal, up: text_button_normal, checked: text_button_normal, font: default-font, fontColor: white, downFontColor: red },
-	discharge: { down: discharge, up: discharge, disabled: discharge_disabled, font: default-font, fontColor: white},
-	upgrade_attack: {down: upgrade_attack, up: upgrade_attack, disabled: upgrade_attack_disabled, font: default-font, fontColor: white},
-	upgrade_speed: {down: upgrade_speed, up: upgrade_speed, disabled: upgrade_speed_disabled, font: default-font, fontColor: white},
-	upgrade_range: {down: upgrade_range, up: upgrade_range, disabled: upgrade_range_disabled, font: default-font, fontColor: white},
-	upgrade_armor: {down: upgrade_armor, up: upgrade_armor, disabled: upgrade_armor_disabled, font: default-font, fontColor: white},
+	discharge: { down: discharge, up: discharge, disabled: discharge_disabled, font: default-font, fontColor: white}
 },
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: { background: hollow }

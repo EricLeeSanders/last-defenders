@@ -84,7 +84,7 @@ public class GameScreen extends AbstractScreen {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		getCamera().update();
-		framesLabel.setText("fps: " + Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
+		framesLabel.setText("FPS: " + Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
 		renderElements(delta);
 
 	}

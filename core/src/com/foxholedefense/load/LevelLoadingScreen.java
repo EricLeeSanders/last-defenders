@@ -114,7 +114,7 @@ public class LevelLoadingScreen extends AbstractScreen{
 		if (percent > 1) {
 			percent = 1;
 		}
-        loadingLabel.setText("Loading: " + Math.round(percent*100) + "%");
+        loadingLabel.setText("LOADING: " + Math.round(percent*100) + "%");
         float startX = startPos + endPos * percent;
         loadingBarBg.setX(startX);
         loadingBarBg.setWidth(endPos - endPos * percent);
