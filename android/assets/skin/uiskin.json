@@ -33,13 +33,13 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	support_hud: {imageUp: bomb, over: button_over, down: button_press, up: button_blue, disabled: button_disabled},
 	support: {down: support, up: support, disabled: support_disabled},
 	enlist: {down: enlist, up: enlist, disabled: enlist_disabled},
+	discharge: {down: discharge, up: discharge, disabled: discharge_disabled},
 	upgrade: {down: upgrade, up: upgrade, checked: upgrade_purchased, disabled: upgrade_disabled},
 	play: {down: play_normal, up: play_normal, over: play_normal, disabled: play_normal}
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_normal, font: default-font, fontColor: white },
-	toggle: { down: text_button_normal, up: text_button_normal, checked: text_button_normal, font: default-font, fontColor: white, downFontColor: red },
-	discharge: { down: discharge, up: discharge, disabled: discharge_disabled, font: default-font, fontColor: white}
+	toggle: { down: text_button_normal, up: text_button_normal, checked: text_button_normal, font: default-font, fontColor: white, downFontColor: red }
 },
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: { background: hollow }

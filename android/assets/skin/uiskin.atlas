@@ -13,21 +13,21 @@ arrow-left
   index: -1
 arrow-right
   rotate: false
-  xy: 3931, 930
+  xy: 750, 138
   size: 53, 36
   orig: 53, 36
   offset: 0, 0
   index: -1
 arrow-small-down
   rotate: false
-  xy: 3931, 968
+  xy: 750, 176
   size: 64, 55
   orig: 64, 55
   offset: 0, 0
   index: -1
 arrow-small-up
   rotate: false
-  xy: 872, 176
+  xy: 2484, 362
   size: 64, 55
   orig: 64, 55
   offset: 0, 0
@@ -41,7 +41,7 @@ attack_icon
   index: -1
 awards
   rotate: false
-  xy: 938, 178
+  xy: 2550, 364
   size: 52, 53
   orig: 52, 53
   offset: 0, 0
@@ -76,21 +76,21 @@ button_normal
   index: -1
 button_over
   rotate: false
-  xy: 3831, 925
+  xy: 650, 133
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 button_press
   rotate: false
-  xy: 772, 133
+  xy: 2384, 319
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
 button_red
   rotate: false
-  xy: 2506, 319
+  xy: 3831, 925
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
@@ -104,14 +104,14 @@ cancel
   index: -1
 check-off
   rotate: false
-  xy: 4056, 988
+  xy: 3355, 988
   size: 35, 35
   orig: 35, 35
   offset: 0, 0
   index: -1
 check-on
   rotate: false
-  xy: 3355, 988
+  xy: 4039, 988
   size: 35, 35
   orig: 35, 35
   offset: 0, 0
@@ -149,7 +149,7 @@ default-rect-pad
   index: -1
 default-pane-noborder
   rotate: false
-  xy: 3997, 971
+  xy: 816, 179
   size: 1, 1
   split: 0, 0, 0, 0
   orig: 1, 1
@@ -197,7 +197,7 @@ default-select-selection
   index: -1
 default-slider
   rotate: false
-  xy: 650, 122
+  xy: 650, 123
   size: 8, 8
   split: 2, 2, 2, 2
   orig: 8, 8
@@ -220,7 +220,7 @@ default-splitpane
   index: -1
 default-splitpane-vertical
   rotate: false
-  xy: 2384, 311
+  xy: 2384, 312
   size: 3, 5
   split: 0, 0, 0, 5
   orig: 3, 5
@@ -228,7 +228,7 @@ default-splitpane-vertical
   index: -1
 default-window
   rotate: false
-  xy: 1427, 276
+  xy: 962, 202
   size: 27, 29
   split: 4, 3, 20, 3
   orig: 27, 29
@@ -236,16 +236,30 @@ default-window
   index: -1
 discharge
   rotate: false
-  xy: 650, 132
-  size: 120, 99
-  orig: 120, 99
+  xy: 515, 122
+  size: 133, 109
+  orig: 133, 109
+  offset: 0, 0
+  index: -1
+support
+  rotate: false
+  xy: 515, 122
+  size: 133, 109
+  orig: 133, 109
   offset: 0, 0
   index: -1
 discharge_disabled
   rotate: false
-  xy: 2384, 318
-  size: 120, 99
-  orig: 120, 99
+  xy: 2249, 308
+  size: 133, 109
+  orig: 133, 109
+  offset: 0, 0
+  index: -1
+support_disabled
+  rotate: false
+  xy: 2249, 308
+  size: 133, 109
+  orig: 133, 109
   offset: 0, 0
   index: -1
 enlist
@@ -264,14 +278,14 @@ enlist_disabled
   index: -1
 games
   rotate: false
-  xy: 2606, 366
+  xy: 3931, 972
   size: 56, 51
   orig: 56, 51
   offset: 0, 0
   index: -1
 heart
   rotate: false
-  xy: 1390, 271
+  xy: 2651, 383
   size: 35, 34
   orig: 35, 34
   offset: 0, 0
@@ -299,7 +313,7 @@ kills_label
   index: -1
 leaderboard
   rotate: false
-  xy: 3997, 974
+  xy: 816, 182
   size: 57, 49
   orig: 57, 49
   offset: 0, 0
@@ -320,7 +334,7 @@ main-panel-hollow
   index: -1
 money
   rotate: false
-  xy: 3377, 642
+  xy: 1390, 270
   size: 25, 35
   orig: 25, 35
   offset: 0, 0
@@ -334,14 +348,14 @@ money_label
   index: -1
 music
   rotate: false
-  xy: 2664, 369
+  xy: 3989, 975
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 null
   rotate: false
-  xy: 992, 230
+  xy: 3325, 485
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
@@ -362,14 +376,14 @@ play_normal
   index: -1
 range_icon
   rotate: false
-  xy: 2764, 369
+  xy: 2604, 369
   size: 45, 48
   orig: 45, 48
   offset: 0, 0
   index: -1
 rotate
   rotate: false
-  xy: 2714, 371
+  xy: 875, 185
   size: 48, 46
   orig: 48, 46
   offset: 0, 0
@@ -383,7 +397,7 @@ select
   index: -1
 selection
   rotate: false
-  xy: 3325, 485
+  xy: 3989, 972
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
@@ -418,37 +432,23 @@ slider-full
   index: -1
 slider-knob
   rotate: false
-  xy: 872, 144
+  xy: 2484, 330
   size: 42, 30
   orig: 42, 30
   offset: 0, 0
   index: -1
 sound
   rotate: false
-  xy: 2606, 319
+  xy: 3931, 925
   size: 48, 45
   orig: 48, 45
   offset: 0, 0
   index: -1
 speed_icon
   rotate: false
-  xy: 2811, 382
+  xy: 925, 196
   size: 35, 35
   orig: 35, 35
-  offset: 0, 0
-  index: -1
-support
-  rotate: false
-  xy: 515, 122
-  size: 133, 109
-  orig: 133, 109
-  offset: 0, 0
-  index: -1
-support_disabled
-  rotate: false
-  xy: 2249, 308
-  size: 133, 109
-  orig: 133, 109
   offset: 0, 0
   index: -1
 text_button_normal
