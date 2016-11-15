@@ -18,6 +18,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.ui.presenter.InspectPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IInspectView;
+import com.foxholedefense.game.ui.view.widgets.DischargeButton;
 import com.foxholedefense.game.ui.view.widgets.UpgradeButton;
 import com.foxholedefense.util.Resources;
 
@@ -30,7 +31,7 @@ import com.foxholedefense.util.Resources;
 public class InspectView extends Group implements InputProcessor, IInspectView {
 	private InspectPresenter presenter;
 	private ImageButton btnChangeTarget, btnCancel;
-	private TextButton btnDischarge;
+	private DischargeButton btnDischarge;
 	private UpgradeButton btnArmor, btnSpeed, btnRange, btnAttack;
 	private Group grpTargetPriority;
 	private Label lblTargetPriority, lblTitle, lblMoney, lblKills;
@@ -137,40 +138,21 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		setTargetPriorityListener();
 
 
-		TextButtonStyle dischargeStyle = new TextButtonStyle(skin.get("discharge", TextButtonStyle.class));
-		dischargeStyle.pressedOffsetY = -27;
-		dischargeStyle.unpressedOffsetY = -27;
-		dischargeStyle.checkedOffsetY = -27;
-		dischargeStyle.pressedOffsetX = 40;
-		dischargeStyle.unpressedOffsetX = 40;
-		dischargeStyle.checkedOffsetX = 40;
-		btnDischarge = new TextButton("9999",dischargeStyle);
-		btnDischarge.getLabel().setAlignment(Align.left);
-		btnDischarge.getLabel().setFontScale(0.45f);
+//		TextButtonStyle dischargeStyle = new TextButtonStyle(skin.get("discharge", TextButtonStyle.class));
+//		dischargeStyle.pressedOffsetY = -27;
+//		dischargeStyle.unpressedOffsetY = -27;
+//		dischargeStyle.checkedOffsetY = -27;
+//		dischargeStyle.pressedOffsetX = 40;
+//		dischargeStyle.unpressedOffsetX = 40;
+//		dischargeStyle.checkedOffsetX = 40;
+//		btnDischarge = new TextButton("9999",dischargeStyle);
+//		btnDischarge.getLabel().setAlignment(Align.left);
+//		btnDischarge.getLabel().setFontScale(0.45f);
+		btnDischarge = new DischargeButton(skin, 0);
 		container.add(btnDischarge).align(Align.center).size(120,99).padTop(10);
 		setDischargeListener();
 	}
 
-	/**
-	 * Create the upgrade controls that are grouped together with Groups
-	 */
-
-	private TextButton createUpgradeButton(String cost,Skin skin,String styleName) {	
-		TextButtonStyle upgradeStyle = new TextButtonStyle(skin.get(styleName, TextButtonStyle.class));
-		//upgradeStyle.font = Resources.getFont("default-font-46");
-		upgradeStyle.pressedOffsetY = -49;
-		upgradeStyle.unpressedOffsetY = -49;
-		upgradeStyle.checkedOffsetY = -49;
-		upgradeStyle.pressedOffsetX = 35;
-		upgradeStyle.unpressedOffsetX = 35;
-		upgradeStyle.checkedOffsetX = 35;
-		
-		TextButton upgradeButton = new TextButton(cost, upgradeStyle);
-		upgradeButton.getLabel().setAlignment(Align.left);
-		upgradeButton.getLabel().setFontScale(0.45f);
-		return upgradeButton;
-		
-	}
 
 	@Override
 	public void standByState() {
@@ -184,7 +166,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	
 	@Override
 	public void dischargeEnabled(boolean enabled) {
-		btnDischarge.setDisabled(!enabled);
+		btnDischarge.button.setDisabled(!enabled);
 		if (enabled){
 			btnDischarge.setTouchable(Touchable.enabled);
 		} else {
@@ -204,7 +186,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		btnSpeed.updateCost(selectedTower.getSpeedIncreaseCost());
 		btnRange.updateCost(selectedTower.getRangeIncreaseCost());
 		btnAttack.updateCost(selectedTower.getAttackIncreaseCost());
-		btnDischarge.getLabel().setText(String.valueOf(selectedTower.getSellCost()));
+		btnDischarge.updateCost(selectedTower.getSellCost());
 		lblTargetPriority.setText(selectedTower.getAI().name().replace('_', ' '));
 		updateUpgradeControl(btnArmor, selectedTower.hasArmor(), selectedTower.getArmorCost());
 		updateUpgradeControl(btnSpeed, selectedTower.hasIncreasedSpeed(), selectedTower.getSpeedIncreaseCost());
