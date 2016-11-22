@@ -5,9 +5,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
@@ -30,15 +32,11 @@ import com.foxholedefense.util.Resources;
  */
 public class InspectView extends Group implements InputProcessor, IInspectView {
 	private InspectPresenter presenter;
-	private ImageButton btnChangeTarget, btnCancel;
 	private DischargeButton btnDischarge;
 	private UpgradeButton btnArmor, btnSpeed, btnRange, btnAttack;
-	private Group grpTargetPriority;
 	private Label lblTargetPriority, lblTitle, lblMoney, lblKills;
 	public InspectView(InspectPresenter presenter, Skin skin) {
 		this.presenter = presenter;
-		grpTargetPriority = new Group();
-		grpTargetPriority.setTransform(false);
 		this.setTransform(false);
 		createControls(skin);
 	}
@@ -48,9 +46,19 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	 */
 	public void createControls(Skin skin) {
 		Table container = new Table();
+		container.setTransform(false);
 		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 		addActor(container);
-		container.setBackground(skin.getDrawable("main-panel-hollow"));
+		container.setBackground(skin.getDrawable("main-panel"));
+
+		Table inspectTable = new Table();
+		inspectTable.setTransform(false);
+		inspectTable.setBackground(skin.getDrawable("hollow"));
+
+
+		container.add(inspectTable).expand().fill();
+
+
 
 
 		
@@ -82,38 +90,33 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		lblKills.setFontScale(0.6f);
 		addActor(lblKills);
 		
-		btnCancel = new ImageButton(skin,"cancel");
-		setCancelListener();
+		ImageButton btnCancel = new ImageButton(skin,"cancel");
+		setCancelListener(btnCancel);
 		btnCancel.setSize(64, 64);
 		btnCancel.getImageCell().size(35,36);
 		btnCancel.getImage().setScaling(Scaling.stretch);
 		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
 		addActor(btnCancel);
 
-		Table upgradeTable = new Table();
-		//btnArmor = createUpgradeButton("100",skin, "upgrade_armor");
-		//    public UpgradeButton(Skin skin, String name, String iconName, int cost, int iconHeight, int iconWidth, int iconX, int iconY){
 		btnArmor = new UpgradeButton(skin, "Armor", "shield", 100, 28, 30,0,0 );
-		upgradeTable.add(btnArmor).size(100,128).spaceBottom(10).spaceRight(10);
+		inspectTable.add(btnArmor).size(100,128);//.spaceBottom(10).spaceRight(10);
 		setArmorListener();
-		//btnRange = createUpgradeButton("100",skin, "upgrade_range");
+
 		btnRange = new UpgradeButton(skin, "Increase Range", "range_icon", 100, 28, 30,0,0 );
-		upgradeTable.add(btnRange).size(100,128).spaceBottom(10).spaceRight(10);
+		inspectTable.add(btnRange).size(100,128);//.spaceBottom(10).spaceRight(10);
 		setIncreaseRangeListener();
 
-		//btnSpeed = createUpgradeButton("100",skin, "upgrade_speed");
 		btnSpeed = new UpgradeButton(skin, "Increase Speed", "speed_icon", 100,30,30,0,0 );
-		upgradeTable.add(btnSpeed).size(100,128).spaceBottom(5).spaceRight(10);
+		inspectTable.add(btnSpeed).size(100,128);//.spaceBottom(5).spaceRight(10);
 		setIncreaseSpeedListener();
 
-		//btnAttack = createUpgradeButton("100",skin, "upgrade_attack");
 		btnAttack = new UpgradeButton(skin, "Increase Attack", "attack_icon", 100, 26,26, 3, -3);
-		upgradeTable.add(btnAttack).size(100,128).spaceBottom(5).spaceRight(10);
+		inspectTable.add(btnAttack).size(100,128);//.spaceBottom(5).spaceRight(10);
 		setIncreaseAttackListener();
 
-		container.add(upgradeTable).colspan(2).padTop(25);
-		
-		container.row();
+		Group grpTargetPriority = new Group();
+		grpTargetPriority.setTransform(false);
+
 		LabelStyle lblTargetPriorityStyle = new LabelStyle(skin.get("hollow_label", LabelStyle.class));
 		lblTargetPriorityStyle.background.setLeftWidth(-2);
 		lblTargetPriority = new Label("First", lblTargetPriorityStyle);
@@ -128,29 +131,23 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		lblTarget.setFontScale(0.45f);
 		grpTargetPriority.addActor(lblTarget);
 		
-		btnChangeTarget = new ImageButton(skin, "arrow-right");
-		btnChangeTarget.setSize(50, 50);
-		btnChangeTarget.getImageCell().size(32,22);
-		btnChangeTarget.getImage().setScaling(Scaling.stretch);
-		btnChangeTarget.setPosition(lblTargetPriority.getX() + lblTargetPriority.getWidth(), lblTargetPriority.getY() - 4);
+		Button btnChangeTarget = new Button(skin, "arrow-right");
+		btnChangeTarget.setSize(32,22);
+		btnChangeTarget.setPosition(lblTargetPriority.getX() + lblTargetPriority.getWidth(), lblTargetPriority.getY() + 7);
 		grpTargetPriority.addActor(btnChangeTarget);
-		container.add(grpTargetPriority).align(Align.left).padTop(45);
-		setTargetPriorityListener();
+		setTargetPriorityListener(grpTargetPriority);
 
 
-//		TextButtonStyle dischargeStyle = new TextButtonStyle(skin.get("discharge", TextButtonStyle.class));
-//		dischargeStyle.pressedOffsetY = -27;
-//		dischargeStyle.unpressedOffsetY = -27;
-//		dischargeStyle.checkedOffsetY = -27;
-//		dischargeStyle.pressedOffsetX = 40;
-//		dischargeStyle.unpressedOffsetX = 40;
-//		dischargeStyle.checkedOffsetX = 40;
-//		btnDischarge = new TextButton("9999",dischargeStyle);
-//		btnDischarge.getLabel().setAlignment(Align.left);
-//		btnDischarge.getLabel().setFontScale(0.45f);
+		inspectTable.row();
+
+		inspectTable.add(grpTargetPriority).align(Align.left).padTop(45).colspan(2);
+
+
 		btnDischarge = new DischargeButton(skin, 0);
-		container.add(btnDischarge).align(Align.center).size(120,99).padTop(10);
+		inspectTable.add(btnDischarge).align(Align.center).size(133,83).colspan(2);
 		setDischargeListener();
+
+
 	}
 
 
@@ -210,7 +207,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 
 	}
 
-	private void setCancelListener() {
+	private void setCancelListener(Button btnCancel) {
 		btnCancel.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -220,7 +217,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		});
 	}
 
-	private void setTargetPriorityListener() {
+	private void setTargetPriorityListener(Group grpTargetPriority) {
 		grpTargetPriority.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {

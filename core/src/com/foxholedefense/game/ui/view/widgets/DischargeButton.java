@@ -23,7 +23,7 @@ public class DischargeButton extends Group {
         lblCost.setFontScale(0.45f);
         lblCost.setAlignment(Align.bottomLeft);
         lblCost.pack();
-        lblCost.setPosition(38,10);
+        lblCost.setPosition(38,3);
         addActor(lblCost);
 
         Label lblTitle = new Label("DISCHARGE", skin);
@@ -31,7 +31,7 @@ public class DischargeButton extends Group {
         lblTitle.setAlignment(Align.center);
         lblTitle.pack();
         float lblTitleX = ActorUtil.calcXBotLeftFromCenter(button.getWidth() / 2, lblTitle.getWidth());
-        lblTitle.setPosition(lblTitleX, 62);
+        lblTitle.setPosition(lblTitleX, 37);
         addActor(lblTitle);
     }
 
