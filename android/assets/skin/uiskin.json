@@ -11,7 +11,8 @@ com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_normal },
-	toggle: { down: text_button_normal, checked: text_button_normal, up: text_button_normal }
+	toggle: { down: text_button_normal, checked: text_button_normal, up: text_button_normal },
+	arrow-right: {down: arrow-right, up: arrow-right}
 },
 
 			
@@ -33,7 +34,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	support_hud: {imageUp: bomb, over: button_over, down: button_press, up: button_blue, disabled: button_disabled},
 	support: {down: support, up: support, disabled: support_disabled},
 	enlist: {down: enlist, up: enlist, disabled: enlist_disabled},
-	discharge: {down: discharge, up: discharge, disabled: discharge_disabled},
+	discharge: {down: support, up: support, disabled: support_disabled},
 	upgrade: {down: upgrade, up: upgrade, checked: upgrade_purchased, disabled: upgrade_disabled},
 	play: {down: play_normal, up: play_normal, over: play_normal, disabled: play_normal}
 },
@@ -45,8 +46,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: { background: hollow }
 },
 com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable: {
-	main-panel: { region: main-panel, leftWidth: 75, rightWidth: 75, topHeight: 67, bottomHeight: 67 },
-	main-panel-hollow: { region: main-panel-hollow, leftWidth: 75, rightWidth: 75, topHeight: 67, bottomHeight: 67 }
+	main-panel: { region: main-panel, leftWidth: 75, rightWidth: 75, topHeight: 67, bottomHeight: 67 }
 },
 com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
 	default: {
@@ -74,6 +74,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: { font: default-font, fontColor: white },
 	hollow_label: {background: hollow_label, font: default-font, fontColor: white},
+	hollow: {background: hollow, font: default-font, fontColor: white},
 	label_normal: {background: hollow_label, font: default-font, fontColor: white},
 	money_label: {background: money_label, font: default-font, fontColor: white},
 	kills_label: {background: kills_label, font: default-font, fontColor: white},

@@ -68,10 +68,10 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		// table.debug();
 
 		scroll = new ScrollPane(enlistTable, skin);
-		enlistTable.padTop(10);
-		enlistTable.defaults().expandX();
+		//enlistTable.padTop(10);
+		enlistTable.defaults().expand().fill();
 		
-		container.add(scroll).expand().fill().colspan(1);
+		container.add(scroll).expand().fill();
 		container.setBackground(skin.getDrawable("main-panel"));
 		
 		lblTitle = new Label("ENLIST", skin);

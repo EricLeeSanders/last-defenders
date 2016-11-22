@@ -26,15 +26,15 @@ public class SupportButton extends Group{
         lblTitle.setAlignment(Align.center);
         lblTitle.pack();
         float lblTitleX = ActorUtil.calcXBotLeftFromCenter(button.getWidth() / 2, lblTitle.getWidth());
-        float lblTitleY = ActorUtil.calcYBotLeftFromCenter(75, lblTitle.getHeight());
-        lblTitle.setPosition(lblTitleX, lblTitleY);
+        float lblTitleY = ActorUtil.calcYBotLeftFromCenter(button.getHeight() / 2, lblTitle.getHeight());
+        lblTitle.setPosition(lblTitleX, lblTitleY + 7);
         addActor(lblTitle);
 
         Label lblCost = new Label(String.valueOf(cost), skin);
         lblCost.setFontScale(0.45f);
         lblCost.setAlignment(Align.center);
         lblCost.pack();
-        lblCost.setPosition(40, 11);
+        lblCost.setPosition(40, 2);
         addActor(lblCost);
 
     }

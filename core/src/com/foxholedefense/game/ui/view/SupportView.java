@@ -97,24 +97,24 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 
 		SupportButton landmineButton = new SupportButton(skin, "Landmine", LandMine.COST);
 		supportButtons.add(landmineButton);
-		supportTable.add(landmineButton).size(133,110).spaceBottom(5);
+		supportTable.add(landmineButton).size(133,83).spaceBottom(5);
 		setLandmineListener(landmineButton);
 
 		SupportButton supplydropButton = new SupportButton(skin, "Supply Drop", SupplyDropCrate.COST);
 		supportButtons.add(supplydropButton);
-		supportTable.add(supplydropButton).size(133,110).spaceBottom(5);
+		supportTable.add(supplydropButton).size(133,83).spaceBottom(5);
 		setSupplyDropListener(supplydropButton);
 
 		SupportButton airstrikeButton = new SupportButton(skin, "Airstrike", AirStrike.COST);
 		supportButtons.add(airstrikeButton);
-		supportTable.add(airstrikeButton).size(133,110).spaceBottom(5);
+		supportTable.add(airstrikeButton).size(133,83).spaceBottom(5);
 		setAirStrikeListener(airstrikeButton);
 		
 		supportTable.row();
 
 		SupportButton apacheButton = new SupportButton(skin, "Apache", Apache.COST);
 		supportButtons.add(apacheButton);
-		supportTable.add(apacheButton).size(133,110).spaceBottom(5);
+		supportTable.add(apacheButton).size(133,83).spaceBottom(5);
 		setApacheListener(apacheButton);
 		
 		btnCancel = new ImageButton(skin,"cancel");
