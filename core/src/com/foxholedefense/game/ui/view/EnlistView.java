@@ -62,9 +62,11 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	 */
 	public void createControls(Skin skin) {
 		Table container = new Table();
+		container.setTransform(false);
 		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 		choosingGroup.addActor(container);
 		Table enlistTable = new Table();
+		enlistTable.setTransform(false);
 		// table.debug();
 
 		scroll = new ScrollPane(enlistTable, skin);

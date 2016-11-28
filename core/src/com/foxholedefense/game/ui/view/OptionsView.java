@@ -65,6 +65,7 @@ public class OptionsView extends Group implements IOptionsView {
 		this.addActor(container);
 
 		Table mainTable = new Table();
+		mainTable.setTransform(false);
 		mainTable.setBackground(skin.getDrawable("hollow"));
 		container.add(mainTable);
 		

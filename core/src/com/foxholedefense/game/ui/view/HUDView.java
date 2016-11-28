@@ -79,6 +79,7 @@ public class HUDView extends Group implements IHUDView {
 		addActor(btnOptions);
 		
 		Table statsTable = new Table();
+		statsTable.setTransform(false);
 		statsTable.setFillParent(true);
 		addActor(statsTable);
 		
