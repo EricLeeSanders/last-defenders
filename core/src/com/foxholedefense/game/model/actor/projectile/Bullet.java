@@ -82,7 +82,7 @@ public class Bullet extends Actor implements Pool.Poolable{
 	 */
 	@Override
 	public void draw(Batch batch, float alpha) {
-		bullet.setPosition(getX() - (bullet.getWidth()/2), getY() - (bullet.getHeight()/2));
+		//bullet.setPosition(getX() - (bullet.getWidth()/2), getY() - (bullet.getHeight()/2));
 		bullet.draw(batch);
 	}
 

@@ -102,6 +102,7 @@ public class MenuView extends Group implements IMenuView {
 		Skin skin = resources.getSkin(Resources.SKIN_JSON);
 		
 		optionsTable = new Table();
+		optionsTable.setTransform(false);
 		optionsTable.setBackground(skin.getDrawable("main-panel"));
 		optionsTable.setSize(500,300);
 		optionsTable.setPosition((Resources.VIRTUAL_WIDTH/2)-(optionsTable.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(optionsTable.getHeight()/2));

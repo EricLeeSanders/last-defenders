@@ -64,9 +64,11 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	 */
 	public void createControls(Skin skin) {
 		Table container = new Table();
+		container.setTransform(false);
 		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 		choosingGroup.addActor(container);
 		Table supportTable = new Table();
+		supportTable.setTransform(false);
 		// table.debug();
 
 		final ScrollPane scroll = new ScrollPane(supportTable, skin);

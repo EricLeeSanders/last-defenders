@@ -28,6 +28,7 @@ public class LevelCompletedView extends Group implements ILevelCompletedView{
 	
 	public void createControls(Skin skin){
 		Table table = new Table();
+		table.setTransform(false);
 		table.setBackground(skin.getDrawable("main-panel"));
 		table.setSize(400,260);
 		table.setPosition((Resources.VIRTUAL_WIDTH/2)-(table.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(table.getHeight()/2));
