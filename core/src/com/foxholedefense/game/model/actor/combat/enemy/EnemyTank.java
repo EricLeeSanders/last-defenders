@@ -50,9 +50,9 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	private Polygon body;
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
-	public EnemyTank(TextureRegion tankRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory) {
+	public EnemyTank(TextureRegion bodyRegion, TextureRegion[] turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory) {
 		super(turretRegion, pool, targetGroup, TEXTURE_TURRET_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
-		this.tankBodyRegion = tankRegion;
+		this.tankBodyRegion = bodyRegion;
 		this.deathEffectFactory = deathEffectFactory;
 		this.projectileFactory = projectileFactory;
 		body = new Polygon(bodyPoints);
