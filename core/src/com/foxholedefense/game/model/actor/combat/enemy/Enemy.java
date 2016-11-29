@@ -2,6 +2,7 @@ package com.foxholedefense.game.model.actor.combat.enemy;
 
 import java.util.Random;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
@@ -35,33 +36,22 @@ public abstract class Enemy extends CombatActor {
 	private Pool<CombatActor> pool;
 	private int actionIndex = 0; // Current index in the actionList
 	private float speed; // number of pixels it moves in a second
-	private float textureCounter; // Used to animate textures
 	private float findTargetCounter = 0;
 	private float attackCounter = 100; //Ready to attack
-	private int textureIndex; // Current texture index
-	private boolean multipleTextures, attacking;
-	private TextureRegion[] textureRegions;
+	private boolean attacking;
 	private float movementDelayCounter;
-	private Vector2 currentWaypoint = new Vector2();
 	private float lengthToEnd;
 	private boolean lengthToEndCalculated;
+	private Animation movementAnimation;
+	private float movementAnimationStateTime;
 	public Enemy(TextureRegion[] textureRegions, CombatActorPool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
 					float speed, float health, float armor, float attack, float attackSpeed, float range) {
 		super(textureRegions[0], pool, targetGroup, textureSize, gunPos, health, armor, attack, attackSpeed, range);
-		this.textureRegions = textureRegions;
+		movementAnimation = new Animation(0.3f, textureRegions);
+		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		this.speed = speed;
-		multipleTextures = true;
 		this.pool = pool;
 	}
-
-	public Enemy(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
-					float speed, float health, float armor, float attack, float attackSpeed, float range) {
-		super(textureRegion, pool, targetGroup, textureSize, gunPos, health, armor, attack, attackSpeed, range);
-		this.speed = speed;
-		multipleTextures = false;
-		this.pool = pool;
-	}
-
 	/**
 	 * Sets the path for the enemy. Starts off screen.
 	 * 
@@ -128,11 +118,12 @@ public abstract class Enemy extends CombatActor {
 			attackHandler(delta);
 		} else {
 			super.act(delta); // Pause to create a delay if attacking
+			movementAnimationStateTime += delta;
 		}
 
 		// Find the next way point when at the end of a way point
 		if (!isDead() && !attacking) {
-			changeTextures(delta);
+			movementAnimation.getKeyFrame(movementAnimationStateTime, true);
 			nextWaypointHandler();
 		}
 	}
@@ -185,26 +176,6 @@ public abstract class Enemy extends CombatActor {
 		attackCounter = 100; //Ready to attack
 		findTargetDelay = random.nextFloat()*2 + 1;
 	}
-	/**
-	 * Handles the changing of textures
-	 * 
-	 * @param delta
-	 */
-	public void changeTextures(float delta) {
-		if (multipleTextures) {
-			if (!attacking) {
-				if (textureCounter >= 0.3f) {
-					textureCounter = 0;
-					textureIndex++;
-					setTextureRegion(textureRegions[textureIndex % 2]);
-				} else {
-					textureCounter += delta;
-				}
-			} else {
-				setTextureRegion(textureRegions[2]); // Stationary when attacking
-			}
-		}
-	}
 
 	public boolean isAttacking() {
 		return attacking;
@@ -218,14 +189,13 @@ public abstract class Enemy extends CombatActor {
 		super.reset();
 		this.setRotation(0);
 		attacking = false;
-		textureIndex = 0;
-		textureCounter = 0;
 		findTargetCounter = 0;
 		actionIndex = 0;
 		actionList.clear();
 		findTargetDelay = 2f;
 		attackCounter = 100; //Ready to attack
 		lengthToEnd = 0;
+		movementAnimationStateTime = 0;
 	}
 
 	/**

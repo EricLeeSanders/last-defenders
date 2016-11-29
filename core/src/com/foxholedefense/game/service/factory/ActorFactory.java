@@ -72,18 +72,18 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	private SupportActorPool<Apache> apachePool = new SupportActorPool<Apache>(Apache.class);
 	private SupportActorPool<AirStrike> airStrikePool = new SupportActorPool<AirStrike>(AirStrike.class);
 	private SupportActorPool<LandMine> landMinePool = new SupportActorPool<LandMine>(LandMine.class);
-	private TextureAtlas actorAtlas;
 	private FHDAudio audio;
 	private ActorGroups actorGroups;
-	private Map<Class, TextureRegion> loadedTextures = new HashMap<Class, TextureRegion>();
+	private Map<String, TextureRegion> loadedTextures = new HashMap<String, TextureRegion>();
+	private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<String, Array<AtlasRegion>>();
 	public ActorFactory(ActorGroups actorGroups, TextureAtlas actorAtlas, FHDAudio audio){
-		this.actorAtlas = actorAtlas;
 		this.actorGroups = actorGroups;
 		this.audio = audio;
 		initCombatActorPools(actorGroups);
+		initTextures(actorAtlas);
 		
 	}
-	public void  initCombatActorPools(ActorGroups actorGroups){
+	private void  initCombatActorPools(ActorGroups actorGroups){
 		towerRiflePool = new CombatActorPool<CombatActor>(TowerRifle.class, actorGroups.getEnemyGroup());
 		towerTankPool = new CombatActorPool<CombatActor>(TowerTank.class, actorGroups.getEnemyGroup());
 		towerFlameThrowerPool = new CombatActorPool<CombatActor>(TowerFlameThrower.class, actorGroups.getEnemyGroup());
@@ -98,6 +98,39 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		enemyRocketLauncherPool = new CombatActorPool<CombatActor>(EnemyRocketLauncher.class, actorGroups.getTowerGroup());
 		enemySniperPool = new CombatActorPool<CombatActor>(EnemySniper.class, actorGroups.getTowerGroup());
 		enemyHumveePool = new CombatActorPool<CombatActor>(EnemyHumvee.class, actorGroups.getTowerGroup());
+	}
+
+	private void initTextures(TextureAtlas actorAtlas){
+		loadedTextures.put("range-red", actorAtlas.findRegion("range-red"));
+		loadedTextures.put("range-white", actorAtlas.findRegion("range-white"));
+		loadedTextures.put("range-red-turret", actorAtlas.findRegion("range-red-turret"));
+		loadedTextures.put("range-white-turret", actorAtlas.findRegion("range-white-turret"));
+		loadedTextures.put("range-black", actorAtlas.findRegion("range-black"));
+		loadedTextures.put("airstrike", actorAtlas.findRegion("airstrike"));
+		loadedTextures.put("apache1", actorAtlas.findRegion("apache1"));
+		loadedTextures.put("apache2", actorAtlas.findRegion("apache2"));
+		loadedTextures.put("apache3", actorAtlas.findRegion("apache3"));
+		loadedTextures.put("bullet", actorAtlas.findRegion("bullet"));
+		loadedTextures.put("healthbar-armor", actorAtlas.findRegion("healthbar-armor"));
+		loadedTextures.put("healthbar-bg", actorAtlas.findRegion("healthbar-bg"));
+		loadedTextures.put("healthbar-life", actorAtlas.findRegion("healthbar-life"));
+		loadedTextures.put("humvee", actorAtlas.findRegion("humvee"));
+		loadedTextures.put("landmine", actorAtlas.findRegion("landmine"));
+		loadedTextures.put("rifle", actorAtlas.findRegion("rifle"));
+		loadedTextures.put("rifle-left", actorAtlas.findRegion("rifle-left"));
+		loadedTextures.put("rifle-right", actorAtlas.findRegion("rifle-right"));
+		loadedTextures.put("supply-drop", actorAtlas.findRegion("supply-drop"));
+		loadedTextures.put("supply-drop-crate", actorAtlas.findRegion("supply-drop-crate"));
+		loadedTextures.put("tank", actorAtlas.findRegion("tank"));
+		loadedTextures.put("tank-turret", actorAtlas.findRegion("tank-turret"));
+		loadedTextures.put("turret-bags", actorAtlas.findRegion("turret-bags"));
+		loadedTextures.put("turret-machine", actorAtlas.findRegion("turret-machine"));
+
+
+		loadedAtlasRegions.put("explosion", actorAtlas.findRegions("explosion"));
+		loadedAtlasRegions.put("flame", actorAtlas.findRegions("flame"));
+		loadedAtlasRegions.put("blood-splatter", actorAtlas.findRegions("blood-splatter"));
+		loadedAtlasRegions.put("smoke-ring", actorAtlas.findRegions("smoke-ring"));
 	}
 	/**
 	 * Obtains a tower from the pool
@@ -301,65 +334,65 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	protected CombatActor createCombatActor(Class<? extends CombatActor> type, Group targetGroup) {
 		CombatActor actor = null;
 		if (type.equals(TowerRifle.class)) {
-			TextureRegion rifleRegion = actorAtlas.findRegion("Rifle");
-			actor = new TowerRifle(rifleRegion, towerRiflePool, targetGroup, this, this, audio);
+			TextureRegion rifleRegion = loadedTextures.get("rifle");
+			actor = new TowerRifle(rifleRegion, towerRiflePool, targetGroup, loadedTextures.get("range-white"), loadedTextures.get("range-red"), this, this, audio);
 		} else if (type.equals(TowerFlameThrower.class)) {
-			TextureRegion flameThrowerRegion = actorAtlas.findRegion("Rifle");
-			actor = new TowerFlameThrower(flameThrowerRegion, towerFlameThrowerPool, targetGroup, this, this, audio);
+			TextureRegion flameThrowerRegion = loadedTextures.get("rifle");
+			actor = new TowerFlameThrower(flameThrowerRegion, towerFlameThrowerPool, targetGroup, loadedTextures.get("range-white"), loadedTextures.get("range-red"), this, this, audio);
 		} else if (type.equals(TowerSniper.class)) {
-			TextureRegion sniperRegion = actorAtlas.findRegion("Rifle");
-			actor = new TowerSniper(sniperRegion, towerSniperPool, targetGroup, this, this, audio);
+			TextureRegion sniperRegion = loadedTextures.get("rifle");
+			actor = new TowerSniper(sniperRegion, towerSniperPool, targetGroup, loadedTextures.get("range-white"), loadedTextures.get("range-red"), this, this, audio);
 		} else if (type.equals(TowerMachineGun.class)) {
-			TextureRegion machineRegion = actorAtlas.findRegion("Rifle");
-			actor = new TowerMachineGun(machineRegion, towerMachinePool, targetGroup, this, this, audio);
+			TextureRegion machineRegion = loadedTextures.get("rifle");
+			actor = new TowerMachineGun(machineRegion, towerMachinePool, targetGroup, loadedTextures.get("range-white"), loadedTextures.get("range-red"), this, this, audio);
 		} else if (type.equals(TowerRocketLauncher.class)) {
-			TextureRegion rocketLauncherRegion = actorAtlas.findRegion("Rifle");
-			actor = new TowerRocketLauncher(rocketLauncherRegion, towerRocketLauncherPool, targetGroup, this, this, audio);
+			TextureRegion rocketLauncherRegion = loadedTextures.get("rifle");
+			actor = new TowerRocketLauncher(rocketLauncherRegion, towerRocketLauncherPool, targetGroup, loadedTextures.get("range-white"), loadedTextures.get("range-red"), this, this, audio);
 		} else if (type.equals(TowerTank.class)) {
-			TextureRegion tankRegion = actorAtlas.findRegion("Tank");
-			TextureRegion turretRegion = actorAtlas.findRegion("TankTurret");
-			actor = new TowerTank(tankRegion, turretRegion, towerTankPool, targetGroup, this, this);
+			TextureRegion tankRegion = loadedTextures.get("tank");
+			TextureRegion turretRegion = loadedTextures.get("tank-turret");
+			actor = new TowerTank(tankRegion, turretRegion, towerTankPool, targetGroup, loadedTextures.get("range-white"), loadedTextures.get("range-red"), this, this);
 		} else if (type.equals(TowerTurret.class)) {
-			TextureRegion machineRegion = actorAtlas.findRegion("TurretMachine");
-			TextureRegion bagsRegion = actorAtlas.findRegion("TurretBags");
-			actor = new TowerTurret(bagsRegion, machineRegion, towerTurretPool, targetGroup, this, this, audio);
+			TextureRegion machineRegion = loadedTextures.get("turret-machine");
+			TextureRegion bagsRegion = loadedTextures.get("turret-bags");
+			actor = new TowerTurret(bagsRegion, machineRegion, towerTurretPool, targetGroup, loadedTextures.get("range-white-turret"), loadedTextures.get("range-red-turret"), this, this, audio);
 		} else if (type.equals(EnemyRifle.class)) {
-			TextureRegion[] rifleRegions = new TextureRegion[3];
-			rifleRegions[0] = actorAtlas.findRegion("RifleLeft");
-			rifleRegions[1] = actorAtlas.findRegion("RifleRight");
-			rifleRegions[2] = actorAtlas.findRegion("Rifle");
-			actor = new EnemyRifle(rifleRegions, enemyRiflePool, targetGroup, this, this, audio);
+			TextureRegion[] regions = new TextureRegion[3];
+			regions[0] = loadedTextures.get("rifle-left");
+			regions[1] = loadedTextures.get("rifle-right");
+			regions[2] = loadedTextures.get("rifle");
+			actor = new EnemyRifle(regions, enemyRiflePool, targetGroup, this, this, audio);
 		} else if (type.equals(EnemyFlameThrower.class)) {
-			TextureRegion[] flameThrowerRegions = new TextureRegion[3];
-			flameThrowerRegions[0] = actorAtlas.findRegion("RifleLeft");
-			flameThrowerRegions[1] = actorAtlas.findRegion("RifleRight");
-			flameThrowerRegions[2] = actorAtlas.findRegion("Rifle");
-			actor = new EnemyFlameThrower(flameThrowerRegions, enemyFlameThrowerPool, targetGroup, this, this, audio);
+			TextureRegion[] regions = new TextureRegion[3];
+			regions[0] = loadedTextures.get("rifle-left");
+			regions[1] = loadedTextures.get("rifle-right");
+			regions[2] = loadedTextures.get("rifle");
+			actor = new EnemyFlameThrower(regions, enemyFlameThrowerPool, targetGroup, this, this, audio);
 		} else if (type.equals(EnemyHumvee.class)) {
-			TextureRegion humveeRegion = actorAtlas.findRegion("Humvee");
-			actor = new EnemyHumvee(humveeRegion, enemyHumveePool, this);
+			TextureRegion humveeRegion = loadedTextures.get("Humvee");
+			actor = new EnemyHumvee(new TextureRegion[]{humveeRegion}, enemyHumveePool, this);
 		} else if (type.equals(EnemyMachineGun.class)) {
-			TextureRegion[] machineRegions = new TextureRegion[3];
-			machineRegions[0] = actorAtlas.findRegion("RifleLeft");
-			machineRegions[1] = actorAtlas.findRegion("RifleRight");
-			machineRegions[2] = actorAtlas.findRegion("Rifle");
-			actor = new EnemyMachineGun(machineRegions, enemyMachinePool, targetGroup, this, this, audio);
+			TextureRegion[] regions = new TextureRegion[3];
+			regions[0] = loadedTextures.get("rifle-left");
+			regions[1] = loadedTextures.get("rifle-right");
+			regions[2] = loadedTextures.get("rifle");
+			actor = new EnemyMachineGun(regions, enemyMachinePool, targetGroup, this, this, audio);
 		} else if (type.equals(EnemyRocketLauncher.class)) {
-			TextureRegion[] rocketLauncherRegions = new TextureRegion[3];
-			rocketLauncherRegions[0] = actorAtlas.findRegion("RifleLeft");
-			rocketLauncherRegions[1] = actorAtlas.findRegion("RifleRight");
-			rocketLauncherRegions[2] = actorAtlas.findRegion("Rifle");
-			actor = new EnemyRocketLauncher(rocketLauncherRegions, enemyRocketLauncherPool, targetGroup, this, this, audio);
+			TextureRegion[] regions = new TextureRegion[3];
+			regions[0] = loadedTextures.get("rifle-left");
+			regions[1] = loadedTextures.get("rifle-right");
+			regions[2] = loadedTextures.get("rifle");
+			actor = new EnemyRocketLauncher(regions, enemyRocketLauncherPool, targetGroup, this, this, audio);
 		} else if (type.equals(EnemySniper.class)) {
-			TextureRegion[] sniperRegions = new TextureRegion[3];
-			sniperRegions[0] = actorAtlas.findRegion("RifleLeft");
-			sniperRegions[1] = actorAtlas.findRegion("RifleRight");
-			sniperRegions[2] = actorAtlas.findRegion("Rifle");
-			actor = new EnemySniper(sniperRegions, enemySniperPool, targetGroup, this, this, audio);
+			TextureRegion[] regions = new TextureRegion[3];
+			regions[0] = loadedTextures.get("rifle-left");
+			regions[1] = loadedTextures.get("rifle-right");
+			regions[2] = loadedTextures.get("rifle");
+			actor = new EnemySniper(regions, enemySniperPool, targetGroup, this, this, audio);
 		} else if (type.equals(EnemyTank.class)) {
-			TextureRegion tankRegion = actorAtlas.findRegion("Tank");
-			TextureRegion turretRegion = actorAtlas.findRegion("TankTurret");
-			actor = new EnemyTank(tankRegion, turretRegion, enemyTankPool, targetGroup, this, this);
+			TextureRegion tankRegion = loadedTextures.get("tank");
+			TextureRegion turretRegion = loadedTextures.get("tank-turret");
+			actor = new EnemyTank(tankRegion, new TextureRegion[]{turretRegion}, enemyTankPool, targetGroup, this, this);
 		} else {
 			throw new NullPointerException("Actor factory couldn't create: " + type.getSimpleName());
 		}
@@ -417,7 +450,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	 * @return Explosion
 	 */
 	protected Explosion createExplosionActor() {
-		Array<AtlasRegion> atlasRegions = actorAtlas.findRegions("explosion");
+		Array<AtlasRegion> atlasRegions = loadedAtlasRegions.get("explosion");
 		Explosion explosion = new Explosion(explosionPool, atlasRegions, audio);
 		return explosion;
 
@@ -429,7 +462,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	 * @return Flame
 	 */
 	protected Flame createFlameActor() {
-		Array<AtlasRegion> atlasRegions = actorAtlas.findRegions("flame");
+		Array<AtlasRegion> atlasRegions = loadedAtlasRegions.get("flame");
 		Flame flame = new Flame(flamePool, atlasRegions);
 		return flame;
 
@@ -442,7 +475,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	 */
 	protected SupplyDrop createSupplyDropActor() {
 		Logger.info("Creating Supply Drop Actor");
-		TextureRegion supplyDropRegion = actorAtlas.findRegion("supply-drop");
+		TextureRegion supplyDropRegion = loadedTextures.get("supply-drop");
 		SupplyDrop supplyDrop = new SupplyDrop(supplyDropRegion, supplyDropPool, this);
 		return supplyDrop;
 
@@ -455,7 +488,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	 */
 	protected SupplyDropCrate createSupplyDropCrateActor() {
 		Logger.info("Creating Supply Drop Crate Actor");
-		TextureRegion supplyDropCrateRegion = actorAtlas.findRegion("supply-drop-crate");
+		TextureRegion supplyDropCrateRegion = loadedTextures.get("supply-drop-crate");
 		SupplyDropCrate supplyDropCrate = new SupplyDropCrate(supplyDropCrateRegion, supplyDropCratePool, actorGroups.getTowerGroup());
 		return supplyDropCrate;
 
@@ -469,10 +502,10 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	protected DeathEffect createDeathEffect(Class<? extends DeathEffect> type) {
 		
 		if (type.equals(BloodSplatter.class)) {
-			Array<AtlasRegion> atlasRegions = actorAtlas.findRegions("blood-splatter");
+			Array<AtlasRegion> atlasRegions = loadedAtlasRegions.get("blood-splatter");
 			return new BloodSplatter(bloodPool, atlasRegions);
 		} else if(type.equals(VehicleExplosion.class)){
-			Array<AtlasRegion> atlasRegions = actorAtlas.findRegions("smoke-ring");
+			Array<AtlasRegion> atlasRegions = loadedAtlasRegions.get("smoke-ring");
 			return new VehicleExplosion(vehicleExplosionPool, atlasRegions);	
 		} else {
 			throw new NullPointerException("Actor factory couldn't create: " + type.getSimpleName());
@@ -489,15 +522,15 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		Group targetGroup = actorGroups.getEnemyGroup();
 		if (type.equals(Apache.class)) {
 			TextureRegion [] textureRegions = new TextureRegion[3];
-			textureRegions[0] = actorAtlas.findRegion("apache1");
-			textureRegions[1] = actorAtlas.findRegion("apache2");
-			textureRegions[2] = actorAtlas.findRegion("apache3");
+			textureRegions[0] = loadedTextures.get("apache1");
+			textureRegions[1] = loadedTextures.get("apache2");
+			textureRegions[2] = loadedTextures.get("apache3");
 			return new Apache(apachePool, targetGroup, this, textureRegions, audio);
 		} else if(type.equals(AirStrike.class)){
-			TextureRegion textureRegion = actorAtlas.findRegion("airstrike");
+			TextureRegion textureRegion = loadedTextures.get("airstrike");
 			return new AirStrike(airStrikePool, targetGroup, this, textureRegion, audio);	
 		} else if (type.equals(LandMine.class)){
-			TextureRegion textureRegion = actorAtlas.findRegion("landmine");
+			TextureRegion textureRegion = loadedTextures.get("landmine");
 			return new LandMine(landMinePool, targetGroup, this, textureRegion);	
 		} else {
 			throw new NullPointerException("Actor factory couldn't create: " + type.getSimpleName());
