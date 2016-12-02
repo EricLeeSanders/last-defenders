@@ -37,8 +37,8 @@ public class EnemyRocketLauncher extends Enemy implements IRpg {
 	private FHDAudio audio;
 	private IProjectileFactory projectileFactory;
 	private IDeathEffectFactory deathEffectFactory;
-	public EnemyRocketLauncher(TextureRegion[] actorRegions, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
-		super(actorRegions, pool, targetGroup, TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
+	public EnemyRocketLauncher(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
+		super(stationaryTextureRegion, animatedRegions, pool, targetGroup, TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
 		this.deathEffectFactory = deathEffectFactory;

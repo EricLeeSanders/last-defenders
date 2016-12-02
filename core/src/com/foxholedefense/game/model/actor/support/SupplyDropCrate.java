@@ -28,26 +28,18 @@ import com.foxholedefense.util.Resources;
 public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 	public static final int COST = 1000;
 	private static final float SUPPLYDROP_DURATION = 1f;
-	private static final float RANGE = 300f;
+	private static final float RANGE = 150f;
 	private Circle rangeCircle = new Circle();
 	private boolean active, showRange;
-	private Sprite locationSprite;
 	private SupplyDropCratePool pool;
 	private Group towerGroup;
-	public SupplyDropCrate(TextureRegion textureRegion, SupplyDropCratePool pool, Group towerGroup) {
+	private TextureRegion rangeTexture;
+	public SupplyDropCrate(TextureRegion textureRegion, TextureRegion rangeTexture, SupplyDropCratePool pool, Group towerGroup) {
 		super(textureRegion, new Dimension(50, 50));
 		this.pool = pool;
 		this.towerGroup = towerGroup;
-		
-		Pixmap locationPixmap = new Pixmap(600, 600, Format.RGBA8888);
-		locationPixmap.setColor(0,0,0,0.5f);
-		locationPixmap.fillCircle(300,300,300);
-		locationSprite = (new Sprite(new Texture(locationPixmap)));
-		locationPixmap.dispose();
-		locationSprite.setSize(RANGE, RANGE);
-		float locX = ActorUtil.calcXBotLeftFromCenter(getX(), locationSprite.getWidth());
-		float locY = ActorUtil.calcYBotLeftFromCenter(getY(), locationSprite.getHeight());
-		locationSprite.setPosition(locX, locY);
+		this.rangeTexture = rangeTexture;
+
 	}
 	
 	public SupplyDropCrate beginDrop(float dropDelay, Vector2 dropLocation){
@@ -76,7 +68,11 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 	public void draw(Batch batch, float alpha) {
 		super.draw(batch, alpha);
 		if(isShowRange()){
-			locationSprite.draw(batch);
+			float width = RANGE * 2;
+			float height = RANGE * 2;
+			float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, width);
+			float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, height);
+			batch.draw(rangeTexture,x, y, getOriginX(), getOriginY(), width, height, 1, 1, getRotation());
 		}
 	}
 	
@@ -124,7 +120,6 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 	@Override 
 	public void setPositionCenter(Vector2 pos){
 		super.setPositionCenter(pos);
-		locationSprite.setPosition(ActorUtil.calcXBotLeftFromCenter(pos.x, locationSprite.getWidth()), ActorUtil.calcYBotLeftFromCenter(pos.y, locationSprite.getHeight()));
 	}
 
 	@Override

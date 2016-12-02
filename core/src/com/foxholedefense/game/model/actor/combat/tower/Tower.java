@@ -98,7 +98,7 @@ public abstract class Tower extends CombatActor {
 		float height = getRange() * 2;
 		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, width);
 		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, height);
-		batch.draw(currentRangeRegion,x, y, getOriginX(), getOriginY(), width, height, 1, 1, getRotation());
+		batch.draw(currentRangeRegion,x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
 	}
 	/**
 	 * Finds targets while active. Always looks for a target.
