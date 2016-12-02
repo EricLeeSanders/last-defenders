@@ -41,7 +41,7 @@ public class TowerTurret extends Tower implements IRotatable {
 	public static final float ATTACK = 3;
 	public static final float ATTACK_SPEED = .2f;
 	public static final float RANGE = 70;
-	public static final float RANGE_WIDTH = 40;
+	public static final float RANGE_WIDTH = 80;
 	public static final Dimension BULLET_SIZE = new Dimension(10, 10);
 	public static final int COST = 1300;
 	public static final int ARMOR_COST = 900;
@@ -129,7 +129,7 @@ public class TowerTurret extends Tower implements IRotatable {
 		float width = RANGE_WIDTH;
 		float height = getRange();
 		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, width);
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, height);
+		float y = getPositionCenter().y + 8;
 		batch.draw(currentRangeRegion,x, y, 40, 0, width, height, 1, 1, getRotation());
 	}
 

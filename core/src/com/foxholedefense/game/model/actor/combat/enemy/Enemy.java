@@ -44,13 +44,15 @@ public abstract class Enemy extends CombatActor {
 	private boolean lengthToEndCalculated;
 	private Animation movementAnimation;
 	private float movementAnimationStateTime;
-	public Enemy(TextureRegion[] textureRegions, CombatActorPool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
+	private TextureRegion stationaryTextureRegion;
+	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
 					float speed, float health, float armor, float attack, float attackSpeed, float range) {
-		super(textureRegions[0], pool, targetGroup, textureSize, gunPos, health, armor, attack, attackSpeed, range);
-		movementAnimation = new Animation(0.3f, textureRegions);
+		super(stationaryTextureRegion, pool, targetGroup, textureSize, gunPos, health, armor, attack, attackSpeed, range);
+		movementAnimation = new Animation(0.3f, animatedRegions);
 		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		this.speed = speed;
 		this.pool = pool;
+		this.stationaryTextureRegion = stationaryTextureRegion;
 	}
 	/**
 	 * Sets the path for the enemy. Starts off screen.
@@ -115,6 +117,7 @@ public abstract class Enemy extends CombatActor {
 		// animation has finished, then reset its rotation to the way point
 		// it was heading to before it began attacking
 		if (attacking) {
+			setTextureRegion(stationaryTextureRegion);
 			attackHandler(delta);
 		} else {
 			super.act(delta); // Pause to create a delay if attacking
@@ -123,7 +126,7 @@ public abstract class Enemy extends CombatActor {
 
 		// Find the next way point when at the end of a way point
 		if (!isDead() && !attacking) {
-			movementAnimation.getKeyFrame(movementAnimationStateTime, true);
+			setTextureRegion(movementAnimation.getKeyFrame(movementAnimationStateTime, true));
 			nextWaypointHandler();
 		}
 	}
