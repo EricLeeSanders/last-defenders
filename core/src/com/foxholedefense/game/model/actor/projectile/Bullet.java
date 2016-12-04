@@ -1,11 +1,6 @@
 package com.foxholedefense.game.model.actor.projectile;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Pixmap.Format;
+
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,6 +15,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.GameStage;
 import com.foxholedefense.game.helper.Damage;
+import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
@@ -36,22 +32,14 @@ import com.foxholedefense.util.Resources;
  */
 public class Bullet extends Actor implements Pool.Poolable{
 	private static final float SPEED = 350f;
-	private Sprite bullet;
 	private ITargetable target;
 	private IAttacker attacker;
 	private Pool<Bullet> pool;
+	private TextureRegion bulletTexture;
 	
-	public Bullet(Pool<Bullet> pool){
+	public Bullet(Pool<Bullet> pool, TextureRegion bulletTexture) {
 		this.pool = pool;
-		createBulletSprite();
-	}
-	private void createBulletSprite(){
-		Pixmap bulletPixmap = new Pixmap(100, 100, Format.RGBA8888);
-		bulletPixmap.setColor(0,0,0,1f);
-		bulletPixmap.fillCircle(50, 50, 50);
-		bullet = (new Sprite(new Texture(bulletPixmap)));
-		bulletPixmap.dispose();
-		bullet.setSize(5, 5);
+		this.bulletTexture = bulletTexture;
 	}
 
 	/**
@@ -64,11 +52,12 @@ public class Bullet extends Actor implements Pool.Poolable{
 	 * @param size
 	 *            - Size of the bullet
 	 */
-	public Actor initialize(IAttacker attacker, ITargetable target, Vector2 pos, Dimension size) {
+	public Actor initialize(IAttacker attacker, ITargetable target, Vector2 pos, Dimension size ) {
 		this.target = target;
 		this.attacker = attacker;
 		this.setPosition(pos.x, pos.y);
 		this.setSize(size.getWidth(), size.getHeight());
+		this.setOrigin(size.getWidth() / 2, size.getHeight() / 2);
 		Vector2 end = target.getPositionCenter();
 		MoveToAction moveAction = new MoveToAction();
 		moveAction.setPosition(end.x, end.y);
@@ -77,13 +66,9 @@ public class Bullet extends Actor implements Pool.Poolable{
 		return this;
 	}
 
-	/**
-	 * Draw the bullet
-	 */
 	@Override
 	public void draw(Batch batch, float alpha) {
-		//bullet.setPosition(getX() - (bullet.getWidth()/2), getY() - (bullet.getHeight()/2));
-		bullet.draw(batch);
+		batch.draw(bulletTexture, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 	}
 
 	/**
@@ -98,6 +83,7 @@ public class Bullet extends Actor implements Pool.Poolable{
 		if (this.getActions().size == 0) {
 			Damage.dealBulletDamage(attacker, target);
 			pool.free(this);
+			return;
 		}
 	}
 
