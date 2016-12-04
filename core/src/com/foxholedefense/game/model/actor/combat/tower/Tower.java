@@ -1,10 +1,7 @@
 package com.foxholedefense.game.model.actor.combat.tower;
 
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
+
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -30,7 +27,7 @@ public abstract class Tower extends CombatActor {
 	private boolean rangeIncreaseEnabled, speedIncreaseEnabled, attackIncreaseEnabled;
 	private TowerAI ai = TowerAI.FIRST;
 	private boolean active, showRange; 
-	private float attackCounter = 0;
+	private float attackCounter = getAttackSpeed(); //ready to attack
 	private TextureRegion rangeRegion, collidingRangeRegion;
 	private int kills;
 	private Pool<CombatActor> pool;

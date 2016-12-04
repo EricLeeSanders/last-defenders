@@ -32,7 +32,7 @@ public class TowerRifle extends Tower {
 	public static float ATTACK = 4;
 	public static float ATTACK_SPEED = 0.8f;
 	public static float RANGE = 50;
-	public static final Dimension BULLET_SIZE = new Dimension(10, 10);
+	public static final Dimension BULLET_SIZE = new Dimension(5, 5);
 	public static final int COST = 200;
 	public static final int ARMOR_COST = 100;
 	public static final int RANGE_INCREASE_COST = 50;

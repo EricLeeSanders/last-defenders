@@ -28,10 +28,10 @@ public class EnemySniper extends Enemy {
 	public static final float HEALTH = 8;
 	public static final float ARMOR = 4;
 	public static final float ATTACK = 5;
-	public static final float ATTACK_SPEED = 1;
+	public static final float ATTACK_SPEED = 4;
 	public static final float RANGE = 100;
 	public static final float SPEED = 70f;
-	public static final Dimension BULLET_SIZE = new Dimension(10, 10);
+	public static final Dimension BULLET_SIZE = new Dimension(5, 5);
 	public static final Vector2 GUN_POS = new Vector2(4, 26);
 	public static final Dimension TEXTURE_SIZE = new Dimension(32, 56);
 	private Circle body;

@@ -1,5 +1,6 @@
 package com.foxholedefense.game.model.actor.support;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
@@ -33,15 +34,20 @@ public class Apache extends SupportActor{
 	private IProjectileFactory projectileFactory;
 	private FHDAudio audio;
 	private ITowerAI ai = new FirstEnemyAI();
-	public Apache(SupportActorPool<Apache> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion [] textureRegions, FHDAudio audio) {
-		super(pool, targetGroup, textureRegions[0], new Dimension(textureRegions[0].getRegionWidth()*SCALE, textureRegions[0].getRegionHeight()*SCALE),
+	private Animation movementAnimation;
+	private float movementAnimationStateTime;
+
+	public Apache(SupportActorPool<Apache> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion stationaryTextureRegion, TextureRegion [] textureRegions, TextureRegion rangeTexture, FHDAudio audio) {
+		super(pool, targetGroup, stationaryTextureRegion, rangeTexture, new Dimension(stationaryTextureRegion.getRegionWidth()*SCALE, stationaryTextureRegion.getRegionHeight()*SCALE),
 				RANGE, ATTACK, GUN_POS, COST);
 		this.textureRegions = textureRegions;
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
+		movementAnimation = new Animation(0.25f, textureRegions);
+		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
 	}
 	public void initialize(Vector2 position){
-		Vector2 destination = new Vector2(position.x - (this.getWidth()/2), position.y - (this.getHeight()/2));
+		Vector2 destination = new Vector2(position.x - this.getOriginX(), position.y - this.getOriginY());
 		setPositionCenter(new Vector2(0-this.getHeight(), Resources.VIRTUAL_HEIGHT/2));
 		float moveDistance = (destination.dst(this.getPositionCenter()) / MOVE_SPEED);
 		this.setRotation(calculateRotation(destination));
@@ -60,7 +66,8 @@ public class Apache extends SupportActor{
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		changeTextures(delta);
+		movementAnimationStateTime += delta;
+		setTextureRegion(movementAnimation.getKeyFrame(movementAnimationStateTime, true));
 		//If the Apache has been placed (active) but is done moving to the location
 		//then it is ready to attack
 		if(isActive() && !isReadyToAttack() && this.getActions().size <= 0){
@@ -123,21 +130,6 @@ public class Apache extends SupportActor{
 			projectileFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
 		}
 
-	}
-	
-	/**
-	 * Handles the changing of textures
-	 * 
-	 * @param delta
-	 */
-	public void changeTextures(float delta) {
-		if (textureCounter >= 0.2f) {
-			textureCounter = 0;
-			textureIndex++;
-			super.setTextureRegion(textureRegions[textureIndex % 3]);
-		} else {
-			textureCounter += delta;
-		}
 	}
 
 	public boolean isReadyToAttack() {
