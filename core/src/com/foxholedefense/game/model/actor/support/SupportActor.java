@@ -1,11 +1,5 @@
 package com.foxholedefense.game.model.actor.support;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -21,6 +15,7 @@ import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.projectile.Bullet;
 import com.foxholedefense.game.service.factory.ActorFactory;
+import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
@@ -34,9 +29,9 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	private int cost;
 	private Group getTargetGroup;
 	private boolean showRange;
-	private Sprite rangeSprite;
-	private Color rangeColor = new Color(1.0f, 1.0f, 1.0f, 0.5f);
-	public SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion, Dimension textureSize
+	private TextureRegion rangeTexture;
+
+	public SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion, TextureRegion rangeTexture, Dimension textureSize
 						, float range, float attack, Vector2 gunPos, int cost) {
 		super(textureRegion, textureSize);
 		this.pool = pool;
@@ -45,23 +40,22 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 		this.gunPos = gunPos;
 		this.cost = cost;
 		this.getTargetGroup = targetGroup;
-		createRangeSprite();
-	}
-	protected void createRangeSprite(){
-		Pixmap rangePixmap = new Pixmap(600, 600, Format.RGBA8888);
-		rangePixmap.setColor(1.0f, 1.0f, 1.0f, 0.75f);
-		rangePixmap.fillCircle(300, 300, 300);
-		setRangeSprite(new Sprite(new Texture(rangePixmap)));
-		rangePixmap.dispose();
+		this.rangeTexture = rangeTexture;
 	}
 	@Override
 	public void draw(Batch batch, float alpha) {
-		if (showRange) {
-			rangeSprite.setBounds(getPositionCenter().x - range, getPositionCenter().y - range, range*2, range*2);
-			rangeSprite.draw(batch);
-
+		if (isShowRange()) {
+			drawRange(batch);
 		}
 		super.draw(batch, alpha);
+	}
+
+	protected void drawRange(Batch batch){
+		float width = range * 2;
+		float height = range * 2;
+		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, width);
+		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, height);
+		batch.draw(rangeTexture,x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
 	}
 
 	public Group getTargetGroup(){
@@ -91,13 +85,6 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 		return showRange;
 	}
 
-	public void setRangeColor(float r, float g, float b, float a) {
-		rangeColor.set(r, g, b, a);
-	}
-
-	public Color getRangeColor() {
-		return rangeColor;
-	}
 	
 	@Override
 	public Shape2D getRangeShape() {
@@ -121,11 +108,5 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 		this.clear();
 		this.remove();
 	}
-	public Sprite getRangeSprite() {
-		return rangeSprite;
-	}
-	public void setRangeSprite(Sprite rangeSprite) {
-		this.rangeSprite = rangeSprite;
-	}
-	
+
 }

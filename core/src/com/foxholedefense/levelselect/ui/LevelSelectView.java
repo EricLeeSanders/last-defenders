@@ -134,7 +134,7 @@ public class LevelSelectView extends Group {
 		setBtnPlayListener(btnPlay);
 
 
-		lblLevel = new Label("Level X", skin);
+		lblLevel = new Label("LEVEL X", skin);
 		lblLevel.setPosition((Resources.VIRTUAL_WIDTH/2)-(lblLevel.getWidth()/2)
 				, Resources.VIRTUAL_HEIGHT-lblLevel.getHeight() - 25);
 		levelGroup.addActor(lblLevel);
@@ -143,35 +143,35 @@ public class LevelSelectView extends Group {
 		levelGroup.setVisible(visible);
 		if(visible){
 			if(selectedLevel == 1){
-				lblLevel.setText("Level 1");
+				lblLevel.setText("LEVEL 1");
 				level1.setVisible(true);
 				level2.setVisible(false);
 				level3.setVisible(false);
 				level4.setVisible(false);
 				level5.setVisible(false);
 			} else if(selectedLevel == 2){
-				lblLevel.setText("Level 2");
+				lblLevel.setText("LEVEL 2");
 				level1.setVisible(false);
 				level2.setVisible(true);
 				level3.setVisible(false);
 				level4.setVisible(false);
 				level5.setVisible(false);
 			} else if(selectedLevel == 3){
-				lblLevel.setText("Level 3");
+				lblLevel.setText("LEVEL 3");
 				level1.setVisible(false);
 				level2.setVisible(false);
 				level3.setVisible(true);
 				level4.setVisible(false);
 				level5.setVisible(false);
 			} else if(selectedLevel == 4){
-				lblLevel.setText("Level 4");
+				lblLevel.setText("LEVEL 4");
 				level1.setVisible(false);
 				level2.setVisible(false);
 				level3.setVisible(false);
 				level4.setVisible(true);
 				level5.setVisible(false);
 			} else if(selectedLevel == 5){
-				lblLevel.setText("Level 5");
+				lblLevel.setText("LEVEL 5");
 				level1.setVisible(false);
 				level2.setVisible(false);
 				level3.setVisible(false);

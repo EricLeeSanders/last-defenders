@@ -1,35 +1,19 @@
 package com.foxholedefense.util;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.Pixmap.Blending;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
-import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
-import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
+
 //-agentlib:hprof=heap=dump,format=b
+
 public class Resources {
 	public static final String LOAD_ATLAS = "load/load.atlas";
 	public static final String MENU_ATLAS = "menu/menu.atlas";
@@ -69,13 +53,9 @@ public class Resources {
 		this.userPreferences = userPreferences;
 //		loadFonts();
 //		loadSkin(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
-		Pixmap.setBlending(Blending.None);
 	}
 	public void dispose() {
 		Logger.info("Resources dispose");
-		//Need to reset Pixmap blending otherwise blending
-		//for fonts on restart are screwed up
-		Pixmap.setBlending(Blending.SourceOver);
 		manager.dispose();
 		shapeRenderer.dispose();
 

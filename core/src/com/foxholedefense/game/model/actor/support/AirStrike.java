@@ -41,22 +41,25 @@ public class AirStrike extends SupportActor implements IRpg{
 	public static final int COST = 1000;
 	public static final float ATTACK = 10f;
 	public static final float SPEED = 150f;
-	public static final float AIRSTRIKE_RADIUS = 75;
+	public static final float AIRSTRIKE_RADIUS = 60;
 	public static final int MAX_AIRSTRIKES = 3;
 	public static final Vector2 GUN_POS = new Vector2(0,0);
-	public static final Dimension BULLET_SIZE = new Dimension(20,20);
+	public static final Dimension BULLET_SIZE = new Dimension(10, 10);
 	private Array<AirStrikeLocation> airStrikeLocations = new Array<AirStrikeLocation>();
 	private IProjectileFactory projectileFactory;
 	private FHDAudio audio;
-	public AirStrike(SupportActorPool<AirStrike> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion textureRegion, FHDAudio audio) {
-		super(pool, targetGroup, textureRegion, new Dimension(textureRegion.getRegionWidth(), textureRegion.getRegionHeight())
-				,0f,ATTACK, GUN_POS, COST);
+	private TextureRegion rangeTexture;
+
+	public AirStrike(SupportActorPool<AirStrike> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion textureRegion, TextureRegion rangeTexture, FHDAudio audio) {
+		super(pool, targetGroup, textureRegion, rangeTexture, new Dimension(textureRegion.getRegionWidth(), textureRegion.getRegionHeight())
+				,AIRSTRIKE_RADIUS,ATTACK, GUN_POS, COST);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
+		this.rangeTexture = rangeTexture;
 
 	}
-	public void addLocation(Vector2 location, Group group){
-		airStrikeLocations.add(new AirStrikeLocation(location,AIRSTRIKE_RADIUS, group ));
+	public void addLocation(AirStrikeLocation location){
+		airStrikeLocations.add(location);
 	}
 	public void beginAirStrike(){
 		Logger.info("Beginning Air Strike Run");

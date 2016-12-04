@@ -74,6 +74,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	private SupportActorPool<LandMine> landMinePool = new SupportActorPool<LandMine>(LandMine.class);
 	private FHDAudio audio;
 	private ActorGroups actorGroups;
+
 	private Map<String, TextureRegion> loadedTextures = new HashMap<String, TextureRegion>();
 	private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<String, Array<AtlasRegion>>();
 	public ActorFactory(ActorGroups actorGroups, TextureAtlas actorAtlas, FHDAudio audio){
@@ -120,6 +121,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		loadedTextures.put("tank-turret", actorAtlas.findRegion("tank-turret"));
 		loadedTextures.put("turret-bags", actorAtlas.findRegion("turret-bags"));
 		loadedTextures.put("turret-machine", actorAtlas.findRegion("turret-machine"));
+		loadedTextures.put("apache-stationary", actorAtlas.findRegion("apache",1));
 
 
 		loadedAtlasRegions.put("explosion", actorAtlas.findRegions("explosion"));
@@ -362,7 +364,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 			TextureRegion stationaryRegion = loadedTextures.get("rifle-stationary");
 			actor = new EnemyFlameThrower(stationaryRegion, animatedRegions, enemyFlameThrowerPool, targetGroup, this, this, audio);
 		} else if (type.equals(EnemyHumvee.class)) {
-			TextureRegion humveeRegion = loadedTextures.get("Humvee");
+			TextureRegion humveeRegion = loadedTextures.get("humvee");
 			actor = new EnemyHumvee(humveeRegion, new TextureRegion[]{humveeRegion}, enemyHumveePool, this);
 		} else if (type.equals(EnemyMachineGun.class)) {
 			TextureRegion[] animatedRegions = loadedAtlasRegions.get("rifle").toArray(TextureRegion.class);
@@ -393,7 +395,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	 * @return HealthBar
 	 */
 	protected HealthBar createHealthBarActor() {
-		HealthBar healthBar = new HealthBar(healthPool);
+		HealthBar healthBar = new HealthBar(healthPool, loadedTextures.get("healthbar-bg"), loadedTextures.get("healthbar-life"), loadedTextures.get("healthbar-armor"));
 		return healthBar;
 
 	}
@@ -404,7 +406,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	 * @return Bullet
 	 */
 	protected Bullet createBulletActor() {
-		Bullet bullet = new Bullet(bulletPool);
+		Bullet bullet = new Bullet(bulletPool, loadedTextures.get("bullet"));
 		return bullet;
 
 	}
@@ -415,7 +417,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	 * @return RPG
 	 */
 	protected RPG createRPGActor() {
-		RPG rpg = new RPG(rpgPool, explosionPool);
+		RPG rpg = new RPG(rpgPool, explosionPool, loadedTextures.get("bullet"));
 		return rpg;
 
 	}
@@ -426,7 +428,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	 * @return AirStrikeBomb
 	 */
 	protected AirStrikeBomb createAirStrikeBombActor() {
-		AirStrikeBomb airStrikeBomb = new AirStrikeBomb(airStrikeBombPool, explosionPool);
+		AirStrikeBomb airStrikeBomb = new AirStrikeBomb(airStrikeBombPool, explosionPool, loadedTextures.get("bullet"));
 		return airStrikeBomb;
 
 	}
@@ -510,19 +512,34 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		Group targetGroup = actorGroups.getEnemyGroup();
 		if (type.equals(Apache.class)) {
 			TextureRegion [] textureRegions = loadedAtlasRegions.get("apache").toArray(TextureRegion.class);
-			return new Apache(apachePool, targetGroup, this, textureRegions, audio);
+			TextureRegion rangeTexture = loadedTextures.get("range-white");
+			TextureRegion stationaryRegion = loadedTextures.get("apache-stationary");
+			if(stationaryRegion == null){
+				System.out.println("is nulL!");
+			}
+			return new Apache(apachePool, targetGroup, this,stationaryRegion, textureRegions, rangeTexture, audio);
 		} else if(type.equals(AirStrike.class)){
 			TextureRegion textureRegion = loadedTextures.get("airstrike");
-			return new AirStrike(airStrikePool, targetGroup, this, textureRegion, audio);	
+			TextureRegion rangeTexture = loadedTextures.get("range-black");
+			return new AirStrike(airStrikePool, targetGroup, this, textureRegion, rangeTexture, audio);
 		} else if (type.equals(LandMine.class)){
 			TextureRegion textureRegion = loadedTextures.get("landmine");
-			return new LandMine(landMinePool, targetGroup, this, textureRegion);	
+			TextureRegion rangeTexture = loadedTextures.get("range-white");
+			return new LandMine(landMinePool, targetGroup, this, textureRegion, rangeTexture);
 		} else {
 			throw new NullPointerException("Actor factory couldn't create: " + type.getSimpleName());
 		}
 
 	}
-	
+
+
+	public Map<String, TextureRegion> getLoadedTextures() {
+		return loadedTextures;
+	}
+
+	public Map<String, Array<AtlasRegion>> getLoadedAtlasRegions() {
+		return loadedAtlasRegions;
+	}
 	public class CombatActorPool<T extends CombatActor> extends Pool<CombatActor> {
 		private final Class<? extends CombatActor> type;
 		private final Group targetGroup;

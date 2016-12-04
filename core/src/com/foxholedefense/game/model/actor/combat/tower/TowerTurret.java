@@ -1,11 +1,7 @@
 package com.foxholedefense.game.model.actor.combat.tower;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -42,7 +38,7 @@ public class TowerTurret extends Tower implements IRotatable {
 	public static final float ATTACK_SPEED = .2f;
 	public static final float RANGE = 70;
 	public static final float RANGE_WIDTH = 80;
-	public static final Dimension BULLET_SIZE = new Dimension(10, 10);
+	public static final Dimension BULLET_SIZE = new Dimension(5, 5);
 	public static final int COST = 1300;
 	public static final int ARMOR_COST = 900;
 	public static final int RANGE_INCREASE_COST = 500;

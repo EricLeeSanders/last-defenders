@@ -29,7 +29,9 @@ public class AirStrikePlacement {
 		currentAirStrike.setVisible(false);
 	}
 	public void addLocation(Vector2 location){
-		currentAirStrike.addLocation(location, actorGroups.getSupportGroup());
+		AirStrikeLocation airStrikeLocation = new AirStrikeLocation(location,AirStrike.AIRSTRIKE_RADIUS, actorFactory.getLoadedTextures().get("range-black") );
+		currentAirStrike.addLocation(airStrikeLocation);
+		actorGroups.getSupportGroup().addActor(airStrikeLocation);
 	}
 	public void finishCurrentAirStrike() {
 		if (isCurrentAirStrike()) {

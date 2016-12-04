@@ -43,11 +43,9 @@ public class Flame extends Actor implements Pool.Poolable {
 	private CombatActor shooter;
 	private ShapeRenderer flameOutline = Resources.getShapeRenderer();
 	private Dimension flameSize;
-	Polygon poly = null;
-	Polygon targetBodySnap = null;
 	private Pool<Flame> pool;
 	private float[] bodyPoints = new float[8];
-	private Polygon flameBody = new Polygon(bodyPoints);
+	private Polygon flameBody;
 	/**
 	 * Constructs a flame
 	 */
@@ -71,6 +69,7 @@ public class Flame extends Actor implements Pool.Poolable {
 		this.flameSize = flameSize;
 		bodyPoints[3] = bodyPoints[5] = flameSize.getHeight();
 		bodyPoints[4] = bodyPoints[6] = flameSize.getWidth();
+		flameBody = new Polygon(bodyPoints);
 		Damage.dealFlameTargetDamage(shooter, target);
 		Damage.dealFlameGroupDamage(shooter, target, targetGroup.getChildren(), getFlameBody());
 		return this;
@@ -81,7 +80,7 @@ public class Flame extends Actor implements Pool.Poolable {
 	public void act(float delta) {
 		super.act(delta);
 		stateTime += delta;
-		if (shooter.isDead()) {
+		if (shooter.isDead() || flameAnimation.isAnimationFinished(stateTime)) {
 			pool.free(this);
 		}
 	}
@@ -93,15 +92,12 @@ public class Flame extends Actor implements Pool.Poolable {
 	@Override
 	public void draw(Batch batch, float alpha) {
 		TextureRegion currentFlame = flameAnimation.getKeyFrame(stateTime, true);
-		if (flameAnimation.isAnimationFinished(stateTime)) {
-			pool.free(this);
-		}
 		this.setOrigin((currentFlame.getRegionWidth() / 2), 0);
 		this.setPosition(shooter.getGunPos().x - (currentFlame.getRegionWidth() / 2), shooter.getGunPos().y);
 		setRotation(shooter.getRotation());
 		if (Logger.DEBUG) {
 			batch.end();
-			poly = getFlameBody();
+			Polygon poly = getFlameBody();
 			flameOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			flameOutline.begin(ShapeType.Line);
 			flameOutline.setColor(Color.RED);
@@ -114,7 +110,8 @@ public class Flame extends Actor implements Pool.Poolable {
 	}
 
 	/**
-	 * Get the flame size
+	 * Get the flame body.
+	 * Must be a polygon because a rectangle can't be rotated.
 	 * 
 	 * @return
 	 */

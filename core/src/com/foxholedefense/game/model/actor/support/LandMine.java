@@ -34,8 +34,8 @@ public class LandMine extends SupportActor implements IRpg{
 	private Circle body;
 	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private IProjectileFactory projectileFactory;
-	public LandMine(SupportActorPool<LandMine> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion textureRegion) {
-		super(pool, targetGroup, textureRegion, new Dimension(textureRegion.getRegionWidth()*SCALE, textureRegion.getRegionHeight()*SCALE)
+	public LandMine(SupportActorPool<LandMine> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion textureRegion, TextureRegion rangeTexture) {
+		super(pool, targetGroup, textureRegion, rangeTexture, new Dimension(textureRegion.getRegionWidth()*SCALE, textureRegion.getRegionHeight()*SCALE)
 				,RANGE,ATTACK, GUN_POS, COST);
 		this.projectileFactory = projectileFactory;
 		this.body = new Circle(this.getPositionCenter(), this.getWidth()/2);

@@ -45,6 +45,7 @@ public abstract class Enemy extends CombatActor {
 	private Animation movementAnimation;
 	private float movementAnimationStateTime;
 	private TextureRegion stationaryTextureRegion;
+
 	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
 					float speed, float health, float armor, float attack, float attackSpeed, float range) {
 		super(stationaryTextureRegion, pool, targetGroup, textureSize, gunPos, health, armor, attack, attackSpeed, range);

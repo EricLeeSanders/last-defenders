@@ -24,6 +24,7 @@ import com.foxholedefense.util.Logger;
 public class Damage {
 	private static void dealTargetDamage(IAttacker attacker, ITargetable target) {
 		if (target != null && target.isDead() == false) {
+			Logger.debug("Doing " + attacker.getAttack() + " damage to: " + target.getClass().getSimpleName());
 			target.takeDamage(attacker.getAttack());
 			if (target.isDead() && attacker instanceof Tower) {
 				// Only give the tower a kill if it is alive.
@@ -78,11 +79,8 @@ public class Damage {
 					Logger.debug("AOE Actor distance: " + distance + " aoe radius: " + aoeRadius.radius);
 					if (CollisionDetection.explosionAndTarget( aoeTarget.getBody(), aoeRadius)) {
 						damagePercent = (1000 / distance);
-						if (damagePercent > 100) {
-							damagePercent = 100;
-						}
 						damage = (attacker.getAttack() * (damagePercent / 100));
-						Logger.debug("Doing " + damagePercent + "% of damage for " + damage + " damage");
+						Logger.debug("Doing " + damagePercent + "% of damage for " + damage + " damage to: " + aoeTarget.getClass().getSimpleName());
 						aoeTarget.takeDamage(damage);
 						Logger.debug("Actors new health:" + ((CombatActor) aoeTarget).getHealth());
 						if (aoeTarget.isDead() && attacker instanceof Tower) {
