@@ -1,13 +1,9 @@
 package com.foxholedefense.game.model.actor.projectile;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Pixmap.Format;
+
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
@@ -19,6 +15,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.GameStage;
 import com.foxholedefense.game.helper.Damage;
+import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
@@ -36,7 +33,6 @@ import com.foxholedefense.util.Resources;
  */
 public class RPG extends Actor implements Pool.Poolable {
 	private static final float SPEED = 350f;
-	private Sprite rpg;
 	private ITargetable target;
 	private IAttacker shooter;
 	private Group targetGroup;
@@ -44,18 +40,11 @@ public class RPG extends Actor implements Pool.Poolable {
 	private Pool<RPG> pool;
 	private float radius;
 	private ExplosionPool explosionPool;
-	public RPG(Pool<RPG> pool, ExplosionPool explosionPool){
+	private TextureRegion rpgTexture;
+	public RPG(Pool<RPG> pool, ExplosionPool explosionPool, TextureRegion rpgTexture){
 		this.pool = pool;
-		createRPGSprite();
 		this.explosionPool = explosionPool;
-	}
-	private void createRPGSprite(){
-		Pixmap rpgPixmap = new Pixmap(100, 100, Format.RGBA8888);
-		rpgPixmap.setColor(0,0,0,1f);
-		rpgPixmap.fillCircle(50, 50, 50);
-		rpg = (new Sprite(new Texture(rpgPixmap)));
-		rpgPixmap.dispose();
-		rpg.setSize(10, 10);
+		this.rpgTexture = rpgTexture;
 	}
 	/**
 	 * Initializes an RPG
@@ -74,6 +63,7 @@ public class RPG extends Actor implements Pool.Poolable {
 		this.radius = radius;
 		this.setPosition(pos.x, pos.y);
 		this.setSize(size.getWidth(), size.getHeight());
+		this.setOrigin(size.getWidth() / 2, size.getHeight() / 2);
 		destination = target.getPositionCenter();
 		MoveToAction moveAction = new MoveToAction();
 		moveAction.setPosition(destination.x, destination.y);
@@ -82,22 +72,10 @@ public class RPG extends Actor implements Pool.Poolable {
 		return this;
 	}
 
-	/**
-	 * Draw the RPG
-	 */
+
 	@Override
 	public void draw(Batch batch, float alpha) {
-		rpg.setPosition(getX() - (rpg.getWidth()/2), getY() - (rpg.getHeight()/2));
-		rpg.draw(batch);
-	}
-
-	/**
-	 * get the body of the RPG
-	 * 
-	 * @return
-	 */
-	public Rectangle getBody() {
-		return new Rectangle(getX(), getY(), getWidth(), getHeight());
+		batch.draw(rpgTexture, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 	}
 
 	/**
@@ -114,9 +92,7 @@ public class RPG extends Actor implements Pool.Poolable {
 			Damage.dealRpgDamage(shooter, target); // Deal damage
 			explosionPool.obtain().initialize(shooter, radius, target, targetGroup, destination);
 			pool.free(this);
-
 		}
-
 	}
 
 	@Override

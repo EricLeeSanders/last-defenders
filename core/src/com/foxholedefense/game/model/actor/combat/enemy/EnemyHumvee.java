@@ -38,8 +38,8 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 	private float[] bodyPoints = {0,0, 0,79, 40, 79, 40, 0 };
 	private Polygon body;
 	
-	public EnemyHumvee(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, IDeathEffectFactory deathEffectFactory) {
-		super(actorRegion, pool, null, TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
+	public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, IDeathEffectFactory deathEffectFactory) {
+		super(stationaryTextureRegion, animatedRegions, pool, null, TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
 		this.deathEffectFactory = deathEffectFactory;
 		this.body = new Polygon(bodyPoints);
 	}

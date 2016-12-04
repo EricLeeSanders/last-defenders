@@ -1,22 +1,7 @@
 package com.foxholedefense.game.service.actorplacement;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
-
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
-import com.foxholedefense.game.model.actor.ActorGroups;
-import com.foxholedefense.game.model.actor.support.AirStrike;
-import com.foxholedefense.game.model.actor.support.AirStrikeLocation;
-import com.foxholedefense.game.model.actor.support.SupplyDrop;
 import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
-import com.foxholedefense.game.model.actor.support.SupportActor;
-import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.game.service.factory.interfaces.ISupplyDropFactory;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;

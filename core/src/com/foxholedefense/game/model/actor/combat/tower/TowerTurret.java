@@ -1,11 +1,7 @@
 package com.foxholedefense.game.model.actor.combat.tower;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
@@ -20,6 +16,7 @@ import com.foxholedefense.game.model.actor.interfaces.IRotatable;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
+import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
@@ -40,7 +37,8 @@ public class TowerTurret extends Tower implements IRotatable {
 	public static final float ATTACK = 3;
 	public static final float ATTACK_SPEED = .2f;
 	public static final float RANGE = 70;
-	public static final Dimension BULLET_SIZE = new Dimension(10, 10);
+	public static final float RANGE_WIDTH = 80;
+	public static final Dimension BULLET_SIZE = new Dimension(5, 5);
 	public static final int COST = 1300;
 	public static final int ARMOR_COST = 900;
 	public static final int RANGE_INCREASE_COST = 500;
@@ -62,14 +60,17 @@ public class TowerTurret extends Tower implements IRotatable {
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
-	public TowerTurret(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
-		super(turretRegion, pool, targetGroup, TEXTURE_TURRET_SIZE, GUN_POS, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
+	private TextureRegion rangeRegion, collidingRangeRegion;
+	public TowerTurret(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
+		super(turretRegion, pool, targetGroup, TEXTURE_TURRET_SIZE, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.bodyRegion = bodyRegion;
 		this.turretRegion = turretRegion;
 		this.audio = audio;
 		this.deathEffectFactory = deathEffectFactory;
 		this.projectileFactory = projectileFactory;
 		this.body = new Circle(this.getPositionCenter(), 27);
+		this.rangeRegion = rangeRegion;
+		this.collidingRangeRegion = collidingRangeRegion;
 	}
 
 	/**
@@ -117,21 +118,17 @@ public class TowerTurret extends Tower implements IRotatable {
 	}
 	@Override
 	protected void drawRange(Batch batch){
-		getRangeSprite().setPosition(getPositionCenter().x - (getRangeSprite().getWidth()/2), getPositionCenter().y);
-		getRangeSprite().setRotation(bodyRotation);
-		getRangeSprite().draw(batch);
+		TextureRegion currentRangeRegion = rangeRegion;
+		if(isTowerColliding()){
+			currentRangeRegion = collidingRangeRegion;
+		}
+		float width = RANGE_WIDTH;
+		float height = getRange();
+		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, width);
+		float y = getPositionCenter().y + 8;
+		batch.draw(currentRangeRegion,x, y, 40, 0, width, height, 1, 1, getRotation());
 	}
-	@Override
-	protected void createRangeSprite(){
-		Pixmap rangePixmap = new Pixmap(400,400, Format.RGBA8888);
-		rangePixmap.setColor(1.0f, 1.0f, 1.0f, 0.5f);
-		rangePixmap.fillTriangle(400,400,200,0,0,400);
-		setRangeSprite(new Sprite(new Texture(rangePixmap)));
-		rangePixmap.dispose();
-		getRangeSprite().setOrigin(40,0);
-		getRangeSprite().flip(false, true);
-		getRangeSprite().setSize(80,70);
-	}
+
 	/**
 	 * Body of the Turret. CombatActor/Tower holds the Turret but not the body
 	 * Which we don't care about for collision detection.
@@ -164,13 +161,7 @@ public class TowerTurret extends Tower implements IRotatable {
 		}
 
 	}
-	@Override
-	public void increaseRange(){
-		super.increaseRange();
-		rangeCoords[3] = rangeCoords[5] = this.getRange() + (TEXTURE_BODY_SIZE.getHeight() / 2);
-		getRangeSprite().setSize(80, this.getRange());
-	}
-	
+
 	@Override
 	public String getName(){
 		return "Turret";

@@ -1,10 +1,7 @@
 package com.foxholedefense.game.model.actor.combat.tower;
 
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
+
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -12,6 +9,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.ai.TowerAI;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
+import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
 
 /**
@@ -29,11 +27,12 @@ public abstract class Tower extends CombatActor {
 	private boolean rangeIncreaseEnabled, speedIncreaseEnabled, attackIncreaseEnabled;
 	private TowerAI ai = TowerAI.FIRST;
 	private boolean active, showRange; 
-	private float attackCounter = 0;
+	private float attackCounter = getAttackSpeed(); //ready to attack
+	private TextureRegion rangeRegion, collidingRangeRegion;
 	private int kills;
-	private Sprite rangeSprite;
 	private Pool<CombatActor> pool;
-	public Tower(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
+	private boolean towerColliding;
+	public Tower(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
 					float health, float armor, float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost, int rangeIncreaseCost, int attackIncreaseCost) {
 		super(textureRegion, pool, targetGroup, textureSize, gunPos, health, armor, attack, attackSpeed, range);
 		this.cost = cost;
@@ -41,17 +40,10 @@ public abstract class Tower extends CombatActor {
 		this.speedIncreaseCost = speedIncreaseCost;
 		this.rangeIncreaseCost = rangeIncreaseCost;
 		this.attackIncreaseCost = attackIncreaseCost;
-		createRangeSprite();
+		this.collidingRangeRegion = collidingRangeRegion;
+		this.rangeRegion = rangeRegion;
 		this.pool = pool;
 	}
-	protected void createRangeSprite(){
-		Pixmap rangePixmap = new Pixmap(600, 600, Format.RGBA8888);
-		rangePixmap.setColor(1.0f, 1.0f, 1.0f, 0.5f);
-		rangePixmap.fillCircle(300, 300, 300);
-		setRangeSprite(new Sprite(new Texture(rangePixmap)));
-		rangePixmap.dispose();
-	}
-
 	/**
 	 * Gets the selling price for the tower. Adds up the upgraded attributes and
 	 * their cost and multiplies by a rate.
@@ -95,10 +87,15 @@ public abstract class Tower extends CombatActor {
 		super.draw(batch, alpha);
 	}
 	protected void drawRange(Batch batch){
-		if( getRangeSprite() != null){
-			getRangeSprite().setBounds(getPositionCenter().x - getRange(), getPositionCenter().y - getRange(),getRange()*2, getRange()*2);
-			getRangeSprite().draw(batch);
+		TextureRegion currentRangeRegion = rangeRegion;
+		if(isTowerColliding()){
+			currentRangeRegion = collidingRangeRegion;
 		}
+		float width = getRange() * 2;
+		float height = getRange() * 2;
+		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, width);
+		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, height);
+		batch.draw(currentRangeRegion,x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
 	}
 	/**
 	 * Finds targets while active. Always looks for a target.
@@ -149,12 +146,10 @@ public abstract class Tower extends CombatActor {
 	}
 
 	/**
-	 * Used mainly for placing an actor. Need this so that when an actor is
+	 * Used for placing an actor. Need this so that when an actor is
 	 * being placed it does not attack enemies, and vice versa.
 	 */
-	public void setActive(boolean active) {
-		this.active = active;
-	}
+	public void setActive(boolean active) {	this.active = active; }
 
 	public void heal() {
 		resetHealth();
@@ -235,13 +230,10 @@ public abstract class Tower extends CombatActor {
 		this.ai = ai;
 		//this.targetPriority = targetPriority;
 	}
-	public void setRangeColor(float r, float g, float b, float a){
-		getRangeSprite().setColor(r,g,b,a);
+	public void setTowerColliding(boolean towerColliding){
+		this.towerColliding = towerColliding;
 	}
-	protected Sprite getRangeSprite() {
-		return rangeSprite;
-	}
-	protected void setRangeSprite(Sprite rangeSprite) {
-		this.rangeSprite = rangeSprite;
+	public boolean isTowerColliding(){
+		return towerColliding;
 	}
 }

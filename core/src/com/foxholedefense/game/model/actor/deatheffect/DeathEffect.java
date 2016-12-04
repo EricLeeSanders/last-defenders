@@ -35,6 +35,9 @@ public abstract class DeathEffect extends GameActor implements Pool.Poolable {
 	public void act(float delta) {
 		super.act(delta);
 		stateTime += delta;
+		if (animation.isAnimationFinished(stateTime)) {
+			pool.free(this);
+		}
 	}
 
 	/**
@@ -44,9 +47,6 @@ public abstract class DeathEffect extends GameActor implements Pool.Poolable {
 	public void draw(Batch batch, float alpha) {
 		TextureRegion currentFrame = animation.getKeyFrame(stateTime, false);
 		batch.draw(currentFrame, this.getX(), this.getY(), size.getWidth(), size.getHeight());
-		if (animation.isAnimationFinished(stateTime)) {
-			pool.free(this);
-		}
 	}
 	
 	@Override

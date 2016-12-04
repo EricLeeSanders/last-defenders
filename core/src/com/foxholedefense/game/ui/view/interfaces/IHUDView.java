@@ -22,7 +22,6 @@ public interface IHUDView {
 
 	public void waveInProgressState();
 
-	public void changeSpeed(boolean normalSpeed);
 
 	public void setMoney(String money);
 

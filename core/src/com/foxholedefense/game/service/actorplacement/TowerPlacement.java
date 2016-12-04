@@ -67,12 +67,7 @@ public class TowerPlacement {
 			currentTower.setVisible(true);
 			currentTower.setPositionCenter(clickCoords);
 			currentTower.setShowRange(true);
-			if (towerCollides()) {
-				currentTower.setRangeColor(1f, 0f, 0f, 0.75f);// Red
-
-			} else {
-				currentTower.setRangeColor(1f, 1f, 1f, 0.75f);
-			}
+			currentTower.setTowerColliding(towerCollides());
 		}
 	}
 
@@ -84,12 +79,7 @@ public class TowerPlacement {
 	public void rotateTower(float rotation) {
 		if (currentTower != null) {
 			currentTower.setRotation(currentTower.getRotation() - rotation);
-			if (towerCollides()) {
-				currentTower.setRangeColor(1f, 0f, 0f, 0.75f);// Red
-
-			} else {
-				currentTower.setRangeColor(1f, 1f, 1f, 0.75f);
-			}
+			currentTower.setTowerColliding(towerCollides());
 		}
 	}
 

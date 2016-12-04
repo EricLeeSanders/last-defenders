@@ -1,35 +1,19 @@
 package com.foxholedefense.util;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.Pixmap.Blending;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-import com.badlogic.gdx.utils.ObjectMap;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
-import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
-import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
+
 //-agentlib:hprof=heap=dump,format=b
+
 public class Resources {
 	public static final String LOAD_ATLAS = "load/load.atlas";
 	public static final String MENU_ATLAS = "menu/menu.atlas";
@@ -64,18 +48,14 @@ public class Resources {
 	private static ShapeRenderer shapeRenderer = new ShapeRenderer();
 	private UserPreferences userPreferences;
 	private AssetManager manager = new AssetManager();
-	
+
 	public Resources(UserPreferences userPreferences){
 		this.userPreferences = userPreferences;
 //		loadFonts();
 //		loadSkin(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
-		Pixmap.setBlending(Blending.None);
 	}
 	public void dispose() {
 		Logger.info("Resources dispose");
-		//Need to reset Pixmap blending otherwise blending
-		//for fonts on restart are screwed up
-		Pixmap.setBlending(Blending.SourceOver);
 		manager.dispose();
 		shapeRenderer.dispose();
 
@@ -85,64 +65,7 @@ public class Resources {
 		return userPreferences;
 	}
 
-	/**
-	 * Creates the default font for the skin.json
-	 * Creates a copy of default-font-46.
-	 * @return
-	 */
-	public ObjectMap<String, Object> createDefaultFont(){
-		// Creates a copy instead of using default-font-46 directly because
-		// using it directly causes on exception to be thrown. The exception is thrown because
-		// the font is disposed in two places
-		ObjectMap<String, Object> map = new ObjectMap<String, Object>();
-		BitmapFont font_46 = getFont("default-font-46");
-		BitmapFont defaultFont = new BitmapFont(font_46.getData(),font_46.getRegions(), false);
-		map.put("default-font", defaultFont); 
-		return map;
-	}
-	public void loadFontsSync(){
-		Blending prevBlend = Pixmap.getBlending();
-		Pixmap.setBlending(Blending.SourceOver);
-		FileHandleResolver resolver = new InternalFileHandleResolver();
-		manager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
-		manager.setLoader(BitmapFont.class, new FreetypeFontLoader(resolver));
-		FreeTypeFontLoaderParameter parameter_16 = createFontParam("font/palamecia titling.ttf", 16, Color.BLACK, 1f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-		manager.load("default-font-16", BitmapFont.class, parameter_16 );
-		FreeTypeFontLoaderParameter parameter_22 = createFontParam("font/palamecia titling.ttf", 22, Color.BLACK, 1.3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-		manager.load("default-font-22", BitmapFont.class, parameter_22 );
-		FreeTypeFontLoaderParameter parameter_46 = createFontParam("font/palamecia titling.ttf", 46, Color.BLACK, 3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-		manager.load("default-font-46", BitmapFont.class, parameter_46 );
-		manager.finishLoading(); 
-		Pixmap.setBlending(prevBlend);
-	}
-	
-	public void loadFonts(){
-		Blending prevBlend = Pixmap.getBlending();
-		Pixmap.setBlending(Blending.SourceOver);
-		FileHandleResolver resolver = new InternalFileHandleResolver();
-		manager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
-		manager.setLoader(BitmapFont.class, new FreetypeFontLoader(resolver));
-		FreeTypeFontLoaderParameter parameter_16 = createFontParam("font/palamecia titling.ttf", 16, Color.BLACK, 1f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-		manager.load("default-font-16", BitmapFont.class, parameter_16 );
-		FreeTypeFontLoaderParameter parameter_22 = createFontParam("font/palamecia titling.ttf", 22, Color.BLACK, 1.3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-		manager.load("default-font-22", BitmapFont.class, parameter_22 );
-		FreeTypeFontLoaderParameter parameter_46 = createFontParam("font/palamecia titling.ttf", 46, Color.BLACK, 3f, Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-		manager.load("default-font-46", BitmapFont.class, parameter_46 );
-		Pixmap.setBlending(prevBlend);
-	}
-	
-	private FreeTypeFontLoaderParameter createFontParam(String fontFileName, int size, Color borderColor, float borderWidth, TextureFilter minFilter, TextureFilter magFilter){
-		FreeTypeFontLoaderParameter parameter = new FreeTypeFontLoaderParameter();
-		parameter.fontParameters.size = size;
-		parameter.fontParameters.borderColor = borderColor;
-		parameter.fontParameters.borderWidth = borderWidth;
-		parameter.fontParameters.genMipMaps = true;
-		parameter.fontParameters.minFilter = minFilter;
-		parameter.fontParameters.magFilter = magFilter;
-		parameter.fontFileName = fontFileName;
-		
-		return parameter;
-	}
+
 	public void loadMapSync(int level) {
 		loadMap(level);
 		manager.finishLoading();
@@ -165,11 +88,24 @@ public class Resources {
 	
 	public void loadSkin(String skinJson, String atlas) {
 		try {
-			manager.load(skinJson, Skin.class, new SkinLoader.SkinParameter(atlas, createDefaultFont()));
+			manager.load(skinJson, Skin.class, new SkinLoader.SkinParameter(atlas));
 			Logger.info("Skin Loaded");
 		} catch (GdxRuntimeException e) {
 			Logger.error("Load Skin Error", e);
 		}
+	}
+
+	public void initFont(){
+		BitmapFont font = getSkin(SKIN_JSON).getFont("default-font");
+		font.setUseIntegerPositions(false);
+		font.getData().setLineHeight(55);
+		font.getData().ascent = 11;
+		font.getData().capHeight = 30;
+		font.getData().descent = -14;
+		font.getData().scaleX = 1.0f;
+		font.getData().scaleY = 1.0f;
+		font.getData().spaceWidth = 12.0f;
+		font.getData().xHeight = 30.0f;
 	}
 	public void loadAtlasSync(String file) {
 		loadAtlas(file);
@@ -234,18 +170,6 @@ public class Resources {
 		return manager.get(file, Skin.class);
 	}
 
-	public BitmapFont getFont(String font){
-		return manager.get(font, BitmapFont.class);
-	}
-	
-	public java.util.Map<String, BitmapFont> getFonts(){
-		java.util.Map<String, BitmapFont> fonts = new HashMap<String, BitmapFont>();
-		fonts.put("default-font-16", getFont("default-font-16"));
-		fonts.put("default-font-22", getFont("default-font-22"));
-		fonts.put("default-font-46", getFont("default-font-46"));
-		return fonts;
-	}
-	
 	public static ShapeRenderer getShapeRenderer(){
 		return shapeRenderer;
 	}

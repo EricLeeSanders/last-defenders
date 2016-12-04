@@ -39,13 +39,14 @@ public class GameOverView extends Group implements IGameOverView {
 	 */
 	public void createControls(Skin skin) {
 		Table table = new Table();
+		table.setTransform(false);
 		table.setBackground(skin.getDrawable("main-panel"));
-		table.setSize(250,300);
+		table.setSize(400,300);
 		table.setPosition((Resources.VIRTUAL_WIDTH/2)-(table.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(table.getHeight()/2));
 		this.addActor(table);
 		
 		
-		lblTitle = new Label("Game Over", skin);
+		lblTitle = new Label("GAME OVER", skin);
 		lblTitle.setFontScale(0.45f);
 		lblTitle.setAlignment(Align.center);
 		lblTitle.setPosition(table.getX() + (table.getWidth()/2) - (lblTitle.getWidth()/2)
@@ -60,19 +61,19 @@ public class GameOverView extends Group implements IGameOverView {
 
 		
 		table.row();
-		btnNewGame = new TextButton("New Game", skin);
+		btnNewGame = new TextButton("NEW GAME", skin);
 		btnNewGame.getLabel().setFontScale(0.45f);
 		table.add(btnNewGame).width(150).height(45).spaceTop(10);
 		setBtnNewGameListener();
 		
 		table.row();
-		btnHighScores = new TextButton("High Scores", skin);
+		btnHighScores = new TextButton("HIGH SCORES", skin);
 		btnHighScores.getLabel().setFontScale(0.45f);
 		table.add(btnHighScores).width(150).height(45).spaceTop(10);
 		setBtnHighScoresListener();
 		
 		table.row();
-		btnMainMenu = new TextButton("Main Menu", skin);
+		btnMainMenu = new TextButton("MAIN MENU", skin);
 		btnMainMenu.getLabel().setFontScale(0.45f);
 		table.add(btnMainMenu).width(150).height(45).spaceTop(10);
 		setBtnMainMenuListener();
@@ -90,7 +91,7 @@ public class GameOverView extends Group implements IGameOverView {
 
 	@Override
 	public void setWavesCompleted(String wavesCompleted) {
-		lblWavesCompleted.setText("Waves Completed\n" + wavesCompleted);
+		lblWavesCompleted.setText("WAVES COMPLETED\n" + wavesCompleted);
 	}
 
 	private void setBtnNewGameListener() {

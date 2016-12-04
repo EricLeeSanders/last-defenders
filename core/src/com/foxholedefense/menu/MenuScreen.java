@@ -19,7 +19,7 @@ public class MenuScreen extends AbstractScreen {
 	public MenuScreen(ScreenStateManager screenStateManager, GameStateManager gameStateManager, Resources resources, FHDAudio audio) {
 		super(gameStateManager);
 		this.audio = audio;
-		this.stage = new MenuStage(screenStateManager, resources, audio);
+		this.stage = new MenuStage(screenStateManager, resources, audio, getViewport());
 		super.addInputProcessor(stage);
 		audio.playMusic();
 	}

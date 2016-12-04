@@ -75,7 +75,6 @@ public class GameLoadingScreen extends AbstractScreen{
 	}
 	
 	public void load() {
-		resources.loadFontsSync();
 		resources.loadSkin(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
 		resources.loadAtlas(Resources.MENU_ATLAS);
 		resources.loadAtlas(Resources.LEVEL_SELECT_ATLAS);
@@ -84,6 +83,7 @@ public class GameLoadingScreen extends AbstractScreen{
 	}
 
 	public void finishedLoading() {
+		resources.initFont();
         screenStateManager.setState(ScreenState.MENU);
 		
 	}

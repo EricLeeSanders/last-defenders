@@ -1,9 +1,6 @@
 package com.foxholedefense.levelselect.ui;
 
-import java.util.Map;
-import java.util.Set;
 
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -11,11 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.foxholedefense.util.Logger;
+import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
@@ -33,19 +29,21 @@ public class LevelSelectView extends Group {
 	private Group levelGroup;
 	private int selectedLevel;
 	private FHDAudio audio;
-	public LevelSelectView(LevelSelectPresenter presenter, TextureAtlas levelAtlas, Map<String,BitmapFont> fonts, FHDAudio audio) {
+	public LevelSelectView(LevelSelectPresenter presenter, Resources resources, FHDAudio audio) {
 		this.presenter = presenter;
 		this.audio = audio;
-		createControls(levelAtlas);
+		TextureAtlas levelSelectAtlas = resources.getAtlas(Resources.LEVEL_SELECT_ATLAS);
+		Skin skin = resources.getSkin(Resources.SKIN_JSON);
+		createControls(levelSelectAtlas, skin);
 		levelGroup = new Group();
 		this.addActor(levelGroup);
 		levelGroup.setVisible(false);
 		levelGroup.setTransform(false);
 		this.setTransform(false);
-		createConfirmLevelControls(levelAtlas, fonts);
+		createConfirmLevelControls(levelSelectAtlas, skin);
 	}
 
-	private void createControls(TextureAtlas levelSelectAtlas) {
+	private void createControls(TextureAtlas levelSelectAtlas, Skin skin) {
 	
 		
 		ImageButton btnLevel1 = new ImageButton(new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
@@ -78,8 +76,10 @@ public class LevelSelectView extends Group {
 		this.addActor(btnLevel5); 
 		setBtnLevelListener(btnLevel5, 5);
 		
-		ImageButton btnMenu = new ImageButton(new TextureRegionDrawable(levelSelectAtlas.findRegion("menu")));
+		ImageButton btnMenu = new ImageButton(skin, "arrow-left");
 		btnMenu.setSize(64,64);
+		btnMenu.getImageCell().size(40,27);
+		btnMenu.getImage().setScaling(Scaling.stretch);
 		btnMenu.setPosition(15,15);
 		this.addActor(btnMenu);
 		setBtnMenuListener(btnMenu);
@@ -92,7 +92,7 @@ public class LevelSelectView extends Group {
 		this.getStage().addActor(background);
 		background.setZIndex(0);
 	}
-	private void createConfirmLevelControls(TextureAtlas levelSelectAtlas, Map<String,BitmapFont> fonts){
+	private void createConfirmLevelControls(TextureAtlas levelSelectAtlas, Skin skin){
 		
 		level1 = new Image(levelSelectAtlas.findRegion("level1"));
 		level1.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
@@ -125,14 +125,16 @@ public class LevelSelectView extends Group {
 		levelGroup.addActor(btnMap);
 		setBtnMapListener(btnMap);
 		
-		ImageButton btnPlay = new ImageButton(new TextureRegionDrawable(levelSelectAtlas.findRegion("play")));
+		ImageButton btnPlay = new ImageButton(skin, "arrow-right");
 		btnPlay.setSize(64,64);
+		btnPlay.getImageCell().size(40,27);
+		btnPlay.getImage().setScaling(Scaling.stretch);
 		btnPlay.setPosition(Resources.VIRTUAL_WIDTH - btnPlay.getWidth() - 15 ,15);
 		levelGroup.addActor(btnPlay);
 		setBtnPlayListener(btnPlay);
-		LabelStyle lblLevelStyle = new LabelStyle();
-		lblLevelStyle.font =fonts.get("default-font-46");
-		lblLevel = new Label("Level X",lblLevelStyle );
+
+
+		lblLevel = new Label("LEVEL X", skin);
 		lblLevel.setPosition((Resources.VIRTUAL_WIDTH/2)-(lblLevel.getWidth()/2)
 				, Resources.VIRTUAL_HEIGHT-lblLevel.getHeight() - 25);
 		levelGroup.addActor(lblLevel);
@@ -141,35 +143,35 @@ public class LevelSelectView extends Group {
 		levelGroup.setVisible(visible);
 		if(visible){
 			if(selectedLevel == 1){
-				lblLevel.setText("Level 1");
+				lblLevel.setText("LEVEL 1");
 				level1.setVisible(true);
 				level2.setVisible(false);
 				level3.setVisible(false);
 				level4.setVisible(false);
 				level5.setVisible(false);
 			} else if(selectedLevel == 2){
-				lblLevel.setText("Level 2");
+				lblLevel.setText("LEVEL 2");
 				level1.setVisible(false);
 				level2.setVisible(true);
 				level3.setVisible(false);
 				level4.setVisible(false);
 				level5.setVisible(false);
 			} else if(selectedLevel == 3){
-				lblLevel.setText("Level 3");
+				lblLevel.setText("LEVEL 3");
 				level1.setVisible(false);
 				level2.setVisible(false);
 				level3.setVisible(true);
 				level4.setVisible(false);
 				level5.setVisible(false);
 			} else if(selectedLevel == 4){
-				lblLevel.setText("Level 4");
+				lblLevel.setText("LEVEL 4");
 				level1.setVisible(false);
 				level2.setVisible(false);
 				level3.setVisible(false);
 				level4.setVisible(true);
 				level5.setVisible(false);
 			} else if(selectedLevel == 5){
-				lblLevel.setText("Level 5");
+				lblLevel.setText("LEVEL 5");
 				level1.setVisible(false);
 				level2.setVisible(false);
 				level3.setVisible(false);

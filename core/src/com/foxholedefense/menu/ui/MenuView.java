@@ -1,6 +1,7 @@
 package com.foxholedefense.menu.ui;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -21,6 +22,9 @@ import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * View for the Main Menu
@@ -74,6 +78,7 @@ public class MenuView extends Group implements IMenuView {
 		
 		btnSound = new ImageButton(skin, "sound");
 		btnSound.setSize(64, 64);
+		btnSound.getImageCell().size(34,32);
 		btnSound.setPosition(84, 25);
 		addActor(btnSound);
 		setBtnSoundListener(btnSound);
@@ -81,12 +86,14 @@ public class MenuView extends Group implements IMenuView {
 		
 		btnMusic = new ImageButton(skin, "music");
 		btnMusic.setSize(64, 64);
+		btnMusic.getImageCell().size(36,36);
 		btnMusic.setPosition(172,36);
 		addActor(btnMusic);
 		setBtnMusicListener(btnMusic);
 		
 		ImageButton btnOptions = new ImageButton(skin, "options");
 		btnOptions.setSize(64, 64);
+		btnOptions.getImageCell().size(34,35);
 		btnOptions.setPosition(407, 36);
 		addActor(btnOptions);
 		setBtnOptionsListener(btnOptions);
@@ -95,7 +102,8 @@ public class MenuView extends Group implements IMenuView {
 		Skin skin = resources.getSkin(Resources.SKIN_JSON);
 		
 		optionsTable = new Table();
-		optionsTable.setBackground(skin.getDrawable("main-panel-hollow"));
+		optionsTable.setTransform(false);
+		optionsTable.setBackground(skin.getDrawable("main-panel"));
 		optionsTable.setSize(500,300);
 		optionsTable.setPosition((Resources.VIRTUAL_WIDTH/2)-(optionsTable.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(optionsTable.getHeight()/2));
 		//table.debug();
