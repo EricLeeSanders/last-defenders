@@ -56,53 +56,66 @@ public class OptionsView extends Group implements IOptionsView {
 	 */
 	public void createControls(Resources resources) {
 		Skin skin = resources.getSkin(Resources.SKIN_JSON);
-		Table mainTable = new Table();
-		mainTable.setBackground(skin.getDrawable("main-panel-hollow"));
-		mainTable.setSize(500,360);
-		mainTable.setPosition((Resources.VIRTUAL_WIDTH/2)-(mainTable.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(mainTable.getHeight()/2));
+		Table container = new Table();
+		container.setTransform(false);
+		container.setBackground(skin.getDrawable("main-panel"));
+		container.setSize(500,360);
+		container.setPosition((Resources.VIRTUAL_WIDTH/2)-(container.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(container.getHeight()/2));
 		//table.debug();
-		this.addActor(mainTable);
+		this.addActor(container);
+
+		Table mainTable = new Table();
+		mainTable.setTransform(false);
+		mainTable.setBackground(skin.getDrawable("hollow"));
+		container.add(mainTable);
 		
-		Label lblTitle = new Label("Options", skin);
-		lblTitle.setPosition(mainTable.getX() + (mainTable.getWidth()/2) - (lblTitle.getWidth()/2)
-					,mainTable.getY() + mainTable.getHeight() - lblTitle.getHeight() );
+		Label lblTitle = new Label("OPTIONS", skin);
+		lblTitle.setPosition(container.getX() + (container.getWidth()/2) - (lblTitle.getWidth()/2)
+					,container.getY() + container.getHeight() - lblTitle.getHeight() );
 		lblTitle.setAlignment(Align.center);
 		lblTitle.setFontScale(0.7f);
 		this.addActor(lblTitle);
-		
-		//mainTable.row();
 
-		btnResume = new TextButton("Resume",skin);
+		btnResume = new TextButton("RESUME",skin);
 		btnResume.getLabel().setFontScale(0.45f);
+		btnResume.pack();
+		btnResume.setPosition(112,20);
+		addActor(btnResume);
 		setBtnResumeListener();
 		
-		btnNewGame = new TextButton("New Game",skin);
+		btnNewGame = new TextButton("NEW GAME",skin);
 		btnNewGame.getLabel().setFontScale(0.45f);
+		btnNewGame.pack();
+		btnNewGame.setPosition(btnResume.getX() + btnResume.getWidth() + 15, btnResume.getY());
+		addActor(btnNewGame);
 		setBtnNewGameListener();
 
-		btnMainMenu = new TextButton("Main Menu",skin);
+		btnMainMenu = new TextButton("MAIN MENU",skin);
 		btnMainMenu.getLabel().setFontScale(0.45f);
+		btnMainMenu.pack();
+		btnMainMenu.setPosition(btnNewGame.getX() + btnNewGame.getWidth() + 15, btnNewGame.getY());
+		addActor(btnMainMenu);
 		setBtnMainMenuListener();
 		
-		btnSound = new CheckBox(" Sound On", skin);
+		btnSound = new CheckBox(" SOUND ON", skin);
 		btnSound.getLabel().setFontScale(0.45f);
 		btnSound.getImageCell().width(32).height(32);
 		btnSound.getImage().setScaling(Scaling.stretch);
 		setBtnSoundListener(btnSound);
 		
-		btnMusic = new CheckBox(" Music On", skin);
+		btnMusic = new CheckBox(" MUSIC ON", skin);
 		btnMusic.getLabel().setFontScale(0.45f);
 		btnMusic.getImageCell().width(32).height(32);
 		btnMusic.getImage().setScaling(Scaling.stretch);
 		setBtnMusicListener(btnMusic);
 		
-		btnShowRanges = new CheckBox(" Show Ranges", skin);
+		btnShowRanges = new CheckBox(" SHOW RANGES", skin);
 		btnShowRanges.getLabel().setFontScale(0.45f);
 		btnShowRanges.getImageCell().width(32).height(32);
 		btnShowRanges.getImage().setScaling(Scaling.stretch);
 		setBtnShowRangesListener(btnShowRanges);
 		
-		Label lblVol = new Label("Volume", skin);
+		Label lblVol = new Label("VOLUME", skin);
 		lblVol.setFontScale(0.5f);
 		
 		Stack volumeStack = new Stack();
@@ -125,24 +138,24 @@ public class OptionsView extends Group implements IOptionsView {
 		volSliderBg.setSize(300, 22);
 	
 		
-		this.sliderStartPos = volSliderBg.getX();
-		this.sliderEndPos = volSliderBg.getX() + volSliderBg.getWidth() - 4;
+		this.sliderStartPos = volSliderBg.getX() + 2;
+		this.sliderEndPos = volSliderBg.getX() + volSliderBg.getWidth() - 6;
 		
 		volumeStack.add(volSliderFull);
 		volumeStack.add(volSliderBg);
 		volumeStack.add(volumeSlider);
 		
-		mainTable.add(btnResume).width(128).height(44).spaceBottom(10);
+		//mainTable.add(btnResume).width(128).height(41).spaceBottom(10);
 		mainTable.add(btnShowRanges).left().spaceLeft(15).spaceBottom(10);
 		
 		mainTable.row();
 		
-		mainTable.add(btnNewGame).width(128).height(44).spaceBottom(10);
+		//mainTable.add(btnNewGame).width(128).height(41).spaceBottom(10);
 		mainTable.add(btnMusic).left().spaceLeft(15).spaceBottom(10);
 		
 		mainTable.row();
 		
-		mainTable.add(btnMainMenu).width(128).height(44).spaceBottom(10);
+		//mainTable.add(btnMainMenu).width(128).height(41).spaceBottom(10);
 		mainTable.add(btnSound).left().spaceLeft(15).spaceBottom(10);
 		
 		mainTable.row();
@@ -152,6 +165,7 @@ public class OptionsView extends Group implements IOptionsView {
 		mainTable.row();
 		
 		mainTable.add(volumeStack).colspan(2).width(300).height(18);
+
         
 	}
 

@@ -47,7 +47,7 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	public static final int SPEED_INCREASE_COST = 650;
 	public static final int ATTACK_INCREASE_COST = 650;
 	public static final float AOE_RADIUS = 75f;
-	public static final Dimension BULLET_SIZE = new Dimension(10, 10);
+	public static final Dimension RPG_SIZE = new Dimension(7, 7);
 	public static final Vector2 GUN_POS = new Vector2(0, 57);
 	public static final Dimension TEXTURE_BODY_SIZE = new Dimension(50, 76);
 	public static final Dimension TEXTURE_TURRET_SIZE = new Dimension(22, 120);
@@ -60,8 +60,8 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	private float bodyRotation;
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
-	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory) {
-		super(turretRegion, pool, targetGroup, TEXTURE_TURRET_SIZE, GUN_POS, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
+	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory) {
+		super(turretRegion, pool, targetGroup, TEXTURE_TURRET_SIZE, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.bodyRegion = bodyRegion;
 		this.turretRegion = turretRegion;
 		this.deathEffectFactory = deathEffectFactory;
@@ -128,7 +128,7 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	@Override
 	public void attackTarget() {
 		if(getTarget() != null){
-			projectileFactory.loadRPG().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), BULLET_SIZE, AOE_RADIUS);
+			projectileFactory.loadRPG().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), RPG_SIZE, AOE_RADIUS);
 		}
 	}
 	

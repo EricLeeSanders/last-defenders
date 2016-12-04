@@ -1,55 +1,139 @@
 
 uiskin.png
-size: 2048,2048
+size: 2048,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-cancel_disabled
+arrow-left
   rotate: false
-  xy: 1893, 1668
+  xy: 650, 53
+  size: 53, 36
+  orig: 53, 36
+  offset: 0, 0
+  index: -1
+arrow-right
+  rotate: false
+  xy: 803, 149
+  size: 53, 36
+  orig: 53, 36
+  offset: 0, 0
+  index: -1
+arrow-small-down
+  rotate: false
+  xy: 1493, 666
+  size: 64, 55
+  orig: 64, 55
+  offset: 0, 0
+  index: -1
+arrow-small-up
+  rotate: false
+  xy: 1559, 666
+  size: 64, 55
+  orig: 64, 55
+  offset: 0, 0
+  index: -1
+attack_icon
+  rotate: false
+  xy: 858, 141
+  size: 45, 44
+  orig: 45, 44
+  offset: 0, 0
+  index: -1
+awards
+  rotate: false
+  xy: 1625, 668
+  size: 52, 53
+  orig: 52, 53
+  offset: 0, 0
+  index: -1
+bomb
+  rotate: false
+  xy: 1327, 370
+  size: 26, 40
+  orig: 26, 40
+  offset: 0, 0
+  index: -1
+button_blue
+  rotate: false
+  xy: 1677, 745
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
-cancel_normal
+button_disabled
   rotate: false
-  xy: 1893, 1568
+  xy: 1345, 542
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
-cancel_normal
+button_normal
   rotate: false
-  xy: 1893, 1468
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: 2
-cancel_over
-  rotate: false
-  xy: 1893, 1368
+  xy: 1795, 795
   size: 98, 98
   orig: 98, 98
   offset: 0, 0
   index: -1
-cancel_pressed
+button_over
   rotate: false
-  xy: 1893, 1268
+  xy: 1243, 412
   size: 98, 98
   orig: 98, 98
+  offset: 0, 0
+  index: -1
+button_press
+  rotate: false
+  xy: 1227, 312
+  size: 98, 98
+  orig: 98, 98
+  offset: 0, 0
+  index: -1
+button_red
+  rotate: false
+  xy: 1897, 840
+  size: 98, 98
+  orig: 98, 98
+  offset: 0, 0
+  index: -1
+cancel
+  rotate: false
+  xy: 1427, 656
+  size: 64, 65
+  orig: 64, 65
+  offset: 0, 0
+  index: -1
+check-off
+  rotate: false
+  xy: 1445, 619
+  size: 35, 35
+  orig: 35, 35
+  offset: 0, 0
+  index: -1
+check-on
+  rotate: false
+  xy: 1445, 582
+  size: 35, 35
+  orig: 35, 35
   offset: 0, 0
   index: -1
 cursor
   rotate: false
-  xy: 2042, 1976
+  xy: 203, 7
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
   offset: 0, 0
   index: -1
+default-font
+  rotate: false
+  xy: 1, 55
+  size: 512, 130
+  orig: 512, 130
+  offset: 0, 0
+  index: -1
 default-pane
   rotate: false
-  xy: 2042, 1993
+  xy: 1003, 195
   size: 5, 3
   split: 1, 1, 1, 1
   orig: 5, 3
@@ -57,7 +141,7 @@ default-pane
   index: -1
 default-rect-pad
   rotate: false
-  xy: 2042, 1993
+  xy: 1003, 195
   size: 5, 3
   split: 1, 1, 1, 1
   orig: 5, 3
@@ -65,7 +149,7 @@ default-rect-pad
   index: -1
 default-pane-noborder
   rotate: false
-  xy: 2046, 1973
+  xy: 203, 1
   size: 1, 1
   split: 0, 0, 0, 0
   orig: 1, 1
@@ -73,7 +157,7 @@ default-pane-noborder
   index: -1
 default-rect
   rotate: false
-  xy: 2041, 1966
+  xy: 2032, 1020
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -81,7 +165,7 @@ default-rect
   index: -1
 default-rect-down
   rotate: false
-  xy: 2041, 1971
+  xy: 500, 50
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -89,7 +173,7 @@ default-rect-down
   index: -1
 default-round-large
   rotate: false
-  xy: 2022, 1746
+  xy: 1327, 312
   size: 20, 20
   split: 5, 5, 5, 4
   orig: 20, 20
@@ -97,7 +181,7 @@ default-round-large
   index: -1
 default-select
   rotate: false
-  xy: 1993, 1715
+  xy: 1677, 723
   size: 27, 20
   split: 4, 14, 4, 4
   orig: 27, 20
@@ -105,7 +189,7 @@ default-select
   index: -1
 default-select-selection
   rotate: false
-  xy: 2031, 1963
+  xy: 2044, 1020
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -113,7 +197,7 @@ default-select-selection
   index: -1
 default-slider
   rotate: false
-  xy: 2031, 1968
+  xy: 443, 1
   size: 8, 8
   split: 2, 2, 2, 2
   orig: 8, 8
@@ -121,14 +205,14 @@ default-slider
   index: -1
 default-slider-knob
   rotate: false
-  xy: 2031, 1978
+  xy: 1110, 287
   size: 9, 18
   orig: 9, 18
   offset: 0, 0
   index: -1
 default-splitpane
   rotate: false
-  xy: 2042, 1988
+  xy: 1493, 661
   size: 5, 3
   split: 0, 5, 0, 0
   orig: 5, 3
@@ -136,7 +220,7 @@ default-splitpane
   index: -1
 default-splitpane-vertical
   rotate: false
-  xy: 2042, 1981
+  xy: 1777, 838
   size: 3, 5
   split: 0, 0, 0, 5
   orig: 3, 5
@@ -144,716 +228,283 @@ default-splitpane-vertical
   index: -1
 default-window
   rotate: false
-  xy: 1993, 1737
+  xy: 1706, 714
   size: 27, 29
   split: 4, 3, 20, 3
   orig: 27, 29
   offset: 0, 0
   index: -1
-discharge
+enlist
   rotate: false
-  xy: 1253, 67
-  size: 212, 175
-  orig: 212, 175
+  xy: 1677, 845
+  size: 116, 178
+  orig: 116, 178
   offset: 0, 0
   index: -1
-discharge_disabled
+enlist_disabled
   rotate: false
-  xy: 544, 112
-  size: 212, 175
-  orig: 212, 175
+  xy: 1125, 462
+  size: 116, 178
+  orig: 116, 178
   offset: 0, 0
   index: -1
-double-speed_normal
+games
   rotate: false
-  xy: 1893, 1907
-  size: 136, 137
-  orig: 136, 137
+  xy: 650, 91
+  size: 56, 51
+  orig: 56, 51
   offset: 0, 0
   index: -1
-down_disabled
+heart
   rotate: false
-  xy: 1893, 1168
-  size: 98, 98
-  orig: 98, 98
+  xy: 1327, 334
+  size: 35, 34
+  orig: 35, 34
   offset: 0, 0
   index: -1
-down_normal
+hollow
   rotate: false
-  xy: 1893, 1068
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-down_over
-  rotate: false
-  xy: 1427, 1544
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-down_pressed
-  rotate: false
-  xy: 1427, 1444
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-enlist_flame_thrower
-  rotate: false
-  xy: 1527, 1583
-  size: 300, 461
-  orig: 300, 461
-  offset: 0, 0
-  index: -1
-enlist_flame_thrower_disabled
-  rotate: false
-  xy: 1125, 1181
-  size: 300, 461
-  orig: 300, 461
-  offset: 0, 0
-  index: -1
-enlist_machine_gun
-  rotate: false
-  xy: 1527, 1120
-  size: 300, 461
-  orig: 300, 461
-  offset: 0, 0
-  index: -1
-enlist_machine_gun_disabled
-  rotate: false
-  xy: 1125, 718
-  size: 300, 461
-  orig: 300, 461
-  offset: 0, 0
-  index: -1
-enlist_normal
-  rotate: false
-  xy: 1427, 1344
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-enlist_rifle
-  rotate: false
-  xy: 1527, 657
-  size: 300, 461
-  orig: 300, 461
-  offset: 0, 0
-  index: -1
-enlist_rifle_disabled
-  rotate: false
-  xy: 1125, 255
-  size: 300, 461
-  orig: 300, 461
-  offset: 0, 0
-  index: -1
-enlist_rocket_launcher
-  rotate: false
-  xy: 1527, 194
-  size: 300, 461
-  orig: 300, 461
+  xy: 1125, 723
+  size: 550, 300
+  orig: 550, 300
   offset: 0, 0
   index: -1
 hollow_label
   rotate: false
-  xy: 1467, 70
-  size: 561, 122
-  orig: 561, 122
+  xy: 515, 144
+  size: 192, 41
+  orig: 192, 41
+  offset: 0, 0
+  index: -1
+kills_label
+  rotate: false
+  xy: 1125, 642
+  size: 300, 79
+  orig: 300, 79
+  offset: 0, 0
+  index: -1
+leaderboard
+  rotate: false
+  xy: 333, 4
+  size: 57, 49
+  orig: 57, 49
   offset: 0, 0
   index: -1
 main-panel
   rotate: false
-  xy: 1, 1328
-  size: 1122, 716
-  orig: 1122, 716
-  offset: 0, 0
-  index: -1
-main-panel-hollow
-  rotate: false
-  xy: 1, 610
+  xy: 1, 307
   size: 1122, 716
   orig: 1122, 716
   offset: 0, 0
   index: -1
 money
   rotate: false
-  xy: 1039, 518
-  size: 64, 90
-  orig: 64, 90
+  xy: 1679, 686
+  size: 25, 35
+  orig: 25, 35
   offset: 0, 0
   index: -1
-music_disabled
+money_label
   rotate: false
-  xy: 1427, 1244
-  size: 98, 98
-  orig: 98, 98
+  xy: 1, 1
+  size: 200, 52
+  orig: 200, 52
   offset: 0, 0
   index: -1
-music_normal
+music
   rotate: false
-  xy: 1427, 1144
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-music_over
-  rotate: false
-  xy: 1427, 1044
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-music_pressed
-  rotate: false
-  xy: 1427, 944
-  size: 98, 98
-  orig: 98, 98
+  xy: 1895, 790
+  size: 48, 48
+  orig: 48, 48
   offset: 0, 0
   index: -1
 null
   rotate: false
-  xy: 2046, 1970
+  xy: 203, 4
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
-options_disabled
+options
   rotate: false
-  xy: 1427, 844
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-options_normal
-  rotate: false
-  xy: 1427, 744
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-options_over
-  rotate: false
-  xy: 1427, 644
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-options_pressed
-  rotate: false
-  xy: 1889, 968
-  size: 98, 98
-  orig: 98, 98
+  xy: 392, 2
+  size: 49, 51
+  orig: 49, 51
   offset: 0, 0
   index: -1
 play_normal
   rotate: false
-  xy: 1125, 1644
-  size: 400, 400
-  orig: 400, 400
+  xy: 1003, 200
+  size: 105, 105
+  orig: 105, 105
   offset: 0, 0
   index: -1
-right_disabled
+range_icon
   rotate: false
-  xy: 1427, 544
-  size: 98, 98
-  orig: 98, 98
+  xy: 1997, 890
+  size: 45, 48
+  orig: 45, 48
   offset: 0, 0
   index: -1
-right_normal
+rotate
   rotate: false
-  xy: 1427, 444
-  size: 98, 98
-  orig: 98, 98
+  xy: 1945, 792
+  size: 48, 46
+  orig: 48, 46
   offset: 0, 0
   index: -1
-right_over
+select
   rotate: false
-  xy: 1427, 344
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-right_pressed
-  rotate: false
-  xy: 1427, 244
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-scroll-bar-horz
-  rotate: false
-  xy: 1039, 1
-  size: 966, 62
-  orig: 966, 62
-  offset: 0, 0
-  index: -1
-scroll-bar-knob
-  rotate: false
-  xy: 1829, 997
-  size: 58, 79
-  orig: 58, 79
-  offset: 0, 0
-  index: -1
-scroll-bar-vert
-  rotate: false
-  xy: 1829, 1078
-  size: 62, 966
-  orig: 62, 966
+  xy: 443, 11
+  size: 55, 42
+  orig: 55, 42
   offset: 0, 0
   index: -1
 selection
   rotate: false
-  xy: 2046, 1967
+  xy: 515, 56
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
-single-speed_normal
+shield
   rotate: false
-  xy: 1893, 1768
-  size: 136, 137
-  orig: 136, 137
-  offset: 0, 0
-  index: -1
-slider
-  rotate: false
-  xy: 1, 463
-  size: 987, 71
-  orig: 987, 71
+  xy: 905, 145
+  size: 37, 40
+  orig: 37, 40
   offset: 0, 0
   index: -1
 slider-bg
   rotate: false
-  xy: 1, 2
-  size: 1036, 49
-  orig: 1036, 49
+  xy: 1431, 536
+  size: 4, 4
+  orig: 4, 4
   offset: 0, 0
   index: -1
 slider-frame
   rotate: false
-  xy: 1, 536
+  xy: 1, 233
   size: 1000, 72
   orig: 1000, 72
   offset: 0, 0
   index: -1
+slider-full
+  rotate: false
+  xy: 1, 187
+  size: 1000, 44
+  orig: 1000, 44
+  offset: 0, 0
+  index: -1
 slider-knob
   rotate: false
-  xy: 1039, 457
-  size: 82, 59
-  orig: 82, 59
+  xy: 944, 155
+  size: 42, 30
+  orig: 42, 30
+  offset: 0, 0
+  index: -1
+sound
+  rotate: false
+  xy: 1997, 843
+  size: 48, 45
+  orig: 48, 45
+  offset: 0, 0
+  index: -1
+speed_icon
+  rotate: false
+  xy: 1445, 545
+  size: 35, 35
+  orig: 35, 35
   offset: 0, 0
   index: -1
 support
   rotate: false
-  xy: 1039, 65
-  size: 212, 188
-  orig: 212, 188
+  xy: 515, 59
+  size: 133, 83
+  orig: 133, 83
   offset: 0, 0
   index: -1
-support_airstrike
+support_disabled
   rotate: false
-  xy: 758, 112
-  size: 212, 175
-  orig: 212, 175
+  xy: 1897, 940
+  size: 133, 83
+  orig: 133, 83
   offset: 0, 0
   index: -1
-text_button_disabled
+text_button_normal
   rotate: false
-  xy: 544, 289
-  size: 514, 166
-  orig: 514, 166
-  offset: 0, 0
-  index: -1
-text_button_disabled_hollow
-  rotate: false
-  xy: 1, 53
-  size: 541, 200
-  orig: 541, 200
-  offset: 0, 0
-  index: -1
-text_button_normal_hollow
-  rotate: false
-  xy: 1, 255
-  size: 541, 200
-  orig: 541, 200
+  xy: 203, 12
+  size: 128, 41
+  orig: 128, 41
   offset: 0, 0
   index: -1
 textfield
   rotate: false
-  xy: 2031, 2030
+  xy: 1227, 446
   size: 14, 14
   split: 3, 3, 3, 3
   orig: 14, 14
   offset: 0, 0
   index: -1
+tower-attr-full
+  rotate: false
+  xy: 1125, 315
+  size: 64, 15
+  orig: 64, 15
+  offset: 0, 0
+  index: -1
+tower-stat
+  rotate: false
+  xy: 709, 161
+  size: 92, 24
+  orig: 92, 24
+  offset: 0, 0
+  index: -1
 tree-minus
   rotate: false
-  xy: 2031, 2014
+  xy: 1227, 430
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
 tree-plus
   rotate: false
-  xy: 2031, 1998
+  xy: 1227, 414
   size: 14, 14
   orig: 14, 14
   offset: 0, 0
   index: -1
-upgrade_armor
+upgrade
   rotate: false
-  xy: 1829, 710
-  size: 200, 256
-  orig: 200, 256
+  xy: 1795, 895
+  size: 100, 128
+  orig: 100, 128
   offset: 0, 0
   index: -1
-upgrade_armor_disabled
+upgrade_disabled
   rotate: false
-  xy: 1829, 452
-  size: 200, 256
-  orig: 200, 256
+  xy: 1125, 332
+  size: 100, 128
+  orig: 100, 128
   offset: 0, 0
   index: -1
-upgrade_attack
+upgrade_purchased
   rotate: false
-  xy: 1829, 194
-  size: 200, 256
-  orig: 200, 256
+  xy: 1243, 512
+  size: 100, 128
+  orig: 100, 128
+  offset: 0, 0
+  index: -1
+wave
+  rotate: false
+  xy: 1345, 513
+  size: 84, 27
+  orig: 84, 27
   offset: 0, 0
   index: -1
 white
   rotate: false
-  xy: 2036, 1963
+  xy: 1125, 310
   size: 3, 3
   orig: 3, 3
-  offset: 0, 0
-  index: -1
-
-uiskin2.png
-size: 2048,2048
-format: RGBA8888
-filter: Linear,Linear
-repeat: none
-check-off
-  rotate: false
-  xy: 605, 455
-  size: 174, 173
-  orig: 174, 173
-  offset: 0, 0
-  index: -1
-check-on
-  rotate: false
-  xy: 731, 102
-  size: 174, 173
-  orig: 174, 173
-  offset: 0, 0
-  index: -1
-enlist_rocket_launcher_disabled
-  rotate: false
-  xy: 1274, 1583
-  size: 300, 461
-  orig: 300, 461
-  offset: 0, 0
-  index: -1
-enlist_sniper
-  rotate: false
-  xy: 1, 941
-  size: 300, 461
-  orig: 300, 461
-  offset: 0, 0
-  index: -1
-enlist_sniper_disabled
-  rotate: false
-  xy: 1576, 1583
-  size: 300, 461
-  orig: 300, 461
-  offset: 0, 0
-  index: -1
-enlist_tank
-  rotate: false
-  xy: 1, 478
-  size: 300, 461
-  orig: 300, 461
-  offset: 0, 0
-  index: -1
-enlist_tank_disabled
-  rotate: false
-  xy: 303, 941
-  size: 300, 461
-  orig: 300, 461
-  offset: 0, 0
-  index: -1
-enlist_turret
-  rotate: false
-  xy: 1, 15
-  size: 300, 461
-  orig: 300, 461
-  offset: 0, 0
-  index: -1
-enlist_turret_disabled
-  rotate: false
-  xy: 303, 478
-  size: 300, 461
-  orig: 300, 461
-  offset: 0, 0
-  index: -1
-hollow
-  rotate: false
-  xy: 1, 1452
-  size: 1271, 592
-  orig: 1271, 592
-  offset: 0, 0
-  index: -1
-kills_label
-  rotate: false
-  xy: 719, 357
-  size: 300, 79
-  orig: 300, 79
-  offset: 0, 0
-  index: -1
-lives
-  rotate: false
-  xy: 907, 80
-  size: 99, 95
-  orig: 99, 95
-  offset: 0, 0
-  index: -1
-money_label
-  rotate: false
-  xy: 731, 277
-  size: 300, 78
-  orig: 300, 78
-  offset: 0, 0
-  index: -1
-rotate_disabled
-  rotate: false
-  xy: 1878, 1946
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-rotate_normal
-  rotate: false
-  xy: 907, 177
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-rotate_over
-  rotate: false
-  xy: 1878, 1846
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-rotate_pressed
-  rotate: false
-  xy: 1878, 1746
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-select_disabled
-  rotate: false
-  xy: 1878, 1646
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-select_normal
-  rotate: false
-  xy: 1790, 1483
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-select_normal
-  rotate: false
-  xy: 1790, 1383
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: 2
-select_over
-  rotate: false
-  xy: 517, 1
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-select_pressed
-  rotate: false
-  xy: 617, 1
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-slider-full
-  rotate: false
-  xy: 1, 1404
-  size: 1040, 46
-  orig: 1040, 46
-  offset: 0, 0
-  index: -1
-sound_disabled
-  rotate: false
-  xy: 1043, 1352
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-sound_normal
-  rotate: false
-  xy: 1143, 1352
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-sound_over
-  rotate: false
-  xy: 1009, 1252
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-sound_pressed
-  rotate: false
-  xy: 1009, 1152
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-support_airstrike_disabled
-  rotate: false
-  xy: 303, 43
-  size: 212, 175
-  orig: 212, 175
-  offset: 0, 0
-  index: -1
-support_apache
-  rotate: false
-  xy: 807, 969
-  size: 212, 175
-  orig: 212, 175
-  offset: 0, 0
-  index: -1
-support_apache_disabled
-  rotate: false
-  xy: 807, 792
-  size: 212, 175
-  orig: 212, 175
-  offset: 0, 0
-  index: -1
-support_landmine
-  rotate: false
-  xy: 807, 615
-  size: 212, 175
-  orig: 212, 175
-  offset: 0, 0
-  index: -1
-support_landmine_disabled
-  rotate: false
-  xy: 781, 438
-  size: 212, 175
-  orig: 212, 175
-  offset: 0, 0
-  index: -1
-support_normal
-  rotate: false
-  xy: 1109, 1252
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-support_supplydrop
-  rotate: false
-  xy: 505, 278
-  size: 212, 175
-  orig: 212, 175
-  offset: 0, 0
-  index: -1
-support_supplydrop_disabled
-  rotate: false
-  xy: 517, 101
-  size: 212, 175
-  orig: 212, 175
-  offset: 0, 0
-  index: -1
-text_button_normal
-  rotate: false
-  xy: 1274, 1415
-  size: 514, 166
-  orig: 514, 166
-  offset: 0, 0
-  index: -1
-up_disabled
-  rotate: false
-  xy: 1109, 1152
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-up_normal
-  rotate: false
-  xy: 1021, 1052
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-up_over
-  rotate: false
-  xy: 1021, 952
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-up_pressed
-  rotate: false
-  xy: 1021, 852
-  size: 98, 98
-  orig: 98, 98
-  offset: 0, 0
-  index: -1
-upgrade_attack_disabled
-  rotate: false
-  xy: 605, 1146
-  size: 200, 256
-  orig: 200, 256
-  offset: 0, 0
-  index: -1
-upgrade_range
-  rotate: false
-  xy: 303, 220
-  size: 200, 256
-  orig: 200, 256
-  offset: 0, 0
-  index: -1
-upgrade_range_disabled
-  rotate: false
-  xy: 605, 888
-  size: 200, 256
-  orig: 200, 256
-  offset: 0, 0
-  index: -1
-upgrade_speed
-  rotate: false
-  xy: 807, 1146
-  size: 200, 256
-  orig: 200, 256
-  offset: 0, 0
-  index: -1
-upgrade_speed_disabled
-  rotate: false
-  xy: 605, 630
-  size: 200, 256
-  orig: 200, 256
-  offset: 0, 0
-  index: -1
-wave_normal
-  rotate: false
-  xy: 1021, 752
-  size: 98, 98
-  orig: 98, 98
   offset: 0, 0
   index: -1

@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.foxholedefense.menu.ui.MenuPresenter;
 import com.foxholedefense.menu.ui.MenuView;
 import com.foxholedefense.screen.state.ScreenStateManager;
@@ -24,8 +25,8 @@ public class MenuStage extends Stage {
 	private MenuPresenter presenter;
 	private MenuView menuView;
 	private Resources resources;
-	public MenuStage(ScreenStateManager screenStateManager, Resources resources, FHDAudio audio) {
-		super(new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, new OrthographicCamera()));
+	public MenuStage(ScreenStateManager screenStateManager, Resources resources, FHDAudio audio, Viewport viewport) {
+		super(viewport);
 		this.screenStatemanager = screenStateManager;
 		this.resources = resources;
 		resources.loadAtlas(Resources.MENU_ATLAS);

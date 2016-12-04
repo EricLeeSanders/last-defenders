@@ -75,11 +75,11 @@ public class Explosion extends Actor implements Pool.Poolable {
 	@Override
 	public void draw(Batch batch, float alpha) {
 		TextureRegion currentExplosion = explosionAnimation.getKeyFrame(stateTime, true);
-		
+
 		if (explosionAnimation.isAnimationFinished(stateTime)) {
 			pool.free(this);
 		}
-		
+
 		batch.draw(currentExplosion, this.getX() - (currentExplosion.getRegionWidth() / 2), this.getY() - (currentExplosion.getRegionHeight() / 2));
 	}
 

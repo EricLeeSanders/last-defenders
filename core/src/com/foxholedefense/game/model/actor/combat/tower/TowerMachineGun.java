@@ -32,7 +32,7 @@ public class TowerMachineGun extends Tower {
 	public static final float ATTACK = 1;
 	public static final float ATTACK_SPEED = 0.2f;
 	public static final float RANGE = 40;
-	public static final Dimension BULLET_SIZE = new Dimension(10, 10);
+	public static final Dimension BULLET_SIZE = new Dimension(5, 5);
 	public static final int COST = 300;
 	public static final int ARMOR_COST = 200;
 	public static final int RANGE_INCREASE_COST = 100;
@@ -44,8 +44,8 @@ public class TowerMachineGun extends Tower {
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
-	public TowerMachineGun(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
-		super(actorRegion, pool, targetGroup, TEXTURE_SIZE, GUN_POS, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
+	public TowerMachineGun(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
+		super(actorRegion, pool, targetGroup, TEXTURE_SIZE, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.audio = audio;
 		this.deathEffectFactory = deathEffectFactory;
 		this.projectileFactory = projectileFactory;

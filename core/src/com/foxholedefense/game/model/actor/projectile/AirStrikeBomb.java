@@ -1,13 +1,8 @@
 package com.foxholedefense.game.model.actor.projectile;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Pixmap.Format;
+
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
@@ -35,25 +30,17 @@ import com.foxholedefense.util.Resources;
  */
 public class AirStrikeBomb extends Actor implements Pool.Poolable {
 	private static final float SPEED = 600f;
-	private Sprite bomb;
 	private IAttacker attacker;
 	private Vector2 destination;
 	private Group targetGroup;
 	private Pool<AirStrikeBomb> pool;
 	private float radius;
 	private ExplosionPool explosionPool;
-	public AirStrikeBomb(Pool<AirStrikeBomb> pool, ExplosionPool explosionPool){
+	private TextureRegion bombTexture;
+	public AirStrikeBomb(Pool<AirStrikeBomb> pool, ExplosionPool explosionPool, TextureRegion bombTexture) {
 		this.pool = pool;
 		this.explosionPool = explosionPool;
-		createBombSprite();
-	}
-	private void createBombSprite(){
-		Pixmap bombPixmap = new Pixmap(100, 100, Format.RGBA8888);
-		bombPixmap.setColor(0,0,0,1f);
-		bombPixmap.fillCircle(50, 50, 50);
-		bomb = (new Sprite(new Texture(bombPixmap)));
-		bombPixmap.dispose();
-		bomb.setSize(10, 10);
+		this.bombTexture = bombTexture;
 	}
 	/**
 	 * Initializes and AirStrike Bomb
@@ -68,6 +55,7 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 		this.targetGroup = targetGroup;
 		this.setPosition(pos.x, pos.y);
 		this.setSize(size.getWidth(), size.getHeight());
+		this.setOrigin(size.getWidth() / 2, size.getHeight() / 2);
 		this.radius = radius;
 		this.attacker = attacker;
 		this.destination = destination;
@@ -79,22 +67,10 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 		return this;
 	}
 
-	/**
-	 * Draw the RPG
-	 */
+
 	@Override
 	public void draw(Batch batch, float alpha) {
-		bomb.setPosition(getX() - (bomb.getWidth()/2), getY() - (bomb.getHeight()/2));
-		bomb.draw(batch);
-	}
-
-	/**
-	 * get the body of the RPG
-	 * 
-	 * @return
-	 */
-	public Rectangle getBody() {
-		return new Rectangle(getX(), getY(), getWidth(), getHeight());
+		batch.draw(bombTexture, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 	}
 
 	/**
@@ -110,7 +86,6 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 		if (this.getActions().size == 0) {
 			explosionPool.obtain().initialize(attacker, radius,  null, targetGroup, destination);
 			pool.free(this);
-
 		}
 
 	}

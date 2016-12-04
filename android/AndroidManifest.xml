@@ -5,13 +5,16 @@
     android:versionName="1.0" >
 
     <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="20" />
-	<uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/GdxTheme" 
         android:name="com.foxholedefense.android.FHDApplicationLauncher" >
+        <meta-data android:name="com.google.android.gms.games.APP_ID" android:value="@string/app_id" />
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
         <activity
             android:name="com.foxholedefense.android.AndroidLauncher"
             android:label="@string/app_name" 

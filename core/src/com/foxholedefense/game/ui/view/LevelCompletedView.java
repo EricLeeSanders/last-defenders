@@ -28,12 +28,13 @@ public class LevelCompletedView extends Group implements ILevelCompletedView{
 	
 	public void createControls(Skin skin){
 		Table table = new Table();
+		table.setTransform(false);
 		table.setBackground(skin.getDrawable("main-panel"));
 		table.setSize(400,260);
 		table.setPosition((Resources.VIRTUAL_WIDTH/2)-(table.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(table.getHeight()/2));
 		this.addActor(table);
 		
-		lblTitle = new Label("Level Completed", skin);
+		lblTitle = new Label("LEVEL COMPLETED", skin);
 		lblTitle.setFontScale(0.45f);
 		lblTitle.setAlignment(Align.center);
 		lblTitle.setPosition(table.getX() + (table.getWidth()/2) - (lblTitle.getWidth()/2)
@@ -41,19 +42,19 @@ public class LevelCompletedView extends Group implements ILevelCompletedView{
 		this.addActor(lblTitle);
 
 		
-		lblContinue = new Label("Do you want to\ncontinue playing this\nlevel and compete\nfor a high score?", skin, "hollow_label");
+		lblContinue = new Label("Do you want to\ncontinue playing this\nlevel and compete\nfor a high score?".toUpperCase(), skin, "hollow");
 		lblContinue.setFontScale(0.45f);
 		lblContinue.setAlignment(Align.center);
 		table.add(lblContinue).colspan(2).width(280).height(120).padTop(30).spaceBottom(15);
 		
 		
 		table.row();
-		btnContinueLevel = new TextButton("Continue", skin);
+		btnContinueLevel = new TextButton("CONTINUE", skin);
 		btnContinueLevel.getLabel().setFontScale(0.45f);
 		table.add(btnContinueLevel).width(130).height(45);
 		setBtnContinueLevel();
 
-		btnNewGame = new TextButton("New Game", skin);
+		btnNewGame = new TextButton("NEW GAME", skin);
 		btnNewGame.getLabel().setFontScale(0.45f);
 		table.add(btnNewGame).width(130).height(45);
 		setbtnNewGameListener();
