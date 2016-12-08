@@ -38,17 +38,9 @@ public abstract class DeathEffect extends GameActor implements Pool.Poolable {
 		if (animation.isAnimationFinished(stateTime)) {
 			pool.free(this);
 		}
+		setTextureRegion(animation.getKeyFrame(stateTime, false));
 	}
 
-	/**
-	 * Draws the explosion and frees it when it is done.
-	 */
-	@Override
-	public void draw(Batch batch, float alpha) {
-		TextureRegion currentFrame = animation.getKeyFrame(stateTime, false);
-		batch.draw(currentFrame, this.getX(), this.getY(), size.getWidth(), size.getHeight());
-	}
-	
 	@Override
 	public void reset() {
 		this.clear();
