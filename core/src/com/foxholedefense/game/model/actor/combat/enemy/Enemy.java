@@ -57,7 +57,7 @@ public abstract class Enemy extends CombatActor {
 	}
 	/**
 	 * Sets the path for the enemy. Starts off screen.
-	 * 
+	 *
 	 * @param path
 	 */
 	public void setPath(Array<Vector2> path) {
@@ -65,13 +65,22 @@ public abstract class Enemy extends CombatActor {
 			return;
 		}
 
-		//position
-		Vector2 newWaypoint = path.get(0);
+		//Place the enemy at the start and off screen
+		Vector2 newWaypoint = path.get(0); // start
 		setPositionCenter(newWaypoint);
-		setRotation(calculateRotation(path.get(1)));
-		Vector2 rotatedCoords = getRotatedCoords(this.getPositionCenter().x, getY() + this.getTextureSize().getHeight());
+
+		// face the next waypoint
+		setRotation(Math.round(calculateRotation(path.get(1))));
+
+		// The enemy always faces its target (tower or way point) and the top/front of the enemy needs to be off screen.
+		// That ensures that the entire body of the enemy is off the screen when spawning.
+		// rotatedCoords are the coords of the top/front of the enemy.
+		Vector2 rotatedCoords = getRotatedCoords(this.getX() + this.getTextureSize().getWidth(), this.getPositionCenter().y);
+
+		// Reposition the enemy so that it is off the screen
 		float newX = this.getPositionCenter().x + (this.getPositionCenter().x - rotatedCoords.x);
 		float newY = this.getPositionCenter().y + (this.getPositionCenter().y - rotatedCoords.y);
+		System.out.println(newX + "," + newY);
 		this.setPositionCenter(newX, newY); // Start off screen
 
 		//create MoveTo actions

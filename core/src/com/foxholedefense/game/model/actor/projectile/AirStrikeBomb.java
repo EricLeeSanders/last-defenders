@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.GameStage;
 import com.foxholedefense.game.helper.Damage;
+import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.service.factory.ActorFactory;

@@ -33,8 +33,8 @@ public class EnemyRifle extends Enemy {
 	public static final float RANGE = 50;
 	public static final float SPEED = 70f;
 	public static final Dimension BULLET_SIZE = new Dimension(5, 5);
-	public static final Vector2 GUN_POS = new Vector2(4, 26);
-	public static final Dimension TEXTURE_SIZE = new Dimension(32, 56);
+	public static final Vector2 GUN_POS = new Vector2(26, -4);
+	public static final Dimension TEXTURE_SIZE = new Dimension(56, 32);
 	private Circle body;
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;
