@@ -30,7 +30,6 @@ public class SupplyDrop extends GameActor implements Pool.Poolable{
 	public void beginSupplyDrop(Vector2 dropLocation){
 		Logger.info("Beginning Supply drop");
 		active = true;
-		this.setRotation(-90);
 		setPositionCenter(new Vector2(0-this.getHeight(), dropLocation.y));
 		float moveToX = Resources.VIRTUAL_WIDTH+this.getHeight();
 		float moveToY = ActorUtil.calcYBotLeftFromCenter(dropLocation.y, getHeight());

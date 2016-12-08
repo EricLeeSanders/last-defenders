@@ -23,8 +23,8 @@ public class Apache extends SupportActor{
 	private static final float RANGE = 75f;
 	private static final float ATTACK = 5f;
 	private static final float MOVE_SPEED = 200f;
-	private static final float TIME_ACTIVE_LIMIT = 15f;
-	private static final Dimension BULLET_SIZE = new Dimension(10, 10);
+	private static final float TIME_ACTIVE_LIMIT = 1f;
+	private static final Dimension BULLET_SIZE = new Dimension(6,6);
 	private static final Vector2 GUN_POS = new Vector2(0,0);
 	private TextureRegion [] textureRegions;
 	private boolean readyToAttack, exitingStage;
@@ -103,7 +103,7 @@ public class Apache extends SupportActor{
 		}
 	}
 	private void exitStage(){
-		Vector2 destination = new Vector2(0-this.getHeight()-(this.getHeight()/2), Resources.VIRTUAL_HEIGHT/2 - this.getWidth()/2);
+		Vector2 destination = new Vector2(0-this.getWidth() , Resources.VIRTUAL_HEIGHT/2 - this.getHeight()/2);
 		float moveDistance = (destination.dst(this.getPositionCenter()) / MOVE_SPEED);
 		this.setRotation(calculateRotation(destination));
 		addAction(Actions.moveTo(destination.x, destination.y, moveDistance, Interpolation.linear));

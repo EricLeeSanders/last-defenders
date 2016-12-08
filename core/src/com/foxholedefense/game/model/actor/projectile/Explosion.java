@@ -45,7 +45,9 @@ public class Explosion extends Actor implements Pool.Poolable {
 	public Explosion(Pool<Explosion> pool, Array<AtlasRegion> regions, FHDAudio audio) {
 		this.pool = pool;
 		this.audio = audio;
-	
+		setSize(regions.get(0).getRegionWidth() ,regions.get(0).getRegionWidth()) ;
+		setOrigin(getWidth()/2 ,getHeight()/2 ) ;
+		setRotation(90);
 		explosionAnimation = new Animation(0.05f, regions);
 		explosionAnimation.setPlayMode(PlayMode.LOOP);
 	}
@@ -80,7 +82,8 @@ public class Explosion extends Actor implements Pool.Poolable {
 			pool.free(this);
 		}
 
-		batch.draw(currentExplosion, this.getX() - (currentExplosion.getRegionWidth() / 2), this.getY() - (currentExplosion.getRegionHeight() / 2));
+		batch.draw(currentExplosion, this.getX() - (currentExplosion.getRegionWidth() / 2), this.getY() - (currentExplosion.getRegionHeight() / 2)
+				, getOriginX(), getOriginY(), getWidth(), getHeight(), 1, 1, getRotation() );
 	}
 
 	@Override

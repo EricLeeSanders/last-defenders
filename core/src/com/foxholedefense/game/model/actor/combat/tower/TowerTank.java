@@ -48,10 +48,10 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	public static final int ATTACK_INCREASE_COST = 650;
 	public static final float AOE_RADIUS = 75f;
 	public static final Dimension RPG_SIZE = new Dimension(7, 7);
-	public static final Vector2 GUN_POS = new Vector2(0, 57);
-	public static final Dimension TEXTURE_BODY_SIZE = new Dimension(50, 76);
-	public static final Dimension TEXTURE_TURRET_SIZE = new Dimension(22, 120);
-	private float[] bodyPoints = { 0, 0, 0, 75, 50, 75, 50, 0 };
+	public static final Vector2 GUN_POS = new Vector2(57, 0);
+	public static final Dimension TEXTURE_BODY_SIZE = new Dimension(76, 50);
+	public static final Dimension TEXTURE_TURRET_SIZE = new Dimension(120, 22);
+	private float[] bodyPoints = { 0, 0, 0, 50, 75, 50, 75, 0 };
 	private Polygon body;
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
