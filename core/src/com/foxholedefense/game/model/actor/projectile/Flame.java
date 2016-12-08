@@ -92,8 +92,8 @@ public class Flame extends Actor implements Pool.Poolable {
 	@Override
 	public void draw(Batch batch, float alpha) {
 		TextureRegion currentFlame = flameAnimation.getKeyFrame(stateTime, true);
-		this.setOrigin((currentFlame.getRegionWidth() / 2), 0);
-		this.setPosition(shooter.getGunPos().x - (currentFlame.getRegionWidth() / 2), shooter.getGunPos().y);
+		this.setOrigin(0, currentFlame.getRegionHeight() / 2);
+		this.setPosition(shooter.getGunPos().x, shooter.getGunPos().y  - getOriginY());
 		setRotation(shooter.getRotation());
 		if (Logger.DEBUG) {
 			batch.end();
@@ -106,7 +106,7 @@ public class Flame extends Actor implements Pool.Poolable {
 			batch.begin();
 		}
 		batch.draw(currentFlame, this.getX(), this.getY(), this.getOriginX(), this.getOriginY(), currentFlame.getRegionWidth(), currentFlame.getRegionHeight()
-				, flameSize.getHeight()/currentFlame.getRegionWidth(),flameSize.getHeight()/currentFlame.getRegionHeight(), this.getRotation());
+				, 1, 1, this.getRotation());
 	}
 
 	/**

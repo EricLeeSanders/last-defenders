@@ -32,10 +32,10 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 	public static final float SPEED = 140f;
 
 	public static final Vector2 GUN_POS = new Vector2(0, 0);
-	public static final Dimension TEXTURE_SIZE = new Dimension(40, 79);
+	public static final Dimension TEXTURE_SIZE = new Dimension(80, 40);
 	
 	private IDeathEffectFactory deathEffectFactory;
-	private float[] bodyPoints = {0,0, 0,79, 40, 79, 40, 0 };
+	private float[] bodyPoints = {0,0, 0,40, 80, 40, 80, 0 };
 	private Polygon body;
 	
 	public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, IDeathEffectFactory deathEffectFactory) {
