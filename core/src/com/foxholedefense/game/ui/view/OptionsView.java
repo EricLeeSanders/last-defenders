@@ -4,25 +4,18 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.game.ui.presenter.OptionsPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IOptionsView;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
 /**
@@ -35,8 +28,8 @@ public class OptionsView extends Group implements IOptionsView {
 	private OptionsPresenter presenter;
 	private TextButton btnResume, btnNewGame, btnMainMenu;
 	private CheckBox btnShowRanges, btnSound, btnMusic;
-	private Image volSliderBg;
-	private float sliderEndPos, sliderStartPos;
+	private Image volSliderBg, speedSliderBg;
+	private float volSliderEndPos, volSliderStartPos, speedSliderEndPos, speedSliderStartPos;
 	public OptionsView(OptionsPresenter presenter, Resources resources) {
 		this.presenter = presenter;
 		this.setTransform(false);
@@ -46,9 +39,14 @@ public class OptionsView extends Group implements IOptionsView {
 	public void act(float delta){
 		super.act(delta);
 		//This is a bit of a hack, but I need this here for the initial load of the screen.
-        float startX = sliderStartPos + sliderEndPos * presenter.getMasterVolume();
-        volSliderBg.setX(startX);
-        volSliderBg.setWidth(sliderEndPos - sliderEndPos * presenter.getMasterVolume());
+        float volStartX = volSliderStartPos + volSliderEndPos * presenter.getMasterVolume();
+        volSliderBg.setX(volStartX);
+        volSliderBg.setWidth(volSliderEndPos - volSliderEndPos * presenter.getMasterVolume());
+
+		float speedValue = presenter.getGameSpeed() / Resources.MAX_GAME_SPEED;
+		float speedStartX = speedSliderStartPos + speedSliderEndPos * speedValue;
+		speedSliderBg.setX(speedStartX);
+		speedSliderBg.setWidth(speedSliderEndPos - speedSliderEndPos * speedValue);
 	}
 
 	/**
@@ -114,14 +112,102 @@ public class OptionsView extends Group implements IOptionsView {
 		btnShowRanges.getImageCell().width(32).height(32);
 		btnShowRanges.getImage().setScaling(Scaling.stretch);
 		setBtnShowRangesListener(btnShowRanges);
-		
+
+		Label lblVolZero = new Label("0", skin);
+		lblVolZero.setFontScale(0.35f);
+
+		Label lblVolHundred = new Label("100", skin);
+		lblVolHundred.setFontScale(0.35f);
+
 		Label lblVol = new Label("VOLUME", skin);
 		lblVol.setFontScale(0.5f);
 		
+		Stack volumeStack = createVolSlider(skin, resources);
+
+		Label lblSpeedZero = new Label("0", skin);
+		lblSpeedZero.setFontScale(0.35f);
+
+		Label lblSpeedTwo = new Label("2X ", skin);
+		lblSpeedTwo.setFontScale(0.35f);
+
+		Label lblSpeed = new Label("SPEED", skin);
+		lblSpeed.setFontScale(0.5f);
+
+		Stack speedStack = createSpeedSlider(skin, resources);
+		
+		//mainTable.add(btnResume).width(128).height(41).spaceBottom(10);
+		mainTable.add(btnShowRanges).colspan(2).left().spaceLeft(15).spaceBottom(10);
+		
+		mainTable.row();
+		
+		//mainTable.add(btnNewGame).width(128).height(41).spaceBottom(10);
+		mainTable.add(btnMusic).colspan(2).left().spaceLeft(15).spaceBottom(10);
+		
+		mainTable.row();
+		
+		//mainTable.add(btnMainMenu).width(128).height(41).spaceBottom(10);
+		mainTable.add(btnSound).colspan(2).left().spaceLeft(15);
+		
+		mainTable.row();
+
+		mainTable.add(lblVolZero).left();
+		mainTable.add(lblVol);
+		mainTable.add(lblVolHundred).right();
+		
+		mainTable.row();
+		
+		mainTable.add(volumeStack).colspan(3).width(300).height(18);
+
+		mainTable.row();
+
+		mainTable.add(lblSpeedZero).left();
+		mainTable.add(lblSpeed);
+		mainTable.add(lblSpeedTwo).right();
+
+		mainTable.row();
+
+		mainTable.add(speedStack).colspan(3).width(300).height(18).spaceTop(1);
+
+        
+	}
+
+	private Stack createSpeedSlider(Skin skin, Resources resources){
+		Stack speedStack = new Stack();
+		speedStack.setTransform(false);
+
+
+		Slider speedSlider = new Slider(0, 1f, 0.01f, false, skin);
+		speedSlider.getStyle().knob.setMinWidth(33);
+		speedSlider.getStyle().knob.setMinHeight(24);
+		speedSlider.getStyle().background.setMinHeight(22);
+		speedSlider.getStyle().background.setMinWidth(300);
+		float speedValue = presenter.getGameSpeed() / Resources.MAX_GAME_SPEED;
+		speedSlider.setValue(speedValue);
+		speedSliderListener(speedSlider);
+
+
+		Image speedSliderFull = new Image(resources.getAtlas(Resources.SKIN_ATLAS).findRegion("slider-full"));
+		speedSliderFull.setSize(300, 22);
+
+		speedSliderBg = new Image(resources.getAtlas(Resources.SKIN_ATLAS).findRegion("slider-bg"));
+		speedSliderBg.setSize(300, 22);
+
+
+		this.speedSliderStartPos = speedSliderBg.getX() + 2;
+		this.speedSliderEndPos = speedSliderBg.getX() + speedSliderBg.getWidth() - 6;
+
+		speedStack.add(speedSliderFull);
+		speedStack.add(speedSliderBg);
+		speedStack.add(speedSlider);
+
+		return speedStack;
+	}
+
+	private Stack createVolSlider(Skin skin, Resources resources){
 		Stack volumeStack = new Stack();
 		volumeStack.setTransform(false);
-		
-		
+
+
 		Slider volumeSlider = new Slider(0, 1f, 0.01f, false, skin);
 		volumeSlider.getStyle().knob.setMinWidth(33);
 		volumeSlider.getStyle().knob.setMinHeight(24);
@@ -129,44 +215,23 @@ public class OptionsView extends Group implements IOptionsView {
 		volumeSlider.getStyle().background.setMinWidth(300);
 		volumeSlider.setValue(presenter.getMasterVolume());
 		volSliderListener(volumeSlider);
-	
-		
+
+
 		Image volSliderFull = new Image(resources.getAtlas(Resources.SKIN_ATLAS).findRegion("slider-full"));
 		volSliderFull.setSize(300, 22);
-		
+
 		volSliderBg = new Image(resources.getAtlas(Resources.SKIN_ATLAS).findRegion("slider-bg"));
 		volSliderBg.setSize(300, 22);
-	
-		
-		this.sliderStartPos = volSliderBg.getX() + 2;
-		this.sliderEndPos = volSliderBg.getX() + volSliderBg.getWidth() - 6;
-		
+
+
+		this.volSliderStartPos = volSliderBg.getX() + 2;
+		this.volSliderEndPos = volSliderBg.getX() + volSliderBg.getWidth() - 6;
+
 		volumeStack.add(volSliderFull);
 		volumeStack.add(volSliderBg);
 		volumeStack.add(volumeSlider);
-		
-		//mainTable.add(btnResume).width(128).height(41).spaceBottom(10);
-		mainTable.add(btnShowRanges).left().spaceLeft(15).spaceBottom(10);
-		
-		mainTable.row();
-		
-		//mainTable.add(btnNewGame).width(128).height(41).spaceBottom(10);
-		mainTable.add(btnMusic).left().spaceLeft(15).spaceBottom(10);
-		
-		mainTable.row();
-		
-		//mainTable.add(btnMainMenu).width(128).height(41).spaceBottom(10);
-		mainTable.add(btnSound).left().spaceLeft(15).spaceBottom(10);
-		
-		mainTable.row();
-		
-		mainTable.add(lblVol).colspan(2);
-		
-		mainTable.row();
-		
-		mainTable.add(volumeStack).colspan(2).width(300).height(18);
 
-        
+		return volumeStack;
 	}
 
 	private void setBtnResumeListener() {
@@ -249,13 +314,37 @@ public class OptionsView extends Group implements IOptionsView {
 			}
 			
 			private void moveSlider(){
-		        float startX = sliderStartPos + sliderEndPos * slider.getValue();
+		        float startX = volSliderStartPos + volSliderEndPos * slider.getValue();
 		        presenter.volumeChanged(slider.getValue());
 		        volSliderBg.setX(startX);
-		        volSliderBg.setWidth(sliderEndPos - sliderEndPos * slider.getValue());
+		        volSliderBg.setWidth(volSliderEndPos - volSliderEndPos * slider.getValue());
 			}
 		});
 	}
+
+	private void speedSliderListener(final Slider slider){
+		slider.addListener(new ClickListener(){
+			@Override
+			public void touchDragged (InputEvent event, float x, float y, int pointer) {
+				super.touchDragged(event, x, y, pointer);
+				moveSlider();
+			}
+			@Override
+			public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+				super.touchDown(event, x, y, pointer, button);
+				moveSlider();
+				return true;
+			}
+
+			private void moveSlider(){
+				float startX = speedSliderStartPos + speedSliderEndPos * slider.getValue();
+				presenter.speedChanged(slider.getValue() * Resources.MAX_GAME_SPEED);
+				speedSliderBg.setX(startX);
+				speedSliderBg.setWidth(speedSliderEndPos - speedSliderEndPos * slider.getValue());
+			}
+		});
+	}
+
 	@Override
 	public void optionsState() {
 		this.setVisible(true);
