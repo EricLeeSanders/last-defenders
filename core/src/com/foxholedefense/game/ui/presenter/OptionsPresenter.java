@@ -107,7 +107,13 @@ public class OptionsPresenter implements IGameUIStateObserver {
 		audio.changeMusicEnabled();
 		view.setBtnMusicOn(audio.isMusicEnabled());
 	}
-	
+
+	public void speedChanged(float val){ resources.setGameSpeed(val);}
+
+	public float getGameSpeed(){
+		return resources.getGameSpeed();
+	}
+
 	public void volumeChanged(float vol){
 		audio.setMasterVolume(vol);
 	}
