@@ -26,8 +26,7 @@ public class Resources {
 	public static final float VIRTUAL_HEIGHT = 360;
 	public static final float TILED_MAP_SCALE = 0.5f;
 
-	public static final float NORMAL_SPEED = 1.0f;
-	public static final float DOUBLE_SPEED = 2.0f;
+	public static final float MAX_GAME_SPEED = 2.0f;
 
 	public static final String MENU_MUSIC = "audio/big_action_trailer.mp3";
 
