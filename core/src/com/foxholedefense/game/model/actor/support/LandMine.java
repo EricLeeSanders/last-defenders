@@ -56,15 +56,18 @@ public class LandMine extends SupportActor implements IRpg{
 	}
 	@Override
 	public void draw(Batch batch, float alpha) {
-		batch.end();
 		if (Logger.DEBUG) {
+			batch.end();
+
 			debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			debugBody.begin(ShapeType.Line);
 			debugBody.setColor(Color.YELLOW);
 			debugBody.circle(this.getPositionCenter().x, this.getPositionCenter().y, this.getWidth() / 2);
 			debugBody.end();
+
+			batch.begin();
 		}
-		batch.begin();
+
 		super.draw(batch, alpha);
 	}
 	private void explode(){
