@@ -52,6 +52,7 @@ public class GameStage extends Stage {
 		createGroups();
 		TiledMap tiledMap = resources.getMap(intLevel);
 		map = new Map(tiledMap);
+		mapRenderer = new MapRenderer(tiledMap, getCamera());
 		level = new Level(intLevel, getActorGroups(),actorFactory, map);
 
 	}
