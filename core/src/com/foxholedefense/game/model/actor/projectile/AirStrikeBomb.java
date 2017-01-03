@@ -19,6 +19,7 @@ import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.game.service.factory.ActorFactory.ExplosionPool;
+import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -54,14 +55,21 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 	 */
 	public Actor initialize(IAttacker attacker, Vector2 destination, Group targetGroup, Vector2 pos, Dimension size, float radius) {
 		this.targetGroup = targetGroup;
-		this.setPosition(pos.x, pos.y);
 		this.setSize(size.getWidth(), size.getHeight());
 		this.setOrigin(size.getWidth() / 2, size.getHeight() / 2);
 		this.radius = radius;
 		this.attacker = attacker;
+
+		float startX = ActorUtil.calcXBotLeftFromCenter(pos.x, size.getWidth());
+		float startY = ActorUtil.calcYBotLeftFromCenter(pos.y, size.getHeight());
+		this.setPosition(startX, startY);
+
 		this.destination = destination;
+
 		MoveToAction moveAction = new MoveToAction();
-		moveAction.setPosition(destination.x, destination.y);
+		float endX = ActorUtil.calcXBotLeftFromCenter(destination.x, size.getWidth());
+		float endY = ActorUtil.calcYBotLeftFromCenter(destination.y, size.getHeight());
+		moveAction.setPosition(endX, endY);
 		moveAction.setDuration(destination.dst(pos) / SPEED);
 		addAction(moveAction);
 		
