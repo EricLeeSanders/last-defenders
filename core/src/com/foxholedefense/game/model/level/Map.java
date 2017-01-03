@@ -35,18 +35,12 @@ public class Map implements Disposable{
 	private Array<Rectangle> pathBoundaries = new SnapshotArray<Rectangle>(false, 32);
 	private TiledMapRenderer tiledMapRenderer;
 	private TiledMap tiledMap;
-	public Map(int intLevel, Camera camera, TiledMap tiledMap) {
+	public Map(TiledMap tiledMap) {
 		this.tiledMap = tiledMap;
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap,Resources.TILED_MAP_SCALE);
-		tiledMapRenderer.setView((OrthographicCamera) camera);
 		findPath();
 		findBoundaries();
 	}
 
-	public void update() {
-		tiledMapRenderer.render();
-	}
-	
 	/**
 	 * Finds the path for the enemies to follow
 	 */
@@ -90,7 +84,6 @@ public class Map implements Disposable{
 	public void dispose() {
 		Logger.info("Map Disposed");
 		tiledMap.dispose();
-
 	}
 
 }
