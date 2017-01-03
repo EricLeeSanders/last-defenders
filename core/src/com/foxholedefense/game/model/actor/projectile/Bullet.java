@@ -20,6 +20,7 @@ import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.ActorFactory;
+import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -55,12 +56,18 @@ public class Bullet extends Actor implements Pool.Poolable{
 	public Actor initialize(IAttacker attacker, ITargetable target, Vector2 pos, Dimension size ) {
 		this.target = target;
 		this.attacker = attacker;
-		this.setPosition(pos.x, pos.y);
 		this.setSize(size.getWidth(), size.getHeight());
 		this.setOrigin(size.getWidth() / 2, size.getHeight() / 2);
+
+		float startX = ActorUtil.calcXBotLeftFromCenter(pos.x, size.getWidth());
+		float startY = ActorUtil.calcYBotLeftFromCenter(pos.y, size.getHeight());
+		this.setPosition(startX, startY);
+
 		Vector2 end = target.getPositionCenter();
 		MoveToAction moveAction = new MoveToAction();
-		moveAction.setPosition(end.x, end.y);
+		float endX = ActorUtil.calcXBotLeftFromCenter(end.x, size.getWidth());
+		float endY = ActorUtil.calcYBotLeftFromCenter(end.y, size.getHeight());
+		moveAction.setPosition(endX, endY);
 		moveAction.setDuration(end.dst(pos) / SPEED);
 		addAction(moveAction);
 		return this;
