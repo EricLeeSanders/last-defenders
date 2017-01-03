@@ -2,6 +2,7 @@ package com.foxholedefense.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Scaling;
@@ -38,6 +39,7 @@ public class GameStage extends Stage {
 	private int intLevel;
 	private ActorGroups actorGroups;
 	private Map map;
+	private MapRenderer mapRenderer;
 	private Resources resources;
 	public GameStage(int intLevel, Player player, ActorGroups actorGroups, ActorFactory actorFactory, LevelStateManager levelStateManager, GameUIStateManager uiStateManager, Viewport viewport, Resources resources) {
 		super(viewport);
@@ -48,7 +50,8 @@ public class GameStage extends Stage {
 		this.intLevel = intLevel;
 		this.resources = resources;
 		createGroups();
-		map = new Map(intLevel, getCamera(), resources.getMap(intLevel));
+		TiledMap tiledMap = resources.getMap(intLevel);
+		map = new Map(tiledMap);
 		level = new Level(intLevel, getActorGroups(),actorFactory, map);
 
 	}
@@ -81,7 +84,7 @@ public class GameStage extends Stage {
 
 	@Override
 	public void draw() {
-		map.update();
+		mapRenderer.update();
 		super.draw();
 	}	
 
