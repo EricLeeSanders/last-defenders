@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -162,6 +163,27 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public Shape2D getRangeShape() {
 		rangeCircle.set(getPositionCenter().x, getPositionCenter().y, range);
 		return rangeCircle;
+	}
+
+	protected void drawRangeWithShapeRenderer(){
+		ShapeRenderer sr = Resources.getShapeRenderer();
+		Shape2D rangeShape = getRangeShape();
+		sr.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+		if(rangeShape instanceof Rectangle) {
+			sr.begin(ShapeType.Filled);
+			Rectangle rangeRect = (Rectangle) rangeShape;
+			sr.rect(getX(), getY(), rangeRect.getWidth(), rangeRect.getHeight());
+		} else if(rangeShape instanceof Polygon){
+			sr.begin(ShapeType.Line);
+			Polygon rangePoly = (Polygon) rangeShape;
+			sr.polygon(rangePoly.getTransformedVertices());
+		} else if(rangeShape instanceof Circle){
+			sr.begin(ShapeType.Filled);
+			Circle rangeCircle = (Circle) rangeShape;
+			sr.circle(rangeCircle.x, rangeCircle.y, rangeCircle.radius);
+		}
+		sr.setColor(Color.BLUE);
+		sr.end();
 	}
 
 	public float getAttackSpeed() {
