@@ -22,6 +22,7 @@ import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.ActorFactory;
+import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
@@ -83,7 +84,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 		}
 
 		batch.draw(currentExplosion, this.getX() - (currentExplosion.getRegionWidth() / 2), this.getY() - (currentExplosion.getRegionHeight() / 2)
-				, getOriginX(), getOriginY(), getWidth(), getHeight(), 1, 1, getRotation() );
+				, getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation() );
 	}
 
 	@Override
