@@ -31,8 +31,8 @@ public class TowerFlameThrower extends Tower implements IFlame {
 	public static final float HEALTH = 8;
 	public static final float ARMOR = 4;
 	public static final float ATTACK = 7; 
-	public static final float ATTACK_SPEED = 1f;
-	public static final float RANGE = 800;
+	public static final float ATTACK_SPEED = 1.20f;
+	public static final float RANGE = 70;
 	public static final int COST = 600;
 	public static final int ARMOR_COST = 5665;
 	public static final int RANGE_INCREASE_COST = 450;
@@ -41,7 +41,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
 	public static final Vector2 GUN_POS = new Vector2(26, -4);
 	public static final Dimension TEXTURE_SIZE = new Dimension(56, 32);
 	private Circle body;
-	private Dimension flameSize = new Dimension(64, 20);
+	private Dimension flameSize = new Dimension(RANGE-26, 20);
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
@@ -56,7 +56,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
 
 	@Override
 	public Dimension getFlameSize() {
-		flameSize.set(64,20);
+		flameSize.set(this.getRange()-GUN_POS.x, this.getHeight());
 		return flameSize;
 	}
 
