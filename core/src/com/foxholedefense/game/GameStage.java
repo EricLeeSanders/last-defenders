@@ -1,15 +1,9 @@
 package com.foxholedefense.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.foxholedefense.FHDGame;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
@@ -67,7 +61,7 @@ public class GameStage extends Stage {
 		this.addActor(getActorGroups().getEnemyGroup());
 		this.addActor(getActorGroups().getTowerGroup());
 		this.addActor(getActorGroups().getProjectileGroup());
-		this.addActor(getActorGroups().getHealthBarGroup());
+		this.addActor(getActorGroups().getHealthGroup());
 		this.addActor(getActorGroups().getSupportGroup());
 	}
 
