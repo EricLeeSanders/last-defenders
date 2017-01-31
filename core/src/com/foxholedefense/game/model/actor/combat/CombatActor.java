@@ -53,7 +53,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private Group targetGroup;
 	public CombatActor(TextureRegion textureRegion,Pool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
 						float health, float armor, float attack, float attackSpeed, float range) {
-		super(textureRegion, textureSize);
+		super(textureSize);
 		this.MAX_HEALTH = health;
 		this.MAX_ARMOR = armor;
 		this.RESET_ATTACK = attack;
@@ -67,6 +67,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.range = range;
 		this.pool = pool;
 		this.targetGroup = targetGroup;
+		setTextureRegion(textureRegion);
 		
 		
 	}
