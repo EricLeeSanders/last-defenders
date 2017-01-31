@@ -1,16 +1,12 @@
 package com.foxholedefense.game.ui;
 
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
@@ -32,7 +28,7 @@ import com.foxholedefense.game.ui.view.InspectView;
 import com.foxholedefense.game.ui.view.LevelCompletedView;
 import com.foxholedefense.game.ui.view.OptionsView;
 import com.foxholedefense.game.ui.view.SupportView;
-import com.foxholedefense.screen.state.ScreenStateManager;
+import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
@@ -62,7 +58,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	private GameUIStateManager uiStateManager;
 	private LevelStateManager levelStateManager;
 	private GameStateManager gameStateManager;
-	private ScreenStateManager screenStateManager;
+	private IScreenChanger screenChanger;
 	private ActorGroups actorGroups;
 	private ActorFactory actorFactory;
 	private InputMultiplexer imp;
@@ -70,7 +66,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	private Resources resources;
 	public GameUIStage(Player player, ActorGroups actorGroups, ActorFactory actorFactory
 			, GameUIStateManager uiStateManager, LevelStateManager levelStateManager
-			, GameStateManager gameStateManager, ScreenStateManager screenStateManager
+			, GameStateManager gameStateManager, IScreenChanger screenChanger
 			, InputMultiplexer imp, Viewport viewport, Map map, Resources resources, FHDAudio audio) {
 		super(viewport);
 		this.map = map;
@@ -82,7 +78,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		this.levelStateManager = levelStateManager;
 		this.gameStateManager = gameStateManager;
 		this.resources = resources;
-		this.screenStateManager = screenStateManager;
+		this.screenChanger = screenChanger;
 		uiStateManager.attach(this);
 		imp.addProcessor(this);
 		createUI(resources, audio);
@@ -110,15 +106,15 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		this.inspectView = new InspectView(inspectPresenter, skin);
 		inspectPresenter.setView(inspectView);
 
-		this.optionsPresenter = new OptionsPresenter(uiStateManager, gameStateManager, screenStateManager, resources, audio);
+		this.optionsPresenter = new OptionsPresenter(uiStateManager, gameStateManager, screenChanger, resources, audio);
 		this.optionsView = new OptionsView(optionsPresenter, resources);
 		optionsPresenter.setView(optionsView);
 
-		this.gameOverPresenter = new GameOverPresenter(uiStateManager, screenStateManager, player, audio);
+		this.gameOverPresenter = new GameOverPresenter(uiStateManager, screenChanger, player, audio);
 		this.gameOverView = new GameOverView(gameOverPresenter, skin);
 		gameOverPresenter.setView(gameOverView);
 		
-		this.levelCompletedPresenter = new LevelCompletedPresenter(player, gameStateManager, uiStateManager, screenStateManager, audio);
+		this.levelCompletedPresenter = new LevelCompletedPresenter(player, gameStateManager, uiStateManager, screenChanger, audio);
 		this.levelCompletedView = new LevelCompletedView(levelCompletedPresenter, skin);
 		levelCompletedPresenter.setView(levelCompletedView);
 		
