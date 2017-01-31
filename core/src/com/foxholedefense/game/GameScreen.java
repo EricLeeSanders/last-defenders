@@ -4,10 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.profiling.GLProfiler;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.foxholedefense.FHDGame;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
@@ -16,7 +13,7 @@ import com.foxholedefense.game.ui.GameUIStage;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.screen.AbstractScreen;
-import com.foxholedefense.screen.state.ScreenStateManager;
+import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.Logger;
@@ -38,7 +35,7 @@ public class GameScreen extends AbstractScreen {
 	private GameStateManager gameStateManager;
 	private GameUIStateManager uiStateManager;
 	private Resources resources;
-	public GameScreen(int intLevel, GameStateManager gameStateManager, ScreenStateManager screenStateManager, Resources resources, FHDAudio audio) {
+	public GameScreen(int intLevel, GameStateManager gameStateManager, IScreenChanger screenChanger, Resources resources, FHDAudio audio) {
 		super(gameStateManager);
 		this.player = new Player();
 		this.resources = resources;
@@ -49,7 +46,7 @@ public class GameScreen extends AbstractScreen {
 		this.gameStateManager = gameStateManager;
 		gameStage = new GameStage(intLevel, player, actorGroups, actorFactory, levelStateManager, uiStateManager, getViewport(), resources);
 		gameUIStage = new GameUIStage(player, actorGroups, actorFactory, uiStateManager, levelStateManager, gameStateManager
-						, screenStateManager, super.getInputMultiplexer(), getViewport(), gameStage.getMap(), resources, audio);
+						, screenChanger, super.getInputMultiplexer(), getViewport(), gameStage.getMap(), resources, audio);
 		super.show();
 		audio.turnOffMusic();
 		GLProfiler.enable();

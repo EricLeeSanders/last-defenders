@@ -5,8 +5,7 @@ import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.IGameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IOptionsView;
-import com.foxholedefense.screen.state.ScreenStateManager;
-import com.foxholedefense.screen.state.ScreenStateManager.ScreenState;
+import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.FHDAudio;
@@ -22,15 +21,15 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
 public class OptionsPresenter implements IGameUIStateObserver {
 	private GameStateManager gameStateManager;
 	private GameUIStateManager uiStateManager;
-	private ScreenStateManager screenStateManager;
+	private IScreenChanger screenChanger;
 	private IOptionsView view;
 	private FHDAudio audio;
 	private Resources resources;
-	public OptionsPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager, ScreenStateManager screenStateManager, Resources resources, FHDAudio audio) {
+	public OptionsPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager, IScreenChanger screenChanger, Resources resources, FHDAudio audio) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.gameStateManager = gameStateManager;
-		this.screenStateManager = screenStateManager;
+		this.screenChanger = screenChanger;
 		this.audio = audio;
 		this.resources = resources;
 	}
@@ -68,7 +67,7 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	public void mainMenu() {
 		audio.playSound(FHDSound.SMALL_CLICK);
 		gameStateManager.setState(GameState.PLAY);
-		screenStateManager.setState(ScreenState.MENU);
+		screenChanger.changeToMenu();
 
 	}
 
@@ -78,7 +77,7 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	public void newGame() {
 		audio.playSound(FHDSound.SMALL_CLICK);
 		gameStateManager.setState(GameState.PLAY);
-		screenStateManager.setState(ScreenState.LEVEL_SELECTION);
+		screenChanger.changeToLevelSelect();
 
 	}
 	
