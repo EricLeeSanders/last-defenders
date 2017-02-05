@@ -62,13 +62,13 @@ public class FHDGame extends Game implements IScreenChanger {
 	}
 
 	@Override
-	public void changeToLevel(int level) {
+	public void changeToLevelLoad(int level) {
 		this.getScreen().dispose(); // dispose current screen
-		this.setScreen(new LevelLoadingScreen(gameStateManager, this, resources, 5));
+		this.setScreen(new LevelLoadingScreen(gameStateManager, this, resources, level));
 	}
 
 	@Override
-	public void changeToLevelLoad(int level) {
+	public void changeToLevel(int level) {
 		this.getScreen().dispose(); // dispose current screen
 		this.setScreen(new GameScreen(level, gameStateManager, this, resources, audio));
 	}
