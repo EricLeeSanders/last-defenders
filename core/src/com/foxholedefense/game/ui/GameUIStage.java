@@ -2,14 +2,21 @@ package com.foxholedefense.game.ui;
 
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.foxholedefense.game.GameStage;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
+import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
+import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
+import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
+import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
+import com.foxholedefense.game.service.actorplacement.TowerPlacement;
 import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.game.ui.presenter.EnlistPresenter;
 import com.foxholedefense.game.ui.presenter.GameOverPresenter;
@@ -40,40 +47,25 @@ import com.foxholedefense.util.Resources;
  *
  */
 public class GameUIStage extends Stage implements IGameUIStateObserver{
-	private HUDView hudView;
-	private InspectView inspectView;
-	private EnlistView enlistView;
-	private EnlistPresenter enlistPresenter;
-	private SupportView supportView;
-	private SupportPresenter supportPresenter;
-	private HUDPresenter hudPresenter;
-	private InspectPresenter inspectPresenter;
-	private OptionsView optionsView;
-	private OptionsPresenter optionsPresenter;
-	private GameOverPresenter gameOverPresenter;
-	private GameOverView gameOverView;
-	private LevelCompletedPresenter levelCompletedPresenter;
-	private LevelCompletedView levelCompletedView;
 	private Player player;
 	private GameUIStateManager uiStateManager;
 	private LevelStateManager levelStateManager;
 	private GameStateManager gameStateManager;
 	private IScreenChanger screenChanger;
-	private ActorGroups actorGroups;
-	private ActorFactory actorFactory;
+	private Group towerGroup;
 	private InputMultiplexer imp;
-	private Map map;
 	private Resources resources;
-	public GameUIStage(Player player, ActorGroups actorGroups, ActorFactory actorFactory
+
+	public GameUIStage(Player player, Group towerGroup
 			, GameUIStateManager uiStateManager, LevelStateManager levelStateManager
 			, GameStateManager gameStateManager, IScreenChanger screenChanger
-			, InputMultiplexer imp, Viewport viewport, Map map, Resources resources, FHDAudio audio) {
+			, InputMultiplexer imp, Viewport viewport, Resources resources
+			, FHDAudio audio, GameStage gameStage) {
+
 		super(viewport);
-		this.map = map;
 		this.imp = imp;
 		this.player = player;
-		this.actorGroups = actorGroups;
-		this.actorFactory = actorFactory;
+		this.towerGroup = towerGroup;
 		this.uiStateManager = uiStateManager;
 		this.levelStateManager = levelStateManager;
 		this.gameStateManager = gameStateManager;
@@ -81,41 +73,42 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		this.screenChanger = screenChanger;
 		uiStateManager.attach(this);
 		imp.addProcessor(this);
-		createUI(resources, audio);
+		createUI(resources, audio, gameStage) ;
 	}
 
 	/**
 	 * Create and initialize the views and presenters of the Game UI
 	 */
-	public void createUI(Resources resources, FHDAudio audio) {
+	public void createUI(Resources resources, FHDAudio audio, GameStage gameStage) {
 		Skin skin = resources.getSkin(Resources.SKIN_JSON);
-		this.enlistPresenter = new EnlistPresenter(uiStateManager, player, actorGroups, actorFactory, map, audio);
-		this.enlistView = new EnlistView(enlistPresenter, skin);
+		EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio,  gameStage.getTowerPlacement());
+		EnlistView enlistView = new EnlistView(enlistPresenter, skin);
 		enlistPresenter.setView(enlistView);
-		
-		this.supportPresenter = new SupportPresenter(uiStateManager, player, actorGroups, actorFactory, audio);
-		this.supportView = new SupportView(supportPresenter, skin);
-		supportPresenter.setView(supportView);
-		
-		this.hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player, resources, audio);
-		this.hudView = new HUDView(hudPresenter, skin, resources);
-		hudPresenter.setView(hudView);
-		//hudView.setFillParent(true);
 
-		this.inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager, player, actorGroups, audio);
-		this.inspectView = new InspectView(inspectPresenter, skin);
+		SupportPresenter supportPresenter = new SupportPresenter(uiStateManager, player, audio
+				, gameStage.getSupportActorPlacement(),  gameStage.getAirStrikePlacement(),  gameStage.getSupplyDropPlacement());
+		SupportView supportView = new SupportView(supportPresenter, skin);
+		supportPresenter.setView(supportView);
+
+		HUDPresenter hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player, resources, audio);
+		HUDView hudView = new HUDView(hudPresenter, skin, resources);
+		hudPresenter.setView(hudView);
+		gameStage.attachCombatObserver(hudPresenter);
+
+		InspectPresenter inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager, player, towerGroup, audio);
+		InspectView inspectView = new InspectView(inspectPresenter, skin);
 		inspectPresenter.setView(inspectView);
 
-		this.optionsPresenter = new OptionsPresenter(uiStateManager, gameStateManager, screenChanger, resources, audio);
-		this.optionsView = new OptionsView(optionsPresenter, resources);
+		OptionsPresenter optionsPresenter = new OptionsPresenter(uiStateManager, gameStateManager, screenChanger, resources, audio);
+		OptionsView optionsView = new OptionsView(optionsPresenter, resources);
 		optionsPresenter.setView(optionsView);
 
-		this.gameOverPresenter = new GameOverPresenter(uiStateManager, screenChanger, player, audio);
-		this.gameOverView = new GameOverView(gameOverPresenter, skin);
+		GameOverPresenter gameOverPresenter = new GameOverPresenter(uiStateManager, screenChanger, player, audio);
+		GameOverView gameOverView = new GameOverView(gameOverPresenter, skin);
 		gameOverPresenter.setView(gameOverView);
-		
-		this.levelCompletedPresenter = new LevelCompletedPresenter(player, gameStateManager, uiStateManager, screenChanger, audio);
-		this.levelCompletedView = new LevelCompletedView(levelCompletedPresenter, skin);
+
+		LevelCompletedPresenter levelCompletedPresenter = new LevelCompletedPresenter(player, gameStateManager, uiStateManager, screenChanger, audio);
+		LevelCompletedView levelCompletedView = new LevelCompletedView(levelCompletedPresenter, skin);
 		levelCompletedPresenter.setView(levelCompletedView);
 		
 		this.addActor(hudView);
@@ -138,7 +131,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	 * @param showRanges
 	 */
 	private void showTowerRanges(boolean showRanges) {
-		for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
+		for (Actor tower : towerGroup.getChildren()) {
 			if (tower instanceof Tower) {
 				((Tower) tower).setShowRange(showRanges);
 			}
