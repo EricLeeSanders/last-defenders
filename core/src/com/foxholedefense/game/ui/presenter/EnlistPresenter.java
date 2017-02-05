@@ -2,6 +2,7 @@ package com.foxholedefense.game.ui.presenter;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
@@ -32,16 +33,14 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	private GameUIStateManager uiStateManager;
 	private Player player;
 	private IEnlistView view;
-	private ActorGroups actorGroups;
 	private FHDAudio audio;
 	public EnlistPresenter(GameUIStateManager uiStateManager, Player player
-			, ActorGroups actorGroups, ActorFactory actorFactory, Map map, FHDAudio audio) {
+			, FHDAudio audio, TowerPlacement towerPlacement) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.player = player;
 		this.audio = audio;
-		this.actorGroups = actorGroups;
-		towerPlacement = new TowerPlacement(map, actorGroups, actorFactory);
+		this.towerPlacement = towerPlacement;
 	}
 
 	/**

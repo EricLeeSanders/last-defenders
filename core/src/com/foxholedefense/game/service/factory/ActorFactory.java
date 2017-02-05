@@ -12,8 +12,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
+import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
 import com.foxholedefense.game.model.actor.combat.enemy.*;
 import com.foxholedefense.game.model.actor.combat.tower.*;
 import com.foxholedefense.game.model.actor.deatheffect.BloodSplatter;
@@ -72,6 +74,11 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	private SupportActorPool<Apache> apachePool = new SupportActorPool<Apache>(Apache.class);
 	private SupportActorPool<AirStrike> airStrikePool = new SupportActorPool<AirStrike>(AirStrike.class);
 	private SupportActorPool<LandMine> landMinePool = new SupportActorPool<LandMine>(LandMine.class);
+
+	private SnapshotArray<ICombatActorObserver> combatActorObservers = new SnapshotArray<ICombatActorObserver>();
+	private SnapshotArray<ITowerObserver> towerObservers = new SnapshotArray<ITowerObserver>();
+	private SnapshotArray<IEnemyObserver> enemyObservers = new SnapshotArray<IEnemyObserver>();
+
 	private FHDAudio audio;
 	private ActorGroups actorGroups;
 
@@ -131,6 +138,19 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		loadedAtlasRegions.put("rifle", actorAtlas.findRegions("rifle"));
 		loadedAtlasRegions.put("apache", actorAtlas.findRegions("apache"));
 	}
+
+	public void attachCombatObserver(ICombatActorObserver observer){
+		combatActorObservers.add(observer);
+	}
+
+	public void attachTowerObserver(ITowerObserver observer) {
+		towerObservers.add(observer);
+	}
+
+	public void attachEnemyObserver(IEnemyObserver observer) {
+		enemyObservers.add(observer);
+	}
+
 	/**
 	 * Obtains a tower from the pool
 	 * 
@@ -155,6 +175,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		} else if (type.equals("FlameThrower")) {
 			tower = (Tower) towerFlameThrowerPool.obtain();
 		}
+		tower.setDead(false);
 		return tower;
 	}
 
@@ -385,6 +406,13 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		} else {
 			throw new NullPointerException("Actor factory couldn't create: " + type.getSimpleName());
 		}
+		if(actor instanceof Tower) {
+			((Tower)actor).attachAllTower(towerObservers);
+		} else if(actor instanceof Enemy) {
+			((Enemy)actor).attachAllEnemy(enemyObservers);
+		}
+		actor.attachAllCombatActor(combatActorObservers);
+
 		return actor;
 	}
 	

@@ -10,16 +10,16 @@ import com.foxholedefense.game.model.actor.interfaces.IAttacker;
  * Created by Eric on 10/28/2016.
  */
 
-public enum TowerAI implements com.foxholedefense.game.model.actor.ai.towerai.ITowerAI {
+public enum TowerAI implements ITowerAI {
     FIRST(new FirstEnemyAI(), 0)
     , LAST(new LastEnemyAI(), 1)
     , LEAST_HP(new LeastHPEnemyAI(), 2)
     , MOST_HP(new MostHPEnemyAI(), 3);
 
-    private com.foxholedefense.game.model.actor.ai.towerai.ITowerAI ai;
+    private ITowerAI ai;
     private int position;
 
-    TowerAI(com.foxholedefense.game.model.actor.ai.towerai.ITowerAI ai, int position) {
+    TowerAI(ITowerAI ai, int position) {
         this.ai = ai;
         this.position = position;
     }

@@ -163,7 +163,7 @@ public class HUDView extends Group implements IHUDView {
 
 	@Override
 	public void setLives(String lives) {
-		//lblLives.setText(lives);
+		lblLives.setText(lives);
 	}
 
 	@Override

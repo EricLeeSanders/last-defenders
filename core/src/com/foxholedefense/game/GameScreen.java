@@ -8,6 +8,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
+import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
+import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
+import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
+import com.foxholedefense.game.service.actorplacement.TowerPlacement;
 import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.game.ui.GameUIStage;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
@@ -28,6 +32,7 @@ import com.foxholedefense.util.Resources;
  *
  */
 public class GameScreen extends AbstractScreen {
+
 	private Label framesLabel;
 	private GameStage gameStage;
 	private GameUIStage gameUIStage;
@@ -35,22 +40,26 @@ public class GameScreen extends AbstractScreen {
 	private GameStateManager gameStateManager;
 	private GameUIStateManager uiStateManager;
 	private Resources resources;
+
 	public GameScreen(int intLevel, GameStateManager gameStateManager, IScreenChanger screenChanger, Resources resources, FHDAudio audio) {
+
 		super(gameStateManager);
 		this.player = new Player();
 		this.resources = resources;
 		ActorGroups actorGroups = new ActorGroups();
 		LevelStateManager levelStateManager = new LevelStateManager();
 		uiStateManager = new GameUIStateManager(levelStateManager);
-		ActorFactory actorFactory = new ActorFactory(actorGroups, resources.getAtlas(Resources.ACTOR_ATLAS), audio);
 		this.gameStateManager = gameStateManager;
-		gameStage = new GameStage(intLevel, player, actorGroups, actorFactory, levelStateManager, uiStateManager, getViewport(), resources);
-		gameUIStage = new GameUIStage(player, actorGroups, actorFactory, uiStateManager, levelStateManager, gameStateManager
-						, screenChanger, super.getInputMultiplexer(), getViewport(), gameStage.getMap(), resources, audio);
+		gameStage = new GameStage(intLevel, player, actorGroups, audio, levelStateManager, uiStateManager, getViewport(), resources);
+		gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager, levelStateManager, gameStateManager
+						, screenChanger, super.getInputMultiplexer(), getViewport(), resources, audio, gameStage);
+
+
 		super.show();
 		audio.turnOffMusic();
 		GLProfiler.enable();
 		createFramesField(resources.getSkin(Resources.SKIN_JSON));
+		gameStage.loadFirstWave();
 	}
 
 	public void createFramesField(Skin skin) {
