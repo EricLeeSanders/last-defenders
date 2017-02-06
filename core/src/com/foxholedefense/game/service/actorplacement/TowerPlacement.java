@@ -13,6 +13,7 @@ import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
+import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
 import com.foxholedefense.game.model.actor.interfaces.IRotatable;
 import com.foxholedefense.game.model.level.Map;
@@ -96,6 +97,8 @@ public class TowerPlacement {
 				currentTower.setActive(true);
 				HealthBar healthBar = actorFactory.loadHealthBar();
 				healthBar.setActor(currentTower);
+				ArmorIcon armorIcon = actorFactory.loadArmorIcon();
+				armorIcon.setActor(currentTower);
 				currentTower = null;
 				return true;
 			}

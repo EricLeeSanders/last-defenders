@@ -454,7 +454,7 @@ healthbar-bg
   index: -1
 healthbar-life
   rotate: false
-  xy: 253, 707
+  xy: 253, 475
   size: 30, 4
   orig: 30, 4
   offset: 0, 0
@@ -536,6 +536,20 @@ turret-machine
   orig: 56, 32
   offset: 0, 0
   index: -1
+shield
+  rotate: false
+  xy: 253, 671
+  size: 37, 40
+  orig: 37, 40
+  offset: 0, 0
+  index: -1
+shield-destroyed
+  rotate: false
+  xy: 665, 574
+  size: 37, 40
+  orig: 37, 40
+  offset: 0, 0
+  index: 1
 smoke-ring
   rotate: false
   xy: 1149, 581
