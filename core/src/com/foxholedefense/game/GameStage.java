@@ -98,7 +98,7 @@ public class GameStage extends Stage implements IEnemyObserver{
 		this.addActor(getActorGroups().getEnemyGroup());
 		this.addActor(getActorGroups().getTowerGroup());
 		this.addActor(getActorGroups().getProjectileGroup());
-		this.addActor(getActorGroups().getHealthBarGroup());
+		this.addActor(getActorGroups().getHealthGroup());
 		this.addActor(getActorGroups().getSupportGroup());
 	}
 
