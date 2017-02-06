@@ -1,5 +1,6 @@
 package com.foxholedefense.game.ui.presenter;
 
+import com.badlogic.gdx.math.Vector2;
 import com.foxholedefense.game.model.IPlayerObserver;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
@@ -143,6 +144,15 @@ public class HUDPresenter implements IGameUIStateObserver, ICombatActorObserver,
 
 	@Override
 	public void notifyCombatActor(CombatActor actor, CombatActorEvent event) {
+
+		switch(event){
+			case ARMOR_BROKEN:
+				view.displayMessage("ARMOR BROKEN", actor.getPositionCenter(), 0.3f);
+				break;
+			default:
+				break;
+
+		}
 
 	}
 }
