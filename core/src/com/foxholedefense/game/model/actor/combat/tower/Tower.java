@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.ai.TowerAI;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
+import com.foxholedefense.game.model.actor.effects.ArmorDestroyedEffect;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
