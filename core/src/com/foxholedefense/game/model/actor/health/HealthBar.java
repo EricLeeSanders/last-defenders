@@ -35,7 +35,7 @@ public class HealthBar extends Actor implements Pool.Poolable {
 			float healthPercentage = actor.getHealthPercent();
 			float armorPercentage = actor.getArmorPercent();
 			// Only show if the actor has been hit
-			//if (((healthPercentage < 100 && actor.hasArmor() == false) || (actor.hasArmor() && armorPercentage < 100)) && healthPercentage > 0) {
+			if (((healthPercentage < 100 && actor.hasArmor() == false) || (actor.hasArmor() && armorPercentage < 100)) && healthPercentage > 0) {
 				float healthBarSize = (((30) * (healthPercentage)) / 100);
 				float armorBarSize = (((30) * (armorPercentage)) / 100);
 				setPosition(actor.getPositionCenter().x - 10, actor.getPositionCenter().y + 20);
@@ -46,7 +46,7 @@ public class HealthBar extends Actor implements Pool.Poolable {
 				if (actor.hasArmor()) {
 					batch.draw(armorBar, getX(), getY(), armorBarSize, 4);
 				}
-			//}
+			}
 		}
 	}
 

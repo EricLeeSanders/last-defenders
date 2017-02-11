@@ -28,7 +28,15 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
     @Override
     public void draw(Batch batch, float alpha) {
         if (actor != null && actor.hasArmor()) {
-            setPosition(actor.getPositionCenter().x - 22, actor.getPositionCenter().y + 16);
+            setY( actor.getPositionCenter().y + 16);
+            // If the health bar is showing, place it to the left.
+            // Other wise place it above the actor
+            if(actor.getHealthPercent() < 100 || actor.getArmorPercent() < 100) {
+                setX(actor.getPositionCenter().x - 22);
+            } else {
+                setX(actor.getPositionCenter().x - 6);
+            }
+
             batch.draw(icon, getX(), getY(), 12, 13);
         }
     }
