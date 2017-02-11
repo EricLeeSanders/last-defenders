@@ -1,5 +1,6 @@
 package com.foxholedefense.game.model.actor.effects;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -21,6 +22,9 @@ import com.foxholedefense.util.Resources;
  */
 
 public class ArmorDestroyedEffect extends Actor implements Pool.Poolable {
+
+    private static final float DURATION = 2;
+
     private CombatActor actor = null;
     private Pool<ArmorDestroyedEffect> pool;
     private Animation animation;
@@ -28,7 +32,7 @@ public class ArmorDestroyedEffect extends Actor implements Pool.Poolable {
     private float stateTime;
 
     public ArmorDestroyedEffect(Array<AtlasRegion> regions, Pool<ArmorDestroyedEffect> pool, Label label){
-        animation = new Animation(2, regions);
+        animation = new Animation(DURATION, regions);
         animation.setPlayMode(Animation.PlayMode.NORMAL);
         this.pool = pool;
         this.label = label;
@@ -40,7 +44,7 @@ public class ArmorDestroyedEffect extends Actor implements Pool.Poolable {
 
     public Actor initialize(CombatActor actor){
         this.actor = actor;
-
+        System.out.println("Destroy INIT");
         label.setX(ActorUtil.calcXBotLeftFromCenter(actor.getPositionCenter().x, label.getWidth()));
         label.setY(ActorUtil.calcYBotLeftFromCenter(actor.getPositionCenter().y, label.getHeight()));
 
@@ -48,8 +52,8 @@ public class ArmorDestroyedEffect extends Actor implements Pool.Poolable {
 
         label.addAction(
                 Actions.parallel(
-                        Actions.moveTo(label.getX(), label.getY() + 50, 2),
-                        Actions.fadeOut(2)));
+                        Actions.moveTo(label.getX(), label.getY() + 50, DURATION),
+                        Actions.fadeOut(DURATION)));
 
         return this;
     }
@@ -81,9 +85,14 @@ public class ArmorDestroyedEffect extends Actor implements Pool.Poolable {
 
     @Override
     public void reset() {
+        System.out.println("Reset DESTROY EFECT");
         this.actor = null;
         this.remove();
         stateTime = 0;
+        this.clear();
+        label.remove();
+        label.clear();
+        label.getColor().a = 1;
     }
 
 }

@@ -538,14 +538,14 @@ turret-machine
   index: -1
 shield
   rotate: false
-  xy: 253, 671
+  xy: 665, 574
   size: 37, 40
   orig: 37, 40
   offset: 0, 0
   index: -1
 shield-destroyed
   rotate: false
-  xy: 665, 574
+  xy: 253, 621
   size: 37, 40
   orig: 37, 40
   offset: 0, 0
@@ -648,6 +648,13 @@ tank-turret
   orig: 120, 22
   offset: 0, 0
   index: -1
+tower-heal
+  rotate: false
+  xy: 253, 663
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: 1
 turret-bags
   rotate: false
   xy: 1978, 953
