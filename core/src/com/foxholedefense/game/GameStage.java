@@ -13,6 +13,8 @@ import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.enemy.IEnemyObserver;
 import com.foxholedefense.game.model.actor.combat.tower.ITowerObserver;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
+import com.foxholedefense.game.model.actor.effects.ArmorDestroyedEffect;
+import com.foxholedefense.game.model.actor.effects.TowerHealEffect;
 import com.foxholedefense.game.model.level.Level;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
@@ -165,6 +167,10 @@ public class GameStage extends Stage implements IEnemyObserver{
 	private void healTowers(){
 		for(Actor tower : actorGroups.getTowerGroup().getChildren()){
 			if (tower instanceof Tower){
+
+				TowerHealEffect effect = actorFactory.loadTowerHealEffect();
+				effect.initialize((Tower)tower);
+
 				((Tower)tower).heal();
 			}
 		}

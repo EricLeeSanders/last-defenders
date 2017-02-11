@@ -17,6 +17,7 @@ import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
 import com.foxholedefense.game.model.actor.combat.enemy.*;
 import com.foxholedefense.game.model.actor.combat.tower.*;
 import com.foxholedefense.game.model.actor.effects.ArmorDestroyedEffect;
+import com.foxholedefense.game.model.actor.effects.TowerHealEffect;
 import com.foxholedefense.game.model.actor.effects.deatheffect.BloodSplatter;
 import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffect;
 import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffectType;
@@ -71,6 +72,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	private FlamePool flamePool = new FlamePool();
 	private ArmorIconPool armorIconPool = new ArmorIconPool();
 	private ArmorDestroyedEffectPool armorDestroyedEffectPool = new ArmorDestroyedEffectPool();
+	private TowerHealEffectPool towerHealEffectPool = new TowerHealEffectPool();
 	private SupplyDropPool supplyDropPool = new SupplyDropPool();
 	private SupplyDropCratePool supplyDropCratePool = new SupplyDropCratePool();
 	private SupportActorPool<Apache> apachePool = new SupportActorPool<Apache>(Apache.class);
@@ -134,6 +136,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 		loadedTextures.put("turret-machine", actorAtlas.findRegion("turret-machine"));
 		loadedTextures.put("apache-stationary", actorAtlas.findRegion("apache",1));
 		loadedTextures.put("shield", actorAtlas.findRegion("shield"));
+
 
 		loadedAtlasRegions.put("explosion", actorAtlas.findRegions("explosion"));
 		loadedAtlasRegions.put("flame", actorAtlas.findRegions("flame"));
@@ -257,6 +260,13 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 		ArmorDestroyedEffect armorDestroyedEffect = armorDestroyedEffectPool.obtain();
 		actorGroups.getHealthGroup().addActor(armorDestroyedEffect);
 		return armorDestroyedEffect;
+	}
+
+	@Override
+	public TowerHealEffect loadTowerHealEffect(){
+		TowerHealEffect towerHealEffect = towerHealEffectPool.obtain();
+		actorGroups.getHealthGroup().addActor(towerHealEffect);
+		return towerHealEffect;
 	}
 
 	/**
@@ -527,7 +537,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 		Logger.info("Creating Supply Drop Crate Actor");
 		TextureRegion supplyDropCrateRegion = loadedTextures.get("supply-drop-crate");
 		TextureRegion rangeTexture = loadedTextures.get("range-black");
-		SupplyDropCrate supplyDropCrate = new SupplyDropCrate(supplyDropCrateRegion, rangeTexture, supplyDropCratePool, actorGroups.getTowerGroup());
+		SupplyDropCrate supplyDropCrate = new SupplyDropCrate(supplyDropCrateRegion, rangeTexture, supplyDropCratePool, actorGroups.getTowerGroup(), this);
 		return supplyDropCrate;
 
 	}
@@ -539,6 +549,11 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	protected ArmorDestroyedEffect createArmorDestroyedEffect(){
 		Label label = new Label("", resources.getSkin(Resources.SKIN_JSON));
 		return new ArmorDestroyedEffect(loadedAtlasRegions.get("shield-destroyed"), armorDestroyedEffectPool,label);
+	}
+
+	protected TowerHealEffect createTowerHealEffect(){
+		System.out.println("CREATING TOWER HEAL EFFECT");
+		return new TowerHealEffect(towerHealEffectPool, resources.getSkin(Resources.SKIN_JSON));
 	}
 	
 	/**
@@ -667,6 +682,13 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 		@Override
 		protected ArmorDestroyedEffect newObject() {
 			return createArmorDestroyedEffect();
+		}
+	}
+
+	public class TowerHealEffectPool extends Pool<TowerHealEffect> {
+		@Override
+		protected TowerHealEffect newObject() {
+			return createTowerHealEffect();
 		}
 	}
 

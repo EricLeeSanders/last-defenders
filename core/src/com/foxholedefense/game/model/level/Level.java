@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
+import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
 import com.foxholedefense.game.service.factory.ActorFactory;
 
@@ -45,6 +46,10 @@ public class Level{
 				delayCount = 0;
 				SpawningEnemy enemy = spawningEnemyQueue.remove();
 				actorGroups.getEnemyGroup().addActor(enemy.getEnemy());
+				HealthBar healthBar = actorFactory.loadHealthBar();
+				healthBar.setActor(enemy.getEnemy());
+				ArmorIcon armorIcon = actorFactory.loadArmorIcon();
+				armorIcon.setActor(enemy.getEnemy());
 				enemyDelay = enemy.getDelay();
 			} else {
 				delayCount += delta;
@@ -87,8 +92,7 @@ public class Level{
 			float delay = enemyJson.getFloat("delay");
 			SpawningEnemy spawningEnemy = new SpawningEnemy(enemy, delay);
 			spawningEnemyQueue.add(spawningEnemy);
-			HealthBar healthBar = actorFactory.loadHealthBar();
-			healthBar.setActor(enemy);
+
 
 		}
 	}

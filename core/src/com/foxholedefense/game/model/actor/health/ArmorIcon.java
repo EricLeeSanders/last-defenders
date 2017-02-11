@@ -60,6 +60,7 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
 
         // When the armor is broken, show the destroy effect
         if(!actor.hasArmor() && showDestroyEffect){
+            System.out.println("SHOW DESTROY");
             showDestroyEffect = false;
             ArmorDestroyedEffect effect = armorDestroyedEffectPool.obtain();
             this.getParent().addActor(effect);
@@ -76,6 +77,7 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
 
     @Override
     public void reset() {
+        System.out.println("Armor Icon RESET");
         this.actor = null;
         this.remove();
         showDestroyEffect = false;
