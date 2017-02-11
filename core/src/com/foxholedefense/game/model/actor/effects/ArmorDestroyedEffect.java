@@ -6,10 +6,15 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
+import com.foxholedefense.util.ActorUtil;
+import com.foxholedefense.util.Resources;
 
 /**
  * Created by Eric on 1/6/2017.
@@ -19,16 +24,33 @@ public class ArmorDestroyedEffect extends Actor implements Pool.Poolable {
     private CombatActor actor = null;
     private Pool<ArmorDestroyedEffect> pool;
     private Animation animation;
+    private Label label;
     private float stateTime;
 
-    public ArmorDestroyedEffect(Array<AtlasRegion> regions, Pool<ArmorDestroyedEffect> pool){
+    public ArmorDestroyedEffect(Array<AtlasRegion> regions, Pool<ArmorDestroyedEffect> pool, Label label){
         animation = new Animation(2, regions);
         animation.setPlayMode(Animation.PlayMode.NORMAL);
         this.pool = pool;
+        this.label = label;
+
+        label.setText("ARMOR DESTROYED");
+        label.setAlignment(Align.center);
+        label.setFontScale(0.3f);
     }
 
     public Actor initialize(CombatActor actor){
         this.actor = actor;
+
+        label.setX(ActorUtil.calcXBotLeftFromCenter(actor.getPositionCenter().x, label.getWidth()));
+        label.setY(ActorUtil.calcYBotLeftFromCenter(actor.getPositionCenter().y, label.getHeight()));
+
+        this.getParent().addActor(label);
+
+        label.addAction(
+                Actions.parallel(
+                        Actions.moveTo(label.getX(), label.getY() + 50, 2),
+                        Actions.fadeOut(2)));
+
         return this;
     }
 

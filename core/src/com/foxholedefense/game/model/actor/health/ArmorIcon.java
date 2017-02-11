@@ -62,8 +62,8 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
         if(!actor.hasArmor() && showDestroyEffect){
             showDestroyEffect = false;
             ArmorDestroyedEffect effect = armorDestroyedEffectPool.obtain();
-            effect.initialize(actor);
             this.getParent().addActor(effect);
+            effect.initialize(actor);
         }
 
     }
