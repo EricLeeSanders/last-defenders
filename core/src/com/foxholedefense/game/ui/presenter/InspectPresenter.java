@@ -2,13 +2,14 @@ package com.foxholedefense.game.ui.presenter;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.ai.TowerAI;
-import com.foxholedefense.game.model.actor.ai.towerai.FirstEnemyAI;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
+import com.foxholedefense.game.model.actor.combat.tower.ITowerObserver;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.level.state.ILevelStateObserver;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
@@ -27,21 +28,21 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  * @author Eric
  *
  */
-public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserver, ICombatActorObserver {
+public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserver, ITowerObserver, ICombatActorObserver {
 	private GameUIStateManager uiStateManager;
 	private LevelStateManager levelStateManager;
 	private Tower selectedTower;
 	private Player player;
-	private ActorGroups actorGroups;
+	private Group towerGroup;
 	private IInspectView view;
 	private FHDAudio audio;
-	public InspectPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, Player player, ActorGroups actorGroups, FHDAudio audio) {
+	public InspectPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, Player player, Group towerGroup, FHDAudio audio) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.levelStateManager = levelStateManager;
 		levelStateManager.attach(this);
 		this.player = player;
-		this.actorGroups = actorGroups;
+		this.towerGroup = towerGroup;
 		this.audio = audio;
 	}
 
@@ -71,7 +72,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	private void resetInspect(){
 		Logger.info("Detaching Inspect from Tower");
 		if(selectedTower != null){
-			selectedTower.detach(this);
+			selectedTower.detachCombatActor(this);
 			selectedTower = null;
 		}
 	}
@@ -166,11 +167,12 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 */
 	public void inspectTower(Vector2 coords) {
 		if (uiStateManager.getState().equals(GameUIState.STANDBY) || uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)) {
-			Actor hitActor = CollisionDetection.towerHit(actorGroups.getTowerGroup().getChildren(), coords);
+			Actor hitActor = CollisionDetection.towerHit(towerGroup.getChildren(), coords);
 			if (hitActor != null) {
 				if (hitActor instanceof Tower) {
 					selectedTower = (Tower) hitActor;
-					selectedTower.attach(this);
+					selectedTower.attachTower(this);
+					selectedTower.attachCombatActor(this);
 					uiStateManager.setState(GameUIState.INSPECTING);
 				}
 			}
@@ -236,15 +238,15 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	}
 
 	@Override
-	public void notifty() {
+	public void notifyCombatActor(CombatActor actor, CombatActorEvent event){
 		if(selectedTower == null
-			|| selectedTower.isDead()){
+			|| event.equals(CombatActorEvent.DEAD)){
 			closeInspect();
 		}
-		else{
-			view.update(selectedTower);
-		}
-		
 	}
 
+	@Override
+	public void notifyTower(Tower tower, TowerEvent event) {
+		view.update(tower);
+	}
 }

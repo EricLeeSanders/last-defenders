@@ -1,7 +1,7 @@
 package com.foxholedefense.menu;
 
 import com.foxholedefense.screen.AbstractScreen;
-import com.foxholedefense.screen.state.ScreenStateManager;
+import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
@@ -16,10 +16,10 @@ import com.foxholedefense.util.Resources;
 public class MenuScreen extends AbstractScreen {
 	private MenuStage stage;
 	private FHDAudio audio;
-	public MenuScreen(ScreenStateManager screenStateManager, GameStateManager gameStateManager, Resources resources, FHDAudio audio) {
+	public MenuScreen(IScreenChanger screenChanger, GameStateManager gameStateManager, Resources resources, FHDAudio audio) {
 		super(gameStateManager);
 		this.audio = audio;
-		this.stage = new MenuStage(screenStateManager, resources, audio, getViewport());
+		this.stage = new MenuStage(screenChanger, resources, audio, getViewport());
 		super.addInputProcessor(stage);
 		audio.playMusic();
 	}

@@ -39,17 +39,16 @@ public class SupportPresenter implements IGameUIStateObserver {
 	private GameUIStateManager uiStateManager;
 	private Player player;
 	private ISupportView view;
-	private ActorGroups actorGroups;
 	private FHDAudio audio;
-	public SupportPresenter(GameUIStateManager uiStateManager, Player player, ActorGroups actorGroups, ActorFactory actorFactory, FHDAudio audio) {
+	public SupportPresenter(GameUIStateManager uiStateManager, Player player, FHDAudio audio
+			, SupportActorPlacement supportActorPlacement, AirStrikePlacement airStrikePlacement, SupplyDropPlacement supplyDropPlacement ) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.audio = audio;
 		this.player = player;
-		this.actorGroups = actorGroups;
-		supportActorPlacement = new SupportActorPlacement(actorGroups, actorFactory);
-		airStrikePlacement = new AirStrikePlacement(actorGroups, actorFactory);
-		supplyDropPlacement = new SupplyDropPlacement(actorFactory);
+		this.supplyDropPlacement = supplyDropPlacement;
+		this.supportActorPlacement = supportActorPlacement;
+		this.airStrikePlacement = airStrikePlacement;
 	}
 
 	/**

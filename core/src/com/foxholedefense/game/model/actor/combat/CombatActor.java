@@ -1,38 +1,27 @@
 package com.foxholedefense.game.model.actor.combat;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Disposable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.ICollision;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
-import com.foxholedefense.game.model.actor.interfaces.IVehicle;
-import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
-import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
-import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
-import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
+import com.foxholedefense.game.model.actor.combat.ICombatActorObserver.CombatActorEvent;
 
 /**
  * Represents both a Tower and Enemy.
@@ -51,9 +40,11 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private Pool<CombatActor> pool;
 	private SnapshotArray<ICombatActorObserver> observers = new SnapshotArray<ICombatActorObserver>();
 	private Group targetGroup;
+
 	public CombatActor(TextureRegion textureRegion,Pool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
 						float health, float armor, float attack, float attackSpeed, float range) {
-		super(textureRegion, textureSize);
+
+		super(textureSize);
 		this.MAX_HEALTH = health;
 		this.MAX_ARMOR = armor;
 		this.RESET_ATTACK = attack;
@@ -67,24 +58,29 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.range = range;
 		this.pool = pool;
 		this.targetGroup = targetGroup;
+		setTextureRegion(textureRegion);
 		
 		
 	}
-	public void detach(ICombatActorObserver observer){
+	public void detachCombatActor(ICombatActorObserver observer){
 		Logger.info("Combat Actor Detach: " + observer.getClass().getName());
 		observers.removeValue(observer, false);
 	}
-	public void attach(ICombatActorObserver observer){
+
+	public void attachAllCombatActor(Array<ICombatActorObserver> observers){
+		this.observers.addAll(observers);
+	}
+
+	public void attachCombatActor(ICombatActorObserver observer){
 		Logger.info("Combat Actor Attach: " + observer.getClass().getName());
 		observers.add(observer);
 	}
-	protected void notifyObservers(){
+	protected void notifyObserversCombatActor(CombatActorEvent event){
 		Logger.info("Combat Actor: Notify Observers");
 		Object[] items = observers.begin();
-		for(int i = 0, n = observers.size; i < n; i++){
-			ICombatActorObserver observer = (ICombatActorObserver) items[i];
+		for(ICombatActorObserver observer : observers){
 			Logger.info("Combat Actor Notifying: " + observer.getClass().getName());
-			observer.notifty();
+			observer.notifyCombatActor(this, event);
 		}
 		observers.end();
 	}
@@ -134,10 +130,10 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	}
 
 	public void takeDamage(float damage) {
-		if (hasArmor && armor > 0) {
+		if (hasArmor()) {
 			if ((armor - damage) < 0) {
 				health = health - (damage - armor);
-				armor = 0;
+				setHasArmor(false);
 			} else {
 				armor = armor - damage;
 			}
@@ -213,8 +209,8 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		if (isDead()) {
 			deathAnimation();
 			pool.free(this);
+			notifyObserversCombatActor(CombatActorEvent.DEAD);
 		}
-		notifyObservers();
 	}
 
 	public boolean isDead() {
@@ -254,6 +250,10 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	}
 
 	public void setHasArmor(boolean hasArmor) {
+		if(hasArmor() && !hasArmor) {
+			armor = 0;
+			notifyObserversCombatActor(CombatActorEvent.ARMOR_BROKEN);
+		}
 		this.hasArmor = hasArmor;
 	}
 	

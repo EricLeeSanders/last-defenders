@@ -50,7 +50,7 @@ public class ActorGroups{
 		return enemyGroup;
 	}
 
-	public Group getHealthBarGroup() {
+	public Group getHealthGroup() {
 		return healthBarGroup;
 	}
 

@@ -1,7 +1,7 @@
 package com.foxholedefense.levelselect;
 
 import com.foxholedefense.screen.AbstractScreen;
-import com.foxholedefense.screen.state.ScreenStateManager;
+import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
@@ -16,10 +16,10 @@ import com.foxholedefense.util.Resources;
 public class LevelSelectScreen extends AbstractScreen {
 	private LevelSelectStage stage;
 	private FHDAudio audio;
-	public LevelSelectScreen(ScreenStateManager screenStateManager, GameStateManager gameStateManager, Resources resources, FHDAudio audio) {
+	public LevelSelectScreen(IScreenChanger screenChanger, GameStateManager gameStateManager, Resources resources, FHDAudio audio) {
 		super(gameStateManager);
 		this.audio = audio;
-		this.stage = new LevelSelectStage(screenStateManager,resources, audio, getViewport());
+		this.stage = new LevelSelectStage(screenChanger,resources, audio, getViewport());
 		super.addInputProcessor(stage);
 	}
 	@Override

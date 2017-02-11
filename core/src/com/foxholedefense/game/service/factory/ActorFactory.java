@@ -1,25 +1,26 @@
 package com.foxholedefense.game.service.factory;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
+import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
 import com.foxholedefense.game.model.actor.combat.enemy.*;
 import com.foxholedefense.game.model.actor.combat.tower.*;
-import com.foxholedefense.game.model.actor.deatheffect.BloodSplatter;
-import com.foxholedefense.game.model.actor.deatheffect.DeathEffect;
-import com.foxholedefense.game.model.actor.deatheffect.DeathEffectType;
-import com.foxholedefense.game.model.actor.deatheffect.VehicleExplosion;
+import com.foxholedefense.game.model.actor.effects.ArmorDestroyedEffect;
+import com.foxholedefense.game.model.actor.effects.deatheffect.BloodSplatter;
+import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffect;
+import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffectType;
+import com.foxholedefense.game.model.actor.effects.deatheffect.VehicleExplosion;
+import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
 import com.foxholedefense.game.model.actor.projectile.AirStrikeBomb;
 import com.foxholedefense.game.model.actor.projectile.Bullet;
@@ -35,7 +36,6 @@ import com.foxholedefense.game.model.actor.support.SupportActor;
 import com.foxholedefense.game.service.factory.interfaces.*;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
-import com.foxholedefense.util.Resources;
 
 /**
  * Factory class for obtaining from a pool, various actors
@@ -44,7 +44,7 @@ import com.foxholedefense.util.Resources;
  *
  */
 // TODO: Doing a lot of things here
-public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISupportActorFactory, IProjectileFactory, IDeathEffectFactory, ISupplyDropFactory {
+public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISupportActorFactory, IProjectileFactory, IDeathEffectFactory, ISupplyDropFactory {
 	private CombatActorPool<CombatActor> towerRiflePool;
 	private CombatActorPool<CombatActor> towerTankPool;
 	private CombatActorPool<CombatActor> towerFlameThrowerPool;
@@ -67,11 +67,18 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	private AirStrikeBombPool airStrikeBombPool = new AirStrikeBombPool();
 	private ExplosionPool explosionPool = new ExplosionPool();
 	private FlamePool flamePool = new FlamePool();
+	private ArmorIconPool armorIconPool = new ArmorIconPool();
+	private ArmorDestroyedEffectPool armorDestroyedEffectPool = new ArmorDestroyedEffectPool();
 	private SupplyDropPool supplyDropPool = new SupplyDropPool();
 	private SupplyDropCratePool supplyDropCratePool = new SupplyDropCratePool();
 	private SupportActorPool<Apache> apachePool = new SupportActorPool<Apache>(Apache.class);
 	private SupportActorPool<AirStrike> airStrikePool = new SupportActorPool<AirStrike>(AirStrike.class);
 	private SupportActorPool<LandMine> landMinePool = new SupportActorPool<LandMine>(LandMine.class);
+
+	private SnapshotArray<ICombatActorObserver> combatActorObservers = new SnapshotArray<ICombatActorObserver>();
+	private SnapshotArray<ITowerObserver> towerObservers = new SnapshotArray<ITowerObserver>();
+	private SnapshotArray<IEnemyObserver> enemyObservers = new SnapshotArray<IEnemyObserver>();
+
 	private FHDAudio audio;
 	private ActorGroups actorGroups;
 
@@ -122,7 +129,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		loadedTextures.put("turret-bags", actorAtlas.findRegion("turret-bags"));
 		loadedTextures.put("turret-machine", actorAtlas.findRegion("turret-machine"));
 		loadedTextures.put("apache-stationary", actorAtlas.findRegion("apache",1));
-
+		loadedTextures.put("shield", actorAtlas.findRegion("shield"));
 
 		loadedAtlasRegions.put("explosion", actorAtlas.findRegions("explosion"));
 		loadedAtlasRegions.put("flame", actorAtlas.findRegions("flame"));
@@ -130,7 +137,21 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		loadedAtlasRegions.put("smoke-ring", actorAtlas.findRegions("smoke-ring"));
 		loadedAtlasRegions.put("rifle", actorAtlas.findRegions("rifle"));
 		loadedAtlasRegions.put("apache", actorAtlas.findRegions("apache"));
+		loadedAtlasRegions.put("shield-destroyed", actorAtlas.findRegions("shield-destroyed"));
 	}
+
+	public void attachCombatObserver(ICombatActorObserver observer){
+		combatActorObservers.add(observer);
+	}
+
+	public void attachTowerObserver(ITowerObserver observer) {
+		towerObservers.add(observer);
+	}
+
+	public void attachEnemyObserver(IEnemyObserver observer) {
+		enemyObservers.add(observer);
+	}
+
 	/**
 	 * Obtains a tower from the pool
 	 * 
@@ -155,6 +176,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		} else if (type.equals("FlameThrower")) {
 			tower = (Tower) towerFlameThrowerPool.obtain();
 		}
+		tower.setDead(false);
 		return tower;
 	}
 
@@ -215,8 +237,22 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 	@Override
 	public HealthBar loadHealthBar() {
 		HealthBar healthBar = healthPool.obtain();
-		actorGroups.getHealthBarGroup().addActor(healthBar);
+		actorGroups.getHealthGroup().addActor(healthBar);
 		return healthBar;
+	}
+
+	@Override
+	public ArmorIcon loadArmorIcon(){
+		ArmorIcon armorIcon = armorIconPool.obtain();
+		actorGroups.getHealthGroup().addActor(armorIcon);
+		return armorIcon;
+	}
+
+	@Override
+	public ArmorDestroyedEffect loadArmorDestroyedEffect(){
+		ArmorDestroyedEffect armorDestroyedEffect = armorDestroyedEffectPool.obtain();
+		actorGroups.getHealthGroup().addActor(armorDestroyedEffect);
+		return armorDestroyedEffect;
 	}
 
 	/**
@@ -278,7 +314,8 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		actorGroups.getProjectileGroup().addActor(flame);
 		return flame;
 	}
-	
+
+
 	/**
 	 * Obtains a Supply Drop from the pool
 	 * 
@@ -385,6 +422,13 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		} else {
 			throw new NullPointerException("Actor factory couldn't create: " + type.getSimpleName());
 		}
+		if(actor instanceof Tower) {
+			((Tower)actor).attachAllTower(towerObservers);
+		} else if(actor instanceof Enemy) {
+			((Enemy)actor).attachAllEnemy(enemyObservers);
+		}
+		actor.attachAllCombatActor(combatActorObservers);
+
 		return actor;
 	}
 	
@@ -483,6 +527,14 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		return supplyDropCrate;
 
 	}
+
+	protected ArmorIcon createArmorIcon(){
+		return new ArmorIcon(armorIconPool, loadedTextures.get("shield"), armorDestroyedEffectPool);
+	}
+
+	protected ArmorDestroyedEffect createArmorDestroyedEffect(){
+		return new ArmorDestroyedEffect(loadedAtlasRegions.get("shield-destroyed"), armorDestroyedEffectPool);
+	}
 	
 	/**
 	 * Create a Death Effect
@@ -554,6 +606,8 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 		}
 
 	}
+
+
 	
 	public class HealthPool extends Pool<HealthBar> {
 		@Override
@@ -596,7 +650,21 @@ public class ActorFactory implements ICombatActorFactory, IHealthBarFactory, ISu
 			return createFlameActor();
 		}
 	}
-	
+
+	public class ArmorIconPool extends Pool<ArmorIcon> {
+		@Override
+		protected ArmorIcon newObject() {
+			return createArmorIcon();
+		}
+	}
+
+	public class ArmorDestroyedEffectPool extends Pool<ArmorDestroyedEffect> {
+		@Override
+		protected ArmorDestroyedEffect newObject() {
+			return createArmorDestroyedEffect();
+		}
+	}
+
 	public class SupplyDropPool extends Pool<SupplyDrop> {
 		@Override
 		protected SupplyDrop newObject() {

@@ -5,8 +5,6 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
-import javax.swing.GroupLayout.Alignment;
-
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Interpolation;
@@ -17,32 +15,28 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.foxholedefense.screen.AbstractScreen;
-import com.foxholedefense.screen.state.ScreenStateManager;
-import com.foxholedefense.screen.state.ScreenStateManager.ScreenState;
+import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
-import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
 
 public class LevelLoadingScreen extends AbstractScreen{
 	private Resources resources;
-	private ScreenStateManager screenStateManager;
+	private IScreenChanger screenChanger;
 	private Stage stage;
 	private static final float MIN_LOAD_TIME = 3f;
 	private float loadTime = 0;
-	private ScreenState nextScreen;
 	private int level;
 	private Image loadingBarBg;
 	private Label loadingLabel;
 	private float endPos = 528;
 	private float startPos = 55;
 	private int intTip;
-	public LevelLoadingScreen(GameStateManager gameStateManager, ScreenStateManager screenStateManager, Resources resources, ScreenState nextScreen, int level ) {
+	public LevelLoadingScreen(GameStateManager gameStateManager, IScreenChanger screenChanger, Resources resources, int level ) {
 		super(gameStateManager);
 		this.resources = resources;
-		this.screenStateManager = screenStateManager;
-		this.nextScreen = nextScreen;
+		this.screenChanger = screenChanger;
 		this.level = level;
 		this.stage = new Stage(new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, new OrthographicCamera()));
 		super.addInputProcessor(stage);
@@ -139,7 +133,7 @@ public class LevelLoadingScreen extends AbstractScreen{
 	}
 
 	public void finishedLoading() {
-        screenStateManager.setState(nextScreen);
+		screenChanger.changeToLevel(level);
 	}
 
 }

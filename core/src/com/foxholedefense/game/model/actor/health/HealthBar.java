@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
+import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
