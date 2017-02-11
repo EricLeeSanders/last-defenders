@@ -65,7 +65,7 @@ public class GameStage extends Stage implements IEnemyObserver{
 		TiledMap tiledMap = resources.getMap(intLevel);
 		map = new Map(tiledMap);
 		mapRenderer = new MapRenderer(tiledMap, getCamera());
-		actorFactory = new ActorFactory(actorGroups, resources.getAtlas(Resources.ACTOR_ATLAS), audio);
+		actorFactory = new ActorFactory(actorGroups, resources.getAtlas(Resources.ACTOR_ATLAS), audio, resources);
 		actorFactory.attachEnemyObserver(this);
 		level = new Level(intLevel, getActorGroups(),actorFactory, map);
 		createPlacementServices(actorFactory, map);
