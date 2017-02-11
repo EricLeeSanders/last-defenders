@@ -8,8 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.foxholedefense.screen.AbstractScreen;
-import com.foxholedefense.screen.state.ScreenStateManager;
-import com.foxholedefense.screen.state.ScreenStateManager.ScreenState;
+import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
@@ -19,14 +18,14 @@ import com.foxholedefense.util.Resources;
 public class GameLoadingScreen extends AbstractScreen{
 	private Resources resources;
 	private FHDAudio audio;
-	private ScreenStateManager screenStateManager;
+	private IScreenChanger screenChanger;
 	private Stage stage;
 	private static final float MIN_LOAD_TIME = 3.50f;
 	private float loadTime = 0;
-	public GameLoadingScreen(GameStateManager gameStateManager, ScreenStateManager screenStateManager, Resources resources, FHDAudio audio ) {
+	public GameLoadingScreen(GameStateManager gameStateManager, IScreenChanger screenChanger, Resources resources, FHDAudio audio ) {
 		super(gameStateManager);
 		this.resources = resources;
-		this.screenStateManager = screenStateManager;
+		this.screenChanger = screenChanger;
 		this.audio = audio;
 		this.stage = new Stage(new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, new OrthographicCamera()));
 		super.addInputProcessor(stage);
@@ -84,7 +83,7 @@ public class GameLoadingScreen extends AbstractScreen{
 
 	public void finishedLoading() {
 		resources.initFont();
-        screenStateManager.setState(ScreenState.MENU);
+		screenChanger.changeToMenu();
 		
 	}
 

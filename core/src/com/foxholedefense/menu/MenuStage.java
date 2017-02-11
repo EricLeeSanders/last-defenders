@@ -1,15 +1,10 @@
 package com.foxholedefense.menu;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.foxholedefense.menu.ui.MenuPresenter;
 import com.foxholedefense.menu.ui.MenuView;
-import com.foxholedefense.screen.state.ScreenStateManager;
+import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
@@ -21,16 +16,14 @@ import com.foxholedefense.util.Resources;
  *
  */
 public class MenuStage extends Stage {
-	private ScreenStateManager screenStatemanager;
 	private MenuPresenter presenter;
 	private MenuView menuView;
 	private Resources resources;
-	public MenuStage(ScreenStateManager screenStateManager, Resources resources, FHDAudio audio, Viewport viewport) {
+	public MenuStage(IScreenChanger screenChanger, Resources resources, FHDAudio audio, Viewport viewport) {
 		super(viewport);
-		this.screenStatemanager = screenStateManager;
 		this.resources = resources;
 		resources.loadAtlas(Resources.MENU_ATLAS);
-		presenter = new MenuPresenter(screenStateManager, audio);
+		presenter = new MenuPresenter(screenChanger, audio);
 		menuView = new MenuView(presenter, resources);
 		presenter.setView(menuView);
 		this.addActor(menuView);

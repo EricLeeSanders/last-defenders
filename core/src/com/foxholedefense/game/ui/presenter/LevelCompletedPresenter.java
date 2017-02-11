@@ -1,29 +1,27 @@
 package com.foxholedefense.game.ui.presenter;
 
 import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.IGameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.ILevelCompletedView;
-import com.foxholedefense.screen.state.ScreenStateManager;
-import com.foxholedefense.screen.state.ScreenStateManager.ScreenState;
+import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 
 public class LevelCompletedPresenter implements IGameUIStateObserver{
 	private ILevelCompletedView view;
-	private ScreenStateManager screenStateManager;
+	private IScreenChanger screenChanger;
 	private GameStateManager gameStateManager;
 	private GameUIStateManager uiStateManager;
 	private Player player;
 	private FHDAudio audio;
 	public LevelCompletedPresenter(Player player, GameStateManager gameStateManager
-			, GameUIStateManager uiStateManager, ScreenStateManager screenStateManager, FHDAudio audio){
+			, GameUIStateManager uiStateManager, IScreenChanger screenChanger, FHDAudio audio){
 		
 		this.player = player;
-		this.screenStateManager = screenStateManager;
+		this.screenChanger = screenChanger;
 		this.gameStateManager = gameStateManager;
 		this.uiStateManager = uiStateManager;
 		this.audio = audio;
@@ -46,7 +44,7 @@ public class LevelCompletedPresenter implements IGameUIStateObserver{
 	 */
 	public void levelSelect() {
 		audio.playSound(FHDSound.SMALL_CLICK);
-		screenStateManager.setState(ScreenState.LEVEL_SELECTION);
+		screenChanger.changeToLevelSelect();
 	}
 	/**
 	 * Continue the level

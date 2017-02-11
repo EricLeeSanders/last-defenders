@@ -5,12 +5,15 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.ai.TowerAI;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
+import com.foxholedefense.util.Logger;
 
 /**
  * Represents a Tower
@@ -32,6 +35,8 @@ public abstract class Tower extends CombatActor {
 	private int kills;
 	private Pool<CombatActor> pool;
 	private boolean towerColliding;
+	private SnapshotArray<ITowerObserver> observers = new SnapshotArray<ITowerObserver>();
+
 	public Tower(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
 					float health, float armor, float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost, int rangeIncreaseCost, int attackIncreaseCost) {
 		super(textureRegion, pool, targetGroup, textureSize, gunPos, health, armor, attack, attackSpeed, range);
@@ -44,6 +49,31 @@ public abstract class Tower extends CombatActor {
 		this.rangeRegion = rangeRegion;
 		this.pool = pool;
 	}
+
+	public void detachTower(ITowerObserver observer){
+		Logger.info("Tower Detach: " + observer.getClass().getName());
+		observers.removeValue(observer, false);
+	}
+
+	public void attachAllTower(Array<ITowerObserver> observers){
+		this.observers.addAll(observers);
+	}
+
+	public void attachTower(ITowerObserver observer){
+		Logger.info("Tower Actor Attach: " + observer.getClass().getName());
+		observers.add(observer);
+	}
+
+	protected void notifyObserversTower(ITowerObserver.TowerEvent event){
+		Logger.info("Tower Actor: Notify Observers");
+		Object[] items = observers.begin();
+		for(ITowerObserver observer : observers){
+			Logger.info("Tower Actor Notifying: " + observer.getClass().getName());
+			observer.notifyTower(this, event);
+		}
+		observers.end();
+	}
+
 	/**
 	 * Gets the selling price for the tower. Adds up the upgraded attributes and
 	 * their cost and multiplies by a rate.
@@ -215,7 +245,7 @@ public abstract class Tower extends CombatActor {
 
 	public void giveKill() {
 		kills++;
-		notifyObservers();
+		notifyObserversTower(ITowerObserver.TowerEvent.KILLED_ENEMY);
 	}
 
 	public void removeTower() {

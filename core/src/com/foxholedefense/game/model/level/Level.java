@@ -9,15 +9,11 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.foxholedefense.game.GameStage;
 import com.foxholedefense.game.model.actor.ActorGroups;
+import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.health.HealthBar;
-import com.foxholedefense.game.model.level.state.ILevelStateObserver;
-import com.foxholedefense.game.model.level.state.LevelStateManager;
-import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
 import com.foxholedefense.game.service.factory.ActorFactory;
-import com.foxholedefense.util.Logger;
 
 public class Level{
 	public static final int MAX_WAVES = 1;
@@ -36,12 +32,10 @@ public class Level{
 		this.actorGroups = actorGroups;
 		this.actorFactory = actorFactory;
 		this.map = map;
-		loadWave();
 	}
 
 	/**
-	 * Updated each frame. Spawns enemies when the Level State is
-	 * SPAWNING_ENEMIES
+	 * Spwan enemies
 	 * 
 	 * @param delta
 	 */
@@ -98,7 +92,7 @@ public class Level{
 
 		}
 	}
-	
+
 	public int getSpawningEnemiesCount(){
 		return spawningEnemyQueue.size();
 	}
@@ -106,4 +100,5 @@ public class Level{
 	public int getCurrentWave() {
 		return currentWave;
 	}
+
 }

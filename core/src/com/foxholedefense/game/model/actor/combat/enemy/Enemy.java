@@ -18,6 +18,7 @@ import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.util.Dimension;
+import com.foxholedefense.util.Logger;
 
 /**
  * An abstract class that represents an Enemy. Enemies are created from the
@@ -45,6 +46,7 @@ public abstract class Enemy extends CombatActor {
 	private Animation movementAnimation;
 	private float movementAnimationStateTime;
 	private TextureRegion stationaryTextureRegion;
+	private SnapshotArray<IEnemyObserver> observers = new SnapshotArray<IEnemyObserver>();
 
 	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
 					float speed, float health, float armor, float attack, float attackSpeed, float range) {
@@ -55,6 +57,31 @@ public abstract class Enemy extends CombatActor {
 		this.pool = pool;
 		this.stationaryTextureRegion = stationaryTextureRegion;
 	}
+
+	public void detachEnemy(IEnemyObserver observer){
+		Logger.info("Enemy Detach: " + observer.getClass().getName());
+		observers.removeValue(observer, false);
+	}
+
+	public void attachAllEnemy(Array<IEnemyObserver> observers){
+		this.observers.addAll(observers);
+	}
+
+	public void attachEnemy(IEnemyObserver observer){
+		Logger.info("Enemy Actor Attach: " + observer.getClass().getName());
+		observers.add(observer);
+	}
+
+	protected void notifyObserversEnemy(IEnemyObserver.EnemyEvent event){
+		Logger.info("Enemy Actor: Notify Observers");
+		Object[] items = observers.begin();
+		for(IEnemyObserver observer : observers){
+			Logger.info("Enemy Actor Notifying: " + observer.getClass().getName());
+			observer.notifyEnemy(this, event);
+		}
+		observers.end();
+	}
+
 	/**
 	 * Sets the path for the enemy. Starts off screen.
 	 *
@@ -160,12 +187,14 @@ public abstract class Enemy extends CombatActor {
 			if (actionIndex < actionList.size) {
 				moveToNextWaypoint();
 			} else {
-				if (getStage() instanceof GameStage) {
-					((GameStage) getStage()).enemyReachedEnd();
-				}
-				pool.free(this);
+				reachedEnd();
 			}
 		}
+	}
+
+	private void reachedEnd(){
+		notifyObserversEnemy(IEnemyObserver.EnemyEvent.REACHED_END);
+		pool.free(this);
 	}
 
 	private void attackHandler(float delta){

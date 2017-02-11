@@ -1,10 +1,14 @@
 package com.foxholedefense.game.ui.view;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -16,8 +20,11 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.game.ui.presenter.HUDPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IHUDView;
+import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
+
+import javax.sound.midi.Sequence;
 
 /**
  * View for the Game HUD
@@ -163,7 +170,26 @@ public class HUDView extends Group implements IHUDView {
 
 	@Override
 	public void setLives(String lives) {
-		//lblLives.setText(lives);
+		lblLives.setText(lives);
+	}
+
+	@Override
+	public void displayMessage(String message, Vector2 centerPos, float scale) {
+
+		Label label = new Label(message.toUpperCase(), resources.getSkin(Resources.SKIN_JSON));
+		label.setAlignment(Align.center);
+		label.setFontScale(scale);
+		label.setX(ActorUtil.calcXBotLeftFromCenter(centerPos.x, label.getWidth()));
+		label.setY(ActorUtil.calcYBotLeftFromCenter(centerPos.y, label.getHeight()));
+
+		this.addActor(label);
+
+		label.addAction(
+				Actions.parallel(
+					Actions.moveTo(label.getX(), label.getY() + 50, 2),
+					Actions.fadeOut(2)));
+
+
 	}
 
 	@Override

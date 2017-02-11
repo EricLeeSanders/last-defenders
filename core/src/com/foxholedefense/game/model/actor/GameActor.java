@@ -23,8 +23,7 @@ public class GameActor extends Actor{
 	private Dimension textureSize;
 	private Vector2 positionCenter = new Vector2();
 	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
-	public GameActor(TextureRegion textureRegion, Dimension textureSize){
-		this.setTextureRegion(textureRegion);
+	public GameActor(Dimension textureSize){
 		this.setTextureSize(textureSize);
 		this.setSize(textureSize.getWidth(), textureSize.getHeight());
 		this.setOrigin(textureSize.getWidth() / 2, textureSize.getHeight() / 2);
@@ -78,7 +77,10 @@ public class GameActor extends Actor{
 			bodyOutline.end();
 			batch.begin();
 		}
-		batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getTextureSize().getWidth(), getTextureSize().getHeight(), getScaleX(), getScaleY(), getRotation());
+		TextureRegion textureRegion = getTextureRegion();
+		if(textureRegion != null) {
+			batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getTextureSize().getWidth(), getTextureSize().getHeight(), getScaleX(), getScaleY(), getRotation());
+		}
 	}
 	
 	public Vector2 getPositionCenter() {

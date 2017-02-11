@@ -1,8 +1,10 @@
 package com.foxholedefense.game.ui.presenter;
 
-import com.foxholedefense.FHDGame;
+import com.badlogic.gdx.math.Vector2;
 import com.foxholedefense.game.model.IPlayerObserver;
 import com.foxholedefense.game.model.Player;
+import com.foxholedefense.game.model.actor.combat.CombatActor;
+import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
 import com.foxholedefense.game.model.level.Level;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
@@ -22,7 +24,7 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  * @author Eric
  *
  */
-public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
+public class HUDPresenter implements IGameUIStateObserver, ICombatActorObserver, IPlayerObserver {
 	private LevelStateManager levelStateManager;
 	private GameUIStateManager uiStateManager;
 	private GameStateManager gameStateManager;
@@ -140,4 +142,17 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 		}
 	}
 
+	@Override
+	public void notifyCombatActor(CombatActor actor, CombatActorEvent event) {
+
+		switch(event){
+			case ARMOR_BROKEN:
+				view.displayMessage("ARMOR BROKEN", actor.getPositionCenter(), 0.3f);
+				break;
+			default:
+				break;
+
+		}
+
+	}
 }

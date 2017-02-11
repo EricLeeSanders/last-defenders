@@ -1,5 +1,7 @@
 package com.foxholedefense.game.ui.view.interfaces;
 
+import com.badlogic.gdx.math.Vector2;
+
 /**
  * Interface for HUD View. Used by the HUD Presenter to communicate with the
  * view
@@ -22,6 +24,7 @@ public interface IHUDView {
 
 	public void waveInProgressState();
 
+	public void displayMessage(String message, Vector2 centerPos, float scale);
 
 	public void setMoney(String money);
 

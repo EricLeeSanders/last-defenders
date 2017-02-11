@@ -5,8 +5,7 @@ import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.IGameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IGameOverView;
-import com.foxholedefense.screen.state.ScreenStateManager;
-import com.foxholedefense.screen.state.ScreenStateManager.ScreenState;
+import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 
@@ -18,13 +17,13 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  */
 public class GameOverPresenter implements IGameUIStateObserver {
 	private Player player;
-	private ScreenStateManager screenStateManager;
+	private IScreenChanger screenChanger;
 	private GameUIStateManager uiStateManager;
 	private IGameOverView view;
 	private FHDAudio audio;
-	public GameOverPresenter(GameUIStateManager uiStateManager, ScreenStateManager screenStateManager, Player player, FHDAudio audio) {
+	public GameOverPresenter(GameUIStateManager uiStateManager, IScreenChanger screenChanger, Player player, FHDAudio audio) {
 		this.player = player;
-		this.screenStateManager = screenStateManager;
+		this.screenChanger = screenChanger;
 		this.uiStateManager = uiStateManager;
 		this.audio = audio;
 		uiStateManager.attach(this);
@@ -52,7 +51,7 @@ public class GameOverPresenter implements IGameUIStateObserver {
 	 */
 	public void newGame() {
 		audio.playSound(FHDSound.SMALL_CLICK);
-		screenStateManager.setState(ScreenState.LEVEL_SELECTION);
+		screenChanger.changeToLevelSelect();
 
 	}
 
@@ -61,7 +60,7 @@ public class GameOverPresenter implements IGameUIStateObserver {
 	 */
 	public void mainMenu() {
 		audio.playSound(FHDSound.SMALL_CLICK);
-		screenStateManager.setState(ScreenState.MENU);
+		screenChanger.changeToMenu();
 
 	}
 
