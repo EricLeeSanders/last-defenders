@@ -176,20 +176,6 @@ public class HUDView extends Group implements IHUDView {
 	@Override
 	public void displayMessage(String message, Vector2 centerPos, float scale) {
 
-		Label label = new Label(message.toUpperCase(), resources.getSkin(Resources.SKIN_JSON));
-		label.setAlignment(Align.center);
-		label.setFontScale(scale);
-		label.setX(ActorUtil.calcXBotLeftFromCenter(centerPos.x, label.getWidth()));
-		label.setY(ActorUtil.calcYBotLeftFromCenter(centerPos.y, label.getHeight()));
-
-		this.addActor(label);
-
-		label.addAction(
-				Actions.parallel(
-					Actions.moveTo(label.getX(), label.getY() + 50, 2),
-					Actions.fadeOut(2)));
-
-
 	}
 
 	@Override
