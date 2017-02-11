@@ -93,7 +93,6 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		HUDPresenter hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player, resources, audio);
 		HUDView hudView = new HUDView(hudPresenter, skin, resources);
 		hudPresenter.setView(hudView);
-		gameStage.attachCombatObserver(hudPresenter);
 
 		InspectPresenter inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager, player, towerGroup, audio);
 		InspectView inspectView = new InspectView(inspectPresenter, skin);

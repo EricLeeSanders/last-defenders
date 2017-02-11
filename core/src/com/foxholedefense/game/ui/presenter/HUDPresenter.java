@@ -24,7 +24,7 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  * @author Eric
  *
  */
-public class HUDPresenter implements IGameUIStateObserver, ICombatActorObserver, IPlayerObserver {
+public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	private LevelStateManager levelStateManager;
 	private GameUIStateManager uiStateManager;
 	private GameStateManager gameStateManager;
@@ -140,19 +140,5 @@ public class HUDPresenter implements IGameUIStateObserver, ICombatActorObserver,
 		} else {
 			view.setWaveCount(String.valueOf(player.getWaveCount()) + "/" + Level.MAX_WAVES);
 		}
-	}
-
-	@Override
-	public void notifyCombatActor(CombatActor actor, CombatActorEvent event) {
-
-		switch(event){
-			case ARMOR_BROKEN:
-				view.displayMessage("ARMOR BROKEN", actor.getPositionCenter(), 0.3f);
-				break;
-			default:
-				break;
-
-		}
-
 	}
 }

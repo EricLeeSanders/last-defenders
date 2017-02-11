@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.SnapshotArray;
@@ -36,6 +37,7 @@ import com.foxholedefense.game.model.actor.support.SupportActor;
 import com.foxholedefense.game.service.factory.interfaces.*;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.Resources;
 
 /**
  * Factory class for obtaining from a pool, various actors
@@ -81,12 +83,14 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 
 	private FHDAudio audio;
 	private ActorGroups actorGroups;
+	private Resources resources;
 
 	private Map<String, TextureRegion> loadedTextures = new HashMap<String, TextureRegion>();
 	private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<String, Array<AtlasRegion>>();
-	public ActorFactory(ActorGroups actorGroups, TextureAtlas actorAtlas, FHDAudio audio){
+	public ActorFactory(ActorGroups actorGroups, TextureAtlas actorAtlas, FHDAudio audio, Resources resources){
 		this.actorGroups = actorGroups;
 		this.audio = audio;
+		this.resources = resources;
 		initCombatActorPools(actorGroups);
 		initTextures(actorAtlas);
 		
@@ -533,7 +537,8 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	}
 
 	protected ArmorDestroyedEffect createArmorDestroyedEffect(){
-		return new ArmorDestroyedEffect(loadedAtlasRegions.get("shield-destroyed"), armorDestroyedEffectPool);
+		Label label = new Label("", resources.getSkin(Resources.SKIN_JSON));
+		return new ArmorDestroyedEffect(loadedAtlasRegions.get("shield-destroyed"), armorDestroyedEffectPool,label);
 	}
 	
 	/**
