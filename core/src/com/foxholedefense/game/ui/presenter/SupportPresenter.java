@@ -151,12 +151,14 @@ public class SupportPresenter implements IGameUIStateObserver {
 	/**
 	 * Cancel Support
 	 */
-	public void cancelSupport() {
+	public void cancelSupport(boolean returnState) {
 		audio.playSound(FHDSound.SMALL_CLICK);
 		supportActorPlacement.removeCurrentSupportActor();
 		airStrikePlacement.removeCurrentAirStrike();	
 		supplyDropPlacement.removeCurrentSupplyDropCrate();
-		uiStateManager.setStateReturn();
+		if(returnState) {
+			uiStateManager.setStateReturn();
+		}
 	}
 	
 	public int getPlayerMoney(){
@@ -203,6 +205,10 @@ public class SupportPresenter implements IGameUIStateObserver {
 		case PLACING_AIRSTRIKE:
 		case PLACING_SUPPLYDROP:
 			view.placingSupportState();
+			break;
+		case GAME_OVER:
+		case LEVEL_COMPLETED:
+			cancelSupport(false);
 			break;
 		default:
 			view.standByState();
