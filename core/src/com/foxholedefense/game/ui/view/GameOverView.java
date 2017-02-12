@@ -41,7 +41,7 @@ public class GameOverView extends Group implements IGameOverView {
 		Table table = new Table();
 		table.setTransform(false);
 		table.setBackground(skin.getDrawable("main-panel"));
-		table.setSize(400,300);
+		table.setSize(300,300);
 		table.setPosition((Resources.VIRTUAL_WIDTH/2)-(table.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(table.getHeight()/2));
 		this.addActor(table);
 		
@@ -57,7 +57,7 @@ public class GameOverView extends Group implements IGameOverView {
 		lblWavesCompleted = new Label("0", skin, "hollow_label");
 		lblWavesCompleted.setFontScale(0.45f);
 		lblWavesCompleted.setAlignment(Align.center);
-		table.add(lblWavesCompleted).width(225).height(75).padTop(35);
+		table.add(lblWavesCompleted).width(225).height(40);
 
 		
 		table.row();
@@ -91,7 +91,7 @@ public class GameOverView extends Group implements IGameOverView {
 
 	@Override
 	public void setWavesCompleted(String wavesCompleted) {
-		lblWavesCompleted.setText("WAVES COMPLETED\n" + wavesCompleted);
+		lblWavesCompleted.setText(wavesCompleted + " WAVES COMPLETED");
 	}
 
 	private void setBtnNewGameListener() {
