@@ -207,7 +207,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.cancelSupport();
+				presenter.cancelSupport(true);
 			}
 		});
 	}
@@ -226,7 +226,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.cancelSupport();
+				presenter.cancelSupport(true);
 			}
 		});
 	}
