@@ -143,9 +143,9 @@ public class GameStage extends Stage implements IEnemyObserver{
 				player.giveMoney((int) (100 * (float) level.getCurrentWave()));
 				levelStateManager.setState(LevelState.STANDBY);
 				player.setWaveCount(player.getWaveCount() + 1);
+				isLevelCompleted();
 				level.loadWave(); //load the next wave
 				healTowers();
-				isLevelCompleted();
 				return true;
 		}
 		return false;
@@ -167,11 +167,12 @@ public class GameStage extends Stage implements IEnemyObserver{
 	private void healTowers(){
 		for(Actor tower : actorGroups.getTowerGroup().getChildren()){
 			if (tower instanceof Tower){
+				if(((Tower)tower).isActive()) {
+					TowerHealEffect effect = actorFactory.loadTowerHealEffect();
+					effect.initialize((Tower) tower);
 
-				TowerHealEffect effect = actorFactory.loadTowerHealEffect();
-				effect.initialize((Tower)tower);
-
-				((Tower)tower).heal();
+					((Tower) tower).heal();
+				}
 			}
 		}
 	}
