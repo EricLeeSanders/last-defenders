@@ -46,6 +46,14 @@ public class LevelCompletedPresenter implements IGameUIStateObserver{
 		audio.playSound(FHDSound.SMALL_CLICK);
 		screenChanger.changeToLevelSelect();
 	}
+
+	/**
+	 * Change to main menu
+	 */
+	public void mainMenu() {
+		audio.playSound(FHDSound.SMALL_CLICK);
+		screenChanger.changeToMenu();
+	}
 	/**
 	 * Continue the level
 	 */
