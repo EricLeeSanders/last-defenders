@@ -6,7 +6,7 @@ filter: Linear,Linear
 repeat: none
 img-loading
   rotate: false
-  xy: 1571, 1075
+  xy: 1571, 1021
   size: 259, 57
   orig: 259, 57
   offset: 0, 0
@@ -14,8 +14,8 @@ img-loading
 level-load-bar
   rotate: false
   xy: 1, 7
-  size: 1280, 108
-  orig: 1280, 108
+  size: 638, 54
+  orig: 638, 54
   offset: 0, 0
   index: -1
 level-load-bar-bg
@@ -27,7 +27,7 @@ level-load-bar-bg
   index: -1
 level-load-screen
   rotate: false
-  xy: 1, 117
+  xy: 1, 63
   size: 1568, 1015
   orig: 1568, 1015
   offset: 0, 0
