@@ -37,14 +37,12 @@ public class ArmorDestroyedEffect extends Actor implements Pool.Poolable {
         this.pool = pool;
         this.label = label;
 
-        label.setText("ARMOR DESTROYED");
         label.setAlignment(Align.center);
         label.setFontScale(0.3f);
     }
 
     public Actor initialize(CombatActor actor){
         this.actor = actor;
-        System.out.println("Destroy INIT");
         label.setX(ActorUtil.calcXBotLeftFromCenter(actor.getPositionCenter().x, label.getWidth()));
         label.setY(ActorUtil.calcYBotLeftFromCenter(actor.getPositionCenter().y, label.getHeight()));
 
@@ -84,7 +82,6 @@ public class ArmorDestroyedEffect extends Actor implements Pool.Poolable {
 
     @Override
     public void reset() {
-        System.out.println("Reset DESTROY EFECT");
         this.actor = null;
         this.remove();
         stateTime = 0;
