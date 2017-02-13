@@ -41,7 +41,7 @@ public class GameOverView extends Group implements IGameOverView {
 		Table table = new Table();
 		table.setTransform(false);
 		table.setBackground(skin.getDrawable("main-panel"));
-		table.setSize(300,300);
+		table.setSize(325,300);
 		table.setPosition((Resources.VIRTUAL_WIDTH/2)-(table.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(table.getHeight()/2));
 		this.addActor(table);
 		
@@ -57,7 +57,7 @@ public class GameOverView extends Group implements IGameOverView {
 		lblWavesCompleted = new Label("0", skin, "hollow_label");
 		lblWavesCompleted.setFontScale(0.45f);
 		lblWavesCompleted.setAlignment(Align.center);
-		table.add(lblWavesCompleted).width(225).height(40);
+		table.add(lblWavesCompleted).width(275).height(40);
 
 		
 		table.row();
