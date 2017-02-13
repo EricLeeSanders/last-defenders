@@ -30,7 +30,7 @@ public abstract class Tower extends CombatActor {
 	private int cost, armorCost, speedIncreaseCost, rangeIncreaseCost, attackIncreaseCost;
 	private boolean rangeIncreaseEnabled, speedIncreaseEnabled, attackIncreaseEnabled;
 	private TowerAI ai = TowerAI.FIRST;
-	private boolean active, showRange; 
+	private boolean showRange;
 	private float attackCounter = getAttackSpeed(); //ready to attack
 	private TextureRegion rangeRegion, collidingRangeRegion;
 	private int kills;
@@ -162,7 +162,6 @@ public abstract class Tower extends CombatActor {
 		attackIncreaseEnabled = false;
 		kills = 0;
 		this.setShowRange(false);
-		setActive(false);
 	}
 
 	/**
@@ -171,16 +170,6 @@ public abstract class Tower extends CombatActor {
 	public void findTarget() {
 		setTarget(getAI().findTarget(this, getTargetGroup().getChildren()));
 	}
-
-	public boolean isActive() {
-		return active;
-	}
-
-	/**
-	 * Used for placing an actor. Need this so that when an actor is
-	 * being placed it does not attack enemies, and vice versa.
-	 */
-	public void setActive(boolean active) {	this.active = active; }
 
 	public void heal() {
 		resetHealth();
