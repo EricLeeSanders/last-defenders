@@ -36,7 +36,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private ITargetable target;
 	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private Circle rangeCircle = new Circle();
-	private boolean hasArmor, dead;
+	private boolean hasArmor, dead, active;
 	private Pool<CombatActor> pool;
 	private SnapshotArray<ICombatActorObserver> observers = new SnapshotArray<ICombatActorObserver>();
 	private Group targetGroup;
@@ -96,6 +96,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.setRotation(0);
 		this.clear();
 		this.remove();
+		setActive(false);
 	}
 
 	@Override
@@ -268,7 +269,16 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public Group getTargetGroup(){
 		return targetGroup;
 	}
-	
-	
+
+	/**
+	 * Combat actor is an active actor on the stage.
+	 * It can be targeted, and attacked.
+	 * @return
+     */
+	public boolean isActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {	this.active = active; }
 
 }
