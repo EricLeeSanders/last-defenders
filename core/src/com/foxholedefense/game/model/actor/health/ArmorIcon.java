@@ -45,8 +45,7 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
     public void act(float delta) {
 
         super.act(delta);
-        if (actor == null || actor.isDead() ||
-                (actor instanceof Tower && !((Tower)actor).isActive())) {
+        if (actor == null || actor.isDead() || !actor.isActive()) {
             pool.free(this);
             return;
         }

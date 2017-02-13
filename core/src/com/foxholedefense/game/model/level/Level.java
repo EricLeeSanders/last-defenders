@@ -50,6 +50,7 @@ public class Level{
 				healthBar.setActor(enemy.getEnemy());
 				ArmorIcon armorIcon = actorFactory.loadArmorIcon();
 				armorIcon.setActor(enemy.getEnemy());
+				enemy.getEnemy().setActive(true);
 				enemyDelay = enemy.getDelay();
 			} else {
 				delayCount += delta;
