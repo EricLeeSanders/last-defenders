@@ -552,7 +552,6 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	}
 
 	protected TowerHealEffect createTowerHealEffect(){
-		System.out.println("CREATING TOWER HEAL EFFECT");
 		return new TowerHealEffect(towerHealEffectPool, resources.getSkin(Resources.SKIN_JSON));
 	}
 	
@@ -586,9 +585,6 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 			TextureRegion [] textureRegions = loadedAtlasRegions.get("apache").toArray(TextureRegion.class);
 			TextureRegion rangeTexture = loadedTextures.get("range-white");
 			TextureRegion stationaryRegion = loadedTextures.get("apache-stationary");
-			if(stationaryRegion == null){
-				System.out.println("is nulL!");
-			}
 			return new Apache(apachePool, targetGroup, this,stationaryRegion, textureRegions, rangeTexture, audio);
 		} else if(type.equals(AirStrike.class)){
 			TextureRegion textureRegion = loadedTextures.get("airstrike");
