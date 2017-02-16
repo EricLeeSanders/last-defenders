@@ -43,8 +43,8 @@ public class TowerTurret extends Tower implements IRotatable {
 	public static final int SPEED_INCREASE_COST = 500;
 	public static final int ATTACK_INCREASE_COST = 500;
 	public static final Vector2 GUN_POS = new Vector2(26, -4);
-	public static final Dimension TEXTURE_BODY_SIZE = new Dimension(56, 60);
-	public static final Dimension TEXTURE_TURRET_SIZE = new Dimension(56, 32);
+	public static final Dimension TEXTURE_BODY_SIZE = new Dimension(42,78);
+	public static final Dimension TEXTURE_TURRET_SIZE = new Dimension(71, 24);
 	private float[] rangeCoords = { (TEXTURE_BODY_SIZE.getWidth() / 2)
 			, (TEXTURE_BODY_SIZE.getHeight() / 2)
 			, RANGE + (TEXTURE_BODY_SIZE.getWidth() / 2)

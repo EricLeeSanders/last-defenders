@@ -43,8 +43,8 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	public static final float AOE_RADIUS = 75f;
 	public static final Dimension RPG_SIZE = new Dimension(7, 7);
 	public static final Vector2 GUN_POS = new Vector2(57, 0);
-	public static final Dimension TEXTURE_BODY_SIZE = new Dimension(76, 50);
-	public static final Dimension TEXTURE_TURRET_SIZE = new Dimension(120, 22);
+	public static final Dimension TEXTURE_BODY_SIZE = new Dimension(116, 76);
+	public static final Dimension TEXTURE_TURRET_SIZE = new Dimension(209,41);
 	private float[] bodyPoints = { 0, 0, 0, 50, 76, 50, 76, 0 };
 	private Polygon body;
 	private TextureRegion bodyRegion;

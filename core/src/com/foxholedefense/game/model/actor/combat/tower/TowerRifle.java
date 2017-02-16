@@ -33,7 +33,7 @@ public class TowerRifle extends Tower {
 	public static final int SPEED_INCREASE_COST = 50;
 	public static final int ATTACK_INCREASE_COST = 50;
 	public static final Vector2 GUN_POS = new Vector2(26, -4);
-	public static final Dimension TEXTURE_SIZE = new Dimension(56, 32);
+	public static final Dimension TEXTURE_SIZE = new Dimension(56, 26);
 	private Circle body;
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;
