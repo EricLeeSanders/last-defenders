@@ -37,6 +37,7 @@ public class ArmorDestroyedEffect extends Actor implements Pool.Poolable {
         this.pool = pool;
         this.label = label;
 
+        label.setText("ARMOR DESTROYED");
         label.setAlignment(Align.center);
         label.setFontScale(0.3f);
     }
