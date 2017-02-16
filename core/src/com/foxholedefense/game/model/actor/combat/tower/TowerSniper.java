@@ -34,7 +34,7 @@ public class TowerSniper extends Tower {
 	public static final int ATTACK_INCREASE_COST = 100;
 	public static final Dimension BULLET_SIZE = new Dimension(5, 5);
 	public static final Vector2 GUN_POS = new Vector2(26, -4);
-	public static final Dimension TEXTURE_SIZE = new Dimension(56, 32);
+	public static final Dimension TEXTURE_SIZE = new Dimension(80,30);
 	private Circle body;
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;
