@@ -7,7 +7,7 @@ import com.foxholedefense.util.Dimension;
 
 public class BloodSplatter extends DeathEffect {
 	public BloodSplatter(Pool<DeathEffect> pool, Array<AtlasRegion> atlasRegions) {
-		super(pool, atlasRegions, new Dimension(48,48));
+		super(pool, atlasRegions);
 		setRotation(90);
 	}
 

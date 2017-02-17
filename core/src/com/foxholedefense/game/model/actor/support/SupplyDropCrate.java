@@ -34,7 +34,7 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 	private TextureRegion rangeTexture;
 	public SupplyDropCrate(TextureRegion textureRegion, TextureRegion rangeTexture, SupplyDropCratePool pool,
 						   Group towerGroup, IHealthFactory healthFactory) {
-		super(new Dimension(50, 50));
+		super(textureRegion);
 		this.pool = pool;
 		this.towerGroup = towerGroup;
 		this.rangeTexture = rangeTexture;

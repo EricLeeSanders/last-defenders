@@ -16,6 +16,7 @@ import com.foxholedefense.game.model.actor.interfaces.IRotatable;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
+import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
@@ -43,17 +44,10 @@ public class TowerTurret extends Tower implements IRotatable {
 	public static final int SPEED_INCREASE_COST = 500;
 	public static final int ATTACK_INCREASE_COST = 500;
 	public static final Vector2 GUN_POS = new Vector2(26, -4);
-	public static final Dimension TEXTURE_BODY_SIZE = new Dimension(42,78);
-	public static final Dimension TEXTURE_TURRET_SIZE = new Dimension(71, 24);
-	private float[] rangeCoords = { (TEXTURE_BODY_SIZE.getWidth() / 2)
-			, (TEXTURE_BODY_SIZE.getHeight() / 2)
-			, RANGE + (TEXTURE_BODY_SIZE.getWidth() / 2)
-			, (RANGE/2) + (TEXTURE_BODY_SIZE.getHeight() / 2)
-			, RANGE + (TEXTURE_BODY_SIZE.getWidth() / 2)
-			, (TEXTURE_BODY_SIZE.getHeight() / 2) - (RANGE/2)};
+	private float[] rangeCoords = new float[6];
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
-	private float[] rangeTransformedVertices;
+
 	private ShapeRenderer rangeOutline = Resources.getShapeRenderer();
 	private ShapeRenderer turretOutline = Resources.getShapeRenderer();
 	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
@@ -64,8 +58,9 @@ public class TowerTurret extends Tower implements IRotatable {
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
 	private TextureRegion rangeRegion, collidingRangeRegion;
+
 	public TowerTurret(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
-		super(turretRegion, pool, targetGroup, TEXTURE_TURRET_SIZE, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
+		super(turretRegion, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.bodyRegion = bodyRegion;
 		this.turretRegion = turretRegion;
 		this.audio = audio;
@@ -75,7 +70,19 @@ public class TowerTurret extends Tower implements IRotatable {
 		this.rangeRegion = rangeRegion;
 		this.collidingRangeRegion = collidingRangeRegion;
 
+
+		createRangeCoords();
 		rangePoly = new Polygon(rangeCoords);
+	}
+
+	private void createRangeCoords(){
+
+		rangeCoords[0] = (bodyRegion.getRegionWidth() / 2);
+		rangeCoords[1] = (bodyRegion.getRegionHeight() / 2);
+		rangeCoords[2] = RANGE + (bodyRegion.getRegionWidth() / 2);
+		rangeCoords[3] = (RANGE/2) + (bodyRegion.getRegionHeight() / 2);
+		rangeCoords[4] = RANGE + (bodyRegion.getRegionWidth() / 2);
+		rangeCoords[5] = (bodyRegion.getRegionHeight() / 2) - (RANGE/2);
 	}
 
 	/**
@@ -101,7 +108,7 @@ public class TowerTurret extends Tower implements IRotatable {
 			turretOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			turretOutline.begin(ShapeType.Line);
 			turretOutline.setColor(Color.YELLOW);
-			turretOutline.rect(getX(),getY(), getTextureSize().getWidth(), getTextureSize().getHeight());
+			turretOutline.rect(getX(),getY(), getWidth(), getHeight());
 			turretOutline.end();
 			
 			rangeOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
@@ -114,8 +121,11 @@ public class TowerTurret extends Tower implements IRotatable {
 		if (isShowRange()) {
 			drawRange(batch);
 		}
-		batch.draw(bodyRegion, this.getPositionCenter().x - (TEXTURE_BODY_SIZE.getWidth() / 2), this.getPositionCenter().y - (TEXTURE_BODY_SIZE.getHeight() / 2)
-				, TEXTURE_BODY_SIZE.getWidth() / 2, TEXTURE_BODY_SIZE.getHeight() / 2, TEXTURE_BODY_SIZE.getWidth(), TEXTURE_BODY_SIZE.getHeight()
+
+		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, bodyRegion.getRegionWidth());
+		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, bodyRegion.getRegionHeight());
+
+		batch.draw(bodyRegion, x, y	, bodyRegion.getRegionWidth() / 2, bodyRegion.getRegionHeight() / 2, bodyRegion.getRegionWidth(), bodyRegion.getRegionHeight()
 				, 1, 1, bodyRotation);
 		//batch.draw(turretRegion, getX(), getY(), getOriginX(), getOriginY(), TEXTURE_TURRET_SIZE.getWidth(), TEXTURE_TURRET_SIZE.getHeight(), 1, 1, getRotation());
 		super.draw(batch, alpha);
@@ -152,9 +162,13 @@ public class TowerTurret extends Tower implements IRotatable {
 
 	@Override
 	public Shape2D getRangeShape() {
-		rangePoly.setOrigin((TEXTURE_BODY_SIZE.getWidth() / 2), (TEXTURE_BODY_SIZE.getHeight() / 2));
+
+		rangePoly.setOrigin(getOriginX(), getOriginY());
 		rangePoly.setRotation(bodyRotation);
-		rangePoly.setPosition(getPositionCenter().x - (TEXTURE_BODY_SIZE.getWidth() / 2), getPositionCenter().y - (TEXTURE_BODY_SIZE.getHeight() / 2));
+
+		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, bodyRegion.getRegionWidth());
+		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, bodyRegion.getRegionHeight());
+		rangePoly.setPosition(x, y);
 		return rangePoly;
 	}
 
@@ -170,10 +184,10 @@ public class TowerTurret extends Tower implements IRotatable {
 	@Override
 	public void increaseRange() {
 		super.increaseRange();
-		rangeCoords[2] = getRange() + (TEXTURE_BODY_SIZE.getWidth() / 2);
-		rangeCoords[3] = (getRange()/2) + (TEXTURE_BODY_SIZE.getHeight() / 2);
-		rangeCoords[4] = getRange() + (TEXTURE_BODY_SIZE.getWidth() / 2);
-		rangeCoords[5] = (TEXTURE_BODY_SIZE.getHeight() / 2) - (getRange()/2);
+		rangeCoords[2] = getRange() + (bodyRegion.getRegionWidth() / 2);
+		rangeCoords[3] = (getRange()/2) + (bodyRegion.getRegionHeight() / 2);
+		rangeCoords[4] = getRange() + (bodyRegion.getRegionWidth() / 2);
+		rangeCoords[5] = (bodyRegion.getRegionHeight() / 2) - (getRange()/2);
 		rangePoly.setVertices(rangeCoords);
 	}
 

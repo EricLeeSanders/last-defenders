@@ -20,13 +20,12 @@ import com.foxholedefense.util.Resources;
 
 public class GameActor extends Actor{
 	private TextureRegion textureRegion;
-	private Dimension textureSize;
 	private Vector2 positionCenter = new Vector2();
 	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
-	public GameActor(Dimension textureSize){
-		this.setTextureSize(textureSize);
-		this.setSize(textureSize.getWidth(), textureSize.getHeight());
-		this.setOrigin(textureSize.getWidth() / 2, textureSize.getHeight() / 2);
+	public GameActor(TextureRegion textureRegion){
+		this.setTextureRegion(textureRegion);
+		this.setSize(textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
+		this.setOrigin(getWidth() / 2, getHeight() / 2);
 	}
 
 	public Vector2 getRotatedCoords(float x, float y) {
@@ -73,13 +72,13 @@ public class GameActor extends Actor{
 			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			bodyOutline.begin(ShapeType.Line);
 			bodyOutline.setColor(Color.BLUE);
-			bodyOutline.rect(getX(),getY(), textureSize.getWidth(), textureSize.getHeight());
+			bodyOutline.rect(getX(),getY(), getWidth(), getHeight());
 			bodyOutline.end();
 			batch.begin();
 		}
 		TextureRegion textureRegion = getTextureRegion();
 		if(textureRegion != null) {
-			batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getTextureSize().getWidth(), getTextureSize().getHeight(), getScaleX(), getScaleY(), getRotation());
+			batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 		}
 	}
 	
@@ -94,14 +93,6 @@ public class GameActor extends Actor{
 	
 	public void setPositionCenter(float x, float y){
 		setPosition(x - getOriginX(), y - getOriginY());
-	}
-
-	public Dimension getTextureSize() {
-		return textureSize;
-	}
-
-	public void setTextureSize(Dimension textureSize) {
-		this.textureSize = textureSize;
 	}
 
 	public TextureRegion getTextureRegion() {
