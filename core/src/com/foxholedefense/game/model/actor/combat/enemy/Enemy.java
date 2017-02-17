@@ -48,9 +48,9 @@ public abstract class Enemy extends CombatActor {
 	private TextureRegion stationaryTextureRegion;
 	private SnapshotArray<IEnemyObserver> observers = new SnapshotArray<IEnemyObserver>();
 
-	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, Dimension textureSize, Vector2 gunPos,
+	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
 					float speed, float health, float armor, float attack, float attackSpeed, float range) {
-		super(stationaryTextureRegion, pool, targetGroup, textureSize, gunPos, health, armor, attack, attackSpeed, range);
+		super(stationaryTextureRegion, pool, targetGroup, gunPos, health, armor, attack, attackSpeed, range);
 		movementAnimation = new Animation(0.3f, animatedRegions);
 		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		this.speed = speed;
@@ -102,7 +102,7 @@ public abstract class Enemy extends CombatActor {
 		// The enemy always faces its target (tower or way point) and the top/front of the enemy needs to be off screen.
 		// That ensures that the entire body of the enemy is off the screen when spawning.
 		// rotatedCoords are the coords of the top/front of the enemy.
-		Vector2 rotatedCoords = getRotatedCoords(this.getX() + this.getTextureSize().getWidth(), this.getPositionCenter().y );
+		Vector2 rotatedCoords = getRotatedCoords(this.getX() + getWidth(), this.getPositionCenter().y );
 
 		// Reposition the enemy so that it is off the screen
 		float newX = this.getPositionCenter().x + (this.getPositionCenter().x - rotatedCoords.x);

@@ -14,11 +14,9 @@ public abstract class DeathEffect extends GameActor implements Pool.Poolable {
 	private Pool<DeathEffect> pool;
 	private Animation animation;
 	private float stateTime;
-	private Dimension size;
-	public DeathEffect(Pool<DeathEffect> pool, Array<AtlasRegion> regions, Dimension size){
-		super(size);
+	public DeathEffect(Pool<DeathEffect> pool, Array<AtlasRegion> regions){
+		super(regions.get(0));
 		this.pool = pool;
-		this.size = size;
 		animation = new Animation(0.05f, regions);
 		animation.setPlayMode(PlayMode.NORMAL);
 	}

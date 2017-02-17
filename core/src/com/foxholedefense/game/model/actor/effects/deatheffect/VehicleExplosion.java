@@ -7,7 +7,7 @@ import com.foxholedefense.util.Dimension;
 
 public class VehicleExplosion extends DeathEffect{
 	public VehicleExplosion(Pool<DeathEffect> pool, Array<AtlasRegion> atlasRegions){
-		super(pool, atlasRegions, new Dimension(128,128));
+		super(pool, atlasRegions);
 		setRotation(90);
 	}
 }
