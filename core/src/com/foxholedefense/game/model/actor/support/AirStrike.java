@@ -51,8 +51,7 @@ public class AirStrike extends SupportActor implements IRpg{
 	private TextureRegion rangeTexture;
 
 	public AirStrike(SupportActorPool<AirStrike> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion textureRegion, TextureRegion rangeTexture, FHDAudio audio) {
-		super(pool, targetGroup, textureRegion, rangeTexture, new Dimension(textureRegion.getRegionWidth(), textureRegion.getRegionHeight())
-				,AIRSTRIKE_RADIUS,ATTACK, GUN_POS, COST);
+		super(pool, targetGroup, textureRegion, rangeTexture, AIRSTRIKE_RADIUS, ATTACK, GUN_POS, COST);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
 		this.rangeTexture = rangeTexture;

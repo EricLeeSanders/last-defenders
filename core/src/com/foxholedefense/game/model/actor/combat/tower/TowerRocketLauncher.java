@@ -34,14 +34,13 @@ public class TowerRocketLauncher extends Tower implements IRpg {
 	public static final int ATTACK_INCREASE_COST = 450;
 	public static final float AOE_RADIUS = 50f;
 	public static final Dimension RPG_SIZE = new Dimension(7, 7);
-	public static final Vector2 GUN_POS = new Vector2(26, -4);
-	public static final Dimension TEXTURE_SIZE = new Dimension(56, 32);
+	public static final Vector2 GUN_POS = new Vector2(27, -4);
 	private Circle body;
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
 	public TowerRocketLauncher(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
-		super(actorRegion, pool, targetGroup, TEXTURE_SIZE, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
+		super(actorRegion, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.audio = audio;
 		this.deathEffectFactory = deathEffectFactory;
 		this.projectileFactory = projectileFactory;

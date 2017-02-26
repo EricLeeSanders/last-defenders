@@ -43,9 +43,7 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	public static final float AOE_RADIUS = 75f;
 	public static final Dimension RPG_SIZE = new Dimension(7, 7);
 	public static final Vector2 GUN_POS = new Vector2(57, 0);
-	public static final Dimension TEXTURE_BODY_SIZE = new Dimension(76, 50);
-	public static final Dimension TEXTURE_TURRET_SIZE = new Dimension(120, 22);
-	private float[] bodyPoints = { 0, 0, 0, 50, 76, 50, 76, 0 };
+	private float[] bodyPoints = { 0, 0, 0, 50, 75, 50, 75, 0 };
 	private Polygon body;
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
@@ -55,7 +53,7 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
 	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory) {
-		super(turretRegion, pool, targetGroup, TEXTURE_TURRET_SIZE, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
+		super(turretRegion, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.bodyRegion = bodyRegion;
 		this.turretRegion = turretRegion;
 		this.deathEffectFactory = deathEffectFactory;
@@ -89,16 +87,17 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 			turretOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			turretOutline.begin(ShapeType.Line);
 			turretOutline.setColor(Color.YELLOW);
-			turretOutline.rect(getX(),getY(), getTextureSize().getWidth(), getTextureSize().getHeight());
+			turretOutline.rect(getX(),getY(), getWidth(), getHeight());
 			turretOutline.end();
 
 			batch.begin();
 		}
-
-		batch.draw(bodyRegion, this.getPositionCenter().x - (TEXTURE_BODY_SIZE.getWidth() / 2), this.getPositionCenter().y - (TEXTURE_BODY_SIZE.getHeight() / 2)
-				, TEXTURE_BODY_SIZE.getWidth() / 2, TEXTURE_BODY_SIZE.getHeight() / 2, TEXTURE_BODY_SIZE.getWidth(), TEXTURE_BODY_SIZE.getHeight()
+		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, bodyRegion.getRegionWidth());
+		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, bodyRegion.getRegionHeight());
+		// draw body
+		batch.draw(bodyRegion, x, y, bodyRegion.getRegionWidth() / 2, bodyRegion.getRegionHeight() / 2, bodyRegion.getRegionWidth(), bodyRegion.getRegionHeight()
 				, 1, 1, bodyRotation);
-		batch.draw(turretRegion, getX(), getY(), getOriginX(), getOriginY(), TEXTURE_TURRET_SIZE.getWidth(), TEXTURE_TURRET_SIZE.getHeight(), 1, 1, getRotation());
+		batch.draw(turretRegion, getX(), getY(), getOriginX(), getOriginY(), turretRegion.getRegionWidth(), turretRegion.getRegionHeight(), 1, 1, getRotation());
 	}
 
 	/**
@@ -107,9 +106,14 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	 */
 	@Override
 	public Polygon getBody() {
-		body.setOrigin((TEXTURE_BODY_SIZE.getWidth() / 2), (TEXTURE_BODY_SIZE.getHeight() / 2));
+
+		body.setOrigin(bodyRegion.getRegionWidth()/2, bodyRegion.getRegionHeight()/2);
 		body.setRotation(bodyRotation);
-		body.setPosition(ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, TEXTURE_BODY_SIZE.getWidth()), ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, TEXTURE_BODY_SIZE.getHeight()));
+
+		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, bodyRegion.getRegionWidth());
+		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, bodyRegion.getRegionHeight());
+		body.setPosition(x, y);
+
 		return body;
 	}
 
