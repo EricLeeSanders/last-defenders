@@ -177,8 +177,10 @@ public abstract class Enemy extends CombatActor {
 	}
 
 	private void moveToNextWaypoint(){
+
 		setRotation(calculateRotation((actionList.get(actionIndex)).getX() + (this.getOriginX()), (actionList.get(actionIndex)).getY() + (this.getOriginY())));
 		this.addAction(actionList.get(actionIndex)); // Set Move TO
+
 	}
 
 	private void nextWaypointHandler(){

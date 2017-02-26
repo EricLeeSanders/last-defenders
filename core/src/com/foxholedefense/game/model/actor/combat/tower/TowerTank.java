@@ -43,7 +43,7 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	public static final float AOE_RADIUS = 75f;
 	public static final Dimension RPG_SIZE = new Dimension(7, 7);
 	public static final Vector2 GUN_POS = new Vector2(57, 0);
-	private float[] bodyPoints = { 0, 0, 0, 50, 76, 50, 76, 0 };
+	private float[] bodyPoints = { 0, 0, 0, 50, 75, 50, 75, 0 };
 	private Polygon body;
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
@@ -106,7 +106,8 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	 */
 	@Override
 	public Polygon getBody() {
-		body.setOrigin(getOriginX(), getOriginY());
+
+		body.setOrigin(bodyRegion.getRegionWidth()/2, bodyRegion.getRegionHeight()/2);
 		body.setRotation(bodyRotation);
 
 		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, bodyRegion.getRegionWidth());
