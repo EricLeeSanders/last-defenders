@@ -37,7 +37,7 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
                 setX(actor.getPositionCenter().x - 6);
             }
 
-            batch.draw(icon, getX(), getY(), 12, 13);
+            batch.draw(icon, getX(), getY());
         }
     }
 
@@ -69,7 +69,7 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
 
     public void setActor(CombatActor actor) {
         this.actor = actor;
-        this.setSize(30, 4);
+        this.setSize(icon.getRegionWidth(), icon.getRegionHeight());
 
     }
 
