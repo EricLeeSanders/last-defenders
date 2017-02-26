@@ -34,7 +34,7 @@ public class TowerRocketLauncher extends Tower implements IRpg {
 	public static final int ATTACK_INCREASE_COST = 450;
 	public static final float AOE_RADIUS = 50f;
 	public static final Dimension RPG_SIZE = new Dimension(7, 7);
-	public static final Vector2 GUN_POS = new Vector2(26, -4);
+	public static final Vector2 GUN_POS = new Vector2(27, -4);
 	private Circle body;
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;

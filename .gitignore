@@ -1,5 +1,5 @@
 ## Project Specific
-/android/src/com/foxholedefense/android/FHDApplicationLauncher.java
+FHDApplicationLauncher.java
 
 ## Java
 
@@ -13,6 +13,7 @@ java_Leak_Suspects.zip
 java_System_Overview.zip
 java_Top_Consumers.zip
 java.threads
+
 
 ## GWT
 war/
@@ -39,6 +40,7 @@ android/gen/
 out/
 com_crashlytics_export_strings.xml
 keystore.properties
+files/keys/
 
 ## Eclipse
 .classpath

@@ -25,7 +25,7 @@ public class GameActor extends Actor{
 	public GameActor(TextureRegion textureRegion){
 		this.setTextureRegion(textureRegion);
 		this.setSize(textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
-		this.setOrigin(getWidth() / 2, getHeight() / 2);
+		this.setOrigin(textureRegion.getRegionWidth() / 2,textureRegion.getRegionHeight() / 2);
 	}
 
 	public Vector2 getRotatedCoords(float x, float y) {

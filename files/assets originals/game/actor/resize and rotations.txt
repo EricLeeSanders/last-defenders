@@ -1,0 +1,109 @@
+Resize % = 12.7272
+
+
+Towers 
+
+Rifle - 440
+
+Machine -340
+
+Sniper - 628
+
+Flame Thrower - 460
+
+Rocket launcher - 460
+
+Turret-Turret - 560 - bottom
+
+Turret-Bags - 330 - bottom
+
+Tank - turret - 1646 - left
+
+
+
+
+
+Enemies
+
+Resize: 13.3971
+
+Rifle 1&2
+Center 130x123
+New size 260x246
+
+Rifle Stationary
+Center 101x91
+New size 202x418
+
+Rifle ALL
+New Size 260x418
+
+----------------------
+FlameThrower 1&2
+Center 104x129
+New size 280x259
+
+FlameThrower Stationary
+New size 204x440
+
+FlameThrower ALL
+New size 280x440
+
+----------------------
+MachineGun 1&2
+Center 100x123
+New size 208x246
+
+MachineGun Stationary	
+Center 101x91
+new size 202x318
+
+MachineGun ALL
+new size 208x318
+
+----------------------
+RocketLauncher 1&2
+Center 170x123
+new size 370x300
+
+RocketLauncher Stationary
+Center 101x144
+new size 240x442
+
+RocketLauncher ALL
+New size 370x442
+
+--------------------
+Sniper 1&2
+Center 160x127
+new size 320x300
+
+Sniper Stationary
+center 112x127
+new size 240x614
+
+Sniper all
+new size 320x614
+
+--------------------
+Sprinter 1&2
+center 101x123
+new size 206x246
+
+Sprinter stationary
+center 101x91
+new size 202x182
+
+Sprinter ALL
+new size 206x246
+
+
+
+
+
+
+
+
+gun rotation for enemies - 65%
+
+
