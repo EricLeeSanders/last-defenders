@@ -28,14 +28,13 @@ public class EnemySniper extends Enemy {
 	public static final float SPEED = 70f;
 	public static final Dimension BULLET_SIZE = new Dimension(5, 5);
 	public static final Vector2 GUN_POS = new Vector2(26, -4);
-	public static final Dimension TEXTURE_SIZE = new Dimension(56, 32);
 	private Circle body;
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
 	
 	public EnemySniper(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
-		super(stationaryTextureRegion, animatedRegions, pool, targetGroup, TEXTURE_SIZE, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
+		super(stationaryTextureRegion, animatedRegions, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
 		this.audio = audio;
 		this.deathEffectFactory = deathEffectFactory;
 		this.projectileFactory = projectileFactory;

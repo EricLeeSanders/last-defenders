@@ -18,7 +18,6 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
 
 public class Apache extends SupportActor{
 	public static final int COST = 2000;
-	private static final float SCALE = 0.5f;
 	private static final float ATTACK_SPEED = 0.1f;
 	private static final float RANGE = 75f;
 	private static final float ATTACK = 5f;
@@ -38,8 +37,7 @@ public class Apache extends SupportActor{
 	private float movementAnimationStateTime;
 
 	public Apache(SupportActorPool<Apache> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion stationaryTextureRegion, TextureRegion [] textureRegions, TextureRegion rangeTexture, FHDAudio audio) {
-		super(pool, targetGroup, stationaryTextureRegion, rangeTexture, new Dimension(stationaryTextureRegion.getRegionWidth()*SCALE, stationaryTextureRegion.getRegionHeight()*SCALE),
-				RANGE, ATTACK, GUN_POS, COST);
+		super(pool, targetGroup, stationaryTextureRegion, rangeTexture,	RANGE, ATTACK, GUN_POS, COST);
 		this.textureRegions = textureRegions;
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;

@@ -31,9 +31,9 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	private boolean showRange;
 	private TextureRegion rangeTexture;
 
-	public SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion, TextureRegion rangeTexture, Dimension textureSize
+	public SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion, TextureRegion rangeTexture
 						, float range, float attack, Vector2 gunPos, int cost) {
-		super(textureSize);
+		super(textureRegion);
 		this.pool = pool;
 		this.range = range;
 		this.attack = attack;
