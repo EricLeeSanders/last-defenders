@@ -60,6 +60,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Close and finishing inspecting
 	 */
 	public void closeInspect() {
+		Logger.info("Inspect Presenter: close inspect");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		resetInspect();
 		uiStateManager.setStateReturn();
@@ -70,7 +71,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Resets the inspect
 	 */
 	private void resetInspect(){
-		Logger.info("Detaching Inspect from Tower");
+		Logger.info("Inspect Presenter: reset Inspect");
 		if(selectedTower != null){
 			selectedTower.detachCombatActor(this);
 			selectedTower = null;
@@ -81,6 +82,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Change the target priority of the tower
 	 */
 	public void changeTargetPriority() {
+		Logger.info("Inspect Presenter: changing target priority");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if (selectedTower != null) {
 			TowerAI ai = TowerAI.values()[(selectedTower.getAI().getPosition() + 1) % 4];
@@ -94,9 +96,11 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Increase the tower's attack
 	 */
 	public void increaseAttack() {
+		Logger.info("Inspect Presenter: increasing attack");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if (selectedTower != null) {
 			if (!selectedTower.hasIncreasedAttack()) {
+				Logger.info("Inspect Presenter: increased tower attack");
 				player.spendMoney(selectedTower.getAttackIncreaseCost());
 				selectedTower.increaseAttack();
 				view.update(selectedTower);
@@ -108,9 +112,11 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Give the tower armor
 	 */
 	public void giveArmor() {
+		Logger.info("Inspect Presenter: giving armor");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if (selectedTower != null) {
 			if (!selectedTower.hasArmor()) {
+				Logger.info("Inspect Presenter: tower given armor");
 				player.spendMoney(selectedTower.getArmorCost());
 				selectedTower.setHasArmor(true);
 				view.update(selectedTower);
@@ -122,9 +128,11 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Increase the tower's range
 	 */
 	public void increaseRange() {
+		Logger.info("Inspect Presenter: increasing range");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if (selectedTower != null) {
 			if (!selectedTower.hasIncreasedRange()) {
+				Logger.info("Inspect Presenter: increased tower range");
 				player.spendMoney(selectedTower.getRangeIncreaseCost());
 				selectedTower.increaseRange();
 				view.update(selectedTower);
@@ -136,9 +144,11 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Increase the tower's attack speed
 	 */
 	public void increaseSpeed() {
+		Logger.info("Inspect Presenter: increasing speed");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if (selectedTower != null) {
 			if (!selectedTower.hasIncreasedSpeed()) {
+				Logger.info("Inspect Presenter: increased tower speed");
 				player.spendMoney(selectedTower.getSpeedIncreaseCost());
 				selectedTower.increaseSpeed();
 				view.update(selectedTower);
@@ -150,12 +160,12 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Discharge and Sell the tower
 	 */
 	public void dishcharge() {
+		Logger.info("Inspect Presenter: discharging");
 		if (selectedTower != null) {
 			audio.playSound(FHDSound.SELL);
 			player.giveMoney(selectedTower.getSellCost());
 			selectedTower.sellTower();
 			closeInspect();
-
 		}
 	}
 
@@ -170,6 +180,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 			Actor hitActor = CollisionDetection.towerHit(towerGroup.getChildren(), coords);
 			if (hitActor != null) {
 				if (hitActor instanceof Tower) {
+					Logger.info("Inspect Presenter: inspecting tower");
 					selectedTower = (Tower) hitActor;
 					selectedTower.attachTower(this);
 					selectedTower.attachCombatActor(this);
@@ -209,6 +220,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 
 	@Override
 	public void changeUIState(GameUIState state) {
+
 		switch (state) {
 		case INSPECTING:
 			view.inspectingState();
@@ -224,6 +236,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 
 	@Override
 	public void changeLevelState(LevelState state) {
+
 		switch(state){
 		case WAVE_IN_PROGRESS:
 			view.dischargeEnabled(false);
@@ -239,6 +252,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 
 	@Override
 	public void notifyCombatActor(CombatActor actor, CombatActorEvent event){
+
 		if(selectedTower == null
 			|| event.equals(CombatActorEvent.DEAD)){
 			closeInspect();
@@ -247,6 +261,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 
 	@Override
 	public void notifyTower(Tower tower, TowerEvent event) {
+
 		view.update(tower);
 	}
 }

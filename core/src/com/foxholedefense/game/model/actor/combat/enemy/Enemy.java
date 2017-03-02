@@ -177,7 +177,7 @@ public abstract class Enemy extends CombatActor {
 	}
 
 	private void moveToNextWaypoint(){
-
+		Logger.info("Enemy: " + this.getClass().getSimpleName() + " setting new waypoint");
 		setRotation(calculateRotation((actionList.get(actionIndex)).getX() + (this.getOriginX()), (actionList.get(actionIndex)).getY() + (this.getOriginY())));
 		this.addAction(actionList.get(actionIndex)); // Set Move TO
 
@@ -195,6 +195,7 @@ public abstract class Enemy extends CombatActor {
 	}
 
 	private void reachedEnd(){
+		Logger.info("Enemy: " + this.getClass().getSimpleName() + " reached end");
 		notifyObserversEnemy(IEnemyObserver.EnemyEvent.REACHED_END);
 		pool.free(this);
 	}
@@ -231,6 +232,7 @@ public abstract class Enemy extends CombatActor {
 	@Override
 	public void reset() {
 		super.reset();
+		Logger.info("Enemy: " + this.getClass().getSimpleName() + " Resetting");
 		this.setRotation(0);
 		attacking = false;
 		findTargetCounter = 0;

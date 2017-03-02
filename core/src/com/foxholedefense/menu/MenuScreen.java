@@ -26,6 +26,7 @@ public class MenuScreen extends AbstractScreen {
 
 	@Override
 	public void show() {
+		Logger.info("Menu Screen: show");
 		super.show();
 
 	}
@@ -44,7 +45,7 @@ public class MenuScreen extends AbstractScreen {
 	@Override
 	public void dispose() {
 		super.dispose();
-		Logger.info("Menu Screen Dispose");
+		Logger.info("Menu Screen: Dispose");
 		stage.dispose();
 
 	}

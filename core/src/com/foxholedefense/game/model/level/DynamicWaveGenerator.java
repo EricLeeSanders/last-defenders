@@ -45,6 +45,7 @@ public class DynamicWaveGenerator {
 	 * @return
 	 */
 	public Queue<SpawningEnemy> generateWave(int currentWave){
+		Logger.info("DynamicWaveGenerator: Generating Wave: " + currentWave);
 		int currentGeneratedWave = currentWave - Level.MAX_WAVES;
 		if((currentGeneratedWave % 3) == 0) {
 			//Add humvee
@@ -116,6 +117,7 @@ public class DynamicWaveGenerator {
 		return enemies;
 	}
 	private Queue<SpawningEnemy> createSpawningEnemies(){
+		Logger.info("DynamicWaveGenerator: Creating Spawning Enemies ");
 		Queue<SpawningEnemy> spawningEnemies = new LinkedList<SpawningEnemy>();
 		SnapshotArray<Enemy> enemies = createEnemies();
 		float randDelay;

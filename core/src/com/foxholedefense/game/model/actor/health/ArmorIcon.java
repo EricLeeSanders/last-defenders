@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.effects.ArmorDestroyedEffect;
+import com.foxholedefense.util.Logger;
 
 /**
  * Created by Eric on 1/6/2017.
@@ -68,6 +69,7 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
     }
 
     public void setActor(CombatActor actor) {
+        Logger.info("ArmorIcon: setting actor: " + actor.getClass().getSimpleName());
         this.actor = actor;
         this.setSize(icon.getRegionWidth(), icon.getRegionHeight());
 
@@ -75,6 +77,7 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
 
     @Override
     public void reset() {
+        Logger.info("ArmorIcon: resetting");
         this.actor = null;
         this.remove();
         showDestroyEffect = false;

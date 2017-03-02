@@ -33,6 +33,7 @@ public class GameLoadingScreen extends AbstractScreen{
 	
 	@Override
 	public void show() {
+		Logger.info("Game loading screen: show");
 		super.show();
 		resources.loadAtlasSync(Resources.LOAD_ATLAS);
 		TextureAtlas atlas = resources.getAtlas(Resources.LOAD_ATLAS);

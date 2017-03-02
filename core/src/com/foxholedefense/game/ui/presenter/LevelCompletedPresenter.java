@@ -9,6 +9,7 @@ import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
+import com.foxholedefense.util.Logger;
 
 public class LevelCompletedPresenter implements IGameUIStateObserver{
 	private ILevelCompletedView view;
@@ -43,6 +44,7 @@ public class LevelCompletedPresenter implements IGameUIStateObserver{
 	 * Change to level select
 	 */
 	public void levelSelect() {
+		Logger.info("Level Completed Presenter: level select");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		screenChanger.changeToLevelSelect();
 	}
@@ -51,6 +53,7 @@ public class LevelCompletedPresenter implements IGameUIStateObserver{
 	 * Change to main menu
 	 */
 	public void mainMenu() {
+		Logger.info("Level Completed Presenter: main menu");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		screenChanger.changeToMenu();
 	}
@@ -58,12 +61,14 @@ public class LevelCompletedPresenter implements IGameUIStateObserver{
 	 * Continue the level
 	 */
 	public void continueLevel() {
+		Logger.info("Level Completed Presenter: continue level");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		uiStateManager.setState(GameUIState.STANDBY);
 	}
 	
 	@Override
 	public void changeUIState(GameUIState state) {
+
 		switch(state) {
 		case LEVEL_COMPLETED:
 			view.levelCompletedState();

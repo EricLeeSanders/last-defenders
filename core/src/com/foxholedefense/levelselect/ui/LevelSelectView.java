@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 
@@ -44,8 +45,9 @@ public class LevelSelectView extends Group {
 	}
 
 	private void createControls(TextureAtlas levelSelectAtlas, Skin skin) {
-	
-		
+
+		Logger.info("Level select view: creating controls");
+
 		ImageButton btnLevel1 = new ImageButton(new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
 		btnLevel1.setSize(64, 64);
 		btnLevel1.setPosition(240-(btnLevel1.getWidth()/2), 40);
@@ -83,8 +85,8 @@ public class LevelSelectView extends Group {
 		btnMenu.setPosition(15,15);
 		this.addActor(btnMenu);
 		setBtnMenuListener(btnMenu);
-		
-		
+
+		Logger.info("Level select view: controls created");
 	}
 	public void setBackground(TextureAtlas levelSelectAtlas){
 		Image background = new Image(levelSelectAtlas.findRegion("background"));
@@ -93,7 +95,9 @@ public class LevelSelectView extends Group {
 		background.setZIndex(0);
 	}
 	private void createConfirmLevelControls(TextureAtlas levelSelectAtlas, Skin skin){
-		
+
+		Logger.info("Level select view: creating confirm level controls");
+
 		level1 = new Image(levelSelectAtlas.findRegion("level1"));
 		level1.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 		level1.setVisible(false);
@@ -138,8 +142,13 @@ public class LevelSelectView extends Group {
 		lblLevel.setPosition((Resources.VIRTUAL_WIDTH/2)-(lblLevel.getWidth()/2)
 				, Resources.VIRTUAL_HEIGHT-lblLevel.getHeight() - 25);
 		levelGroup.addActor(lblLevel);
+
+		Logger.info("Level select presenter: confirm level controls created");
 	}
 	private void showConfirmWindow(boolean visible){
+
+		Logger.info("Level select presenter: show confirm window: " + visible);
+
 		levelGroup.setVisible(visible);
 		if(visible){
 			if(selectedLevel == 1){

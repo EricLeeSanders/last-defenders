@@ -30,6 +30,7 @@ public class LevelSelectScreen extends AbstractScreen {
 	
 	@Override
 	public void show() {
+		Logger.info("Level select screen: show");
 		super.show();
 	}
 

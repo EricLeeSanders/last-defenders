@@ -29,7 +29,7 @@ public class SupplyDrop extends GameActor implements Pool.Poolable{
 	}
 	
 	public void beginSupplyDrop(Vector2 dropLocation){
-		Logger.info("Beginning Supply drop");
+		Logger.info("SupplyDrop: Beginning Supply drop");
 		active = true;
 		setPositionCenter(new Vector2(0-this.getHeight(), dropLocation.y));
 		float moveToX = Resources.VIRTUAL_WIDTH+this.getHeight();
@@ -59,6 +59,7 @@ public class SupplyDrop extends GameActor implements Pool.Poolable{
 	
 	@Override
 	public void reset() {
+		Logger.info("SupplyDrop: Resetting");
 		active = false;
 		this.setPosition(0, 0);
 		this.setRotation(0);

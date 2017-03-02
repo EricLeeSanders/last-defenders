@@ -19,6 +19,7 @@ import com.foxholedefense.game.ui.state.IGameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
 import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 
@@ -59,23 +60,25 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 * @param strEnlistTower
 	 */
 	public void createTower(String strEnlistTower) {
+		Logger.info("Enlist Presenter: creating tower");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		towerPlacement.createTower(strEnlistTower.replaceAll(" ", ""));
 		uiStateManager.setState(GameUIState.PLACING_TOWER);
+		Logger.info("Enlist Presenter: tower created");
 	}
 
 	/**
 	 * Try to place a tower
 	 */
 	public void placeTower() {
+		Logger.info("Enlist Presenter: placing tower");
 		int cost = towerPlacement.getCurrentTower().getCost();
 		if (towerPlacement.placeTower()) {
 			audio.playSound(FHDSound.ACTOR_PLACE);
 			uiStateManager.setStateReturn();
 			player.spendMoney(cost);
 			towerPlacement.removeCurrentTower();
-			
-
+			Logger.info("Enlist Presenter: tower placed");
 		}
 	}
 
@@ -83,11 +86,13 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 * Cancel enlisting
 	 */
 	public void cancelEnlist(boolean returnState) {
+		Logger.info("Enlist Presenter: canceling enlist: " + returnState);
 		audio.playSound(FHDSound.SMALL_CLICK);
 		towerPlacement.removeCurrentTower();
 		if(returnState){
 			uiStateManager.setStateReturn();
 		}
+		Logger.info("Enlist Presenter: enlist canceled");
 	}
 
 	/**

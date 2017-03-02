@@ -23,6 +23,7 @@ import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
 import com.foxholedefense.game.ui.view.interfaces.ISupportView;
 import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 
@@ -65,6 +66,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Create a Supply Drop
 	 */
 	public void createSupplyDrop(){
+		Logger.info("Support Presenter: create supply drop");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		supplyDropPlacement.createSupplyDrop();
 		uiStateManager.setState(GameUIState.PLACING_SUPPLYDROP);
@@ -75,21 +77,24 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Place a supply drop
 	 */
 	public void placeSupplyDrop(Vector2 location){
+		Logger.info("Support Presenter: place supply drop");
 		supplyDropPlacement.setLocation(location);
 		view.showBtnPlace();
 	}
 	
 	private void finishSupplyDropPlacement(){
+		Logger.info("Support Presenter: finishing supply drop placement");
 		if(supplyDropPlacement.isCurrentSupplyDropCrate() && uiStateManager.getState().equals(GameUIState.PLACING_SUPPLYDROP)){
 			supplyDropPlacement.finishPlacement();
+			Logger.info("Support Presenter: supply drop placement finished");
 		}
 	}
 	
 	/**
 	 * Create an AirStrike
 	 */
-	
 	public void createAirStrike(){
+		Logger.info("Support Presenter: create air strike");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		airStrikePlacement.createAirStrike();
 		uiStateManager.setState(GameUIState.PLACING_AIRSTRIKE);
@@ -99,17 +104,22 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Place an Air Strike Location
 	 */
 	public void placeAirStrikeLocation(Vector2 location){
+		Logger.info("Support Presenter: placing air strike location");
 		if (!airStrikePlacement.getCurrentAirStrike().readyToBegin()) {
 			airStrikePlacement.addLocation(location);
+			Logger.info("Support Presenter: air strike location placed");
 			if(airStrikePlacement.getCurrentAirStrike().readyToBegin()){
+				Logger.info("Support Presenter: air strike ready to begin");
 				view.showBtnPlace();
 			}
 		}
 	}
 	
 	public void finishAirStrikePlacement(){
+		Logger.info("Support Presenter: finishing air strike placement");
 		if (airStrikePlacement.isCurrentAirStrike() && uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)) {
 			airStrikePlacement.finishCurrentAirStrike();
+			Logger.info("Support Presenter: air strike placement finished");
 		}
 	}
 	
@@ -118,6 +128,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * 
 	 */
 	public void createSupportActor(String type) {
+		Logger.info("Support Presenter: create support actor");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		supportActorPlacement.createSupportActor(type);
 		uiStateManager.setState(GameUIState.PLACING_SUPPORT);
@@ -127,24 +138,31 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Try to place a Support Actor
 	 */
 	public void placeSupportActor() {
+		Logger.info("Support Presenter: placing support actor");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if(uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)){
+			Logger.info("Support Presenter: placing air strike");
 			int cost = airStrikePlacement.getCurrentAirStrike().getCost();
 			player.spendMoney(cost);
 			finishAirStrikePlacement();
 			uiStateManager.setStateReturn();
+			Logger.info("Support Presenter: air strike placed");
 		} else if (uiStateManager.getState().equals(GameUIState.PLACING_SUPPORT)){
+			Logger.info("Support Presenter: placing support actor");
 			int cost = supportActorPlacement.getCurrentSupportActor().getCost();
 			if (supportActorPlacement.placeSupportActor()) {
 				player.spendMoney(cost);
 				supportActorPlacement.removeCurrentSupportActor();
 				uiStateManager.setStateReturn();
+				Logger.info("Support Presenter: support actor placed");
 			}
 		} else if (uiStateManager.getState().equals(GameUIState.PLACING_SUPPLYDROP)){
+			Logger.info("Support Presenter: placing supply drop");
 			int cost = supplyDropPlacement.getCurrentSupplyDropCrate().getCost();
 			player.spendMoney(cost);
 			finishSupplyDropPlacement();
 			uiStateManager.setStateReturn();
+			Logger.info("Support Presenter: supply drop placed");
 		}
 	}
 	
@@ -152,6 +170,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Cancel Support
 	 */
 	public void cancelSupport(boolean returnState) {
+		Logger.info("Support Presenter: cancel support");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		supportActorPlacement.removeCurrentSupportActor();
 		airStrikePlacement.removeCurrentAirStrike();	
@@ -195,6 +214,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 
 	@Override
 	public void changeUIState(GameUIState state) {
+
 		switch (state) {
 		case SUPPORT:
 			view.supportState();
