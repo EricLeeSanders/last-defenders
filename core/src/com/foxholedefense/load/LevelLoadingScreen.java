@@ -44,6 +44,7 @@ public class LevelLoadingScreen extends AbstractScreen{
 	
 	@Override
 	public void show() {
+		Logger.info("Level loading screen: show");
 		super.show();
 		loadTime = 0;
 		

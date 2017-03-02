@@ -22,6 +22,7 @@ import com.foxholedefense.game.ui.presenter.InspectPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IInspectView;
 import com.foxholedefense.game.ui.view.widgets.DischargeButton;
 import com.foxholedefense.game.ui.view.widgets.UpgradeButton;
+import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
 /**
@@ -45,6 +46,9 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	 * Create the controls
 	 */
 	public void createControls(Skin skin) {
+
+		Logger.info("Inspect View: creating controls");
+
 		Table container = new Table();
 		container.setTransform(false);
 		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
@@ -55,13 +59,8 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		inspectTable.setTransform(false);
 		inspectTable.setBackground(skin.getDrawable("hollow"));
 
-
 		container.add(inspectTable).expand().fill();
 
-
-
-
-		
 		lblTitle = new Label("Tower", skin);
 		lblTitle.setPosition((container.getWidth()/2) - (lblTitle.getWidth()/2)
 					,container.getY() + container.getHeight() - lblTitle.getHeight());
@@ -137,17 +136,15 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		grpTargetPriority.addActor(btnChangeTarget);
 		setTargetPriorityListener(grpTargetPriority);
 
-
 		inspectTable.row();
 
 		inspectTable.add(grpTargetPriority).align(Align.left).padTop(45).colspan(2);
-
 
 		btnDischarge = new DischargeButton(skin, 0);
 		inspectTable.add(btnDischarge).align(Align.center).size(133,83).colspan(2);
 		setDischargeListener();
 
-
+		Logger.info("Inspect View: controls created");
 	}
 
 

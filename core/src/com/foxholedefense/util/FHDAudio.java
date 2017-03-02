@@ -28,6 +28,7 @@ public class FHDAudio {
 	 * Load the sounds and music
 	 */
 	public void load() {
+		Logger.info("FHDAudio: loading");
 		music = Gdx.audio.newMusic(Gdx.files.internal(Resources.MENU_MUSIC));
 		music.setLooping(true);
 
@@ -70,7 +71,7 @@ public class FHDAudio {
 		setMasterVolume(userPreferences.getPreferences().getFloat("masterVolume", 1));
 		setSoundEnabled(userPreferences.getPreferences().getBoolean("soundEnabled", true));
 		setMusicEnabled(userPreferences.getPreferences().getBoolean("musicEnabled", true));
-
+		Logger.info("FHDAudio: loaded");
 	}
 	
 	public float getMasterVolume(){
@@ -119,6 +120,7 @@ public class FHDAudio {
 	}
 	
 	public void playSound(FHDSound sound){
+		Logger.info("FHDAudio: playing sound: " + sound.name());
 		if(!soundEnabled){
 			return;
 		}

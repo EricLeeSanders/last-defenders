@@ -82,7 +82,7 @@ public class Map implements Disposable{
 	
 	@Override
 	public void dispose() {
-		Logger.info("Map Disposed");
+		Logger.info("Map: Disposed");
 		tiledMap.dispose();
 	}
 

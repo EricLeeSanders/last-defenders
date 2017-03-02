@@ -9,6 +9,7 @@ import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 
@@ -45,40 +46,42 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	}
 	
 	private void initView(){
+		Logger.info("Options Presenter: initializing view");
 		changeUIState(uiStateManager.getState());
 		view.setBtnMusicOn(audio.isMusicEnabled());
 		view.setBtnSoundOn(audio.isSoundEnabled());
 		view.setBtnShowRangesOn(isShowRangesEnabled());
+		Logger.info("Options Presenter: view initialized");
 	}
 
 	/**
 	 * Resume the game
 	 */
 	public void resumeGame() {
+		Logger.info("Options Presenter: resume game");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		gameStateManager.setState(GameState.PLAY);
 		uiStateManager.setStateReturn();
-
 	}
 
 	/**
 	 * Go to main menu
 	 */
 	public void mainMenu() {
+		Logger.info("Options Presenter: main menu");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		gameStateManager.setState(GameState.PLAY);
 		screenChanger.changeToMenu();
-
 	}
 
 	/**
 	 * Start a new game
 	 */
 	public void newGame() {
+		Logger.info("Options Presenter: new game");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		gameStateManager.setState(GameState.PLAY);
 		screenChanger.changeToLevelSelect();
-
 	}
 	
 	private boolean isShowRangesEnabled(){
@@ -87,6 +90,7 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	}
 	
 	public void showRangesPressed() {
+		Logger.info("Options Presenter: show ranges pressed");
 		Preferences prefs = resources.getUserPreferences().getPreferences();
 		boolean isShowRangesEnabled = isShowRangesEnabled();
 		prefs.putBoolean("showRanges", !isShowRangesEnabled);
@@ -95,6 +99,7 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	}
 	
 	public void soundPressed() {
+		Logger.info("Options Presenter: sound pressed");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		audio.changeSoundEnabled();
 		view.setBtnSoundOn(audio.isSoundEnabled());
@@ -102,6 +107,7 @@ public class OptionsPresenter implements IGameUIStateObserver {
 
 	
 	public void musicPressed() {
+		Logger.info("Options Presenter: music pressed");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		audio.changeMusicEnabled();
 		view.setBtnMusicOn(audio.isMusicEnabled());
@@ -123,6 +129,7 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	
 	@Override
 	public void changeUIState(GameUIState state) {
+
 		switch (state) {
 		case OPTIONS:
 			view.optionsState();

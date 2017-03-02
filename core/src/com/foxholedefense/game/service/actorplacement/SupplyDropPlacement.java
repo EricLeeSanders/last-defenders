@@ -13,17 +13,20 @@ public class SupplyDropPlacement {
 		this.actorFactory = actorFactory;
 	}
 	public void createSupplyDrop() {
+		Logger.info("SupplyDropPlacement: creating supply drop");
 		currentSupplyDropCrate = actorFactory.loadSupplyDropCrate();
 		currentSupplyDropCrate.setPosition(0, 0);
 		currentSupplyDropCrate.setActive(false);
 		currentSupplyDropCrate.setVisible(false);
 	}
 	public void setLocation(Vector2 location){
+		Logger.info("SupplyDropPlacement: creating location");
 		currentSupplyDropCrate.setVisible(true);
 		currentSupplyDropCrate.setShowRange(true);
 		currentSupplyDropCrate.setPositionCenter(location);
 	}
 	public void finishPlacement() {
+		Logger.info("SupplyDropPlacement: finishing placement");
 		if (isCurrentSupplyDropCrate()) {
 			float x = ActorUtil.calcXCenterFromBotLeft(currentSupplyDropCrate.getX(), currentSupplyDropCrate.getWidth());
 			float y = ActorUtil.calcYCenterFromBotLeft(currentSupplyDropCrate.getY(), currentSupplyDropCrate.getHeight());
@@ -35,6 +38,7 @@ public class SupplyDropPlacement {
 	}
 	
 	public void removeCurrentSupplyDropCrate(){
+		Logger.info("SupplyDropPlacement: remove supply drop");
 		if (isCurrentSupplyDropCrate()) {
 			currentSupplyDropCrate.freeActor();
 			currentSupplyDropCrate = null;

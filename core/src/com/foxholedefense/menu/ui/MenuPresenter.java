@@ -3,6 +3,7 @@ package com.foxholedefense.menu.ui;
 import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
+import com.foxholedefense.util.Logger;
 
 /**
  * Presenter class for the Main Menu
@@ -23,22 +24,26 @@ public class MenuPresenter {
 		initView();
 	}
 	private void initView(){
+		Logger.info("Menu Presenter: initializing view");
 		view.setBtnMusicOn(audio.isMusicEnabled());
 		view.setBtnSoundOn(audio.isSoundEnabled());
 	}
 	public void playGame() {
+		Logger.info("Menu Presenter: play game");
 		audio.playSound(FHDSound.LARGE_CLICK);
 		screenChanger.changeToLevelSelect();
 
 	}
 	
 	public void soundPressed() {
+		Logger.info("Menu Presenter: sound pressed");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		audio.changeSoundEnabled();
 		view.setBtnSoundOn(audio.isSoundEnabled());
 	}
 	
 	public void musicPressed() {
+		Logger.info("Menu Presenter: music pressed");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		audio.changeMusicEnabled();
 		view.setBtnMusicOn(audio.isMusicEnabled());

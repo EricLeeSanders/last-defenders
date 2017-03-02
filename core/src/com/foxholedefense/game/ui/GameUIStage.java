@@ -38,6 +38,7 @@ import com.foxholedefense.game.ui.view.SupportView;
 import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
 /**
@@ -80,6 +81,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	 * Create and initialize the views and presenters of the Game UI
 	 */
 	public void createUI(Resources resources, FHDAudio audio, GameStage gameStage) {
+		Logger.info("GameUIStage: creating ui");
 		Skin skin = resources.getSkin(Resources.SKIN_JSON);
 		EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio,  gameStage.getTowerPlacement());
 		EnlistView enlistView = new EnlistView(enlistPresenter, skin);
@@ -122,6 +124,8 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		imp.addProcessor(enlistView);
 		imp.addProcessor(supportView);
 		imp.addProcessor(inspectView);
+
+		Logger.info("GameUIStage: ui created");
 	}
 	
 	/**
@@ -130,6 +134,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	 * @param showRanges
 	 */
 	private void showTowerRanges(boolean showRanges) {
+		Logger.info("GameUIStage: showTowerRanges: " + showRanges);
 		for (Actor tower : towerGroup.getChildren()) {
 			if (tower instanceof Tower) {
 				((Tower) tower).setShowRange(showRanges);
@@ -138,6 +143,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	}
 	@Override
 	public void changeUIState(GameUIState state) {
+		Logger.info("GameUIStage: changing ui state: " + state.name());
 		if(resources.getUserPreferences().getPreferences().getBoolean("showRanges", false)){
 			showTowerRanges(true);
 			return;

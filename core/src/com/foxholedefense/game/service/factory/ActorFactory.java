@@ -98,6 +98,9 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 		
 	}
 	private void  initCombatActorPools(ActorGroups actorGroups){
+
+		Logger.info("Actor Factory: initializing Combat Actor Pools");
+
 		towerRiflePool = new CombatActorPool<CombatActor>(TowerRifle.class, actorGroups.getEnemyGroup());
 		towerTankPool = new CombatActorPool<CombatActor>(TowerTank.class, actorGroups.getEnemyGroup());
 		towerFlameThrowerPool = new CombatActorPool<CombatActor>(TowerFlameThrower.class, actorGroups.getEnemyGroup());
@@ -112,9 +115,14 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 		enemyRocketLauncherPool = new CombatActorPool<CombatActor>(EnemyRocketLauncher.class, actorGroups.getTowerGroup());
 		enemySniperPool = new CombatActorPool<CombatActor>(EnemySniper.class, actorGroups.getTowerGroup());
 		enemyHumveePool = new CombatActorPool<CombatActor>(EnemyHumvee.class, actorGroups.getTowerGroup());
+
+		Logger.info("Actor Factory: Combat Actor Pools initialized");
 	}
 
 	private void initTextures(TextureAtlas actorAtlas){
+
+		Logger.info("Actor Factory: initializing textures");
+
 		loadedTextures.put("range-red", actorAtlas.findRegion("range-red"));
 		loadedTextures.put("range-white", actorAtlas.findRegion("range-white"));
 		loadedTextures.put("range-red-turret", actorAtlas.findRegion("range-red-turret"));
@@ -150,7 +158,6 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 		loadedTextures.put("apache-stationary", actorAtlas.findRegion("apache",1));
 		loadedTextures.put("shield", actorAtlas.findRegion("shield"));
 
-
 		loadedAtlasRegions.put("explosion", actorAtlas.findRegions("explosion"));
 		loadedAtlasRegions.put("flame", actorAtlas.findRegions("flame"));
 		loadedAtlasRegions.put("blood-splatter", actorAtlas.findRegions("blood-splatter"));
@@ -163,6 +170,8 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 		loadedAtlasRegions.put("enemy-sprinter", actorAtlas.findRegions("enemy-sprinter"));
 		loadedAtlasRegions.put("apache", actorAtlas.findRegions("apache"));
 		loadedAtlasRegions.put("shield-destroyed", actorAtlas.findRegions("shield-destroyed"));
+
+		Logger.info("Actor Factory: textures initialized");
 	}
 
 	public void attachCombatObserver(ICombatActorObserver observer){
@@ -185,6 +194,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	 */
 	@Override
 	public Tower loadTower(String type) {
+		Logger.info("Actor Factory: loading Tower: " + type);
 		Tower tower = null;
 		if (type.equals("Rifle")) {
 			tower = (Tower) towerRiflePool.obtain();
@@ -201,6 +211,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 		} else if (type.equals("FlameThrower")) {
 			tower = (Tower) towerFlameThrowerPool.obtain();
 		}
+
 		tower.setDead(false);
 		return tower;
 	}
@@ -213,6 +224,9 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	 */
 	@Override
 	public Enemy loadEnemy(String type) {
+
+		Logger.info("Actor Factory: loading Enemy: " + type);
+
 		Enemy enemy = null;
 		if (type.equals("EnemyRifle")) {
 			enemy = (Enemy) enemyRiflePool.obtain();
@@ -229,6 +243,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 		} else if (type.equals("EnemyHumvee")) {
 			enemy = (Enemy) enemyHumveePool.obtain();
 		}
+
 		enemy.setDead(false);
 		return enemy;
 	}
@@ -241,6 +256,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	 */
 	@Override
 	public DeathEffect loadDeathEffect(DeathEffectType type){
+
 		DeathEffect deathEffect = null;
 		switch(type) {
 		case BLOOD:
@@ -250,6 +266,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 			deathEffect = vehicleExplosionPool.obtain();
 			break;
 		}
+
 		actorGroups.getDeathEffectGroup().addActor(deathEffect);
 		return deathEffect;
 	}
@@ -261,6 +278,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	 */
 	@Override
 	public HealthBar loadHealthBar() {
+		Logger.info("Actor Factory: loading healthbar");
 		HealthBar healthBar = healthPool.obtain();
 		actorGroups.getHealthGroup().addActor(healthBar);
 		return healthBar;
@@ -268,6 +286,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 
 	@Override
 	public ArmorIcon loadArmorIcon(){
+		Logger.info("Actor Factory: loading ArmorIcon");
 		ArmorIcon armorIcon = armorIconPool.obtain();
 		actorGroups.getHealthGroup().addActor(armorIcon);
 		return armorIcon;
@@ -355,7 +374,6 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	 */
 	@Override
 	public SupplyDrop loadSupplyDrop() {
-		Logger.info("Loading Supply Drop actor from the pool");
 		SupplyDrop supplyDrop = supplyDropPool.obtain();
 		actorGroups.getSupportGroup().addActor(supplyDrop);
 		return supplyDrop;
@@ -368,7 +386,6 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	 */
 	@Override
 	public SupplyDropCrate loadSupplyDropCrate() {
-		Logger.info("Loading Supply Drop Crate actor from the pool");
 		SupplyDropCrate supplyDropCrate = supplyDropCratePool.obtain();
 		actorGroups.getSupportGroup().addActor(supplyDropCrate);
 		return supplyDropCrate;
@@ -382,6 +399,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	 */
 	@Override
 	public SupportActor loadSupportActor(String type) {
+		Logger.info("Actor Factory: loading support actor: " + type);
 		SupportActor supportActor = null;
 		if (type.equals("Apache")) {
 			supportActor = apachePool.obtain();
@@ -400,6 +418,8 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	 * @return CombatActor
 	 */
 	protected CombatActor createCombatActor(Class<? extends CombatActor> type, Group targetGroup) {
+
+		Logger.info("Actor Factory: creating combat actor: " + type.getSimpleName());
 		CombatActor actor = null;
 		if (type.equals(TowerRifle.class)) {
 			TextureRegion rifleRegion = loadedTextures.get("tower-rifle");
@@ -471,6 +491,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	 * @return HealthBar
 	 */
 	protected HealthBar createHealthBarActor() {
+		Logger.info("Actor Factory: creating healthbar");
 		HealthBar healthBar = new HealthBar(healthPool, loadedTextures.get("healthbar-bg"), loadedTextures.get("healthbar-life"), loadedTextures.get("healthbar-armor"));
 		return healthBar;
 
@@ -539,7 +560,6 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	 * @return SupplyDrop
 	 */
 	protected SupplyDrop createSupplyDropActor() {
-		Logger.info("Creating Supply Drop Actor");
 		TextureRegion supplyDropRegion = loadedTextures.get("supply-drop");
 		SupplyDrop supplyDrop = new SupplyDrop(supplyDropRegion, supplyDropPool, this);
 		return supplyDrop;
@@ -552,7 +572,6 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	 * @return SupplyDropCrate
 	 */
 	protected SupplyDropCrate createSupplyDropCrateActor() {
-		Logger.info("Creating Supply Drop Crate Actor");
 		TextureRegion supplyDropCrateRegion = loadedTextures.get("supply-drop-crate");
 		TextureRegion rangeTexture = loadedTextures.get("range-black");
 		SupplyDropCrate supplyDropCrate = new SupplyDropCrate(supplyDropCrateRegion, rangeTexture, supplyDropCratePool, actorGroups.getTowerGroup(), this);
@@ -561,6 +580,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	}
 
 	protected ArmorIcon createArmorIcon(){
+		Logger.info("Actor Factory: creating ArmorIcon");
 		return new ArmorIcon(armorIconPool, loadedTextures.get("shield"), armorDestroyedEffectPool);
 	}
 
@@ -598,6 +618,7 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	 * @return SupportActor
 	 */
 	protected SupportActor createSupportActor(Class<? extends SupportActor> type) {
+		Logger.info("Actor Factory: creating support actor: " + type.getSimpleName());
 		Group targetGroup = actorGroups.getEnemyGroup();
 		if (type.equals(Apache.class)) {
 			TextureRegion [] textureRegions = loadedAtlasRegions.get("apache").toArray(TextureRegion.class);
