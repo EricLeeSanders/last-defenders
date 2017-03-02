@@ -51,6 +51,7 @@ public class HUDView extends Group implements IHUDView {
 	 * Create the controls
 	 */
 	public void createControls(Skin skin) {
+		Logger.info("HUD View: creating controls");
 
 		btnWave = new ImageButton(skin, "wave");
 		btnWave.setSize(64, 64);
@@ -113,6 +114,8 @@ public class HUDView extends Group implements IHUDView {
 		statsTable.add(lblWaveCount).size(145,19).colspan(4).padTop(5);
 		statsTable.top().left();
 		this.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+
+		Logger.info("HUD View: controls created");
 	}
 
 

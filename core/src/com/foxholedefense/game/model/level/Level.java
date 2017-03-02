@@ -15,6 +15,7 @@ import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
 import com.foxholedefense.game.service.factory.ActorFactory;
+import com.foxholedefense.util.Logger;
 
 public class Level{
 	public static final int MAX_WAVES = 1;
@@ -43,6 +44,7 @@ public class Level{
 	public void update(float delta) {
 		if(spawningEnemyQueue.size() > 0){
 			if (delayCount >= enemyDelay ) {
+				Logger.info("Level: Spawning Enemy");
 				delayCount = 0;
 				SpawningEnemy enemy = spawningEnemyQueue.remove();
 				actorGroups.getEnemyGroup().addActor(enemy.getEnemy());
@@ -62,6 +64,7 @@ public class Level{
 	 * Loads the wave
 	 */
 	public void loadWave() {
+
 		currentWave++;
 		delayCount = 0;
 		enemyDelay = 0;
@@ -82,6 +85,7 @@ public class Level{
 		spawningEnemyQueue = waveGenerator.generateWave(currentWave);
 	}
 	private void loadWaveFromJSON(){
+		Logger.info("Level: Loading Wave from JSON");
 		JsonValue json = new JsonReader().parse(Gdx.files.internal("game/levels/level" + intLevel + "/waves/wave" + currentWave + ".json"));
 		spawningEnemyQueue = new LinkedList<SpawningEnemy>();
 		JsonValue enemiesJson = json.get("wave");
@@ -93,8 +97,6 @@ public class Level{
 			float delay = enemyJson.getFloat("delay");
 			SpawningEnemy spawningEnemy = new SpawningEnemy(enemy, delay);
 			spawningEnemyQueue.add(spawningEnemy);
-
-
 		}
 	}
 

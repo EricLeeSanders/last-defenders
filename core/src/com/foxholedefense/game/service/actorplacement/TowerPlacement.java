@@ -54,6 +54,7 @@ public class TowerPlacement {
 	 * @param type - Type of tower
 	 */
 	public void createTower(String type) {
+		Logger.info("TowerPlacement: creating tower: " + type);
 		currentTower = actorFactory.loadTower(type);
 		currentTower.setPosition(0, 0);
 		actorGroups.getTowerGroup().addActor(currentTower);
@@ -92,6 +93,7 @@ public class TowerPlacement {
 	 * @return boolean - if Tower was successfully placed
 	 */
 	public boolean placeTower() {
+		Logger.info("TowerPlacement: trying to place tower");
 		if (currentTower != null) {
 			if (!towerCollides()) {
 				currentTower.setActive(true);
@@ -100,7 +102,18 @@ public class TowerPlacement {
 				ArmorIcon armorIcon = actorFactory.loadArmorIcon();
 				armorIcon.setActor(currentTower);
 				currentTower = null;
+				Logger.info("TowerPlacement: placing tower");
 				return true;
+			} else {
+
+				//TODO this is here mostly for testing. Can probably be removed for production
+				SnapshotArray<Actor> towers = actorGroups.getTowerGroup().getChildren();
+
+				if (CollisionDetection.CollisionWithPath(map.getPathBoundaries(), currentTower)) {
+					Logger.info("TowerPlacement: tower collides with path");
+				} else if (CollisionDetection.CollisionWithActors(towers, currentTower)) {
+					Logger.info("TowerPlacement: tower collides with another Actor");
+				}
 			}
 		}
 		return false;
@@ -127,6 +140,7 @@ public class TowerPlacement {
 	 * Remove the current tower
 	 */
 	public void removeCurrentTower() {
+		Logger.info("TowerPlacement: removing tower");
 		if (isCurrentTower()) {
 			currentTower.freeActor();
 			currentTower = null;

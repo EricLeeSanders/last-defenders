@@ -81,20 +81,25 @@ public class GameStage extends Stage implements IEnemyObserver{
 	 * fully constructed before loading the wave.
 	 */
 	public void loadFirstWave(){
+		Logger.info("Game Stage: loading first wave");
 		level.loadWave();
+		Logger.info("Game Stage: first wave loaded");
 	}
 
 	public void createPlacementServices(ActorFactory actorFactory, Map map){
+		Logger.info("Game Stage: creating placement services");
 		towerPlacement = new TowerPlacement(map, actorGroups, actorFactory);
 		supportActorPlacement = new SupportActorPlacement(actorGroups, actorFactory);
 		airStrikePlacement = new AirStrikePlacement(actorGroups, actorFactory);
 		supplyDropPlacement = new SupplyDropPlacement(actorFactory);
+		Logger.info("Game Stage: placement services created");
 	}
 
 	/**
 	 * Create the actor groups. Order matters
 	 */
 	public void createGroups() {
+		Logger.info("Game Stage: creating groups");
 		this.addActor(getActorGroups().getDeathEffectGroup());
 		this.addActor(getActorGroups().getLandmineGroup());
 		this.addActor(getActorGroups().getEnemyGroup());
@@ -102,6 +107,7 @@ public class GameStage extends Stage implements IEnemyObserver{
 		this.addActor(getActorGroups().getProjectileGroup());
 		this.addActor(getActorGroups().getHealthGroup());
 		this.addActor(getActorGroups().getSupportGroup());
+		Logger.info("Game Stage: groups created");
 	}
 
 	/**
@@ -112,7 +118,9 @@ public class GameStage extends Stage implements IEnemyObserver{
 		super.act(delta);
 		if (levelStateManager.getState().equals(LevelState.WAVE_IN_PROGRESS)) {
 			level.update(delta);
-			isWaveOver();
+			if(isWaveOver()){
+				waveOver();
+			}
 		}
 	}
 
@@ -138,18 +146,23 @@ public class GameStage extends Stage implements IEnemyObserver{
 			&& level.getSpawningEnemiesCount() <= 0
 			&& getActorGroups().getProjectileGroup().getChildren().size <= 0
 			&& !(levelStateManager.getState().equals(LevelState.GAME_OVER))) {
-			
-				Logger.info("Wave over");
-				player.giveMoney((int) (100 * (float) level.getCurrentWave()));
-				levelStateManager.setState(LevelState.STANDBY);
-				player.setWaveCount(player.getWaveCount() + 1);
-				isLevelCompleted();
-				level.loadWave(); //load the next wave
-				healTowers();
+
 				return true;
 		}
 		return false;
 
+	}
+
+	private void waveOver(){
+		Logger.info("Game Stage: Wave over");
+		player.giveMoney((int) (100 * (float) level.getCurrentWave()));
+		levelStateManager.setState(LevelState.STANDBY);
+		player.setWaveCount(player.getWaveCount() + 1);
+		if(isLevelCompleted()){
+			levelComleted();
+		}
+		level.loadWave(); //load the next wave
+		healTowers();
 	}
 	
 	/**
@@ -157,14 +170,18 @@ public class GameStage extends Stage implements IEnemyObserver{
 	 */
 	private boolean isLevelCompleted(){
 		if(player.getWavesCompleted() == Level.MAX_WAVES){
-			Logger.info("Level Over");
-			uiStateManager.setState(GameUIState.LEVEL_COMPLETED);
+			Logger.info("Game Stage: Level Over");
 			return true;
 		}
 		return false;
 	}
+
+	private void levelComleted(){
+		uiStateManager.setState(GameUIState.LEVEL_COMPLETED);
+	}
 	
 	private void healTowers(){
+		Logger.info("Game Stage: healing towers");
 		for(Actor tower : actorGroups.getTowerGroup().getChildren()){
 			if (tower instanceof Tower){
 				if(((Tower)tower).isActive()) {
@@ -181,10 +198,12 @@ public class GameStage extends Stage implements IEnemyObserver{
 	 * If an enemy reaches the end, subtract 1 life from the player
 	 */
 	private void enemyReachedEnd() {
+		Logger.info("Game Stage: enemy reached end");
 		if (player.getLives() > 0) { // Only subtract if we have lives.
 			player.setLives(player.getLives() - 1);
 		}
 		if (player.getLives() <= 0 && !levelStateManager.getState().equals(LevelState.GAME_OVER)) { // end game
+			Logger.info("Game Stage: game over");
 			levelStateManager.setState(LevelState.GAME_OVER);
 			uiStateManager.setState(GameUIState.GAME_OVER);
 		}
@@ -234,6 +253,7 @@ public class GameStage extends Stage implements IEnemyObserver{
 
 	@Override
 	public void notifyEnemy(Enemy enemy, EnemyEvent event) {
+		Logger.info("Game Stage: notify enemy: " + event.name());
 		if(event.equals(EnemyEvent.REACHED_END)){
 			enemyReachedEnd();
 		}

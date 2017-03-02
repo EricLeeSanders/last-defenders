@@ -22,6 +22,7 @@ public class AirStrikePlacement {
 		this.actorFactory = actorFactory;
 	}
 	public void createAirStrike() {
+		Logger.info("AirStrikePlacement: creating air strike");
 		currentAirStrike = (AirStrike)actorFactory.loadSupportActor("AirStrike");
 		currentAirStrike.setPosition(0, 0);
 		actorGroups.getSupportGroup().addActor(currentAirStrike);
@@ -29,11 +30,13 @@ public class AirStrikePlacement {
 		currentAirStrike.setVisible(false);
 	}
 	public void addLocation(Vector2 location){
+		Logger.info("AirStrikePlacement: addLocation");
 		AirStrikeLocation airStrikeLocation = new AirStrikeLocation(location,AirStrike.AIRSTRIKE_RADIUS, actorFactory.getLoadedTextures().get("range-black") );
 		currentAirStrike.addLocation(airStrikeLocation);
 		actorGroups.getSupportGroup().addActor(airStrikeLocation);
 	}
 	public void finishCurrentAirStrike() {
+		Logger.info("AirStrikePlacement: finishing current air strike");
 		if (isCurrentAirStrike()) {
 			currentAirStrike.beginAirStrike();
 			currentAirStrike.setVisible(true);
@@ -42,6 +45,7 @@ public class AirStrikePlacement {
 	}
 	
 	public void removeCurrentAirStrike(){
+		Logger.info("AirStrikePlacement: removing current airstrike");
 		if (isCurrentAirStrike()) {
 			currentAirStrike.freeActor();
 			currentAirStrike = null;

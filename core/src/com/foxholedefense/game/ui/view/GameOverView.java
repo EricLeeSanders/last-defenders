@@ -37,6 +37,8 @@ public class GameOverView extends Group implements IGameOverView {
 	 * Create controls 
 	 */
 	public void createControls(Skin skin) {
+		Logger.info("Game Over View: creating controls");
+
 		Table table = new Table();
 		table.setTransform(false);
 		table.setBackground(skin.getDrawable("main-panel"));
@@ -76,6 +78,8 @@ public class GameOverView extends Group implements IGameOverView {
 		btnMainMenu.getLabel().setFontScale(0.45f);
 		table.add(btnMainMenu).width(150).height(45).spaceTop(10);
 		setBtnMainMenuListener(btnMainMenu);
+
+		Logger.info("Game Over View: controls created");
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import com.foxholedefense.game.ui.view.interfaces.IHUDView;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 
@@ -59,6 +60,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 * Show the options view. Also pause the Game.
 	 */
 	public void options() {
+		Logger.info("HUD Presenter: options");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		uiStateManager.setState(GameUIState.OPTIONS);
 		gameStateManager.setState(GameState.PAUSE);
@@ -69,6 +71,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 * Start the next wave
 	 */
 	public void startWave() {
+		Logger.info("HUD Presenter: starting wave");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		levelStateManager.setState(LevelState.WAVE_IN_PROGRESS);
 		uiStateManager.setState(GameUIState.WAVE_IN_PROGRESS);
@@ -79,6 +82,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 * Show the Enlist view
 	 */
 	public void enlist() {
+		Logger.info("HUD Presenter: enlist");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		uiStateManager.setState(GameUIState.ENLISTING);
 
@@ -88,6 +92,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 * Show the Support view
 	 */
 	public void support() {
+		Logger.info("HUD Presenter: support");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		uiStateManager.setState(GameUIState.SUPPORT);
 
@@ -96,6 +101,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 
 	@Override
 	public void changeUIState(GameUIState state) {
+
 		switch (state) {
 		case GAME_OVER:
 			view.gameOverState();
@@ -128,12 +134,14 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 */
 	@Override
 	public void playerAttributeChange() {
+		Logger.info("HUD Presenter: playerAttributeChange");
 		view.setLives(String.valueOf(player.getLives()));
 		view.setMoney(String.valueOf(player.getMoney()));
 		setWaveCount();
 	}
 	
 	private void setWaveCount(){
+		Logger.info("HUD Presenter: setWaveCount");
 		int waveCount = player.getWavesCompleted();
 		if(waveCount >= Level.MAX_WAVES){
 			view.setWaveCount(String.valueOf(player.getWaveCount()));

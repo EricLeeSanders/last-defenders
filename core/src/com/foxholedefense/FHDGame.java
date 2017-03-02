@@ -11,6 +11,7 @@ import com.foxholedefense.menu.MenuScreen;
 import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.UserPreferences;
 
@@ -30,6 +31,7 @@ public class FHDGame extends Game implements IScreenChanger {
 
 	@Override
 	public void create() {
+		Logger.info("FHDGame: Creating");
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 		userPreferences = new UserPreferences();
 		resources = new Resources(userPreferences);
@@ -37,11 +39,12 @@ public class FHDGame extends Game implements IScreenChanger {
 		gameStateManager = new GameStateManager();
 		GameLoadingScreen loadingScreen = new GameLoadingScreen(gameStateManager, this, resources, audio);
 		setScreen(loadingScreen);
-
+		Logger.info("FHDGame: Created");
 	}
 
 	@Override
 	public void dispose() {
+		Logger.info("FHDGame: disposing");
 		resources.dispose();
 		audio.dispose();
 		this.getScreen().dispose();
@@ -51,24 +54,28 @@ public class FHDGame extends Game implements IScreenChanger {
 
 	@Override
 	public void changeToMenu(){
+		Logger.info("FHDGame: Changing to menu");
 		this.getScreen().dispose(); // dispose current screen
 		this.setScreen(new MenuScreen(this,gameStateManager, resources, audio));
 	}
 
 	@Override
 	public void changeToLevelSelect() {
+		Logger.info("FHDGame: Changing to level select");
 		this.getScreen().dispose(); // dispose current screen
 		this.setScreen(new LevelSelectScreen(this,gameStateManager,resources, audio));
 	}
 
 	@Override
 	public void changeToLevelLoad(int level) {
+		Logger.info("FHDGame: Changing to level load");
 		this.getScreen().dispose(); // dispose current screen
 		this.setScreen(new LevelLoadingScreen(gameStateManager, this, resources, level));
 	}
 
 	@Override
 	public void changeToLevel(int level) {
+		Logger.info("FHDGame: Changing to level: " + level);
 		this.getScreen().dispose(); // dispose current screen
 		this.setScreen(new GameScreen(level, gameStateManager, this, resources, audio));
 	}

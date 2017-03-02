@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.foxholedefense.util.Logger;
 
 /**
  * Represents the player
@@ -22,6 +23,7 @@ public class Player {
 	}
 
 	public void notifyObservers() {
+		Logger.info("Player: notifying observers");
 		for (IPlayerObserver observer : observers) {
 			observer.playerAttributeChange();
 		}
@@ -45,6 +47,7 @@ public class Player {
 	}
 
 	public void setMoney(int money) {
+		Logger.info("TowerPlacement: set money: " + money);
 		this.money = money;
 		notifyObservers();
 	}
@@ -54,6 +57,7 @@ public class Player {
 	}
 
 	public void setLives(int lives) {
+		Logger.info("TowerPlacement: set lives: " + lives);
 		this.lives = lives;
 		notifyObservers();
 	}

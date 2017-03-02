@@ -57,11 +57,13 @@ public abstract class AbstractScreen implements Screen {
 
 	@Override
 	public void pause() {
+		Logger.info("Abstract Screen: pausing");
 		gameStateManager.setState(GameState.PAUSE);
 	}
 
 	@Override
 	public void resume() {
+		Logger.info("Abstract Screen: resuming");
 		gameStateManager.setState(GameState.PLAY);
 		
 	}
@@ -73,12 +75,13 @@ public abstract class AbstractScreen implements Screen {
 
 	@Override
 	public void show() {
+		Logger.info("Abstract Screen: show");
 		Gdx.input.setInputProcessor(imp);
 	}
 
 	@Override
 	public void dispose() {
-		Logger.info("Abstract Screen Disposing");
+		Logger.info("Abstract Screen: Disposing");
 
 	}
 

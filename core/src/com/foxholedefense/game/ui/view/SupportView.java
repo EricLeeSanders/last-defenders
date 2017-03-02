@@ -63,6 +63,9 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	 * Creates the controls
 	 */
 	public void createControls(Skin skin) {
+
+		Logger.info("Support View: creating controls");
+
 		Table container = new Table();
 		container.setTransform(false);
 		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
@@ -94,8 +97,6 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		lblMoney.setAlignment(Align.left);
 		lblMoney.setFontScale(0.6f);
 		choosingGroup.addActor(lblMoney);
-		
-
 
 		SupportButton landmineButton = new SupportButton(skin, "Landmine", LandMine.COST);
 		supportButtons.add(landmineButton);
@@ -144,6 +145,8 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		setPlacingCancelListener();
 		addActor(btnPlacingCancel);
 
+
+		Logger.info("Support View: controls created");
 	}
 
 

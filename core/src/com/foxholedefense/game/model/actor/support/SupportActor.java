@@ -103,6 +103,7 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	}
 	@Override
 	public void reset() {
+		Logger.info("SupportActor: Resetting");
 		this.setActive(false);
 		this.setPosition(0, 0);
 		this.setRotation(0);

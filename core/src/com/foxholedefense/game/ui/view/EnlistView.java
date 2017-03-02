@@ -23,6 +23,7 @@ import com.foxholedefense.game.model.actor.combat.tower.TowerTurret;
 import com.foxholedefense.game.ui.presenter.EnlistPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
 import com.foxholedefense.game.ui.view.widgets.EnlistButton;
+import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -61,6 +62,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	 * Creates the controls
 	 */
 	public void createControls(Skin skin) {
+		Logger.info("Enlist View: creating controls");
 		Table container = new Table();
 		container.setTransform(false);
 		container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
@@ -152,7 +154,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		btnRotate.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlacingCancel.getY() + 60);
 		setRotateListener();
 		addActor(btnRotate);
-
+		Logger.info("Enlist View: controls created");
 	}
 	/**
 	 * Creates a tower button and adds it to the map
@@ -171,6 +173,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	 * Updates the tower buttons to disable/enable.
 	 */
 	private void updateTowerButtons() {
+		Logger.info("Enlist View: updating tower buttons");
 	    Iterator<Entry<EnlistButton, Integer>> iter = towerCosts.entrySet().iterator();
 	    while(iter.hasNext()){
 	    	Map.Entry<EnlistButton, Integer> tower = iter.next();

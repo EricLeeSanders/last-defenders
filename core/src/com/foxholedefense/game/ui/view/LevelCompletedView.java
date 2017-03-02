@@ -26,6 +26,9 @@ public class LevelCompletedView extends Group implements ILevelCompletedView{
 	}
 	
 	public void createControls(Skin skin){
+
+		Logger.info("Level Completed View: creating controls");
+
 		Table table = new Table();
 		table.setTransform(false);
 		table.setBackground(skin.getDrawable("main-panel"));
@@ -62,6 +65,8 @@ public class LevelCompletedView extends Group implements ILevelCompletedView{
 		btnMainMenu.getLabel().setFontScale(0.45f);
 		table.add(btnMainMenu).width(130).height(45);
 		setbtnMainMenuListener(btnMainMenu);
+
+		Logger.info("Level Completed View: controls created");
 	}
 	
 	private void setBtnContinueLevel(Button button) {
