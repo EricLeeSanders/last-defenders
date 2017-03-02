@@ -61,7 +61,7 @@ public class AirStrike extends SupportActor implements IRpg{
 		airStrikeLocations.add(location);
 	}
 	public void beginAirStrike(){
-		Logger.info("Beginning Air Strike Run");
+		Logger.info("AirStrike: Beginning Air Strike Run");
 		setActive(true);
 		setPositionCenter(new Vector2(0-this.getHeight(), Resources.VIRTUAL_HEIGHT/2));
 		this.addAction(Actions.moveTo(Resources.VIRTUAL_WIDTH+this.getWidth(), ((Resources.VIRTUAL_HEIGHT/2) - (getHeight()/2)),  AIRSTRIKE_DURATION, Interpolation.linear));
@@ -90,10 +90,10 @@ public class AirStrike extends SupportActor implements IRpg{
 	}
 	@Override
 	public void reset() {
+		Logger.info("AirStrike: Resetting");
 		for(AirStrikeLocation location : airStrikeLocations){
 			location.remove();
 			location.clear();
-			
 		}
 		airStrikeLocations.clear();
 		super.reset();

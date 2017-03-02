@@ -59,6 +59,7 @@ public class HealthBar extends Actor implements Pool.Poolable {
 	}
 
 	public void setActor(CombatActor actor) {
+		Logger.info("HealthBar: setting actor: " + actor.getClass().getSimpleName());
 		this.actor = actor;
 		this.setSize(30, 4);
 
@@ -66,6 +67,7 @@ public class HealthBar extends Actor implements Pool.Poolable {
 
 	@Override
 	public void reset() {
+		Logger.info("HealthBar: setting resetting");
 		this.actor = null;
 		this.remove();
 

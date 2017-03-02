@@ -59,7 +59,7 @@ public class MenuView extends Group implements IMenuView {
 	}
 	
 	public void createControls(Resources resources) {
-		
+		Logger.info("Menu view: initializing view");
 		TextureAtlas menuAtlas = resources.getAtlas(Resources.MENU_ATLAS);
 		Skin skin = resources.getSkin(Resources.SKIN_JSON);
 		
@@ -97,8 +97,11 @@ public class MenuView extends Group implements IMenuView {
 		btnOptions.setPosition(407, 36);
 		addActor(btnOptions);
 		setBtnOptionsListener(btnOptions);
+
+		Logger.info("Menu view: view initialized");
 	}
 	public void createOptionControls(Resources resources) {
+		Logger.info("Menu view: creating option controls");
 		Skin skin = resources.getSkin(Resources.SKIN_JSON);
 		
 		optionsTable = new Table();
@@ -164,6 +167,8 @@ public class MenuView extends Group implements IMenuView {
 		optionsTable.add(lblVol).colspan(2);
 		optionsTable.row();
 		optionsTable.add(volumeStack).colspan(2).width(300).height(18);
+
+		Logger.info("Menu view: option controls created");
 	}
 	
 	public void setBackground(TextureAtlas menuAtlas){

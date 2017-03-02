@@ -8,6 +8,7 @@ import com.foxholedefense.game.ui.view.interfaces.IGameOverView;
 import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
+import com.foxholedefense.util.Logger;
 
 /**
  * Presenter for Game Over.
@@ -50,6 +51,7 @@ public class GameOverPresenter implements IGameUIStateObserver {
 	 * Start a new game
 	 */
 	public void newGame() {
+		Logger.info("Game Over Presenter: new Game");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		screenChanger.changeToLevelSelect();
 
@@ -59,6 +61,7 @@ public class GameOverPresenter implements IGameUIStateObserver {
 	 * Change to main menu
 	 */
 	public void mainMenu() {
+		Logger.info("Game Over Presenter: main menu");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		screenChanger.changeToMenu();
 
@@ -68,11 +71,13 @@ public class GameOverPresenter implements IGameUIStateObserver {
 	 * Change to high scores
 	 */
 	public void highScores() {
+		Logger.info("Game Over Presenter: high scores");
 		audio.playSound(FHDSound.SMALL_CLICK);
 	}
 
 	@Override
 	public void changeUIState(GameUIState state) {
+
 		switch (state) {
 		case GAME_OVER:
 			view.gameOverState();

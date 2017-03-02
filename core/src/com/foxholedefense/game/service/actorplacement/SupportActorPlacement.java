@@ -21,6 +21,7 @@ public class SupportActorPlacement {
 	}
 
 	public void createSupportActor(String type) {
+		Logger.info("SupportActorPlacement: creating supply actor: " + type);
 		currentSupportActor = actorFactory.loadSupportActor(type);
 		currentSupportActor.setPosition(0, 0);
 		if(type.equals("LandMine")){
@@ -44,6 +45,7 @@ public class SupportActorPlacement {
 	}
 
 	public boolean placeSupportActor() {
+		Logger.info("SupportActorPlacement: trying to place Support Actor");
 		if (currentSupportActor != null) {
 			//If it is an Apache that is being placed, then we need to call it's initialize method
 			if(currentSupportActor instanceof Apache){
@@ -52,6 +54,7 @@ public class SupportActorPlacement {
 			currentSupportActor.setActive(true);
 			currentSupportActor.setShowRange(false);
 			currentSupportActor = null;
+			Logger.info("SupportActorPlacement: placing Support Actor");
 			return true;
 		}
 		return false;
@@ -60,6 +63,7 @@ public class SupportActorPlacement {
 
 
 	public void removeCurrentSupportActor() {
+		Logger.info("SupportActorPlacement: removing Support Actor");
 		if (isCurrentSupportActor()) {
 			currentSupportActor.freeActor();
 			currentSupportActor = null;

@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.game.ui.presenter.OptionsPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IOptionsView;
+import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
 /**
@@ -53,6 +54,9 @@ public class OptionsView extends Group implements IOptionsView {
 	 * Create controls
 	 */
 	public void createControls(Resources resources) {
+
+		Logger.info("Options View: creating controls");
+
 		Skin skin = resources.getSkin(Resources.SKIN_JSON);
 		Table container = new Table();
 		container.setTransform(false);
@@ -168,7 +172,7 @@ public class OptionsView extends Group implements IOptionsView {
 
 		mainTable.add(speedStack).colspan(3).width(300).height(18).spaceTop(1);
 
-        
+		Logger.info("Options View: controls created");
 	}
 
 	private Stack createSpeedSlider(Skin skin, Resources resources){

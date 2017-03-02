@@ -38,6 +38,7 @@ public class GameUIStateManager implements ILevelStateObserver {
 	}
 
 	private void syncWithLevelState() {
+		Logger.info("Game UI State: syncWithLevelState");
 		switch (levelStateManager.getState()) {
 		case WAVE_IN_PROGRESS:
 			this.setState(GameUIState.WAVE_IN_PROGRESS);
@@ -67,6 +68,7 @@ public class GameUIStateManager implements ILevelStateObserver {
 
 	@Override
 	public void changeLevelState(LevelState state) {
+		Logger.info("Game UI State: changeLevelState: " + state.name());
 		switch (state) {
 		case STANDBY:
 			if (this.getState() == GameUIState.WAVE_IN_PROGRESS) {

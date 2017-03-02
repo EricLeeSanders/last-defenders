@@ -50,11 +50,9 @@ public class Resources {
 
 	public Resources(UserPreferences userPreferences){
 		this.userPreferences = userPreferences;
-//		loadFonts();
-//		loadSkin(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
 	}
 	public void dispose() {
-		Logger.info("Resources dispose");
+		Logger.info("Resources: dispose");
 		manager.dispose();
 		shapeRenderer.dispose();
 
@@ -66,35 +64,42 @@ public class Resources {
 
 
 	public void loadMapSync(int level) {
+		Logger.info("Resources: sync loading map: " + level);
 		loadMap(level);
 		manager.finishLoading();
+		Logger.info("Resources: sync loaded map: " + level);
 	}
 	
 	public void loadMap(int level) {
+		Logger.info("Resources: loading map: " + level);
 		try {
 			manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
 			manager.load("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
-			Logger.info("Map Loaded: " + "game/levels/level" + level + "/level" + level + ".tmx");
+			Logger.info("Resources: map loaded: " + "game/levels/level" + level + "/level" + level + ".tmx");
 		} catch (GdxRuntimeException e) {
-			Logger.error("Map load error", e);
+			Logger.error("Resources: map load error", e);
 		}
 	}
 
 	public void loadSkinSync(String skinJson, String atlas) {
+		Logger.info("Resources: sync loading skin");
 		loadSkin(skinJson, atlas);
 		manager.finishLoading();
+		Logger.info("Resources: sync loaded skin");
 	}
 	
 	public void loadSkin(String skinJson, String atlas) {
+		Logger.info("Resources: loading skin");
 		try {
 			manager.load(skinJson, Skin.class, new SkinLoader.SkinParameter(atlas));
-			Logger.info("Skin Loaded");
+			Logger.info("Resources: skin loaded");
 		} catch (GdxRuntimeException e) {
-			Logger.error("Load Skin Error", e);
+			Logger.error("Resources: load skin error", e);
 		}
 	}
 
 	public void initFont(){
+		Logger.info("Resources: initializing font");
 		BitmapFont font = getSkin(SKIN_JSON).getFont("default-font");
 		font.setUseIntegerPositions(false);
 		font.getData().setLineHeight(55);
@@ -105,35 +110,43 @@ public class Resources {
 		font.getData().scaleY = 1.0f;
 		font.getData().spaceWidth = 12.0f;
 		font.getData().xHeight = 30.0f;
+		Logger.info("Resources: font initialized");
 	}
 	public void loadAtlasSync(String file) {
+		Logger.info("Resources: sync loading atlas: " + file);
 		loadAtlas(file);
 		manager.finishLoading();
+		Logger.info("Resources: sync loaded atlas: " + file);
 	}
 	
 	public void loadAtlas(String file) {
+		Logger.info("Resources: loading atlas: " + file);
 		if(!manager.isLoaded(file)){
 			try {
 				manager.load(file, TextureAtlas.class);
-				Logger.info(file + " Atlas Loaded");
+				Logger.info("Resources: atlas loaded: " + file);
 			} catch (GdxRuntimeException e) {
-				Logger.error("Load Atlas Error", e);
+				Logger.error("Resources: atlas load error", e);
 			}
 		}
 	}
 
 	public void loadTextureSync(String file) {
+		Logger.info("Resources: sync loading texture: " + file);
 		loadTexture(file);
 		manager.finishLoading();
+		Logger.info("Resources: sync loaded texture: " + file);
 	}
 	
 	public void loadTexture(String file) {
+		Logger.info("Resources: loading texture: " + file);
 		if(!manager.isLoaded(file)){
 			try {
 				manager.load(file, Texture.class);
 				manager.finishLoading();
+				Logger.info("Resources: texture loaded: " + file);
 			} catch (GdxRuntimeException e) {
-				Logger.error("Load Texture Error", e);
+				Logger.error("Resources: texture load error", e);
 			}
 		}
 	}
@@ -179,12 +192,14 @@ public class Resources {
 		this.gameSpeed = gameSpeed;
 	}
 	public void unloadAsset(String file){
+		Logger.info("Resources: unloaded: " + file);
 		if(manager.isLoaded(file)){
 			manager.unload(file);
-			Logger.info(file + " unloaded");
+			Logger.info("Resources: " + file + " unloaded");
 		}
 	}
 	public void unloadMap(int level){
+		Logger.info("Resources: unloading map: " + level);
 		if(manager.isLoaded("game/levels/level" + level + "/level" + level + ".tmx")){
 			manager.unload("game/levels/level" + level + "/level" + level + ".tmx");
 			Logger.info("Map " + level + " unloaded");

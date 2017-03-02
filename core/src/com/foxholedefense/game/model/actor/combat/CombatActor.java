@@ -86,6 +86,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	}
 	@Override
 	public void reset() {
+		Logger.info("Combat Actor: " + this.getClass().getSimpleName() + " Resetting");
 		health = MAX_HEALTH;
 		armor = MAX_ARMOR;
 		hasArmor = false;
@@ -208,6 +209,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public void setDead(boolean dead) {
 		this.dead = dead;
 		if (isDead()) {
+			Logger.info("Combat Actor: " + this.getClass().getSimpleName() + " Dead");
 			deathAnimation();
 			pool.free(this);
 			notifyObserversCombatActor(CombatActorEvent.DEAD);

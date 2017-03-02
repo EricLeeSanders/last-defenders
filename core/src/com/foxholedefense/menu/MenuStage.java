@@ -18,10 +18,8 @@ import com.foxholedefense.util.Resources;
 public class MenuStage extends Stage {
 	private MenuPresenter presenter;
 	private MenuView menuView;
-	private Resources resources;
 	public MenuStage(IScreenChanger screenChanger, Resources resources, FHDAudio audio, Viewport viewport) {
 		super(viewport);
-		this.resources = resources;
 		resources.loadAtlas(Resources.MENU_ATLAS);
 		presenter = new MenuPresenter(screenChanger, audio);
 		menuView = new MenuView(presenter, resources);
@@ -32,7 +30,7 @@ public class MenuStage extends Stage {
 	
 	@Override
 	public void dispose(){
-		Logger.info("Menu Stage Dispose");
+		Logger.info("Menu Stage: Dispose");
 	}
 
 }

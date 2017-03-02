@@ -13,6 +13,7 @@ import com.foxholedefense.game.service.factory.ActorFactory.SupportActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 
@@ -45,6 +46,7 @@ public class Apache extends SupportActor{
 		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
 	}
 	public void initialize(Vector2 position){
+		Logger.info("Apache: initializing");
 		Vector2 destination = new Vector2(position.x - this.getOriginX(), position.y - this.getOriginY());
 		setPositionCenter(new Vector2(0-this.getHeight(), Resources.VIRTUAL_HEIGHT/2));
 		float moveDistance = (destination.dst(this.getPositionCenter()) / MOVE_SPEED);
@@ -53,6 +55,7 @@ public class Apache extends SupportActor{
 	}
 	@Override
 	public void reset() {
+		Logger.info("Apache: resetting");
 		setReadyToAttack(false);
 		timeActive = 0;
 		attackCounter = 0;
@@ -101,6 +104,7 @@ public class Apache extends SupportActor{
 		}
 	}
 	private void exitStage(){
+		Logger.info("Apache: exiting stage");
 		Vector2 destination = new Vector2(0-this.getWidth() , Resources.VIRTUAL_HEIGHT/2 - this.getHeight()/2);
 		float moveDistance = (destination.dst(this.getPositionCenter()) / MOVE_SPEED);
 		this.setRotation(calculateRotation(destination));
