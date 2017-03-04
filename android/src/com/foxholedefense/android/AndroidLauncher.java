@@ -36,6 +36,7 @@ public class AndroidLauncher extends AndroidApplication implements IPlayServices
 		gameHelper.setup(gameHelperListener);
 
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
+		config.useWakelock = true;
 		initialize(new FHDGame(this), config);
 	}
 
