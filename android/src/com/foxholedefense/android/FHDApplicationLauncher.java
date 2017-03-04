@@ -23,7 +23,8 @@ import org.acra.sender.HttpSender;
 	            ReportField.PACKAGE_NAME,
 	            ReportField.REPORT_ID,
 	            ReportField.BUILD,
-	            ReportField.STACK_TRACE
+	            ReportField.STACK_TRACE,
+	            ReportField.LOGCAT
 	    },
 	    mode = ReportingInteractionMode.TOAST,
 		resToastText = R.string.toast_crash
