@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
+import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.model.actor.interfaces.IVehicle;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
@@ -40,7 +41,7 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 	}
 
 	@Override
-	public void attackTarget() {
+	public void attackTarget(ITargetable target) {
 		// Does not attack
 
 	}

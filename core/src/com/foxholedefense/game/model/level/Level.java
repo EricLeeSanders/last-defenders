@@ -53,6 +53,7 @@ public class Level{
 				ArmorIcon armorIcon = actorFactory.loadArmorIcon();
 				armorIcon.setActor(enemy.getEnemy());
 				enemy.getEnemy().setActive(true);
+				enemy.getEnemy().setDead(false);
 				enemyDelay = enemy.getDelay();
 			} else {
 				delayCount += delta;
