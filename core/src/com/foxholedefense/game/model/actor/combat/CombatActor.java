@@ -33,7 +33,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private final float RESET_ATTACK_SPEED, RESET_RANGE, MAX_HEALTH, MAX_ARMOR, RESET_ATTACK;
 	private float attackSpeed, range, health, attack, armor;
 	private Vector2 gunPos;
-	private ITargetable target;
 	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private Circle rangeCircle = new Circle();
 	private boolean hasArmor, dead, active;
@@ -93,7 +92,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		attack = RESET_ATTACK;
 		attackSpeed = RESET_ATTACK_SPEED;
 		range = RESET_RANGE;
-		target = null;
 		this.setRotation(0);
 		this.clear();
 		this.remove();
@@ -149,10 +147,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 	}
 
-	public void setTarget(CombatActor target) {
-		this.target = target;
-	}
-
 	public Vector2 getGunPos() {
 		return getRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y));
 
@@ -200,7 +194,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.range = range;
 	}
 
-	public abstract void attackTarget();
+	public abstract void attackTarget(ITargetable target);
 	
 	protected abstract void deathAnimation();
 
@@ -259,11 +253,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		}
 		this.hasArmor = hasArmor;
 	}
-	
-	public ITargetable getTarget() {
-		return target;
-	}
-	
+
 	public void freeActor(){
 		pool.free(this);
 	}

@@ -212,7 +212,6 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 			tower = (Tower) towerFlameThrowerPool.obtain();
 		}
 
-		tower.setDead(false);
 		return tower;
 	}
 
@@ -244,7 +243,6 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 			enemy = (Enemy) enemyHumveePool.obtain();
 		}
 
-		enemy.setDead(false);
 		return enemy;
 	}
 	

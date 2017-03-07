@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.ai.TowerAI;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.ArmorDestroyedEffect;
+import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
@@ -135,23 +136,22 @@ public abstract class Tower extends CombatActor {
 	public void act(float delta) {
 		super.act(delta);
 		if (isActive()) {
-			findTarget();
+			attackHandler(delta);
 		}
-		if (getTarget() != null) {
-			if (getTarget().isDead()) {
-				setTarget(null);
-			} else {
-				setRotation(calculateRotation(getTarget().getPositionCenter()));
-				if (attackCounter >= getAttackSpeed()) {
-					attackCounter = 0;
-					attackTarget();
-				} else {
-					attackCounter += delta;
-				}
+	}
+
+	private void attackHandler(float delta){
+		ITargetable target = findTarget();
+		if(target != null && !target.isDead()){
+			setRotation(calculateRotation(target.getPositionCenter()));
+			if (attackCounter >= getAttackSpeed()) {
+				attackCounter = 0;
+				attackTarget(target);
 			}
-		} else { // Make the actor always ready to shoot
-			attackCounter += delta;
 		}
+
+		attackCounter += delta;
+
 	}
 
 	@Override
@@ -168,8 +168,8 @@ public abstract class Tower extends CombatActor {
 	/**
 	 * Find a target based on the Target Priority
 	 */
-	public void findTarget() {
-		setTarget(getAI().findTarget(this, getTargetGroup().getChildren()));
+	public ITargetable findTarget() {
+		return getAI().findTarget(this, getTargetGroup().getChildren());
 	}
 
 	public void heal() {
