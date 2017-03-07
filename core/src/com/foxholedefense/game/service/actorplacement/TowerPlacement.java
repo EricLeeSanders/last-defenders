@@ -97,6 +97,7 @@ public class TowerPlacement {
 		if (currentTower != null) {
 			if (!towerCollides()) {
 				currentTower.setActive(true);
+				currentTower.setDead(false);
 				HealthBar healthBar = actorFactory.loadHealthBar();
 				healthBar.setActor(currentTower);
 				ArmorIcon armorIcon = actorFactory.loadArmorIcon();

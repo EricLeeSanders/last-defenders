@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IRpg;
+import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
@@ -44,10 +45,10 @@ public class EnemyRocketLauncher extends Enemy implements IRpg {
 	}
 
 	@Override
-	public void attackTarget() {
-		if(getTarget() != null){
+	public void attackTarget(ITargetable target) {
+		if(target != null){
 			audio.playSound(FHDSound.ROCKET_LAUNCH);
-			projectileFactory.loadRPG().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), RPG_SIZE, AOE_RADIUS);
+			projectileFactory.loadRPG().initialize(this, target, getTargetGroup(), this.getGunPos(), RPG_SIZE, AOE_RADIUS);
 		}
 
 	}

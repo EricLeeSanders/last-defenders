@@ -12,6 +12,7 @@ import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.health.interfaces.IPlatedArmor;
 import com.foxholedefense.game.model.actor.interfaces.IRpg;
+import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.model.actor.interfaces.IVehicle;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
@@ -105,9 +106,9 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	}
 
 	@Override
-	public void attackTarget() {
-		if(getTarget() != null){
-			projectileFactory.loadRPG().initialize(this, getTarget(), getTargetGroup(), this.getGunPos(), RPG_SIZE, AOE_RADIUS);
+	public void attackTarget(ITargetable target) {
+		if(target != null){
+			projectileFactory.loadRPG().initialize(this, target, getTargetGroup(), this.getGunPos(), RPG_SIZE, AOE_RADIUS);
 		}
 	}
 

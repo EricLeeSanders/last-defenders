@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffectType;
+import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
@@ -43,10 +44,10 @@ public class EnemyRifle extends Enemy {
 	}
 
 	@Override
-	public void attackTarget() {
-		if(getTarget() != null){
+	public void attackTarget(ITargetable target) {
+		if(target != null){
 			audio.playSound(FHDSound.RIFLE);
-			projectileFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
+			projectileFactory.loadBullet().initialize(this, target, this.getGunPos(), BULLET_SIZE);
 		}
 	}
 

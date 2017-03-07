@@ -16,6 +16,7 @@ import com.foxholedefense.game.GameStage;
 import com.foxholedefense.game.model.actor.ai.EnemyAI;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
+import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
@@ -24,13 +25,13 @@ import com.foxholedefense.util.Logger;
  * An abstract class that represents an Enemy. Enemies are created from the
  * ActorFactory and are pooled. Enemies can attack towers. Enemies can have
  * multiple textures to show movement.
- * 
+ *
  * @author Eric
  *
  */
 public abstract class Enemy extends CombatActor {
 	private static final float MOVEMENT_DELAY = 1f; // The delay to wait after
-													// attacking
+	// attacking
 	private Random random = new Random();
 	private float findTargetDelay = 2f;
 	private SnapshotArray<MoveToAction> actionList = new SnapshotArray<MoveToAction>();
@@ -49,7 +50,7 @@ public abstract class Enemy extends CombatActor {
 	private SnapshotArray<IEnemyObserver> observers = new SnapshotArray<IEnemyObserver>();
 
 	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
-					float speed, float health, float armor, float attack, float attackSpeed, float range) {
+				 float speed, float health, float armor, float attack, float attackSpeed, float range) {
 		super(stationaryTextureRegion, pool, targetGroup, gunPos, health, armor, attack, attackSpeed, range);
 		movementAnimation = new Animation(0.3f, animatedRegions);
 		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
@@ -127,14 +128,8 @@ public abstract class Enemy extends CombatActor {
 	/**
 	 * Finds a tower to attack.
 	 */
-	public void findTarget() {
-		this.setTarget(EnemyAI.findNearestTower(this, getTargetGroup().getChildren()));
-		if (getTarget() != null) {
-			this.setRotation(calculateRotation(super.getTarget().getPositionCenter()));
-			findTargetCounter = 0;
-			attackCounter = 100; //Ready to attack
-			attacking = true;
-		}
+	private ITargetable findTarget() {
+		return EnemyAI.findNearestTower(this, getTargetGroup().getChildren());
 	}
 
 	/**
@@ -144,19 +139,11 @@ public abstract class Enemy extends CombatActor {
 	 */
 	@Override
 	public void act(float delta) {
-		//System.out.println(getLengthToEnd());
+
 		lengthToEndCalculated = false;
-		// Find target if delay has expired.
-		if (!(this instanceof IPassiveEnemy) && !attacking) {
-			findTargetHandler(delta);
-		}
-		// If the enemy is attacking and the duration to pause for the attack
-		// animation has finished, then reset its rotation to the way point
-		// it was heading to before it began attacking
-		if (attacking) {
-			setTextureRegion(stationaryTextureRegion);
-			attackHandler(delta);
-		} else {
+
+		attackHandler(delta);
+		if (!attacking) {
 			super.act(delta); // Pause to create a delay if attacking
 			movementAnimationStateTime += delta;
 		}
@@ -168,14 +155,9 @@ public abstract class Enemy extends CombatActor {
 		}
 	}
 
-	private void findTargetHandler(float delta){
-		if ((findTargetCounter >= findTargetDelay)) {
-			findTarget();
-		} else {
-			findTargetCounter += delta;
-		}
+	private boolean isReadyToFindTarget(){
+		return findTargetCounter >= findTargetDelay;
 	}
-
 	private void moveToNextWaypoint(){
 		Logger.info("Enemy: " + this.getClass().getSimpleName() + " setting new waypoint");
 		setRotation(calculateRotation((actionList.get(actionIndex)).getX() + (this.getOriginX()), (actionList.get(actionIndex)).getY() + (this.getOriginY())));
@@ -201,24 +183,43 @@ public abstract class Enemy extends CombatActor {
 	}
 
 	private void attackHandler(float delta){
-		movementDelayCounter += delta;
-		attackCounter += delta;
-		if (movementDelayCounter >= MOVEMENT_DELAY ){
-			finishAttacking();
-		} else if(this.getTarget() == null || this.getTarget().isDead()){
-			findTargetHandler(delta);
-		} else if( attackCounter >= this.getAttackSpeed()) {
-			this.setRotation(calculateRotation(super.getTarget().getPositionCenter()));
-			this.attackTarget();
-			attackCounter = 0;
+		if(attacking) {
+			movementDelayCounter += delta;
 		}
+		attackCounter += delta;
+		if (isFinishedAttacking()){
+			finishAttacking();
+		} else if( canAttack()) {
+			if (!(this instanceof IPassiveEnemy) && !attacking) {
+				if(isReadyToFindTarget()){
+					ITargetable target = findTarget();
+					if(target != null && !target.isDead()) {
+						this.setRotation(calculateRotation(target.getPositionCenter()));
+						this.attackTarget(target);
+						attacking = true;
+						setTextureRegion(stationaryTextureRegion);
+						attackCounter = 0;
+						findTargetCounter = 0;
+					}
+				} else {
+					findTargetCounter += delta;
+				}
+			}
+		}
+	}
+
+	private boolean isFinishedAttacking(){
+		return attacking && movementDelayCounter >= MOVEMENT_DELAY;
+	}
+
+	private boolean canAttack(){
+		return attackCounter >= this.getAttackSpeed();
 	}
 
 	private void finishAttacking(){
 		setRotation(calculateRotation((actionList.get(actionIndex)).getX() + (this.getOriginX()), (actionList.get(actionIndex)).getY() + (this.getOriginY())));
 		movementDelayCounter = 0;
 		attacking = false;
-		attackCounter = 100; //Ready to attack
 		findTargetDelay = random.nextFloat()*2 + 1;
 	}
 
@@ -246,7 +247,7 @@ public abstract class Enemy extends CombatActor {
 
 	/**
 	 * Determines the length till the end of the entire path
-	 * 
+	 *
 	 * @return boolean - Total Distance till the end
 	 */
 	public void calcLengthToEnd() {
