@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffectType;
+import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
@@ -48,10 +49,10 @@ public class TowerSniper extends Tower {
 	}
 
 	@Override
-	public void attackTarget() {
+	public void attackTarget(ITargetable target) {
 		audio.playSound(FHDSound.SNIPER);
-		if(getTarget() != null){
-			projectileFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
+		if(target != null){
+			projectileFactory.loadBullet().initialize(this, target, this.getGunPos(), BULLET_SIZE);
 		}
 
 	}
