@@ -17,14 +17,17 @@ import com.foxholedefense.game.model.actor.projectile.Bullet;
 import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
+import com.foxholedefense.util.UtilPool;
 
 public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	private Pool<SupportActor> pool;
 	private float range, attack;
 	private Vector2 gunPos;
+	private Vector2 rotatedGunPos = UtilPool.getVector2();
 	private boolean active;
 	private int cost;
 	private Group getTargetGroup;
@@ -94,7 +97,10 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 
 	@Override
 	public Vector2 getGunPos() {
-		return getRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y));
+		FHDVector2 rotatedCoords = getRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y));
+		rotatedGunPos.set(rotatedCoords.x, rotatedCoords.y);
+		rotatedCoords.free();
+		return rotatedGunPos;
 	}
 
 	@Override

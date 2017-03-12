@@ -23,6 +23,7 @@ import com.foxholedefense.game.model.actor.combat.tower.TowerTurret;
 import com.foxholedefense.game.ui.presenter.EnlistPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
 import com.foxholedefense.game.ui.view.widgets.EnlistButton;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -32,6 +33,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * View class for Enlisting. Shows Enlisting window as well as the options to
@@ -255,6 +257,12 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		});
 	}
 
+	private void moveTower(float x, float y){
+		FHDVector2 coords = (FHDVector2)this.getStage().screenToStageCoordinates(UtilPool.getVector2(x, y));
+		presenter.moveTower(coords);
+		coords.free();
+	}
+
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub
@@ -275,8 +283,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2(screenX, screenY));
-		presenter.moveTower(coords);
+		moveTower(screenX, screenY);
 		return false;
 	}
 
@@ -288,8 +295,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2(screenX, screenY));
-		presenter.moveTower(coords);
+		moveTower(screenX, screenY);
 		return false;
 
 	}

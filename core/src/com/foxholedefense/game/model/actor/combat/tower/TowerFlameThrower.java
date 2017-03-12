@@ -14,6 +14,7 @@ import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * Represents a Tower FlameThrower
@@ -33,7 +34,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
 	public static final int RANGE_INCREASE_COST = 450;
 	public static final int SPEED_INCREASE_COST = 450;
 	public static final int ATTACK_INCREASE_COST = 450;
-	public static final Vector2 GUN_POS = new Vector2(26, 4);
+	public static final Vector2 GUN_POS = UtilPool.getVector2(26, 4);
 	private Circle body;
 	private Dimension flameSize = new Dimension(RANGE-26, 20);
 	private FHDAudio audio;

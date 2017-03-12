@@ -21,6 +21,7 @@ import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * Represents an Enemy Tank.
@@ -38,7 +39,7 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	public static final float SPEED = 45;
 	public static final float AOE_RADIUS = 75f;
 	public static final Dimension RPG_SIZE = new Dimension(7, 7);
-	public static final Vector2 GUN_POS = new Vector2(57, 0);
+	public static final Vector2 GUN_POS = UtilPool.getVector2(57, 0);
 	private float[] bodyPoints = { 0, 0, 0, 50, 75, 50, 75, 0 };
 	private TextureRegion bodyRegion;
 	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();

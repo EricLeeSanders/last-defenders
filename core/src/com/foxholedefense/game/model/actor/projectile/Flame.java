@@ -30,6 +30,7 @@ import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * Represents a Flame from a FlameThrower. Deals periodic damage as an AOE.
@@ -49,7 +50,7 @@ public class Flame extends Actor implements Pool.Poolable {
 	private Pool<Flame> pool;
 	private float[] bodyPoints = new float[8];
 	private Polygon flameBody;
-	private Vector2 maxFlameTextureSize = new Vector2(0,0);
+	private Vector2 maxFlameTextureSize = UtilPool.getVector2();
 	/**
 	 * Constructs a flame
 	 */
