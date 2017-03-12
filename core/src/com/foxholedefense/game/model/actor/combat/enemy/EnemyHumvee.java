@@ -12,6 +12,7 @@ import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * Represents an Enemy Humvee. A passive enemy.
@@ -28,7 +29,7 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 	public static final float RANGE = 0;
 	public static final float SPEED = 140f;
 
-	public static final Vector2 GUN_POS = new Vector2(0, 0);
+	public static final Vector2 GUN_POS = UtilPool.getVector2();;
 	
 	private IDeathEffectFactory deathEffectFactory;
 	private float[] bodyPoints = {15,0, 15,32, 69,32, 69, 0 };

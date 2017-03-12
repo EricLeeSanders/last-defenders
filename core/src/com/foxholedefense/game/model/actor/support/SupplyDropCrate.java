@@ -43,10 +43,10 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 
 	}
 	
-	public SupplyDropCrate beginDrop(float dropDelay, Vector2 dropLocation){
+	public SupplyDropCrate beginDrop(float dropDelay, float x, float y){
 		Logger.info("SupplyDropCrate: Beginning Crate drop");
 		active = true;
-		setPositionCenter(dropLocation.x, dropLocation.y);
+		setPositionCenter(x, y);
 		addAction(Actions.delay(dropDelay, Actions.scaleTo(0.5f, 0.5f, SUPPLYDROP_DURATION, Interpolation.linear)));
 		setVisible(false);
 		addAction(Actions.delay(dropDelay, Actions.visible(true)));

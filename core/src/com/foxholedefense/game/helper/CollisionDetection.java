@@ -11,8 +11,10 @@ import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.interfaces.ICollision;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.badlogic.gdx.math.Shape2D;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * A static class to handle all collisions that can occur during the game
@@ -197,9 +199,9 @@ public final class CollisionDetection {
 	 */
 	private static boolean polygonAndCircle(Polygon polygon, Circle circle) {
 		float[] vertices = polygon.getTransformedVertices();
-		Vector2 center = new Vector2(circle.x, circle.y);
-		Vector2 vectorA = new Vector2();
-		Vector2 vectorB = new Vector2();
+		FHDVector2 center = UtilPool.getVector2(circle.x, circle.y);
+		FHDVector2 vectorA = UtilPool.getVector2();
+		FHDVector2 vectorB = UtilPool.getVector2();
 		float squareRadius = circle.radius * circle.radius;
 		vectorA.set(vertices[vertices.length - 2], vertices[vertices.length - 1]);
 		vectorB.set(vertices[0], vertices[1]);
@@ -213,6 +215,9 @@ public final class CollisionDetection {
 				return true;
 			}
 		}
+
+		UtilPool.freeObjects(center, vectorA, vectorB);
+
 		return (polygon.contains(circle.x, circle.y));
 	}
 

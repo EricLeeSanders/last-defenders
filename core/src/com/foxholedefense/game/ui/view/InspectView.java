@@ -22,8 +22,10 @@ import com.foxholedefense.game.ui.presenter.InspectPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IInspectView;
 import com.foxholedefense.game.ui.view.widgets.DischargeButton;
 import com.foxholedefense.game.ui.view.widgets.UpgradeButton;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * View for inspecting a tower
@@ -294,8 +296,9 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2(screenX, screenY));
+		FHDVector2 coords = (FHDVector2)this.getStage().screenToStageCoordinates(UtilPool.getVector2(screenX, screenY));
 		presenter.inspectTower(coords);
+		coords.free();
 		return false;
 	}
 

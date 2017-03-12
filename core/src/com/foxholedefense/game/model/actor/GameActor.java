@@ -15,12 +15,14 @@ import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
+import com.foxholedefense.util.UtilPool;
 
 public class GameActor extends Actor{
 	private TextureRegion textureRegion;
-	private Vector2 positionCenter = new Vector2();
+	private FHDVector2 positionCenter = UtilPool.getVector2();
 	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
 	public GameActor(TextureRegion textureRegion){
 		this.setTextureRegion(textureRegion);
@@ -28,7 +30,7 @@ public class GameActor extends Actor{
 		this.setOrigin(textureRegion.getRegionWidth() / 2,textureRegion.getRegionHeight() / 2);
 	}
 
-	public Vector2 getRotatedCoords(float x, float y) {
+	public FHDVector2 getRotatedCoords(float x, float y) {
 		// Math stuff here -
 		// http://math.stackexchange.com/questions/270194/how-to-find-the-vertices-angle-after-rotation
 		double rotation = Math.toRadians(this.getRotation());
@@ -36,11 +38,10 @@ public class GameActor extends Actor{
 		float sin = (float) Math.sin(rotation);
 		float newX = ((((x - getPositionCenter().x) * cos) - ((y - getPositionCenter().y) * sin)) + getPositionCenter().x);
 		float newY = ((((x - getPositionCenter().x) * sin) + ((y - getPositionCenter().y) * cos)) + getPositionCenter().y);
-		return new Vector2(newX, newY);
+		return UtilPool.getVector2(newX, newY);
 	}
-	public Vector2 getRotatedCoords(Vector2 coords) {
-		return getRotatedCoords(coords.x, coords.y);
-	}
+
+
 	/**
 	 * Calculates a rotation from the current position and the target
 	 * position.
@@ -50,7 +51,10 @@ public class GameActor extends Actor{
 	 * @return float - Rotation
 	 */
 	public float calculateRotation(float x, float y) {
-		return calculateRotation(new Vector2(x,y));
+		FHDVector2 vector = UtilPool.getVector2(x,y);
+		float rotation = calculateRotation(vector);
+		vector.free();
+		return rotation;
 	}
 	/**
 	 * Calculates a rotation from the current position and the target
@@ -61,7 +65,7 @@ public class GameActor extends Actor{
 	 * @return float - Rotation
 	 */
 	public float calculateRotation(Vector2 target) {
-		Vector2 targetCopy = new Vector2(target);
+		Vector2 targetCopy = UtilPool.getVector2(target);
 		return targetCopy.sub(getPositionCenter()).angle();
 	}
 
@@ -82,15 +86,15 @@ public class GameActor extends Actor{
 		}
 	}
 	
-	public Vector2 getPositionCenter() {
+	public FHDVector2 getPositionCenter() {
 		positionCenter.set(getX() + getOriginX(), getY() + getOriginY());
 		return positionCenter;
 	}
-	
+
 	public void setPositionCenter(Vector2 pos) {
 		setPositionCenter(pos.x,pos.y);
 	}
-	
+
 	public void setPositionCenter(float x, float y){
 		setPosition(x - getOriginX(), y - getOriginY());
 	}

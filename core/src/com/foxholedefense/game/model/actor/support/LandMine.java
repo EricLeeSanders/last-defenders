@@ -24,12 +24,13 @@ import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
+import com.foxholedefense.util.UtilPool;
 
 public class LandMine extends SupportActor implements IRpg{
 	public static final int COST = 300;
 	private static final float ATTACK = 15f;
 	private static final float RANGE = 50;
-	private static final Vector2 GUN_POS = new Vector2(0,0);
+	private static final Vector2 GUN_POS = UtilPool.getVector2(0,0);
 	private Circle body;
 	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private IProjectileFactory projectileFactory;

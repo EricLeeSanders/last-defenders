@@ -97,7 +97,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 
 	/**
 	 * Move the tower
-	 * 
+	 *
 	 * @param coords
 	 *            - Position to move
 	 */

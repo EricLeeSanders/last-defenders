@@ -13,9 +13,11 @@ import com.foxholedefense.game.service.factory.ActorFactory.SupportActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
+import com.foxholedefense.util.UtilPool;
 
 public class Apache extends SupportActor{
 	public static final int COST = 2000;
@@ -25,7 +27,7 @@ public class Apache extends SupportActor{
 	private static final float MOVE_SPEED = 200f;
 	private static final float TIME_ACTIVE_LIMIT = 1f;
 	private static final Dimension BULLET_SIZE = new Dimension(6,6);
-	private static final Vector2 GUN_POS = new Vector2(0,0);
+	private static final Vector2 GUN_POS = UtilPool.getVector2(0,0);
 	private TextureRegion [] textureRegions;
 	private boolean readyToAttack, exitingStage;
 	private float textureCounter, attackCounter, timeActive;
@@ -47,11 +49,13 @@ public class Apache extends SupportActor{
 	}
 	public void initialize(Vector2 position){
 		Logger.info("Apache: initializing");
-		Vector2 destination = new Vector2(position.x - this.getOriginX(), position.y - this.getOriginY());
-		setPositionCenter(new Vector2(0-this.getHeight(), Resources.VIRTUAL_HEIGHT/2));
+		FHDVector2 destination = UtilPool.getVector2(position.x - this.getOriginX(), position.y - this.getOriginY());
+		FHDVector2 centerPos = UtilPool.getVector2(0-this.getHeight(), Resources.VIRTUAL_HEIGHT/2);
+		setPositionCenter(centerPos);
 		float moveDistance = (destination.dst(this.getPositionCenter()) / MOVE_SPEED);
 		this.setRotation(calculateRotation(destination));
 		addAction(Actions.moveTo(destination.x, destination.y, moveDistance, Interpolation.linear));
+		UtilPool.freeObjects(destination, centerPos);
 	}
 	@Override
 	public void reset() {
@@ -105,10 +109,11 @@ public class Apache extends SupportActor{
 	}
 	private void exitStage(){
 		Logger.info("Apache: exiting stage");
-		Vector2 destination = new Vector2(0-this.getWidth() , Resources.VIRTUAL_HEIGHT/2 - this.getHeight()/2);
+		FHDVector2 destination = UtilPool.getVector2(0-this.getWidth() , Resources.VIRTUAL_HEIGHT/2 - this.getHeight()/2);
 		float moveDistance = (destination.dst(this.getPositionCenter()) / MOVE_SPEED);
 		this.setRotation(calculateRotation(destination));
 		addAction(Actions.moveTo(destination.x, destination.y, moveDistance, Interpolation.linear));
+		destination.free();
 		setActive(false);
 	}
 	

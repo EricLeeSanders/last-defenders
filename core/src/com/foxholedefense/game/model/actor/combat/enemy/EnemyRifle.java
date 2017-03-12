@@ -13,6 +13,7 @@ import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * Represents an Enemy Rifle
@@ -29,7 +30,7 @@ public class EnemyRifle extends Enemy {
 	public static final float RANGE = 50;
 	public static final float SPEED = 70f;
 	public static final Dimension BULLET_SIZE = new Dimension(5, 5);
-	public static final Vector2 GUN_POS = new Vector2(26, -4);
+	public static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);
 	private Circle body;
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;

@@ -26,6 +26,7 @@ import com.foxholedefense.game.ui.presenter.SupportPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
 import com.foxholedefense.game.ui.view.interfaces.ISupportView;
 import com.foxholedefense.game.ui.view.widgets.SupportButton;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -35,6 +36,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * View class for Support. Shows Support window as well as the options to
@@ -254,8 +256,9 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2(screenX, screenY));
+		FHDVector2 coords = (FHDVector2)this.getStage().screenToStageCoordinates(UtilPool.getVector2(screenX, screenY));
 		presenter.screenTouch(coords, "TouchDown");
+		coords.free();
 		return false;
 	}
 
@@ -267,8 +270,9 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) {
-		Vector2 coords = this.getStage().screenToStageCoordinates(new Vector2(screenX, screenY));
+		FHDVector2 coords = (FHDVector2)this.getStage().screenToStageCoordinates(UtilPool.getVector2(screenX, screenY));
 		presenter.screenTouch(coords, "Dragged");
+		coords.free();
 		return false;
 
 	}

@@ -13,8 +13,10 @@ import com.foxholedefense.game.service.factory.ActorFactory.SupplyDropPool;
 import com.foxholedefense.game.service.factory.interfaces.ISupplyDropFactory;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
+import com.foxholedefense.util.UtilPool;
 
 public class SupplyDrop extends GameActor implements Pool.Poolable{
 	private static final float SUPPLYDROP_DURATION = 2f;
@@ -28,16 +30,18 @@ public class SupplyDrop extends GameActor implements Pool.Poolable{
 		setTextureRegion(textureRegion);
 	}
 	
-	public void beginSupplyDrop(Vector2 dropLocation){
+	public void beginSupplyDrop(float x, float y){
 		Logger.info("SupplyDrop: Beginning Supply drop");
 		active = true;
-		setPositionCenter(new Vector2(0-this.getHeight(), dropLocation.y));
+		FHDVector2 centerPos = UtilPool.getVector2(0-this.getHeight(),y);
+		setPositionCenter(centerPos);
+		centerPos.free();
 		float moveToX = Resources.VIRTUAL_WIDTH+this.getHeight();
-		float moveToY = ActorUtil.calcYBotLeftFromCenter(dropLocation.y, getHeight());
+		float moveToY = ActorUtil.calcYBotLeftFromCenter(y, getHeight());
 		this.addAction(Actions.moveTo(moveToX, moveToY,  SUPPLYDROP_DURATION, Interpolation.linear));
-		float dropDelay = SUPPLYDROP_DURATION * ((dropLocation.x - (this.getWidth() / 4))/ Resources.VIRTUAL_WIDTH);
+		float dropDelay = SUPPLYDROP_DURATION * ((x - (this.getWidth() / 4))/ Resources.VIRTUAL_WIDTH);
 		Logger.info("DropDelay: " + dropDelay);
-		supplyDropFactory.loadSupplyDropCrate().beginDrop(dropDelay, dropLocation).toBack();
+		supplyDropFactory.loadSupplyDropCrate().beginDrop(dropDelay,x, y).toBack();
 	}
 	@Override
 	public void act(float delta) {
