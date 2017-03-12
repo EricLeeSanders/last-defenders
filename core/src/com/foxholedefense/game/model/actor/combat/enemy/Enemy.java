@@ -19,7 +19,9 @@ import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.util.Dimension;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * An abstract class that represents an Enemy. Enemies are created from the
@@ -103,16 +105,18 @@ public abstract class Enemy extends CombatActor {
 		// The enemy always faces its target (tower or way point) and the top/front of the enemy needs to be off screen.
 		// That ensures that the entire body of the enemy is off the screen when spawning.
 		// rotatedCoords are the coords of the top/front of the enemy.
-		Vector2 rotatedCoords = getRotatedCoords(this.getX() + getWidth(), this.getPositionCenter().y );
+		FHDVector2 rotatedCoords = getRotatedCoords(this.getX() + getWidth(), this.getPositionCenter().y );
 
 		// Reposition the enemy so that it is off the screen
 		float newX = this.getPositionCenter().x + (this.getPositionCenter().x - rotatedCoords.x);
 		float newY = this.getPositionCenter().y + (this.getPositionCenter().y - rotatedCoords.y);
 
+		rotatedCoords.free();
+
 		this.setPositionCenter(newX, newY); // Start off screen
 
 		//create MoveTo actions
-		Vector2 moveVector = new Vector2();
+		Vector2 moveVector = UtilPool.getVector2();
 		for (int i = 1; i < path.size; i++) {
 			Vector2 prevWaypoint = newWaypoint;
 			newWaypoint = path.get(i);

@@ -14,6 +14,7 @@ import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * Represents an Enemy Rocket Launcher
@@ -31,7 +32,7 @@ public class EnemyRocketLauncher extends Enemy implements IRpg {
 	public static final float SPEED = 55f;
 	public static final float AOE_RADIUS = 50f;
 	public static final Dimension RPG_SIZE = new Dimension(7, 7);
-	public static final Vector2 GUN_POS = new Vector2(26, -4);
+	public static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);
 	private Circle body;
 	private FHDAudio audio;
 	private IProjectileFactory projectileFactory;

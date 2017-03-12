@@ -23,6 +23,7 @@ import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * Represents a Tower Turret. Turret is different in that its shape is a
@@ -44,7 +45,7 @@ public class TowerTurret extends Tower implements IRotatable {
 	public static final int RANGE_INCREASE_COST = 500;
 	public static final int SPEED_INCREASE_COST = 500;
 	public static final int ATTACK_INCREASE_COST = 500;
-	public static final Vector2 GUN_POS = new Vector2(8,0);
+	public static final Vector2 GUN_POS = UtilPool.getVector2(8,0);
 	private float[] rangeCoords = new float[6];
 	private float[] bodyPoints = { 0, 19, 0, 31, 6, 34, 13, 34, 24, 28, 22, 47, 36, 49, 39, 27, 36, 0, 22, 3, 24, 22, 12, 16, 6, 16};
 	private TextureRegion bodyRegion;
