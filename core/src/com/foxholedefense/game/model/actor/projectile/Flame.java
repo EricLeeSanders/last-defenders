@@ -27,6 +27,7 @@ import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.IFlame;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.ActorFactory;
+import com.foxholedefense.util.DebugOptions;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -118,7 +119,7 @@ public class Flame extends Actor implements Pool.Poolable {
 		float heightScale = flameSize.getWidth() / currentFlame.getRegionHeight();
 		float widthScale = flameSize.getWidth() / currentFlame.getRegionWidth();
 
-		if (Logger.DEBUG) {
+		if (DebugOptions.showTextureBoundaries) {
 			batch.end();
 			Polygon poly = getFlameBody();
 			flameOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);

@@ -21,6 +21,7 @@ import com.foxholedefense.game.service.factory.ActorFactory.ExplosionPool;
 import com.foxholedefense.game.service.factory.ActorFactory.SupportActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
 import com.foxholedefense.util.ActorUtil;
+import com.foxholedefense.util.DebugOptions;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -55,7 +56,7 @@ public class LandMine extends SupportActor implements IRpg{
 	}
 	@Override
 	public void draw(Batch batch, float alpha) {
-		if (Logger.DEBUG) {
+		if (DebugOptions.showTextureBoundaries) {
 			batch.end();
 
 			debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);

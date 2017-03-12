@@ -19,6 +19,7 @@ import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
 import com.foxholedefense.util.ActorUtil;
+import com.foxholedefense.util.DebugOptions;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -77,7 +78,7 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 		if(isShowRange()){
 			drawRange(batch);
 		}
-		if (Logger.DEBUG) {
+		if (DebugOptions.showTextureBoundaries) {
 			batch.end();
 
 			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
