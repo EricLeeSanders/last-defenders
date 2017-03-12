@@ -3,7 +3,6 @@ package com.foxholedefense.util;
 import com.badlogic.gdx.Gdx;
 
 public class Logger {
-	public static final boolean DEBUG = true;
 	private static final String DEBUG_TAG = "FHD";
 	private static final String INFO_TAG = "FHD";
 	private static final String ERROR_TAG = "FHD";
