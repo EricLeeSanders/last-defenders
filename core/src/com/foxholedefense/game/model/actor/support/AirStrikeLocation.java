@@ -11,15 +11,16 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.util.ActorUtil;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Resources;
 
 public class AirStrikeLocation extends Actor {
-	private Vector2 location;
+	private FHDVector2 location;
 	private float radius;
 	private boolean showRange = true;
 	private TextureRegion rangeTexture;
 
-	public AirStrikeLocation(Vector2 location, float radius, TextureRegion rangeTexture) {
+	public AirStrikeLocation(FHDVector2 location, float radius, TextureRegion rangeTexture) {
 		this.location = location;
 		this.radius = radius;
 		this.rangeTexture = rangeTexture;
@@ -45,7 +46,7 @@ public class AirStrikeLocation extends Actor {
 		return new Circle(location.x, location.y, radius);
 	}
 	
-	public Vector2 getLocation() {
+	public FHDVector2 getLocation() {
 		return location;
 	}
 
@@ -55,5 +56,11 @@ public class AirStrikeLocation extends Actor {
 
 	public void setShowRange(boolean showRange) {
 		this.showRange = showRange;
+	}
+
+	@Override
+	public void clear () {
+		location.free();
+		super.clear();
 	}
 }

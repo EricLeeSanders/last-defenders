@@ -31,10 +31,12 @@ import com.foxholedefense.game.service.factory.ActorFactory.AirStrikeBombPool;
 import com.foxholedefense.game.service.factory.ActorFactory.SupportActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
 import com.foxholedefense.util.Dimension;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
+import com.foxholedefense.util.UtilPool;
 
 public class AirStrike extends SupportActor implements IRpg{
 	public static final float AIRSTRIKE_DURATION = 2.5f;
@@ -43,7 +45,7 @@ public class AirStrike extends SupportActor implements IRpg{
 	public static final float SPEED = 150f;
 	public static final float AIRSTRIKE_RADIUS = 60;
 	public static final int MAX_AIRSTRIKES = 3;
-	public static final Vector2 GUN_POS = new Vector2(0,0);
+	public static final Vector2 GUN_POS = UtilPool.getVector2();
 	public static final Dimension BULLET_SIZE = new Dimension(10, 10);
 	private Array<AirStrikeLocation> airStrikeLocations = new Array<AirStrikeLocation>();
 	private IProjectileFactory projectileFactory;
@@ -63,7 +65,9 @@ public class AirStrike extends SupportActor implements IRpg{
 	public void beginAirStrike(){
 		Logger.info("AirStrike: Beginning Air Strike Run");
 		setActive(true);
-		setPositionCenter(new Vector2(0-this.getHeight(), Resources.VIRTUAL_HEIGHT/2));
+		FHDVector2 centerPos = UtilPool.getVector2(0-this.getHeight(), Resources.VIRTUAL_HEIGHT/2);
+		setPositionCenter(centerPos);
+		centerPos.free();
 		this.addAction(Actions.moveTo(Resources.VIRTUAL_WIDTH+this.getWidth(), ((Resources.VIRTUAL_HEIGHT/2) - (getHeight()/2)),  AIRSTRIKE_DURATION, Interpolation.linear));
 		for(AirStrikeLocation location : airStrikeLocations){
 			dropBomb(location);

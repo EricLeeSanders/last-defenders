@@ -11,6 +11,7 @@ import com.foxholedefense.game.model.actor.support.AirStrike;
 import com.foxholedefense.game.model.actor.support.AirStrikeLocation;
 import com.foxholedefense.game.model.actor.support.SupportActor;
 import com.foxholedefense.game.service.factory.ActorFactory;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 
 public class AirStrikePlacement {
@@ -29,7 +30,7 @@ public class AirStrikePlacement {
 		currentAirStrike.setActive(false);
 		currentAirStrike.setVisible(false);
 	}
-	public void addLocation(Vector2 location){
+	public void addLocation(FHDVector2 location){
 		Logger.info("AirStrikePlacement: addLocation");
 		AirStrikeLocation airStrikeLocation = new AirStrikeLocation(location,AirStrike.AIRSTRIKE_RADIUS, actorFactory.getLoadedTextures().get("range-black") );
 		currentAirStrike.addLocation(airStrikeLocation);

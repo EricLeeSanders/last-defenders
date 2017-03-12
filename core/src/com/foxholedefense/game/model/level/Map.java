@@ -23,6 +23,7 @@ import com.foxholedefense.game.GameStage;
 import com.foxholedefense.screen.AbstractScreen;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * Represents a TiledMap
@@ -51,7 +52,7 @@ public class Map implements Disposable{
 		float pathY = path.getPolyline().getY();
 
 		for (int i = 0; i < vertices.length - 1; i = i + 2) {
-			pathCoords.add(new Vector2(Math.abs(vertices[i] + pathX)*Resources.TILED_MAP_SCALE
+			pathCoords.add(UtilPool.getVector2(Math.abs(vertices[i] + pathX)*Resources.TILED_MAP_SCALE
 					, Math.abs(vertices[i + 1] + pathY)*Resources.TILED_MAP_SCALE));
 		}
 	}

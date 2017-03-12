@@ -26,6 +26,7 @@ import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * Presenter for Enlist. Handles enlisting towers
@@ -106,7 +107,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	public void placeAirStrikeLocation(Vector2 location){
 		Logger.info("Support Presenter: placing air strike location");
 		if (!airStrikePlacement.getCurrentAirStrike().readyToBegin()) {
-			airStrikePlacement.addLocation(location);
+			airStrikePlacement.addLocation(UtilPool.getVector2(location));
 			Logger.info("Support Presenter: air strike location placed");
 			if(airStrikePlacement.getCurrentAirStrike().readyToBegin()){
 				Logger.info("Support Presenter: air strike ready to begin");

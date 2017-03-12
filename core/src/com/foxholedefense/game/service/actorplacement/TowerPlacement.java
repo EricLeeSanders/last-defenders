@@ -63,7 +63,7 @@ public class TowerPlacement {
 
 	/**
 	 * Move the tower that is still being placed (not an active tower)
-	 * 
+	 *
 	 * @param clickCoords - Where to move the tower to
 	 */
 	public void moveTower(Vector2 clickCoords) {

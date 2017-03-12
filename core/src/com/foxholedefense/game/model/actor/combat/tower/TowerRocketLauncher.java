@@ -14,6 +14,7 @@ import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * Represents a Tower RocketLauncher
@@ -35,7 +36,7 @@ public class TowerRocketLauncher extends Tower implements IRpg {
 	public static final int ATTACK_INCREASE_COST = 450;
 	public static final float AOE_RADIUS = 50f;
 	public static final Dimension RPG_SIZE = new Dimension(7, 7);
-	public static final Vector2 GUN_POS = new Vector2(27, -4);
+	public static final Vector2 GUN_POS = UtilPool.getVector2(27, -4);
 	private Circle body;
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;

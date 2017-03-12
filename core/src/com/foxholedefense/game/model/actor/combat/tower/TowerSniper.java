@@ -13,6 +13,7 @@ import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * Represents a Tower Sniper
@@ -34,7 +35,7 @@ public class TowerSniper extends Tower {
 	public static final int SPEED_INCREASE_COST = 100;
 	public static final int ATTACK_INCREASE_COST = 100;
 	public static final Dimension BULLET_SIZE = new Dimension(5, 5);
-	public static final Vector2 GUN_POS = new Vector2(38, -9);
+	public static final Vector2 GUN_POS = UtilPool.getVector2(38, -9);
 	private Circle body;
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;

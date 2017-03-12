@@ -19,9 +19,11 @@ import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.ICollision;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.util.Dimension;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.game.model.actor.combat.ICombatActorObserver.CombatActorEvent;
+import com.foxholedefense.util.UtilPool;
 
 /**
  * Represents both a Tower and Enemy.
@@ -33,6 +35,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private final float RESET_ATTACK_SPEED, RESET_RANGE, MAX_HEALTH, MAX_ARMOR, RESET_ATTACK;
 	private float attackSpeed, range, health, attack, armor;
 	private Vector2 gunPos;
+	private Vector2 rotatedGunPos = UtilPool.getVector2();
 	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private Circle rangeCircle = new Circle();
 	private boolean hasArmor, dead, active;
@@ -148,8 +151,10 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	}
 
 	public Vector2 getGunPos() {
-		return getRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y));
-
+		FHDVector2 rotatedCoords = getRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y));
+		rotatedGunPos.set(rotatedCoords.x, rotatedCoords.y);
+		rotatedCoords.free();
+		return rotatedGunPos;
 	}
 	@Override
 	public Shape2D getRangeShape() {
