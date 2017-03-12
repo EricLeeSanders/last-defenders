@@ -33,7 +33,6 @@ import com.foxholedefense.util.Resources;
  */
 public class GameScreen extends AbstractScreen {
 
-	private Label framesLabel;
 	private GameStage gameStage;
 	private GameUIStage gameUIStage;
 	private Player player;
@@ -58,16 +57,7 @@ public class GameScreen extends AbstractScreen {
 		super.show();
 		audio.turnOffMusic();
 		GLProfiler.enable();
-		createFramesField(resources.getSkin(Resources.SKIN_JSON));
 		gameStage.loadFirstWave();
-	}
-
-	public void createFramesField(Skin skin) {
-		framesLabel = new Label("0", skin);
-		framesLabel.setFontScale(0.35f);
-		framesLabel.setColor(1f, 1f, 1f, 0.30f);
-		framesLabel.setPosition(200, 320);
-		gameUIStage.addActor(framesLabel);
 	}
 
 	@Override
@@ -90,7 +80,6 @@ public class GameScreen extends AbstractScreen {
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		getCamera().update();
-		framesLabel.setText("FPS: " + Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
 		renderElements(delta);
 
 	}

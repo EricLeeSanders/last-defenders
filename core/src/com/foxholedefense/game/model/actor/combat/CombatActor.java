@@ -18,6 +18,7 @@ import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.ICollision;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
+import com.foxholedefense.util.DebugOptions;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
@@ -108,7 +109,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 	@Override
 	public void draw(Batch batch, float alpha) {
-		if(Logger.DEBUG && debugBody != null){
+		if(DebugOptions.showTextureBoundaries && debugBody != null){
 			batch.end();
 			debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			debugBody.begin(ShapeType.Line);
