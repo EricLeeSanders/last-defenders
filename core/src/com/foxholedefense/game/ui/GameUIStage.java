@@ -18,6 +18,7 @@ import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
 import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
 import com.foxholedefense.game.service.actorplacement.TowerPlacement;
 import com.foxholedefense.game.service.factory.ActorFactory;
+import com.foxholedefense.game.ui.presenter.DebugPresenter;
 import com.foxholedefense.game.ui.presenter.EnlistPresenter;
 import com.foxholedefense.game.ui.presenter.GameOverPresenter;
 import com.foxholedefense.game.ui.presenter.HUDPresenter;
@@ -28,6 +29,7 @@ import com.foxholedefense.game.ui.presenter.SupportPresenter;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.IGameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.game.ui.view.DebugView;
 import com.foxholedefense.game.ui.view.EnlistView;
 import com.foxholedefense.game.ui.view.GameOverView;
 import com.foxholedefense.game.ui.view.HUDView;
@@ -111,6 +113,10 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		LevelCompletedPresenter levelCompletedPresenter = new LevelCompletedPresenter(player, gameStateManager, uiStateManager, screenChanger, audio);
 		LevelCompletedView levelCompletedView = new LevelCompletedView(levelCompletedPresenter, skin);
 		levelCompletedPresenter.setView(levelCompletedView);
+
+		DebugPresenter debugPresenter = new DebugPresenter(uiStateManager, gameStateManager);
+		DebugView debugView = new DebugView(debugPresenter, resources.getSkin(Resources.SKIN_JSON));
+		debugPresenter.setView(debugView);
 		
 		this.addActor(hudView);
 		this.addActor(enlistView);
@@ -119,6 +125,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		this.addActor(optionsView);
 		this.addActor(gameOverView);
 		this.addActor(levelCompletedView);
+		this.addActor(debugView);
 
 		imp.addProcessor(this);
 		imp.addProcessor(enlistView);

@@ -98,6 +98,13 @@ public class OptionsView extends Group implements IOptionsView {
 		btnMainMenu.setPosition(btnNewGame.getX() + btnNewGame.getWidth() + 15, btnNewGame.getY());
 		addActor(btnMainMenu);
 		setBtnMainMenuListener();
+
+		TextButton btnDebug = new TextButton("DEBUG", skin);
+		btnDebug.getLabel().setFontScale(0.45f);
+		btnDebug.setSize(75,35);
+		btnDebug.setPosition(475,300);
+		addActor(btnDebug);
+		setBtnDebugListener(btnDebug);
 		
 		btnSound = new CheckBox(" SOUND ON", skin);
 		btnSound.getLabel().setFontScale(0.45f);
@@ -266,6 +273,17 @@ public class OptionsView extends Group implements IOptionsView {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
 				presenter.mainMenu();
+			}
+		});
+
+	}
+
+	private void setBtnDebugListener(Button button) {
+		button.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				presenter.debug();
 			}
 		});
 

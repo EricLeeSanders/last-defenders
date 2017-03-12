@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.util.ActorUtil;
+import com.foxholedefense.util.DebugOptions;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
@@ -71,7 +72,7 @@ public class GameActor extends Actor{
 
 	@Override
 	public void draw(Batch batch, float alpha) {
-		if(Logger.DEBUG == true){
+		if(DebugOptions.showTextureBoundaries){
 			batch.end();
 			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			bodyOutline.begin(ShapeType.Line);

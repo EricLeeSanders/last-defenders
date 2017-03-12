@@ -18,6 +18,7 @@ import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
 import com.foxholedefense.util.ActorUtil;
+import com.foxholedefense.util.DebugOptions;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
@@ -115,7 +116,7 @@ public class TowerTurret extends Tower implements IRotatable {
 
 		super.draw(batch, alpha);
 
-		if (Logger.DEBUG) {
+		if (DebugOptions.showTextureBoundaries) {
 			batch.end();
 
 			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);

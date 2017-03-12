@@ -1,5 +1,6 @@
 package com.foxholedefense.game.ui.presenter;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Preferences;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.IGameUIStateObserver;
@@ -82,6 +83,11 @@ public class OptionsPresenter implements IGameUIStateObserver {
 		audio.playSound(FHDSound.SMALL_CLICK);
 		gameStateManager.setState(GameState.PLAY);
 		screenChanger.changeToLevelSelect();
+	}
+
+	public void debug(){
+		Logger.info("Options Presenter: debug");
+		uiStateManager.setState(GameUIState.DEBUG);
 	}
 	
 	private boolean isShowRangesEnabled(){
