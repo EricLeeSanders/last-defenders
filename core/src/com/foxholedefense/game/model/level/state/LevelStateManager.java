@@ -35,10 +35,13 @@ public class LevelStateManager {
 	 */
 	public void notifyObservers() {
 		Logger.info("Level state: Notify Observers");
-		for (ILevelStateObserver observer : observers) {
-			Logger.info("Level state: Notifying: " + observer.getClass().getName());
+		Object[] objects = observers.begin();
+		for(int i = observers.size - 1; i >= 0; i--){
+			ILevelStateObserver observer = (ILevelStateObserver) objects[i];
+			Logger.info("Level State Notifying: " + observer.getClass().getName());
 			observer.changeLevelState(state);
 		}
+		observers.end();
 	}
 
 	/**

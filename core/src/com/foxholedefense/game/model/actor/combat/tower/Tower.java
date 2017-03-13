@@ -68,8 +68,9 @@ public abstract class Tower extends CombatActor {
 
 	protected void notifyObserversTower(ITowerObserver.TowerEvent event){
 		Logger.info("Tower Actor: Notify Observers");
-		Object[] items = observers.begin();
-		for(ITowerObserver observer : observers){
+		Object[] objects = observers.begin();
+		for(int i = observers.size - 1; i >= 0; i--){
+			ITowerObserver observer = (ITowerObserver) objects[i];
 			Logger.info("Tower Actor Notifying: " + observer.getClass().getName());
 			observer.notifyTower(this, event);
 		}

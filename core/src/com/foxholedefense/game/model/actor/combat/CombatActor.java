@@ -80,8 +80,9 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	}
 	protected void notifyObserversCombatActor(CombatActorEvent event){
 		Logger.info("Combat Actor: Notify Observers");
-		Object[] items = observers.begin();
-		for(ICombatActorObserver observer : observers){
+		Object[] objects = observers.begin();
+		for(int i = observers.size - 1; i >= 0; i--){
+			ICombatActorObserver observer = (ICombatActorObserver) objects[i];
 			Logger.info("Combat Actor Notifying: " + observer.getClass().getName());
 			observer.notifyCombatActor(this, event);
 		}

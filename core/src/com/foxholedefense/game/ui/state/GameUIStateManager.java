@@ -25,11 +25,14 @@ public class GameUIStateManager implements ILevelStateObserver {
 	}
 
 	public void notifyObservers() {
-		Logger.info("Game UI State: Notify Observers");
-		for (IGameUIStateObserver observer : observers) {
-			Logger.info("Game UI State Notifying: " + observer.getClass().getName());
+		Logger.info("GameUIState Actor: Notify Observers");
+		Object[] objects = observers.begin();
+		for(int i = observers.size - 1; i >= 0; i--){
+			IGameUIStateObserver observer = (IGameUIStateObserver) objects[i];
+			Logger.info("GameUIState Notifying: " + observer.getClass().getName());
 			observer.changeUIState(state);
 		}
+		observers.end();
 	}
 
 	// Determine the state to return to

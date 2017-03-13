@@ -35,10 +35,13 @@ public class GameStateManager {
 	 */
 	public void notifyObservers() {
 		Logger.info("Game State: Notify Observers");
-		for (IGameStateObserver observer : observers) {
+		Object[] objects = observers.begin();
+		for(int i = observers.size - 1; i >= 0; i--){
+			IGameStateObserver observer = (IGameStateObserver) objects[i];
 			Logger.info("Game State Notifying: " + observer.getClass().getName());
 			observer.changeGameState(state);
 		}
+		observers.end();
 	}
 
 	/**
