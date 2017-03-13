@@ -76,7 +76,6 @@ public class GameScreen extends AbstractScreen {
 //	                    ", vertexCount: " + GLProfiler.vertexCount.value
 //	    );
 //	    GLProfiler.reset();
-		delta = delta * resources.getGameSpeed();
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		getCamera().update();
@@ -90,7 +89,9 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void renderElements(float delta) {
 		if (gameStateManager.getState().equals(GameState.PLAY)) {
-			gameStage.act(delta);
+			if(resources.getGameSpeed() > 0) {
+				gameStage.act(delta * resources.getGameSpeed());
+			}
 		}
 		gameStage.draw();
 
