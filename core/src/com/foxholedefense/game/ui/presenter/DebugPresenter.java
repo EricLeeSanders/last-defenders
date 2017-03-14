@@ -53,6 +53,11 @@ public class DebugPresenter implements IGameUIStateObserver {
         view.showFPS(DebugOptions.showFPS);
     }
 
+    public void crash(){
+        Object o = null;
+        o.toString();
+    }
+
     @Override
     public void changeUIState(GameUIStateManager.GameUIState state) {
 
