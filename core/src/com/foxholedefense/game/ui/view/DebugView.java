@@ -87,14 +87,21 @@ public class DebugView extends Group implements IDebugView {
         btnShowTextureBoundaries.getImage().setScaling(Scaling.stretch);
         setBtnShowTextureBoundariesListener(btnShowTextureBoundaries);
 
+        TextButton btnCrash =  new TextButton("TEST CRASH",skin);
+        btnCrash.getLabel().setFontScale(0.45f);
+        btnCrash.pack();
+        setBtnCrashListener(btnCrash);
 
-        //mainTable.add(btnResume).width(128).height(41).spaceBottom(10);
-        mainTable.add(btnShowFPS).colspan(2).left().spaceLeft(15).spaceBottom(10);
+
+        mainTable.add(btnShowFPS).left().spaceLeft(15).spaceBottom(10);
 
         mainTable.row();
 
-        //mainTable.add(btnNewGame).width(128).height(41).spaceBottom(10);
-        mainTable.add(btnShowTextureBoundaries).colspan(2).left().spaceLeft(15).spaceBottom(10);
+        mainTable.add(btnShowTextureBoundaries).left().spaceLeft(15).spaceBottom(10);
+
+        mainTable.row();
+
+        mainTable.add(btnCrash).left().spaceLeft(15).spaceBottom(10);
 
         Logger.info("Debug View: controls created");
     }
@@ -104,6 +111,16 @@ public class DebugView extends Group implements IDebugView {
         framesLabel.setText("FPS: " + Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
     }
 
+    private void setBtnCrashListener(Button button) {
+        button.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+                presenter.crash();
+            }
+        });
+
+    }
     private void setBtnShowFPSListener(Button button){
         button.addListener(new ClickListener() {
             @Override
