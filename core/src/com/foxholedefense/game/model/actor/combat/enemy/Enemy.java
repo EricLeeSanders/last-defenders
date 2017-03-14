@@ -77,8 +77,9 @@ public abstract class Enemy extends CombatActor {
 
 	protected void notifyObserversEnemy(IEnemyObserver.EnemyEvent event){
 		Logger.info("Enemy Actor: Notify Observers");
-		Object[] items = observers.begin();
-		for(IEnemyObserver observer : observers){
+		Object[] objects = observers.begin();
+		for(int i = observers.size - 1; i >= 0; i--){
+			IEnemyObserver observer = (IEnemyObserver) objects[i];
 			Logger.info("Enemy Actor Notifying: " + observer.getClass().getName());
 			observer.notifyEnemy(this, event);
 		}
