@@ -24,9 +24,12 @@ public class Player {
 
 	public void notifyObservers() {
 		Logger.info("Player: notifying observers");
-		for (IPlayerObserver observer : observers) {
+		Object[] objects = observers.begin();
+		for(int i = observers.size - 1; i >= 0; i--){
+			IPlayerObserver observer = (IPlayerObserver) objects[i];
 			observer.playerAttributeChange();
 		}
+		observers.end();
 	}
 
 	public void setWaveCount(int waveCount) {
