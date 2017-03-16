@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.GameStage;
 import com.foxholedefense.screen.AbstractScreen;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.UtilPool;
@@ -32,7 +33,7 @@ import com.foxholedefense.util.UtilPool;
  *
  */
 public class Map implements Disposable{
-	private Array<Vector2> pathCoords = new SnapshotArray<Vector2>(true, 16);
+	private Array<FHDVector2> pathCoords = new SnapshotArray<FHDVector2>(true, 16);
 	private Array<Rectangle> pathBoundaries = new SnapshotArray<Rectangle>(false, 32);
 	private TiledMapRenderer tiledMapRenderer;
 	private TiledMap tiledMap;
@@ -77,7 +78,8 @@ public class Map implements Disposable{
 	public Array<Rectangle> getPathBoundaries(){
 		return pathBoundaries;
 	}
-	public Array<Vector2> getPath() {
+	public Array<FHDVector2> getPath() {
+
 		return pathCoords;
 	}
 	
