@@ -97,7 +97,8 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 
 	@Override
 	public Vector2 getGunPos() {
-		FHDVector2 rotatedCoords = getRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y));
+		Vector2 centerPos = getPositionCenter();
+		FHDVector2 rotatedCoords = ActorUtil.getRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y), centerPos.x, centerPos.y, Math.toRadians(getRotation()));
 		rotatedGunPos.set(rotatedCoords.x, rotatedCoords.y);
 		rotatedCoords.free();
 		return rotatedGunPos;

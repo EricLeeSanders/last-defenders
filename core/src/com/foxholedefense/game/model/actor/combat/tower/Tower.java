@@ -144,7 +144,7 @@ public abstract class Tower extends CombatActor {
 	private void attackHandler(float delta){
 		ITargetable target = findTarget();
 		if(target != null && !target.isDead()){
-			setRotation(calculateRotation(target.getPositionCenter()));
+			setRotation(ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
 			if (attackCounter >= getAttackSpeed()) {
 				attackCounter = 0;
 				attackTarget(target);
@@ -163,6 +163,7 @@ public abstract class Tower extends CombatActor {
 		speedIncreaseEnabled = false;
 		attackIncreaseEnabled = false;
 		kills = 0;
+		attackCounter = getAttackSpeed(); // ready to attack
 		this.setShowRange(false);
 	}
 

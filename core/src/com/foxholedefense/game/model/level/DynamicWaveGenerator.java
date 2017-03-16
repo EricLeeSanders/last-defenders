@@ -18,6 +18,7 @@ import com.foxholedefense.game.model.actor.combat.enemy.*;
 import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
 import com.foxholedefense.game.service.factory.ActorFactory;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 
 public class DynamicWaveGenerator {
@@ -104,13 +105,13 @@ public class DynamicWaveGenerator {
 	}
 	private SnapshotArray<Enemy> createEnemiesByType(int n, Class<? extends Enemy> enemyClass) {
 		SnapshotArray<Enemy> enemies = new SnapshotArray<Enemy>();
-		Array<Vector2> enemyPath = map.getPath();
+		Array<FHDVector2> enemyPath = map.getPath();
 		for(int i = 0; i < n; i++){
 			String type = enemyClass.getSimpleName();
 			int randArmor = random.nextInt(3); //0-2
 			boolean armor = (randArmor == 0) ? true : false;
 			Enemy enemy = actorFactory.loadEnemy(type);
-			enemy.setPath(new SnapshotArray<Vector2>(enemyPath));
+			enemy.setPath(enemyPath);
 			enemy.setHasArmor(armor);
 			enemies.add(enemy);
 		}

@@ -31,45 +31,6 @@ public class GameActor extends Actor{
 		this.setOrigin(textureRegion.getRegionWidth() / 2,textureRegion.getRegionHeight() / 2);
 	}
 
-	public FHDVector2 getRotatedCoords(float x, float y) {
-		// Math stuff here -
-		// http://math.stackexchange.com/questions/270194/how-to-find-the-vertices-angle-after-rotation
-		double rotation = Math.toRadians(this.getRotation());
-		float cos = (float) Math.cos(rotation);
-		float sin = (float) Math.sin(rotation);
-		float newX = ((((x - getPositionCenter().x) * cos) - ((y - getPositionCenter().y) * sin)) + getPositionCenter().x);
-		float newY = ((((x - getPositionCenter().x) * sin) + ((y - getPositionCenter().y) * cos)) + getPositionCenter().y);
-		return UtilPool.getVector2(newX, newY);
-	}
-
-
-	/**
-	 * Calculates a rotation from the current position and the target
-	 * position.
-	 *
-	 * @param x
-	 * @param y
-	 * @return float - Rotation
-	 */
-	public float calculateRotation(float x, float y) {
-		FHDVector2 vector = UtilPool.getVector2(x,y);
-		float rotation = calculateRotation(vector);
-		vector.free();
-		return rotation;
-	}
-	/**
-	 * Calculates a rotation from the current position and the target
-	 * position.
-	 *
-	 * @param target
-	 *            - Position to rotate to
-	 * @return float - Rotation
-	 */
-	public float calculateRotation(Vector2 target) {
-		Vector2 targetCopy = UtilPool.getVector2(target);
-		return targetCopy.sub(getPositionCenter()).angle();
-	}
-
 	@Override
 	public void draw(Batch batch, float alpha) {
 		if(DebugOptions.showTextureBoundaries){
@@ -86,8 +47,8 @@ public class GameActor extends Actor{
 			batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 		}
 	}
-	
-	public FHDVector2 getPositionCenter() {
+
+	public Vector2 getPositionCenter() {
 		positionCenter.set(getX() + getOriginX(), getY() + getOriginY());
 		return positionCenter;
 	}
