@@ -15,6 +15,7 @@ import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
 import com.foxholedefense.game.service.factory.ActorFactory;
+import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 
 public class Level{
@@ -90,10 +91,10 @@ public class Level{
 		JsonValue json = new JsonReader().parse(Gdx.files.internal("game/levels/level" + intLevel + "/waves/wave" + currentWave + ".json"));
 		spawningEnemyQueue = new LinkedList<SpawningEnemy>();
 		JsonValue enemiesJson = json.get("wave");
-		Array<Vector2> enemyPath = map.getPath();
+		Array<FHDVector2> enemyPath = map.getPath();
 		for (JsonValue enemyJson : enemiesJson.iterator()) {
 			Enemy enemy = actorFactory.loadEnemy("Enemy" + enemyJson.getString("enemy"));
-			enemy.setPath(new SnapshotArray<Vector2>(enemyPath));
+			enemy.setPath(enemyPath);
 			enemy.setHasArmor(enemyJson.getBoolean("armor"));
 			float delay = enemyJson.getFloat("delay");
 			SpawningEnemy spawningEnemy = new SpawningEnemy(enemy, delay);

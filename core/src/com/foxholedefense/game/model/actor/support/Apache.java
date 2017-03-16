@@ -11,6 +11,7 @@ import com.foxholedefense.game.model.actor.ai.towerai.FirstEnemyAI;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.service.factory.ActorFactory.SupportActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
+import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDVector2;
@@ -53,7 +54,7 @@ public class Apache extends SupportActor{
 		FHDVector2 centerPos = UtilPool.getVector2(0-this.getHeight(), Resources.VIRTUAL_HEIGHT/2);
 		setPositionCenter(centerPos);
 		float moveDistance = (destination.dst(this.getPositionCenter()) / MOVE_SPEED);
-		this.setRotation(calculateRotation(destination));
+		this.setRotation(ActorUtil.calculateRotation(destination, getPositionCenter()));
 		addAction(Actions.moveTo(destination.x, destination.y, moveDistance, Interpolation.linear));
 		UtilPool.freeObjects(destination, centerPos);
 	}
@@ -92,7 +93,7 @@ public class Apache extends SupportActor{
 			if (getTarget().isDead()) {
 				setTarget(null);
 			} else {
-				setRotation(calculateRotation(getTarget().getPositionCenter()));
+				setRotation(ActorUtil.calculateRotation(getTarget().getPositionCenter(), getPositionCenter()));
 				if (attackCounter >= ATTACK_SPEED) {
 					attackCounter = 0;
 					attackTarget();
@@ -111,7 +112,7 @@ public class Apache extends SupportActor{
 		Logger.info("Apache: exiting stage");
 		FHDVector2 destination = UtilPool.getVector2(0-this.getWidth() , Resources.VIRTUAL_HEIGHT/2 - this.getHeight()/2);
 		float moveDistance = (destination.dst(this.getPositionCenter()) / MOVE_SPEED);
-		this.setRotation(calculateRotation(destination));
+		this.setRotation(ActorUtil.calculateRotation(destination, getPositionCenter()));
 		addAction(Actions.moveTo(destination.x, destination.y, moveDistance, Interpolation.linear));
 		destination.free();
 		setActive(false);
