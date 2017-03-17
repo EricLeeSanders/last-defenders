@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.foxholedefense.game.model.actor.ai.towerai.ITowerAI;
 import com.foxholedefense.game.model.actor.ai.towerai.FirstEnemyAI;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
+import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.ActorFactory.SupportActorPool;
 import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
 import com.foxholedefense.util.ActorUtil;
@@ -22,18 +23,15 @@ import com.foxholedefense.util.UtilPool;
 
 public class Apache extends SupportActor{
 	public static final int COST = 2000;
-	private static final float ATTACK_SPEED = 0.1f;
+	private static final float ATTACK_SPEED = 0.2f;
 	private static final float RANGE = 75f;
 	private static final float ATTACK = 5f;
 	private static final float MOVE_SPEED = 200f;
-	private static final float TIME_ACTIVE_LIMIT = 1f;
+	private static final float TIME_ACTIVE_LIMIT = 10f;
 	private static final Dimension BULLET_SIZE = new Dimension(6,6);
 	private static final Vector2 GUN_POS = UtilPool.getVector2(0,0);
-	private TextureRegion [] textureRegions;
 	private boolean readyToAttack, exitingStage;
-	private float textureCounter, attackCounter, timeActive;
-	private int textureIndex; // Current texture index
-	private CombatActor target;
+	private float attackCounter, timeActive;
 	private IProjectileFactory projectileFactory;
 	private FHDAudio audio;
 	private ITowerAI ai = new FirstEnemyAI();
@@ -42,11 +40,11 @@ public class Apache extends SupportActor{
 
 	public Apache(SupportActorPool<Apache> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion stationaryTextureRegion, TextureRegion [] textureRegions, TextureRegion rangeTexture, FHDAudio audio) {
 		super(pool, targetGroup, stationaryTextureRegion, rangeTexture,	RANGE, ATTACK, GUN_POS, COST);
-		this.textureRegions = textureRegions;
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
 		movementAnimation = new Animation(0.25f, textureRegions);
 		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
+		attackCounter = ATTACK_SPEED;
 	}
 	public void initialize(Vector2 position){
 		Logger.info("Apache: initializing");
@@ -63,9 +61,7 @@ public class Apache extends SupportActor{
 		Logger.info("Apache: resetting");
 		setReadyToAttack(false);
 		timeActive = 0;
-		attackCounter = 0;
-		textureCounter = 0;
-		textureIndex = 0;
+		attackCounter = ATTACK_SPEED;
 		exitingStage = false;
 		super.reset();
 	}
@@ -80,34 +76,32 @@ public class Apache extends SupportActor{
 			setReadyToAttack(true);
 		}
 		if (isReadyToAttack()) {
-			findTarget();
-			timeActive += delta;
-			if(timeActive >= TIME_ACTIVE_LIMIT){
-				setReadyToAttack(false);
-				setExitingStage(true);
-				exitStage();
-				setTarget(null);
-			}
+			attackHandler(delta);
 		}
-		if (getTarget() != null) {
-			if (getTarget().isDead()) {
-				setTarget(null);
-			} else {
-				setRotation(ActorUtil.calculateRotation(getTarget().getPositionCenter(), getPositionCenter()));
-				if (attackCounter >= ATTACK_SPEED) {
-					attackCounter = 0;
-					attackTarget();
-				} else {
-					attackCounter += delta;
-				}
-			}
-		} else { // Make the actor always ready to shoot
-			attackCounter += delta;
-		} 
 		if(isExitingStage() && this.getActions().size <= 0){
 			this.freeActor();
 		}
 	}
+
+	private void attackHandler(float delta){
+		ITargetable target = findTarget();
+		attackCounter += delta;
+		if(target != null && !target.isDead()){
+			setRotation(ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
+			if (attackCounter >= ATTACK_SPEED) {
+				attackCounter = 0;
+				attackTarget(target);
+			}
+		}
+
+		timeActive += delta;
+		if(timeActive >= TIME_ACTIVE_LIMIT){
+			setReadyToAttack(false);
+			setExitingStage(true);
+			exitStage();
+		}
+	}
+
 	private void exitStage(){
 		Logger.info("Apache: exiting stage");
 		FHDVector2 destination = UtilPool.getVector2(0-this.getWidth() , Resources.VIRTUAL_HEIGHT/2 - this.getHeight()/2);
@@ -121,21 +115,15 @@ public class Apache extends SupportActor{
 	/**
 	 * Find a target using TowerAI First Enemy
 	 */
-	public void findTarget() {
-		setTarget(ai.findTarget(this, getTargetGroup().getChildren()));
+	public ITargetable findTarget() {
+		return ai.findTarget(this, getTargetGroup().getChildren());
 
 	}
-	public void setTarget(CombatActor target) {
-		this.target = target;
-	}
-	public CombatActor getTarget() {
-		return target;
-	}
-	
-	public void attackTarget() {
-		if(getTarget() != null){
+
+	public void attackTarget(ITargetable target) {
+		if(target != null && !target.isDead()){
 			audio.playSound(FHDSound.MACHINE_GUN);
-			projectileFactory.loadBullet().initialize(this, getTarget(), this.getGunPos(), BULLET_SIZE);
+			projectileFactory.loadBullet().initialize(this, target, this.getGunPos(), BULLET_SIZE);
 		}
 
 	}
