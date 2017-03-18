@@ -1,17 +1,12 @@
 package com.foxholedefense.game.ui.view;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.game.model.actor.combat.tower.TowerFlameThrower;
 import com.foxholedefense.game.model.actor.combat.tower.TowerMachineGun;
@@ -26,7 +21,6 @@ import com.foxholedefense.game.ui.view.widgets.EnlistButton;
 import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
-import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -43,7 +37,7 @@ import com.foxholedefense.util.UtilPool;
  *
  */
 public class EnlistView extends Group implements IEnlistView, InputProcessor {
-	private Map<EnlistButton, Integer> towerCosts;
+	private Array<EnlistButton> enlistButtons = new Array<EnlistButton>(7);
 	private ImageButton btnPlacingCancel, btnPlace, btnRotate;
 	private ImageButton btnCancel, btnScrollUp, btnScrollDown;
 	private EnlistPresenter presenter;
@@ -97,8 +91,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		lblMoney.setAlignment(Align.left);
 		lblMoney.setFontScale(0.6f);
 		choosingGroup.addActor(lblMoney);
-		
-		towerCosts = new HashMap<EnlistButton, Integer>();
+
 		createTowerButton(enlistTable, skin, "Rifle", TowerRifle.COST, 4, 4, 5, 3);
 		createTowerButton(enlistTable, skin, "Machine Gun", TowerMachineGun.COST, 1, 4, 4, 8);
 		createTowerButton(enlistTable, skin, "Sniper", TowerSniper.COST, 7, 8, 10, 1);
@@ -168,7 +161,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		EnlistButton towerButton = new EnlistButton(skin, attack, health, range, speed, towerName, towerCost);
 		enlistTable.add(towerButton).size(116,178).spaceBottom(5);
 		setTowerListener(towerButton,towerName);
-		towerCosts.put(towerButton,towerCost);
+		enlistButtons.add(towerButton);
 	}
 
 	/**
@@ -176,11 +169,9 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	 */
 	private void updateTowerButtons() {
 		Logger.info("Enlist View: updating tower buttons");
-	    Iterator<Entry<EnlistButton, Integer>> iter = towerCosts.entrySet().iterator();
-	    while(iter.hasNext()){
-	    	Map.Entry<EnlistButton, Integer> tower = iter.next();
-	    	boolean affordable = presenter.canAffordTower(tower.getValue());
-	    	tower.getKey().button.setDisabled(!affordable);
+		for(EnlistButton button : enlistButtons){
+	    	boolean affordable = presenter.canAffordTower(button.cost);
+	    	button.button.setDisabled(!affordable);
 	    }
 
 	}
@@ -216,7 +207,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.createTower(tower,towerCosts.get(enlistButton));
+				presenter.createTower(tower,enlistButton.cost);
 			}
 		});
 	}
