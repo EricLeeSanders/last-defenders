@@ -5,7 +5,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.ai.TowerAI;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
@@ -18,6 +17,7 @@ import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.IGameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IInspectView;
+import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
@@ -36,7 +36,9 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	private Group towerGroup;
 	private IInspectView view;
 	private FHDAudio audio;
-	public InspectPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, Player player, Group towerGroup, FHDAudio audio) {
+	private IMessageDisplayer messageDisplayer;
+	private boolean dischargeDisabled;
+	public InspectPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, Player player, Group towerGroup, FHDAudio audio, IMessageDisplayer messageDisplayer) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.levelStateManager = levelStateManager;
@@ -44,6 +46,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 		this.player = player;
 		this.towerGroup = towerGroup;
 		this.audio = audio;
+		this.messageDisplayer = messageDisplayer;
 	}
 
 	/**
@@ -98,13 +101,12 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	public void increaseAttack() {
 		Logger.info("Inspect Presenter: increasing attack");
 		audio.playSound(FHDSound.SMALL_CLICK);
-		if (selectedTower != null) {
-			if (!selectedTower.hasIncreasedAttack()) {
-				Logger.info("Inspect Presenter: increased tower attack");
-				player.spendMoney(selectedTower.getAttackIncreaseCost());
-				selectedTower.increaseAttack();
-				view.update(selectedTower);
-			}
+
+		if(canUpgradeTower(selectedTower.getAttackIncreaseCost(), selectedTower.hasIncreasedAttack())) {
+			Logger.info("Inspect Presenter: increased tower attack");
+			player.spendMoney(selectedTower.getAttackIncreaseCost());
+			selectedTower.increaseAttack();
+			view.update(selectedTower);
 		}
 	}
 
@@ -114,13 +116,11 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	public void giveArmor() {
 		Logger.info("Inspect Presenter: giving armor");
 		audio.playSound(FHDSound.SMALL_CLICK);
-		if (selectedTower != null) {
-			if (!selectedTower.hasArmor()) {
-				Logger.info("Inspect Presenter: tower given armor");
-				player.spendMoney(selectedTower.getArmorCost());
-				selectedTower.setHasArmor(true);
-				view.update(selectedTower);
-			}
+		if(canUpgradeTower(selectedTower.getArmorCost(), selectedTower.hasArmor())) {
+			Logger.info("Inspect Presenter: tower given armor");
+			player.spendMoney(selectedTower.getArmorCost());
+			selectedTower.setHasArmor(true);
+			view.update(selectedTower);
 		}
 	}
 
@@ -130,13 +130,11 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	public void increaseRange() {
 		Logger.info("Inspect Presenter: increasing range");
 		audio.playSound(FHDSound.SMALL_CLICK);
-		if (selectedTower != null) {
-			if (!selectedTower.hasIncreasedRange()) {
-				Logger.info("Inspect Presenter: increased tower range");
-				player.spendMoney(selectedTower.getRangeIncreaseCost());
-				selectedTower.increaseRange();
-				view.update(selectedTower);
-			}
+		if(canUpgradeTower(selectedTower.getRangeIncreaseCost(), selectedTower.hasIncreasedRange())) {
+			Logger.info("Inspect Presenter: increased tower range");
+			player.spendMoney(selectedTower.getRangeIncreaseCost());
+			selectedTower.increaseRange();
+			view.update(selectedTower);
 		}
 	}
 
@@ -146,14 +144,40 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	public void increaseSpeed() {
 		Logger.info("Inspect Presenter: increasing speed");
 		audio.playSound(FHDSound.SMALL_CLICK);
-		if (selectedTower != null) {
-			if (!selectedTower.hasIncreasedSpeed()) {
-				Logger.info("Inspect Presenter: increased tower speed");
-				player.spendMoney(selectedTower.getSpeedIncreaseCost());
-				selectedTower.increaseSpeed();
-				view.update(selectedTower);
-			}
+		if(canUpgradeTower(selectedTower.getSpeedIncreaseCost(), selectedTower.hasIncreasedSpeed())) {
+			Logger.info("Inspect Presenter: increased tower speed");
+			player.spendMoney(selectedTower.getSpeedIncreaseCost());
+			selectedTower.increaseSpeed();
+			view.update(selectedTower);
 		}
+	}
+
+	/**
+	 * Checks if we can upgrade the tower. May display a message to the user.
+	 * @param cost
+	 * @param hasUpgrade
+     * @return - boolean - if the tower can be upgraded
+     */
+	private boolean canUpgradeTower(int cost, boolean hasUpgrade){
+
+		if (selectedTower == null) {
+			Logger.info("Inspect Presenter canUpgradeTower: selectdTower is null");
+			return false;
+		}
+
+		if(hasUpgrade){
+			Logger.info("Inspect Presenter canUpgradeTower: selectdTower already has this upgrade");
+			messageDisplayer.displayMessage(selectedTower.getName() + " already has this upgrade!");
+			return false;
+		}
+
+		if(!canAffordUpgrade(cost)){
+			Logger.info("Upgrade cannot be afforded: player: " + player.getMoney() + " upgrade: " + cost);
+			messageDisplayer.displayMessage("Cannot afford this upgrade!");
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -161,6 +185,10 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 */
 	public void dishcharge() {
 		Logger.info("Inspect Presenter: discharging");
+		if(isDischargeDisabled()){
+			messageDisplayer.displayMessage("Cannot discharge " + selectedTower.getName() + " while a wave is in progress!");
+			return;
+		}
 		if (selectedTower != null) {
 			audio.playSound(FHDSound.SELL);
 			player.giveMoney(selectedTower.getSellCost());
@@ -218,6 +246,15 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 		return false;
 	}
 
+	public boolean isDischargeDisabled(){
+		return dischargeDisabled;
+	}
+
+	public void setDischargeDisabled(boolean disabled){
+		this.dischargeDisabled = disabled;
+		view.dischargeDisabled(disabled);
+	}
+
 	@Override
 	public void changeUIState(GameUIState state) {
 
@@ -239,10 +276,10 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 
 		switch(state){
 		case WAVE_IN_PROGRESS:
-			view.dischargeEnabled(false);
+			setDischargeDisabled(true);
 			break;
 		case STANDBY:
-			view.dischargeEnabled(true);
+			setDischargeDisabled(false);
 			break;
 		default:
 			break;

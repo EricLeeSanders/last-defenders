@@ -161,14 +161,8 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	}
 	
 	@Override
-	public void dischargeEnabled(boolean enabled) {
-		btnDischarge.button.setDisabled(!enabled);
-		if (enabled){
-			btnDischarge.setTouchable(Touchable.enabled);
-		} else {
-			btnDischarge.setTouchable(Touchable.disabled);			
-		}
-		
+	public void dischargeDisabled(boolean disabled) {
+		btnDischarge.button.setDisabled(disabled);
 	}
 	/**
 	 * Binds to the Inspected Tower and updates the widgets
@@ -198,12 +192,6 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		boolean affordable = presenter.canAffordUpgrade(upgradeCost);
 		upgradeButton.button.setDisabled(!affordable && !towerHasUpgrade);
 		upgradeButton.setPurchased(towerHasUpgrade);
-		if (!affordable || towerHasUpgrade) {
-			upgradeButton.setTouchable(Touchable.disabled);
-		} else {
-			upgradeButton.setTouchable(Touchable.enabled);
-		}
-
 	}
 
 	private void setCancelListener(Button btnCancel) {

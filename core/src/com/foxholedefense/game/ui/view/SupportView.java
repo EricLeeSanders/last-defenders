@@ -160,21 +160,15 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 			SupportButton supportButton = (SupportButton) actor;
 			boolean affordable = presenter.canAffordSupport(supportButton.cost);
 			supportButton.button.setDisabled(!affordable);
-			if(affordable){
-				supportButton.setTouchable(Touchable.enabled);
-			} else {
-				supportButton.setTouchable(Touchable.disabled);
-			}
-
 		}
 	}
 
-	private void setLandmineListener(SupportButton button) {
-		button.addListener(new ActorGestureListener() {
+	private void setLandmineListener(final SupportButton supportButton) {
+		supportButton.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.createSupportActor("LandMine");
+				presenter.createSupportActor("LandMine", supportButton.cost);
 			}
 		});
 
@@ -198,12 +192,12 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		});
 	}
 
-	private void setApacheListener(SupportButton button) {
-		button.addListener(new ActorGestureListener() {
+	private void setApacheListener(final SupportButton supportButton) {
+		supportButton.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.createSupportActor("Apache");
+				presenter.createSupportActor("Apache", supportButton.cost);
 			}
 		});
 	}

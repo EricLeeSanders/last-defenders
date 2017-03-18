@@ -3,6 +3,7 @@ package com.foxholedefense.game.ui.presenter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.Field;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
@@ -18,6 +19,7 @@ import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.IGameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
+import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -35,13 +37,16 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	private Player player;
 	private IEnlistView view;
 	private FHDAudio audio;
+	private IMessageDisplayer messageDisplayer;
+
 	public EnlistPresenter(GameUIStateManager uiStateManager, Player player
-			, FHDAudio audio, TowerPlacement towerPlacement) {
+			, FHDAudio audio, TowerPlacement towerPlacement, IMessageDisplayer messageDisplayer) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.player = player;
 		this.audio = audio;
 		this.towerPlacement = towerPlacement;
+		this.messageDisplayer = messageDisplayer;
 	}
 
 	/**
@@ -59,12 +64,17 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 * 
 	 * @param strEnlistTower
 	 */
-	public void createTower(String strEnlistTower) {
+	public void createTower(String strEnlistTower, int cost) {
 		Logger.info("Enlist Presenter: creating tower");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		towerPlacement.createTower(strEnlistTower.replaceAll(" ", ""));
-		uiStateManager.setState(GameUIState.PLACING_TOWER);
-		Logger.info("Enlist Presenter: tower created");
+		if(canAffordTower(cost)) {
+			audio.playSound(FHDSound.SMALL_CLICK);
+			towerPlacement.createTower(strEnlistTower.replaceAll(" ", ""));
+			uiStateManager.setState(GameUIState.PLACING_TOWER);
+			Logger.info("Enlist Presenter: tower created");
+		} else {
+			Logger.info("Enlist Presenter: cannot afford " + strEnlistTower + " player: " + getPlayerMoney() + " cost: " + cost);
+			messageDisplayer.displayMessage("You cannot afford to enlist a " + strEnlistTower + "!");
+		}
 	}
 
 	/**
@@ -79,6 +89,9 @@ public class EnlistPresenter implements IGameUIStateObserver {
 			player.spendMoney(cost);
 			towerPlacement.removeCurrentTower();
 			Logger.info("Enlist Presenter: tower placed");
+		} else {
+			Logger.info("Enlist Presenter: cannot place tower");
+			messageDisplayer.displayMessage("Cannot place a tower here!");
 		}
 	}
 
