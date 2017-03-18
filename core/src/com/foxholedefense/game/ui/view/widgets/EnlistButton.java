@@ -16,9 +16,11 @@ import com.foxholedefense.util.Resources;
 
 public class EnlistButton extends Group {
     public ImageButton button;
+    public int cost;
     public EnlistButton(Skin skin, float attack, float health, float range, float speed, String name, int cost){
         this.setTransform(false);
         this.button = new ImageButton(skin, "enlist");
+        this.cost = cost;
         addActor(button);
         createBar(skin, attack, 108, "attack_icon", 18,18, 2, 3, name, cost);
         createBar(skin, health, 83, "heart", 18,18, 2, 2, name, cost);
