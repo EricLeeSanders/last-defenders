@@ -7,11 +7,11 @@ package com.foxholedefense.game.ui.view.interfaces;
  *
  */
 public interface ISupportView {
-	public void supportState();
+	void supportState();
 
-	public void placingSupportState();
+	void placingSupportState();
 
-	public void standByState();
-	
-	public void showBtnPlace();
+	void standByState();
+
+	void showBtnPlace();
 }

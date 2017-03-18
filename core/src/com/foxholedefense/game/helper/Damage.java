@@ -50,10 +50,9 @@ public class Damage {
 		}
 	}
 	public static void dealFlameGroupDamage(IAttacker attacker, ITargetable target, SnapshotArray<Actor>targetGroup, Polygon flameBody) {
-		ITargetable flameTarget;
 		for(int i = targetGroup.size - 1; i >= 0; i--){
 			Actor actor = targetGroup.get(i);
-			flameTarget = (ITargetable) actor;
+			ITargetable flameTarget = (ITargetable) actor;
 			if (flameTarget != null && flameTarget.isDead() == false) {
 				Shape2D targetBody = flameTarget.getBody();
 				if (CollisionDetection.flameAndTarget(targetBody, flameBody)) {
@@ -67,19 +66,16 @@ public class Damage {
 
 	public static void dealExplosionDamage(IAttacker attacker, float radius, Vector2 position, ITargetable target, SnapshotArray<Actor>targetGroup) {
 		Circle aoeRadius = new Circle(position.x, position.y, radius);
-		ITargetable aoeTarget;
-		float distance, damage, damagePercent;
 		for(int i = targetGroup.size - 1; i >= 0; i--){
 			Actor actor = targetGroup.get(i);
-			aoeTarget = (ITargetable) actor;
-			distance = damage = damagePercent = 0;
+			ITargetable aoeTarget = (ITargetable) actor;
 			if (aoeTarget.isDead() == false) {
 				if (aoeTarget.equals(target) == false) {
-					distance = position.dst( aoeTarget.getPositionCenter());
+					float distance = position.dst( aoeTarget.getPositionCenter());
 					Logger.debug("AOE Actor distance: " + distance + " aoe radius: " + aoeRadius.radius);
 					if (CollisionDetection.explosionAndTarget( aoeTarget.getBody(), aoeRadius)) {
-						damagePercent = (1000 / distance);
-						damage = (attacker.getAttack() * (damagePercent / 100));
+						float damagePercent = (1000 / distance);
+						float damage = (attacker.getAttack() * (damagePercent / 100));
 						Logger.debug("Doing " + damagePercent + "% of damage for " + damage + " damage to: " + aoeTarget.getClass().getSimpleName());
 						aoeTarget.takeDamage(damage);
 						Logger.debug("Actors new health:" + ((CombatActor) aoeTarget).getHealth());

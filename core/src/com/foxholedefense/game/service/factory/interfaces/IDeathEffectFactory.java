@@ -4,5 +4,5 @@ import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffect;
 import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffectType;
 
 public interface IDeathEffectFactory {
-	public DeathEffect loadDeathEffect(DeathEffectType type);
+	DeathEffect loadDeathEffect(DeathEffectType type);
 }

@@ -8,9 +8,9 @@ package com.foxholedefense.game.ui.view.interfaces;
  *
  */
 public interface IGameOverView {
-	public void setWavesCompleted(String wavesCompleted);
+	void setWavesCompleted(String wavesCompleted);
 
-	public void standByState();
+	void standByState();
 
-	public void gameOverState();
+	void gameOverState();
 }

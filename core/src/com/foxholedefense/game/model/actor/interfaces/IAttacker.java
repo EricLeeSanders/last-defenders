@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  *
  */
 public interface IAttacker {
-	public Shape2D getRangeShape();
-	public Vector2 getGunPos();
-	public float getAttack();
+	Shape2D getRangeShape();
+	Vector2 getGunPos();
+	float getAttack();
 }

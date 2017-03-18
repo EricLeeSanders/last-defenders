@@ -5,9 +5,9 @@ package com.foxholedefense.game.ui.view.interfaces;
  */
 
 public interface IDebugView {
-    public void debugState();
-    public void standByState();
-    public void showFPS(boolean show);
-    public void setFPSChecked(boolean isChecked);
-    public void setTextureBoundariesChecked(boolean isChecked);
+    void debugState();
+    void standByState();
+    void showFPS(boolean show);
+    void setFPSChecked(boolean isChecked);
+    void setTextureBoundariesChecked(boolean isChecked);
 }

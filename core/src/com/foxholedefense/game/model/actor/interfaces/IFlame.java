@@ -10,5 +10,5 @@ import com.foxholedefense.util.Dimension;
  *
  */
 public interface IFlame {
-	public Dimension getFlameSize();
+	Dimension getFlameSize();
 }

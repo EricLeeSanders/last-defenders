@@ -6,8 +6,8 @@ import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
 
 public interface IHealthFactory {
-	public HealthBar loadHealthBar();
-	public ArmorIcon loadArmorIcon();
-	public ArmorDestroyedEffect loadArmorDestroyedEffect();
-	public TowerHealEffect loadTowerHealEffect();
+	HealthBar loadHealthBar();
+	ArmorIcon loadArmorIcon();
+	ArmorDestroyedEffect loadArmorDestroyedEffect();
+	TowerHealEffect loadTowerHealEffect();
 }
