@@ -13,7 +13,7 @@ import com.foxholedefense.util.Logger;
  *
  */
 public class Player {
-	private int money = 20000;
+	private int money = 200;
 	private int lives = 15;
 	private int waveCount = 1;
 	private SnapshotArray<IPlayerObserver> observers = new SnapshotArray<IPlayerObserver>();

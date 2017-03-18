@@ -10,7 +10,9 @@ import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.interfaces.IRotatable;
+import com.foxholedefense.game.model.actor.support.AirStrike;
 import com.foxholedefense.game.model.actor.support.Apache;
+import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
 import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
@@ -21,6 +23,7 @@ import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.IGameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
+import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.game.ui.view.interfaces.ISupportView;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
@@ -42,8 +45,10 @@ public class SupportPresenter implements IGameUIStateObserver {
 	private Player player;
 	private ISupportView view;
 	private FHDAudio audio;
+	private IMessageDisplayer messageDisplayer;
 	public SupportPresenter(GameUIStateManager uiStateManager, Player player, FHDAudio audio
-			, SupportActorPlacement supportActorPlacement, AirStrikePlacement airStrikePlacement, SupplyDropPlacement supplyDropPlacement ) {
+			, SupportActorPlacement supportActorPlacement, AirStrikePlacement airStrikePlacement, SupplyDropPlacement supplyDropPlacement
+			, IMessageDisplayer messageDisplayer) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.audio = audio;
@@ -51,6 +56,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 		this.supplyDropPlacement = supplyDropPlacement;
 		this.supportActorPlacement = supportActorPlacement;
 		this.airStrikePlacement = airStrikePlacement;
+		this.messageDisplayer = messageDisplayer;
 	}
 
 	/**
@@ -67,10 +73,17 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Create a Supply Drop
 	 */
 	public void createSupplyDrop(){
-		Logger.info("Support Presenter: create supply drop");
+		Logger.info("Support Presenter: creating supply drop");
 		audio.playSound(FHDSound.SMALL_CLICK);
-		supplyDropPlacement.createSupplyDrop();
-		uiStateManager.setState(GameUIState.PLACING_SUPPLYDROP);
+		if(canAffordSupport(SupplyDropCrate.COST)) {
+			supplyDropPlacement.createSupplyDrop();
+			uiStateManager.setState(GameUIState.PLACING_SUPPLYDROP);
+			Logger.info("Support Presenter: supply drop created");
+		} else {
+			Logger.info("Support Presenter: cannot afford supply drop player: " + getPlayerMoney() + " cost: " + SupplyDropCrate.COST);
+			messageDisplayer.displayMessage("You cannot afford a supply drop!");
+		}
+
 	}
 	
 	
@@ -95,10 +108,16 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Create an AirStrike
 	 */
 	public void createAirStrike(){
-		Logger.info("Support Presenter: create air strike");
+		Logger.info("Support Presenter: creating air strike");
 		audio.playSound(FHDSound.SMALL_CLICK);
-		airStrikePlacement.createAirStrike();
-		uiStateManager.setState(GameUIState.PLACING_AIRSTRIKE);
+		if(canAffordSupport(AirStrike.COST)) {
+			airStrikePlacement.createAirStrike();
+			uiStateManager.setState(GameUIState.PLACING_AIRSTRIKE);
+			Logger.info("Support Presenter: air strike created");
+		} else {
+			Logger.info("Support Presenter: cannot afford airstrike player: " + getPlayerMoney() + " cost: " + SupplyDropCrate.COST);
+			messageDisplayer.displayMessage("You cannot afford an airstrike!");
+		}
 	}
 	
 	/**
@@ -128,11 +147,19 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Create a Support Actor
 	 * 
 	 */
-	public void createSupportActor(String type) {
-		Logger.info("Support Presenter: create support actor");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		supportActorPlacement.createSupportActor(type);
-		uiStateManager.setState(GameUIState.PLACING_SUPPORT);
+	public void createSupportActor(String type, int cost) {
+		Logger.info("Support Presenter: creating support actor");
+		if(canAffordSupport(cost)) {
+			audio.playSound(FHDSound.SMALL_CLICK);
+			supportActorPlacement.createSupportActor(type);
+			uiStateManager.setState(GameUIState.PLACING_SUPPORT);
+			Logger.info("Support Presenter: support actor created");
+		} else {
+			Logger.info("Support Presenter: cannot afford " + type + " player: " + getPlayerMoney() + " cost: " + cost);
+			messageDisplayer.displayMessage("You cannot afford a " + type + "!");
+		}
+
+
 	}
 	
 	/**

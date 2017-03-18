@@ -85,20 +85,22 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	public void createUI(Resources resources, FHDAudio audio, GameStage gameStage) {
 		Logger.info("GameUIStage: creating ui");
 		Skin skin = resources.getSkin(Resources.SKIN_JSON);
-		EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio,  gameStage.getTowerPlacement());
-		EnlistView enlistView = new EnlistView(enlistPresenter, skin);
-		enlistPresenter.setView(enlistView);
-
-		SupportPresenter supportPresenter = new SupportPresenter(uiStateManager, player, audio
-				, gameStage.getSupportActorPlacement(),  gameStage.getAirStrikePlacement(),  gameStage.getSupplyDropPlacement());
-		SupportView supportView = new SupportView(supportPresenter, skin);
-		supportPresenter.setView(supportView);
 
 		HUDPresenter hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player, resources, audio);
 		HUDView hudView = new HUDView(hudPresenter, skin, resources);
 		hudPresenter.setView(hudView);
 
-		InspectPresenter inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager, player, towerGroup, audio);
+		EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio,  gameStage.getTowerPlacement(), hudPresenter);
+		EnlistView enlistView = new EnlistView(enlistPresenter, skin);
+		enlistPresenter.setView(enlistView);
+
+		SupportPresenter supportPresenter = new SupportPresenter(uiStateManager, player, audio
+				, gameStage.getSupportActorPlacement(),  gameStage.getAirStrikePlacement(),  gameStage.getSupplyDropPlacement()
+				, hudPresenter);
+		SupportView supportView = new SupportView(supportPresenter, skin);
+		supportPresenter.setView(supportView);
+
+		InspectPresenter inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager, player, towerGroup, audio, hudPresenter);
 		InspectView inspectView = new InspectView(inspectPresenter, skin);
 		inspectPresenter.setView(inspectView);
 
@@ -117,7 +119,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		DebugPresenter debugPresenter = new DebugPresenter(uiStateManager, gameStateManager);
 		DebugView debugView = new DebugView(debugPresenter, resources.getSkin(Resources.SKIN_JSON));
 		debugPresenter.setView(debugView);
-		
+
 		this.addActor(hudView);
 		this.addActor(enlistView);
 		this.addActor(supportView);
