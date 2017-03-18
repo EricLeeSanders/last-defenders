@@ -1,5 +1,6 @@
 package com.foxholedefense.game.ui.view;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.AlphaAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
@@ -20,6 +21,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.game.ui.presenter.HUDPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IHUDView;
+import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -33,24 +35,35 @@ import javax.sound.midi.Sequence;
  *
  */
 public class HUDView extends Group implements IHUDView {
+
+	private static final float MESSAGE_DURATION = 2;
 	private Image imgMoney, imgLife;
-	
 	private ImageButton btnWave, btnEnlist, btnSupport, btnOptions;
 	private Label lblMoney, lblLives, lblWaveCount;
 	private HUDPresenter presenter;
 	private Resources resources;
-
+	private Label messageLabel;
 	public HUDView(HUDPresenter presenter,Skin skin, Resources resources) {
 		this.presenter = presenter;
 		this.setTransform(false);
 		this.resources = resources;
 		createControls(skin);
+		createMessageDisplayLabel(skin);
+	}
+
+	private void createMessageDisplayLabel(Skin skin){
+		LabelStyle messageDisplayLabelStyle = new Label.LabelStyle(skin.get(LabelStyle.class));
+		messageDisplayLabelStyle.fontColor = Color.RED;
+
+		messageLabel = new Label("", resources.getSkin(Resources.SKIN_JSON));
+		messageLabel.setFontScale(0.35f);
+		messageLabel.setStyle(messageDisplayLabelStyle);
 	}
 
 	/**
 	 * Create the controls
 	 */
-	public void createControls(Skin skin) {
+	private void createControls(Skin skin) {
 		Logger.info("HUD View: creating controls");
 
 		btnWave = new ImageButton(skin, "wave");
@@ -177,11 +190,6 @@ public class HUDView extends Group implements IHUDView {
 	}
 
 	@Override
-	public void displayMessage(String message, Vector2 centerPos, float scale) {
-
-	}
-
-	@Override
 	public void setWaveCount(String waveCount) {
 		lblWaveCount.setText("WAVE: " + waveCount);
 	}
@@ -234,5 +242,21 @@ public class HUDView extends Group implements IHUDView {
 		btnEnlist.setVisible(true);
 		btnSupport.setVisible(true);
 		btnOptions.setVisible(true);
+	}
+
+	@Override
+	public void displayMessage(String message) {
+		Logger.info("HUDView: displaying message: " + message);
+		messageLabel.clearActions();
+		messageLabel.setText(message.toUpperCase());
+		messageLabel.pack();
+		messageLabel.setPosition((Resources.VIRTUAL_WIDTH / 2) - (messageLabel.getWidth() / 2), (Resources.VIRTUAL_HEIGHT / 2) + 50);
+		messageLabel.addAction(Actions.moveTo(messageLabel.getX(), messageLabel.getY() + 50, MESSAGE_DURATION));
+
+		messageLabel.addAction(Actions.sequence(
+				Actions.moveTo(messageLabel.getX(), messageLabel.getY() + 100, MESSAGE_DURATION),
+				Actions.removeActor()));
+		getParent().addActor(messageLabel);
+
 	}
 }

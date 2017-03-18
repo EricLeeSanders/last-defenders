@@ -181,11 +181,6 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	    	Map.Entry<EnlistButton, Integer> tower = iter.next();
 	    	boolean affordable = presenter.canAffordTower(tower.getValue());
 	    	tower.getKey().button.setDisabled(!affordable);
-	    	if(affordable){
-	    		tower.getKey().setTouchable(Touchable.enabled);
-	    	} else {
-	    		tower.getKey().setTouchable(Touchable.disabled);
-	    	}
 	    }
 
 	}
@@ -216,12 +211,12 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 			}
 		});
 	}
-	private void setTowerListener(EnlistButton button, final String tower){
-		button.addListener(new ActorGestureListener() {
+	private void setTowerListener(final EnlistButton enlistButton, final String tower){
+		enlistButton.addListener(new ActorGestureListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.createTower(tower);
+				presenter.createTower(tower,towerCosts.get(enlistButton));
 			}
 		});
 	}

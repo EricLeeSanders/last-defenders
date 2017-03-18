@@ -12,6 +12,7 @@ import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.IGameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IHUDView;
+import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.FHDAudio;
@@ -25,7 +26,7 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  * @author Eric
  *
  */
-public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
+public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver, IMessageDisplayer {
 	private LevelStateManager levelStateManager;
 	private GameUIStateManager uiStateManager;
 	private GameStateManager gameStateManager;
@@ -148,5 +149,10 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 		} else {
 			view.setWaveCount(String.valueOf(player.getWaveCount()) + "/" + Level.MAX_WAVES);
 		}
+	}
+
+	@Override
+	public void displayMessage(String message) {
+		view.displayMessage(message);
 	}
 }

@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  * @author Eric
  *
  */
-public interface IHUDView {
+public interface IHUDView extends IMessageDisplayer {
 	public void standByState();
 	
 	public void supportState();
@@ -23,8 +23,6 @@ public interface IHUDView {
 	public void gameOverState();
 
 	public void waveInProgressState();
-
-	public void displayMessage(String message, Vector2 centerPos, float scale);
 
 	public void setMoney(String money);
 
