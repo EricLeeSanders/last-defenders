@@ -8,13 +8,13 @@ package com.foxholedefense.game.ui.view.interfaces;
  *
  */
 public interface IOptionsView {
-	public void optionsState();
+	void optionsState();
 
-	public void standByState();
+	void standByState();
 	
-	public void setBtnShowRangesOn(boolean showRangesOn);
+	void setBtnShowRangesOn(boolean showRangesOn);
 	
-	public void setBtnSoundOn(boolean soundOn);
+	void setBtnSoundOn(boolean soundOn);
 	
-	public void setBtnMusicOn(boolean musicOn);
+	void setBtnMusicOn(boolean musicOn);
 }

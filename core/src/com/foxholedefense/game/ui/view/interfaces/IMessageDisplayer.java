@@ -5,5 +5,5 @@ package com.foxholedefense.game.ui.view.interfaces;
  */
 
 public interface IMessageDisplayer {
-    public void displayMessage(String message);
+    void displayMessage(String message);
 }

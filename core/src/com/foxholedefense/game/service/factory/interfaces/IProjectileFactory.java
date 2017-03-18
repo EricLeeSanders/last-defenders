@@ -7,10 +7,10 @@ import com.foxholedefense.game.model.actor.projectile.Flame;
 import com.foxholedefense.game.model.actor.projectile.RPG;
 
 public interface IProjectileFactory {
-	public Bullet loadBullet();
-	public RPG loadRPG();
-	public AirStrikeBomb loadAirStrikeBomb();
-	public Explosion loadExplosion();
-	public Flame loadFlame();
+	Bullet loadBullet();
+	RPG loadRPG();
+	AirStrikeBomb loadAirStrikeBomb();
+	Explosion loadExplosion();
+	Flame loadFlame();
 	
 }
