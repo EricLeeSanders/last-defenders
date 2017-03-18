@@ -10,23 +10,23 @@ import com.badlogic.gdx.math.Vector2;
  *
  */
 public interface IHUDView extends IMessageDisplayer {
-	public void standByState();
+	void standByState();
 	
-	public void supportState();
+	void supportState();
 
-	public void enlistingState();
+	void enlistingState();
 	
-	public void inspectingState();
+	void inspectingState();
 
-	public void optionsState();
+	void optionsState();
 
-	public void gameOverState();
+	void gameOverState();
 
-	public void waveInProgressState();
+	void waveInProgressState();
 
-	public void setMoney(String money);
+	void setMoney(String money);
 
-	public void setLives(String lives);
+	void setLives(String lives);
 
-	public void setWaveCount(String waveCount);
+	void setWaveCount(String waveCount);
 }

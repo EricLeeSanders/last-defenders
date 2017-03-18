@@ -8,13 +8,13 @@ package com.foxholedefense.game.ui.view.interfaces;
  *
  */
 public interface IEnlistView {
-	public void enlistingState();
+	void enlistingState();
 
-	public void placingTowerState();
+	void placingTowerState();
 
-	public void standByState();
+	void standByState();
 
-	public void showBtnPlace();
+	void showBtnPlace();
 	
-	public void showBtnRotate();
+	void showBtnRotate();
 }

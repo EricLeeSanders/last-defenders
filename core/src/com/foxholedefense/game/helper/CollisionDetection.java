@@ -147,8 +147,10 @@ public final class CollisionDetection {
 	 * @param clickCoord - The coords where the player clicked
 	 * @return CombatActor - CombatActor that was hit or null if none were hit
 	 */
+	private static Rectangle clickRect = new Rectangle(0,0,0,0);
 	public static Tower towerHit(SnapshotArray<Actor> Towers, Vector2 clickCoord) {
-		Rectangle clickRect = new Rectangle(clickCoord.x, clickCoord.y, 1, 1);
+		clickRect.setPosition(clickCoord.x, clickCoord.y);
+		clickRect.setSize(1,1);
 		for (Actor tower : Towers) {
 			if (tower instanceof Tower) {
 				Shape2D towerBody = ((CombatActor) tower).getBody();
@@ -186,8 +188,6 @@ public final class CollisionDetection {
 		return false;
 	}
 
-	// Create lines between 2 vertices for each vertex. Check whether that line
-	// intersects the circle.
 	/**
 	 * Checks for collision with a polygon and circle. Libgdx does not have a
 	 * native way to do this. This method creates a line between 2 vertices for
@@ -229,8 +229,18 @@ public final class CollisionDetection {
 	 * @param rectangle
 	 * @return boolean - If there is a collision
 	 */
+	private static Polygon rectPoly = new Polygon();
+	private static float rectanglePoints [] = new float[8];
 	private static boolean polygonAndRectangle(Polygon polygon, Rectangle rectangle) {
-		Polygon rectPoly = new Polygon(new float[] { 0, 0, rectangle.width, 0, rectangle.width, rectangle.height, 0, rectangle.height });
+		rectanglePoints[0] = 0;
+		rectanglePoints[1] = 0;
+		rectanglePoints[2] = rectangle.width;
+		rectanglePoints[3] = 0;
+		rectanglePoints[4] = rectangle.width;
+		rectanglePoints[5] = rectangle.height;
+		rectanglePoints[6] = 0;
+		rectanglePoints[7] = rectangle.height;
+		rectPoly.setVertices(rectanglePoints);
 		rectPoly.setPosition(rectangle.x, rectangle.y);
 		return Intersector.overlapConvexPolygons(rectPoly, polygon);
 
