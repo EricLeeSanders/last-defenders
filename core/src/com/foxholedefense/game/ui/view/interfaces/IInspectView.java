@@ -10,11 +10,11 @@ import com.foxholedefense.game.model.actor.combat.tower.Tower;
  *
  */
 public interface IInspectView {
-	public void update(Tower selectedTower);
+	void update(Tower selectedTower);
 
-	public void standByState();
+	void standByState();
 
-	public void inspectingState();
+	void inspectingState();
 	
-	public void dischargeDisabled(boolean enabled);
+	void dischargeDisabled(boolean enabled);
 }

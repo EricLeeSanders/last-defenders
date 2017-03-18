@@ -4,6 +4,6 @@ import com.foxholedefense.game.model.actor.support.SupplyDrop;
 import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
 
 public interface ISupplyDropFactory {
-	public SupplyDrop loadSupplyDrop();
-	public SupplyDropCrate loadSupplyDropCrate();
+	SupplyDrop loadSupplyDrop();
+	SupplyDropCrate loadSupplyDropCrate();
 }	
