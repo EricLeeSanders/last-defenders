@@ -88,8 +88,7 @@ public class Flame extends Actor implements Pool.Poolable {
 		bodyPoints[3] = bodyPoints[5] = flameSize.getHeight();
 		bodyPoints[4] = bodyPoints[6] = flameSize.getWidth();
 		flameBody = new Polygon(bodyPoints);
-		Damage.dealFlameTargetDamage(shooter, target);
-		Damage.dealFlameGroupDamage(shooter, target, targetGroup.getChildren(), getFlameBody());
+		Damage.dealFlameGroupDamage(shooter, targetGroup.getChildren(), getFlameBody());
 		return this;
 	}
 

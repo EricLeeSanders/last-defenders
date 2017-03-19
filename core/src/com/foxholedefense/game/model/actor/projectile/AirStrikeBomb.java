@@ -93,7 +93,7 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 	public void act(float delta) {
 		super.act(delta);
 		if (this.getActions().size == 0) {
-			explosionPool.obtain().initialize(attacker, radius,  null, targetGroup, destination);
+			explosionPool.obtain().initialize(attacker, radius, targetGroup, destination);
 			pool.free(this);
 		}
 
