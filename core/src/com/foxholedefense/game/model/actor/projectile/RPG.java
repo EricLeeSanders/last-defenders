@@ -97,8 +97,7 @@ public class RPG extends Actor implements Pool.Poolable {
 	public void act(float delta) {
 		super.act(delta);
 		if (this.getActions().size == 0) {
-			Damage.dealRpgDamage(shooter, target); // Deal damage
-			explosionPool.obtain().initialize(shooter, radius, target, targetGroup, destination);
+			explosionPool.obtain().initialize(shooter, radius, targetGroup, destination);
 			pool.free(this);
 		}
 	}

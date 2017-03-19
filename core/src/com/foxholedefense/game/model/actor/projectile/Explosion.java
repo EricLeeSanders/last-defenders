@@ -56,13 +56,13 @@ public class Explosion extends Actor implements Pool.Poolable {
 	/**
 	 * Initializes an Explosion and deals Damage
 	 */
-	public Actor initialize(IAttacker attacker, float radius, ITargetable target, Group targetGroup, Vector2 position) {
+	public Actor initialize(IAttacker attacker, float radius, Group targetGroup, Vector2 position) {
 		audio.playSound(FHDSound.RPG_EXPLOSION);
 		if (targetGroup.getStage() instanceof GameStage) {
 			((GameStage) targetGroup.getStage()).getActorGroups().getProjectileGroup().addActor(this);
 		}
 		this.setPosition(position.x, position.y);
-		Damage.dealExplosionDamage(attacker, radius, position, target, targetGroup.getChildren());
+		Damage.dealExplosionDamage(attacker, radius, position, targetGroup.getChildren());
 		return this;
 	}
 	

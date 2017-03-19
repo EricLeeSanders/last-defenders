@@ -22,21 +22,19 @@ import com.foxholedefense.util.Logger;
  *
  */
 public class Damage {
+
 	private static void dealTargetDamage(IAttacker attacker, ITargetable target) {
-		if (target != null && target.isDead() == false) {
+		if (target != null && !target.isDead()) {
 			Logger.debug("Doing " + attacker.getAttack() + " damage to: " + target.getClass().getSimpleName());
 			target.takeDamage(attacker.getAttack());
 			if (target.isDead() && attacker instanceof Tower) {
 				// Only give the tower a kill if it is alive.
-				if (((Tower)attacker).isDead() == false) {
+				if (!((Tower)attacker).isDead()) {
 					Logger.debug("Target: giving kill to shooter");
 					((Tower) attacker).giveKill();
 				}
 			}
 		}
-	}
-	public static void dealRpgDamage(IAttacker attacker, ITargetable target) {
-		dealTargetDamage(attacker,target);
 	}
 
 	public static void dealBulletDamage(IAttacker attacker, ITargetable target) {
@@ -44,46 +42,36 @@ public class Damage {
 			dealTargetDamage(attacker, target);
 		}
 	}
-	public static void dealFlameTargetDamage(IAttacker attacker, ITargetable target) {
-		if (!(target instanceof IPlatedArmor)) {
-			dealTargetDamage(attacker, target);
-		}
-	}
-	public static void dealFlameGroupDamage(IAttacker attacker, ITargetable target, SnapshotArray<Actor>targetGroup, Polygon flameBody) {
+
+	public static void dealFlameGroupDamage(IAttacker attacker, SnapshotArray<Actor>targetGroup, Polygon flameBody) {
 		for(int i = targetGroup.size - 1; i >= 0; i--){
 			Actor actor = targetGroup.get(i);
 			ITargetable flameTarget = (ITargetable) actor;
-			if (flameTarget != null && flameTarget.isDead() == false) {
+			if (flameTarget != null && !flameTarget.isDead()) {
 				Shape2D targetBody = flameTarget.getBody();
 				if (CollisionDetection.flameAndTarget(targetBody, flameBody)) {
-					if(!(flameTarget.equals(target))){
-						dealFlameTargetDamage(attacker,flameTarget);
+					if (!(flameTarget instanceof IPlatedArmor)) {
+						dealTargetDamage(attacker, flameTarget);
 					}
 				}
 			}
 		}
 	}
-
-	public static void dealExplosionDamage(IAttacker attacker, float radius, Vector2 position, ITargetable target, SnapshotArray<Actor>targetGroup) {
-		Circle aoeRadius = new Circle(position.x, position.y, radius);
+	private static Circle aoeRadius = new Circle();
+	public static void dealExplosionDamage(IAttacker attacker, float radius, Vector2 position, SnapshotArray<Actor>targetGroup) {
+		aoeRadius.setPosition(position.x, position.y);
+		aoeRadius.setRadius(radius);
 		for(int i = targetGroup.size - 1; i >= 0; i--){
 			Actor actor = targetGroup.get(i);
 			ITargetable aoeTarget = (ITargetable) actor;
-			if (aoeTarget.isDead() == false) {
-				if (aoeTarget.equals(target) == false) {
-					float distance = position.dst( aoeTarget.getPositionCenter());
-					Logger.debug("AOE Actor distance: " + distance + " aoe radius: " + aoeRadius.radius);
-					if (CollisionDetection.explosionAndTarget( aoeTarget.getBody(), aoeRadius)) {
-						float damagePercent = (1000 / distance);
-						float damage = (attacker.getAttack() * (damagePercent / 100));
-						Logger.debug("Doing " + damagePercent + "% of damage for " + damage + " damage to: " + aoeTarget.getClass().getSimpleName());
-						aoeTarget.takeDamage(damage);
-						Logger.debug("Actors new health:" + ((CombatActor) aoeTarget).getHealth());
-						if (aoeTarget.isDead() && attacker instanceof Tower) {
-							if (((Tower)attacker).isDead() == false) {
-								Logger.debug("Explosion: giving kill to shooter");
-								((Tower) attacker).giveKill();
-							}
+			if (!aoeTarget.isDead()) {
+				if (CollisionDetection.explosionAndTarget( aoeTarget.getBody(), aoeRadius)) {
+					float damage = attacker.getAttack();
+					aoeTarget.takeDamage(damage);
+					if (aoeTarget.isDead() && attacker instanceof Tower) {
+						if (!((Tower)attacker).isDead()) {
+							Logger.debug("Explosion: giving kill to shooter");
+							((Tower) attacker).giveKill();
 						}
 					}
 				}
