@@ -50,7 +50,7 @@ public class Flame extends Actor implements Pool.Poolable {
 	private Dimension flameSize;
 	private Pool<Flame> pool;
 	private float[] bodyPoints = new float[8];
-	private Polygon flameBody;
+	private Polygon flameBody = new Polygon();
 	private Vector2 maxFlameTextureSize = UtilPool.getVector2();
 	/**
 	 * Constructs a flame
@@ -85,9 +85,11 @@ public class Flame extends Actor implements Pool.Poolable {
 		stateTime = 0;
 		flameAnimation.setFrameDuration(FRAME_DURATION);
 		this.flameSize = flameSize;
+		this.setPosition(shooter.getGunPos().x, shooter.getGunPos().y  - getOriginY());
+		setRotation(shooter.getRotation());
 		bodyPoints[3] = bodyPoints[5] = flameSize.getHeight();
 		bodyPoints[4] = bodyPoints[6] = flameSize.getWidth();
-		flameBody = new Polygon(bodyPoints);
+		flameBody.setVertices(bodyPoints);
 		Damage.dealFlameGroupDamage(shooter, targetGroup.getChildren(), getFlameBody());
 		return this;
 	}
