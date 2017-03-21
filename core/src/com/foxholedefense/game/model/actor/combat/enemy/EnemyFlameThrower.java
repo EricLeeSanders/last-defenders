@@ -25,16 +25,17 @@ import com.foxholedefense.util.UtilPool;
 public class EnemyFlameThrower extends Enemy implements IFlame {
 	public static final float HEALTH = 8;
 	public static final float ARMOR = 3;
-	public static final float ATTACK = 10; 
-	public static final float ATTACK_SPEED = 1f;
-	public static final float RANGE = 80;
+	public static final float ATTACK = 1.75f;
+	public static final float ATTACK_SPEED = 1.2f;
+	public static final float RANGE = 70;
 	public static final float SPEED = 70f;
-	public static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);
+	public static final Vector2 GUN_POS = UtilPool.getVector2(26, 4);
 	private Circle body;
-	private Dimension flameSize = new Dimension(20, RANGE-26);
+	private Dimension flameSize = new Dimension(RANGE-26, 20);
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
+
 	public EnemyFlameThrower(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
 		super(stationaryTextureRegion, animatedRegions, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
 		this.audio = audio;
@@ -44,16 +45,17 @@ public class EnemyFlameThrower extends Enemy implements IFlame {
 	}
 
 	@Override
+	public Dimension getFlameSize() {
+		flameSize.set(this.getRange()-GUN_POS.x, this.getHeight());
+		return flameSize;
+	}
+
+	@Override
 	public void attackTarget(ITargetable target) {
 		if(target != null){
 			audio.playSound(FHDSound.FLAME_BURST);
-			projectileFactory.loadFlame().initialize(this, target, getTargetGroup(), getFlameSize());
+			projectileFactory.loadFlame().initialize(this, getTargetGroup(), getFlameSize());
 		}
-	}
-	@Override
-	public Dimension getFlameSize() {
-		flameSize.set(flameSize.getWidth(), this.getRange()-GUN_POS.y);
-		return flameSize;
 	}
 
 	@Override

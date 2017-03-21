@@ -250,6 +250,7 @@ public abstract class Enemy extends CombatActor {
 		lengthToEnd = 0;
 		movementAnimationStateTime = 0;
 		rotationBeforeAttacking = 0;
+		movementDelayCounter = 0;
 	}
 
 	/**
