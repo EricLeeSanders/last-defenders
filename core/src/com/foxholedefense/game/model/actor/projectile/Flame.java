@@ -42,9 +42,11 @@ import com.foxholedefense.util.UtilPool;
 public class Flame extends Actor implements Pool.Poolable {
 
 	private static final float FRAME_DURATION = 0.025f;
+	private static final float TICK_ATTACK_SPEED = 0.1f;
 
 	private Animation flameAnimation;
 	private float stateTime;
+	private float tickTime = TICK_ATTACK_SPEED;
 	private CombatActor shooter;
 	private ShapeRenderer flameOutline = Resources.getShapeRenderer();
 	private Dimension flameSize;
@@ -52,12 +54,14 @@ public class Flame extends Actor implements Pool.Poolable {
 	private float[] bodyPoints = new float[8];
 	private Polygon flameBody = new Polygon();
 	private Vector2 maxFlameTextureSize = UtilPool.getVector2();
+	private Group targetGroup;
+
 	/**
 	 * Constructs a flame
 	 */
 	public Flame(Pool<Flame> pool, Array<AtlasRegion> regions) {
 		this.pool = pool;
-		flameAnimation = new Animation(0.05f, regions);
+		flameAnimation = new Animation(FRAME_DURATION, regions);
 		flameAnimation.setPlayMode(PlayMode.LOOP);
 		for(AtlasRegion region : regions){
 			float height = region.getRegionHeight();
@@ -77,20 +81,17 @@ public class Flame extends Actor implements Pool.Poolable {
 	/**
 	 * Initializes a flame.
 	 *
-	 * @param shooter
-	 * @param target
 	 */
-	public Actor initialize(CombatActor shooter, ITargetable target, Group targetGroup, Dimension flameSize) {
+	public Actor initialize(CombatActor shooter, Group targetGroup, Dimension flameSize) {
 		this.shooter = shooter;
+		this.targetGroup = targetGroup;
 		stateTime = 0;
-		flameAnimation.setFrameDuration(FRAME_DURATION);
 		this.flameSize = flameSize;
 		this.setPosition(shooter.getGunPos().x, shooter.getGunPos().y  - getOriginY());
 		setRotation(shooter.getRotation());
 		bodyPoints[3] = bodyPoints[5] = flameSize.getHeight();
 		bodyPoints[4] = bodyPoints[6] = flameSize.getWidth();
 		flameBody.setVertices(bodyPoints);
-		Damage.dealFlameGroupDamage(shooter, targetGroup.getChildren(), getFlameBody());
 		return this;
 	}
 
@@ -101,6 +102,17 @@ public class Flame extends Actor implements Pool.Poolable {
 		stateTime += delta;
 		if (shooter.isDead() || flameAnimation.isAnimationFinished(stateTime)) {
 			pool.free(this);
+		}
+
+		attackHandler(delta);
+	}
+
+	private void attackHandler(float delta){
+
+		tickTime += delta;
+		if(tickTime > TICK_ATTACK_SPEED){
+			Damage.dealFlameGroupDamage(shooter, targetGroup.getChildren(), getFlameBody());
+			tickTime = 0;
 		}
 	}
 
@@ -152,6 +164,7 @@ public class Flame extends Actor implements Pool.Poolable {
 		this.clear();
 		this.remove();
 		stateTime = 0;
+		tickTime = TICK_ATTACK_SPEED;
 	}
 
 

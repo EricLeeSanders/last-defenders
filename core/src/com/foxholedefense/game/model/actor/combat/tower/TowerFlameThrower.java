@@ -24,9 +24,9 @@ import com.foxholedefense.util.UtilPool;
  */
 public class TowerFlameThrower extends Tower implements IFlame {
 
-	public static final float HEALTH = 8;
+	public static final float HEALTH = 800;
 	public static final float ARMOR = 4;
-	public static final float ATTACK = 7; 
+	public static final float ATTACK = 0.7f;
 	public static final float ATTACK_SPEED = 1.20f;
 	public static final float RANGE = 70;
 	public static final int COST = 600;
@@ -40,6 +40,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
+
 	public TowerFlameThrower(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
 		super(actorRegion, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.audio = audio;
@@ -59,7 +60,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
 	public void attackTarget(ITargetable target) {
 		if(target != null){
 			audio.playSound(FHDSound.FLAME_BURST);
-			projectileFactory.loadFlame().initialize(this, target, getTargetGroup(), getFlameSize());
+			projectileFactory.loadFlame().initialize(this, getTargetGroup(), getFlameSize());
 		}
 	}
 	
