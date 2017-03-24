@@ -78,6 +78,14 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 		if(isShowRange()){
 			drawRange(batch);
 		}
+
+		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, bodyRegion.getRegionWidth());
+		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, bodyRegion.getRegionHeight());
+		// draw body
+		batch.draw(bodyRegion, x, y, bodyRegion.getRegionWidth() / 2, bodyRegion.getRegionHeight() / 2, bodyRegion.getRegionWidth(), bodyRegion.getRegionHeight()
+				, 1, 1, bodyRotation);
+		batch.draw(turretRegion, getX(), getY(), getOriginX(), getOriginY(), turretRegion.getRegionWidth(), turretRegion.getRegionHeight(), 1, 1, getRotation());
+
 		if (DebugOptions.showTextureBoundaries) {
 			batch.end();
 
@@ -95,12 +103,6 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 
 			batch.begin();
 		}
-		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, bodyRegion.getRegionWidth());
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, bodyRegion.getRegionHeight());
-		// draw body
-		batch.draw(bodyRegion, x, y, bodyRegion.getRegionWidth() / 2, bodyRegion.getRegionHeight() / 2, bodyRegion.getRegionWidth(), bodyRegion.getRegionHeight()
-				, 1, 1, bodyRotation);
-		batch.draw(turretRegion, getX(), getY(), getOriginX(), getOriginY(), turretRegion.getRegionWidth(), turretRegion.getRegionHeight(), 1, 1, getRotation());
 	}
 
 	/**
