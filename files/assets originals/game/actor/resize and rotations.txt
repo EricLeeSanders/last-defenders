@@ -15,7 +15,7 @@ Rocket launcher - 460
 
 Turret-Turret - 560 - bottom
 
-Turret-Bags - 330 - bottom
+Turret-Bags - 524 - bottom
 
 Tank - turret - 1646 - left
 

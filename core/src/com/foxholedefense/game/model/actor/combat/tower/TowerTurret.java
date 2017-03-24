@@ -48,7 +48,7 @@ public class TowerTurret extends Tower implements IRotatable {
 	public static final int ATTACK_INCREASE_COST = 500;
 	public static final Vector2 GUN_POS = UtilPool.getVector2(8,0);
 	private float[] rangeCoords = new float[6];
-	private float[] bodyPoints = { 0, 19, 0, 31, 6, 34, 13, 34, 24, 28, 22, 47, 36, 49, 39, 27, 36, 0, 22, 3, 24, 22, 12, 16, 6, 16};
+	private float[] bodyPoints = {5, 14, 5, 36, 11, 46, 35, 46, 35, 3, 11, 3};
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
 
@@ -127,7 +127,7 @@ public class TowerTurret extends Tower implements IRotatable {
 
 			turretOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 			turretOutline.begin(ShapeType.Line);
-			turretOutline.setColor(Color.YELLOW);
+			turretOutline.setColor(Color.BLUE);
 			turretOutline.rect(getX(),getY(), getWidth(), getHeight());
 			turretOutline.end();
 
