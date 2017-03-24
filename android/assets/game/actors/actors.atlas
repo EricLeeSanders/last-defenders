@@ -41,112 +41,112 @@ apache
   index: 3
 blood-splatter
   rotate: false
-  xy: 1162, 319
+  xy: 1162, 217
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 0
 blood-splatter
   rotate: false
-  xy: 1162, 319
+  xy: 1162, 217
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 4
 blood-splatter
   rotate: false
-  xy: 1162, 319
+  xy: 1162, 217
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 6
 blood-splatter
   rotate: false
-  xy: 1162, 319
+  xy: 1162, 217
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 2
 blood-splatter
   rotate: false
-  xy: 1162, 319
+  xy: 1162, 217
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 3
 blood-splatter
   rotate: false
-  xy: 1162, 319
+  xy: 1162, 217
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 1
 blood-splatter
   rotate: false
-  xy: 1162, 319
+  xy: 1162, 217
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 7
 blood-splatter
   rotate: false
-  xy: 1162, 319
+  xy: 1162, 217
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 5
 blood-splatter
   rotate: false
-  xy: 1162, 269
+  xy: 259, 98
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 8
 blood-splatter
   rotate: false
-  xy: 1162, 219
+  xy: 1694, 411
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 9
 blood-splatter
   rotate: false
-  xy: 259, 98
+  xy: 1744, 411
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 10
 blood-splatter
   rotate: false
-  xy: 1752, 411
+  xy: 1794, 411
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 11
 blood-splatter
   rotate: false
-  xy: 1802, 411
+  xy: 1844, 411
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 12
 blood-splatter
   rotate: false
-  xy: 1852, 411
+  xy: 1221, 368
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 13
 blood-splatter
   rotate: false
-  xy: 1220, 368
+  xy: 1220, 318
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: 14
 blood-splatter
   rotate: false
-  xy: 1270, 373
+  xy: 1271, 373
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
@@ -181,7 +181,7 @@ enemy-flame-thrower-stationary
   index: -1
 enemy-humvee
   rotate: false
-  xy: 455, 687
+  xy: 181, 62
   size: 74, 32
   orig: 74, 32
   offset: 0, 0
@@ -209,42 +209,42 @@ enemy-machine-gun-stationary
   index: -1
 enemy-rifle
   rotate: false
-  xy: 1529, 426
+  xy: 1471, 426
   size: 53, 33
   orig: 53, 33
   offset: 0, 0
   index: 1
 enemy-rifle
   rotate: false
-  xy: 1584, 426
+  xy: 1526, 426
   size: 53, 33
   orig: 53, 33
   offset: 0, 0
   index: 2
 enemy-rifle-stationary
   rotate: false
-  xy: 1474, 426
+  xy: 1416, 426
   size: 53, 33
   orig: 53, 33
   offset: 0, 0
   index: -1
 enemy-rocket-launcher
   rotate: false
-  xy: 181, 46
+  xy: 1162, 368
   size: 57, 48
   orig: 57, 48
   offset: 0, 0
   index: 1
 enemy-rocket-launcher
   rotate: false
-  xy: 455, 638
+  xy: 1162, 319
   size: 56, 47
   orig: 56, 47
   offset: 0, 0
   index: 2
 enemy-rocket-launcher-stationary
   rotate: false
-  xy: 1162, 369
+  xy: 455, 621
   size: 56, 47
   orig: 56, 47
   offset: 0, 0
@@ -279,14 +279,14 @@ enemy-sprinter
   index: 1
 enemy-sprinter
   rotate: false
-  xy: 2008, 871
+  xy: 1214, 290
   size: 31, 26
   orig: 31, 26
   offset: 0, 0
   index: 2
 enemy-sprinter-stationary
   rotate: false
-  xy: 1362, 395
+  xy: 1363, 395
   size: 31, 26
   orig: 31, 26
   offset: 0, 0
@@ -650,14 +650,14 @@ range-turret
   index: -1
 shield
   rotate: false
-  xy: 565, 474
+  xy: 2030, 1010
   size: 12, 13
   orig: 12, 13
   offset: 0, 0
   index: -1
 shield-destroyed
   rotate: false
-  xy: 1909, 706
+  xy: 565, 474
   size: 12, 13
   orig: 12, 13
   offset: 0, 0
@@ -741,35 +741,35 @@ smoke-ring
   index: 11
 supply-drop-crate
   rotate: false
-  xy: 513, 635
+  xy: 1162, 267
   size: 50, 50
   orig: 50, 50
   offset: 0, 0
   index: -1
 tower-flame-thrower
   rotate: false
-  xy: 1639, 433
+  xy: 1581, 433
   size: 56, 26
   orig: 56, 26
   offset: 0, 0
   index: -1
 tower-machine-gun
   rotate: false
-  xy: 1320, 395
+  xy: 1321, 395
   size: 40, 26
   orig: 40, 26
   offset: 0, 0
   index: -1
 tower-rifle
   rotate: false
-  xy: 1697, 433
+  xy: 1639, 433
   size: 53, 26
   orig: 53, 26
   offset: 0, 0
   index: -1
 tower-rocket-launcher
   rotate: false
-  xy: 1416, 428
+  xy: 181, 29
   size: 56, 31
   orig: 56, 31
   offset: 0, 0
@@ -797,9 +797,9 @@ tower-tank-turret
   index: -1
 tower-turret-bags
   rotate: false
-  xy: 2008, 899
-  size: 28, 49
-  orig: 28, 49
+  xy: 455, 670
+  size: 67, 49
+  orig: 67, 49
   offset: 0, 0
   index: -1
 tower-turret-turret
