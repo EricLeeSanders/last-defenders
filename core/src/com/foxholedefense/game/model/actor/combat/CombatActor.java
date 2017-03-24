@@ -111,6 +111,9 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 	@Override
 	public void draw(Batch batch, float alpha) {
+
+		super.draw(batch, alpha);
+
 		if(DebugOptions.showTextureBoundaries && debugBody != null){
 			batch.end();
 			debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
@@ -127,8 +130,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 			debugBody.end();
 			batch.begin();
 		}
-
-		super.draw(batch, alpha);
 	}
 
 	public float getHealth() {
