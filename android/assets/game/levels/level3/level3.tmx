@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="76">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" nextobjectid="77">
  <tileset firstgid="1" name="tiles" tilewidth="32" tileheight="32" spacing="2" margin="1" tilecount="225" columns="15">
   <image source="../tiles/tiles.png" width="512" height="512"/>
   <terraintypes>
@@ -87,7 +87,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="Boundary" visible="0">
+ <objectgroup name="Boundary">
   <object id="18" x="1" y="328.5" width="628.5" height="80.5"/>
   <object id="20" x="551" y="328" width="80" height="303"/>
   <object id="23" x="553" y="549" width="172" height="83"/>
@@ -98,7 +98,7 @@
   <object id="35" x="520" y="42" width="78" height="235"/>
   <object id="36" x="522" y="39" width="397" height="82"/>
   <object id="37" x="841" y="1" width="76" height="74"/>
-  <object id="40" x="4" y="74" width="241" height="110"/>
+  <object id="40" x="4" y="74" width="241" height="79"/>
   <object id="42" x="166" y="75" width="83" height="502"/>
   <object id="43" x="3" y="1" width="54" height="74"/>
   <object id="45" x="60" y="41" width="25" height="37"/>
@@ -116,6 +116,7 @@
   <object id="71" x="1068" y="2" width="208" height="116"/>
   <object id="72" x="1100" y="112" width="176" height="37"/>
   <object id="73" x="1129.33" y="154" width="146.667" height="28"/>
+  <object id="76" x="3" y="156" width="82" height="25"/>
  </objectgroup>
  <objectgroup name="Path">
   <object id="75" name="PathLine" x="0" y="372">
