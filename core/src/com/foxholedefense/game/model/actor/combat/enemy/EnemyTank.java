@@ -62,16 +62,7 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	 */
 	@Override
 	public void draw(Batch batch, float alpha) {
-		if (DebugOptions.showTextureBoundaries) {
-			batch.end();
-			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			bodyOutline.begin(ShapeType.Line);
-			bodyOutline.setColor(Color.YELLOW);
-			bodyOutline.polygon(getBody().getTransformedVertices());
-			bodyOutline.end();
 
-			batch.begin();
-		}
 
 		// If the tank is not attacking, then rotate the body as well
 		if (!isAttacking()) {
@@ -83,6 +74,17 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 		batch.draw(bodyRegion, x, y, bodyRegion.getRegionWidth() / 2, bodyRegion.getRegionHeight() / 2, bodyRegion.getRegionWidth(), bodyRegion.getRegionHeight()
 				, 1, 1, bodyRotation);
 		super.draw(batch, alpha);
+
+		if (DebugOptions.showTextureBoundaries) {
+			batch.end();
+			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+			bodyOutline.begin(ShapeType.Line);
+			bodyOutline.setColor(Color.YELLOW);
+			bodyOutline.polygon(getBody().getTransformedVertices());
+			bodyOutline.end();
+
+			batch.begin();
+		}
 	}
 
 	/**
