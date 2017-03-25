@@ -39,9 +39,9 @@ public abstract class Tower extends CombatActor {
 	private boolean towerColliding;
 	private SnapshotArray<ITowerObserver> observers = new SnapshotArray<ITowerObserver>();
 
-	public Tower(TextureRegion textureRegion, CombatActorPool<CombatActor> pool, Group targetGroup, Vector2 gunPos, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
+	public Tower(TextureRegion textureRegion, Dimension textureSize, CombatActorPool<CombatActor> pool, Group targetGroup, Vector2 gunPos, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
 					float health, float armor, float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost, int rangeIncreaseCost, int attackIncreaseCost) {
-		super(textureRegion, pool, targetGroup, gunPos, health, armor, attack, attackSpeed, range);
+		super(textureRegion, textureSize, pool, targetGroup, gunPos, health, armor, attack, attackSpeed, range);
 		this.cost = cost;
 		this.armorCost = armorCost;
 		this.speedIncreaseCost = speedIncreaseCost;

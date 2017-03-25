@@ -26,6 +26,7 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 	public static final int COST = 1000;
 	private static final float SUPPLYDROP_DURATION = 1f;
 	private static final float RANGE = 150f;
+	private static final Dimension TEXTURE_SIZE = new Dimension(50, 50);
 	private Circle rangeCircle = new Circle();
 	private boolean active, showRange;
 	private SupplyDropCratePool pool;
@@ -34,7 +35,7 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 	private TextureRegion rangeTexture;
 	public SupplyDropCrate(TextureRegion textureRegion, TextureRegion rangeTexture, SupplyDropCratePool pool,
 						   Group towerGroup, IHealthFactory healthFactory) {
-		super(textureRegion);
+		super(textureRegion, TEXTURE_SIZE);
 		this.pool = pool;
 		this.towerGroup = towerGroup;
 		this.rangeTexture = rangeTexture;
