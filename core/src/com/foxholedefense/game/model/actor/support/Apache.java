@@ -30,6 +30,7 @@ public class Apache extends SupportActor{
 	private static final float TIME_ACTIVE_LIMIT = 10f;
 	private static final Dimension BULLET_SIZE = new Dimension(6,6);
 	private static final Vector2 GUN_POS = UtilPool.getVector2(0,0);
+	private static final Dimension TEXTURE_SIZE = new Dimension(30, 30);
 	private boolean readyToAttack, exitingStage;
 	private float attackCounter, timeActive;
 	private IProjectileFactory projectileFactory;
@@ -39,7 +40,7 @@ public class Apache extends SupportActor{
 	private float movementAnimationStateTime;
 
 	public Apache(SupportActorPool<Apache> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion stationaryTextureRegion, TextureRegion [] textureRegions, TextureRegion rangeTexture, FHDAudio audio) {
-		super(pool, targetGroup, stationaryTextureRegion, rangeTexture,	RANGE, ATTACK, GUN_POS, COST);
+		super(pool, targetGroup, stationaryTextureRegion, TEXTURE_SIZE, rangeTexture, RANGE, ATTACK, GUN_POS, COST);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
 		movementAnimation = new Animation(0.25f, textureRegions);

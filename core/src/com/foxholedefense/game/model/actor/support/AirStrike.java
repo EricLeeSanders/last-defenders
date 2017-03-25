@@ -45,15 +45,16 @@ public class AirStrike extends SupportActor implements IRpg{
 	public static final float SPEED = 150f;
 	public static final float AIRSTRIKE_RADIUS = 60;
 	public static final int MAX_AIRSTRIKES = 3;
-	public static final Vector2 GUN_POS = UtilPool.getVector2();
-	public static final Dimension BULLET_SIZE = new Dimension(10, 10);
+	private static final Vector2 GUN_POS = UtilPool.getVector2();
+	private static final Dimension BULLET_SIZE = new Dimension(10, 10);
+	private static final Dimension TEXTURE_SIZE = new Dimension(178, 120);
 	private Array<AirStrikeLocation> airStrikeLocations = new Array<AirStrikeLocation>();
 	private IProjectileFactory projectileFactory;
 	private FHDAudio audio;
 	private TextureRegion rangeTexture;
 
 	public AirStrike(SupportActorPool<AirStrike> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion textureRegion, TextureRegion rangeTexture, FHDAudio audio) {
-		super(pool, targetGroup, textureRegion, rangeTexture, AIRSTRIKE_RADIUS, ATTACK, GUN_POS, COST);
+		super(pool, targetGroup, textureRegion, TEXTURE_SIZE, rangeTexture, AIRSTRIKE_RADIUS, ATTACK, GUN_POS, COST);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
 		this.rangeTexture = rangeTexture;

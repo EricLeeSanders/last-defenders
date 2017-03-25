@@ -25,10 +25,11 @@ public class GameActor extends Actor{
 	private TextureRegion textureRegion;
 	private FHDVector2 positionCenter = UtilPool.getVector2();
 	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
-	public GameActor(TextureRegion textureRegion){
+
+	public GameActor(TextureRegion textureRegion, Dimension textureSize){
 		this.setTextureRegion(textureRegion);
-		this.setSize(textureRegion.getRegionWidth(), textureRegion.getRegionHeight());
-		this.setOrigin(textureRegion.getRegionWidth() / 2,textureRegion.getRegionHeight() / 2);
+		this.setSize(textureSize.getWidth(),textureSize.getHeight());
+		this.setOrigin(textureSize.getWidth() / 2, textureSize.getHeight() / 2);
 	}
 
 	@Override

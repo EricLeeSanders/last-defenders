@@ -34,7 +34,8 @@ public class TowerFlameThrower extends Tower implements IFlame {
 	public static final int RANGE_INCREASE_COST = 450;
 	public static final int SPEED_INCREASE_COST = 450;
 	public static final int ATTACK_INCREASE_COST = 450;
-	public static final Vector2 GUN_POS = UtilPool.getVector2(26, 4);
+	private static final Vector2 GUN_POS = UtilPool.getVector2(26, 4);
+	private static final Dimension TEXTURE_SIZE = new Dimension(56, 26);
 	private Circle body;
 	private Dimension flameSize = new Dimension(RANGE-26, 20);
 	private FHDAudio audio;
@@ -42,7 +43,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
 	private IProjectileFactory projectileFactory;
 
 	public TowerFlameThrower(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
-		super(actorRegion, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
+		super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.audio = audio;
 		this.deathEffectFactory = deathEffectFactory;
 		this.projectileFactory = projectileFactory;
