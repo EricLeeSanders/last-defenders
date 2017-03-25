@@ -20,11 +20,12 @@ import com.foxholedefense.util.UtilPool;
 
 public class SupplyDrop extends GameActor implements Pool.Poolable{
 	private static final float SUPPLYDROP_DURATION = 2f;
+	private static final Dimension TEXTURE_SIZE = new Dimension(178, 120);
 	private boolean active;
 	private SupplyDropPool pool;
 	private ISupplyDropFactory supplyDropFactory;
 	public SupplyDrop(TextureRegion textureRegion, SupplyDropPool pool, ISupplyDropFactory supplyDropFactory) {
-		super(textureRegion);
+		super(textureRegion, TEXTURE_SIZE);
 		this.pool = pool;
 		this.supplyDropFactory = supplyDropFactory;
 		setTextureRegion(textureRegion);

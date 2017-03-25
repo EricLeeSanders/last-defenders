@@ -39,8 +39,10 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	public static final float RANGE = 80;
 	public static final float SPEED = 45;
 	public static final float AOE_RADIUS = 75f;
-	public static final Dimension RPG_SIZE = new Dimension(7, 7);
-	public static final Vector2 GUN_POS = UtilPool.getVector2(57, 0);
+	private static final Dimension RPG_SIZE = new Dimension(7, 7);
+	private static final Vector2 GUN_POS = UtilPool.getVector2(57, 0);
+	private static final Dimension TEXTURE_SIZE_BODY = new Dimension(76, 50);
+	private static final Dimension TEXTURE_SIZE_TURRET = new Dimension(120, 33);
 	private float[] bodyPoints = { 0, 0, 0, 50, 75, 50, 75, 0 };
 	private TextureRegion bodyRegion;
 	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
@@ -49,7 +51,7 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
 	public EnemyTank( TextureRegion bodyRegion, TextureRegion turretRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory) {
-		super(turretRegion, animatedRegions, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
+		super(turretRegion, animatedRegions, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
 		this.bodyRegion = bodyRegion;
 		this.deathEffectFactory = deathEffectFactory;
 		this.projectileFactory = projectileFactory;
@@ -68,10 +70,10 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 		if (!isAttacking()) {
 			bodyRotation = getRotation();
 		}
-		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, bodyRegion.getRegionWidth());
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, bodyRegion.getRegionHeight());
+		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
+		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
 		// draw body
-		batch.draw(bodyRegion, x, y, bodyRegion.getRegionWidth() / 2, bodyRegion.getRegionHeight() / 2, bodyRegion.getRegionWidth(), bodyRegion.getRegionHeight()
+		batch.draw(bodyRegion, x, y, TEXTURE_SIZE_BODY.getWidth() / 2, TEXTURE_SIZE_BODY.getHeight() / 2, TEXTURE_SIZE_BODY.getWidth(), TEXTURE_SIZE_BODY.getHeight()
 				, 1, 1, bodyRotation);
 		super.draw(batch, alpha);
 
@@ -93,11 +95,11 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	 */
 	@Override
 	public Polygon getBody() {
-		body.setOrigin(bodyRegion.getRegionWidth()/2, bodyRegion.getRegionHeight()/2);
+		body.setOrigin(TEXTURE_SIZE_BODY.getWidth()/2, TEXTURE_SIZE_BODY.getHeight()/2);
 		body.setRotation(bodyRotation);
 
-		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, bodyRegion.getRegionWidth());
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, bodyRegion.getRegionHeight());
+		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
+		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
 		body.setPosition(x, y);
 
 		return body;

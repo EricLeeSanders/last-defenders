@@ -6,8 +6,9 @@ import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.util.Dimension;
 
 public class BloodSplatter extends DeathEffect {
+	private static final Dimension TEXTURE_SIZE = new Dimension(48,48);
 	public BloodSplatter(Pool<DeathEffect> pool, Array<AtlasRegion> atlasRegions) {
-		super(pool, atlasRegions);
+		super(pool, atlasRegions, TEXTURE_SIZE);
 		setRotation(90);
 	}
 

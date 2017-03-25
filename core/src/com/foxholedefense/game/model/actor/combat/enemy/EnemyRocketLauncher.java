@@ -31,14 +31,15 @@ public class EnemyRocketLauncher extends Enemy implements IRpg {
 	public static final float RANGE = 60;
 	public static final float SPEED = 55f;
 	public static final float AOE_RADIUS = 50f;
-	public static final Dimension RPG_SIZE = new Dimension(7, 7);
-	public static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);
+	private static final Dimension RPG_SIZE = new Dimension(7, 7);
+	private static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);
+	private static final Dimension TEXTURE_SIZE = new Dimension(57, 48);
 	private Circle body;
 	private FHDAudio audio;
 	private IProjectileFactory projectileFactory;
 	private IDeathEffectFactory deathEffectFactory;
 	public EnemyRocketLauncher(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
-		super(stationaryTextureRegion, animatedRegions, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
+		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
 		this.deathEffectFactory = deathEffectFactory;

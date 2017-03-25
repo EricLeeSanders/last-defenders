@@ -29,14 +29,15 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 	public static final float RANGE = 0;
 	public static final float SPEED = 140f;
 
-	public static final Vector2 GUN_POS = UtilPool.getVector2();;
+	private static final Vector2 GUN_POS = UtilPool.getVector2();
+	private static final Dimension TEXTURE_SIZE = new Dimension(74, 32);
 	
 	private IDeathEffectFactory deathEffectFactory;
 	private float[] bodyPoints = {15,0, 15,32, 69,32, 69, 0 };
 	private Polygon body;
 	
 	public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, IDeathEffectFactory deathEffectFactory) {
-		super(stationaryTextureRegion, animatedRegions, pool, null, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
+		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, null, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
 		this.deathEffectFactory = deathEffectFactory;
 		this.body = new Polygon(bodyPoints);
 	}

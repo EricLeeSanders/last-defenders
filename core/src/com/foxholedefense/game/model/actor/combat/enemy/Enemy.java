@@ -22,6 +22,7 @@ import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
 import com.foxholedefense.util.ActorUtil;
+import com.foxholedefense.util.Dimension;
 import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.UtilPool;
@@ -52,9 +53,9 @@ public abstract class Enemy extends CombatActor {
 	private float rotationBeforeAttacking;
 	private SnapshotArray<IEnemyObserver> observers = new SnapshotArray<IEnemyObserver>();
 
-	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
+	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, Dimension textureSize, CombatActorPool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
 				 float speed, float health, float armor, float attack, float attackSpeed, float range) {
-		super(stationaryTextureRegion, pool, targetGroup, gunPos, health, armor, attack, attackSpeed, range);
+		super(stationaryTextureRegion, textureSize, pool, targetGroup, gunPos, health, armor, attack, attackSpeed, range);
 		movementAnimation = new Animation(0.3f, animatedRegions);
 		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		this.speed = speed;

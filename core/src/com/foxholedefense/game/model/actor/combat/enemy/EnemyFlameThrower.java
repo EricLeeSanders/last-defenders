@@ -29,7 +29,8 @@ public class EnemyFlameThrower extends Enemy implements IFlame {
 	public static final float ATTACK_SPEED = 1.2f;
 	public static final float RANGE = 70;
 	public static final float SPEED = 70f;
-	public static final Vector2 GUN_POS = UtilPool.getVector2(26, 4);
+	private static final Vector2 GUN_POS = UtilPool.getVector2(26, 4);
+	private static final Dimension TEXTURE_SIZE = new Dimension(56, 36);
 	private Circle body;
 	private Dimension flameSize = new Dimension(RANGE-26, 20);
 	private FHDAudio audio;
@@ -37,7 +38,7 @@ public class EnemyFlameThrower extends Enemy implements IFlame {
 	private IProjectileFactory projectileFactory;
 
 	public EnemyFlameThrower(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
-		super(stationaryTextureRegion, animatedRegions, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
+		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
 		this.audio = audio;
 		this.deathEffectFactory = deathEffectFactory;
 		this.projectileFactory = projectileFactory;

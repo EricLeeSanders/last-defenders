@@ -28,19 +28,20 @@ public class TowerRifle extends Tower {
 	public static float ATTACK = 4;
 	public static float ATTACK_SPEED = 0.8f;
 	public static float RANGE = 50;
-	public static final Dimension BULLET_SIZE = new Dimension(5, 5);
 	public static final int COST = 200;
 	public static final int ARMOR_COST = 100;
 	public static final int RANGE_INCREASE_COST = 50;
 	public static final int SPEED_INCREASE_COST = 50;
 	public static final int ATTACK_INCREASE_COST = 50;
-	public static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);
+	private static final Dimension BULLET_SIZE = new Dimension(5, 5);
+	private static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);
+	private static final Dimension TEXTURE_SIZE = new Dimension(53, 26);
 	private Circle body;
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
 	public TowerRifle(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
-		super(actorRegion, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
+		super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.audio = audio;
 		this.deathEffectFactory = deathEffectFactory;
 		this.projectileFactory = projectileFactory;

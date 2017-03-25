@@ -28,21 +28,21 @@ public class TowerSniper extends Tower {
 	public static final float ATTACK = 7;
 	public static final float ATTACK_SPEED = 1;
 	public static final float RANGE = 100;
-
 	public static final int COST = 400;
 	public static final int ARMOR_COST = 200;
 	public static final int RANGE_INCREASE_COST = 100;
 	public static final int SPEED_INCREASE_COST = 100;
 	public static final int ATTACK_INCREASE_COST = 100;
-	public static final Dimension BULLET_SIZE = new Dimension(5, 5);
-	public static final Vector2 GUN_POS = UtilPool.getVector2(38, -9);
+	private static final Dimension BULLET_SIZE = new Dimension(5, 5);
+	private static final Vector2 GUN_POS = UtilPool.getVector2(38, -9);
+	private static final Dimension TEXTURE_SIZE = new Dimension(78, 31);
 	private Circle body;
 	private FHDAudio audio;
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
 	
 	public TowerSniper(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
-		super(actorRegion, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
+		super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.audio = audio;
 		this.deathEffectFactory = deathEffectFactory;
 		this.projectileFactory = projectileFactory;
