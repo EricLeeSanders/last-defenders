@@ -45,10 +45,10 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private SnapshotArray<ICombatActorObserver> observers = new SnapshotArray<ICombatActorObserver>();
 	private Group targetGroup;
 
-	public CombatActor(TextureRegion textureRegion,Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
+	public CombatActor(TextureRegion textureRegion, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
 						float health, float armor, float attack, float attackSpeed, float range) {
 
-		super(textureRegion);
+		super(textureRegion, textureSize);
 		this.MAX_HEALTH = health;
 		this.MAX_ARMOR = armor;
 		this.RESET_ATTACK = attack;
