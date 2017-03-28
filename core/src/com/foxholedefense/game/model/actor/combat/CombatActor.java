@@ -38,7 +38,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private float attackSpeed, range, health, attack, armor;
 	private Vector2 gunPos;
 	private Vector2 rotatedGunPos = UtilPool.getVector2();
-	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private Circle rangeCircle = new Circle();
 	private boolean hasArmor, dead, active;
 	private Pool<CombatActor> pool;
@@ -114,22 +113,27 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 		super.draw(batch, alpha);
 
-		if(DebugOptions.showTextureBoundaries && debugBody != null){
-			batch.end();
-			debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			debugBody.begin(ShapeType.Line);
-			debugBody.setColor(Color.RED);
-			Shape2D body = getBody();
-			if(body instanceof Polygon) {
-				Polygon polyBody = (Polygon) body;
-				debugBody.polygon(polyBody.getTransformedVertices());
-			} else if (body instanceof Circle) {
-				Circle circleBody = (Circle) body;
-				debugBody.circle(circleBody.x, circleBody.y, circleBody.radius);
-			}
-			debugBody.end();
-			batch.begin();
+		if(DebugOptions.showTextureBoundaries){
+			drawDebugBody(batch);
 		}
+	}
+
+	private void drawDebugBody(Batch batch){
+		batch.end();
+		ShapeRenderer debugBody = Resources.getShapeRenderer();
+		debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+		debugBody.begin(ShapeType.Line);
+		debugBody.setColor(Color.RED);
+		Shape2D body = getBody();
+		if(body instanceof Polygon) {
+			Polygon polyBody = (Polygon) body;
+			debugBody.polygon(polyBody.getTransformedVertices());
+		} else if (body instanceof Circle) {
+			Circle circleBody = (Circle) body;
+			debugBody.circle(circleBody.x, circleBody.y, circleBody.radius);
+		}
+		debugBody.end();
+		batch.begin();
 	}
 
 	public float getHealth() {
@@ -165,27 +169,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public Shape2D getRangeShape() {
 		rangeCircle.set(getPositionCenter().x, getPositionCenter().y, range);
 		return rangeCircle;
-	}
-
-	protected void drawRangeWithShapeRenderer(){
-		ShapeRenderer sr = Resources.getShapeRenderer();
-		Shape2D rangeShape = getRangeShape();
-		sr.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-		if(rangeShape instanceof Rectangle) {
-			sr.begin(ShapeType.Filled);
-			Rectangle rangeRect = (Rectangle) rangeShape;
-			sr.rect(getX(), getY(), rangeRect.getWidth(), rangeRect.getHeight());
-		} else if(rangeShape instanceof Polygon){
-			sr.begin(ShapeType.Line);
-			Polygon rangePoly = (Polygon) rangeShape;
-			sr.polygon(rangePoly.getTransformedVertices());
-		} else if(rangeShape instanceof Circle){
-			sr.begin(ShapeType.Filled);
-			Circle rangeCircle = (Circle) rangeShape;
-			sr.circle(rangeCircle.x, rangeCircle.y, rangeCircle.radius);
-		}
-		sr.setColor(Color.BLUE);
-		sr.end();
 	}
 
 	public float getAttackSpeed() {

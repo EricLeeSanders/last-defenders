@@ -52,8 +52,6 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	private Polygon body;
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
-	private ShapeRenderer turretOutline = Resources.getShapeRenderer();
-	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
 	private float bodyRotation;
 	private IDeathEffectFactory deathEffectFactory;
 	private IProjectileFactory projectileFactory;
@@ -89,22 +87,22 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 		batch.draw(turretRegion, getX(), getY(), getOriginX(), getOriginY(), TEXTURE_SIZE_TURRET.getWidth(), TEXTURE_SIZE_TURRET.getHeight(), 1, 1, getRotation());
 
 		if (DebugOptions.showTextureBoundaries) {
-			batch.end();
-
-			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			bodyOutline.begin(ShapeType.Line);
-			bodyOutline.setColor(Color.YELLOW);
-			bodyOutline.polygon(getBody().getTransformedVertices());
-			bodyOutline.end();
-
-			turretOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			turretOutline.begin(ShapeType.Line);
-			turretOutline.setColor(Color.YELLOW);
-			turretOutline.rect(getX(),getY(), getWidth(), getHeight());
-			turretOutline.end();
-
-			batch.begin();
+			drawDebugBody(batch);
 		}
+	}
+
+	private void drawDebugBody(Batch batch){
+		batch.end();
+
+		ShapeRenderer bodyOutline = Resources.getShapeRenderer();
+
+		bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+		bodyOutline.begin(ShapeType.Line);
+		bodyOutline.setColor(Color.YELLOW);
+		bodyOutline.polygon(getBody().getTransformedVertices());
+		bodyOutline.end();
+
+		batch.begin();
 	}
 
 	/**

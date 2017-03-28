@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.profiling.GLProfiler;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -37,17 +38,33 @@ public abstract class AbstractScreen implements Screen {
 		camera = new OrthographicCamera();
 		imp = new InputMultiplexer();
 		viewport = new FitViewport(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, getCamera());
+		GLProfiler.enable();
 	}
 
 	public abstract void renderElements(float delta);
 
 	@Override
 	public void render(float delta) {
+
 		// clear the screen with the given RGB color (black)
 		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		renderElements(delta);
+		//profile();
+	}
+
+
+
+	private void profile(){
+		System.out.println(
+	            "  Drawcalls: " + GLProfiler.drawCalls +
+	                    ", Calls: " + GLProfiler.calls +
+	                    ", TextureBindings: " + GLProfiler.textureBindings +
+	                    ", ShaderSwitches:  " + GLProfiler.shaderSwitches +
+	                    ", vertexCount: " + GLProfiler.vertexCount.value
+	    );
+	    GLProfiler.reset();
 	}
 
 	@Override
@@ -82,6 +99,7 @@ public abstract class AbstractScreen implements Screen {
 	@Override
 	public void dispose() {
 		Logger.info("Abstract Screen: Disposing");
+		GLProfiler.disable();
 
 	}
 

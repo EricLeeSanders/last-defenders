@@ -54,9 +54,6 @@ public class TowerTurret extends Tower implements IRotatable {
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
 
-	private ShapeRenderer rangeOutline = Resources.getShapeRenderer();
-	private ShapeRenderer turretOutline = Resources.getShapeRenderer();
-	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
 	private Polygon body;
 	private float bodyRotation;
 	private Polygon rangePoly;
@@ -118,29 +115,37 @@ public class TowerTurret extends Tower implements IRotatable {
 		super.draw(batch, alpha);
 
 		if (DebugOptions.showTextureBoundaries) {
-			batch.end();
-
-			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			bodyOutline.begin(ShapeType.Line);
-			bodyOutline.setColor(Color.YELLOW);
-			bodyOutline.polygon(getBody().getTransformedVertices());
-			bodyOutline.end();
-
-			turretOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			turretOutline.begin(ShapeType.Line);
-			turretOutline.setColor(Color.BLUE);
-			turretOutline.rect(getX(),getY(), getWidth(), getHeight());
-			turretOutline.end();
-
-			rangeOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			rangeOutline.begin(ShapeType.Line);
-			rangeOutline.setColor(Color.PURPLE);
-			rangeOutline.polygon(getRangeShape().getTransformedVertices());
-			rangeOutline.end();
-			batch.begin();
+			drawDebugBody(batch);
 		}
 
 	}
+
+	private void drawDebugBody(Batch batch){
+		batch.end();
+
+		ShapeRenderer sr = Resources.getShapeRenderer();
+
+		sr.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+		sr.begin(ShapeType.Line);
+		sr.setColor(Color.YELLOW);
+		sr.polygon(getBody().getTransformedVertices());
+		sr.end();
+
+		sr.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+		sr.begin(ShapeType.Line);
+		sr.setColor(Color.BLUE);
+		sr.rect(getX(),getY(), getWidth(), getHeight());
+		sr.end();
+
+		sr.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+		sr.begin(ShapeType.Line);
+		sr.setColor(Color.PURPLE);
+		sr.polygon(getRangeShape().getTransformedVertices());
+		sr.end();
+
+		batch.begin();
+	}
+
 	@Override
 	protected void drawRange(Batch batch){
 		TextureRegion currentRangeRegion = rangeRegion;
