@@ -48,7 +48,6 @@ public class Flame extends Actor implements Pool.Poolable {
 	private float stateTime;
 	private float tickTime = TICK_ATTACK_SPEED;
 	private CombatActor shooter;
-	private ShapeRenderer flameOutline = Resources.getShapeRenderer();
 	private Dimension flameSize;
 	private Pool<Flame> pool;
 	private float[] bodyPoints = new float[8];
@@ -133,17 +132,22 @@ public class Flame extends Actor implements Pool.Poolable {
 		float widthScale = flameSize.getWidth() / currentFlame.getRegionWidth();
 
 		if (DebugOptions.showTextureBoundaries) {
-			batch.end();
-			Polygon poly = getFlameBody();
-			flameOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			flameOutline.begin(ShapeType.Line);
-			flameOutline.setColor(Color.RED);
-			flameOutline.polygon(poly.getTransformedVertices());
-			flameOutline.end();
-			batch.begin();
+			drawDebugBody(batch);
 		}
 		batch.draw(currentFlame, this.getX(), this.getY(), this.getOriginX(), this.getOriginY(), currentFlame.getRegionWidth(), currentFlame.getRegionHeight()
 				, widthScale, heightScale, this.getRotation());
+	}
+
+	private void drawDebugBody(Batch batch){
+		ShapeRenderer flameOutline = Resources.getShapeRenderer();
+		batch.end();
+		Polygon poly = getFlameBody();
+		flameOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+		flameOutline.begin(ShapeType.Line);
+		flameOutline.setColor(Color.RED);
+		flameOutline.polygon(poly.getTransformedVertices());
+		flameOutline.end();
+		batch.begin();
 	}
 
 	/**

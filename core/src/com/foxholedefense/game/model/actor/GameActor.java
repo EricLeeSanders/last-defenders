@@ -24,7 +24,6 @@ import com.foxholedefense.util.UtilPool;
 public class GameActor extends Actor{
 	private TextureRegion textureRegion;
 	private FHDVector2 positionCenter = UtilPool.getVector2();
-	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
 
 	public GameActor(TextureRegion textureRegion, Dimension textureSize){
 		this.setTextureRegion(textureRegion);
@@ -41,14 +40,19 @@ public class GameActor extends Actor{
 		}
 
 		if(DebugOptions.showTextureBoundaries){
-			batch.end();
-			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			bodyOutline.begin(ShapeType.Line);
-			bodyOutline.setColor(Color.BLUE);
-			bodyOutline.rect(getX(),getY(), getWidth(), getHeight());
-			bodyOutline.end();
-			batch.begin();
+			drawDebugBody(batch);
 		}
+	}
+
+	private void drawDebugBody(Batch batch){
+		batch.end();
+		ShapeRenderer bodyOutline = Resources.getShapeRenderer();
+		bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+		bodyOutline.begin(ShapeType.Line);
+		bodyOutline.setColor(Color.BLUE);
+		bodyOutline.rect(getX(),getY(), getWidth(), getHeight());
+		bodyOutline.end();
+		batch.begin();
 	}
 
 	public Vector2 getPositionCenter() {
