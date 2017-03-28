@@ -34,7 +34,6 @@ public class LandMine extends SupportActor implements IRpg{
 	private static final Vector2 GUN_POS = UtilPool.getVector2(0,0);
 	private static final Dimension TEXTURE_SIZE = new Dimension(30, 30);
 	private Circle body;
-	private ShapeRenderer debugBody = Resources.getShapeRenderer();
 	private IProjectileFactory projectileFactory;
 	public LandMine(SupportActorPool<LandMine> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion textureRegion, TextureRegion rangeTexture) {
 		super(pool, targetGroup, textureRegion, TEXTURE_SIZE, rangeTexture, RANGE, ATTACK, GUN_POS, COST);
@@ -57,19 +56,23 @@ public class LandMine extends SupportActor implements IRpg{
 	}
 	@Override
 	public void draw(Batch batch, float alpha) {
-		if (DebugOptions.showTextureBoundaries) {
-			batch.end();
-
-			debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			debugBody.begin(ShapeType.Line);
-			debugBody.setColor(Color.YELLOW);
-			debugBody.circle(this.getPositionCenter().x, this.getPositionCenter().y, this.getWidth() / 2);
-			debugBody.end();
-
-			batch.begin();
-		}
-
 		super.draw(batch, alpha);
+		if (DebugOptions.showTextureBoundaries) {
+			drawDebugBody(batch);
+		}
+	}
+
+	private void drawDebugBody(Batch batch){
+		ShapeRenderer debugBody = Resources.getShapeRenderer();
+		batch.end();
+
+		debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+		debugBody.begin(ShapeType.Line);
+		debugBody.setColor(Color.YELLOW);
+		debugBody.circle(this.getPositionCenter().x, this.getPositionCenter().y, this.getWidth() / 2);
+		debugBody.end();
+
+		batch.begin();
 	}
 	private void explode(){
 		Logger.info("Landmine: exploding");

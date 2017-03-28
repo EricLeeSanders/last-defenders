@@ -1,18 +1,8 @@
 package com.foxholedefense.game;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.profiling.GLProfiler;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
-import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
-import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
-import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
-import com.foxholedefense.game.service.actorplacement.TowerPlacement;
-import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.game.ui.GameUIStage;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
@@ -56,7 +46,6 @@ public class GameScreen extends AbstractScreen {
 
 		super.show();
 		audio.turnOffMusic();
-		GLProfiler.enable();
 		gameStage.loadFirstWave();
 	}
 
@@ -65,22 +54,6 @@ public class GameScreen extends AbstractScreen {
 		gameStage.getViewport().setScreenSize(width, height); // update the size of ViewPort
 		gameUIStage.getViewport().setScreenSize(width, height); // update the size of ViewPort
 	    super.resize(width, height);
-	}
-	@Override
-	public void render(float delta) {
-//	    System.out.println(
-//	            "  Drawcalls: " + GLProfiler.drawCalls +
-//	                    ", Calls: " + GLProfiler.calls +
-//	                    ", TextureBindings: " + GLProfiler.textureBindings +
-//	                    ", ShaderSwitches:  " + GLProfiler.shaderSwitches +
-//	                    ", vertexCount: " + GLProfiler.vertexCount.value
-//	    );
-//	    GLProfiler.reset();
-		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		getCamera().update();
-		renderElements(delta);
-
 	}
 
 	/**
@@ -111,7 +84,6 @@ public class GameScreen extends AbstractScreen {
 		Logger.info("Game Screen Dispose");
 		gameStage.dispose();
 		gameUIStage.dispose();
-	    GLProfiler.disable();
 	}
 
 }

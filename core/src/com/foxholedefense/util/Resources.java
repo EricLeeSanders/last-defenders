@@ -44,18 +44,23 @@ public class Resources {
 	public static final String LARGE_CLICK = "audio/button_large_click.mp3";
 	public static final String VEHICLE_EXPLOSION_SOUND = "audio/vehicle_explosion.mp3";
 	private float gameSpeed = 1;
-	private static ShapeRenderer shapeRenderer = new ShapeRenderer();
+	private static ShapeRenderer shapeRenderer;
 	private UserPreferences userPreferences;
 	private AssetManager manager = new AssetManager();
 
 	public Resources(UserPreferences userPreferences){
 		this.userPreferences = userPreferences;
+		shapeRenderer = new ShapeRenderer();
 	}
 	public void dispose() {
 		Logger.info("Resources: dispose");
 		manager.dispose();
 		shapeRenderer.dispose();
+	}
 
+	public void activityResume(){
+		shapeRenderer.dispose();
+		shapeRenderer = new ShapeRenderer();
 	}
 	
 	public UserPreferences getUserPreferences(){
