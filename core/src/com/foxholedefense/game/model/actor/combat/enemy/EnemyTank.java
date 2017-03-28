@@ -45,7 +45,6 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	private static final Dimension TEXTURE_SIZE_TURRET = new Dimension(120, 33);
 	private float[] bodyPoints = { 0, 0, 0, 50, 75, 50, 75, 0 };
 	private TextureRegion bodyRegion;
-	private ShapeRenderer bodyOutline = Resources.getShapeRenderer();
 	private float bodyRotation;
 	private Polygon body;
 	private IDeathEffectFactory deathEffectFactory;
@@ -65,7 +64,6 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	@Override
 	public void draw(Batch batch, float alpha) {
 
-
 		// If the tank is not attacking, then rotate the body as well
 		if (!isAttacking()) {
 			bodyRotation = getRotation();
@@ -78,15 +76,20 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 		super.draw(batch, alpha);
 
 		if (DebugOptions.showTextureBoundaries) {
-			batch.end();
-			bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-			bodyOutline.begin(ShapeType.Line);
-			bodyOutline.setColor(Color.YELLOW);
-			bodyOutline.polygon(getBody().getTransformedVertices());
-			bodyOutline.end();
-
-			batch.begin();
+			drawDebugBody(batch);
 		}
+	}
+
+	private void drawDebugBody(Batch batch){
+		ShapeRenderer bodyOutline = Resources.getShapeRenderer();
+		batch.end();
+		bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+		bodyOutline.begin(ShapeType.Line);
+		bodyOutline.setColor(Color.YELLOW);
+		bodyOutline.polygon(getBody().getTransformedVertices());
+		bodyOutline.end();
+
+		batch.begin();
 	}
 
 	/**

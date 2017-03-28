@@ -43,6 +43,13 @@ public class FHDGame extends Game implements IScreenChanger {
 	}
 
 	@Override
+	public void resume (){
+		Logger.info("FHDGame: resuming");
+		resources.activityResume();
+		super.resume();
+	}
+
+	@Override
 	public void dispose() {
 		Logger.info("FHDGame: disposing");
 		resources.dispose();
