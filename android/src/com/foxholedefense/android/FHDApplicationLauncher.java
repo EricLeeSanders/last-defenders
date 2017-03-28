@@ -16,7 +16,7 @@ import org.acra.sender.HttpSender;
 	    httpMethod = HttpSender.Method.POST,
 	    formUriBasicAuthLogin = AcraProperties.LOGIN,
 	    formUriBasicAuthPassword = AcraProperties.PASSWORD,
-		logcatArguments = { "-t", "100", "-v", "time", "FHD:D", "*:S"},
+		logcatArguments = { "-t", "200", "-v", "time", "FHD:D", "*:S"},
 	    customReportContent = {
 	            ReportField.APP_VERSION_CODE,
 	            ReportField.APP_VERSION_NAME,
