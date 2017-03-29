@@ -32,7 +32,7 @@ public class LevelLoadingScreen extends AbstractScreen{
 	private Label loadingLabel;
 	private float endPos = 528;
 	private float startPos = 55;
-	private int intTip;
+
 	public LevelLoadingScreen(GameStateManager gameStateManager, IScreenChanger screenChanger, Resources resources, int level ) {
 		super(gameStateManager);
 		this.resources = resources;
@@ -48,9 +48,7 @@ public class LevelLoadingScreen extends AbstractScreen{
 		super.show();
 		loadTime = 0;
 		
-		resources.unloadAsset(Resources.LEVEL_SELECT_ATLAS);
-		resources.unloadAsset(Resources.MENU_ATLAS);
-		
+
 		resources.loadAtlasSync(Resources.LOAD_ATLAS);
 		TextureAtlas atlas = resources.getAtlas(Resources.LOAD_ATLAS);
 		
