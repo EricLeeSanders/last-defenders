@@ -1,10 +1,8 @@
 package com.foxholedefense.menu.ui;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -14,17 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * View for the Main Menu
@@ -60,8 +53,8 @@ public class MenuView extends Group implements IMenuView {
 	
 	public void createControls(Resources resources) {
 		Logger.info("Menu view: initializing view");
-		TextureAtlas menuAtlas = resources.getAtlas(Resources.MENU_ATLAS);
-		Skin skin = resources.getSkin(Resources.SKIN_JSON);
+		TextureAtlas menuAtlas = resources.getAsset(Resources.MENU_ATLAS, TextureAtlas.class);
+		Skin skin = resources.getSkin();
 		
 		menuBottom = new Image(menuAtlas.findRegion("menu_bottom"));
 		menuBottom.setSize(500, 80);
@@ -102,7 +95,7 @@ public class MenuView extends Group implements IMenuView {
 	}
 	public void createOptionControls(Resources resources) {
 		Logger.info("Menu view: creating option controls");
-		Skin skin = resources.getSkin(Resources.SKIN_JSON);
+		Skin skin = resources.getSkin();
 		
 		optionsTable = new Table();
 		optionsTable.setTransform(false);
@@ -145,10 +138,10 @@ public class MenuView extends Group implements IMenuView {
 		volSliderListener(volumeSlider);
 	
 		
-		Image volSliderFull = new Image(resources.getAtlas(Resources.SKIN_ATLAS).findRegion("slider-full"));
+		Image volSliderFull = new Image(resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
 		volSliderFull.setSize(300, 22);
 		
-		volSliderBg = new Image(resources.getAtlas(Resources.SKIN_ATLAS).findRegion("slider-bg"));
+		volSliderBg = new Image(resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
 		volSliderBg.setSize(300, 22);
 	
 		
