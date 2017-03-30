@@ -44,7 +44,7 @@ public class AndroidLauncher extends AndroidApplication implements IPlayServices
 	protected void onStart()
 	{
 		super.onStart();
-		gameHelper.onStart(this);
+		//gameHelper.onStart(this);
 	}
 
 	@Override
