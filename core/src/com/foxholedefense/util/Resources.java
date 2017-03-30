@@ -5,7 +5,6 @@ import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -51,6 +50,7 @@ public class Resources {
 	public Resources(UserPreferences userPreferences){
 		this.userPreferences = userPreferences;
 		shapeRenderer = new ShapeRenderer();
+		manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
 	}
 	public void dispose() {
 		Logger.info("Resources: dispose");
@@ -68,44 +68,9 @@ public class Resources {
 	}
 
 
-	public void loadMapSync(int level) {
-		Logger.info("Resources: sync loading map: " + level);
-		loadMap(level);
-		manager.finishLoading();
-		Logger.info("Resources: sync loaded map: " + level);
-	}
-	
-	public void loadMap(int level) {
-		Logger.info("Resources: loading map: " + level);
-		try {
-			manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
-			manager.load("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
-			Logger.info("Resources: map loaded: " + "game/levels/level" + level + "/level" + level + ".tmx");
-		} catch (GdxRuntimeException e) {
-			Logger.error("Resources: map load error", e);
-		}
-	}
-
-	public void loadSkinSync(String skinJson, String atlas) {
-		Logger.info("Resources: sync loading skin");
-		loadSkin(skinJson, atlas);
-		manager.finishLoading();
-		Logger.info("Resources: sync loaded skin");
-	}
-	
-	public void loadSkin(String skinJson, String atlas) {
-		Logger.info("Resources: loading skin");
-		try {
-			manager.load(skinJson, Skin.class, new SkinLoader.SkinParameter(atlas));
-			Logger.info("Resources: skin loaded");
-		} catch (GdxRuntimeException e) {
-			Logger.error("Resources: load skin error", e);
-		}
-	}
-
 	public void initFont(){
 		Logger.info("Resources: initializing font");
-		BitmapFont font = getSkin(SKIN_JSON).getFont("default-font");
+		BitmapFont font = getSkin().getFont("default-font");
 		font.setUseIntegerPositions(false);
 		font.getData().setLineHeight(55);
 		font.getData().ascent = 11;
@@ -117,104 +82,95 @@ public class Resources {
 		font.getData().xHeight = 30.0f;
 		Logger.info("Resources: font initialized");
 	}
-	public void loadAtlasSync(String file) {
-		Logger.info("Resources: sync loading atlas: " + file);
-		loadAtlas(file);
-		manager.finishLoading();
-		Logger.info("Resources: sync loaded atlas: " + file);
-	}
-	
-	public void loadAtlas(String file) {
-		Logger.info("Resources: loading atlas: " + file);
+
+	public void loadAsset(String file, Class<?> type){
+		Logger.info("Resources: loading asset: " + file);
 		if(!manager.isLoaded(file)){
 			try {
-				manager.load(file, TextureAtlas.class);
-				Logger.info("Resources: atlas loaded: " + file);
+				manager.load(file, type);
+				Logger.info("Resources: asset loaded: " + file);
 			} catch (GdxRuntimeException e) {
-				Logger.error("Resources: atlas load error", e);
+				Logger.error("Resources: asset load error", e);
 			}
 		}
 	}
 
-	public void loadTextureSync(String file) {
-		Logger.info("Resources: sync loading texture: " + file);
-		loadTexture(file);
+	public void loadAssetSync(String file, Class<?> type){
+		Logger.info("Resources: sync loading asset: " + file);
+		loadAsset(file, type);
 		manager.finishLoading();
-		Logger.info("Resources: sync loaded texture: " + file);
-	}
-	
-	public void loadTexture(String file) {
-		Logger.info("Resources: loading texture: " + file);
-		if(!manager.isLoaded(file)){
-			try {
-				manager.load(file, Texture.class);
-				manager.finishLoading();
-				Logger.info("Resources: texture loaded: " + file);
-			} catch (GdxRuntimeException e) {
-				Logger.error("Resources: texture load error", e);
-			}
-		}
-	}
-	public TiledMap getMap(int level) {
-		if(!manager.isLoaded("game/levels/level" + level + "/level" + level + ".tmx")){
-			Logger.info("Map " + level + " is not loaded. Loading...");
-			loadMapSync(level);
-		}
-		return manager.get("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
+		Logger.info("Resources: sync loaded asset: " + file);
 	}
 
-	public TiledMap getUIMap() {
-		return manager.get("game/ui/ui.tmx", TiledMap.class);
-	}
-
-	public TextureAtlas getAtlas(String file) {
+	public <T> T getAsset(String file, Class<T> type){
 		if(!manager.isLoaded(file)){
 			Logger.info(file + " not loaded. Loading...");
-			loadAtlasSync(file);
+			loadAssetSync(file, type);
 		}
-		return manager.get(file, TextureAtlas.class);
+		return manager.get(file, type);
 	}
 
-	public Texture getTexture(String file) {
-		return manager.get(file, Texture.class);
-	}
-
-	public Skin getSkin(String file) {
-		if(!manager.isLoaded(file)){
-			Logger.info(file + " (skin) not loaded. Loading");
-			loadSkinSync(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
-		}
-		return manager.get(file, Skin.class);
-	}
-
-	public static ShapeRenderer getShapeRenderer(){
-		return shapeRenderer;
-	}
-	public float getGameSpeed() {
-		return gameSpeed;
-	}
-	public void setGameSpeed(float gameSpeed) {
-		this.gameSpeed = gameSpeed;
-	}
 	public void unloadAsset(String file){
-		Logger.info("Resources: unloaded: " + file);
+		Logger.info("Resources: unloading: " + file);
 		if(manager.isLoaded(file)){
 			manager.unload(file);
 			Logger.info("Resources: " + file + " unloaded");
 		}
 	}
+
+
+	public void loadMap(int level) {
+		loadAsset("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
+	}
+
+	public TiledMap getMap(int level) {
+		return getAsset("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
+	}
+
 	public void unloadMap(int level){
-		Logger.info("Resources: unloading map: " + level);
-		if(manager.isLoaded("game/levels/level" + level + "/level" + level + ".tmx")){
-			manager.unload("game/levels/level" + level + "/level" + level + ".tmx");
-			Logger.info("Map " + level + " unloaded");
+		unloadAsset("game/levels/level" + level + "/level" + level + ".tmx");
+	}
+
+
+	public void loadSkinSync() {
+		Logger.info("Resources: sync loading skin");
+		loadSkin();
+		manager.finishLoading();
+		Logger.info("Resources: sync loaded skin");
+	}
+
+	public void loadSkin() {
+		Logger.info("Resources: loading skin");
+		try {
+			manager.load(SKIN_JSON, Skin.class, new SkinLoader.SkinParameter(SKIN_ATLAS));
+			Logger.info("Resources: skin loaded");
+		} catch (GdxRuntimeException e) {
+			Logger.error("Resources: load skin error", e);
 		}
 	}
+
+	public Skin getSkin() {
+		if(!manager.isLoaded(SKIN_JSON)){
+			Logger.info(SKIN_JSON + " (skin) not loaded. Loading");
+			loadSkinSync();
+		}
+		return manager.get(SKIN_JSON, Skin.class);
+	}
+
+	public static ShapeRenderer getShapeRenderer(){
+		return shapeRenderer;
+	}
+
+	public float getGameSpeed() {
+		return gameSpeed;
+	}
+
+	public void setGameSpeed(float gameSpeed) {
+		this.gameSpeed = gameSpeed;
+	}
+
 	public AssetManager getManager(){
 		return manager;
-	}
-	public void finishLoading(){
-		manager.finishLoading();
 	}
 
 	

@@ -8,16 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.foxholedefense.game.GameStage;
 import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.actor.ActorGroups;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
-import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
-import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
-import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
-import com.foxholedefense.game.service.actorplacement.TowerPlacement;
-import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.game.ui.presenter.DebugPresenter;
 import com.foxholedefense.game.ui.presenter.EnlistPresenter;
 import com.foxholedefense.game.ui.presenter.GameOverPresenter;
@@ -84,7 +76,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	 */
 	public void createUI(Resources resources, FHDAudio audio, GameStage gameStage) {
 		Logger.info("GameUIStage: creating ui");
-		Skin skin = resources.getSkin(Resources.SKIN_JSON);
+		Skin skin = resources.getSkin();
 
 		HUDPresenter hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player, resources, audio);
 		HUDView hudView = new HUDView(hudPresenter, skin, resources);
@@ -117,7 +109,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		levelCompletedPresenter.setView(levelCompletedView);
 
 		DebugPresenter debugPresenter = new DebugPresenter(uiStateManager, gameStateManager);
-		DebugView debugView = new DebugView(debugPresenter, resources.getSkin(Resources.SKIN_JSON));
+		DebugView debugView = new DebugView(debugPresenter, resources.getSkin());
 		debugPresenter.setView(debugView);
 
 		this.addActor(hudView);

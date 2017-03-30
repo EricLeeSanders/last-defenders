@@ -49,8 +49,8 @@ public class LevelLoadingScreen extends AbstractScreen{
 		loadTime = 0;
 		
 
-		resources.loadAtlasSync(Resources.LOAD_ATLAS);
-		TextureAtlas atlas = resources.getAtlas(Resources.LOAD_ATLAS);
+		resources.loadAssetSync(Resources.LOAD_ATLAS, TextureAtlas.class);
+		TextureAtlas atlas = resources.getAsset(Resources.LOAD_ATLAS, TextureAtlas.class);
 		
 		Image loadingBar = new Image(atlas.findRegion("level-load-bar"));
 		loadingBar.setSize(endPos, 45);
@@ -62,7 +62,7 @@ public class LevelLoadingScreen extends AbstractScreen{
 		loadingBarBg.setPosition(startPos, ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()) + 6);
 
 		
-		loadingLabel = new Label("LOADING: 0%", resources.getSkin(Resources.SKIN_JSON));
+		loadingLabel = new Label("LOADING: 0%", resources.getSkin());
 		loadingLabel.setFontScale(0.75f);
 		loadingLabel.setAlignment(Align.left);
 		loadingLabel.setColor(1f, 1f, 1f, 1f);
@@ -122,11 +122,14 @@ public class LevelLoadingScreen extends AbstractScreen{
 	public void dispose() {
 		Logger.info("Level Loading Screen Dispose");
 		super.dispose();
+		resources.unloadAsset(Resources.LEVEL_SELECT_ATLAS);
+		resources.unloadAsset(Resources.MENU_ATLAS);
+		resources.unloadAsset(Resources.LOAD_ATLAS);
 		stage.dispose();
 	}
 	
 	public void load() {
-		resources.loadAtlas(Resources.ACTOR_ATLAS);
+		resources.loadAsset(Resources.ACTOR_ATLAS, TextureAtlas.class);
 		resources.loadMap(level);
 		
 	}

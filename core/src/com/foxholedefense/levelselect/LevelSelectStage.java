@@ -1,5 +1,6 @@
 package com.foxholedefense.levelselect;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.foxholedefense.levelselect.ui.LevelSelectPresenter;
@@ -21,10 +22,10 @@ public class LevelSelectStage extends Stage {
 		super(viewport);
 		this.resources = resources;
 		LevelSelectPresenter presenter = new LevelSelectPresenter(screenChanger);
-		resources.loadAtlas(Resources.LEVEL_SELECT_ATLAS);
+		resources.loadAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class);
 		LevelSelectView levelSelectView = new LevelSelectView(presenter, resources, audio);
 		this.addActor(levelSelectView);
-		levelSelectView.setBackground(resources.getAtlas(Resources.LEVEL_SELECT_ATLAS));
+		levelSelectView.setBackground(resources.getAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class));
 	}
 	@Override
 	public void dispose(){

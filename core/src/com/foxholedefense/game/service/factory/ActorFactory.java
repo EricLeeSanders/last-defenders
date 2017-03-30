@@ -583,12 +583,12 @@ public class ActorFactory implements ICombatActorFactory, IHealthFactory, ISuppo
 	}
 
 	protected ArmorDestroyedEffect createArmorDestroyedEffect(){
-		Label label = new Label("", resources.getSkin(Resources.SKIN_JSON));
+		Label label = new Label("", resources.getSkin());
 		return new ArmorDestroyedEffect(loadedAtlasRegions.get("shield-destroyed"), armorDestroyedEffectPool,label);
 	}
 
 	protected TowerHealEffect createTowerHealEffect(){
-		return new TowerHealEffect(towerHealEffectPool, resources.getSkin(Resources.SKIN_JSON));
+		return new TowerHealEffect(towerHealEffectPool, resources.getSkin());
 	}
 	
 	/**
