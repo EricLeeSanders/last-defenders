@@ -23,10 +23,7 @@ public class FHDGame extends Game implements IScreenChanger {
 	private IPlayServices playServices;
 	public FHDGame(IPlayServices playServices){
 		this.playServices = playServices;
-		playServices.signIn();
-	}
-	public FHDGame(){
-
+		//playServices.signIn();
 	}
 
 	@Override
