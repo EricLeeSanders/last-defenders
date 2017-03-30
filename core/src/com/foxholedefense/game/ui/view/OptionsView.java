@@ -1,5 +1,6 @@
 package com.foxholedefense.game.ui.view;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -57,7 +58,7 @@ public class OptionsView extends Group implements IOptionsView {
 
 		Logger.info("Options View: creating controls");
 
-		Skin skin = resources.getSkin(Resources.SKIN_JSON);
+		Skin skin = resources.getSkin();
 		Table container = new Table();
 		container.setTransform(false);
 		container.setBackground(skin.getDrawable("main-panel"));
@@ -197,10 +198,10 @@ public class OptionsView extends Group implements IOptionsView {
 		speedSliderListener(speedSlider);
 
 
-		Image speedSliderFull = new Image(resources.getAtlas(Resources.SKIN_ATLAS).findRegion("slider-full"));
+		Image speedSliderFull = new Image(resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
 		speedSliderFull.setSize(300, 22);
 
-		speedSliderBg = new Image(resources.getAtlas(Resources.SKIN_ATLAS).findRegion("slider-bg"));
+		speedSliderBg = new Image(resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
 		speedSliderBg.setSize(300, 22);
 
 
@@ -228,10 +229,10 @@ public class OptionsView extends Group implements IOptionsView {
 		volSliderListener(volumeSlider);
 
 
-		Image volSliderFull = new Image(resources.getAtlas(Resources.SKIN_ATLAS).findRegion("slider-full"));
+		Image volSliderFull = new Image(resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
 		volSliderFull.setSize(300, 22);
 
-		volSliderBg = new Image(resources.getAtlas(Resources.SKIN_ATLAS).findRegion("slider-bg"));
+		volSliderBg = new Image(resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
 		volSliderBg.setSize(300, 22);
 
 

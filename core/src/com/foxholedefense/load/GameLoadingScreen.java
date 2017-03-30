@@ -35,8 +35,8 @@ public class GameLoadingScreen extends AbstractScreen{
 	public void show() {
 		Logger.info("Game loading screen: show");
 		super.show();
-		resources.loadAtlasSync(Resources.LOAD_ATLAS);
-		TextureAtlas atlas = resources.getAtlas(Resources.LOAD_ATLAS);
+		resources.loadAssetSync(Resources.LOAD_ATLAS, TextureAtlas.class);
+		TextureAtlas atlas = resources.getAsset(Resources.LOAD_ATLAS, TextureAtlas.class);
 		Image image = new Image(atlas.findRegion("img-loading"));
 		float x = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, image.getWidth());
 		float y = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, image.getHeight());
@@ -75,9 +75,9 @@ public class GameLoadingScreen extends AbstractScreen{
 	}
 	
 	public void load() {
-		resources.loadSkin(Resources.SKIN_JSON, Resources.SKIN_ATLAS );
-		resources.loadAtlas(Resources.MENU_ATLAS);
-		resources.loadAtlas(Resources.LEVEL_SELECT_ATLAS);
+		resources.loadSkin();
+		resources.loadAsset(Resources.MENU_ATLAS, TextureAtlas.class);
+		resources.loadAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class);
 		audio.load();
 		
 	}

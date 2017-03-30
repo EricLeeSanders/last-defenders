@@ -33,8 +33,8 @@ public class LevelSelectView extends Group {
 	public LevelSelectView(LevelSelectPresenter presenter, Resources resources, FHDAudio audio) {
 		this.presenter = presenter;
 		this.audio = audio;
-		TextureAtlas levelSelectAtlas = resources.getAtlas(Resources.LEVEL_SELECT_ATLAS);
-		Skin skin = resources.getSkin(Resources.SKIN_JSON);
+		TextureAtlas levelSelectAtlas = resources.getAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class);
+		Skin skin = resources.getSkin();
 		createControls(levelSelectAtlas, skin);
 		levelGroup = new Group();
 		this.addActor(levelGroup);
