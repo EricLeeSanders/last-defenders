@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -20,12 +19,12 @@ import com.foxholedefense.game.model.actor.interfaces.ICollision;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.DebugOptions;
-import com.foxholedefense.util.Dimension;
-import com.foxholedefense.util.FHDVector2;
+import com.foxholedefense.util.datastructures.Dimension;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.game.model.actor.combat.ICombatActorObserver.CombatActorEvent;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 /**
  * Represents both a Tower and Enemy.

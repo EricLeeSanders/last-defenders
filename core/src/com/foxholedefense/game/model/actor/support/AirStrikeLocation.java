@@ -1,18 +1,12 @@
 package com.foxholedefense.game.model.actor.support;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Shape2D;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.FHDVector2;
-import com.foxholedefense.util.Resources;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
 
 public class AirStrikeLocation extends Actor {
 	private FHDVector2 location;

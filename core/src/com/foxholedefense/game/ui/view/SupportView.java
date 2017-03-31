@@ -16,7 +16,7 @@ import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
 import com.foxholedefense.game.ui.presenter.SupportPresenter;
 import com.foxholedefense.game.ui.view.interfaces.ISupportView;
 import com.foxholedefense.game.ui.view.widgets.SupportButton;
-import com.foxholedefense.util.FHDVector2;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -25,7 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 /**
  * View class for Support. Shows Support window as well as the options to

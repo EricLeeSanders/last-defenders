@@ -8,13 +8,13 @@ import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IRpg;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
-import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
-import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
-import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
-import com.foxholedefense.util.Dimension;
+import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.foxholedefense.game.service.factory.EffectFactory;
+import com.foxholedefense.game.service.factory.ProjectileFactory;
+import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 /**
  * Represents a Tower RocketLauncher
@@ -40,12 +40,12 @@ public class TowerRocketLauncher extends Tower implements IRpg {
 	private static final Dimension TEXTURE_SIZE = new Dimension(56, 31);
 	private Circle body;
 	private FHDAudio audio;
-	private IDeathEffectFactory deathEffectFactory;
-	private IProjectileFactory projectileFactory;
-	public TowerRocketLauncher(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
+	private EffectFactory effectFactory;
+	private ProjectileFactory projectileFactory;
+	public TowerRocketLauncher(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, EffectFactory effectFactory, ProjectileFactory projectileFactory, FHDAudio audio) {
 		super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.audio = audio;
-		this.deathEffectFactory = deathEffectFactory;
+		this.effectFactory = effectFactory;
 		this.projectileFactory = projectileFactory;
 		this.body = new Circle(this.getPositionCenter(), 10);
 	}
@@ -64,7 +64,7 @@ public class TowerRocketLauncher extends Tower implements IRpg {
 	
 	@Override
 	protected void deathAnimation() {
-		deathEffectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());;
+		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());;
 		
 	}
 

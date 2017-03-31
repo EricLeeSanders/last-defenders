@@ -8,11 +8,11 @@ import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.model.actor.interfaces.IVehicle;
-import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
-import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
+import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.Dimension;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.Dimension;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 /**
  * Represents an Enemy Humvee. A passive enemy.
@@ -32,13 +32,13 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 	private static final Vector2 GUN_POS = UtilPool.getVector2();
 	private static final Dimension TEXTURE_SIZE = new Dimension(74, 32);
 	
-	private IDeathEffectFactory deathEffectFactory;
+	private EffectFactory effectFactory;
 	private float[] bodyPoints = {15,0, 15,32, 69,32, 69, 0 };
 	private Polygon body;
 	
-	public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, IDeathEffectFactory deathEffectFactory) {
+	public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, EffectFactory effectFactory) {
 		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, null, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
-		this.deathEffectFactory = deathEffectFactory;
+		this.effectFactory = effectFactory;
 		this.body = new Polygon(bodyPoints);
 	}
 
@@ -50,7 +50,7 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 
 	@Override
 	protected void deathAnimation() {
-		deathEffectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());;
+		effectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());;
 		
 	}
 

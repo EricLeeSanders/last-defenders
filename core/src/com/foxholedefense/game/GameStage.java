@@ -1,9 +1,11 @@
 package com.foxholedefense.game;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -24,9 +26,9 @@ import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
 import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
 import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
 import com.foxholedefense.game.service.actorplacement.TowerPlacement;
-import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -39,7 +41,7 @@ import com.foxholedefense.util.Resources;
  *
  */
 public class GameStage extends Stage implements IEnemyObserver{
-
+	private static final int WAVE_OVER_MONEY_MULTIPLIER = 100;
 	private LevelStateManager levelStateManager;
 	private GameUIStateManager uiStateManager;
 	private Level level;
@@ -54,6 +56,7 @@ public class GameStage extends Stage implements IEnemyObserver{
 	private AirStrikePlacement airStrikePlacement;
 	private SupplyDropPlacement supplyDropPlacement;
 	private ActorFactory actorFactory;
+	private IMessageDisplayer messageDisplayer;
 	public GameStage(int intLevel, Player player, ActorGroups actorGroups, FHDAudio audio,
 					 LevelStateManager levelStateManager, GameUIStateManager uiStateManager,
 					 Viewport viewport, Resources resources) {
@@ -156,11 +159,14 @@ public class GameStage extends Stage implements IEnemyObserver{
 
 	private void waveOver(){
 		Logger.info("Game Stage: Wave over");
-		player.giveMoney((int) (100 * (float) level.getCurrentWave()));
+		int money = (int) (WAVE_OVER_MONEY_MULTIPLIER * (float) level.getCurrentWave());
+		player.giveMoney(money);
 		levelStateManager.setState(LevelState.STANDBY);
 		player.setWaveCount(player.getWaveCount() + 1);
 		if(isLevelCompleted()){
 			levelComleted();
+		} else {
+			messageDisplayer.displayMessage("+ " + money, .75f, Color.YELLOW);
 		}
 		level.loadWave(); //load the next wave
 		healTowers();
@@ -258,5 +264,13 @@ public class GameStage extends Stage implements IEnemyObserver{
 		if(event.equals(EnemyEvent.REACHED_END)){
 			enemyReachedEnd();
 		}
+	}
+
+	public IMessageDisplayer getMessageDisplayer() {
+		return messageDisplayer;
+	}
+
+	public void setMessageDisplayer(IMessageDisplayer messageDisplayer) {
+		this.messageDisplayer = messageDisplayer;
 	}
 }

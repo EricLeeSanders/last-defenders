@@ -11,10 +11,9 @@ import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.interfaces.ICollision;
-import com.foxholedefense.util.FHDVector2;
-import com.foxholedefense.util.Logger;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.badlogic.gdx.math.Shape2D;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 /**
  * A static class to handle all collisions that can occur during the game

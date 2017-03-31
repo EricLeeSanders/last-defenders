@@ -14,13 +14,11 @@ import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.effects.TowerHealEffect;
-import com.foxholedefense.game.service.factory.ActorFactory;
-import com.foxholedefense.game.service.factory.ActorFactory.SupplyDropCratePool;
-import com.foxholedefense.game.service.factory.interfaces.IHealthFactory;
+import com.foxholedefense.game.service.factory.EffectFactory;
+import com.foxholedefense.game.service.factory.SupportActorFactory.SupplyDropCratePool;
 import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.Dimension;
+import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.Logger;
-import com.foxholedefense.util.Resources;
 
 public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 	public static final int COST = 1000;
@@ -30,16 +28,16 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 	private Circle rangeCircle = new Circle();
 	private boolean active, showRange;
 	private SupplyDropCratePool pool;
-	private IHealthFactory healthFactory;
+	private EffectFactory effectFactory;
 	private Group towerGroup;
 	private TextureRegion rangeTexture;
 	public SupplyDropCrate(TextureRegion textureRegion, TextureRegion rangeTexture, SupplyDropCratePool pool,
-						   Group towerGroup, IHealthFactory healthFactory) {
+						   Group towerGroup, EffectFactory effectFactory) {
 		super(textureRegion, TEXTURE_SIZE);
 		this.pool = pool;
 		this.towerGroup = towerGroup;
 		this.rangeTexture = rangeTexture;
-		this.healthFactory = healthFactory;
+		this.effectFactory = effectFactory;
 		setTextureRegion(textureRegion);
 
 	}
@@ -85,7 +83,7 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 				Tower tower = (Tower)actor;
 				if(CollisionDetection.targetWithinRange(tower.getBody(), getRangeShape())){
 					tower.heal();
-					TowerHealEffect effect = healthFactory.loadTowerHealEffect();
+					TowerHealEffect effect = effectFactory.loadTowerHealEffect();
 					effect.initialize(tower);
 
 				}

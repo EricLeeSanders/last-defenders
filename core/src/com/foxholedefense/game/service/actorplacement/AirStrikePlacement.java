@@ -1,30 +1,23 @@
 package com.foxholedefense.game.service.actorplacement;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
-
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.support.AirStrike;
 import com.foxholedefense.game.model.actor.support.AirStrikeLocation;
-import com.foxholedefense.game.model.actor.support.SupportActor;
-import com.foxholedefense.game.service.factory.ActorFactory;
-import com.foxholedefense.util.FHDVector2;
+import com.foxholedefense.game.service.factory.SupportActorFactory;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 
 public class AirStrikePlacement {
 	private AirStrike currentAirStrike;
 	private ActorGroups actorGroups;
-	private ActorFactory actorFactory;
-	public AirStrikePlacement(ActorGroups actorGroups, ActorFactory actorFactory) {
+	private SupportActorFactory supportActorFactory;
+	public AirStrikePlacement(ActorGroups actorGroups, SupportActorFactory supportActorFactory) {
 		this.actorGroups = actorGroups;
-		this.actorFactory = actorFactory;
+		this.supportActorFactory = supportActorFactory;
 	}
 	public void createAirStrike() {
 		Logger.info("AirStrikePlacement: creating air strike");
-		currentAirStrike = (AirStrike)actorFactory.loadSupportActor("AirStrike");
+		currentAirStrike = (AirStrike)supportActorFactory.loadSupportActor("AirStrike");
 		currentAirStrike.setPosition(0, 0);
 		actorGroups.getSupportGroup().addActor(currentAirStrike);
 		currentAirStrike.setActive(false);

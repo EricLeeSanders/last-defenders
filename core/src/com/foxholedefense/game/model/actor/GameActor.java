@@ -1,25 +1,17 @@
 package com.foxholedefense.game.model.actor;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Pool;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.DebugOptions;
-import com.foxholedefense.util.Dimension;
-import com.foxholedefense.util.FHDVector2;
-import com.foxholedefense.util.Logger;
+import com.foxholedefense.util.datastructures.Dimension;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Resources;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 public class GameActor extends Actor{
 	private TextureRegion textureRegion;

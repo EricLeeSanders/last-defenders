@@ -4,9 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
 import com.foxholedefense.game.service.factory.interfaces.ISupplyDropFactory;
 import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.FHDVector2;
 import com.foxholedefense.util.Logger;
-import com.foxholedefense.util.UtilPool;
 
 public class SupplyDropPlacement {
 	private SupplyDropCrate currentSupplyDropCrate;

@@ -1,35 +1,21 @@
 package com.foxholedefense.game.ui.presenter;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.reflect.ClassReflection;
-import com.badlogic.gdx.utils.reflect.Field;
-import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.actor.ActorGroups;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.interfaces.IRotatable;
 import com.foxholedefense.game.model.actor.support.AirStrike;
-import com.foxholedefense.game.model.actor.support.Apache;
 import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
-import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
 import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
 import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
-import com.foxholedefense.game.service.actorplacement.TowerPlacement;
-import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.IGameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
 import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.game.ui.view.interfaces.ISupportView;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
-import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 /**
  * Presenter for Enlist. Handles enlisting towers
