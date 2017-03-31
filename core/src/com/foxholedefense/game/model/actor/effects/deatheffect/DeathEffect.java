@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.GameActor;
-import com.foxholedefense.util.Dimension;
+import com.foxholedefense.util.datastructures.Dimension;
 
 public abstract class DeathEffect extends GameActor implements Pool.Poolable {
 	private Pool<DeathEffect> pool;

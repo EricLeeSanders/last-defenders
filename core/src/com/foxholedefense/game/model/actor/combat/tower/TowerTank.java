@@ -15,15 +15,14 @@ import com.foxholedefense.game.model.actor.interfaces.IRotatable;
 import com.foxholedefense.game.model.actor.interfaces.IRpg;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.model.actor.interfaces.IVehicle;
-import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
-import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
-import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
+import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.foxholedefense.game.service.factory.EffectFactory;
+import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.DebugOptions;
-import com.foxholedefense.util.Dimension;
-import com.foxholedefense.util.Logger;
+import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.Resources;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 /**
  * Represents a Tower Tank
@@ -53,13 +52,13 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
 	private float bodyRotation;
-	private IDeathEffectFactory deathEffectFactory;
-	private IProjectileFactory projectileFactory;
-	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory) {
+	private EffectFactory effectFactory;
+	private ProjectileFactory projectileFactory;
+	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, EffectFactory effectFactory, ProjectileFactory projectileFactory) {
 		super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
 		this.bodyRegion = bodyRegion;
 		this.turretRegion = turretRegion;
-		this.deathEffectFactory = deathEffectFactory;
+		this.effectFactory = effectFactory;
 		this.projectileFactory = projectileFactory;
 		body = new Polygon(bodyPoints);
 	}
@@ -142,7 +141,7 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 
 	@Override
 	protected void deathAnimation() {
-		deathEffectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());;
+		effectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());;
 		
 	}
 

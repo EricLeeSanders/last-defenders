@@ -7,13 +7,13 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
-import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
-import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
-import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
-import com.foxholedefense.util.Dimension;
+import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.foxholedefense.game.service.factory.EffectFactory;
+import com.foxholedefense.game.service.factory.ProjectileFactory;
+import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 /**
  * Represents an Enemy Rifle
@@ -34,13 +34,13 @@ public class EnemyRifle extends Enemy {
 	private static final Dimension TEXTURE_SIZE = new Dimension(53, 33);
 	private Circle body;
 	private FHDAudio audio;
-	private IDeathEffectFactory deathEffectFactory;
-	private IProjectileFactory projectileFactory;
+	private EffectFactory effectFactory;
+	private ProjectileFactory projectileFactory;
 	
-	public EnemyRifle(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, IDeathEffectFactory deathEffectFactory, IProjectileFactory projectileFactory, FHDAudio audio) {
+	public EnemyRifle(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, EffectFactory effectFactory, ProjectileFactory projectileFactory, FHDAudio audio) {
 		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
 		this.audio = audio;
-		this.deathEffectFactory = deathEffectFactory;
+		this.effectFactory = effectFactory;
 		this.projectileFactory = projectileFactory;
 		this.body = new Circle(this.getPositionCenter(), 10);
 	}
@@ -55,7 +55,7 @@ public class EnemyRifle extends Enemy {
 
 	@Override
 	protected void deathAnimation() {
-		deathEffectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());;
+		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());;
 		
 	}
 

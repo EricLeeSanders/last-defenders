@@ -8,18 +8,17 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.foxholedefense.game.model.actor.ai.towerai.ITowerAI;
 import com.foxholedefense.game.model.actor.ai.towerai.FirstEnemyAI;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
-import com.foxholedefense.game.service.factory.ActorFactory.SupportActorPool;
-import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
+import com.foxholedefense.game.service.factory.ProjectileFactory;
+import com.foxholedefense.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.Dimension;
+import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.FHDAudio;
-import com.foxholedefense.util.FHDVector2;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 public class Apache extends SupportActor{
 	public static final int COST = 2000;
@@ -33,13 +32,13 @@ public class Apache extends SupportActor{
 	private static final Dimension TEXTURE_SIZE = new Dimension(30, 30);
 	private boolean readyToAttack, exitingStage;
 	private float attackCounter, timeActive;
-	private IProjectileFactory projectileFactory;
+	private ProjectileFactory projectileFactory;
 	private FHDAudio audio;
 	private ITowerAI ai = new FirstEnemyAI();
 	private Animation movementAnimation;
 	private float movementAnimationStateTime;
 
-	public Apache(SupportActorPool<Apache> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion stationaryTextureRegion, TextureRegion [] textureRegions, TextureRegion rangeTexture, FHDAudio audio) {
+	public Apache(SupportActorPool<Apache> pool, Group targetGroup, ProjectileFactory projectileFactory, TextureRegion stationaryTextureRegion, TextureRegion [] textureRegions, TextureRegion rangeTexture, FHDAudio audio) {
 		super(pool, targetGroup, stationaryTextureRegion, TEXTURE_SIZE, rangeTexture, RANGE, ATTACK, GUN_POS, COST);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;

@@ -1,4 +1,4 @@
-package com.foxholedefense.util;
+package com.foxholedefense.util.datastructures;
 
 public class Dimension {
 	private float width;

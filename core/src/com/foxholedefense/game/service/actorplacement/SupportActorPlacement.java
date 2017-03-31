@@ -9,20 +9,21 @@ import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.support.Apache;
 import com.foxholedefense.game.model.actor.support.SupportActor;
 import com.foxholedefense.game.service.factory.ActorFactory;
+import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.util.Logger;
 
 public class SupportActorPlacement {
 	private SupportActor currentSupportActor;
 	private ActorGroups actorGroups;
-	private ActorFactory actorFactory;
-	public SupportActorPlacement(ActorGroups actorGroups, ActorFactory actorFactory) {
+	private SupportActorFactory supportActorFactory;
+	public SupportActorPlacement(ActorGroups actorGroups, SupportActorFactory supportActorFactory) {
 		this.actorGroups = actorGroups;
-		this.actorFactory = actorFactory;
+		this.supportActorFactory = supportActorFactory;
 	}
 
 	public void createSupportActor(String type) {
 		Logger.info("SupportActorPlacement: creating supply actor: " + type);
-		currentSupportActor = actorFactory.loadSupportActor(type);
+		currentSupportActor = supportActorFactory.loadSupportActor(type);
 		currentSupportActor.setPosition(0, 0);
 		if(type.equals("LandMine")){
 			actorGroups.getLandmineGroup().addActor(currentSupportActor);

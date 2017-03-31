@@ -1,33 +1,30 @@
 package com.foxholedefense.game.model.actor.support;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.GameActor;
-import com.foxholedefense.game.service.factory.ActorFactory.SupplyDropPool;
-import com.foxholedefense.game.service.factory.interfaces.ISupplyDropFactory;
+import com.foxholedefense.game.service.factory.SupportActorFactory.SupplyDropPool;
+import com.foxholedefense.game.service.factory.SupportActorFactory.SupplyDropCratePool;
 import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.Dimension;
-import com.foxholedefense.util.FHDVector2;
+import com.foxholedefense.util.datastructures.Dimension;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 public class SupplyDrop extends GameActor implements Pool.Poolable{
 	private static final float SUPPLYDROP_DURATION = 2f;
 	private static final Dimension TEXTURE_SIZE = new Dimension(178, 120);
 	private boolean active;
 	private SupplyDropPool pool;
-	private ISupplyDropFactory supplyDropFactory;
-	public SupplyDrop(TextureRegion textureRegion, SupplyDropPool pool, ISupplyDropFactory supplyDropFactory) {
+	private SupplyDropCratePool supplyDropCratePool;
+
+	public SupplyDrop(TextureRegion textureRegion, SupplyDropPool pool, SupplyDropCratePool supplyDropCratePool) {
 		super(textureRegion, TEXTURE_SIZE);
 		this.pool = pool;
-		this.supplyDropFactory = supplyDropFactory;
+		this.supplyDropCratePool = supplyDropCratePool;
 		setTextureRegion(textureRegion);
 	}
 	
@@ -42,7 +39,7 @@ public class SupplyDrop extends GameActor implements Pool.Poolable{
 		this.addAction(Actions.moveTo(moveToX, moveToY,  SUPPLYDROP_DURATION, Interpolation.linear));
 		float dropDelay = SUPPLYDROP_DURATION * ((x - (this.getWidth() / 4))/ Resources.VIRTUAL_WIDTH);
 		Logger.info("DropDelay: " + dropDelay);
-		supplyDropFactory.loadSupplyDropCrate().beginDrop(dropDelay,x, y).toBack();
+		supplyDropCratePool.obtain().beginDrop(dropDelay,x, y).toBack();
 	}
 	@Override
 	public void act(float delta) {
