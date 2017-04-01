@@ -29,7 +29,7 @@ public class Apache extends SupportActor{
 	private static final float TIME_ACTIVE_LIMIT = 10f;
 	private static final Dimension BULLET_SIZE = new Dimension(6,6);
 	private static final Vector2 GUN_POS = UtilPool.getVector2(0,0);
-	private static final Dimension TEXTURE_SIZE = new Dimension(30, 30);
+	private static final Dimension TEXTURE_SIZE = new Dimension(100, 73);
 	private boolean readyToAttack, exitingStage;
 	private float attackCounter, timeActive;
 	private ProjectileFactory projectileFactory;

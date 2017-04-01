@@ -5,12 +5,12 @@ package com.foxholedefense;
  */
 public interface IPlayServices
 {
-    public void signIn();
-    public void signOut();
-    public void rateGame();
-    public void unlockAchievement();
-    public void submitScore(int highScore);
-    public void showAchievement();
-    public void showScore();
-    public boolean isSignedIn();
+    void signIn();
+    void signOut();
+    void rateGame();
+    void unlockAchievement();
+    void submitScore(int highScore);
+    void showAchievement();
+    void showScore();
+    boolean isSignedIn();
 }

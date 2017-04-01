@@ -5,8 +5,8 @@ package com.foxholedefense.screen;
  */
 
 public interface IScreenChanger {
-    public void changeToMenu();
-    public void changeToLevelSelect();
-    public void changeToLevel(int level);
-    public void changeToLevelLoad(int level);
+    void changeToMenu();
+    void changeToLevelSelect();
+    void changeToLevel(int level);
+    void changeToLevelLoad(int level);
 }

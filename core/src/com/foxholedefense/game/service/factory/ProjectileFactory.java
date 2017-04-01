@@ -32,72 +32,10 @@ public class ProjectileFactory {
     private FHDAudio audio;
     private Resources resources;
 
-    private Map<String, TextureRegion> loadedTextures = new HashMap<String, TextureRegion>();
-    private Map<String, Array<TextureAtlas.AtlasRegion>> loadedAtlasRegions = new HashMap<String, Array<TextureAtlas.AtlasRegion>>();
-
     public ProjectileFactory(ActorGroups actorGroups, FHDAudio audio, Resources resources){
         this.actorGroups = actorGroups;
         this.audio = audio;
         this.resources = resources;
-
-        initTextures(resources.getAsset(Resources.ACTOR_ATLAS, TextureAtlas.class));
-
-    }
-
-
-    private void initTextures(TextureAtlas actorAtlas){
-
-        Logger.info("Projectile Factory: initializing textures");
-
-        loadedTextures.put("range-red", actorAtlas.findRegion("range-red"));
-        loadedTextures.put("range", actorAtlas.findRegion("range"));
-        loadedTextures.put("range-red-turret", actorAtlas.findRegion("range-red-turret"));
-        loadedTextures.put("range-turret", actorAtlas.findRegion("range-turret"));
-        loadedTextures.put("range-black", actorAtlas.findRegion("range-black"));
-        loadedTextures.put("airstrike", actorAtlas.findRegion("airstrike"));
-        loadedTextures.put("bullet", actorAtlas.findRegion("bullet"));
-        loadedTextures.put("healthbar-armor", actorAtlas.findRegion("healthbar-armor"));
-        loadedTextures.put("healthbar-bg", actorAtlas.findRegion("healthbar-bg"));
-        loadedTextures.put("healthbar-life", actorAtlas.findRegion("healthbar-life"));
-        loadedTextures.put("humvee", actorAtlas.findRegion("humvee"));
-        loadedTextures.put("landmine", actorAtlas.findRegion("landmine"));
-        loadedTextures.put("tower-rifle", actorAtlas.findRegion("tower-rifle"));
-        loadedTextures.put("tower-machine-gun", actorAtlas.findRegion("tower-machine-gun"));
-        loadedTextures.put("tower-sniper", actorAtlas.findRegion("tower-sniper"));
-        loadedTextures.put("tower-flame-thrower", actorAtlas.findRegion("tower-flame-thrower"));
-        loadedTextures.put("tower-rocket-launcher", actorAtlas.findRegion("tower-rocket-launcher"));
-        loadedTextures.put("tower-turret-turret", actorAtlas.findRegion("tower-turret-turret"));
-        loadedTextures.put("tower-turret-bags", actorAtlas.findRegion("tower-turret-bags"));
-        loadedTextures.put("tower-tank-body", actorAtlas.findRegion("tower-tank-body"));
-        loadedTextures.put("tower-tank-turret", actorAtlas.findRegion("tower-tank-turret"));
-        loadedTextures.put("enemy-rifle-stationary", actorAtlas.findRegion("enemy-rifle-stationary"));
-        loadedTextures.put("enemy-machine-gun-stationary", actorAtlas.findRegion("enemy-machine-gun-stationary"));
-        loadedTextures.put("enemy-sniper-stationary", actorAtlas.findRegion("enemy-sniper-stationary"));
-        loadedTextures.put("enemy-flame-thrower-stationary", actorAtlas.findRegion("enemy-flame-thrower-stationary"));
-        loadedTextures.put("enemy-rocket-launcher-stationary", actorAtlas.findRegion("enemy-rocket-launcher-stationary"));
-        loadedTextures.put("enemy-sprinter-stationary", actorAtlas.findRegion("enemy-sprinter-stationary"));
-        loadedTextures.put("enemy-tank-body", actorAtlas.findRegion("enemy-tank-body"));
-        loadedTextures.put("enemy-tank-turret", actorAtlas.findRegion("enemy-tank-turret"));
-        loadedTextures.put("enemy-humvee", actorAtlas.findRegion("enemy-humvee"));
-        loadedTextures.put("supply-drop", actorAtlas.findRegion("supply-drop"));
-        loadedTextures.put("supply-drop-crate", actorAtlas.findRegion("supply-drop-crate"));
-        loadedTextures.put("apache-stationary", actorAtlas.findRegion("apache",1));
-        loadedTextures.put("shield", actorAtlas.findRegion("shield"));
-
-        loadedAtlasRegions.put("explosion", actorAtlas.findRegions("explosion"));
-        loadedAtlasRegions.put("flame", actorAtlas.findRegions("flame"));
-        loadedAtlasRegions.put("blood-splatter", actorAtlas.findRegions("blood-splatter"));
-        loadedAtlasRegions.put("smoke-ring", actorAtlas.findRegions("smoke-ring"));
-        loadedAtlasRegions.put("enemy-rifle", actorAtlas.findRegions("enemy-rifle"));
-        loadedAtlasRegions.put("enemy-flame-thrower", actorAtlas.findRegions("enemy-flame-thrower"));
-        loadedAtlasRegions.put("enemy-sniper", actorAtlas.findRegions("enemy-sniper"));
-        loadedAtlasRegions.put("enemy-machine-gun", actorAtlas.findRegions("enemy-machine-gun"));
-        loadedAtlasRegions.put("enemy-rocket-launcher", actorAtlas.findRegions("enemy-rocket-launcher"));
-        loadedAtlasRegions.put("enemy-sprinter", actorAtlas.findRegions("enemy-sprinter"));
-        loadedAtlasRegions.put("apache", actorAtlas.findRegions("apache"));
-        loadedAtlasRegions.put("shield-destroyed", actorAtlas.findRegions("shield-destroyed"));
-
-        Logger.info("Projectile Factory: textures initialized");
     }
 
     /**
@@ -161,7 +99,7 @@ public class ProjectileFactory {
      * @return Bullet
      */
     protected Bullet createBulletActor() {
-        Bullet bullet = new Bullet(bulletPool, loadedTextures.get("bullet"));
+        Bullet bullet = new Bullet(bulletPool, resources.getTexture("bullet"));
         return bullet;
 
     }
@@ -172,7 +110,7 @@ public class ProjectileFactory {
      * @return RPG
      */
     protected RPG createRPGActor() {
-        RPG rpg = new RPG(rpgPool, explosionPool, loadedTextures.get("bullet"));
+        RPG rpg = new RPG(rpgPool, explosionPool, resources.getTexture("bullet"));
         return rpg;
 
     }
@@ -183,7 +121,7 @@ public class ProjectileFactory {
      * @return AirStrikeBomb
      */
     protected AirStrikeBomb createAirStrikeBombActor() {
-        AirStrikeBomb airStrikeBomb = new AirStrikeBomb(airStrikeBombPool, explosionPool, loadedTextures.get("bullet"));
+        AirStrikeBomb airStrikeBomb = new AirStrikeBomb(airStrikeBombPool, explosionPool, resources.getTexture("bullet"));
         return airStrikeBomb;
 
     }
@@ -194,7 +132,7 @@ public class ProjectileFactory {
      * @return Explosion
      */
     protected Explosion createExplosionActor() {
-        Array<TextureAtlas.AtlasRegion> atlasRegions = loadedAtlasRegions.get("explosion");
+        Array<TextureAtlas.AtlasRegion> atlasRegions = resources.getAtlasRegion("explosion");
         Explosion explosion = new Explosion(explosionPool, atlasRegions, audio);
         return explosion;
 
@@ -206,7 +144,7 @@ public class ProjectileFactory {
      * @return Flame
      */
     protected Flame createFlameActor() {
-        Array<TextureAtlas.AtlasRegion> atlasRegions = loadedAtlasRegions.get("flame");
+        Array<TextureAtlas.AtlasRegion> atlasRegions = resources.getAtlasRegion("flame");
         Flame flame = new Flame(flamePool, atlasRegions);
         return flame;
 

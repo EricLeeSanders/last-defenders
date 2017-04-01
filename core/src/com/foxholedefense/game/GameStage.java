@@ -26,6 +26,11 @@ import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
 import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
 import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
 import com.foxholedefense.game.service.actorplacement.TowerPlacement;
+import com.foxholedefense.game.service.factory.CombatActorFactory;
+import com.foxholedefense.game.service.factory.EffectFactory;
+import com.foxholedefense.game.service.factory.HealthFactory;
+import com.foxholedefense.game.service.factory.ProjectileFactory;
+import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
@@ -55,8 +60,13 @@ public class GameStage extends Stage implements IEnemyObserver{
 	private SupportActorPlacement supportActorPlacement;
 	private AirStrikePlacement airStrikePlacement;
 	private SupplyDropPlacement supplyDropPlacement;
-	private ActorFactory actorFactory;
 	private IMessageDisplayer messageDisplayer;
+	private CombatActorFactory combatActorFactory;
+	private HealthFactory healthFactory;
+	private ProjectileFactory projectileFactory;
+	private SupportActorFactory supportActorFactory;
+	private EffectFactory effectFactory;
+
 	public GameStage(int intLevel, Player player, ActorGroups actorGroups, FHDAudio audio,
 					 LevelStateManager levelStateManager, GameUIStateManager uiStateManager,
 					 Viewport viewport, Resources resources) {
@@ -67,15 +77,32 @@ public class GameStage extends Stage implements IEnemyObserver{
 		this.uiStateManager = uiStateManager;
 		this.intLevel = intLevel;
 		this.resources = resources;
-		createGroups();
 		TiledMap tiledMap = resources.getMap(intLevel);
 		map = new Map(tiledMap);
+		createGroups();
+		createFactories(audio);
+		createPlacementServices(map);
 		mapRenderer = new MapRenderer(tiledMap, getCamera());
-		actorFactory = new ActorFactory(actorGroups, resources.getAsset(Resources.ACTOR_ATLAS, TextureAtlas.class), audio, resources);
-		actorFactory.attachEnemyObserver(this);
-		level = new Level(intLevel, getActorGroups(),actorFactory, map);
-		createPlacementServices(actorFactory, map);
+		level = new Level(intLevel, getActorGroups(),combatActorFactory, healthFactory, map);
 
+	}
+
+	private void createFactories(FHDAudio audio){
+		effectFactory = new EffectFactory(actorGroups, resources);
+		healthFactory = new HealthFactory(actorGroups,resources,effectFactory);
+		projectileFactory = new ProjectileFactory(actorGroups, audio, resources);
+		supportActorFactory = new SupportActorFactory(actorGroups, audio, resources, effectFactory, projectileFactory);
+		combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory, healthFactory, projectileFactory);
+		combatActorFactory.attachEnemyObserver(this);
+	}
+
+	public void createPlacementServices(Map map){
+		Logger.info("Game Stage: creating placement services");
+		towerPlacement = new TowerPlacement(map, actorGroups, combatActorFactory, healthFactory);
+		supportActorPlacement = new SupportActorPlacement(actorGroups, supportActorFactory);
+		airStrikePlacement = new AirStrikePlacement(actorGroups, supportActorFactory);
+		supplyDropPlacement = new SupplyDropPlacement(supportActorFactory);
+		Logger.info("Game Stage: placement services created");
 	}
 
 	/**
@@ -88,15 +115,6 @@ public class GameStage extends Stage implements IEnemyObserver{
 		Logger.info("Game Stage: loading first wave");
 		level.loadWave();
 		Logger.info("Game Stage: first wave loaded");
-	}
-
-	public void createPlacementServices(ActorFactory actorFactory, Map map){
-		Logger.info("Game Stage: creating placement services");
-		towerPlacement = new TowerPlacement(map, actorGroups, actorFactory);
-		supportActorPlacement = new SupportActorPlacement(actorGroups, actorFactory);
-		airStrikePlacement = new AirStrikePlacement(actorGroups, actorFactory);
-		supplyDropPlacement = new SupplyDropPlacement(actorFactory);
-		Logger.info("Game Stage: placement services created");
 	}
 
 	/**
@@ -146,14 +164,10 @@ public class GameStage extends Stage implements IEnemyObserver{
 	 * Determine if the wave is over
 	 */
 	public boolean isWaveOver() {
-		if (getActorGroups().getEnemyGroup().getChildren().size <= 0
-			&& level.getSpawningEnemiesCount() <= 0
-			&& getActorGroups().getProjectileGroup().getChildren().size <= 0
-			&& !(levelStateManager.getState().equals(LevelState.GAME_OVER))) {
-
-				return true;
-		}
-		return false;
+		return getActorGroups().getEnemyGroup().getChildren().size <= 0
+				&& level.getSpawningEnemiesCount() <= 0
+				&& getActorGroups().getProjectileGroup().getChildren().size <= 0
+				&& !(levelStateManager.getState().equals(LevelState.GAME_OVER));
 
 	}
 
@@ -192,7 +206,7 @@ public class GameStage extends Stage implements IEnemyObserver{
 		for(Actor tower : actorGroups.getTowerGroup().getChildren()){
 			if (tower instanceof Tower){
 				if(((Tower)tower).isActive()) {
-					TowerHealEffect effect = actorFactory.loadTowerHealEffect();
+					TowerHealEffect effect = effectFactory.loadTowerHealEffect();
 					effect.initialize((Tower) tower);
 
 					((Tower) tower).heal();
@@ -218,15 +232,15 @@ public class GameStage extends Stage implements IEnemyObserver{
 
 
 	public void attachCombatObserver(ICombatActorObserver observer){
-		actorFactory.attachCombatObserver(observer);
+		combatActorFactory.attachCombatObserver(observer);
 	}
 
 	public void attachTowerObserver(ITowerObserver observer) {
-		actorFactory.attachTowerObserver(observer);
+		combatActorFactory.attachTowerObserver(observer);
 	}
 
 	public void attachEnemyObserver(IEnemyObserver observer) {
-		actorFactory.attachEnemyObserver(observer);
+		combatActorFactory.attachEnemyObserver(observer);
 	}
 
 	public ActorGroups getActorGroups() {

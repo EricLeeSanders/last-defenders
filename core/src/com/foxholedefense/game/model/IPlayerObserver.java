@@ -7,5 +7,5 @@ package com.foxholedefense.game.model;
  *
  */
 public interface IPlayerObserver {
-	public void playerAttributeChange();
+	void playerAttributeChange();
 }

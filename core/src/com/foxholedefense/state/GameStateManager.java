@@ -60,6 +60,6 @@ public class GameStateManager {
 	}
 
 	public enum GameState {
-		PLAY, PAUSE, QUIT;
+		PLAY, PAUSE, QUIT
 	}
 }

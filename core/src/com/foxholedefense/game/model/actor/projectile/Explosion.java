@@ -1,11 +1,7 @@
 package com.foxholedefense.game.model.actor.projectile;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
@@ -14,18 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.foxholedefense.FHDGame;
 import com.foxholedefense.game.GameStage;
 import com.foxholedefense.game.helper.Damage;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
-import com.foxholedefense.game.service.factory.ActorFactory;
-import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
-import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 
 /**

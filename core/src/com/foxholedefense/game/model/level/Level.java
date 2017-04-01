@@ -11,7 +11,6 @@ import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
-import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.game.service.factory.HealthFactory;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;

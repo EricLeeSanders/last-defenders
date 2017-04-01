@@ -60,6 +60,6 @@ public class LevelStateManager {
 	}
 
 	public enum LevelState {
-		WAVE_IN_PROGRESS, STANDBY, GAME_OVER;
+		WAVE_IN_PROGRESS, STANDBY, GAME_OVER
 	}
 }

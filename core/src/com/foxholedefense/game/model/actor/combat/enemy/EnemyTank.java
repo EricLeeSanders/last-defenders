@@ -122,8 +122,8 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 
 	@Override
 	protected void deathAnimation() {
-		effectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());;
-		
+		effectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());
+
 	}
 
 }

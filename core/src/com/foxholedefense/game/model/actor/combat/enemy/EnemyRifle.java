@@ -55,8 +55,8 @@ public class EnemyRifle extends Enemy {
 
 	@Override
 	protected void deathAnimation() {
-		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());;
-		
+		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());
+
 	}
 
 	@Override

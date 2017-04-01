@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.GameActor;
+import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory.SupplyDropPool;
 import com.foxholedefense.game.service.factory.SupportActorFactory.SupplyDropCratePool;
 import com.foxholedefense.util.ActorUtil;
@@ -19,12 +20,12 @@ public class SupplyDrop extends GameActor implements Pool.Poolable{
 	private static final Dimension TEXTURE_SIZE = new Dimension(178, 120);
 	private boolean active;
 	private SupplyDropPool pool;
-	private SupplyDropCratePool supplyDropCratePool;
+	private SupportActorFactory supportActorFactory;
 
-	public SupplyDrop(TextureRegion textureRegion, SupplyDropPool pool, SupplyDropCratePool supplyDropCratePool) {
+	public SupplyDrop(TextureRegion textureRegion, SupplyDropPool pool, SupportActorFactory supportActorFactory) {
 		super(textureRegion, TEXTURE_SIZE);
 		this.pool = pool;
-		this.supplyDropCratePool = supplyDropCratePool;
+		this.supportActorFactory = supportActorFactory;
 		setTextureRegion(textureRegion);
 	}
 	
@@ -39,7 +40,7 @@ public class SupplyDrop extends GameActor implements Pool.Poolable{
 		this.addAction(Actions.moveTo(moveToX, moveToY,  SUPPLYDROP_DURATION, Interpolation.linear));
 		float dropDelay = SUPPLYDROP_DURATION * ((x - (this.getWidth() / 4))/ Resources.VIRTUAL_WIDTH);
 		Logger.info("DropDelay: " + dropDelay);
-		supplyDropCratePool.obtain().beginDrop(dropDelay,x, y).toBack();
+		supportActorFactory.loadSupplyDropCrate().beginDrop(dropDelay,x, y).toBack();
 	}
 	@Override
 	public void act(float delta) {
