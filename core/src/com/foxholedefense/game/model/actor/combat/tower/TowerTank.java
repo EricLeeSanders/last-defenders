@@ -141,8 +141,8 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 
 	@Override
 	protected void deathAnimation() {
-		effectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());;
-		
+		effectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());
+
 	}
 
 }

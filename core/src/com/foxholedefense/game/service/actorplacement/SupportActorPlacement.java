@@ -1,14 +1,9 @@
 package com.foxholedefense.game.service.actorplacement;
 
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.SnapshotArray;
-import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.support.Apache;
 import com.foxholedefense.game.model.actor.support.SupportActor;
-import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.util.Logger;
 

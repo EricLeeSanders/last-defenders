@@ -64,8 +64,8 @@ public class TowerRifle extends Tower {
 
 	@Override
 	protected void deathAnimation() {
-		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());;
-		
+		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());
+
 	}
 
 	@Override

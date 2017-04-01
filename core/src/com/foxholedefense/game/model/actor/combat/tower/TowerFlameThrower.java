@@ -73,8 +73,8 @@ public class TowerFlameThrower extends Tower implements IFlame {
 
 	@Override
 	protected void deathAnimation() {
-		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());;
-		
+		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());
+
 	}
 
 	@Override

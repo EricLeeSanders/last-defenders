@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.foxholedefense.game.service.factory.SupportActorFactory.AirStrikeLocationPool;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 
@@ -13,11 +14,16 @@ public class AirStrikeLocation extends Actor {
 	private float radius;
 	private boolean showRange = true;
 	private TextureRegion rangeTexture;
+	private AirStrikeLocationPool pool;
 
-	public AirStrikeLocation(FHDVector2 location, float radius, TextureRegion rangeTexture) {
+	public AirStrikeLocation(AirStrikeLocationPool pool, TextureRegion rangeTexture) {
+		this.pool = pool;
+		this.rangeTexture = rangeTexture;
+	}
+
+	public void initialize(FHDVector2 location, float radius){
 		this.location = location;
 		this.radius = radius;
-		this.rangeTexture = rangeTexture;
 	}
 
 	@Override
@@ -55,6 +61,7 @@ public class AirStrikeLocation extends Actor {
 	@Override
 	public void clear () {
 		location.free();
+		pool.free(this);
 		super.clear();
 	}
 }

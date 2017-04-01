@@ -227,8 +227,8 @@ public class TowerTurret extends Tower implements IRotatable {
 
 	@Override
 	protected void deathAnimation() {
-		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());;
-		
+		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());
+
 	}
 
 }

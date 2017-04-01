@@ -10,5 +10,5 @@ import com.foxholedefense.game.model.actor.interfaces.IAttacker;
  */
 
 public interface ITowerAI {
-    public Enemy findTarget(IAttacker attacker, SnapshotArray<Actor> enemies);
+    Enemy findTarget(IAttacker attacker, SnapshotArray<Actor> enemies);
 }

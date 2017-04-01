@@ -50,8 +50,8 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 
 	@Override
 	protected void deathAnimation() {
-		effectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());;
-		
+		effectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());
+
 	}
 
 	@Override

@@ -6,9 +6,9 @@ package com.foxholedefense.game.model.actor.combat.tower;
 
 public interface ITowerObserver {
 
-    public void notifyTower(Tower tower, TowerEvent event);
+    void notifyTower(Tower tower, TowerEvent event);
 
-    public enum TowerEvent {
-        KILLED_ENEMY;
+    enum TowerEvent {
+        KILLED_ENEMY
     }
 }

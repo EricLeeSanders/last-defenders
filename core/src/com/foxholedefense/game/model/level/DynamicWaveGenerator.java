@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.enemy.*;
-import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
@@ -104,7 +103,7 @@ public class DynamicWaveGenerator {
 		for(int i = 0; i < n; i++){
 			String type = enemyClass.getSimpleName();
 			int randArmor = random.nextInt(3); //0-2
-			boolean armor = (randArmor == 0) ? true : false;
+			boolean armor = (randArmor == 0);
 			Enemy enemy = combatActorFactory.loadEnemy(type);
 			enemy.setPath(enemyPath);
 			enemy.setHasArmor(armor);

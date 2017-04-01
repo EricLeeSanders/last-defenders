@@ -2,15 +2,10 @@ package com.foxholedefense.game.model.actor.health;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.util.Logger;
-import com.foxholedefense.util.Resources;
 
 /**
  * Healthbar that is placed over Actors. Is only displayed when that actor has

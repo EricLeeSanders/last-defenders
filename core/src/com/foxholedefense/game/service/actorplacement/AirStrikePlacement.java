@@ -25,9 +25,8 @@ public class AirStrikePlacement {
 	}
 	public void addLocation(FHDVector2 location){
 		Logger.info("AirStrikePlacement: addLocation");
-		AirStrikeLocation airStrikeLocation = new AirStrikeLocation(location,AirStrike.AIRSTRIKE_RADIUS, actorFactory.getLoadedTextures().get("range-black") );
+		AirStrikeLocation airStrikeLocation = supportActorFactory.loadAirStrikeLocation(location, AirStrike.AIRSTRIKE_RADIUS);
 		currentAirStrike.addLocation(airStrikeLocation);
-		actorGroups.getSupportGroup().addActor(airStrikeLocation);
 	}
 	public void finishCurrentAirStrike() {
 		Logger.info("AirStrikePlacement: finishing current air strike");

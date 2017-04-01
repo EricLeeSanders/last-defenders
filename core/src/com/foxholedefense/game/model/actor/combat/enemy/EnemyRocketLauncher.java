@@ -57,8 +57,8 @@ public class EnemyRocketLauncher extends Enemy implements IRpg {
 
 	@Override
 	protected void deathAnimation() {
-		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());;
-		
+		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());
+
 	}
 
 	@Override

@@ -9,5 +9,5 @@ import static com.badlogic.gdx.Input.Keys.T;
  */
 
 public interface FHDPoolable extends Pool.Poolable{
-    public void free();
+    void free();
 }
