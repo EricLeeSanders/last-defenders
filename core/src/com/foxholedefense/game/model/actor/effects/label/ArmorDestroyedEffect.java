@@ -1,57 +1,50 @@
-package com.foxholedefense.game.model.actor.effects;
+package com.foxholedefense.game.model.actor.effects.label;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
+import com.foxholedefense.game.service.factory.EffectFactory.LabelEffectPool;
 import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.Resources;
 
 /**
  * Created by Eric on 1/6/2017.
  */
 
-public class ArmorDestroyedEffect extends Actor implements Pool.Poolable {
+public class ArmorDestroyedEffect extends LabelEffect {
 
     private static final float DURATION = 2;
+    private static final float SCALE = 0.35f;
+    private static final String MESSAGE = "ARMOR DESTROYED";
 
     private CombatActor actor = null;
-    private Pool<ArmorDestroyedEffect> pool;
     private Animation animation;
-    private Label label;
-    private float stateTime;
 
-    public ArmorDestroyedEffect(Array<AtlasRegion> regions, Pool<ArmorDestroyedEffect> pool, Label label){
+    public ArmorDestroyedEffect(Array<AtlasRegion> regions, LabelEffectPool<ArmorDestroyedEffect> pool, Skin skin){
+        super(pool, DURATION, skin);
         animation = new Animation(DURATION, regions);
         animation.setPlayMode(Animation.PlayMode.NORMAL);
-        this.pool = pool;
-        this.label = label;
 
-        label.setText("ARMOR DESTROYED");
-        label.setAlignment(Align.center);
-        label.setFontScale(0.3f);
+        setText(MESSAGE);
+        setAlignment(Align.center);
+        setFontScale(SCALE);
+
     }
 
     public Actor initialize(CombatActor actor){
         this.actor = actor;
-        label.setX(ActorUtil.calcXBotLeftFromCenter(actor.getPositionCenter().x, label.getWidth()));
-        label.setY(ActorUtil.calcYBotLeftFromCenter(actor.getPositionCenter().y, label.getHeight()));
+        setX(ActorUtil.calcXBotLeftFromCenter(actor.getPositionCenter().x, getWidth()));
+        setY(ActorUtil.calcYBotLeftFromCenter(actor.getPositionCenter().y, getHeight()));
 
-        this.getParent().addActor(label);
-
-        label.addAction(
+        addAction(
                 Actions.parallel(
-                        Actions.moveTo(label.getX(), label.getY() + 50, DURATION),
+                        Actions.moveTo(getX(), getY() + 50, DURATION),
                         Actions.fadeOut(DURATION)));
 
         return this;
@@ -59,6 +52,7 @@ public class ArmorDestroyedEffect extends Actor implements Pool.Poolable {
 
     @Override
     public void draw(Batch batch, float alpha) {
+        super.draw(batch, alpha);
         TextureRegion region = animation.getKeyFrame(stateTime, false);
 
         if (actor != null) {
@@ -71,25 +65,16 @@ public class ArmorDestroyedEffect extends Actor implements Pool.Poolable {
     public void act(float delta){
         super.act(delta);
         if (actor == null || actor.isDead() || !actor.isActive()){
-            pool.free(this);
+            free();
             return;
-        }
-
-        stateTime += delta;
-        if (animation.isAnimationFinished(stateTime)) {
-            pool.free(this);
         }
     }
 
     @Override
     public void reset() {
+        super.reset();
         this.actor = null;
-        this.remove();
-        stateTime = 0;
-        this.clear();
-        label.remove();
-        label.clear();
-        label.getColor().a = 1;
+        getColor().a = 1;
     }
 
 }

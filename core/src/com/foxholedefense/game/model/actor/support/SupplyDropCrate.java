@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.effects.TowerHealEffect;
+import com.foxholedefense.game.model.actor.effects.label.TowerHealEffect;
 import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory.SupplyDropCratePool;
 import com.foxholedefense.util.ActorUtil;
@@ -33,11 +33,12 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 	private TextureRegion rangeTexture;
 	public SupplyDropCrate(TextureRegion textureRegion, TextureRegion rangeTexture, SupplyDropCratePool pool,
 						   Group towerGroup, EffectFactory effectFactory) {
-		super(textureRegion, TEXTURE_SIZE);
+		super(TEXTURE_SIZE);
 		this.pool = pool;
 		this.towerGroup = towerGroup;
 		this.rangeTexture = rangeTexture;
 		this.effectFactory = effectFactory;
+		setTextureRegion(textureRegion);
 
 	}
 	
@@ -82,7 +83,7 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 				Tower tower = (Tower)actor;
 				if(CollisionDetection.targetWithinRange(tower.getBody(), getRangeShape())){
 					tower.heal();
-					TowerHealEffect effect = effectFactory.loadTowerHealEffect();
+					TowerHealEffect effect =  effectFactory.loadLabelEffect(TowerHealEffect.class);
 					effect.initialize(tower);
 
 				}

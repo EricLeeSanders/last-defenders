@@ -5,8 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.effects.ArmorDestroyedEffect;
+import com.foxholedefense.game.model.actor.effects.label.ArmorDestroyedEffect;
 import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.util.Logger;
 
@@ -62,8 +61,7 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
         // When the armor is broken, show the destroy effect
         if(!actor.hasArmor() && showDestroyEffect){
             showDestroyEffect = false;
-            ArmorDestroyedEffect effect = effectFactory.loadArmorDestroyedEffect();
-            this.getParent().addActor(effect);
+            ArmorDestroyedEffect effect =  effectFactory.loadLabelEffect(ArmorDestroyedEffect.class);
             effect.initialize(actor);
         }
 

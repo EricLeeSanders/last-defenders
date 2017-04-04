@@ -23,7 +23,7 @@ public class SupplyDrop extends GameActor implements Pool.Poolable{
 	private SupportActorFactory supportActorFactory;
 
 	public SupplyDrop(TextureRegion textureRegion, SupplyDropPool pool, SupportActorFactory supportActorFactory) {
-		super(textureRegion, TEXTURE_SIZE);
+		super(TEXTURE_SIZE);
 		this.pool = pool;
 		this.supportActorFactory = supportActorFactory;
 		setTextureRegion(textureRegion);

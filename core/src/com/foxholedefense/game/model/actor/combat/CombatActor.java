@@ -46,7 +46,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public CombatActor(TextureRegion textureRegion, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
 						float health, float armor, float attack, float attackSpeed, float range) {
 
-		super(textureRegion, textureSize);
+		super(textureSize);
 		this.MAX_HEALTH = health;
 		this.MAX_ARMOR = armor;
 		this.RESET_ATTACK = attack;
@@ -141,7 +141,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 	public void takeDamage(float damage) {
 		if (hasArmor()) {
-			if ((armor - damage) < 0) {
+			if ((armor - damage) <= 0) {
 				health = health - (damage - armor);
 				setHasArmor(false);
 			} else {
@@ -243,6 +243,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 			armor = 0;
 			notifyObserversCombatActor(CombatActorEvent.ARMOR_BROKEN);
 		}
+		resetArmor();
 		this.hasArmor = hasArmor;
 	}
 

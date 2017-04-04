@@ -122,6 +122,7 @@ public class Resources {
 		loadedAtlasRegions.put("enemy-sprinter", actorAtlas.findRegions("enemy-sprinter"));
 		loadedAtlasRegions.put("apache", actorAtlas.findRegions("apache"));
 		loadedAtlasRegions.put("shield-destroyed", actorAtlas.findRegions("shield-destroyed"));
+		loadedAtlasRegions.put("coin", actorAtlas.findRegions("coin"));
 
 		Logger.info("Resources: textures initialized");
 	}
