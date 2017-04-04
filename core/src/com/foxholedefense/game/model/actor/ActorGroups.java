@@ -1,8 +1,6 @@
 package com.foxholedefense.game.model.actor;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Disposable;
 
 /**
  * A class that holds all of the various Actor Groups that are placed on the
@@ -12,23 +10,17 @@ import com.badlogic.gdx.utils.Disposable;
  *
  */
 public class ActorGroups{
-	private final Group projectileGroup;
-	private final Group enemyGroup;
-	private final Group towerGroup;
-	private final Group healthBarGroup;
-	private final Group supportGroup;
-	private final Group landmineGroup;
-	private final Group deathEffectGroup;
+	private final Group projectileGroup = new Group();
+	private final Group enemyGroup = new Group();
+	private final Group towerGroup = new Group();
+	private final Group healthBarGroup = new Group();
+	private final Group supportGroup = new Group();
+	private final Group landmineGroup = new Group();
+	private final Group deathEffectGroup = new Group();
+	private final Group effectGroup = new Group();
 	
 	public ActorGroups(){
-		projectileGroup = new Group();
-		enemyGroup = new Group();
-		towerGroup = new Group();
-		healthBarGroup = new Group();
-		supportGroup = new Group();
-		landmineGroup = new Group();
-		deathEffectGroup = new Group();
-		
+
 		projectileGroup.setTransform(false);
 		enemyGroup.setTransform(false);
 		towerGroup.setTransform(false);
@@ -36,6 +28,7 @@ public class ActorGroups{
 		supportGroup.setTransform(false);
 		landmineGroup.setTransform(false);
 		deathEffectGroup.setTransform(false);
+		effectGroup.setTransform(false);
 	}
 
 	public Group getProjectileGroup() {
@@ -64,6 +57,10 @@ public class ActorGroups{
 
 	public Group getDeathEffectGroup() {
 		return deathEffectGroup;
+	}
+
+	public Group getEffectGroup() {
+		return effectGroup;
 	}
 
 

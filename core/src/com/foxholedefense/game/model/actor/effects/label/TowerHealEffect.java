@@ -1,45 +1,35 @@
-package com.foxholedefense.game.model.actor.effects;
+package com.foxholedefense.game.model.actor.effects.label;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
+import com.foxholedefense.game.service.factory.EffectFactory.LabelEffectPool;
 import com.foxholedefense.util.ActorUtil;
 
 /**
  * Created by Eric on 1/6/2017.
  */
 
-public class TowerHealEffect extends Label implements Pool.Poolable {
+public class TowerHealEffect extends LabelEffect {
 
     private static final float DURATION = 2;
+    private static final float SCALE = 0.3f;
+    private static final String MESSAGE = "+ HEALTH";
 
     private Tower tower = null;
-    private Pool<TowerHealEffect> pool;
-    private float stateTime;
 
-    public TowerHealEffect(Pool<TowerHealEffect> pool, Skin skin){
+    public TowerHealEffect(LabelEffectPool<TowerHealEffect> pool, Skin skin){
+        super(pool, DURATION, skin);
 
-        super("+ HEALTH", skin);
-        this.pool = pool;
-        this.setSize(24,24);
-
-
-        this.setAlignment(Align.center);
-        Label.LabelStyle style = new Label.LabelStyle(getStyle());
+        setText(MESSAGE);
+        setAlignment(Align.center);
+        LabelStyle style = new LabelStyle(getStyle());
         style.fontColor = Color.GREEN;
         setStyle(style);
-        setFontScale(0.3f);
+        setFontScale(SCALE);
     }
 
 
@@ -51,7 +41,7 @@ public class TowerHealEffect extends Label implements Pool.Poolable {
 
         setPosition(x, y );
 
-        this.addAction(
+        addAction(
                 Actions.parallel(
                         Actions.moveTo(getX(), getY() + 50, DURATION),
                         Actions.fadeOut(DURATION)));
@@ -63,19 +53,15 @@ public class TowerHealEffect extends Label implements Pool.Poolable {
     public void act(float delta){
         super.act(delta);
         if (stateTime >= DURATION || tower == null || tower.isDead()) {
-            pool.free(this);
+            free();
             return;
         }
-
-        stateTime += delta;
     }
 
     @Override
     public void reset() {
-        this.remove();
+        super.reset();
         this.tower = null;
-        stateTime = 0;
-        this.clear();
         getColor().a = 1;
     }
 

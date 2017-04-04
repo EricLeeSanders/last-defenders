@@ -1,13 +1,8 @@
 package com.foxholedefense.game;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.ParallelAction;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
@@ -16,8 +11,8 @@ import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.enemy.IEnemyObserver;
 import com.foxholedefense.game.model.actor.combat.tower.ITowerObserver;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.effects.ArmorDestroyedEffect;
-import com.foxholedefense.game.model.actor.effects.TowerHealEffect;
+import com.foxholedefense.game.model.actor.effects.label.LevelOverPaymentEffect;
+import com.foxholedefense.game.model.actor.effects.label.TowerHealEffect;
 import com.foxholedefense.game.model.level.Level;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
@@ -129,6 +124,7 @@ public class GameStage extends Stage implements IEnemyObserver{
 		this.addActor(getActorGroups().getProjectileGroup());
 		this.addActor(getActorGroups().getHealthGroup());
 		this.addActor(getActorGroups().getSupportGroup());
+		this.addActor(getActorGroups().getEffectGroup());
 		Logger.info("Game Stage: groups created");
 	}
 
@@ -179,9 +175,9 @@ public class GameStage extends Stage implements IEnemyObserver{
 		player.setWaveCount(player.getWaveCount() + 1);
 		if(isLevelCompleted()){
 			levelComleted();
-		} else {
-			messageDisplayer.displayMessage("+ " + money, .75f, Color.YELLOW);
 		}
+		LevelOverPaymentEffect levelOverPaymentEffect = effectFactory.loadLabelEffect(LevelOverPaymentEffect.class);
+		levelOverPaymentEffect.initialize(money);
 		level.loadWave(); //load the next wave
 		healTowers();
 	}
@@ -206,7 +202,7 @@ public class GameStage extends Stage implements IEnemyObserver{
 		for(Actor tower : actorGroups.getTowerGroup().getChildren()){
 			if (tower instanceof Tower){
 				if(((Tower)tower).isActive()) {
-					TowerHealEffect effect = effectFactory.loadTowerHealEffect();
+					TowerHealEffect effect = effectFactory.loadLabelEffect(TowerHealEffect.class);
 					effect.initialize((Tower) tower);
 
 					((Tower) tower).heal();
