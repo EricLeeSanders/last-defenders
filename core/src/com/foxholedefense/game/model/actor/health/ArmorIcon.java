@@ -18,12 +18,9 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
     private TextureRegion icon;
     private CombatActor actor = null;
     private Pool<ArmorIcon> pool;
-    private EffectFactory effectFactory;
-    private boolean showDestroyEffect;
-    public ArmorIcon(Pool<ArmorIcon> pool, TextureRegion icon, EffectFactory effectFactory){
+    public ArmorIcon(Pool<ArmorIcon> pool, TextureRegion icon){
         this.pool = pool;
         this.icon = icon;
-        this.effectFactory = effectFactory;
     }
 
     @Override
@@ -51,20 +48,6 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
             return;
         }
 
-        // If the actor is given armor and
-        // showDestroyEffect has not been set to true
-        // change it to true
-        if(!showDestroyEffect && actor.hasArmor()) {
-            showDestroyEffect = true;
-        }
-
-        // When the armor is broken, show the destroy effect
-        if(!actor.hasArmor() && showDestroyEffect){
-            showDestroyEffect = false;
-            ArmorDestroyedEffect effect =  effectFactory.loadLabelEffect(ArmorDestroyedEffect.class);
-            effect.initialize(actor);
-        }
-
     }
 
     public void setActor(CombatActor actor) {
@@ -79,7 +62,6 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
         Logger.info("ArmorIcon: resetting");
         this.actor = null;
         this.remove();
-        showDestroyEffect = false;
 
     }
 }
