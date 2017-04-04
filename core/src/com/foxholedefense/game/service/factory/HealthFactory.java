@@ -21,12 +21,10 @@ public class HealthFactory {
     private HealthPool healthPool = new HealthPool();
 
     private ActorGroups actorGroups;
-    private EffectFactory effectFactory;
     private Resources resources;
 
-    public HealthFactory(ActorGroups actorGroups, Resources resources, EffectFactory effectFactory){
+    public HealthFactory(ActorGroups actorGroups, Resources resources){
         this.actorGroups = actorGroups;
-        this.effectFactory = effectFactory;
         this.resources = resources;
     }
 
@@ -57,7 +55,7 @@ public class HealthFactory {
 
     protected ArmorIcon createArmorIcon(){
         Logger.info("Actor Factory: creating ArmorIcon");
-        return new ArmorIcon(armorIconPool, resources.getTexture("shield"), effectFactory);
+        return new ArmorIcon(armorIconPool, resources.getTexture("shield"));
     }
 
     public class HealthPool extends Pool<HealthBar> {
