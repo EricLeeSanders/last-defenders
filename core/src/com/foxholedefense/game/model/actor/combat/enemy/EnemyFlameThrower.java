@@ -40,7 +40,7 @@ public class EnemyFlameThrower extends Enemy implements IFlame {
 	private FHDAudio audio;
 	private ProjectileFactory projectileFactory;
 
-	public EnemyFlameThrower(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, ProjectileFactory projectileFactory, FHDAudio audio) {
+	public EnemyFlameThrower(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<EnemyFlameThrower> pool, Group targetGroup, ProjectileFactory projectileFactory, FHDAudio audio) {
 		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;

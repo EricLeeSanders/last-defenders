@@ -39,20 +39,20 @@ import java.util.Map;
  */
 
 public class CombatActorFactory {
-    private CombatActorPool<CombatActor> towerRiflePool = new CombatActorPool<CombatActor>(TowerRifle.class);
-    private CombatActorPool<CombatActor> towerTankPool = new CombatActorPool<CombatActor>(TowerTank.class);
-    private CombatActorPool<CombatActor> towerFlameThrowerPool = new CombatActorPool<CombatActor>(TowerFlameThrower.class);
-    private CombatActorPool<CombatActor> towerTurretPool = new CombatActorPool<CombatActor>(TowerTurret.class);
-    private CombatActorPool<CombatActor> towerSniperPool = new CombatActorPool<CombatActor>(TowerSniper.class);
-    private CombatActorPool<CombatActor> towerMachinePool = new CombatActorPool<CombatActor>(TowerMachineGun.class);
-    private CombatActorPool<CombatActor> towerRocketLauncherPool = new CombatActorPool<CombatActor>(TowerRocketLauncher.class);
-    private CombatActorPool<CombatActor> enemyRiflePool = new CombatActorPool<CombatActor>(EnemyRifle.class);
-    private CombatActorPool<CombatActor> enemyTankPool = new CombatActorPool<CombatActor>(EnemyTank.class);
-    private CombatActorPool<CombatActor> enemyFlameThrowerPool = new CombatActorPool<CombatActor>(EnemyFlameThrower.class);
-    private CombatActorPool<CombatActor> enemyMachinePool = new CombatActorPool<CombatActor>(EnemyMachineGun.class);
-    private CombatActorPool<CombatActor> enemyRocketLauncherPool = new CombatActorPool<CombatActor>(EnemyRocketLauncher.class);
-    private CombatActorPool<CombatActor> enemySniperPool = new CombatActorPool<CombatActor>(EnemySniper.class);
-    private CombatActorPool<CombatActor> enemyHumveePool = new CombatActorPool<CombatActor>(EnemyHumvee.class);
+    private CombatActorPool<TowerRifle> towerRiflePool = new CombatActorPool<TowerRifle>(TowerRifle.class);
+    private CombatActorPool<TowerTank> towerTankPool = new CombatActorPool<TowerTank>(TowerTank.class);
+    private CombatActorPool<TowerFlameThrower> towerFlameThrowerPool = new CombatActorPool<TowerFlameThrower>(TowerFlameThrower.class);
+    private CombatActorPool<TowerTurret> towerTurretPool = new CombatActorPool<TowerTurret>(TowerTurret.class);
+    private CombatActorPool<TowerSniper> towerSniperPool = new CombatActorPool<TowerSniper>(TowerSniper.class);
+    private CombatActorPool<TowerMachineGun> towerMachinePool = new CombatActorPool<TowerMachineGun>(TowerMachineGun.class);
+    private CombatActorPool<TowerRocketLauncher> towerRocketLauncherPool = new CombatActorPool<TowerRocketLauncher>(TowerRocketLauncher.class);
+    private CombatActorPool<EnemyRifle> enemyRiflePool = new CombatActorPool<EnemyRifle>(EnemyRifle.class);
+    private CombatActorPool<EnemyTank> enemyTankPool = new CombatActorPool<EnemyTank>(EnemyTank.class);
+    private CombatActorPool<EnemyFlameThrower> enemyFlameThrowerPool = new CombatActorPool<EnemyFlameThrower>(EnemyFlameThrower.class);
+    private CombatActorPool<EnemyMachineGun> enemyMachinePool = new CombatActorPool<EnemyMachineGun>(EnemyMachineGun.class);
+    private CombatActorPool<EnemyRocketLauncher> enemyRocketLauncherPool = new CombatActorPool<EnemyRocketLauncher>(EnemyRocketLauncher.class);
+    private CombatActorPool<EnemySniper> enemySniperPool = new CombatActorPool<EnemySniper>(EnemySniper.class);
+    private CombatActorPool<EnemyHumvee> enemyHumveePool = new CombatActorPool<EnemyHumvee>(EnemyHumvee.class);
 
     private SnapshotArray<ICombatActorObserver> combatActorObservers = new SnapshotArray<ICombatActorObserver>();
     private SnapshotArray<ITowerObserver> towerObservers = new SnapshotArray<ITowerObserver>();
@@ -124,7 +124,6 @@ public class CombatActorFactory {
      * @return Enemy
      */
     public Enemy loadEnemy(String type) {
-
         Logger.info("Combat Actor Factory: loading Enemy: " + type);
 
         Enemy enemy = null;

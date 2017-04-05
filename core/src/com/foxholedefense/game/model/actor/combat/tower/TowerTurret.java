@@ -60,7 +60,7 @@ public class TowerTurret extends Tower implements IRotatable {
 	private ProjectileFactory projectileFactory;
 	private TextureRegion rangeRegion, collidingRangeRegion;
 
-	public TowerTurret(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
+	public TowerTurret(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<TowerTurret> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
 		super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
 		this.bodyRegion = bodyRegion;
 		this.audio = audio;

@@ -45,7 +45,7 @@ public class TowerRocketLauncher extends Tower implements IRpg {
 	private FHDAudio audio;
 	private ProjectileFactory projectileFactory;
 
-	public TowerRocketLauncher(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
+	public TowerRocketLauncher(TextureRegion actorRegion, CombatActorPool<TowerRocketLauncher> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
 		super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
