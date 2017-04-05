@@ -57,7 +57,7 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	private float bodyRotation;
 	private ProjectileFactory projectileFactory;
 
-	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory) {
+	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<TowerTank> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory) {
 		super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
 		this.bodyRegion = bodyRegion;
 		this.turretRegion = turretRegion;
