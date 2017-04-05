@@ -35,10 +35,12 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  */
 public abstract class Enemy extends CombatActor {
 	private static final float MOVEMENT_DELAY = 1f; // The delay to wait after
+	private static final float FRAME_DURATION = 0.3f;
 	private Random random = new Random();
 	private float findTargetDelay = 2f;
 	private Pool<CombatActor> pool;
-	private float speed; // number of pixels it moves in a second
+	private float speed;
+	private int killReward;
 	private float findTargetCounter = 0;
 	private float attackCounter = 100; //Ready to attack
 	private boolean attacking;
@@ -52,13 +54,14 @@ public abstract class Enemy extends CombatActor {
 	private SnapshotArray<IEnemyObserver> observers = new SnapshotArray<IEnemyObserver>();
 
 	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, Dimension textureSize, CombatActorPool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
-				 float speed, float health, float armor, float attack, float attackSpeed, float range, DeathEffectType deathEffectType) {
+				 float speed, float health, float armor, float attack, float attackSpeed, float range, int killReward, DeathEffectType deathEffectType) {
 		super(stationaryTextureRegion, textureSize, pool, targetGroup, gunPos, health, armor, attack, attackSpeed, range, deathEffectType);
-		movementAnimation = new Animation(0.3f, animatedRegions);
+		movementAnimation = new Animation(FRAME_DURATION, animatedRegions);
 		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		this.speed = speed;
 		this.pool = pool;
 		this.stationaryTextureRegion = stationaryTextureRegion;
+		this.killReward = killReward;
 	}
 
 	public void detachEnemy(IEnemyObserver observer){
@@ -288,6 +291,10 @@ public abstract class Enemy extends CombatActor {
 			calcLengthToEnd();
 		}
 		return lengthToEnd;
+	}
+
+	public int getKillReward(){
+		return killReward;
 	}
 
 }

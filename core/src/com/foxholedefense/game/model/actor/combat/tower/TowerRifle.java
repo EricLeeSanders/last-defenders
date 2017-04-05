@@ -22,17 +22,17 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  */
 public class TowerRifle extends Tower {
 
-	public static float HEALTH = 8;
-	public static float ARMOR = 4;
-	public static float ATTACK = 4;
-	public static float ATTACK_SPEED = 0.8f;
-	public static float RANGE = 50;
+	private static float HEALTH = 8;
+	private static float ARMOR = 4;
+	private static float ATTACK = 4;
+	private static float ATTACK_SPEED = 0.8f;
+	private static float RANGE = 50;
 
 	public static final int COST = 200;
-	public static final int ARMOR_COST = 100;
-	public static final int RANGE_INCREASE_COST = 50;
-	public static final int SPEED_INCREASE_COST = 50;
-	public static final int ATTACK_INCREASE_COST = 50;
+	private static final int ARMOR_COST = 100;
+	private static final int RANGE_INCREASE_COST = 50;
+	private static final int SPEED_INCREASE_COST = 50;
+	private static final int ATTACK_INCREASE_COST = 50;
 
 	private static final Dimension BULLET_SIZE = new Dimension(5, 5);
 	private static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);

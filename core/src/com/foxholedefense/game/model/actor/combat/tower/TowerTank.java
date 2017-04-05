@@ -31,18 +31,18 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  */
 public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatable, IRpg  {
 
-	public static final float HEALTH = 20;
-	public static final float ARMOR = 10;
-	public static final float ATTACK = 10;
-	public static final float ATTACK_SPEED = 0.9f;
-	public static final float RANGE = 80;
-	public static final float AOE_RADIUS = 75f;
+	private static final float HEALTH = 20;
+	private static final float ARMOR = 10;
+	private static final float ATTACK = 10;
+	private static final float ATTACK_SPEED = 0.9f;
+	private static final float RANGE = 80;
+	private static final float AOE_RADIUS = 75f;
 
 	public static final int COST = 1500;
-	public static final int ARMOR_COST = 1200;
-	public static final int RANGE_INCREASE_COST = 650;
-	public static final int SPEED_INCREASE_COST = 650;
-	public static final int ATTACK_INCREASE_COST = 650;
+	private static final int ARMOR_COST = 1200;
+	private static final int RANGE_INCREASE_COST = 650;
+	private static final int SPEED_INCREASE_COST = 650;
+	private static final int ATTACK_INCREASE_COST = 650;
 
 	private static final Dimension RPG_SIZE = new Dimension(7, 7);
 	private static final Vector2 GUN_POS = UtilPool.getVector2(57, 0);

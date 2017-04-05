@@ -31,17 +31,17 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  */
 public class TowerTurret extends Tower implements IRotatable {
 
-	public static final float HEALTH = 14;
-	public static final float ARMOR = 10;
-	public static final float ATTACK = 3;
-	public static final float ATTACK_SPEED = .2f;
-	public static final float RANGE = 70;
+	private static final float HEALTH = 14;
+	private static final float ARMOR = 10;
+	private static final float ATTACK = 3;
+	private static final float ATTACK_SPEED = .2f;
+	private static final float RANGE = 70;
 
 	public static final int COST = 1300;
-	public static final int ARMOR_COST = 900;
-	public static final int RANGE_INCREASE_COST = 500;
-	public static final int SPEED_INCREASE_COST = 500;
-	public static final int ATTACK_INCREASE_COST = 500;
+	private static final int ARMOR_COST = 900;
+	private static final int RANGE_INCREASE_COST = 500;
+	private static final int SPEED_INCREASE_COST = 500;
+	private static final int ATTACK_INCREASE_COST = 500;
 
 	private static final Dimension BULLET_SIZE = new Dimension(5, 5);
 	private static final Vector2 GUN_POS = UtilPool.getVector2(8,0);
@@ -69,7 +69,6 @@ public class TowerTurret extends Tower implements IRotatable {
 		this.rangeRegion = rangeRegion;
 		this.collidingRangeRegion = collidingRangeRegion;
 
-
 		createRangeCoords();
 		rangePoly = new Polygon(rangeCoords);
 	}
@@ -81,7 +80,6 @@ public class TowerTurret extends Tower implements IRotatable {
 		rangeCoords[3] = RANGE;
 		rangeCoords[4] = RANGE;
 		rangeCoords[5] = 0;
-
 	}
 
 	/**

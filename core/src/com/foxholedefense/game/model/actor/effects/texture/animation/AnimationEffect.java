@@ -16,10 +16,10 @@ import com.foxholedefense.util.datastructures.Dimension;
 public class AnimationEffect extends TextureEffect {
     private Animation animation;
 
-    public AnimationEffect(Pool<TextureEffect> pool, Array<AtlasRegion> regions, Dimension textureSize, float frameDuration) {
-        super(pool,textureSize,frameDuration * regions.size);
+    public AnimationEffect(Pool<TextureEffect> pool, Array<AtlasRegion> regions, Dimension textureSize, PlayMode playMode, float duration, float frameDuration) {
+        super(pool, textureSize, duration);
         animation = new Animation(frameDuration, regions);
-        animation.setPlayMode(PlayMode.NORMAL);
+        animation.setPlayMode(playMode);
     }
 
     public void initialize(Vector2 pos){
@@ -28,7 +28,8 @@ public class AnimationEffect extends TextureEffect {
 
     @Override
     public void act(float delta) {
-        if (animation.isAnimationFinished(stateTime)) {
+        if (animation.getPlayMode() != PlayMode.LOOP &&
+                animation.isAnimationFinished(stateTime)) {
             free();
             return;
         }

@@ -21,12 +21,13 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  */
 public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 
-	public static final float HEALTH = 16;
-	public static final float ARMOR = 8;
-	public static final float ATTACK = 0;
-	public static final float ATTACK_SPEED = 0f;
-	public static final float RANGE = 0;
-	public static final float SPEED = 140f;
+	private static final float HEALTH = 16;
+	private static final float ARMOR = 8;
+	private static final float ATTACK = 0;
+	private static final float ATTACK_SPEED = 0f;
+	private static final float RANGE = 0;
+	private static final float SPEED = 140f;
+	private static final int KILL_REWARD = 15;
 
 	private static final Vector2 GUN_POS = UtilPool.getVector2();
 	private static final Dimension TEXTURE_SIZE = new Dimension(74, 32);
@@ -36,7 +37,7 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 	private Polygon body;
 	
 	public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool) {
-		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, null, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, DEATH_EFFECT_TYPE);
+		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, null, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
 		this.body = new Polygon(bodyPoints);
 	}
 

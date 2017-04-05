@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.effects.texture.animation.AnimationEffect;
 import com.foxholedefense.game.model.actor.effects.texture.TextureEffect;
+import com.foxholedefense.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.effects.label.ArmorDestroyedEffect;
 import com.foxholedefense.game.model.actor.effects.label.LabelEffect;
@@ -26,7 +27,7 @@ public class EffectFactory {
     private LabelEffectPool<ArmorDestroyedEffect> armorDestroyedEffectPool = new LabelEffectPool<ArmorDestroyedEffect>(ArmorDestroyedEffect.class);
     private LabelEffectPool<TowerHealEffect> towerHealEffectPool = new LabelEffectPool<TowerHealEffect>(TowerHealEffect.class);
     private LabelEffectPool<LevelOverPaymentEffect> levelOverPaymentEffectPool = new LabelEffectPool<LevelOverPaymentEffect>(LevelOverPaymentEffect.class);
-   // private AnimationEffectPool<EnemyCoinEffect> enemyCoinEffectPool = new AnimationEffectPool<EnemyCoinEffect>(EnemyCoinEffect.class);
+    private AnimationEffectPool<EnemyCoinEffect> enemyCoinEffectPool = new AnimationEffectPool<EnemyCoinEffect>(EnemyCoinEffect.class);
 
     private ActorGroups actorGroups;
     private Resources resources;
@@ -38,10 +39,10 @@ public class EffectFactory {
     /**
      * Obtains a Death Effect from the pool
      *
-     * @param type - The type of Death Effect
-     * @return DeathEffect
+     * @param type
+     * @param <T>
      */
-    public <T extends AnimationEffect> T loadDeathEffect(DeathEffectType type){
+    public <T extends DeathEffect> T loadDeathEffect(DeathEffectType type){
 
         T deathEffect = null;
         switch(type) {
@@ -60,8 +61,8 @@ public class EffectFactory {
     /**
      * Obtains a Label Effect from the pool
      *
-     * @param type - The type of Label Effect
-     * @return LabelEffect
+     * @param type
+     * @param <T>
      */
     public <T extends LabelEffect> T loadLabelEffect(Class<T> type){
 
@@ -75,6 +76,22 @@ public class EffectFactory {
         }
         actorGroups.getEffectGroup().addActor(labelEffect);
         return labelEffect;
+    }
+
+    /**
+     * Obtains an Animation Effect from the pool
+     *
+     * @param type
+     * @param <T>
+     */
+    public <T extends AnimationEffect> T loadAnimationEffect(Class<T> type){
+
+        T animationEffect = null;
+        if(type.equals(EnemyCoinEffect.class)){
+            animationEffect = (T) enemyCoinEffectPool.obtain();
+        }
+        actorGroups.getEffectGroup().addActor(animationEffect);
+        return animationEffect;
     }
 
     /**
@@ -110,11 +127,20 @@ public class EffectFactory {
         }
     }
 
+    protected AnimationEffect createAnimationEffect(Class<? extends AnimationEffect> type){
+        if(type.equals(EnemyCoinEffect.class)){
+            Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("coin");
+            return new EnemyCoinEffect(enemyCoinEffectPool, atlasRegions);
+        } else{
+            throw new NullPointerException("Effect Factory couldn't create: " + type.getSimpleName());
+        }
+    }
 
-    public class DeathEffectPool<T extends TextureEffect> extends Pool<TextureEffect> {
-        private final Class<? extends TextureEffect> type;
 
-        public DeathEffectPool(Class<? extends TextureEffect> type) {
+    public class DeathEffectPool<T extends DeathEffect> extends Pool<TextureEffect> {
+        private final Class<? extends DeathEffect> type;
+
+        public DeathEffectPool(Class<? extends DeathEffect> type) {
             this.type = type;
         }
 
@@ -138,17 +164,17 @@ public class EffectFactory {
         }
     }
 
-//    public class AnimationEffectPool<T extends FHDEffect> extends Pool<FHDEffect> {
-//        private final Class<? extends FHDEffect> type;
-//
-//        public AnimationEffectPool(Class<? extends FHDEffect> type) {
-//            this.type = type;
-//        }
-//
-//        @Override
-//        protected FHDEffect newObject() {
-//            return createLabelEffect(type);
-//        }
-//    }
+    public class AnimationEffectPool<T extends AnimationEffect> extends Pool<TextureEffect> {
+        private final Class<? extends AnimationEffect> type;
+
+        public AnimationEffectPool(Class<? extends AnimationEffect> type) {
+            this.type = type;
+        }
+
+        @Override
+        protected AnimationEffect newObject() {
+            return createAnimationEffect(type);
+        }
+    }
 }
 
