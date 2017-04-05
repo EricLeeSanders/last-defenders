@@ -27,8 +27,10 @@ import com.foxholedefense.game.ui.view.GameOverView;
 import com.foxholedefense.game.ui.view.HUDView;
 import com.foxholedefense.game.ui.view.InspectView;
 import com.foxholedefense.game.ui.view.LevelCompletedView;
+import com.foxholedefense.game.ui.view.MessageDisplayer;
 import com.foxholedefense.game.ui.view.OptionsView;
 import com.foxholedefense.game.ui.view.SupportView;
+import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.FHDAudio;
@@ -50,6 +52,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	private Group towerGroup;
 	private InputMultiplexer imp;
 	private Resources resources;
+	private MessageDisplayer messageDisplayer;
 
 	public GameUIStage(Player player, Group towerGroup
 			, GameUIStateManager uiStateManager, LevelStateManager levelStateManager
@@ -82,17 +85,19 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		HUDView hudView = new HUDView(hudPresenter, skin, resources);
 		hudPresenter.setView(hudView);
 
-		EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio,  gameStage.getTowerPlacement(), hudPresenter);
+		messageDisplayer = new MessageDisplayer(skin);
+
+		EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio,  gameStage.getTowerPlacement(), messageDisplayer);
 		EnlistView enlistView = new EnlistView(enlistPresenter, skin);
 		enlistPresenter.setView(enlistView);
 
 		SupportPresenter supportPresenter = new SupportPresenter(uiStateManager, player, audio
 				, gameStage.getSupportActorPlacement(),  gameStage.getAirStrikePlacement(),  gameStage.getSupplyDropPlacement()
-				, hudPresenter);
+				, messageDisplayer);
 		SupportView supportView = new SupportView(supportPresenter, skin);
 		supportPresenter.setView(supportView);
 
-		InspectPresenter inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager, player, towerGroup, audio, hudPresenter);
+		InspectPresenter inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager, player, towerGroup, audio, messageDisplayer);
 		InspectView inspectView = new InspectView(inspectPresenter, skin);
 		inspectPresenter.setView(inspectView);
 
@@ -120,6 +125,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		this.addActor(gameOverView);
 		this.addActor(levelCompletedView);
 		this.addActor(debugView);
+		this.addActor(messageDisplayer);
 
 		imp.addProcessor(this);
 		imp.addProcessor(enlistView);
@@ -161,6 +167,11 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 			break;
 		}
 		
+	}
+
+
+	public IMessageDisplayer getMessageDisplayer(){
+		return messageDisplayer;
 	}
 
 }

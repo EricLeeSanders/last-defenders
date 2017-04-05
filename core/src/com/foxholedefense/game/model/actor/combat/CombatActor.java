@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -15,17 +14,18 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.GameActor;
+import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.ICollision;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.DebugOptions;
-import com.foxholedefense.util.Dimension;
-import com.foxholedefense.util.FHDVector2;
+import com.foxholedefense.util.datastructures.Dimension;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.game.model.actor.combat.ICombatActorObserver.CombatActorEvent;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 /**
  * Represents both a Tower and Enemy.
@@ -42,12 +42,13 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private boolean hasArmor, dead, active;
 	private Pool<CombatActor> pool;
 	private SnapshotArray<ICombatActorObserver> observers = new SnapshotArray<ICombatActorObserver>();
+	private DeathEffectType deathEffectType;
 	private Group targetGroup;
 
 	public CombatActor(TextureRegion textureRegion, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
-						float health, float armor, float attack, float attackSpeed, float range) {
+						float health, float armor, float attack, float attackSpeed, float range, DeathEffectType deathEffectType) {
 
-		super(textureRegion, textureSize);
+		super(textureSize);
 		this.MAX_HEALTH = health;
 		this.MAX_ARMOR = armor;
 		this.RESET_ATTACK = attack;
@@ -61,6 +62,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.range = range;
 		this.pool = pool;
 		this.targetGroup = targetGroup;
+		this.deathEffectType = deathEffectType;
 		setTextureRegion(textureRegion);
 		
 		
@@ -142,7 +144,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 	public void takeDamage(float damage) {
 		if (hasArmor()) {
-			if ((armor - damage) < 0) {
+			if ((armor - damage) <= 0) {
 				health = health - (damage - armor);
 				setHasArmor(false);
 			} else {
@@ -189,7 +191,9 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 	public abstract void attackTarget(ITargetable target);
 	
-	protected abstract void deathAnimation();
+	public DeathEffectType getDeathEffectType(){
+		return deathEffectType;
+	}
 
 	public abstract Shape2D getBody();
 
@@ -197,9 +201,8 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.dead = dead;
 		if (isDead()) {
 			Logger.info("Combat Actor: " + this.getClass().getSimpleName() + " Dead");
-			deathAnimation();
-			pool.free(this);
 			notifyObserversCombatActor(CombatActorEvent.DEAD);
+			pool.free(this);
 		}
 	}
 
@@ -244,6 +247,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 			armor = 0;
 			notifyObserversCombatActor(CombatActorEvent.ARMOR_BROKEN);
 		}
+		resetArmor();
 		this.hasArmor = hasArmor;
 	}
 

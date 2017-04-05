@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.effects.ArmorDestroyedEffect;
+import com.foxholedefense.game.model.actor.effects.label.ArmorDestroyedEffect;
+import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.util.Logger;
 
 /**
@@ -18,12 +18,9 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
     private TextureRegion icon;
     private CombatActor actor = null;
     private Pool<ArmorIcon> pool;
-    private Pool<ArmorDestroyedEffect> armorDestroyedEffectPool;
-    private boolean showDestroyEffect;
-    public ArmorIcon(Pool<ArmorIcon> pool, TextureRegion icon, Pool<ArmorDestroyedEffect> armorDestroyedEffectPool){
+    public ArmorIcon(Pool<ArmorIcon> pool, TextureRegion icon){
         this.pool = pool;
         this.icon = icon;
-        this.armorDestroyedEffectPool = armorDestroyedEffectPool;
     }
 
     @Override
@@ -51,21 +48,6 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
             return;
         }
 
-        // If the actor is given armor and
-        // showDestroyEffect has not been set to true
-        // change it to true
-        if(!showDestroyEffect && actor.hasArmor()) {
-            showDestroyEffect = true;
-        }
-
-        // When the armor is broken, show the destroy effect
-        if(!actor.hasArmor() && showDestroyEffect){
-            showDestroyEffect = false;
-            ArmorDestroyedEffect effect = armorDestroyedEffectPool.obtain();
-            this.getParent().addActor(effect);
-            effect.initialize(actor);
-        }
-
     }
 
     public void setActor(CombatActor actor) {
@@ -80,7 +62,6 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
         Logger.info("ArmorIcon: resetting");
         this.actor = null;
         this.remove();
-        showDestroyEffect = false;
 
     }
 }

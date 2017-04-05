@@ -9,5 +9,5 @@ import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
  *
  */
 public interface ILevelStateObserver {
-	public void changeLevelState(LevelState state);
+	void changeLevelState(LevelState state);
 }

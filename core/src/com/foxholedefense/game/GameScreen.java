@@ -6,6 +6,7 @@ import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.ui.GameUIStage;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.screen.AbstractScreen;
 import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
@@ -43,6 +44,7 @@ public class GameScreen extends AbstractScreen {
 		gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager, levelStateManager, gameStateManager
 						, screenChanger, super.getInputMultiplexer(), getViewport(), resources, audio, gameStage);
 
+		gameStage.setMessageDisplayer(gameUIStage.getMessageDisplayer());
 
 		super.show();
 		audio.turnOffMusic();
@@ -85,5 +87,6 @@ public class GameScreen extends AbstractScreen {
 		gameStage.dispose();
 		gameUIStage.dispose();
 	}
+
 
 }

@@ -26,7 +26,7 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  * @author Eric
  *
  */
-public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver, IMessageDisplayer {
+public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	private LevelStateManager levelStateManager;
 	private GameUIStateManager uiStateManager;
 	private GameStateManager gameStateManager;
@@ -151,8 +151,4 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver, IMes
 		}
 	}
 
-	@Override
-	public void displayMessage(String message) {
-		view.displayMessage(message);
-	}
 }

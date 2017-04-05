@@ -47,7 +47,6 @@ public class HUDView extends Group implements IHUDView {
 		messageDisplayLabelStyle.fontColor = Color.RED;
 
 		messageLabel = new Label("", resources.getSkin());
-		messageLabel.setFontScale(0.35f);
 		messageLabel.setStyle(messageDisplayLabelStyle);
 	}
 
@@ -235,19 +234,9 @@ public class HUDView extends Group implements IHUDView {
 		btnOptions.setVisible(true);
 	}
 
-	@Override
-	public void displayMessage(String message) {
-		Logger.info("HUDView: displaying message: " + message);
-		messageLabel.clearActions();
-		messageLabel.setText(message.toUpperCase());
-		messageLabel.pack();
-		messageLabel.setPosition((Resources.VIRTUAL_WIDTH / 2) - (messageLabel.getWidth() / 2), (Resources.VIRTUAL_HEIGHT / 2) + 50);
-		messageLabel.addAction(Actions.moveTo(messageLabel.getX(), messageLabel.getY() + 50, MESSAGE_DURATION));
+	public enum MessageColor{
 
-		messageLabel.addAction(Actions.sequence(
-				Actions.moveTo(messageLabel.getX(), messageLabel.getY() + 100, MESSAGE_DURATION),
-				Actions.removeActor()));
-		getParent().addActor(messageLabel);
+
 
 	}
 }

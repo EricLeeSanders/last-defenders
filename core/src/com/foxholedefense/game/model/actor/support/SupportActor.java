@@ -1,27 +1,19 @@
 package com.foxholedefense.game.model.actor.support;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
-import com.foxholedefense.game.model.actor.projectile.Bullet;
-import com.foxholedefense.game.service.factory.ActorFactory;
 import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.Dimension;
-import com.foxholedefense.util.FHDVector2;
+import com.foxholedefense.util.datastructures.Dimension;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
-import com.foxholedefense.util.FHDAudio;
-import com.foxholedefense.util.Resources;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	private Pool<SupportActor> pool;
@@ -36,7 +28,7 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 
 	public SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion, Dimension textureSize
 						, TextureRegion rangeTexture, float range, float attack, Vector2 gunPos, int cost) {
-		super(textureRegion, textureSize);
+		super(textureSize);
 		this.pool = pool;
 		this.range = range;
 		this.attack = attack;

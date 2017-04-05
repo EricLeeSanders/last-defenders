@@ -17,7 +17,8 @@ import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
 import com.foxholedefense.game.model.actor.interfaces.IRotatable;
 import com.foxholedefense.game.model.level.Map;
-import com.foxholedefense.game.service.factory.ActorFactory;
+import com.foxholedefense.game.service.factory.CombatActorFactory;
+import com.foxholedefense.game.service.factory.HealthFactory;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
@@ -31,12 +32,14 @@ public class TowerPlacement {
 	private Tower currentTower;
 	private ActorGroups actorGroups;
 	private Map map;
-	private ActorFactory actorFactory;
+	private CombatActorFactory combatActorFactory;
+	private HealthFactory healthFactory;
 	private SnapshotArray<ICombatActorObserver> observers = new SnapshotArray<ICombatActorObserver>();
-	public TowerPlacement(Map map, ActorGroups actorGroups, ActorFactory actorFactory) {
+	public TowerPlacement(Map map, ActorGroups actorGroups, CombatActorFactory combatActorFactory, HealthFactory healthFactory) {
 		this.map = map;
 		this.actorGroups = actorGroups;
-		this.actorFactory = actorFactory;
+		this.combatActorFactory = combatActorFactory;
+		this.healthFactory = healthFactory;
 	}
 
 	/**
@@ -55,7 +58,7 @@ public class TowerPlacement {
 	 */
 	public void createTower(String type) {
 		Logger.info("TowerPlacement: creating tower: " + type);
-		currentTower = actorFactory.loadTower(type);
+		currentTower = combatActorFactory.loadTower(type);
 		currentTower.setPosition(0, 0);
 		actorGroups.getTowerGroup().addActor(currentTower);
 		currentTower.setVisible(false);
@@ -98,9 +101,9 @@ public class TowerPlacement {
 			if (!towerCollides()) {
 				currentTower.setActive(true);
 				currentTower.setDead(false);
-				HealthBar healthBar = actorFactory.loadHealthBar();
+				HealthBar healthBar = healthFactory.loadHealthBar();
 				healthBar.setActor(currentTower);
-				ArmorIcon armorIcon = actorFactory.loadArmorIcon();
+				ArmorIcon armorIcon = healthFactory.loadArmorIcon();
 				armorIcon.setActor(currentTower);
 				currentTower = null;
 				Logger.info("TowerPlacement: placing tower");
