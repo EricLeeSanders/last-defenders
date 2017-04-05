@@ -9,7 +9,6 @@ import com.foxholedefense.game.model.actor.effects.texture.animation.death.Death
 import com.foxholedefense.game.model.actor.interfaces.IFlame;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
-import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.FHDAudio;
@@ -23,24 +22,26 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  *
  */
 public class EnemyFlameThrower extends Enemy implements IFlame {
+
 	public static final float HEALTH = 8;
 	public static final float ARMOR = 3;
 	public static final float ATTACK = 1.75f;
 	public static final float ATTACK_SPEED = 1.2f;
 	public static final float RANGE = 70;
 	public static final float SPEED = 70f;
+
 	private static final Vector2 GUN_POS = UtilPool.getVector2(26, 4);
 	private static final Dimension TEXTURE_SIZE = new Dimension(56, 36);
+	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
+
 	private Circle body;
 	private Dimension flameSize = new Dimension(RANGE-26, 20);
 	private FHDAudio audio;
-	private EffectFactory effectFactory;
 	private ProjectileFactory projectileFactory;
 
-	public EnemyFlameThrower(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, EffectFactory effectFactory, ProjectileFactory projectileFactory, FHDAudio audio) {
-		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
+	public EnemyFlameThrower(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, ProjectileFactory projectileFactory, FHDAudio audio) {
+		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, DEATH_EFFECT_TYPE);
 		this.audio = audio;
-		this.effectFactory = effectFactory;
 		this.projectileFactory = projectileFactory;
 		this.body = new Circle(this.getPositionCenter(), 10);
 	}
@@ -57,12 +58,6 @@ public class EnemyFlameThrower extends Enemy implements IFlame {
 			audio.playSound(FHDSound.FLAME_BURST);
 			projectileFactory.loadFlame().initialize(this, getTargetGroup(), getFlameSize());
 		}
-	}
-
-	@Override
-	protected void deathAnimation() {
-		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());
-		
 	}
 
 	@Override

@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.GameActor;
+import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.ICollision;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
@@ -41,10 +42,11 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private boolean hasArmor, dead, active;
 	private Pool<CombatActor> pool;
 	private SnapshotArray<ICombatActorObserver> observers = new SnapshotArray<ICombatActorObserver>();
+	private DeathEffectType deathEffectType;
 	private Group targetGroup;
 
 	public CombatActor(TextureRegion textureRegion, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
-						float health, float armor, float attack, float attackSpeed, float range) {
+						float health, float armor, float attack, float attackSpeed, float range, DeathEffectType deathEffectType) {
 
 		super(textureSize);
 		this.MAX_HEALTH = health;
@@ -60,6 +62,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.range = range;
 		this.pool = pool;
 		this.targetGroup = targetGroup;
+		this.deathEffectType = deathEffectType;
 		setTextureRegion(textureRegion);
 		
 		
@@ -188,7 +191,9 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 	public abstract void attackTarget(ITargetable target);
 	
-	protected abstract void deathAnimation();
+	public DeathEffectType getDeathEffectType(){
+		return deathEffectType;
+	}
 
 	public abstract Shape2D getBody();
 
@@ -196,9 +201,8 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		this.dead = dead;
 		if (isDead()) {
 			Logger.info("Combat Actor: " + this.getClass().getSimpleName() + " Dead");
-			deathAnimation();
-			pool.free(this);
 			notifyObserversCombatActor(CombatActorEvent.DEAD);
+			pool.free(this);
 		}
 	}
 

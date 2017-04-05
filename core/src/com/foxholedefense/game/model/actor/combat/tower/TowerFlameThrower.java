@@ -9,7 +9,6 @@ import com.foxholedefense.game.model.actor.effects.texture.animation.death.Death
 import com.foxholedefense.game.model.actor.interfaces.IFlame;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
-import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.FHDAudio;
@@ -29,27 +28,28 @@ public class TowerFlameThrower extends Tower implements IFlame {
 	public static final float ATTACK = 0.7f;
 	public static final float ATTACK_SPEED = 1.20f;
 	public static final float RANGE = 70;
+
 	public static final int COST = 600;
 	public static final int ARMOR_COST = 5665;
 	public static final int RANGE_INCREASE_COST = 450;
 	public static final int SPEED_INCREASE_COST = 450;
 	public static final int ATTACK_INCREASE_COST = 450;
+
 	private static final Vector2 GUN_POS = UtilPool.getVector2(26, 4);
 	private static final Dimension TEXTURE_SIZE = new Dimension(56, 26);
+	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
+
 	private Circle body;
 	private Dimension flameSize = new Dimension(RANGE-26, 20);
 	private FHDAudio audio;
-	private EffectFactory effectFactory;
 	private ProjectileFactory projectileFactory;
 
-	public TowerFlameThrower(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, EffectFactory effectFactory, ProjectileFactory projectileFactory, FHDAudio audio) {
-		super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
+	public TowerFlameThrower(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
+		super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
 		this.audio = audio;
-		this.effectFactory = effectFactory;
 		this.projectileFactory = projectileFactory;
 		this.body = new Circle(this.getPositionCenter(), 10);
 	}
-
 
 	@Override
 	public Dimension getFlameSize() {
@@ -70,18 +70,9 @@ public class TowerFlameThrower extends Tower implements IFlame {
 		return "Flame Thrower";
 	}
 
-
-	@Override
-	protected void deathAnimation() {
-		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());
-
-	}
-
 	@Override
 	public Circle getBody() {
 		body.setPosition(getPositionCenter().x, getPositionCenter().y);
 		return body;
 	}
-
-
 }
