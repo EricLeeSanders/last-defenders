@@ -36,7 +36,7 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 	private float[] bodyPoints = {15,0, 15,32, 69,32, 69, 0 };
 	private Polygon body;
 	
-	public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool) {
+	public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<EnemyHumvee> pool) {
 		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, null, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
 		this.body = new Polygon(bodyPoints);
 	}
