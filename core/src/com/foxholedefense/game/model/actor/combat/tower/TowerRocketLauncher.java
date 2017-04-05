@@ -23,18 +23,18 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  */
 public class TowerRocketLauncher extends Tower implements IRpg {
 
-	public static final float HEALTH = 8;
-	public static final float ARMOR = 4;
-	public static final float ATTACK = 10;
-	public static final float ATTACK_SPEED = 1f;
-	public static final float RANGE = 60;
-	public static final float AOE_RADIUS = 50f;
+	private static final float HEALTH = 8;
+	private static final float ARMOR = 4;
+	private static final float ATTACK = 10;
+	private static final float ATTACK_SPEED = 1f;
+	private static final float RANGE = 60;
+	private static final float AOE_RADIUS = 50f;
 
 	public static final int COST = 800;
-	public static final int ARMOR_COST = 500;
-	public static final int RANGE_INCREASE_COST = 450;
-	public static final int SPEED_INCREASE_COST = 450;
-	public static final int ATTACK_INCREASE_COST = 450;
+	private static final int ARMOR_COST = 500;
+	private static final int RANGE_INCREASE_COST = 450;
+	private static final int SPEED_INCREASE_COST = 450;
+	private static final int ATTACK_INCREASE_COST = 450;
 
 	private static final Dimension RPG_SIZE = new Dimension(7, 7);
 	private static final Vector2 GUN_POS = UtilPool.getVector2(27, -4);

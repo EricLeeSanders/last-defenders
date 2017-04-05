@@ -1,5 +1,6 @@
 package com.foxholedefense.game.model.actor.effects.texture.animation.death;
 
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -11,7 +12,7 @@ public abstract class DeathEffect extends AnimationEffect {
 	private static final float FRAME_DURATION = 0.05f;
 
 	public DeathEffect(Pool<TextureEffect> pool, Array<AtlasRegion> regions, Dimension textureSize) {
-		super(pool, regions, textureSize, FRAME_DURATION);
+		super(pool, regions, textureSize, PlayMode.NORMAL, FRAME_DURATION * regions.size, FRAME_DURATION);
 	}
 
 	public enum DeathEffectType {

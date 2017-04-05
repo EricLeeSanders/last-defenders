@@ -15,6 +15,7 @@ import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.effects.label.ArmorDestroyedEffect;
 import com.foxholedefense.game.model.actor.effects.label.LevelOverPaymentEffect;
 import com.foxholedefense.game.model.actor.effects.label.TowerHealEffect;
+import com.foxholedefense.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.foxholedefense.game.model.level.Level;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
@@ -287,6 +288,10 @@ public class GameStage extends Stage implements IEnemyObserver, ICombatActorObse
 				break;
 			case DEAD:
 				effectFactory.loadDeathEffect(actor.getDeathEffectType()).initialize(actor.getPositionCenter());
+				if(actor instanceof Enemy){
+					effectFactory.loadAnimationEffect(EnemyCoinEffect.class).initialize(actor.getPositionCenter());
+					player.giveMoney(((Enemy)actor).getKillReward());
+				}
 				break;
 		}
 	}

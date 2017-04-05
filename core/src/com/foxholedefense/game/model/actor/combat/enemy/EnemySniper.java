@@ -22,12 +22,13 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  */
 public class EnemySniper extends Enemy {
 
-	public static final float HEALTH = 8;
-	public static final float ARMOR = 4;
-	public static final float ATTACK = 5;
-	public static final float ATTACK_SPEED = 1;
-	public static final float RANGE = 100;
-	public static final float SPEED = 70f;
+	private static final float HEALTH = 8;
+	private static final float ARMOR = 4;
+	private static final float ATTACK = 5;
+	private static final float ATTACK_SPEED = 1;
+	private static final float RANGE = 100;
+	private static final float SPEED = 70f;
+	private static final int KILL_REWARD = 15;
 
 	private static final Dimension BULLET_SIZE = new Dimension(5, 5);
 	private static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);
@@ -39,7 +40,7 @@ public class EnemySniper extends Enemy {
 	private ProjectileFactory projectileFactory;
 	
 	public EnemySniper(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, ProjectileFactory projectileFactory, FHDAudio audio) {
-		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, DEATH_EFFECT_TYPE);
+		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
 		this.body = new Circle(this.getPositionCenter(), 10);

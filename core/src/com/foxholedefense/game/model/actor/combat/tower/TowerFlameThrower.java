@@ -23,17 +23,17 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  */
 public class TowerFlameThrower extends Tower implements IFlame {
 
-	public static final float HEALTH = 800;
-	public static final float ARMOR = 4;
-	public static final float ATTACK = 0.7f;
-	public static final float ATTACK_SPEED = 1.20f;
-	public static final float RANGE = 70;
+	private static final float HEALTH = 800;
+	private static final float ARMOR = 4;
+	private static final float ATTACK = 0.7f;
+	private static final float ATTACK_SPEED = 1.20f;
+	private static final float RANGE = 70;
 
 	public static final int COST = 600;
-	public static final int ARMOR_COST = 5665;
-	public static final int RANGE_INCREASE_COST = 450;
-	public static final int SPEED_INCREASE_COST = 450;
-	public static final int ATTACK_INCREASE_COST = 450;
+	private static final int ARMOR_COST = 5665;
+	private static final int RANGE_INCREASE_COST = 450;
+	private static final int SPEED_INCREASE_COST = 450;
+	private static final int ATTACK_INCREASE_COST = 450;
 
 	private static final Vector2 GUN_POS = UtilPool.getVector2(26, 4);
 	private static final Dimension TEXTURE_SIZE = new Dimension(56, 26);

@@ -23,13 +23,14 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  */
 public class EnemyRocketLauncher extends Enemy implements IRpg {
 
-	public static final float HEALTH = 8;
-	public static final float ARMOR = 4;
-	public static final float ATTACK = 9;
-	public static final float ATTACK_SPEED = 1;
-	public static final float RANGE = 60;
-	public static final float SPEED = 55f;
-	public static final float AOE_RADIUS = 50f;
+	private static final float HEALTH = 8;
+	private static final float ARMOR = 4;
+	private static final float ATTACK = 9;
+	private static final float ATTACK_SPEED = 1;
+	private static final float RANGE = 60;
+	private static final float SPEED = 55f;
+	private static final float AOE_RADIUS = 50f;
+	private static final int KILL_REWARD = 15;
 
 	private static final Dimension RPG_SIZE = new Dimension(7, 7);
 	private static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);
@@ -41,7 +42,7 @@ public class EnemyRocketLauncher extends Enemy implements IRpg {
 	private ProjectileFactory projectileFactory;
 
 	public EnemyRocketLauncher(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, ProjectileFactory projectileFactory, FHDAudio audio) {
-		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, DEATH_EFFECT_TYPE);
+		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
 		this.body = new Circle(this.getPositionCenter(), 10);
