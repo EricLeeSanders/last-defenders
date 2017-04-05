@@ -1,4 +1,4 @@
-package com.foxholedefense.util;
+package com.foxholedefense.util.datastructures.pool;
 
 
 import com.badlogic.gdx.math.Interpolation;
@@ -7,7 +7,6 @@ import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
 import com.foxholedefense.action.FHDSequenceAction;
 import com.foxholedefense.action.WaypointAction;
-import com.foxholedefense.game.model.actor.GameActor;
 
 /**
  * Created by Eric on 3/11/2017.

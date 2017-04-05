@@ -1,24 +1,18 @@
 package com.foxholedefense.game.model.level;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map.Entry;
 import java.util.Queue;
 import java.util.Random;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.enemy.*;
-import com.foxholedefense.game.model.actor.health.ArmorIcon;
-import com.foxholedefense.game.model.actor.health.HealthBar;
-import com.foxholedefense.game.service.factory.ActorFactory;
-import com.foxholedefense.util.FHDVector2;
+import com.foxholedefense.game.service.factory.CombatActorFactory;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 
 public class DynamicWaveGenerator {
@@ -26,11 +20,11 @@ public class DynamicWaveGenerator {
 	private java.util.Map<Class<? extends Enemy>, Integer> towerMap = new HashMap<Class<? extends Enemy>, Integer>();
 	private Map map;
 	private ActorGroups actorGroups;
-	private ActorFactory actorFactory;
-	public DynamicWaveGenerator(Queue<SpawningEnemy> enemies, Map map, ActorGroups actorGroups, ActorFactory actorFactory){
+	private CombatActorFactory combatActorFactory;
+	public DynamicWaveGenerator(Queue<SpawningEnemy> enemies, Map map, ActorGroups actorGroups, CombatActorFactory combatActorFactory){
 		this.map = map;
 		this.actorGroups = actorGroups;
-		this.actorFactory = actorFactory;
+		this.combatActorFactory = combatActorFactory;
 		for(SpawningEnemy spawningEnemy : enemies){
 			incrementTowerMapCount(spawningEnemy.getEnemy().getClass(), 1);
 		}
@@ -109,8 +103,8 @@ public class DynamicWaveGenerator {
 		for(int i = 0; i < n; i++){
 			String type = enemyClass.getSimpleName();
 			int randArmor = random.nextInt(3); //0-2
-			boolean armor = (randArmor == 0) ? true : false;
-			Enemy enemy = actorFactory.loadEnemy(type);
+			boolean armor = (randArmor == 0);
+			Enemy enemy = combatActorFactory.loadEnemy(type);
 			enemy.setPath(enemyPath);
 			enemy.setHasArmor(armor);
 			enemies.add(enemy);

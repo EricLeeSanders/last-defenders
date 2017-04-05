@@ -1,21 +1,21 @@
 package com.foxholedefense.game;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
+import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.enemy.IEnemyObserver;
 import com.foxholedefense.game.model.actor.combat.tower.ITowerObserver;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.effects.ArmorDestroyedEffect;
-import com.foxholedefense.game.model.actor.effects.TowerHealEffect;
+import com.foxholedefense.game.model.actor.effects.label.ArmorDestroyedEffect;
+import com.foxholedefense.game.model.actor.effects.label.LevelOverPaymentEffect;
+import com.foxholedefense.game.model.actor.effects.label.TowerHealEffect;
+import com.foxholedefense.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.foxholedefense.game.model.level.Level;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
@@ -24,9 +24,14 @@ import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
 import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
 import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
 import com.foxholedefense.game.service.actorplacement.TowerPlacement;
-import com.foxholedefense.game.service.factory.ActorFactory;
+import com.foxholedefense.game.service.factory.CombatActorFactory;
+import com.foxholedefense.game.service.factory.EffectFactory;
+import com.foxholedefense.game.service.factory.HealthFactory;
+import com.foxholedefense.game.service.factory.ProjectileFactory;
+import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -38,8 +43,8 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  *
  */
-public class GameStage extends Stage implements IEnemyObserver{
-
+public class GameStage extends Stage implements IEnemyObserver, ICombatActorObserver{
+	private static final int WAVE_OVER_MONEY_MULTIPLIER = 100;
 	private LevelStateManager levelStateManager;
 	private GameUIStateManager uiStateManager;
 	private Level level;
@@ -53,7 +58,13 @@ public class GameStage extends Stage implements IEnemyObserver{
 	private SupportActorPlacement supportActorPlacement;
 	private AirStrikePlacement airStrikePlacement;
 	private SupplyDropPlacement supplyDropPlacement;
-	private ActorFactory actorFactory;
+	private IMessageDisplayer messageDisplayer;
+	private CombatActorFactory combatActorFactory;
+	private HealthFactory healthFactory;
+	private ProjectileFactory projectileFactory;
+	private SupportActorFactory supportActorFactory;
+	private EffectFactory effectFactory;
+
 	public GameStage(int intLevel, Player player, ActorGroups actorGroups, FHDAudio audio,
 					 LevelStateManager levelStateManager, GameUIStateManager uiStateManager,
 					 Viewport viewport, Resources resources) {
@@ -64,15 +75,33 @@ public class GameStage extends Stage implements IEnemyObserver{
 		this.uiStateManager = uiStateManager;
 		this.intLevel = intLevel;
 		this.resources = resources;
-		createGroups();
 		TiledMap tiledMap = resources.getMap(intLevel);
 		map = new Map(tiledMap);
+		createGroups();
+		createFactories(audio);
+		createPlacementServices(map);
 		mapRenderer = new MapRenderer(tiledMap, getCamera());
-		actorFactory = new ActorFactory(actorGroups, resources.getAsset(Resources.ACTOR_ATLAS, TextureAtlas.class), audio, resources);
-		actorFactory.attachEnemyObserver(this);
-		level = new Level(intLevel, getActorGroups(),actorFactory, map);
-		createPlacementServices(actorFactory, map);
+		level = new Level(intLevel, getActorGroups(),combatActorFactory, healthFactory, map);
 
+	}
+
+	private void createFactories(FHDAudio audio){
+		effectFactory = new EffectFactory(actorGroups, resources);
+		healthFactory = new HealthFactory(actorGroups,resources);
+		projectileFactory = new ProjectileFactory(actorGroups, audio, resources);
+		supportActorFactory = new SupportActorFactory(actorGroups, audio, resources, effectFactory, projectileFactory);
+		combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory, healthFactory, projectileFactory);
+		combatActorFactory.attachEnemyObserver(this);
+		combatActorFactory.attachCombatObserver(this);
+	}
+
+	public void createPlacementServices(Map map){
+		Logger.info("Game Stage: creating placement services");
+		towerPlacement = new TowerPlacement(map, actorGroups, combatActorFactory, healthFactory);
+		supportActorPlacement = new SupportActorPlacement(actorGroups, supportActorFactory);
+		airStrikePlacement = new AirStrikePlacement(actorGroups, supportActorFactory);
+		supplyDropPlacement = new SupplyDropPlacement(supportActorFactory);
+		Logger.info("Game Stage: placement services created");
 	}
 
 	/**
@@ -87,15 +116,6 @@ public class GameStage extends Stage implements IEnemyObserver{
 		Logger.info("Game Stage: first wave loaded");
 	}
 
-	public void createPlacementServices(ActorFactory actorFactory, Map map){
-		Logger.info("Game Stage: creating placement services");
-		towerPlacement = new TowerPlacement(map, actorGroups, actorFactory);
-		supportActorPlacement = new SupportActorPlacement(actorGroups, actorFactory);
-		airStrikePlacement = new AirStrikePlacement(actorGroups, actorFactory);
-		supplyDropPlacement = new SupplyDropPlacement(actorFactory);
-		Logger.info("Game Stage: placement services created");
-	}
-
 	/**
 	 * Create the actor groups. Order matters
 	 */
@@ -108,6 +128,7 @@ public class GameStage extends Stage implements IEnemyObserver{
 		this.addActor(getActorGroups().getProjectileGroup());
 		this.addActor(getActorGroups().getHealthGroup());
 		this.addActor(getActorGroups().getSupportGroup());
+		this.addActor(getActorGroups().getEffectGroup());
 		Logger.info("Game Stage: groups created");
 	}
 
@@ -143,25 +164,24 @@ public class GameStage extends Stage implements IEnemyObserver{
 	 * Determine if the wave is over
 	 */
 	public boolean isWaveOver() {
-		if (getActorGroups().getEnemyGroup().getChildren().size <= 0
-			&& level.getSpawningEnemiesCount() <= 0
-			&& getActorGroups().getProjectileGroup().getChildren().size <= 0
-			&& !(levelStateManager.getState().equals(LevelState.GAME_OVER))) {
-
-				return true;
-		}
-		return false;
+		return getActorGroups().getEnemyGroup().getChildren().size <= 0
+				&& level.getSpawningEnemiesCount() <= 0
+				&& getActorGroups().getProjectileGroup().getChildren().size <= 0
+				&& !(levelStateManager.getState().equals(LevelState.GAME_OVER));
 
 	}
 
 	private void waveOver(){
 		Logger.info("Game Stage: Wave over");
-		player.giveMoney((int) (100 * (float) level.getCurrentWave()));
+		int money = (int) (WAVE_OVER_MONEY_MULTIPLIER * (float) level.getCurrentWave());
+		player.giveMoney(money);
 		levelStateManager.setState(LevelState.STANDBY);
 		player.setWaveCount(player.getWaveCount() + 1);
 		if(isLevelCompleted()){
 			levelComleted();
 		}
+		LevelOverPaymentEffect levelOverPaymentEffect = effectFactory.loadLabelEffect(LevelOverPaymentEffect.class);
+		levelOverPaymentEffect.initialize(money);
 		level.loadWave(); //load the next wave
 		healTowers();
 	}
@@ -186,7 +206,7 @@ public class GameStage extends Stage implements IEnemyObserver{
 		for(Actor tower : actorGroups.getTowerGroup().getChildren()){
 			if (tower instanceof Tower){
 				if(((Tower)tower).isActive()) {
-					TowerHealEffect effect = actorFactory.loadTowerHealEffect();
+					TowerHealEffect effect = effectFactory.loadLabelEffect(TowerHealEffect.class);
 					effect.initialize((Tower) tower);
 
 					((Tower) tower).heal();
@@ -212,15 +232,15 @@ public class GameStage extends Stage implements IEnemyObserver{
 
 
 	public void attachCombatObserver(ICombatActorObserver observer){
-		actorFactory.attachCombatObserver(observer);
+		combatActorFactory.attachCombatObserver(observer);
 	}
 
 	public void attachTowerObserver(ITowerObserver observer) {
-		actorFactory.attachTowerObserver(observer);
+		combatActorFactory.attachTowerObserver(observer);
 	}
 
 	public void attachEnemyObserver(IEnemyObserver observer) {
-		actorFactory.attachEnemyObserver(observer);
+		combatActorFactory.attachEnemyObserver(observer);
 	}
 
 	public ActorGroups getActorGroups() {
@@ -250,6 +270,30 @@ public class GameStage extends Stage implements IEnemyObserver{
 
 	public SupplyDropPlacement getSupplyDropPlacement() {
 		return supplyDropPlacement;
+	}
+
+	public IMessageDisplayer getMessageDisplayer() {
+		return messageDisplayer;
+	}
+
+	public void setMessageDisplayer(IMessageDisplayer messageDisplayer) {
+		this.messageDisplayer = messageDisplayer;
+	}
+
+	@Override
+	public void notifyCombatActor(CombatActor actor, CombatActorEvent event) {
+		switch(event){
+			case ARMOR_BROKEN:
+				effectFactory.loadLabelEffect(ArmorDestroyedEffect.class).initialize(actor);
+				break;
+			case DEAD:
+				effectFactory.loadDeathEffect(actor.getDeathEffectType()).initialize(actor.getPositionCenter());
+				if(actor instanceof Enemy){
+					effectFactory.loadAnimationEffect(EnemyCoinEffect.class).initialize(actor.getPositionCenter());
+					player.giveMoney(((Enemy)actor).getKillReward());
+				}
+				break;
+		}
 	}
 
 	@Override

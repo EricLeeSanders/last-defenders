@@ -21,6 +21,12 @@ public class FHDGame extends Game implements IScreenChanger {
 	private UserPreferences userPreferences;
 	private FHDAudio audio;
 	private IPlayServices playServices;
+
+	// Needed for launcher without play services
+	public FHDGame(){
+
+	}
+
 	public FHDGame(IPlayServices playServices){
 		this.playServices = playServices;
 		//playServices.signIn();

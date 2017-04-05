@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
  * @author Eric
  *
  */
-public interface IHUDView extends IMessageDisplayer {
+public interface IHUDView {
 	void standByState();
 	
 	void supportState();

@@ -131,10 +131,10 @@ public class FHDAudio {
 		}
 	}
 	public enum FHDSound {
-		ACTOR_PLACE, SELL, SMALL_CLICK, LARGE_CLICK, RIFLE, SNIPER, MACHINE_GUN, RPG_EXPLOSION, VEHICLE_EXPLOSION, ROCKET_LAUNCH, FLAME_BURST;
+		ACTOR_PLACE, SELL, SMALL_CLICK, LARGE_CLICK, RIFLE, SNIPER, MACHINE_GUN, RPG_EXPLOSION, VEHICLE_EXPLOSION, ROCKET_LAUNCH, FLAME_BURST
 	}
 	public void changeMusicEnabled(){
-		setMusicEnabled(musicEnabled ? false : true);
+		setMusicEnabled(!musicEnabled);
 	}
 	public void setMusicEnabled(boolean enabled){
 		Logger.info("Setting music to " + enabled);
@@ -145,7 +145,7 @@ public class FHDAudio {
 		userPreferences.getPreferences().flush();
 	}
 	public void changeSoundEnabled(){
-		setSoundEnabled(soundEnabled ? false : true);
+		setSoundEnabled(!soundEnabled);
 	}
 	public void setSoundEnabled(boolean enabled){
 		Logger.info("Setting sound to " + enabled);

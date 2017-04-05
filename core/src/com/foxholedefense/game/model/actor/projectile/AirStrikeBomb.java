@@ -3,26 +3,15 @@ package com.foxholedefense.game.model.actor.projectile;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Pool;
-import com.foxholedefense.game.GameStage;
-import com.foxholedefense.game.helper.Damage;
-import com.foxholedefense.game.model.actor.GameActor;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
-import com.foxholedefense.game.service.factory.ActorFactory;
-import com.foxholedefense.game.service.factory.ActorFactory.ExplosionPool;
+import com.foxholedefense.game.service.factory.ProjectileFactory.ExplosionPool;
 import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.Dimension;
-import com.foxholedefense.util.Logger;
-import com.foxholedefense.util.Resources;
+import com.foxholedefense.util.datastructures.Dimension;
 
 /**
  * Represents an AirStrike's Bomb

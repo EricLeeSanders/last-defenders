@@ -4,15 +4,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.effects.deatheffect.DeathEffectType;
+import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.model.actor.interfaces.IVehicle;
-import com.foxholedefense.game.service.factory.ActorFactory.CombatActorPool;
-import com.foxholedefense.game.service.factory.interfaces.IDeathEffectFactory;
+import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.Dimension;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.Dimension;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 /**
  * Represents an Enemy Humvee. A passive enemy.
@@ -22,36 +21,29 @@ import com.foxholedefense.util.UtilPool;
  */
 public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 
-	public static final float HEALTH = 16;
-	public static final float ARMOR = 8;
-	public static final float ATTACK = 0;
-	public static final float ATTACK_SPEED = 0f;
-	public static final float RANGE = 0;
-	public static final float SPEED = 140f;
+	private static final float HEALTH = 16;
+	private static final float ARMOR = 8;
+	private static final float ATTACK = 0;
+	private static final float ATTACK_SPEED = 0f;
+	private static final float RANGE = 0;
+	private static final float SPEED = 140f;
+	private static final int KILL_REWARD = 15;
 
 	private static final Vector2 GUN_POS = UtilPool.getVector2();
 	private static final Dimension TEXTURE_SIZE = new Dimension(74, 32);
-	
-	private IDeathEffectFactory deathEffectFactory;
+	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.VEHCILE_EXPLOSION;
+
 	private float[] bodyPoints = {15,0, 15,32, 69,32, 69, 0 };
 	private Polygon body;
 	
-	public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, IDeathEffectFactory deathEffectFactory) {
-		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, null, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
-		this.deathEffectFactory = deathEffectFactory;
+	public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool) {
+		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, null, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
 		this.body = new Polygon(bodyPoints);
 	}
 
 	@Override
 	public void attackTarget(ITargetable target) {
 		// Does not attack
-
-	}
-
-	@Override
-	protected void deathAnimation() {
-		deathEffectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());;
-		
 	}
 
 	@Override

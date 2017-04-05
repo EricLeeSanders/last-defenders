@@ -240,10 +240,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * @return boolean
 	 */
 	public boolean canAffordUpgrade(int upgradeCost) {
-		if (upgradeCost <= player.getMoney()) {
-			return true;
-		}
-		return false;
+		return upgradeCost <= player.getMoney();
 	}
 
 	public boolean isDischargeDisabled(){

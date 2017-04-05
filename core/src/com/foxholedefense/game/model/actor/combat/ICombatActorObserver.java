@@ -5,9 +5,9 @@ package com.foxholedefense.game.model.actor.combat;
  *
  */
 public interface ICombatActorObserver {
-	public void notifyCombatActor(CombatActor actor, CombatActorEvent event);
+	void notifyCombatActor(CombatActor actor, CombatActorEvent event);
 
-	public enum CombatActorEvent {
+	enum CombatActorEvent {
 		DEAD, HEALED, ARMOR_BROKEN, OTHER
 	}
 }

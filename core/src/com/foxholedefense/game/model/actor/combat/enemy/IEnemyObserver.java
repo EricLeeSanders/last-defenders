@@ -6,9 +6,9 @@ package com.foxholedefense.game.model.actor.combat.enemy;
 
 public interface IEnemyObserver {
 
-    public void notifyEnemy(Enemy enemy, EnemyEvent event);
+    void notifyEnemy(Enemy enemy, EnemyEvent event);
 
-    public enum EnemyEvent {
-        REACHED_END;
+    enum EnemyEvent {
+        REACHED_END
     }
 }

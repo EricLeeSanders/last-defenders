@@ -6,26 +6,19 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.helper.CollisionDetection;
-import com.foxholedefense.game.helper.Damage;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.interfaces.IRpg;
-import com.foxholedefense.game.model.actor.projectile.Explosion;
-import com.foxholedefense.game.service.factory.ActorFactory;
-import com.foxholedefense.game.service.factory.ActorFactory.ExplosionPool;
-import com.foxholedefense.game.service.factory.ActorFactory.SupportActorPool;
-import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
-import com.foxholedefense.util.ActorUtil;
+import com.foxholedefense.game.service.factory.SupportActorFactory.SupportActorPool;
+import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.DebugOptions;
-import com.foxholedefense.util.Dimension;
+import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 public class LandMine extends SupportActor implements IRpg{
 	public static final int COST = 300;
@@ -34,8 +27,8 @@ public class LandMine extends SupportActor implements IRpg{
 	private static final Vector2 GUN_POS = UtilPool.getVector2(0,0);
 	private static final Dimension TEXTURE_SIZE = new Dimension(30, 30);
 	private Circle body;
-	private IProjectileFactory projectileFactory;
-	public LandMine(SupportActorPool<LandMine> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion textureRegion, TextureRegion rangeTexture) {
+	private ProjectileFactory projectileFactory;
+	public LandMine(SupportActorPool<LandMine> pool, Group targetGroup, ProjectileFactory projectileFactory, TextureRegion textureRegion, TextureRegion rangeTexture) {
 		super(pool, targetGroup, textureRegion, TEXTURE_SIZE, rangeTexture, RANGE, ATTACK, GUN_POS, COST);
 		this.projectileFactory = projectileFactory;
 		this.body = new Circle(this.getPositionCenter(), this.getWidth()/2);

@@ -1,42 +1,21 @@
 package com.foxholedefense.game.model.actor.support;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
-import com.foxholedefense.game.GameStage;
-import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.IRpg;
-import com.foxholedefense.game.model.actor.projectile.AirStrikeBomb;
-import com.foxholedefense.game.model.actor.projectile.Bullet;
-import com.foxholedefense.game.service.factory.ActorFactory;
-import com.foxholedefense.game.service.factory.ActorFactory.AirStrikeBombPool;
-import com.foxholedefense.game.service.factory.ActorFactory.SupportActorPool;
-import com.foxholedefense.game.service.factory.interfaces.IProjectileFactory;
-import com.foxholedefense.util.Dimension;
-import com.foxholedefense.util.FHDVector2;
+import com.foxholedefense.game.service.factory.SupportActorFactory.SupportActorPool;
+import com.foxholedefense.game.service.factory.ProjectileFactory;
+import com.foxholedefense.util.datastructures.Dimension;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
-import com.foxholedefense.util.UtilPool;
+import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 public class AirStrike extends SupportActor implements IRpg{
 	public static final float AIRSTRIKE_DURATION = 2.5f;
@@ -49,11 +28,11 @@ public class AirStrike extends SupportActor implements IRpg{
 	private static final Dimension BULLET_SIZE = new Dimension(10, 10);
 	private static final Dimension TEXTURE_SIZE = new Dimension(178, 120);
 	private Array<AirStrikeLocation> airStrikeLocations = new Array<AirStrikeLocation>();
-	private IProjectileFactory projectileFactory;
+	private ProjectileFactory projectileFactory;
 	private FHDAudio audio;
 	private TextureRegion rangeTexture;
 
-	public AirStrike(SupportActorPool<AirStrike> pool, Group targetGroup, IProjectileFactory projectileFactory, TextureRegion textureRegion, TextureRegion rangeTexture, FHDAudio audio) {
+	public AirStrike(SupportActorPool<AirStrike> pool, Group targetGroup, ProjectileFactory projectileFactory, TextureRegion textureRegion, TextureRegion rangeTexture, FHDAudio audio) {
 		super(pool, targetGroup, textureRegion, TEXTURE_SIZE, rangeTexture, AIRSTRIKE_RADIUS, ATTACK, GUN_POS, COST);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
