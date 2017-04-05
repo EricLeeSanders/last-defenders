@@ -63,11 +63,11 @@ public class ArmorDestroyedEffect extends LabelEffect {
 
     @Override
     public void act(float delta){
-        super.act(delta);
         if (actor == null || actor.isDead() || !actor.isActive()){
             free();
             return;
         }
+        super.act(delta);
     }
 
     @Override

@@ -29,10 +29,14 @@ public class TextureEffect extends GameActor implements Pool.Poolable {
         super.act(delta);
         stateTime += delta;
         if (stateTime >= duration){
-            pool.free(this);
+            free();
         }
     }
 
+    /**
+     * This method should not be called more than once.
+     * Otherwise, the object is placed in the pool twice.
+     */
     protected void free(){
         pool.free(this);
     }
