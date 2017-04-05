@@ -28,10 +28,11 @@ public class AnimationEffect extends TextureEffect {
 
     @Override
     public void act(float delta) {
-        super.act(delta);
         if (animation.isAnimationFinished(stateTime)) {
             free();
+            return;
         }
+        super.act(delta);
         setTextureRegion(animation.getKeyFrame(stateTime, false));
     }
 

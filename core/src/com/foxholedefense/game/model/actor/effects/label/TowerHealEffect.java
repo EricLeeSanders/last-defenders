@@ -51,17 +51,17 @@ public class TowerHealEffect extends LabelEffect {
 
     @Override
     public void act(float delta){
-        super.act(delta);
-        if (stateTime >= DURATION || tower == null || tower.isDead()) {
+        if (tower == null || tower.isDead() || !tower.isActive()) {
             free();
             return;
         }
+        super.act(delta);
     }
 
     @Override
     public void reset() {
         super.reset();
-        this.tower = null;
+        tower = null;
         getColor().a = 1;
     }
 
