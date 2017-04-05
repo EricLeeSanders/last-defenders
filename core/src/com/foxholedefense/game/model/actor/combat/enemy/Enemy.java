@@ -53,7 +53,7 @@ public abstract class Enemy extends CombatActor {
 	private float rotationBeforeAttacking;
 	private SnapshotArray<IEnemyObserver> observers = new SnapshotArray<IEnemyObserver>();
 
-	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, Dimension textureSize, CombatActorPool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
+	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
 				 float speed, float health, float armor, float attack, float attackSpeed, float range, int killReward, DeathEffectType deathEffectType) {
 		super(stationaryTextureRegion, textureSize, pool, targetGroup, gunPos, health, armor, attack, attackSpeed, range, deathEffectType);
 		movementAnimation = new Animation(FRAME_DURATION, animatedRegions);

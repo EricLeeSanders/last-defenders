@@ -43,7 +43,7 @@ public class TowerRifle extends Tower {
 	private FHDAudio audio;
 	private ProjectileFactory projectileFactory;
 
-	public TowerRifle(TextureRegion actorRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
+	public TowerRifle(TextureRegion actorRegion, CombatActorPool<TowerRifle> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
 		super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
