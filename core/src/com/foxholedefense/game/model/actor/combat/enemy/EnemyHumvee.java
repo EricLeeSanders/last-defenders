@@ -9,7 +9,6 @@ import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.model.actor.interfaces.IVehicle;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
-import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
@@ -31,27 +30,19 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 
 	private static final Vector2 GUN_POS = UtilPool.getVector2();
 	private static final Dimension TEXTURE_SIZE = new Dimension(74, 32);
-	
-	private EffectFactory effectFactory;
+	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.VEHCILE_EXPLOSION;
+
 	private float[] bodyPoints = {15,0, 15,32, 69,32, 69, 0 };
 	private Polygon body;
 	
-	public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, EffectFactory effectFactory) {
-		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, null, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
-		this.effectFactory = effectFactory;
+	public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool) {
+		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, null, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, DEATH_EFFECT_TYPE);
 		this.body = new Polygon(bodyPoints);
 	}
 
 	@Override
 	public void attackTarget(ITargetable target) {
 		// Does not attack
-
-	}
-
-	@Override
-	protected void deathAnimation() {
-		effectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());
-
 	}
 
 	@Override

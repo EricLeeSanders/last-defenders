@@ -285,6 +285,9 @@ public class GameStage extends Stage implements IEnemyObserver, ICombatActorObse
 			case ARMOR_BROKEN:
 				effectFactory.loadLabelEffect(ArmorDestroyedEffect.class).initialize(actor);
 				break;
+			case DEAD:
+				effectFactory.loadDeathEffect(actor.getDeathEffectType()).initialize(actor.getPositionCenter());
+				break;
 		}
 	}
 

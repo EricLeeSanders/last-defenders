@@ -9,7 +9,6 @@ import com.foxholedefense.game.model.actor.effects.texture.animation.death.Death
 import com.foxholedefense.game.model.actor.interfaces.IRpg;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
-import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.FHDAudio;
@@ -31,18 +30,20 @@ public class EnemyRocketLauncher extends Enemy implements IRpg {
 	public static final float RANGE = 60;
 	public static final float SPEED = 55f;
 	public static final float AOE_RADIUS = 50f;
+
 	private static final Dimension RPG_SIZE = new Dimension(7, 7);
 	private static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);
 	private static final Dimension TEXTURE_SIZE = new Dimension(57, 48);
+	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
+
 	private Circle body;
 	private FHDAudio audio;
 	private ProjectileFactory projectileFactory;
-	private EffectFactory effectFactory;
-	public EnemyRocketLauncher(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, EffectFactory effectFactory, ProjectileFactory projectileFactory, FHDAudio audio) {
-		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE);
+
+	public EnemyRocketLauncher(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<CombatActor> pool, Group targetGroup, ProjectileFactory projectileFactory, FHDAudio audio) {
+		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, DEATH_EFFECT_TYPE);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
-		this.effectFactory = effectFactory;
 		this.body = new Circle(this.getPositionCenter(), 10);
 	}
 
@@ -52,13 +53,6 @@ public class EnemyRocketLauncher extends Enemy implements IRpg {
 			audio.playSound(FHDSound.ROCKET_LAUNCH);
 			projectileFactory.loadRPG().initialize(this, target, getTargetGroup(), this.getGunPos(), RPG_SIZE, AOE_RADIUS);
 		}
-
-	}
-
-	@Override
-	protected void deathAnimation() {
-		effectFactory.loadDeathEffect(DeathEffectType.BLOOD).initialize(this.getPositionCenter());
-
 	}
 
 	@Override

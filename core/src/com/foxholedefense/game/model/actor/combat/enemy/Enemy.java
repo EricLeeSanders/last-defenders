@@ -15,6 +15,7 @@ import com.foxholedefense.action.FHDSequenceAction;
 import com.foxholedefense.action.WaypointAction;
 import com.foxholedefense.game.model.actor.ai.EnemyAI;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
+import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
@@ -51,8 +52,8 @@ public abstract class Enemy extends CombatActor {
 	private SnapshotArray<IEnemyObserver> observers = new SnapshotArray<IEnemyObserver>();
 
 	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, Dimension textureSize, CombatActorPool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
-				 float speed, float health, float armor, float attack, float attackSpeed, float range) {
-		super(stationaryTextureRegion, textureSize, pool, targetGroup, gunPos, health, armor, attack, attackSpeed, range);
+				 float speed, float health, float armor, float attack, float attackSpeed, float range, DeathEffectType deathEffectType) {
+		super(stationaryTextureRegion, textureSize, pool, targetGroup, gunPos, health, armor, attack, attackSpeed, range, deathEffectType);
 		movementAnimation = new Animation(0.3f, animatedRegions);
 		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		this.speed = speed;

@@ -16,7 +16,6 @@ import com.foxholedefense.game.model.actor.interfaces.IRpg;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.model.actor.interfaces.IVehicle;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
-import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.DebugOptions;
@@ -37,28 +36,31 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	public static final float ATTACK = 10;
 	public static final float ATTACK_SPEED = 0.9f;
 	public static final float RANGE = 80;
+	public static final float AOE_RADIUS = 75f;
+
 	public static final int COST = 1500;
 	public static final int ARMOR_COST = 1200;
 	public static final int RANGE_INCREASE_COST = 650;
 	public static final int SPEED_INCREASE_COST = 650;
 	public static final int ATTACK_INCREASE_COST = 650;
-	public static final float AOE_RADIUS = 75f;
+
 	private static final Dimension RPG_SIZE = new Dimension(7, 7);
 	private static final Vector2 GUN_POS = UtilPool.getVector2(57, 0);
 	private static final Dimension TEXTURE_SIZE_BODY = new Dimension(76,50);
 	private static final Dimension TEXTURE_SIZE_TURRET = new Dimension(120, 23);
+	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.VEHCILE_EXPLOSION;
+
 	private float[] bodyPoints = { 0, 0, 0, 50, 75, 50, 75, 0 };
 	private Polygon body;
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
 	private float bodyRotation;
-	private EffectFactory effectFactory;
 	private ProjectileFactory projectileFactory;
-	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, EffectFactory effectFactory, ProjectileFactory projectileFactory) {
-		super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST);
+
+	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<CombatActor> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory) {
+		super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
 		this.bodyRegion = bodyRegion;
 		this.turretRegion = turretRegion;
-		this.effectFactory = effectFactory;
 		this.projectileFactory = projectileFactory;
 		body = new Polygon(bodyPoints);
 	}
@@ -110,10 +112,8 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	 */
 	@Override
 	public Polygon getBody() {
-
 		body.setOrigin(TEXTURE_SIZE_BODY.getWidth()/2, TEXTURE_SIZE_BODY.getHeight()/2);
 		body.setRotation(bodyRotation);
-
 		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
 		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
 		body.setPosition(x, y);
@@ -137,12 +137,6 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	@Override
 	public String getName(){
 		return "Tank";
-	}
-
-	@Override
-	protected void deathAnimation() {
-		effectFactory.loadDeathEffect(DeathEffectType.VEHCILE_EXPLOSION).initialize(this.getPositionCenter());
-
 	}
 
 }
