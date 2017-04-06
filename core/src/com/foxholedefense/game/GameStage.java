@@ -13,7 +13,7 @@ import com.foxholedefense.game.model.actor.combat.enemy.IEnemyObserver;
 import com.foxholedefense.game.model.actor.combat.tower.ITowerObserver;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.effects.label.ArmorDestroyedEffect;
-import com.foxholedefense.game.model.actor.effects.label.LevelOverPaymentEffect;
+import com.foxholedefense.game.model.actor.effects.label.WaveOverCoinEffect;
 import com.foxholedefense.game.model.actor.effects.label.TowerHealEffect;
 import com.foxholedefense.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.foxholedefense.game.model.level.Level;
@@ -180,8 +180,8 @@ public class GameStage extends Stage implements IEnemyObserver, ICombatActorObse
 		if(isLevelCompleted()){
 			levelComleted();
 		}
-		LevelOverPaymentEffect levelOverPaymentEffect = effectFactory.loadLabelEffect(LevelOverPaymentEffect.class);
-		levelOverPaymentEffect.initialize(money);
+		WaveOverCoinEffect waveOverCoinEffect = effectFactory.loadLabelEffect(WaveOverCoinEffect.class);
+		waveOverCoinEffect.initialize(money);
 		level.loadWave(); //load the next wave
 		healTowers();
 	}

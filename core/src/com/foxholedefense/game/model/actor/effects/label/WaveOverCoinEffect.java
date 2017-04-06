@@ -17,7 +17,7 @@ import com.foxholedefense.util.datastructures.Dimension;
  * Created by Eric on 4/1/2017.
  */
 
-public class LevelOverPaymentEffect extends LabelEffect {
+public class WaveOverCoinEffect extends LabelEffect {
 
     private static final float SCALE = 0.75f;
     private static final float DURATION = 2f;
@@ -25,7 +25,7 @@ public class LevelOverPaymentEffect extends LabelEffect {
 
     private Animation animation;
 
-    public LevelOverPaymentEffect(LabelEffectPool<LevelOverPaymentEffect> pool, Skin skin, Array<AtlasRegion> regions){
+    public WaveOverCoinEffect(LabelEffectPool<WaveOverCoinEffect> pool, Skin skin, Array<AtlasRegion> regions){
         super(pool, DURATION, skin);
         animation = new Animation(0.05f, regions);
         animation.setPlayMode(Animation.PlayMode.LOOP);
