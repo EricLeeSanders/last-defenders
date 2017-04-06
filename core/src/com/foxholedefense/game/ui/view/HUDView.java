@@ -1,7 +1,6 @@
 package com.foxholedefense.game.ui.view;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
@@ -16,6 +15,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.game.ui.presenter.HUDPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IHUDView;
+import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
@@ -27,13 +27,13 @@ import com.foxholedefense.util.Resources;
  */
 public class HUDView extends Group implements IHUDView {
 
-	private static final float MESSAGE_DURATION = 2;
 	private Image imgMoney, imgLife;
-	private ImageButton btnWave, btnEnlist, btnSupport, btnOptions;
+	private ImageButton btnWave, btnEnlist, btnSupport, btnOptions, btnPause, btnResume;
 	private Label lblMoney, lblLives, lblWaveCount;
 	private HUDPresenter presenter;
 	private Resources resources;
 	private Label messageLabel;
+	private boolean paused;
 	public HUDView(HUDPresenter presenter,Skin skin, Resources resources) {
 		this.presenter = presenter;
 		this.setTransform(false);
@@ -63,6 +63,22 @@ public class HUDView extends Group implements IHUDView {
 		btnWave.setPosition(10,10);
 		setBtnWaveListener();
 		addActor(btnWave);
+
+		btnPause = new ImageButton(skin, "pause");
+		btnPause.setSize(50,50);
+		btnPause.getImageCell().size(17,23);
+		btnPause.getImage().setScaling(Scaling.stretch);
+		btnPause.setPosition(10, 10);
+		setBtnPauseListener();
+		addActor(btnPause);
+
+		btnResume = new ImageButton(skin, "resume");
+		btnResume.setSize(50,50);
+		btnResume.getImageCell().size(27,30);
+		btnResume.getImage().setScaling(Scaling.stretch);
+		btnResume.setPosition(10, 10);
+		setBtnResumeListener();
+		addActor(btnResume);
 
 		btnEnlist = new ImageButton(skin, "enlist_hud");
 		btnEnlist.setSize(50, 50);
@@ -121,6 +137,31 @@ public class HUDView extends Group implements IHUDView {
 		Logger.info("HUD View: controls created");
 	}
 
+	private void setBtnResumeListener() {
+		btnResume.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				presenter.resume();
+				btnResume.setVisible(false);
+				btnPause.setVisible(true);
+				paused = false;
+			}
+		});
+	}
+
+	private void setBtnPauseListener() {
+		btnPause.addListener(new ClickListener() {
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+				super.touchUp(event, x, y, pointer, button);
+				presenter.pause();
+				btnResume.setVisible(true);
+				btnPause.setVisible(false);
+				paused = true;
+			}
+		});
+	}
 
 	private void setBtnOptionsListener() {
 		btnOptions.addListener(new ClickListener() {
@@ -163,11 +204,16 @@ public class HUDView extends Group implements IHUDView {
 			}
 		});
 	}
-	private void setButtonsVisible(boolean visible){
+	private void setNormalButtonsVisible(boolean visible){
 		btnEnlist.setVisible(visible);
 		btnSupport.setVisible(visible);
 		btnWave.setVisible(visible);
 		btnOptions.setVisible(visible);
+	}
+
+	private void setPauseResumeButtonsVisible(boolean visible){
+		btnResume.setVisible(visible);
+		btnPause.setVisible(visible);
 	}
 	@Override
 	public void setMoney(String money) {
@@ -190,21 +236,26 @@ public class HUDView extends Group implements IHUDView {
 		btnSupport.setTouchable(Touchable.enabled);
 		btnWave.setTouchable(Touchable.enabled);
 		btnOptions.setTouchable(Touchable.enabled);
-		setButtonsVisible(true);
+		btnPause.setVisible(false);
+		btnResume.setVisible(false);
+		setNormalButtonsVisible(true);
 	}
 	@Override
 	public void supportState() {
-		setButtonsVisible(false);
+		setNormalButtonsVisible(false);
+		setPauseResumeButtonsVisible(false);
 	}
 	
 	@Override
 	public void enlistingState() {
-		setButtonsVisible(false);
+		setNormalButtonsVisible(false);
+		setPauseResumeButtonsVisible(false);
 	}
 	
 	@Override
 	public void inspectingState() {
-		setButtonsVisible(false);
+		setNormalButtonsVisible(false);
+		setPauseResumeButtonsVisible(false);
 	}
 
 	@Override
@@ -212,6 +263,9 @@ public class HUDView extends Group implements IHUDView {
 		btnEnlist.setTouchable(Touchable.disabled);
 		btnSupport.setTouchable(Touchable.disabled);
 		btnWave.setTouchable(Touchable.disabled);
+		btnPause.setTouchable(Touchable.disabled);
+		btnResume.setTouchable(Touchable.disabled);
+
 	}
 
 	@Override
@@ -220,6 +274,8 @@ public class HUDView extends Group implements IHUDView {
 		btnSupport.setTouchable(Touchable.disabled);
 		btnWave.setTouchable(Touchable.disabled);
 		btnOptions.setTouchable(Touchable.disabled);
+		btnPause.setTouchable(Touchable.disabled);
+		btnResume.setTouchable(Touchable.disabled);
 	}
 
 	@Override
@@ -228,15 +284,14 @@ public class HUDView extends Group implements IHUDView {
 		btnSupport.setTouchable(Touchable.enabled);
 		btnWave.setTouchable(Touchable.enabled);
 		btnOptions.setTouchable(Touchable.enabled);
+		btnPause.setTouchable(Touchable.enabled);
+		btnResume.setTouchable(Touchable.enabled);
 		btnWave.setVisible(false);
 		btnEnlist.setVisible(true);
 		btnSupport.setVisible(true);
 		btnOptions.setVisible(true);
-	}
-
-	public enum MessageColor{
-
-
+		btnPause.setVisible(!paused);
+		btnResume.setVisible(paused);
 
 	}
 }

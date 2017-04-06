@@ -4,72 +4,30 @@ size: 2048,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-1
-  rotate: false
-  xy: 1072, 174
-  size: 24, 24
-  orig: 24, 24
-  offset: 0, 0
-  index: -1
-2
-  rotate: false
-  xy: 1679, 697
-  size: 24, 24
-  orig: 24, 24
-  offset: 0, 0
-  index: -1
-3
-  rotate: false
-  xy: 1679, 671
-  size: 24, 24
-  orig: 24, 24
-  offset: 0, 0
-  index: -1
-4
-  rotate: false
-  xy: 1706, 719
-  size: 24, 24
-  orig: 24, 24
-  offset: 0, 0
-  index: -1
-5
-  rotate: false
-  xy: 1732, 719
-  size: 24, 24
-  orig: 24, 24
-  offset: 0, 0
-  index: -1
-6
-  rotate: false
-  xy: 1493, 657
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
 arrow-left
-  rotate: false
-  xy: 650, 49
-  size: 53, 36
-  orig: 53, 36
-  offset: 0, 0
-  index: -1
-arrow-right
   rotate: false
   xy: 803, 149
   size: 53, 36
   orig: 53, 36
   offset: 0, 0
   index: -1
+arrow-right
+  rotate: false
+  xy: 858, 149
+  size: 53, 36
+  orig: 53, 36
+  offset: 0, 0
+  index: -1
 arrow-small-down
   rotate: false
-  xy: 1559, 666
+  xy: 1493, 666
   size: 64, 55
   orig: 64, 55
   offset: 0, 0
   index: -1
 arrow-small-up
   rotate: false
-  xy: 650, 87
+  xy: 1559, 666
   size: 64, 55
   orig: 64, 55
   offset: 0, 0
@@ -90,7 +48,7 @@ awards
   index: -1
 bomb
   rotate: false
-  xy: 978, 145
+  xy: 1327, 370
   size: 26, 40
   orig: 26, 40
   offset: 0, 0
@@ -146,21 +104,21 @@ cancel
   index: -1
 check-off
   rotate: false
-  xy: 941, 150
+  xy: 1445, 577
   size: 35, 35
   orig: 35, 35
   offset: 0, 0
   index: -1
 check-on
   rotate: false
-  xy: 1125, 295
+  xy: 1445, 540
   size: 35, 35
   orig: 35, 35
   offset: 0, 0
   index: -1
 cursor
   rotate: false
-  xy: 1431, 537
+  xy: 2044, 878
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -191,7 +149,7 @@ default-rect-pad
   index: -1
 default-pane-noborder
   rotate: false
-  xy: 1003, 197
+  xy: 203, 9
   size: 1, 1
   split: 0, 0, 0, 0
   orig: 1, 1
@@ -199,7 +157,7 @@ default-pane-noborder
   index: -1
 default-rect
   rotate: false
-  xy: 716, 89
+  xy: 2044, 868
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -207,7 +165,7 @@ default-rect
   index: -1
 default-rect-down
   rotate: false
-  xy: 203, 7
+  xy: 2044, 873
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -215,7 +173,7 @@ default-rect-down
   index: -1
 default-round-large
   rotate: false
-  xy: 1705, 697
+  xy: 1706, 692
   size: 20, 20
   split: 5, 5, 5, 4
   orig: 20, 20
@@ -231,7 +189,7 @@ default-select
   index: -1
 default-select-selection
   rotate: false
-  xy: 766, 139
+  xy: 2044, 863
   size: 3, 3
   split: 1, 1, 1, 1
   orig: 3, 3
@@ -239,7 +197,7 @@ default-select-selection
   index: -1
 default-slider
   rotate: false
-  xy: 1327, 402
+  xy: 1003, 190
   size: 8, 8
   split: 2, 2, 2, 2
   orig: 8, 8
@@ -262,7 +220,7 @@ default-splitpane
   index: -1
 default-splitpane-vertical
   rotate: false
-  xy: 1427, 649
+  xy: 2044, 883
   size: 3, 5
   split: 0, 0, 0, 5
   orig: 3, 5
@@ -270,7 +228,7 @@ default-splitpane-vertical
   index: -1
 default-window
   rotate: false
-  xy: 1043, 169
+  xy: 1706, 714
   size: 27, 29
   split: 4, 3, 20, 3
   orig: 27, 29
@@ -299,7 +257,7 @@ games
   index: -1
 heart
   rotate: false
-  xy: 1006, 164
+  xy: 1327, 297
   size: 35, 34
   orig: 35, 34
   offset: 0, 0
@@ -341,7 +299,7 @@ main-panel
   index: -1
 money
   rotate: false
-  xy: 1199, 295
+  xy: 1679, 686
   size: 25, 35
   orig: 25, 35
   offset: 0, 0
@@ -355,14 +313,14 @@ money_label
   index: -1
 music
   rotate: false
-  xy: 716, 94
+  xy: 1997, 890
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 null
   rotate: false
-  xy: 1003, 194
+  xy: 203, 1
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
@@ -374,6 +332,13 @@ options
   orig: 49, 51
   offset: 0, 0
   index: -1
+pause
+  rotate: false
+  xy: 963, 139
+  size: 33, 46
+  orig: 33, 46
+  offset: 0, 0
+  index: -1
 play_normal
   rotate: false
   xy: 1003, 200
@@ -383,14 +348,21 @@ play_normal
   index: -1
 range_icon
   rotate: false
-  xy: 1997, 890
+  xy: 1997, 840
   size: 45, 48
   orig: 45, 48
   offset: 0, 0
   index: -1
+resume
+  rotate: false
+  xy: 650, 83
+  size: 53, 59
+  orig: 53, 59
+  offset: 0, 0
+  index: -1
 rotate
   rotate: false
-  xy: 1997, 842
+  xy: 1999, 792
   size: 48, 46
   orig: 48, 46
   offset: 0, 0
@@ -404,21 +376,21 @@ select
   index: -1
 selection
   rotate: false
-  xy: 1003, 191
+  xy: 2032, 1022
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 shield
   rotate: false
-  xy: 858, 145
+  xy: 1445, 614
   size: 37, 40
   orig: 37, 40
   offset: 0, 0
   index: -1
 slider-bg
   rotate: false
-  xy: 1559, 660
+  xy: 1493, 660
   size: 4, 4
   orig: 4, 4
   offset: 0, 0
@@ -439,21 +411,21 @@ slider-full
   index: -1
 slider-knob
   rotate: false
-  xy: 897, 155
+  xy: 650, 51
   size: 42, 30
   orig: 42, 30
   offset: 0, 0
   index: -1
 sound
   rotate: false
-  xy: 1999, 795
+  xy: 913, 140
   size: 48, 45
   orig: 48, 45
   offset: 0, 0
   index: -1
 speed_icon
   rotate: false
-  xy: 1162, 295
+  xy: 1327, 333
   size: 35, 35
   orig: 35, 35
   offset: 0, 0
@@ -489,7 +461,7 @@ textfield
   index: -1
 tower-attr-full
   rotate: false
-  xy: 709, 144
+  xy: 1125, 315
   size: 64, 15
   orig: 64, 15
   offset: 0, 0
@@ -545,7 +517,7 @@ wave
   index: -1
 white
   rotate: false
-  xy: 2032, 1020
+  xy: 2044, 858
   size: 3, 3
   orig: 3, 3
   offset: 0, 0

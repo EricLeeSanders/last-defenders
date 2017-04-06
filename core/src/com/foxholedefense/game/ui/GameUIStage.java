@@ -81,7 +81,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		Logger.info("GameUIStage: creating ui");
 		Skin skin = resources.getSkin();
 
-		HUDPresenter hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player, resources, audio);
+		HUDPresenter hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player, audio);
 		HUDView hudView = new HUDView(hudPresenter, skin, resources);
 		hudPresenter.setView(hudView);
 
