@@ -62,6 +62,6 @@ public class AirStrikeLocation extends Actor {
 	public void clear () {
 		location.free();
 		pool.free(this);
-		super.clear();
+		showRange = true;
 	}
 }

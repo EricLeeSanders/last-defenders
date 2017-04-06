@@ -28,7 +28,7 @@ import com.foxholedefense.util.Resources;
  */
 public class OptionsView extends Group implements IOptionsView {
 	private OptionsPresenter presenter;
-	private TextButton btnResume, btnNewGame, btnMainMenu;
+	private TextButton btnClose, btnNewGame, btnMainMenu;
 	private CheckBox btnShowRanges, btnSound, btnMusic;
 	private Image volSliderBg, speedSliderBg;
 	private float volSliderEndPos, volSliderStartPos, speedSliderEndPos, speedSliderStartPos;
@@ -79,17 +79,17 @@ public class OptionsView extends Group implements IOptionsView {
 		lblTitle.setFontScale(0.7f);
 		this.addActor(lblTitle);
 
-		btnResume = new TextButton("RESUME",skin);
-		btnResume.getLabel().setFontScale(0.45f);
-		btnResume.pack();
-		btnResume.setPosition(112,20);
-		addActor(btnResume);
-		setBtnResumeListener();
+		btnClose = new TextButton("CLOSE",skin);
+		btnClose.getLabel().setFontScale(0.45f);
+		btnClose.pack();
+		btnClose.setPosition(112,20);
+		addActor(btnClose);
+		setBtnCloseListener();
 		
 		btnNewGame = new TextButton("NEW GAME",skin);
 		btnNewGame.getLabel().setFontScale(0.45f);
 		btnNewGame.pack();
-		btnNewGame.setPosition(btnResume.getX() + btnResume.getWidth() + 15, btnResume.getY());
+		btnNewGame.setPosition(btnClose.getX() + btnClose.getWidth() + 15, btnClose.getY());
 		addActor(btnNewGame);
 		setBtnNewGameListener();
 
@@ -246,12 +246,12 @@ public class OptionsView extends Group implements IOptionsView {
 		return volumeStack;
 	}
 
-	private void setBtnResumeListener() {
-		btnResume.addListener(new ClickListener() {
+	private void setBtnCloseListener() {
+		btnClose.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.resumeGame();
+				presenter.closeOptions();
 			}
 		});
 
