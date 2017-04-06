@@ -31,17 +31,14 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	private GameUIStateManager uiStateManager;
 	private GameStateManager gameStateManager;
 	private Player player;
-	private boolean doubleSpeedEnabled = false;
 	private IHUDView view;
 	private FHDAudio audio;
-	private Resources resources;
-	public HUDPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, GameStateManager gameStateManager, Player player, Resources resources, FHDAudio audio) {
+	public HUDPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, GameStateManager gameStateManager, Player player, FHDAudio audio) {
 		this.levelStateManager = levelStateManager;
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.gameStateManager = gameStateManager;
 		this.player = player;
-		this.resources = resources;
 		this.audio = audio;
 		player.attachObserver(this);
 	}
@@ -58,14 +55,30 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	}
 
 	/**
-	 * Show the options view. Also pause the Game.
+	 * Pauses the game
+	 */
+	public void pause() {
+		Logger.info("HUD Presenter: pause");
+		audio.playSound(FHDSound.SMALL_CLICK);
+		gameStateManager.setState(GameState.PAUSE);
+	}
+
+	/**
+	 * Resumes the game
+	 */
+	public void resume() {
+		Logger.info("HUD Presenter: resume");
+		audio.playSound(FHDSound.SMALL_CLICK);
+		gameStateManager.setState(GameState.PLAY);
+	}
+
+	/**
+	 * Show the options view.
 	 */
 	public void options() {
 		Logger.info("HUD Presenter: options");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		uiStateManager.setState(GameUIState.OPTIONS);
-		gameStateManager.setState(GameState.PAUSE);
-
 	}
 
 	/**

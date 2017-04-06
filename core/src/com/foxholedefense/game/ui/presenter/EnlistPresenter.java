@@ -155,6 +155,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 				break;
 			case GAME_OVER:
 			case LEVEL_COMPLETED:
+				view.standByState();
 				cancelEnlist(false);
 				break;
 			default:
