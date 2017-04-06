@@ -10,7 +10,7 @@ import com.foxholedefense.game.model.actor.effects.texture.animation.EnemyCoinEf
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.effects.label.ArmorDestroyedEffect;
 import com.foxholedefense.game.model.actor.effects.label.LabelEffect;
-import com.foxholedefense.game.model.actor.effects.label.LevelOverPaymentEffect;
+import com.foxholedefense.game.model.actor.effects.label.WaveOverCoinEffect;
 import com.foxholedefense.game.model.actor.effects.label.TowerHealEffect;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.BloodSplatter;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect;
@@ -26,7 +26,7 @@ public class EffectFactory {
     private DeathEffectPool<BloodSplatter> bloodPool = new DeathEffectPool<BloodSplatter>(BloodSplatter.class);
     private LabelEffectPool<ArmorDestroyedEffect> armorDestroyedEffectPool = new LabelEffectPool<ArmorDestroyedEffect>(ArmorDestroyedEffect.class);
     private LabelEffectPool<TowerHealEffect> towerHealEffectPool = new LabelEffectPool<TowerHealEffect>(TowerHealEffect.class);
-    private LabelEffectPool<LevelOverPaymentEffect> levelOverPaymentEffectPool = new LabelEffectPool<LevelOverPaymentEffect>(LevelOverPaymentEffect.class);
+    private LabelEffectPool<WaveOverCoinEffect> waveOverCoinEffectPool = new LabelEffectPool<WaveOverCoinEffect>(WaveOverCoinEffect.class);
     private AnimationEffectPool<EnemyCoinEffect> enemyCoinEffectPool = new AnimationEffectPool<EnemyCoinEffect>(EnemyCoinEffect.class);
 
     private ActorGroups actorGroups;
@@ -71,8 +71,8 @@ public class EffectFactory {
             labelEffect = (T) armorDestroyedEffectPool.obtain();
         } else if(type.equals(TowerHealEffect.class)){
             labelEffect = (T) towerHealEffectPool.obtain();
-        } else if(type.equals(LevelOverPaymentEffect.class)){
-            labelEffect = (T) levelOverPaymentEffectPool.obtain();
+        } else if(type.equals(WaveOverCoinEffect.class)){
+            labelEffect = (T) waveOverCoinEffectPool.obtain();
         }
         actorGroups.getEffectGroup().addActor(labelEffect);
         return labelEffect;
@@ -119,9 +119,9 @@ public class EffectFactory {
             return new ArmorDestroyedEffect(atlasRegions, armorDestroyedEffectPool, resources.getSkin());
         } else if(type.equals(TowerHealEffect.class)){
             return new TowerHealEffect(towerHealEffectPool, resources.getSkin());
-        } else if(type.equals(LevelOverPaymentEffect.class)){
+        } else if(type.equals(WaveOverCoinEffect.class)){
             Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("coin");
-            return new LevelOverPaymentEffect(levelOverPaymentEffectPool, resources.getSkin(), atlasRegions);
+            return new WaveOverCoinEffect(waveOverCoinEffectPool, resources.getSkin(), atlasRegions);
         } else{
             throw new NullPointerException("Effect Factory couldn't create: " + type.getSimpleName());
         }
