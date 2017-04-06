@@ -243,6 +243,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 		case GAME_OVER:
 		case LEVEL_COMPLETED:
 			cancelSupport(false);
+			view.standByState();
 			break;
 		default:
 			view.standByState();

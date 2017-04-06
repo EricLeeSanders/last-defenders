@@ -56,12 +56,11 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	}
 
 	/**
-	 * Resume the game
+	 * Close options window
 	 */
-	public void resumeGame() {
-		Logger.info("Options Presenter: resume game");
+	public void closeOptions() {
+		Logger.info("Options Presenter: close options");
 		audio.playSound(FHDSound.SMALL_CLICK);
-		gameStateManager.setState(GameState.PLAY);
 		uiStateManager.setStateReturn();
 	}
 
