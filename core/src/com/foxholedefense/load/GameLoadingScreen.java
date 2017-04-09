@@ -1,6 +1,9 @@
 package com.foxholedefense.load;
 
 
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -10,6 +13,7 @@ import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.foxholedefense.screen.AbstractScreen;
 import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
+import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
@@ -29,6 +33,18 @@ public class GameLoadingScreen extends AbstractScreen{
 		this.audio = audio;
 		this.stage = new Stage(new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, new OrthographicCamera()));
 		super.addInputProcessor(stage);
+		createBackListener();
+	}
+
+	private void createBackListener(){
+		InputProcessor backProcessor = new InputAdapter() {
+			@Override
+			public boolean keyDown(int keycode) {
+				// Don't allow return while loading;
+				return false;
+			}
+		};
+		super.addInputProcessor(backProcessor);
 	}
 	
 	@Override

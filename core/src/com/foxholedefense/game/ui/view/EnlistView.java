@@ -3,6 +3,7 @@ package com.foxholedefense.game.ui.view;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -104,13 +105,12 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		
 		
 		btnCancel = new ImageButton(skin,"cancel");
-		setCancelListener();
 		btnCancel.setSize(64, 64);
 		btnCancel.getImageCell().size(35,36);
 		btnCancel.getImage().setScaling(Scaling.stretch);
 		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
 		choosingGroup.addActor(btnCancel);
-		//btnCancel.setVisible(true);
+		setCancelListener(btnCancel);
 		
 		btnScrollUp = new ImageButton(skin,"arrow-small-up");
 		btnScrollUp.setSize(64, 64);
@@ -139,7 +139,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		btnPlacingCancel.getImageCell().size(25,25);
 		btnPlacingCancel.getImage().setScaling(Scaling.stretch);
 		btnPlacingCancel.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlace.getY() + 60);
-		setPlacingCancelListener();
+		setCancelListener(btnPlacingCancel);
 		addActor(btnPlacingCancel);
 		
 		btnRotate = new ImageButton(skin, "rotate");
@@ -222,23 +222,13 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		});
 	}
 
-	private void setCancelListener() {
-		btnCancel.addListener(new ClickListener() {
+	private void setCancelListener(Button button) {
+		button.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.cancelEnlist(true);
+				presenter.cancel();
 				
-			}
-		});
-	}
-	
-	private void setPlacingCancelListener() {
-		btnPlacingCancel.addListener(new ClickListener() {
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);
-				presenter.cancelEnlist(true);
 			}
 		});
 	}

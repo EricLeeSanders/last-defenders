@@ -1,6 +1,10 @@
 package com.foxholedefense.game.ui;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,6 +21,7 @@ import com.foxholedefense.game.ui.presenter.HUDPresenter;
 import com.foxholedefense.game.ui.presenter.InspectPresenter;
 import com.foxholedefense.game.ui.presenter.LevelCompletedPresenter;
 import com.foxholedefense.game.ui.presenter.OptionsPresenter;
+import com.foxholedefense.game.ui.presenter.QuitPresenter;
 import com.foxholedefense.game.ui.presenter.SupportPresenter;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.IGameUIStateObserver;
@@ -29,6 +34,7 @@ import com.foxholedefense.game.ui.view.InspectView;
 import com.foxholedefense.game.ui.view.LevelCompletedView;
 import com.foxholedefense.game.ui.view.MessageDisplayer;
 import com.foxholedefense.game.ui.view.OptionsView;
+import com.foxholedefense.game.ui.view.QuitView;
 import com.foxholedefense.game.ui.view.SupportView;
 import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.screen.IScreenChanger;
@@ -74,6 +80,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		createUI(resources, audio, gameStage) ;
 	}
 
+
 	/**
 	 * Create and initialize the views and presenters of the Game UI
 	 */
@@ -117,6 +124,11 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		DebugView debugView = new DebugView(debugPresenter, resources.getSkin());
 		debugPresenter.setView(debugView);
 
+		QuitPresenter quitPresenter = new QuitPresenter(uiStateManager, gameStateManager, screenChanger, audio);
+		QuitView quitView = new QuitView(quitPresenter, resources.getSkin());
+		quitPresenter.setView(quitView);
+
+
 		this.addActor(hudView);
 		this.addActor(enlistView);
 		this.addActor(supportView);
@@ -125,6 +137,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		this.addActor(gameOverView);
 		this.addActor(levelCompletedView);
 		this.addActor(debugView);
+		this.addActor(quitView);
 		this.addActor(messageDisplayer);
 
 		imp.addProcessor(this);
