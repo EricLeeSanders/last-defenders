@@ -10,12 +10,14 @@ import com.foxholedefense.load.LevelLoadingScreen;
 import com.foxholedefense.menu.MenuScreen;
 import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
+import com.foxholedefense.state.GameStateManager.GameState;
+import com.foxholedefense.state.IGameStateObserver;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.UserPreferences;
 
-public class FHDGame extends Game implements IScreenChanger {
+public class FHDGame extends Game implements IScreenChanger, IGameStateObserver {
 	private GameStateManager gameStateManager;
 	private Resources resources;
 	private UserPreferences userPreferences;
@@ -42,7 +44,8 @@ public class FHDGame extends Game implements IScreenChanger {
 		gameStateManager = new GameStateManager();
 		GameLoadingScreen loadingScreen = new GameLoadingScreen(gameStateManager, this, resources, audio);
 		setScreen(loadingScreen);
-		Logger.info("FHDGame: Created");
+		gameStateManager.attach(this);
+		Gdx.input.setCatchBackKey(true);
 	}
 
 	@Override
@@ -88,5 +91,14 @@ public class FHDGame extends Game implements IScreenChanger {
 		Logger.info("FHDGame: Changing to level: " + level);
 		this.getScreen().dispose(); // dispose current screen
 		this.setScreen(new GameScreen(level, gameStateManager, this, resources, audio));
+	}
+
+	@Override
+	public void changeGameState(GameState state) {
+		switch(state){
+			case QUIT:
+				Gdx.app.exit();
+				break;
+		}
 	}
 }

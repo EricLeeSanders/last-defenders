@@ -259,6 +259,12 @@ public class HUDView extends Group implements IHUDView {
 	}
 
 	@Override
+	public void quitState() {
+		setNormalButtonsVisible(false);
+		setPauseResumeButtonsVisible(false);
+	}
+
+	@Override
 	public void optionsState() {
 		btnEnlist.setTouchable(Touchable.disabled);
 		btnSupport.setTouchable(Touchable.disabled);
