@@ -1,8 +1,12 @@
 package com.foxholedefense.levelselect;
 
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputProcessor;
 import com.foxholedefense.screen.AbstractScreen;
 import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
+import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
@@ -15,14 +19,29 @@ import com.foxholedefense.util.Resources;
  */
 public class LevelSelectScreen extends AbstractScreen {
 	private LevelSelectStage stage;
-	private FHDAudio audio;
-	private Resources resources;
+	private IScreenChanger screenChanger;
+
 	public LevelSelectScreen(IScreenChanger screenChanger, GameStateManager gameStateManager, Resources resources, FHDAudio audio) {
 		super(gameStateManager);
-		this.audio = audio;
-		this.resources = resources;
+		this.screenChanger = screenChanger;
 		this.stage = new LevelSelectStage(screenChanger,resources, audio, getViewport());
 		super.addInputProcessor(stage);
+		createBackListener();
+	}
+
+	private void createBackListener(){
+		InputProcessor backProcessor = new InputAdapter() {
+			@Override
+			public boolean keyDown(int keycode) {
+
+				if ((keycode == Keys.ESCAPE) || (keycode == Keys.BACK) ) {
+					Logger.info("LevelSelectScreen: Escape/Back pressed.");
+					screenChanger.changeToMenu();
+				}
+				return false;
+			}
+		};
+		super.addInputProcessor(backProcessor);
 	}
 	@Override
 	public void resize(int width, int height) {

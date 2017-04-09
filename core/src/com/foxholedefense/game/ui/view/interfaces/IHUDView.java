@@ -22,6 +22,8 @@ public interface IHUDView {
 
 	void gameOverState();
 
+	void quitState();
+
 	void waveInProgressState();
 
 	void setMoney(String money);

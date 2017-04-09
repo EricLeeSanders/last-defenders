@@ -70,7 +70,6 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	public void mainMenu() {
 		Logger.info("Options Presenter: main menu");
 		audio.playSound(FHDSound.SMALL_CLICK);
-		gameStateManager.setState(GameState.PLAY);
 		screenChanger.changeToMenu();
 	}
 
@@ -80,7 +79,6 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	public void newGame() {
 		Logger.info("Options Presenter: new game");
 		audio.playSound(FHDSound.SMALL_CLICK);
-		gameStateManager.setState(GameState.PLAY);
 		screenChanger.changeToLevelSelect();
 	}
 

@@ -83,17 +83,18 @@ public class EnlistPresenter implements IGameUIStateObserver {
 		}
 	}
 
+
+	private void cancelEnlist() {
+		Logger.info("Enlist Presenter: canceling enlist");
+		towerPlacement.removeCurrentTower();
+	}
+
 	/**
 	 * Cancel enlisting
 	 */
-	public void cancelEnlist(boolean returnState) {
-		Logger.info("Enlist Presenter: canceling enlist: " + returnState);
-		audio.playSound(FHDSound.SMALL_CLICK);
-		towerPlacement.removeCurrentTower();
-		if(returnState){
-			uiStateManager.setStateReturn();
-		}
-		Logger.info("Enlist Presenter: enlist canceled");
+	public void cancel(){
+		Logger.info("Enlist Presenter: cancel");
+		uiStateManager.setStateReturn();
 	}
 
 	/**
@@ -153,13 +154,9 @@ public class EnlistPresenter implements IGameUIStateObserver {
 			case PLACING_TOWER:
 				view.placingTowerState();
 				break;
-			case GAME_OVER:
-			case LEVEL_COMPLETED:
-				view.standByState();
-				cancelEnlist(false);
-				break;
 			default:
 				view.standByState();
+				cancelEnlist();
 				break;
 		}
 
