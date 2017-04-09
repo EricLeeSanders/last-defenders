@@ -41,6 +41,7 @@ public class MenuScreen extends AbstractScreen {
 					Logger.info("MenuScreen: Escape/Back pressed.");
 					gameStateManager.setState(GameState.QUIT);
 				}
+				return false;
 			}
 		};
 		super.addInputProcessor(backProcessor);

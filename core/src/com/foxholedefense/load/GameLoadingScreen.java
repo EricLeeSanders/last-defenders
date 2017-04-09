@@ -41,6 +41,7 @@ public class GameLoadingScreen extends AbstractScreen{
 			@Override
 			public boolean keyDown(int keycode) {
 				// Don't allow return while loading;
+				return false;
 			}
 		};
 		super.addInputProcessor(backProcessor);
