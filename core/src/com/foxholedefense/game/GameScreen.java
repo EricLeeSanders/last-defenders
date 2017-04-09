@@ -1,5 +1,8 @@
 package com.foxholedefense.game;
 
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputProcessor;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
@@ -49,6 +52,25 @@ public class GameScreen extends AbstractScreen {
 		super.show();
 		audio.turnOffMusic();
 		gameStage.loadFirstWave();
+		createBackListener();
+		gameStateManager.setState(GameState.PLAY);
+	}
+
+	private void createBackListener(){
+		InputProcessor backProcessor = new InputAdapter() {
+			@Override
+			public boolean keyUp(int keycode) {
+
+				if ((keycode == Keys.ESCAPE) || (keycode == Keys.BACK) ) {
+					Logger.info("GameScreen: Escape/Back pressed.");
+					uiStateManager.setState(GameUIState.QUIT_MENU);
+				}
+				return false;
+			}
+		};
+
+
+		super.addInputProcessor(backProcessor);
 	}
 
 	@Override

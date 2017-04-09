@@ -117,29 +117,32 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	public void changeUIState(GameUIState state) {
 
 		switch (state) {
-		case GAME_OVER:
-			view.gameOverState();
-			break;
-		case OPTIONS:
-			view.optionsState();
-			break;
-		case SUPPORT:
-			view.supportState();
-			break;
-		case ENLISTING:
-			view.enlistingState();
-			break;
-		case INSPECTING:
-			view.inspectingState();
-			break;
-		case WAVE_IN_PROGRESS:
-			view.waveInProgressState();
-			break;
-		case STANDBY:
-			view.standByState();
-			break;
-		default:
-			break;
+			case GAME_OVER:
+				view.gameOverState();
+				break;
+			case OPTIONS:
+				view.optionsState();
+				break;
+			case SUPPORT:
+				view.supportState();
+				break;
+			case ENLISTING:
+				view.enlistingState();
+				break;
+			case INSPECTING:
+				view.inspectingState();
+				break;
+			case QUIT_MENU:
+				view.quitState();
+				break;
+			case WAVE_IN_PROGRESS:
+				view.waveInProgressState();
+				break;
+			case STANDBY:
+				view.standByState();
+				break;
+			default:
+				break;
 		}
 	}
 

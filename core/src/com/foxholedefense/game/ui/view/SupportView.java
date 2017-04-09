@@ -4,6 +4,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -112,7 +113,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		setApacheListener(apacheButton);
 		
 		btnCancel = new ImageButton(skin,"cancel");
-		setCancelListener();
+		setCancelListener(btnCancel);
 		btnCancel.setSize(64, 64);
 		btnCancel.getImageCell().size(35,36);
 		btnCancel.getImage().setScaling(Scaling.stretch);
@@ -133,7 +134,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		btnPlacingCancel.getImageCell().size(25,25);
 		btnPlacingCancel.getImage().setScaling(Scaling.stretch);
 		btnPlacingCancel.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlace.getY() + 60);
-		setPlacingCancelListener();
+		setCancelListener(btnPlacingCancel);
 		addActor(btnPlacingCancel);
 
 
@@ -190,15 +191,6 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 			}
 		});
 	}
-	private void setPlacingCancelListener() {
-		btnPlacingCancel.addListener(new ClickListener() {
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-				super.touchUp(event, x, y, pointer, button);
-				presenter.cancelSupport(true);
-			}
-		});
-	}
 	private void setPlaceListener() {
 		btnPlace.addListener(new ClickListener() {
 			@Override
@@ -209,12 +201,12 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		});
 	}
 
-	private void setCancelListener() {
-		btnCancel.addListener(new ClickListener() {
+	private void setCancelListener(Button button) {
+		button.addListener(new ClickListener() {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.cancelSupport(true);
+				presenter.cancel();
 			}
 		});
 	}
