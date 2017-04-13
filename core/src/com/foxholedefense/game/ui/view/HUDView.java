@@ -74,7 +74,7 @@ public class HUDView extends Group implements IHUDView {
 
 		btnResume = new ImageButton(skin, "resume");
 		btnResume.setSize(50,50);
-		btnResume.getImageCell().size(27,30);
+		btnResume.getImageCell().size(21,23);
 		btnResume.getImage().setScaling(Scaling.stretch);
 		btnResume.setPosition(10, 10);
 		setBtnResumeListener();
