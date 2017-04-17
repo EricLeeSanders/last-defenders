@@ -55,7 +55,7 @@ public class GameOverView extends Group implements IGameOverView {
 		this.addActor(lblTitle);
 		
 		table.row();
-		lblWavesCompleted = new Label("0", skin, "hollow_label");
+		lblWavesCompleted = new Label("0", skin);
 		lblWavesCompleted.setFontScale(0.45f);
 		lblWavesCompleted.setAlignment(Align.center);
 		table.add(lblWavesCompleted).width(275).height(40);
