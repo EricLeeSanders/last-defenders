@@ -18,6 +18,7 @@ public class SupportButton extends Group{
     public SupportButton(Skin skin, String name, int cost){
         this.setTransform(false);
         this.button = new ImageButton(skin, "support");
+        button.setSize(133,100);
         this.cost = cost;
         addActor(button);
 
@@ -27,14 +28,15 @@ public class SupportButton extends Group{
         lblTitle.pack();
         float lblTitleX = ActorUtil.calcXBotLeftFromCenter(button.getWidth() / 2, lblTitle.getWidth());
         float lblTitleY = ActorUtil.calcYBotLeftFromCenter(button.getHeight() / 2, lblTitle.getHeight());
-        lblTitle.setPosition(lblTitleX, lblTitleY + 7);
+        lblTitle.setPosition(lblTitleX, lblTitleY + 12);
         addActor(lblTitle);
 
         Label lblCost = new Label(String.valueOf(cost), skin);
         lblCost.setFontScale(0.45f);
         lblCost.setAlignment(Align.center);
         lblCost.pack();
-        lblCost.setPosition(40, 2);
+        float lblCostX = ActorUtil.calcXBotLeftFromCenter(button.getWidth() / 2, lblCost.getWidth());
+        lblCost.setPosition(lblCostX, 10);
         addActor(lblCost);
 
     }

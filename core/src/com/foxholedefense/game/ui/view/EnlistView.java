@@ -159,7 +159,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	 */
 	private void createTowerButton(Table enlistTable, Skin skin, String towerName, Integer towerCost, int attack, int health, int range, int speed){
 		EnlistButton towerButton = new EnlistButton(skin, attack, health, range, speed, towerName, towerCost);
-		enlistTable.add(towerButton).size(116,178).spaceBottom(5);
+		enlistTable.add(towerButton).size(120,195).spaceBottom(5);
 		setTowerListener(towerButton,towerName);
 		enlistButtons.add(towerButton);
 	}

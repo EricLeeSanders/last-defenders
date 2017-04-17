@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="197.29919mm"
+   height="54.645mm"
+   viewBox="0 0 197.29919 54.645"
+   version="1.1"
+   id="svg9887"
+   sodipodi:docname="list-item.svg"
+   inkscape:export-filename="C:\Users\Eric\Documents\GitHub\FoxholeDefense\files\Military GUI\other\list-item.png"
+   inkscape:export-xdpi="20.525253"
+   inkscape:export-ydpi="20.525253"
+   inkscape:version="0.92.0 r15299">
+  <defs
+     id="defs9881" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4"
+     inkscape:cx="146.14264"
+     inkscape:cy="-19.709658"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata9884">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-2.4742276,-99.68789)">
+    <path
+       inkscape:connector-curvature="0"
+       id="path7469"
+       d="m 2.4742276,99.68789 v 54.645 H 199.77342 v -54.645 z"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#2b2200;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:30.08631134;marker:none;enable-background:accumulate"
+       inkscape:export-xdpi="21.846462"
+       inkscape:export-ydpi="21.846462" />
+    <path
+       inkscape:connector-curvature="0"
+       id="path7475"
+       d="m 5.614,102.85489 v 4.41524 h 191.019 v -4.41524 z m 0,43.98698 v 4.4235 h 191.019 v -4.4235 z"
+       style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#40491a;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:29.34936142;marker:none;enable-background:accumulate"
+       inkscape:export-xdpi="21.846462"
+       inkscape:export-ydpi="21.846462" />
+    <g
+       id="g10464"
+       transform="matrix(0.96816919,0,0,1,3.2185291,0)"
+       inkscape:export-xdpi="21.846462"
+       inkscape:export-ydpi="21.846462">
+      <path
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#66762a;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:29.82792282;marker:none;enable-background:accumulate"
+         d="m 2.4742276,102.85489 v 48.41048 H 199.77342 v -48.41048 z"
+         id="path7471"
+         inkscape:connector-curvature="0" />
+      <path
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.09734515;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:29.82792282;marker:none;enable-background:accumulate"
+         d="m 2.4742276,132.05828 v 19.20709 H 199.77342 v -19.20709 z"
+         id="path7473"
+         inkscape:connector-curvature="0" />
+      <path
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;opacity:0.84070794;fill:#2f3613;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:29.82792282;marker:none;enable-background:accumulate"
+         d="m 2.4742276,146.84187 v 4.4235 H 199.77342 v -4.4235 z"
+         id="path7477"
+         inkscape:connector-curvature="0" />
+      <path
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#a8c04f;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:29.82792282;marker:none;enable-background:accumulate"
+         d="m 2.4742276,102.85489 v 4.41524 H 199.77342 v -4.41524 z"
+         id="path7479"
+         inkscape:connector-curvature="0" />
+      <path
+         style="color:#000000;display:inline;overflow:visible;visibility:visible;fill:#c9d891;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:29.82792282;marker:none;enable-background:accumulate"
+         d="m 2.4742276,107.05515 v 0.81029 H 199.77342 v -0.81029 z"
+         id="path7487"
+         inkscape:connector-curvature="0" />
+    </g>
+  </g>
+</svg>
