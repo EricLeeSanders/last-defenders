@@ -25,8 +25,10 @@ import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
+import com.foxholedefense.util.datastructures.Dimension;
 
 public class LevelLoadingScreen extends AbstractScreen{
+	private static final Dimension LOADING_BAR_SIZE = new Dimension(515, 45);
 	private Resources resources;
 	private IScreenChanger screenChanger;
 	private Stage stage;
@@ -35,8 +37,8 @@ public class LevelLoadingScreen extends AbstractScreen{
 	private int level;
 	private Image loadingBarBg;
 	private Label loadingLabel;
-	private float endPos = 528;
-	private float startPos = 55;
+	private float endPos;
+	private float startPos;
 
 	public LevelLoadingScreen(GameStateManager gameStateManager, IScreenChanger screenChanger, Resources resources, int level ) {
 		super(gameStateManager);
@@ -70,13 +72,15 @@ public class LevelLoadingScreen extends AbstractScreen{
 		TextureAtlas atlas = resources.getAsset(Resources.LOAD_ATLAS, TextureAtlas.class);
 		
 		Image loadingBar = new Image(atlas.findRegion("level-load-bar"));
-		loadingBar.setSize(endPos, 45);
-		loadingBar.setPosition(startPos, ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()) + 6);
+		startPos = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, LOADING_BAR_SIZE.getWidth());
+		endPos = LOADING_BAR_SIZE.getWidth();
+		loadingBar.setSize(LOADING_BAR_SIZE.getWidth(), LOADING_BAR_SIZE.getHeight());
+		loadingBar.setPosition(startPos, ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()));
 		
 		
 		loadingBarBg = new Image(atlas.findRegion("level-load-bar-bg"));
-		loadingBarBg.setSize(endPos, loadingBar.getHeight());
-		loadingBarBg.setPosition(startPos, ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()) + 6);
+		loadingBarBg.setSize(LOADING_BAR_SIZE.getWidth(), LOADING_BAR_SIZE.getHeight());
+		loadingBarBg.setPosition(startPos, ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()));
 
 		
 		loadingLabel = new Label("LOADING: 0%", resources.getSkin());
@@ -84,7 +88,7 @@ public class LevelLoadingScreen extends AbstractScreen{
 		loadingLabel.setAlignment(Align.left);
 		loadingLabel.setColor(1f, 1f, 1f, 1f);
 		float lblX = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, loadingLabel.getWidth()) + 30;
-		float lblY = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()) + 2;
+		float lblY = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingLabel.getHeight()) ;
 		loadingLabel.setPosition(lblX, lblY);
 		
 		
@@ -93,7 +97,7 @@ public class LevelLoadingScreen extends AbstractScreen{
 		float screenX = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, screen.getWidth());
 		float screenY = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, screen.getHeight());
 		screen.setPosition(screenX, screenY);
-		
+
 		stage.addActor(loadingBar);
 		stage.addActor(loadingBarBg);
 		stage.addActor(screen);

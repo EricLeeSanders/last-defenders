@@ -82,7 +82,7 @@ public class OptionsView extends Group implements IOptionsView {
 		btnClose = new TextButton("CLOSE",skin);
 		btnClose.getLabel().setFontScale(0.45f);
 		btnClose.pack();
-		btnClose.setPosition(112,20);
+		btnClose.setPosition(80,20);
 		addActor(btnClose);
 		setBtnCloseListener();
 		

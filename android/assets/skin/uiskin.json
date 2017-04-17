@@ -21,31 +21,33 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	toggle: { down: text_button_normal, checked: text_button_normal, up: text_button_normal },
 	music: {imageUp: music, checked: button_normal, checkedOver: button_over, down: button_disabled, up: button_disabled, disabled: button_disabled},
 	sound: {imageUp: sound, checked: button_normal, checkedOver: button_over, down: button_disabled, up: button_disabled, disabled: button_disabled},
-	select: {imageUp: select, over: button_over, down: button_press, up: button_press, disabled: button_disabled},
+	select: {imageUp: select, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
 	cancel: {imageUp: cancel, over: button_over, down: button_press, up: button_red, disabled: button_disabled},
 	rotate: {imageUp: rotate, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
 	options: {imageUp: options, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
-	wave: {imageUp: wave, over: button_over, down: button_press, up: button_blue, disabled: button_disabled},
+	wave: {imageUp: wave, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
 	arrow-left: {imageUp: arrow-left, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
 	arrow-right: {imageUp: arrow-right, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
 	arrow-small-down: {imageUp: arrow-small-down, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
 	arrow-small-up: {imageUp: arrow-small-up, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
-	enlist_hud: {imageUp: shield, over: button_over, down: button_press, up: button_blue, disabled: button_disabled},
-	support_hud: {imageUp: bomb, over: button_over, down: button_press, up: button_blue, disabled: button_disabled},
+	enlist_hud: {imageUp: shield, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
+	support_hud: {imageUp: bomb, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
 	support: {down: support, up: support, disabled: support_disabled},
 	enlist: {down: enlist, up: enlist, disabled: enlist_disabled},
 	discharge: {down: support, up: support, disabled: support_disabled},
 	upgrade: {down: upgrade, up: upgrade, checked: upgrade_purchased, disabled: upgrade_disabled},
-	play: {down: play_normal, up: play_normal, over: play_normal, disabled: play_normal},
 	resume: {imageUp: resume, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
-	pause: {imageUp: pause, over: button_over, down: button_press, up: button_normal, disabled: button_disabled}
+	pause: {imageUp: pause, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
+	games: {imageUp: games, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
-	default: { down: text_button_normal, up: text_button_normal, over: text_button_normal, disabled: text_button_normal, font: default-font, fontColor: white },
-	toggle: { down: text_button_normal, up: text_button_normal, checked: text_button_normal, font: default-font, fontColor: white, downFontColor: red }
+	default: { down: text_button_press, up: text_button_normal, over: text_button_over, disabled: text_button_disabled, font: default-font, fontColor: white },
+	toggle: { down: text_button_press, up: text_button_normal, checked: text_button_normal, font: default-font, fontColor: white, downFontColor: red },
+	transparent: {down: null, font: default-font, fontColor: white}
 },
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
-	default: { background: hollow }
+	default: { background: hollow },
+	no-background: {}
 },
 com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable: {
 	main-panel: { region: main-panel, leftWidth: 75, rightWidth: 75, topHeight: 67, bottomHeight: 67 }

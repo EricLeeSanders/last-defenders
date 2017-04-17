@@ -3,12 +3,16 @@ package com.foxholedefense.game.ui.view;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.game.ui.presenter.QuitPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IQuitView;
 import com.foxholedefense.util.Logger;
@@ -35,44 +39,55 @@ public class QuitView extends Group implements IQuitView {
     public void createControls(Skin skin) {
         Logger.info("QuitView: creating controls");
 
-        Table table = new Table();
-        table.setTransform(false);
-        table.setBackground(skin.getDrawable("main-panel"));
-        table.setSize(325,300);
-        table.setPosition((Resources.VIRTUAL_WIDTH/2)-(table.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(table.getHeight()/2));
-        this.addActor(table);
+        Table container = new Table();
+        container.setTransform(false);
+        container.setBackground(skin.getDrawable("quit-panel"));
+        container.setSize(190,307);
+        container.setPosition((Resources.VIRTUAL_WIDTH/2)-(container.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(container.getHeight()/2));
+        //container.debug();
+        this.addActor(container);
 
 
-        Label lblTitle = new Label("PAUSED", skin);
-        lblTitle.setFontScale(0.45f);
+        Label lblTitle = new Label("QUIT", skin);
+        lblTitle.setPosition(container.getX() + (container.getWidth()/2) - (lblTitle.getWidth()/2)
+                ,container.getY() + container.getHeight() - lblTitle.getHeight() + 5 );
         lblTitle.setAlignment(Align.center);
-        lblTitle.setPosition(table.getX() + (table.getWidth()/2) - (lblTitle.getWidth()/2)
-                ,table.getY() + table.getHeight() - lblTitle.getHeight() + 4);
+        lblTitle.setFontScale(0.7f);
         this.addActor(lblTitle);
 
-        table.row();
-        TextButton btnResume = new TextButton("RESUME", skin);
+        TextButton btnResume = new TextButton("RESUME",skin);
         btnResume.getLabel().setFontScale(0.45f);
-        table.add(btnResume).width(150).height(45).spaceTop(10).padTop(15);
+        btnResume.setSize(150,45);
+        btnResume.pack();
+        btnResume.setPosition(245,229);
+        addActor(btnResume);
         setBtnResumeListener(btnResume);
 
-        table.row();
-        TextButton btnQuit = new TextButton("QUIT", skin);
+
+        TextButton btnQuit = new TextButton("QUIT",skin);
         btnQuit.getLabel().setFontScale(0.45f);
-        table.add(btnQuit).width(150).height(45).spaceTop(10);
+        btnQuit.setSize(150,45);
+        btnQuit.pack();
+        btnQuit.setPosition(btnResume.getX(), btnResume.getY() - 57);
+        addActor(btnQuit);
         setBtnQuitListener(btnQuit);
 
-        table.row();
-        TextButton btnNewGame = new TextButton("NEW GAME", skin);
+        TextButton btnNewGame = new TextButton("NEW GAME",skin);
         btnNewGame.getLabel().setFontScale(0.45f);
-        table.add(btnNewGame).width(150).height(45).spaceTop(10);
+        btnNewGame.setSize(150,45);
+        btnNewGame.pack();
+        btnNewGame.setPosition(btnQuit.getX(), btnQuit.getY() - 57);
+        addActor(btnNewGame);
         setBtnNewGameListener(btnNewGame);
 
-        table.row();
-        TextButton btnMainMenu = new TextButton("MAIN MENU", skin);
+        TextButton btnMainMenu = new TextButton("MAIN MENU",skin);
         btnMainMenu.getLabel().setFontScale(0.45f);
-        table.add(btnMainMenu).width(150).height(45).spaceTop(10);
+        btnMainMenu.setSize(150,45);
+        btnMainMenu.pack();
+        btnMainMenu.setPosition(btnNewGame.getX(), btnNewGame.getY() - 56);
+        addActor(btnMainMenu);
         setBtnMainMenuListener(btnMainMenu);
+
     }
 
     private void setBtnResumeListener(Button button) {

@@ -15,16 +15,18 @@ import com.foxholedefense.util.ActorUtil;
 public class UpgradeButton extends Group {
     public ImageButton button;
     private Label lblCost;
-    public UpgradeButton(Skin skin, String name, String iconName, int cost, int iconWidth, int iconHeight, int xOffset, int yOffset ){
+    public UpgradeButton(Skin skin, String name, String iconName, int cost, int iconWidth, int iconHeight){
         this.setTransform(false);
         this.button = new ImageButton(skin, "upgrade");
+        button.setSize(110, 115);
         addActor(button);
 
         lblCost = new Label(String.valueOf(cost), skin);
         lblCost.setFontScale(0.45f);
-        lblCost.setAlignment(Align.bottomLeft);
+        lblCost.setAlignment(Align.center);
         lblCost.pack();
-        lblCost.setPosition(38,2);
+        float lblCostX = ActorUtil.calcXBotLeftFromCenter(button.getWidth() / 2, lblCost.getWidth());
+        lblCost.setPosition(lblCostX,5);
         addActor(lblCost);
 
         Label lblTitle = new Label(name.toUpperCase().replaceAll(" ", "\n"), skin);
@@ -38,7 +40,9 @@ public class UpgradeButton extends Group {
 
         Image icon = new Image(skin.getAtlas().findRegion(iconName));
         icon.setSize(iconWidth, iconHeight);
-        icon.setPosition(10 + xOffset, button.getHeight() - icon.getHeight() - 5 + yOffset);
+        float iconX = ActorUtil.calcXBotLeftFromCenter(25, icon.getWidth());
+        float iconY = ActorUtil.calcYBotLeftFromCenter(90, icon.getHeight());
+        icon.setPosition(iconX, iconY);
         addActor(icon);
     }
 
