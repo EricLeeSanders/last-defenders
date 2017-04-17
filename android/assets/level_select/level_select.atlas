@@ -6,40 +6,26 @@ filter: MipMapLinearNearest,Nearest
 repeat: none
 background
   rotate: false
-  xy: 1283, 1343
+  xy: 1283, 1213
   size: 640, 360
   orig: 640, 360
   offset: 0, 0
   index: -1
 level1
   rotate: false
-  xy: 1, 983
+  xy: 1, 853
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 level2
   rotate: false
-  xy: 1, 261
+  xy: 1, 131
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 map_icon
-  rotate: false
-  xy: 1, 131
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-menu
-  rotate: false
-  xy: 1283, 1213
-  size: 128, 128
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
-play
   rotate: false
   xy: 1, 1
   size: 128, 128
@@ -48,7 +34,7 @@ play
   index: -1
 pointer
   rotate: false
-  xy: 131, 131
+  xy: 1283, 1083
   size: 128, 128
   orig: 128, 128
   offset: 0, 0

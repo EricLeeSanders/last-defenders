@@ -1,6 +1,7 @@
 package com.foxholedefense.menu.ui;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -12,7 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.util.ActorUtil;
@@ -30,7 +33,7 @@ public class MenuView extends Group implements IMenuView {
 	private MenuPresenter presenter;
 	private ImageButton btnSound, btnMusic;
 	private CheckBox chkBoxSound, chkBoxMusic;
-	private Image volSliderBg, menuBottom;
+	private Image volSliderBg;
 	private float sliderEndPos, sliderStartPos;
 	private Table optionsTable;
 	private Label lblOptionsTitle;
@@ -53,43 +56,50 @@ public class MenuView extends Group implements IMenuView {
 	
 	public void createControls(Resources resources) {
 		Logger.info("Menu view: initializing view");
-		TextureAtlas menuAtlas = resources.getAsset(Resources.MENU_ATLAS, TextureAtlas.class);
+
 		Skin skin = resources.getSkin();
-		
-		menuBottom = new Image(menuAtlas.findRegion("menu_bottom"));
-		menuBottom.setSize(500, 80);
-		menuBottom.setPosition(ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, menuBottom.getWidth()), 0);
-		addActor(menuBottom);
-		
-		ImageButton btnPlay = new ImageButton(skin, "play");
-		btnPlay.setSize(105, 105);
-		btnPlay.setPosition(269, 20);
+
+		Label lblTitle = new Label("FOXHOLE DEFENSE", skin);
+		float lblTitleX = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, lblTitle.getWidth());
+		float lblTitleY = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, lblTitle.getHeight()) + 110;
+		lblTitle.setPosition(lblTitleX, lblTitleY);
+		addActor(lblTitle);
+
+		TextButton btnPlay = new TextButton("PLAY", skin, "transparent");
+		btnPlay.setSize(126, 56);
+		float btnPlayX = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, btnPlay.getWidth());
+		float btnPlayY = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, btnPlay.getHeight());
+		btnPlay.setPosition(btnPlayX, btnPlayY);
 		addActor(btnPlay);
 		setBtnPlayListener(btnPlay);
 		
-		
-		
 		btnSound = new ImageButton(skin, "sound");
 		btnSound.setSize(64, 64);
-		btnSound.getImageCell().size(34,32);
-		btnSound.setPosition(84, 25);
+		btnSound.getImageCell().size(34, 32);
+		btnSound.setPosition(175,22);
 		addActor(btnSound);
 		setBtnSoundListener(btnSound);
 		
 		
 		btnMusic = new ImageButton(skin, "music");
 		btnMusic.setSize(64, 64);
-		btnMusic.getImageCell().size(36,36);
-		btnMusic.setPosition(172,36);
+		btnMusic.getImageCell().size(36, 36);
+		btnMusic.setPosition(250, 22);
 		addActor(btnMusic);
 		setBtnMusicListener(btnMusic);
 		
 		ImageButton btnOptions = new ImageButton(skin, "options");
 		btnOptions.setSize(64, 64);
-		btnOptions.getImageCell().size(34,35);
-		btnOptions.setPosition(407, 36);
+		btnOptions.getImageCell().size(34, 35);
+		btnOptions.setPosition(325, 22);
 		addActor(btnOptions);
 		setBtnOptionsListener(btnOptions);
+
+		ImageButton btnPlayServices = new ImageButton(skin, "games");
+		btnPlayServices.setSize(64, 64);
+		btnPlayServices.getImageCell().size(36, 33);
+		btnPlayServices.setPosition(400, 22);
+		addActor(btnPlayServices);
 
 		Logger.info("Menu view: view initialized");
 	}
@@ -165,7 +175,7 @@ public class MenuView extends Group implements IMenuView {
 	}
 	
 	public void setBackground(TextureAtlas menuAtlas){
-		Image background = new Image(menuAtlas.findRegion("background"));
+		Image background = new Image(menuAtlas.findRegion("main-menu-screen"));
 		background.setFillParent(true);
 		this.getStage().addActor(background);
 		background.setZIndex(0);
@@ -200,7 +210,6 @@ public class MenuView extends Group implements IMenuView {
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
 				optionsTable.setVisible(true);
-				menuBottom.setVisible(false);
 				lblOptionsTitle.setVisible(true);
 			}
 		});
@@ -215,6 +224,7 @@ public class MenuView extends Group implements IMenuView {
 				presenter.playGame();
 			}
 		});
+
 
 	}
 	

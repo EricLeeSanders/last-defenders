@@ -1,12 +1,12 @@
 
 load.png
-size: 2048,2048
+size: 1024,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 img-loading
   rotate: false
-  xy: 1571, 1021
+  xy: 643, 355
   size: 259, 57
   orig: 259, 57
   offset: 0, 0
@@ -14,8 +14,8 @@ img-loading
 level-load-bar
   rotate: false
   xy: 1, 7
-  size: 638, 54
-  orig: 638, 54
+  size: 512, 43
+  orig: 512, 43
   offset: 0, 0
   index: -1
 level-load-bar-bg
@@ -27,8 +27,28 @@ level-load-bar-bg
   index: -1
 level-load-screen
   rotate: false
-  xy: 1, 63
-  size: 1568, 1015
-  orig: 1568, 1015
+  xy: 1, 52
+  size: 640, 360
+  orig: 640, 360
+  offset: 0, 0
+  index: -1
+
+load2.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+large/level-load-bar
+  rotate: false
+  xy: 1, 1
+  size: 1023, 85
+  orig: 1023, 85
+  offset: 0, 0
+  index: -1
+large/level-load-screen
+  rotate: false
+  xy: 1, 88
+  size: 1280, 720
+  orig: 1280, 720
   offset: 0, 0
   index: -1

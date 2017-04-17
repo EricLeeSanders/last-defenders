@@ -56,6 +56,8 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		inspectTable.setTransform(false);
 		inspectTable.setBackground(skin.getDrawable("hollow"));
 
+		inspectTable.defaults().expandX();
+		
 		container.add(inspectTable).expand().fill();
 
 		lblTitle = new Label("Tower", skin);
@@ -94,20 +96,20 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
 		addActor(btnCancel);
 
-		btnArmor = new UpgradeButton(skin, "Armor", "shield", 100, 28, 30,0,0 );
-		inspectTable.add(btnArmor).size(100,128);//.spaceBottom(10).spaceRight(10);
+		btnArmor = new UpgradeButton(skin, "Armor", "shield", 100, 28, 30);
+		inspectTable.add(btnArmor).size(110,115);//.spaceBottom(10).spaceRight(10);
 		setArmorListener();
 
-		btnRange = new UpgradeButton(skin, "Increase Range", "range_icon", 100, 28, 30,0,0 );
-		inspectTable.add(btnRange).size(100,128);//.spaceBottom(10).spaceRight(10);
+		btnRange = new UpgradeButton(skin, "Increase Range", "range_icon", 100, 28, 30);
+		inspectTable.add(btnRange).size(110,115);//.spaceBottom(10).spaceRight(10);
 		setIncreaseRangeListener();
 
-		btnSpeed = new UpgradeButton(skin, "Increase Speed", "speed_icon", 100,30,30,0,0 );
-		inspectTable.add(btnSpeed).size(100,128);//.spaceBottom(5).spaceRight(10);
+		btnSpeed = new UpgradeButton(skin, "Increase Speed", "speed_icon", 100,30,30);
+		inspectTable.add(btnSpeed).size(110,115);//.spaceBottom(5).spaceRight(10);
 		setIncreaseSpeedListener();
 
-		btnAttack = new UpgradeButton(skin, "Increase Attack", "attack_icon", 100, 26,26, 3, -3);
-		inspectTable.add(btnAttack).size(100,128);//.spaceBottom(5).spaceRight(10);
+		btnAttack = new UpgradeButton(skin, "Increase Attack", "attack_icon", 100, 26,26);
+		inspectTable.add(btnAttack).size(110,115);//.spaceBottom(5).spaceRight(10);
 		setIncreaseAttackListener();
 
 		Group grpTargetPriority = new Group();
@@ -135,10 +137,10 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 
 		inspectTable.row();
 
-		inspectTable.add(grpTargetPriority).align(Align.left).padTop(45).colspan(2);
+		inspectTable.add(grpTargetPriority).colspan(2).height(45).width(150).padTop(15).center();
 
-		btnDischarge = new DischargeButton(skin, 0);
-		inspectTable.add(btnDischarge).align(Align.center).size(133,83).colspan(2);
+		btnDischarge = new DischargeButton(skin);
+		inspectTable.add(btnDischarge).colspan(2).size(133,83).padTop(15).center();
 		setDischargeListener();
 
 		Logger.info("Inspect View: controls created");
