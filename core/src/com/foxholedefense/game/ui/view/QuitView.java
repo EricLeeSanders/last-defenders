@@ -48,7 +48,7 @@ public class QuitView extends Group implements IQuitView {
         this.addActor(container);
 
 
-        Label lblTitle = new Label("QUIT", skin);
+        Label lblTitle = new Label("PAUSED", skin);
         lblTitle.setPosition(container.getX() + (container.getWidth()/2) - (lblTitle.getWidth()/2)
                 ,container.getY() + container.getHeight() - lblTitle.getHeight() + 5 );
         lblTitle.setAlignment(Align.center);
