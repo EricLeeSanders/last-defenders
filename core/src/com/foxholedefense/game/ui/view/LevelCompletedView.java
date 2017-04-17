@@ -37,10 +37,10 @@ public class LevelCompletedView extends Group implements ILevelCompletedView{
 		this.addActor(table);
 		
 		Label lblTitle = new Label("LEVEL COMPLETED", skin);
-		lblTitle.setFontScale(0.45f);
+		lblTitle.setFontScale(0.40f);
 		lblTitle.setAlignment(Align.center);
 		lblTitle.setPosition(table.getX() + (table.getWidth()/2) - (lblTitle.getWidth()/2)
-					,table.getY() + table.getHeight() - lblTitle.getHeight() + 5);
+					,table.getY() + table.getHeight() - lblTitle.getHeight() + 7);
 		this.addActor(lblTitle);
 
 		
