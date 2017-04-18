@@ -8,10 +8,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.health.interfaces.IPlatedArmor;
-import com.foxholedefense.game.model.actor.interfaces.IRpg;
+import com.foxholedefense.game.model.actor.interfaces.IRocket;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.model.actor.interfaces.IVehicle;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
@@ -28,7 +27,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  *
  */
-public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
+public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRocket {
 
 	private static final float HEALTH = 20;
 	private static final float ARMOR = 10;
@@ -39,7 +38,7 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	private static final float AOE_RADIUS = 75f;
 	private static final int KILL_REWARD = 15;
 
-	private static final Dimension RPG_SIZE = new Dimension(7, 7);
+	private static final Dimension ROCKET_SIZE = new Dimension(23, 5);
 	private static final Vector2 GUN_POS = UtilPool.getVector2(57, 0);
 	private static final Dimension TEXTURE_SIZE_BODY = new Dimension(76, 50);
 	private static final Dimension TEXTURE_SIZE_TURRET = new Dimension(120, 33);
@@ -118,7 +117,7 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRpg {
 	@Override
 	public void attackTarget(ITargetable target) {
 		if(target != null){
-			projectileFactory.loadRPG().initialize(this, target, getTargetGroup(), this.getGunPos(), RPG_SIZE, AOE_RADIUS);
+			projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), getTargetGroup(), this.getGunPos(), ROCKET_SIZE, AOE_RADIUS);
 		}
 	}
 

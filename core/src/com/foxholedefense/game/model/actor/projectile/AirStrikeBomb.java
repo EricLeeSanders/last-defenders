@@ -76,7 +76,7 @@ public class AirStrikeBomb extends Actor implements Pool.Poolable {
 	 * freed to the pool. If the shooter is a tower, then it handles giving the
 	 * Tower a kill.
 	 *
-	 * When the RPG reaches its destination, create an explosion
+	 * When the Rocket reaches its destination, create an explosion
 	 */
 	@Override
 	public void act(float delta) {

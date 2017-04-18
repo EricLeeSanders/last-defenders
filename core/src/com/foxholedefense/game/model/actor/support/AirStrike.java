@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
-import com.foxholedefense.game.model.actor.interfaces.IRpg;
+import com.foxholedefense.game.model.actor.interfaces.IRocket;
 import com.foxholedefense.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.datastructures.Dimension;
@@ -17,7 +17,7 @@ import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
 
-public class AirStrike extends SupportActor implements IRpg{
+public class AirStrike extends SupportActor implements IRocket {
 	public static final float AIRSTRIKE_DURATION = 2.5f;
 	public static final int COST = 1000;
 	public static final float ATTACK = 10f;
@@ -25,18 +25,16 @@ public class AirStrike extends SupportActor implements IRpg{
 	public static final float AIRSTRIKE_RADIUS = 60;
 	public static final int MAX_AIRSTRIKES = 3;
 	private static final Vector2 GUN_POS = UtilPool.getVector2();
-	private static final Dimension BULLET_SIZE = new Dimension(10, 10);
-	private static final Dimension TEXTURE_SIZE = new Dimension(178, 120);
+	private static final Dimension ROCKET_SIZE = new Dimension(46, 10);
+	private static final Dimension TEXTURE_SIZE = new Dimension(203, 125);
 	private Array<AirStrikeLocation> airStrikeLocations = new Array<AirStrikeLocation>();
 	private ProjectileFactory projectileFactory;
 	private FHDAudio audio;
-	private TextureRegion rangeTexture;
 
 	public AirStrike(SupportActorPool<AirStrike> pool, Group targetGroup, ProjectileFactory projectileFactory, TextureRegion textureRegion, TextureRegion rangeTexture, FHDAudio audio) {
 		super(pool, targetGroup, textureRegion, TEXTURE_SIZE, rangeTexture, AIRSTRIKE_RADIUS, ATTACK, GUN_POS, COST);
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
-		this.rangeTexture = rangeTexture;
 
 	}
 	public void addLocation(AirStrikeLocation location){
@@ -65,7 +63,7 @@ public class AirStrike extends SupportActor implements IRpg{
 	}
 	private void dropBomb(AirStrikeLocation location){
 		audio.playSound(FHDSound.ROCKET_LAUNCH);
-		projectileFactory.loadAirStrikeBomb().initialize(this, location.getLocation(), this.getTargetGroup(),this.getGunPos(), BULLET_SIZE, AIRSTRIKE_RADIUS); 
+		projectileFactory.loadRocket().initialize(this, location.getLocation(), this.getTargetGroup(),this.getGunPos(), ROCKET_SIZE, AIRSTRIKE_RADIUS);
 		
 		
 	}
