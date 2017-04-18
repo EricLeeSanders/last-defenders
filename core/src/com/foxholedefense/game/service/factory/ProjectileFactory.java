@@ -1,7 +1,6 @@
 package com.foxholedefense.game.service.factory;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.ActorGroups;
@@ -9,13 +8,9 @@ import com.foxholedefense.game.model.actor.projectile.AirStrikeBomb;
 import com.foxholedefense.game.model.actor.projectile.Bullet;
 import com.foxholedefense.game.model.actor.projectile.Explosion;
 import com.foxholedefense.game.model.actor.projectile.Flame;
-import com.foxholedefense.game.model.actor.projectile.RPG;
+import com.foxholedefense.game.model.actor.projectile.Rocket;
 import com.foxholedefense.util.FHDAudio;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Eric on 3/31/2017.
@@ -23,10 +18,10 @@ import java.util.Map;
 
 public class ProjectileFactory {
     private BulletPool bulletPool = new BulletPool();
-    private RPGPool rpgPool = new RPGPool();
-    private AirStrikeBombPool airStrikeBombPool = new AirStrikeBombPool();
+    private rocketPool rocketPool = new rocketPool();
     private ExplosionPool explosionPool = new ExplosionPool();
     private FlamePool flamePool = new FlamePool();
+
 
     private ActorGroups actorGroups;
     private FHDAudio audio;
@@ -50,27 +45,15 @@ public class ProjectileFactory {
     }
 
     /**
-     * Obtains an RPG from the pool
+     * Obtains an Rocket from the pool
      *
-     * @return RPG
+     * @return Rocket
      */
-    public RPG loadRPG() {
-        RPG rpg = rpgPool.obtain();
-        actorGroups.getProjectileGroup().addActor(rpg);
-        return rpg;
+    public Rocket loadRocket() {
+        Rocket rocket = rocketPool.obtain();
+        actorGroups.getProjectileGroup().addActor(rocket);
+        return rocket;
     }
-
-    /**
-     * Obtains an AirStrike Bomb from the pool
-     *
-     * @return AirStrikeBomb
-     */
-    public AirStrikeBomb loadAirStrikeBomb() {
-        AirStrikeBomb airStrikeBomb = airStrikeBombPool.obtain();
-        actorGroups.getProjectileGroup().addActor(airStrikeBomb);
-        return airStrikeBomb;
-    }
-
     /**
      * Obtains an Explosion from the pool
      *
@@ -105,24 +88,13 @@ public class ProjectileFactory {
     }
 
     /**
-     * Create an RPG
+     * Create an Rocket
      *
-     * @return RPG
+     * @return Rocket
      */
-    protected RPG createRPGActor() {
-        RPG rpg = new RPG(rpgPool, explosionPool, resources.getTexture("bullet"));
-        return rpg;
-
-    }
-
-    /**
-     * Create an AirStrikeBomb
-     *
-     * @return AirStrikeBomb
-     */
-    protected AirStrikeBomb createAirStrikeBombActor() {
-        AirStrikeBomb airStrikeBomb = new AirStrikeBomb(airStrikeBombPool, explosionPool, resources.getTexture("bullet"));
-        return airStrikeBomb;
+    protected Rocket createRocket() {
+        Rocket rocket = new Rocket(rocketPool, explosionPool, resources.getTexture("rocket"));
+        return rocket;
 
     }
 
@@ -164,17 +136,10 @@ public class ProjectileFactory {
         }
     }
 
-    public class RPGPool extends Pool<RPG> {
+    public class rocketPool extends Pool<Rocket> {
         @Override
-        protected RPG newObject() {
-            return createRPGActor();
-        }
-    }
-
-    public class AirStrikeBombPool extends Pool<AirStrikeBomb> {
-        @Override
-        protected AirStrikeBomb newObject() {
-            return createAirStrikeBombActor();
+        protected Rocket newObject() {
+            return createRocket();
         }
     }
 

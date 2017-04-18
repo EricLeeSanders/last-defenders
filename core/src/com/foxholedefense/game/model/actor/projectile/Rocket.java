@@ -15,49 +15,41 @@ import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.datastructures.Dimension;
 
 /**
- * Represents an RPG
+ * Represents an Rocket
  * 
  * @author Eric
  *
  */
-public class RPG extends Actor implements Pool.Poolable {
+public class Rocket extends Actor implements Pool.Poolable {
 	private static final float SPEED = 350f;
-	private ITargetable target;
 	private IAttacker shooter;
 	private Group targetGroup;
-	private Vector2 destination;
-	private Pool<RPG> pool;
+	private Vector2 destination = new Vector2(0,0);
+	private Pool<Rocket> pool;
 	private float radius;
 	private ExplosionPool explosionPool;
-	private TextureRegion rpgTexture;
-	public RPG(Pool<RPG> pool, ExplosionPool explosionPool, TextureRegion rpgTexture){
+	private TextureRegion rocketTexture;
+	public Rocket(Pool<Rocket> pool, ExplosionPool explosionPool, TextureRegion rocketTexture){
 		this.pool = pool;
 		this.explosionPool = explosionPool;
-		this.rpgTexture = rpgTexture;
+		this.rocketTexture = rocketTexture;
 	}
 	/**
-	 * Initializes an RPG
-	 * 
-	 * @param shooter
-	 * @param target
-	 * @param pos
-	 *            - Position to spawn the RPG
-	 * @param size
-	 *            - Size of the RPG
+	 * Initializes an Rocket
+	 *
 	 */
-	public Actor initialize(IAttacker shooter, ITargetable target, Group targetGroup, Vector2 pos, Dimension size, float radius) {
-		this.target = target;
+	public Actor initialize(IAttacker shooter, Vector2 destination, Group targetGroup, Vector2 pos, Dimension size, float radius) {
 		this.shooter = shooter;
 		this.targetGroup = targetGroup;
 		this.radius = radius;
+		this.destination.set(destination);
+		setRotation(ActorUtil.calculateRotation(destination, shooter.getPositionCenter()));
 		this.setSize(size.getWidth(), size.getHeight());
 		this.setOrigin(size.getWidth() / 2, size.getHeight() / 2);
 
 		float startX = ActorUtil.calcXBotLeftFromCenter(pos.x, size.getWidth());
 		float startY = ActorUtil.calcYBotLeftFromCenter(pos.y, size.getHeight());
 		this.setPosition(startX, startY);
-
-		destination = target.getPositionCenter();
 
 		MoveToAction moveAction = new MoveToAction();
 		float endX = ActorUtil.calcXBotLeftFromCenter(destination.x, size.getWidth());
@@ -71,7 +63,7 @@ public class RPG extends Actor implements Pool.Poolable {
 
 	@Override
 	public void draw(Batch batch, float alpha) {
-		batch.draw(rpgTexture, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+		batch.draw(rocketTexture, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 	}
 
 	/**
@@ -79,7 +71,7 @@ public class RPG extends Actor implements Pool.Poolable {
 	 * freed to the pool. If the shooter is a tower, then it handles giving the
 	 * Tower a kill.
 	 *
-	 * When the RPG reaches its destination, create an explosion
+	 * When the Rocket reaches its destination, create an explosion
 	 */
 	@Override
 	public void act(float delta) {
@@ -93,9 +85,7 @@ public class RPG extends Actor implements Pool.Poolable {
 	@Override
 	public void reset() {
 		this.clear();
-		target = null;
 		shooter = null;
-		destination = null;
 		radius = 0;
 		this.remove();
 	}

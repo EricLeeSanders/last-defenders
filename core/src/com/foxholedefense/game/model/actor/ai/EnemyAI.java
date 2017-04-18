@@ -6,7 +6,7 @@ import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.health.interfaces.IPlatedArmor;
-import com.foxholedefense.game.model.actor.interfaces.IRpg;
+import com.foxholedefense.game.model.actor.interfaces.IRocket;
 
 /**
  * Contains Enemy AI methods to find towers.
@@ -37,7 +37,7 @@ public class EnemyAI {
 						if (tower.getPositionCenter().dst(enemy.getPositionCenter()) < firstTowerDistance) {
 							// If the enemy is instanceof IRPG then it can
 							// attack plated towers.
-							if ((tower instanceof IPlatedArmor == false) || (enemy instanceof IRpg)) {
+							if ((tower instanceof IPlatedArmor == false) || (enemy instanceof IRocket)) {
 								firstTower = tower;
 								firstTowerDistance = tower.getPositionCenter().dst(enemy.getPositionCenter());
 							}

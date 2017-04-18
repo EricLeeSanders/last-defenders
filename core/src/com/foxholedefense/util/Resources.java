@@ -36,7 +36,7 @@ public class Resources {
 
 	public static final String MENU_MUSIC = "audio/big_action_trailer.mp3";
 
-	public static final String RPG_EXPLOSION_SOUND = "audio/rpg_explosion.mp3";
+	public static final String ROCKET_EXPLOSION_SOUND = "audio/rocket_explosion.mp3";
 	public static final String ROCKET_LAUNCH_SOUND = "audio/rocket_launch.mp3";
 	public static final String FLAME_SOUND = "audio/flame_burst.mp3";
 	public static final String RIFLE_SHOT_SOUND = "audio/rifle_shot.mp3";
@@ -82,6 +82,7 @@ public class Resources {
 		loadedTextures.put("range-black", actorAtlas.findRegion("range-black"));
 		loadedTextures.put("airstrike", actorAtlas.findRegion("airstrike"));
 		loadedTextures.put("bullet", actorAtlas.findRegion("bullet"));
+		loadedTextures.put("rocket", actorAtlas.findRegion("rocket"));
 		loadedTextures.put("healthbar-armor", actorAtlas.findRegion("healthbar-armor"));
 		loadedTextures.put("healthbar-bg", actorAtlas.findRegion("healthbar-bg"));
 		loadedTextures.put("healthbar-life", actorAtlas.findRegion("healthbar-life"));

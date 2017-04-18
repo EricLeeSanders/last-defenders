@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
-import com.foxholedefense.game.model.actor.interfaces.IRpg;
+import com.foxholedefense.game.model.actor.interfaces.IRocket;
 import com.foxholedefense.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.DebugOptions;
@@ -20,7 +20,7 @@ import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
 
-public class LandMine extends SupportActor implements IRpg{
+public class LandMine extends SupportActor implements IRocket {
 	public static final int COST = 300;
 	private static final float ATTACK = 15f;
 	private static final float RANGE = 50;

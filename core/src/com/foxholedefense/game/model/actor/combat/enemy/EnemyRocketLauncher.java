@@ -4,9 +4,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
-import com.foxholedefense.game.model.actor.interfaces.IRpg;
+import com.foxholedefense.game.model.actor.interfaces.IRocket;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
@@ -21,7 +20,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  *
  */
-public class EnemyRocketLauncher extends Enemy implements IRpg {
+public class EnemyRocketLauncher extends Enemy implements IRocket {
 
 	private static final float HEALTH = 8;
 	private static final float ARMOR = 4;
@@ -32,7 +31,7 @@ public class EnemyRocketLauncher extends Enemy implements IRpg {
 	private static final float AOE_RADIUS = 50f;
 	private static final int KILL_REWARD = 15;
 
-	private static final Dimension RPG_SIZE = new Dimension(7, 7);
+	private static final Dimension ROCKET_SIZE = new Dimension(23, 5);
 	private static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);
 	private static final Dimension TEXTURE_SIZE = new Dimension(57, 48);
 	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
@@ -52,7 +51,7 @@ public class EnemyRocketLauncher extends Enemy implements IRpg {
 	public void attackTarget(ITargetable target) {
 		if(target != null){
 			audio.playSound(FHDSound.ROCKET_LAUNCH);
-			projectileFactory.loadRPG().initialize(this, target, getTargetGroup(), this.getGunPos(), RPG_SIZE, AOE_RADIUS);
+			projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), getTargetGroup(), this.getGunPos(), ROCKET_SIZE, AOE_RADIUS);
 		}
 	}
 
