@@ -4,6 +4,6 @@ package com.foxholedefense.game.model.actor.interfaces;
  * @author Eric
  *
  */
-public interface IRpg {
+public interface IRocket {
 
 }

@@ -4,9 +4,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
-import com.foxholedefense.game.model.actor.interfaces.IRpg;
+import com.foxholedefense.game.model.actor.interfaces.IRocket;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
@@ -21,7 +20,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  *
  */
-public class TowerRocketLauncher extends Tower implements IRpg {
+public class TowerRocketLauncher extends Tower implements IRocket {
 
 	private static final float HEALTH = 8;
 	private static final float ARMOR = 4;
@@ -36,7 +35,7 @@ public class TowerRocketLauncher extends Tower implements IRpg {
 	private static final int SPEED_INCREASE_COST = 450;
 	private static final int ATTACK_INCREASE_COST = 450;
 
-	private static final Dimension RPG_SIZE = new Dimension(7, 7);
+	private static final Dimension ROCKET_SIZE = new Dimension(23, 5);
 	private static final Vector2 GUN_POS = UtilPool.getVector2(27, -4);
 	private static final Dimension TEXTURE_SIZE = new Dimension(56, 31);
 	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
@@ -56,7 +55,7 @@ public class TowerRocketLauncher extends Tower implements IRpg {
 	public void attackTarget(ITargetable target) {
 		if(target != null){
 			audio.playSound(FHDSound.ROCKET_LAUNCH);
-			projectileFactory.loadRPG().initialize(this, target, getTargetGroup(), this.getGunPos(), RPG_SIZE, AOE_RADIUS);
+			projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), getTargetGroup(), this.getGunPos(), ROCKET_SIZE, AOE_RADIUS);
 		}
 	}
 	

@@ -17,7 +17,7 @@ import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 
 /**
- * Represents an explosion that is the result of an RPG bullet. Deals AOE
+ * Represents an explosion that is the result of an Rocket bullet. Deals AOE
  * damage.
  * 
  * @author Eric
@@ -45,7 +45,7 @@ public class Explosion extends Actor implements Pool.Poolable {
 	 * Initializes an Explosion and deals Damage
 	 */
 	public Actor initialize(IAttacker attacker, float radius, Group targetGroup, Vector2 position) {
-		audio.playSound(FHDSound.RPG_EXPLOSION);
+		audio.playSound(FHDSound.ROCKET_EXPLOSION);
 		if (targetGroup.getStage() instanceof GameStage) {
 			((GameStage) targetGroup.getStage()).getActorGroups().getProjectileGroup().addActor(this);
 		}
