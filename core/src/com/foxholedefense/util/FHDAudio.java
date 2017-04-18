@@ -32,7 +32,7 @@ public class FHDAudio {
 		music = Gdx.audio.newMusic(Gdx.files.internal(Resources.MENU_MUSIC));
 		music.setLooping(true);
 
-		Sound rpgExplosion = Gdx.audio.newSound(Gdx.files.internal(Resources.RPG_EXPLOSION_SOUND));
+		Sound rocketExplosion = Gdx.audio.newSound(Gdx.files.internal(Resources.ROCKET_EXPLOSION_SOUND));
 		Sound rocketLaunch = Gdx.audio.newSound(Gdx.files.internal(Resources.ROCKET_LAUNCH_SOUND));
 		Sound flameBurst = Gdx.audio.newSound(Gdx.files.internal(Resources.FLAME_SOUND));
 		Sound rifleShot = Gdx.audio.newSound(Gdx.files.internal(Resources.RIFLE_SHOT_SOUND));
@@ -44,7 +44,7 @@ public class FHDAudio {
 		Sound smallClick = Gdx.audio.newSound(Gdx.files.internal(Resources.SMALL_CLICK));
 		Sound largeClick = Gdx.audio.newSound(Gdx.files.internal(Resources.LARGE_CLICK));
 		
-		sounds.put(FHDSound.RPG_EXPLOSION, rpgExplosion);
+		sounds.put(FHDSound.ROCKET_EXPLOSION, rocketExplosion);
 		sounds.put(FHDSound.ROCKET_LAUNCH, rocketLaunch);
 		sounds.put(FHDSound.FLAME_BURST, flameBurst);
 		sounds.put(FHDSound.RIFLE, rifleShot);
@@ -56,7 +56,7 @@ public class FHDAudio {
 		sounds.put(FHDSound.SMALL_CLICK, smallClick);
 		sounds.put(FHDSound.LARGE_CLICK, largeClick);
 		
-		rpgExplosion.play(0);
+		rocketExplosion.play(0);
 		rocketLaunch.play(0);
 		flameBurst.play(0);
 		rifleShot.play(0);
@@ -131,7 +131,7 @@ public class FHDAudio {
 		}
 	}
 	public enum FHDSound {
-		ACTOR_PLACE, SELL, SMALL_CLICK, LARGE_CLICK, RIFLE, SNIPER, MACHINE_GUN, RPG_EXPLOSION, VEHICLE_EXPLOSION, ROCKET_LAUNCH, FLAME_BURST
+		ACTOR_PLACE, SELL, SMALL_CLICK, LARGE_CLICK, RIFLE, SNIPER, MACHINE_GUN, ROCKET_EXPLOSION, VEHICLE_EXPLOSION, ROCKET_LAUNCH, FLAME_BURST
 	}
 	public void changeMusicEnabled(){
 		setMusicEnabled(!musicEnabled);
