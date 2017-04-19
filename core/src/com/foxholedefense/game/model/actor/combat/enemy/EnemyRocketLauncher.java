@@ -32,7 +32,7 @@ public class EnemyRocketLauncher extends Enemy implements IRocket {
 	private static final int KILL_REWARD = 15;
 
 	private static final Dimension ROCKET_SIZE = new Dimension(23, 5);
-	private static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);
+	private static final Vector2 GUN_POS = UtilPool.getVector2(25, -10);
 	private static final Dimension TEXTURE_SIZE = new Dimension(57, 48);
 	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
 

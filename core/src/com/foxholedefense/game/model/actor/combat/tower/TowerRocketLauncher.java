@@ -36,7 +36,7 @@ public class TowerRocketLauncher extends Tower implements IRocket {
 	private static final int ATTACK_INCREASE_COST = 450;
 
 	private static final Dimension ROCKET_SIZE = new Dimension(23, 5);
-	private static final Vector2 GUN_POS = UtilPool.getVector2(27, -4);
+	private static final Vector2 GUN_POS = UtilPool.getVector2(25, -10);
 	private static final Dimension TEXTURE_SIZE = new Dimension(56, 31);
 	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
 
