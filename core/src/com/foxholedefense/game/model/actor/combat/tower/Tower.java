@@ -144,8 +144,9 @@ public abstract class Tower extends CombatActor {
 	private void attackHandler(float delta){
 		ITargetable target = findTarget();
 		if(target != null && !target.isDead()){
-			setRotation(ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
+
 			if (attackCounter >= getAttackSpeed()) {
+				setRotation(ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
 				attackCounter = 0;
 				attackTarget(target);
 			}
