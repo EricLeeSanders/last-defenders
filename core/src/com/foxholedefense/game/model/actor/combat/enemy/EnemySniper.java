@@ -31,7 +31,7 @@ public class EnemySniper extends Enemy {
 	private static final int KILL_REWARD = 15;
 
 	private static final Dimension BULLET_SIZE = new Dimension(5, 5);
-	private static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);
+	private static final Vector2 GUN_POS = UtilPool.getVector2(37, -10);
 	private static final Dimension TEXTURE_SIZE = new Dimension(78, 41);
 	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
 
