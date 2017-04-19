@@ -25,7 +25,7 @@ public class TowerSniper extends Tower {
 	private static final float HEALTH = 8;
 	private static final float ARMOR = 4;
 	private static final float ATTACK = 7;
-	private static final float ATTACK_SPEED = 1;
+	private static final float ATTACK_SPEED = 100;
 	private static final float RANGE = 100;
 
 	public static final int COST = 400;
@@ -35,7 +35,7 @@ public class TowerSniper extends Tower {
 	private static final int ATTACK_INCREASE_COST = 100;
 
 	private static final Dimension BULLET_SIZE = new Dimension(5, 5);
-	private static final Vector2 GUN_POS = UtilPool.getVector2(38, -9);
+	private static final Vector2 GUN_POS = UtilPool.getVector2(37, -10);
 	private static final Dimension TEXTURE_SIZE = new Dimension(78, 31);
 	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
 
