@@ -1,0 +1,10 @@
+How to split images in grid with AI CC 2017
+
+* Objects must be on integer pixels. If the object is not 128x128 create a rectangle over the object and align them
+* to align the objects select both (without shift+click) and then click the object you don't want to move
+
+1) select object
+2) Object > Slice > create from selection
+3) Object > Slice > divide slice
+4) File > export > save for web
+
