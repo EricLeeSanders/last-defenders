@@ -270,4 +270,8 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 	public void setActive(boolean active) {	this.active = active; }
 
+	public void setPool(Pool<CombatActor> pool){
+		this.pool = pool;
+	}
+
 }
