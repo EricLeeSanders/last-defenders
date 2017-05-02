@@ -46,18 +46,25 @@ public class TestUtil {
         CombatActorPool<? extends CombatActor> pool = mock(CombatActorPool.class);
         tower.setPool(pool);
 
-        return tower;
+        Tower towerSpy = spy(tower);
+        doReturn(new Group()).when(towerSpy).getTargetGroup();
+
+        return towerSpy;
     }
 
 
     public static Enemy createEnemy(String name){
 
-
         Enemy enemy = combatActorFactory.loadEnemy(name);
         CombatActorPool<? extends CombatActor> pool = mock(CombatActorPool.class);
-        enemy.setPool(pool);
 
-        return enemy;
+
+        Enemy enemySpy = spy(enemy);
+        doReturn(new Group()).when(enemySpy).getTargetGroup();
+        doNothing().when(enemySpy).setTextureRegion(any(TextureRegion.class));
+        enemySpy.setPool(pool);
+
+        return enemySpy;
     }
 
 

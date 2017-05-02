@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Align;
 import com.foxholedefense.util.DebugOptions;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
@@ -60,7 +61,7 @@ public class GameActor extends Actor{
 	}
 
 	public void setPositionCenter(float x, float y){
-		setPosition(x - getOriginX(), y - getOriginY());
+		setPosition(x, y, Align.center);
 	}
 
 	public TextureRegion getTextureRegion() {

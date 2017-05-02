@@ -38,7 +38,6 @@ public abstract class Enemy extends CombatActor {
 	private static final float FRAME_DURATION = 0.3f;
 	private Random random = new Random();
 	private float findTargetDelay = 2f;
-	private Pool<CombatActor> pool;
 	private float speed;
 	private int killReward;
 	private float findTargetCounter = 0;
@@ -59,7 +58,6 @@ public abstract class Enemy extends CombatActor {
 		movementAnimation = new Animation(FRAME_DURATION, animatedRegions);
 		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		this.speed = speed;
-		this.pool = pool;
 		this.stationaryTextureRegion = stationaryTextureRegion;
 		this.killReward = killReward;
 	}
@@ -122,21 +120,21 @@ public abstract class Enemy extends CombatActor {
 
 		//create actions
 		FHDSequenceAction sequenceAction = UtilPool.getSequenceAction();
-		FHDVector2 moveVector = UtilPool.getVector2();
+		//FHDVector2 moveVector = UtilPool.getVector2();
 		for (int i = 1; i < path.size; i++) {
 			Vector2 prevWaypoint = newWaypoint;
 			newWaypoint = path.get(i);
-			moveVector.set((newWaypoint.x - (this.getOriginX())), (newWaypoint.y - (this.getOriginY())));
+			//moveVector.set((newWaypoint.x - (this.getOriginX())), (newWaypoint.y - (this.getOriginY())));
 			float distance = newWaypoint.dst(prevWaypoint);
 			float duration = (distance / speed);
 			float rotation = ActorUtil.calculateRotation(newWaypoint.x, newWaypoint.y, prevWaypoint.x, prevWaypoint.y);
-			WaypointAction waypointAction = createWaypointAction(moveVector.x, moveVector.y, duration, rotation);
+			WaypointAction waypointAction = createWaypointAction(newWaypoint.x, newWaypoint.y, duration, rotation);
 			sequenceAction.addAction(waypointAction);
 		}
 
 		addAction(sequenceAction);
 
-		moveVector.free();
+		//moveVector.free();
 	}
 
 	private WaypointAction createWaypointAction(float x, float y, float duration, float rotation){
@@ -188,7 +186,7 @@ public abstract class Enemy extends CombatActor {
 	private void reachedEnd(){
 		Logger.info("Enemy: " + this.getClass().getSimpleName() + " reached end");
 		notifyObserversEnemy(IEnemyObserver.EnemyEvent.REACHED_END);
-		pool.free(this);
+		freeActor();
 	}
 
 	private void attackHandler(float delta){
@@ -263,7 +261,7 @@ public abstract class Enemy extends CombatActor {
 	private void calcLengthToEnd() {
 		// The enemy should only have 1 action and it should
 		// be a FHDSequenceAction;
-		if(getActions().size <= 0){
+		if(getActions().size == 1){
 			return;
 		}
 
@@ -272,9 +270,8 @@ public abstract class Enemy extends CombatActor {
 		int currentIndex = sequenceAction.getIndex();
 		WaypointAction currentWaypoint = (WaypointAction) sequenceAction.getCurrentAction();
 		lengthToEndCalculated = true;
-		float totalDistance = 0;
 
-		totalDistance = Vector2.dst(this.getX(), this.getY(), currentWaypoint.getX(), currentWaypoint.getY());
+		float totalDistance = Vector2.dst(this.getX(), this.getY(), currentWaypoint.getX(), currentWaypoint.getY());
 		for (int i = currentIndex; i < waypointActions.size - 1; i++) {
 			WaypointAction waypoint = (WaypointAction) waypointActions.get(i);
 			WaypointAction nextWaypoint = (WaypointAction) waypointActions.get(i + 1);

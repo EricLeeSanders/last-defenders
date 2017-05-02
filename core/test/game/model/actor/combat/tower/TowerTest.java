@@ -1,4 +1,4 @@
-package tower;
+package game.model.actor.combat.tower;
 
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;

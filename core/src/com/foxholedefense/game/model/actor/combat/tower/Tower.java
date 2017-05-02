@@ -35,7 +35,6 @@ public abstract class Tower extends CombatActor {
 	private float attackCounter = getAttackSpeed(); //ready to attack
 	private TextureRegion rangeRegion, collidingRangeRegion;
 	private int kills;
-	private Pool<CombatActor> pool;
 	private boolean towerColliding;
 	private SnapshotArray<ITowerObserver> observers = new SnapshotArray<ITowerObserver>();
 
@@ -49,7 +48,6 @@ public abstract class Tower extends CombatActor {
 		this.attackIncreaseCost = attackIncreaseCost;
 		this.collidingRangeRegion = collidingRangeRegion;
 		this.rangeRegion = rangeRegion;
-		this.pool = pool;
 	}
 
 	public void detachTower(ITowerObserver observer){
@@ -247,7 +245,7 @@ public abstract class Tower extends CombatActor {
 	}
 
 	public void removeTower() {
-		pool.free(this);
+		freeActor();
 	}
 
 	public TowerAI getAI() {
