@@ -32,12 +32,12 @@ public class EnemyAI {
 			if(actor instanceof Tower){
 				Tower tower = (Tower)actor;
 				// Tower is active and not dead
-				if (tower.isDead() == false && tower.isActive()) {
+				if (!tower.isDead() && tower.isActive()) {
 					if (CollisionDetection.targetWithinRange(tower.getBody(), enemy.getRangeShape())) {
 						if (tower.getPositionCenter().dst(enemy.getPositionCenter()) < firstTowerDistance) {
 							// If the enemy is instanceof IRPG then it can
 							// attack plated towers.
-							if ((tower instanceof IPlatedArmor == false) || (enemy instanceof IRocket)) {
+							if ((!(tower instanceof IPlatedArmor)) || (enemy instanceof IRocket)) {
 								firstTower = tower;
 								firstTowerDistance = tower.getPositionCenter().dst(enemy.getPositionCenter());
 							}

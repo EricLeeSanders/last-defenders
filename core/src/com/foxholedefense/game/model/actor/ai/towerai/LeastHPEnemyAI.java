@@ -12,36 +12,10 @@ import com.foxholedefense.game.model.actor.interfaces.IRocket;
  * Created by Eric on 10/28/2016.
  */
 
-public class LeastHPEnemyAI implements ITowerAI {
+public class LeastHPEnemyAI extends AbstractTowerAI {
+
     @Override
-    public Enemy findTarget(IAttacker attacker, SnapshotArray<Actor> enemies) {
-        if (enemies.size == 0) {
-            return null;
-        }
-        float lowestEnemyHealth = Integer.MAX_VALUE;
-        Enemy lowestHPEnemy = null;
-        Enemy platedLowestHPEnemy = null;
-        for (Actor actor : enemies) {
-            if (actor instanceof Enemy) {
-                Enemy enemy = (Enemy)actor;
-                if (enemy.isDead() == false) {
-                    if (CollisionDetection.targetWithinRange(enemy.getBody(), attacker.getRangeShape())) {
-                        if (enemy.getHealth() < lowestEnemyHealth) {
-                            if ((enemy instanceof IPlatedArmor == false) || (attacker instanceof IRocket)) {
-                                lowestHPEnemy = enemy;
-                                lowestEnemyHealth = enemy.getHealth();
-                            } else {
-                                platedLowestHPEnemy = enemy;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (lowestHPEnemy == null) {
-            return platedLowestHPEnemy;
-        } else {
-            return lowestHPEnemy;
-        }
+    protected boolean swap(Enemy currentEnemy, Enemy replacingEnemy) {
+        return replacingEnemy.getHealth() < currentEnemy.getHealth();
     }
 }
