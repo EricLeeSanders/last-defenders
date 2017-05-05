@@ -32,6 +32,7 @@ public class TestUtil {
 
     private static Resources createResourcesMock(){
         Array<AtlasRegion> atlasRegion = new Array<AtlasRegion>();
+        atlasRegion.add(null);
 
         Resources resources = mock(Resources.class);
         when(resources.getAtlasRegion(anyString())).thenReturn(atlasRegion);
