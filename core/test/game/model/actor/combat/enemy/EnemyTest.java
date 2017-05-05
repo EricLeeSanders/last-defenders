@@ -205,11 +205,7 @@ public class EnemyTest {
             sequenceAction.act(duration);
         }
 
-        try{
-            enemy.act(1f);
-        } catch(Exception e){
-
-        }
+        enemy.act(10f);
         assertEquals(waypoint4, enemy.getPositionCenter());
 
         try {
@@ -267,12 +263,14 @@ public class EnemyTest {
         assertEquals(halfway.y / 2, enemy.getPositionCenter().y, TestUtil.DELTA);
 
         Vector2 currentWaypoint = new Vector2(secondWaypoint.getX(), secondWaypoint.getY());
-        float length = Vector2.dst(enemy.getX(), enemy.getY(), currentWaypoint.x, currentWaypoint.y);
-        System.out.println(enemy.getX());
-        System.out.println(enemy.getY());
-        System.out.println(currentWaypoint.x);
-        System.out.println(currentWaypoint.y);
-        System.out.println(length);
+        float lengthToEnd = Vector2.dst(enemy.getPositionCenter().x, enemy.getPositionCenter().y, currentWaypoint.x, currentWaypoint.y);
 
+        float x1 = enemy.getPositionCenter().x;
+        float y1 = enemy.getPositionCenter().y;
+        float x2 = currentWaypoint.x;
+        float y2 = currentWaypoint.y;
+
+        double distance = Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2));
+        assertEquals(distance, lengthToEnd, 0.00001f);
     }
 }
