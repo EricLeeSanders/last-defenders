@@ -13,12 +13,11 @@ import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.action.FHDSequenceAction;
 import com.foxholedefense.action.WaypointAction;
-import com.foxholedefense.game.model.actor.ai.EnemyAI;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
+import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager;
+import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
-import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
-import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
@@ -34,24 +33,21 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  *
  */
 public abstract class Enemy extends CombatActor {
-	private static final float MOVEMENT_DELAY = 1f; // The delay to wait after
+	public static final float MOVEMENT_DELAY = 1f; // The delay to wait after a target begins attacking
+	public static final float FIND_TARGET_DELAY = 2f;
 	private static final float FRAME_DURATION = 0.3f;
 	private Random random = new Random();
-	private float findTargetDelay = 2f;
 	private Pool<CombatActor> pool;
 	private float speed;
 	private int killReward;
-	private float findTargetCounter = 0;
-	private float attackCounter = 100; //Ready to attack
-	private boolean attacking;
-	private float movementDelayCounter;
 	private float lengthToEnd;
 	private boolean lengthToEndCalculated;
 	private Animation movementAnimation;
-	private float movementAnimationStateTime;
 	private TextureRegion stationaryTextureRegion;
 	private float rotationBeforeAttacking;
 	private SnapshotArray<IEnemyObserver> observers = new SnapshotArray<IEnemyObserver>();
+
+	private final EnemyStateManager stateManager = new EnemyStateManager(this);
 
 	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
 				 float speed, float health, float armor, float attack, float attackSpeed, float range, int killReward, DeathEffectType deathEffectType) {
@@ -89,6 +85,9 @@ public abstract class Enemy extends CombatActor {
 		observers.end();
 	}
 
+	public void init(){
+		stateManager.setCurrentState(EnemyState.RUNNING);
+	}
 	/**
 	 * Sets the path for the enemy. Starts off screen.
 	 *
@@ -144,13 +143,6 @@ public abstract class Enemy extends CombatActor {
 	}
 
 	/**
-	 * Finds a tower to attack.
-	 */
-	private ITargetable findTarget() {
-		return EnemyAI.findNearestTower(this, getTargetGroup().getChildren());
-	}
-
-	/**
 	 * Pauses enemy when attacking. Creates new MoveTo Actions to set the next
 	 * way point for the Enemy. Calls to change textures. Calls to find target
 	 * when delay expires.
@@ -160,82 +152,38 @@ public abstract class Enemy extends CombatActor {
 
 		lengthToEndCalculated = false;
 
-		attackHandler(delta);
-		if (!attacking) {
+		if (!isAttacking()) {
 			super.act(delta); // Pause to create a delay if attacking
-			movementAnimationStateTime += delta;
 		}
 
-		// Find the next way point when at the end of a way point
-		if (!isDead() && !attacking) {
-			setTextureRegion(movementAnimation.getKeyFrame(movementAnimationStateTime, true));
-			hasEnemyReachedEnd();
-		}
+		stateManager.update(delta);
 	}
 
-	private boolean isReadyToFindTarget(){
-		return findTargetCounter >= findTargetDelay;
+	public void animationStep(float stateTime){
+		setTextureRegion(movementAnimation.getKeyFrame(stateTime, true));
 	}
 
-	private void hasEnemyReachedEnd(){
-		if (this.getActions().size == 0
-				&& !isDead()
-				&& isActive()) {
-			reachedEnd();
-		}
-	}
 
-	private void reachedEnd(){
+	public void reachedEnd(){
 		Logger.info("Enemy: " + this.getClass().getSimpleName() + " reached end");
 		notifyObserversEnemy(IEnemyObserver.EnemyEvent.REACHED_END);
 		pool.free(this);
 	}
 
-	private void attackHandler(float delta){
-		if(attacking) {
-			movementDelayCounter += delta;
-		}
-		attackCounter += delta;
-		if (isFinishedAttacking()){
-			finishAttacking();
-		} else if( canAttack()) {
-			if (!(this instanceof IPassiveEnemy) && !attacking) {
-				if(isReadyToFindTarget()){
-					ITargetable target = findTarget();
-					if(target != null && !target.isDead()) {
-						rotationBeforeAttacking = getRotation();
-						this.setRotation(ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
-						this.attackTarget(target);
-						attacking = true;
-						setTextureRegion(stationaryTextureRegion);
-						attackCounter = 0;
-						findTargetCounter = 0;
-					}
-				} else {
-					findTargetCounter += delta;
-				}
-			}
-		}
+	public void attack(ITargetable target){
+		this.setRotation(ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
+		this.attackTarget(target);
+		setTextureRegion(stationaryTextureRegion);
 	}
 
-	private boolean isFinishedAttacking(){
-		return attacking && movementDelayCounter >= MOVEMENT_DELAY;
+	public void preAttack(){
+		rotationBeforeAttacking = getRotation();
 	}
 
-	private boolean canAttack(){
-		return attackCounter >= this.getAttackSpeed();
-	}
-
-	private void finishAttacking(){
+	public void postAttack(){
 		setRotation(rotationBeforeAttacking);
-		movementDelayCounter = 0;
-		attacking = false;
-		findTargetDelay = random.nextFloat()*2 + 1;
 	}
 
-	public boolean isAttacking() {
-		return attacking;
-	}
 
 	/**
 	 * Resets the enemy for pooling
@@ -245,14 +193,8 @@ public abstract class Enemy extends CombatActor {
 		super.reset();
 		Logger.info("Enemy: " + this.getClass().getSimpleName() + " Resetting");
 		this.setRotation(0);
-		attacking = false;
-		findTargetCounter = 0;
-		findTargetDelay = 2f;
-		attackCounter = 100; //Ready to attack
 		lengthToEnd = 0;
-		movementAnimationStateTime = 0;
 		rotationBeforeAttacking = 0;
-		movementDelayCounter = 0;
 	}
 
 	/**
@@ -284,6 +226,10 @@ public abstract class Enemy extends CombatActor {
 
 		lengthToEnd = totalDistance;
 
+	}
+
+	public boolean isAttacking(){
+		return stateManager.getCurrentStateName().equals(EnemyState.ATTACKING);
 	}
 
 	public float getLengthToEnd() {

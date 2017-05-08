@@ -108,6 +108,7 @@ public class DynamicWaveGenerator {
 			enemy.setPath(enemyPath);
 			enemy.setHasArmor(armor);
 			enemies.add(enemy);
+			enemy.init();
 		}
 		return enemies;
 	}
