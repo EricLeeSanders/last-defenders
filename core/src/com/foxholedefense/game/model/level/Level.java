@@ -96,6 +96,7 @@ public class Level{
 			Enemy enemy = combatActorFactory.loadEnemy("Enemy" + enemyJson.getString("enemy"));
 			enemy.setPath(enemyPath);
 			enemy.setHasArmor(enemyJson.getBoolean("armor"));
+			enemy.init();
 			float delay = enemyJson.getFloat("delay");
 			SpawningEnemy spawningEnemy = new SpawningEnemy(enemy, delay);
 			spawningEnemyQueue.add(spawningEnemy);
