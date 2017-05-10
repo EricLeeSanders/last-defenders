@@ -6,16 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
-import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
-import com.foxholedefense.game.model.actor.combat.enemy.IEnemyObserver;
-import com.foxholedefense.game.model.actor.combat.tower.ITowerObserver;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.effects.label.ArmorDestroyedEffect;
 import com.foxholedefense.game.model.actor.effects.label.WaveOverCoinEffect;
 import com.foxholedefense.game.model.actor.effects.label.TowerHealEffect;
-import com.foxholedefense.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.foxholedefense.game.model.level.Level;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
@@ -43,7 +36,7 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  *
  */
-public class GameStage extends Stage implements IEnemyObserver, ICombatActorObserver{
+public class GameStage extends Stage{
 	private static final int WAVE_OVER_MONEY_MULTIPLIER = 100;
 	private LevelStateManager levelStateManager;
 	private GameUIStateManager uiStateManager;
@@ -90,9 +83,7 @@ public class GameStage extends Stage implements IEnemyObserver, ICombatActorObse
 		healthFactory = new HealthFactory(actorGroups,resources);
 		projectileFactory = new ProjectileFactory(actorGroups, audio, resources);
 		supportActorFactory = new SupportActorFactory(actorGroups, audio, resources, effectFactory, projectileFactory);
-		combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory, healthFactory, projectileFactory);
-		combatActorFactory.attachEnemyObserver(this);
-		combatActorFactory.attachCombatObserver(this);
+		combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory, healthFactory, projectileFactory, player);
 	}
 
 	public void createPlacementServices(Map map){
@@ -230,19 +221,6 @@ public class GameStage extends Stage implements IEnemyObserver, ICombatActorObse
 		}
 	}
 
-
-	public void attachCombatObserver(ICombatActorObserver observer){
-		combatActorFactory.attachCombatObserver(observer);
-	}
-
-	public void attachTowerObserver(ITowerObserver observer) {
-		combatActorFactory.attachTowerObserver(observer);
-	}
-
-	public void attachEnemyObserver(IEnemyObserver observer) {
-		combatActorFactory.attachEnemyObserver(observer);
-	}
-
 	public ActorGroups getActorGroups() {
 		return actorGroups;
 	}
@@ -280,27 +258,4 @@ public class GameStage extends Stage implements IEnemyObserver, ICombatActorObse
 		this.messageDisplayer = messageDisplayer;
 	}
 
-	@Override
-	public void notifyCombatActor(CombatActor actor, CombatActorEvent event) {
-		switch(event){
-			case ARMOR_BROKEN:
-				effectFactory.loadLabelEffect(ArmorDestroyedEffect.class).initialize(actor);
-				break;
-			case DEAD:
-				effectFactory.loadDeathEffect(actor.getDeathEffectType()).initialize(actor.getPositionCenter());
-				if(actor instanceof Enemy){
-					effectFactory.loadAnimationEffect(EnemyCoinEffect.class).initialize(actor.getPositionCenter());
-					player.giveMoney(((Enemy)actor).getKillReward());
-				}
-				break;
-		}
-	}
-
-	@Override
-	public void notifyEnemy(Enemy enemy, EnemyEvent event) {
-		Logger.info("Game Stage: notify enemy: " + event.name());
-		if(event.equals(EnemyEvent.REACHED_END)){
-			enemyReachedEnd();
-		}
-	}
 }

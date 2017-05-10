@@ -16,6 +16,8 @@ import com.foxholedefense.action.WaypointAction;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager;
 import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
+import com.foxholedefense.game.model.actor.combat.state.CombatActorState;
+import com.foxholedefense.game.model.actor.combat.state.StateManager;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.util.ActorUtil;
@@ -36,7 +38,6 @@ public abstract class Enemy extends CombatActor {
 	public static final float MOVEMENT_DELAY = 1f; // The delay to wait after a target begins attacking
 	public static final float FIND_TARGET_DELAY = 2f;
 	private static final float FRAME_DURATION = 0.3f;
-	private Random random = new Random();
 	private Pool<CombatActor> pool;
 	private float speed;
 	private int killReward;
@@ -45,9 +46,8 @@ public abstract class Enemy extends CombatActor {
 	private Animation movementAnimation;
 	private TextureRegion stationaryTextureRegion;
 	private float rotationBeforeAttacking;
-	private SnapshotArray<IEnemyObserver> observers = new SnapshotArray<IEnemyObserver>();
 
-	private final EnemyStateManager stateManager = new EnemyStateManager(this);
+	private StateManager<EnemyState, CombatActorState> stateManager;
 
 	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
 				 float speed, float health, float armor, float attack, float attackSpeed, float range, int killReward, DeathEffectType deathEffectType) {
@@ -60,33 +60,14 @@ public abstract class Enemy extends CombatActor {
 		this.killReward = killReward;
 	}
 
-	public void detachEnemy(IEnemyObserver observer){
-		Logger.info("Enemy Detach: " + observer.getClass().getName());
-		observers.removeValue(observer, false);
-	}
-
-	public void attachAllEnemy(Array<IEnemyObserver> observers){
-		this.observers.addAll(observers);
-	}
-
-	public void attachEnemy(IEnemyObserver observer){
-		Logger.info("Enemy Actor Attach: " + observer.getClass().getName());
-		observers.add(observer);
-	}
-
-	protected void notifyObserversEnemy(IEnemyObserver.EnemyEvent event){
-		Logger.info("Enemy Actor: Notify Observers");
-		Object[] objects = observers.begin();
-		for(int i = observers.size - 1; i >= 0; i--){
-			IEnemyObserver observer = (IEnemyObserver) objects[i];
-			Logger.info("Enemy Actor Notifying: " + observer.getClass().getName());
-			observer.notifyEnemy(this, event);
-		}
-		observers.end();
+	public void setStateManager(StateManager<EnemyState, CombatActorState> stateManager){
+		this.stateManager = stateManager;
 	}
 
 	public void init(){
-		stateManager.setCurrentState(EnemyState.RUNNING);
+		stateManager.transition(EnemyState.RUNNING);
+		setActive(true);
+		setDead(false);
 	}
 	/**
 	 * Sets the path for the enemy. Starts off screen.
@@ -166,7 +147,6 @@ public abstract class Enemy extends CombatActor {
 
 	public void reachedEnd(){
 		Logger.info("Enemy: " + this.getClass().getSimpleName() + " reached end");
-		notifyObserversEnemy(IEnemyObserver.EnemyEvent.REACHED_END);
 		pool.free(this);
 	}
 
@@ -182,6 +162,10 @@ public abstract class Enemy extends CombatActor {
 
 	public void postAttack(){
 		setRotation(rotationBeforeAttacking);
+	}
+
+	public void deadState(){
+		stateManager.transition(EnemyState.DYING);
 	}
 
 

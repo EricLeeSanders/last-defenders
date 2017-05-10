@@ -53,8 +53,7 @@ public class Level{
 				healthBar.setActor(enemy.getEnemy());
 				ArmorIcon armorIcon = healthFactory.loadArmorIcon();
 				armorIcon.setActor(enemy.getEnemy());
-				enemy.getEnemy().setActive(true);
-				enemy.getEnemy().setDead(false);
+				enemy.getEnemy().init();
 				enemyDelay = enemy.getDelay();
 			} else {
 				delayCount += delta;
@@ -96,7 +95,6 @@ public class Level{
 			Enemy enemy = combatActorFactory.loadEnemy("Enemy" + enemyJson.getString("enemy"));
 			enemy.setPath(enemyPath);
 			enemy.setHasArmor(enemyJson.getBoolean("armor"));
-			enemy.init();
 			float delay = enemyJson.getFloat("delay");
 			SpawningEnemy spawningEnemy = new SpawningEnemy(enemy, delay);
 			spawningEnemyQueue.add(spawningEnemy);
