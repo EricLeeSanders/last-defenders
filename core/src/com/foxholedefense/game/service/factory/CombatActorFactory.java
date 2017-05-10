@@ -1,14 +1,10 @@
 package com.foxholedefense.game.service.factory;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.SnapshotArray;
+import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.enemy.EnemyFlameThrower;
 import com.foxholedefense.game.model.actor.combat.enemy.EnemyHumvee;
@@ -17,8 +13,7 @@ import com.foxholedefense.game.model.actor.combat.enemy.EnemyRifle;
 import com.foxholedefense.game.model.actor.combat.enemy.EnemyRocketLauncher;
 import com.foxholedefense.game.model.actor.combat.enemy.EnemySniper;
 import com.foxholedefense.game.model.actor.combat.enemy.EnemyTank;
-import com.foxholedefense.game.model.actor.combat.enemy.IEnemyObserver;
-import com.foxholedefense.game.model.actor.combat.tower.ITowerObserver;
+import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.combat.tower.TowerFlameThrower;
 import com.foxholedefense.game.model.actor.combat.tower.TowerMachineGun;
@@ -27,12 +22,10 @@ import com.foxholedefense.game.model.actor.combat.tower.TowerRocketLauncher;
 import com.foxholedefense.game.model.actor.combat.tower.TowerSniper;
 import com.foxholedefense.game.model.actor.combat.tower.TowerTank;
 import com.foxholedefense.game.model.actor.combat.tower.TowerTurret;
+import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Eric on 3/31/2017.
@@ -54,40 +47,25 @@ public class CombatActorFactory {
     private CombatActorPool<EnemySniper> enemySniperPool = new CombatActorPool<EnemySniper>(EnemySniper.class);
     private CombatActorPool<EnemyHumvee> enemyHumveePool = new CombatActorPool<EnemyHumvee>(EnemyHumvee.class);
 
-    private SnapshotArray<ICombatActorObserver> combatActorObservers = new SnapshotArray<ICombatActorObserver>();
-    private SnapshotArray<ITowerObserver> towerObservers = new SnapshotArray<ITowerObserver>();
-    private SnapshotArray<IEnemyObserver> enemyObservers = new SnapshotArray<IEnemyObserver>();
-
     private FHDAudio audio;
     private ActorGroups actorGroups;
     private Resources resources;
     private EffectFactory effectFactory;
     private HealthFactory healthFactory;
     private ProjectileFactory projectileFactory;
+    private Player player;
 
-    public CombatActorFactory(ActorGroups actorGroups, FHDAudio audio, Resources resources, EffectFactory effectFactory, HealthFactory healthFactory, ProjectileFactory projectileFactory){
+    public CombatActorFactory(ActorGroups actorGroups, FHDAudio audio, Resources resources, EffectFactory effectFactory, HealthFactory healthFactory,
+                              ProjectileFactory projectileFactory, Player player){
         this.actorGroups = actorGroups;
         this.audio = audio;
         this.resources = resources;
         this.effectFactory = effectFactory;
         this.healthFactory = healthFactory;
         this.projectileFactory = projectileFactory;
+        this.player = player;
 
     }
-
-
-    public void attachCombatObserver(ICombatActorObserver observer){
-        combatActorObservers.add(observer);
-    }
-
-    public void attachTowerObserver(ITowerObserver observer) {
-        towerObservers.add(observer);
-    }
-
-    public void attachEnemyObserver(IEnemyObserver observer) {
-        enemyObservers.add(observer);
-    }
-
 
     /**
      * Obtains a tower from the pool
@@ -210,11 +188,12 @@ public class CombatActorFactory {
             throw new NullPointerException("Combat Actor Factory couldn't create: " + type.getSimpleName());
         }
         if(actor instanceof Tower) {
-            ((Tower)actor).attachAllTower(towerObservers);
+            TowerStateManager towerStateManager = new TowerStateManager((Tower) actor, effectFactory);
+            ((Tower)actor).setStateManager(towerStateManager);
         } else if(actor instanceof Enemy) {
-            ((Enemy)actor).attachAllEnemy(enemyObservers);
+            EnemyStateManager enemyStateManager = new EnemyStateManager((Enemy) actor, effectFactory, player);
+            ((Enemy)actor).setStateManager(enemyStateManager);
         }
-        actor.attachAllCombatActor(combatActorObservers);
 
         return actor;
     }

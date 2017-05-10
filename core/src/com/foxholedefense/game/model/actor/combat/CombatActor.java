@@ -10,9 +10,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
@@ -24,7 +22,6 @@ import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
-import com.foxholedefense.game.model.actor.combat.ICombatActorObserver.CombatActorEvent;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 /**
@@ -41,7 +38,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private Circle rangeCircle = new Circle();
 	private boolean hasArmor, dead, active;
 	private Pool<CombatActor> pool;
-	private SnapshotArray<ICombatActorObserver> observers = new SnapshotArray<ICombatActorObserver>();
 	private DeathEffectType deathEffectType;
 	private Group targetGroup;
 
@@ -67,29 +63,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		
 		
 	}
-	public void detachCombatActor(ICombatActorObserver observer){
-		Logger.info("Combat Actor Detach: " + observer.getClass().getName());
-		observers.removeValue(observer, false);
-	}
 
-	public void attachAllCombatActor(Array<ICombatActorObserver> observers){
-		this.observers.addAll(observers);
-	}
-
-	public void attachCombatActor(ICombatActorObserver observer){
-		Logger.info("Combat Actor Attach: " + observer.getClass().getName());
-		observers.add(observer);
-	}
-	protected void notifyObserversCombatActor(CombatActorEvent event){
-		Logger.info("Combat Actor: Notify Observers");
-		Object[] objects = observers.begin();
-		for(int i = observers.size - 1; i >= 0; i--){
-			ICombatActorObserver observer = (ICombatActorObserver) objects[i];
-			Logger.info("Combat Actor Notifying: " + observer.getClass().getName());
-			observer.notifyCombatActor(this, event);
-		}
-		observers.end();
-	}
 	@Override
 	public void reset() {
 		Logger.info("Combat Actor: " + this.getClass().getSimpleName() + " Resetting");
@@ -197,11 +171,13 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 	public abstract Shape2D getBody();
 
+	public abstract void deadState();
+
 	public void setDead(boolean dead) {
 		this.dead = dead;
 		if (isDead()) {
 			Logger.info("Combat Actor: " + this.getClass().getSimpleName() + " Dead");
-			notifyObserversCombatActor(CombatActorEvent.DEAD);
+			deadState();
 			pool.free(this);
 		}
 	}
@@ -245,7 +221,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public void setHasArmor(boolean hasArmor) {
 		if(hasArmor() && !hasArmor) {
 			armor = 0;
-			notifyObserversCombatActor(CombatActorEvent.ARMOR_BROKEN);
 		}
 		resetArmor();
 		this.hasArmor = hasArmor;
