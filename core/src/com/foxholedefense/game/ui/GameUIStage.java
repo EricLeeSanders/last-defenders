@@ -154,6 +154,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	}
 	@Override
 	public void act(float delta) {
+		super.act(delta);
 		for(Updatable presenter : updatablePresenters){
 			presenter.update(delta);
 		}
