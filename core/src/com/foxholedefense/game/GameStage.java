@@ -4,6 +4,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.foxholedefense.game.model.IPlayerObserver;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
@@ -36,7 +37,7 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  *
  */
-public class GameStage extends Stage{
+public class GameStage extends Stage implements IPlayerObserver{
 	private static final int WAVE_OVER_MONEY_MULTIPLIER = 100;
 	private LevelStateManager levelStateManager;
 	private GameUIStateManager uiStateManager;
@@ -75,6 +76,7 @@ public class GameStage extends Stage{
 		createPlacementServices(map);
 		mapRenderer = new MapRenderer(tiledMap, getCamera());
 		level = new Level(intLevel, getActorGroups(),combatActorFactory, healthFactory, map);
+		player.attachObserver(this);
 
 	}
 
@@ -206,14 +208,8 @@ public class GameStage extends Stage{
 		}
 	}
 
-	/**
-	 * If an enemy reaches the end, subtract 1 life from the player
-	 */
-	private void enemyReachedEnd() {
-		Logger.info("Game Stage: enemy reached end");
-		if (player.getLives() > 0) { // Only subtract if we have lives.
-			player.setLives(player.getLives() - 1);
-		}
+	@Override
+	public void playerAttributeChange() {
 		if (player.getLives() <= 0 && !levelStateManager.getState().equals(LevelState.GAME_OVER)) { // end game
 			Logger.info("Game Stage: game over");
 			levelStateManager.setState(LevelState.GAME_OVER);

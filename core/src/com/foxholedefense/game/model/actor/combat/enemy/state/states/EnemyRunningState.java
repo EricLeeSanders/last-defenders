@@ -1,10 +1,13 @@
 package com.foxholedefense.game.model.actor.combat.enemy.state.states;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.ai.EnemyAI;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.foxholedefense.game.model.actor.combat.state.CombatActorState;
 import com.foxholedefense.game.model.actor.combat.state.StateTransitioner;
+import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 
 import java.util.HashMap;
@@ -47,7 +50,7 @@ public class EnemyRunningState implements CombatActorState {
             return;
         }
 
-        if (isReadyToFindTarget()) {
+        if (!(enemy instanceof IPassiveEnemy) && isReadyToFindTarget()) {
             ITargetable target = findTarget();
             if(target != null){
                 attackTransitionParameters.put("target", target);
@@ -68,7 +71,8 @@ public class EnemyRunningState implements CombatActorState {
      * Finds a tower to attack.
      */
     private ITargetable findTarget() {
-        return EnemyAI.findNearestTower(enemy, enemy.getTargetGroup().getChildren());
+        SnapshotArray<Actor> children = enemy.getTargetGroup().getChildren();
+        return EnemyAI.findNearestTower(enemy, children);
     }
 
 

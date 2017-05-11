@@ -1,14 +1,12 @@
 package com.foxholedefense.game.model.actor.combat.tower.state;
 
-import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.combat.state.CombatActorState;
 import com.foxholedefense.game.model.actor.combat.state.StateManager;
-import com.foxholedefense.game.model.actor.combat.state.StateTransitioner;
+import com.foxholedefense.game.model.actor.combat.state.states.CombatActorDyingState;
+import com.foxholedefense.game.model.actor.combat.state.states.CombatActorStandByState;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
 import com.foxholedefense.game.model.actor.combat.tower.state.states.TowerActiveState;
-import com.foxholedefense.game.model.actor.combat.tower.state.states.TowerDyingState;
-import com.foxholedefense.game.model.actor.combat.tower.state.states.TowerStandByState;
 import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.util.Logger;
 
@@ -40,8 +38,8 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
 
     private void initStateObjects(){
         towerStates.put(TowerState.ACTIVE, new TowerActiveState(tower, this));
-        towerStates.put(TowerState.DYING, new TowerDyingState(tower, this, effectFactory));
-        towerStates.put(TowerState.STANDBY, new TowerStandByState(tower, this));
+        towerStates.put(TowerState.DYING, new CombatActorDyingState<TowerState>(tower, this, TowerState.STANDBY, effectFactory));
+        towerStates.put(TowerState.STANDBY, new CombatActorStandByState());
     }
 
     @Override
