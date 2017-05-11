@@ -14,6 +14,8 @@ import com.foxholedefense.game.model.actor.combat.enemy.EnemyRocketLauncher;
 import com.foxholedefense.game.model.actor.combat.enemy.EnemySniper;
 import com.foxholedefense.game.model.actor.combat.enemy.EnemyTank;
 import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager;
+import com.foxholedefense.game.model.actor.combat.event.EventManagerImpl;
+import com.foxholedefense.game.model.actor.combat.event.interfaces.EventManager;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.combat.tower.TowerFlameThrower;
 import com.foxholedefense.game.model.actor.combat.tower.TowerMachineGun;
@@ -194,6 +196,9 @@ public class CombatActorFactory {
             EnemyStateManager enemyStateManager = new EnemyStateManager((Enemy) actor, effectFactory, player);
             ((Enemy)actor).setStateManager(enemyStateManager);
         }
+
+        EventManager eventManager = new EventManagerImpl(actor, effectFactory);
+        actor.setEventManager(eventManager);
 
         return actor;
     }

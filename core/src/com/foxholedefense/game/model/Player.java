@@ -59,11 +59,13 @@ public class Player {
 		return lives;
 	}
 
-	public void setLives(int lives) {
-		Logger.info("TowerPlacement: set lives: " + lives);
-		this.lives = lives;
+	public void enemyReachedEnd(){
+		if(lives > 0){
+			lives--;
+		}
 		notifyObservers();
 	}
+
 
 	public void spendMoney(int amount) {
 		setMoney(getMoney() - amount);

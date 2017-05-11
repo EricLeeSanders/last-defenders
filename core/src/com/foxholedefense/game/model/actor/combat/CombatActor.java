@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.GameActor;
+import com.foxholedefense.game.model.actor.combat.event.interfaces.EventManager;
+import com.foxholedefense.game.model.actor.combat.event.interfaces.EventManager.CombatActorEventEnum;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.ICollision;
@@ -40,6 +42,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private Pool<CombatActor> pool;
 	private DeathEffectType deathEffectType;
 	private Group targetGroup;
+	private EventManager eventManager;
 
 	public CombatActor(TextureRegion textureRegion, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
 						float health, float armor, float attack, float attackSpeed, float range, DeathEffectType deathEffectType) {
@@ -94,7 +97,11 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		}
 	}
 
-	private void drawDebugBody(Batch batch){
+	public void setEventManager(EventManager eventManager){
+		this.eventManager = eventManager;
+	}
+
+								 private void drawDebugBody(Batch batch){
 		batch.end();
 		ShapeRenderer debugBody = Resources.getShapeRenderer();
 		debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
@@ -221,6 +228,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public void setHasArmor(boolean hasArmor) {
 		if(hasArmor() && !hasArmor) {
 			armor = 0;
+			eventManager.sendEvent(CombatActorEventEnum.ARMOR_DESTROYED);
 		}
 		resetArmor();
 		this.hasArmor = hasArmor;
