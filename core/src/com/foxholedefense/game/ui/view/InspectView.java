@@ -168,12 +168,8 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	public void update(Tower selectedTower) {
 		lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
 		lblKills.setText(String.valueOf(selectedTower.getNumOfKills()));
-		lblTitle.setText(selectedTower.getName().toUpperCase());
-		btnArmor.updateCost(selectedTower.getArmorCost());
-		btnSpeed.updateCost(selectedTower.getSpeedIncreaseCost());
-		btnRange.updateCost(selectedTower.getRangeIncreaseCost());
-		btnAttack.updateCost(selectedTower.getAttackIncreaseCost());
 		btnDischarge.updateCost(selectedTower.getSellCost());
+		lblTitle.setText(selectedTower.getName().toUpperCase());
 		lblTargetPriority.setText(selectedTower.getAI().name().replace('_', ' '));
 		updateUpgradeControl(btnArmor, selectedTower.hasArmor(), selectedTower.getArmorCost());
 		updateUpgradeControl(btnSpeed, selectedTower.hasIncreasedSpeed(), selectedTower.getSpeedIncreaseCost());
@@ -186,6 +182,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	 *
 	 */
 	private void updateUpgradeControl(UpgradeButton upgradeButton, boolean towerHasUpgrade, int upgradeCost) {
+		upgradeButton.updateCost(upgradeCost);
 		boolean affordable = presenter.canAffordUpgrade(upgradeCost);
 		upgradeButton.button.setDisabled(!affordable && !towerHasUpgrade);
 		upgradeButton.setPurchased(towerHasUpgrade);
