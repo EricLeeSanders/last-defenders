@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.foxholedefense.game.GameStage;
 import com.foxholedefense.game.model.Player;
@@ -37,6 +38,7 @@ import com.foxholedefense.game.ui.view.OptionsView;
 import com.foxholedefense.game.ui.view.QuitView;
 import com.foxholedefense.game.ui.view.SupportView;
 import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
+import com.foxholedefense.game.ui.view.interfaces.Updatable;
 import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.FHDAudio;
@@ -59,6 +61,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	private InputMultiplexer imp;
 	private Resources resources;
 	private MessageDisplayer messageDisplayer;
+	private Array<Updatable> updatablePresenters = new Array<Updatable>();
 
 	public GameUIStage(Player player, Group towerGroup
 			, GameUIStateManager uiStateManager, LevelStateManager levelStateManager
@@ -145,7 +148,16 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		imp.addProcessor(supportView);
 		imp.addProcessor(inspectView);
 
+		updatablePresenters.add(inspectPresenter);
+
 		Logger.info("GameUIStage: ui created");
+	}
+	@Override
+	public void act(float delta) {
+		super.act(delta);
+		for(Updatable presenter : updatablePresenters){
+			presenter.update(delta);
+		}
 	}
 	
 	/**

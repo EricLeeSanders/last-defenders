@@ -1,10 +1,7 @@
 package com.foxholedefense.game.ui.presenter;
 
-import com.badlogic.gdx.math.Vector2;
 import com.foxholedefense.game.model.IPlayerObserver;
 import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
 import com.foxholedefense.game.model.level.Level;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
@@ -12,12 +9,10 @@ import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.IGameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IHUDView;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
-import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 
 /**
