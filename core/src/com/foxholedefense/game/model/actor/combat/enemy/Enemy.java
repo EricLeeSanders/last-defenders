@@ -225,4 +225,8 @@ public abstract class Enemy extends CombatActor {
 		return killReward;
 	}
 
+	public EnemyState getState(){
+		return stateManager.getCurrentStateName();
+	}
+
 }

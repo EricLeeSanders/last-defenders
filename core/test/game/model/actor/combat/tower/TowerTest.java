@@ -42,7 +42,6 @@ public class TowerTest {
         tower.takeDamage(100);
 
         assertTrue(tower.isDead());
-        assertFalse(tower.isActive());
         assertFalse(tower.hasArmor());
 
     }
