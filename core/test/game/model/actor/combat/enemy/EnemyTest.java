@@ -6,7 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import com.foxholedefense.action.FHDSequenceAction;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
-import com.foxholedefense.game.model.actor.combat.enemy.IEnemyObserver.EnemyEvent;
+import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
@@ -30,7 +30,7 @@ import util.TestUtil;
  * Created by Eric on 4/23/2017.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class, Enemy.class})
+@PrepareForTest({Logger.class})
 public class EnemyTest {
 
     @Before
@@ -48,7 +48,6 @@ public class EnemyTest {
         enemy.takeDamage(100);
 
         assertTrue(enemy.isDead());
-        assertFalse(enemy.isActive());
         assertFalse(enemy.hasArmor());
 
     }
@@ -175,7 +174,9 @@ public class EnemyTest {
     public void testEnemyReachedEnd(){
 
         Enemy enemy = TestUtil.createEnemy("EnemyRifle");
-        enemy.setActive(true);
+
+        assertEquals(EnemyState.RUNNING, enemy.getState());
+
         Array<FHDVector2> path = new Array<FHDVector2>();
 
         FHDVector2 startPoint = new FHDVector2();
@@ -206,13 +207,7 @@ public class EnemyTest {
         }
 
         enemy.act(10f);
-        assertEquals(waypoint4, enemy.getPositionCenter());
-
-        try {
-            PowerMockito.verifyPrivate(enemy, times(1)).invoke("reachedEnd");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        assertEquals(EnemyState.REACHED_END, enemy.getState());
     }
 
     @Test
