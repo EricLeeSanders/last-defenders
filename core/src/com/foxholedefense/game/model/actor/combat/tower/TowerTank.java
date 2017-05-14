@@ -18,6 +18,8 @@ import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPoo
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.DebugOptions;
+import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
@@ -55,12 +57,14 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	private TextureRegion turretRegion;
 	private float bodyRotation;
 	private ProjectileFactory projectileFactory;
+	private FHDAudio audio;
 
-	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<TowerTank> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory) {
+	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<TowerTank> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
 		super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
 		this.bodyRegion = bodyRegion;
 		this.turretRegion = turretRegion;
 		this.projectileFactory = projectileFactory;
+		this.audio = audio;
 		body = new Polygon(bodyPoints);
 	}
 
@@ -129,6 +133,7 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	@Override
 	public void attackTarget(ITargetable target) {
 		if(target != null){
+			audio.playSound(FHDSound.ROCKET_LAUNCH);
 			projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), getTargetGroup(), this.getGunPos(), ROCKET_SIZE, AOE_RADIUS);
 		}
 	}

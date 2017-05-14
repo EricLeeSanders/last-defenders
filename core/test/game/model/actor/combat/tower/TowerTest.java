@@ -1,22 +1,21 @@
 package game.model.actor.combat.tower;
 
-import com.foxholedefense.game.model.actor.combat.CombatActor;
+import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.combat.tower.TowerRifle;
-import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
 import com.foxholedefense.util.Logger;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
+
+
 import static org.mockito.Mockito.*;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-import util.GdxTestRunner;
 import util.TestUtil;
 
 
@@ -37,7 +36,7 @@ public class TowerTest {
      */
     @Test
     public void testTowerDead() {
-        Tower tower = TestUtil.createTower("Rifle");
+        Tower tower = TestUtil.createTower("Rifle", false);
         tower.setHasArmor(true);
         tower.takeDamage(100);
 
@@ -51,7 +50,7 @@ public class TowerTest {
      */
     @Test
     public void testTowerArmor1(){
-        Tower tower = TestUtil.createTower("Rifle");
+        Tower tower = TestUtil.createTower("Rifle", false);
         float damageAmount = tower.getHealth() / 2;
         tower.setHasArmor(true);
         tower.takeDamage(damageAmount);
@@ -65,7 +64,7 @@ public class TowerTest {
      */
     @Test
     public void testTowerArmor2(){
-        Tower tower = TestUtil.createTower("Rifle");
+        Tower tower = TestUtil.createTower("Rifle", false);
         float damageAmount = tower.getHealth() / 4;
         tower.setHasArmor(true);
         tower.takeDamage(damageAmount);
@@ -79,12 +78,29 @@ public class TowerTest {
      */
     @Test
     public void testTowerArmor3(){
-        Tower tower = TestUtil.createTower("Rifle");
+        Tower tower = TestUtil.createTower("Rifle", false);
         float damageAmount = tower.getHealth();
         tower.setHasArmor(true);
         tower.takeDamage(damageAmount);
 
         assertEquals(tower.getHealthPercent(), 50f, TestUtil.DELTA);
         assertFalse(tower.hasArmor());
+    }
+
+    @Test
+    public void testState1(){
+        Tower tower = TestUtil.createTower("Rifle", true);
+        Enemy enemy = TestUtil.createEnemy("EnemyRifle");
+
+        tower.getTargetGroup().addActor(enemy);
+
+        assertEquals(TowerState.ACTIVE, tower.getState());
+
+        enemy.setPositionCenter(120, 120);
+        tower.setPositionCenter(120, 120);
+
+        tower.act(.0001f);
+        verify(tower, times(1)).attackTarget(enemy);
+
     }
 }
