@@ -154,7 +154,7 @@ public class CombatActorFactory {
         } else if (type.equals(TowerTank.class)) {
             TextureRegion tankRegion = resources.getTexture("tower-tank-body");
             TextureRegion turretRegion = resources.getTexture("tower-tank-turret");
-            actor = new TowerTank(tankRegion, turretRegion, towerTankPool, actorGroups.getEnemyGroup(), resources.getTexture("range"), resources.getTexture("range-red"), projectileFactory);
+            actor = new TowerTank(tankRegion, turretRegion, towerTankPool, actorGroups.getEnemyGroup(), resources.getTexture("range"), resources.getTexture("range-red"), projectileFactory, audio);
         } else if (type.equals(TowerTurret.class)) {
             TextureRegion machineRegion = resources.getTexture("tower-turret-turret");
             TextureRegion bagsRegion = resources.getTexture("tower-turret-bags");
@@ -185,7 +185,7 @@ public class CombatActorFactory {
         } else if (type.equals(EnemyTank.class)) {
             TextureRegion tankRegion = resources.getTexture("enemy-tank-body");
             TextureRegion turretRegion = resources.getTexture("enemy-tank-turret");
-            actor = new EnemyTank(tankRegion, turretRegion, new TextureRegion[]{turretRegion}, enemyTankPool, actorGroups.getTowerGroup(), projectileFactory);
+            actor = new EnemyTank(tankRegion, turretRegion, new TextureRegion[]{turretRegion}, enemyTankPool, actorGroups.getTowerGroup(), projectileFactory, audio);
         } else {
             throw new NullPointerException("Combat Actor Factory couldn't create: " + type.getSimpleName());
         }

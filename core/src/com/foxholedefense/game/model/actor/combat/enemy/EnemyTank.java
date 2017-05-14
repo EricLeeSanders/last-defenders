@@ -17,6 +17,8 @@ import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPoo
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.DebugOptions;
+import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
@@ -49,11 +51,13 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRocket 
 	private float bodyRotation;
 	private Polygon body;
 	private ProjectileFactory projectileFactory;
+	private FHDAudio audio;
 
-	public EnemyTank( TextureRegion bodyRegion, TextureRegion turretRegion, TextureRegion[] animatedRegions, CombatActorPool<EnemyTank> pool, Group targetGroup, ProjectileFactory projectileFactory) {
+	public EnemyTank( TextureRegion bodyRegion, TextureRegion turretRegion, TextureRegion[] animatedRegions, CombatActorPool<EnemyTank> pool, Group targetGroup, ProjectileFactory projectileFactory, FHDAudio audio) {
 		super(turretRegion, animatedRegions, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
 		this.bodyRegion = bodyRegion;
 		this.projectileFactory = projectileFactory;
+		this.audio = audio;
 		body = new Polygon(bodyPoints);
 	}
 
@@ -117,6 +121,7 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRocket 
 	@Override
 	public void attackTarget(ITargetable target) {
 		if(target != null){
+			audio.playSound(FHDSound.ROCKET_LAUNCH);
 			projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), getTargetGroup(), this.getGunPos(), ROCKET_SIZE, AOE_RADIUS);
 		}
 	}

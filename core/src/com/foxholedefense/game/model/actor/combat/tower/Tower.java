@@ -228,4 +228,8 @@ public abstract class Tower extends CombatActor {
 	public boolean isTowerColliding(){
 		return towerColliding;
 	}
+
+	public TowerState getState() {
+		return stateManager.getCurrentStateName();
+	}
 }

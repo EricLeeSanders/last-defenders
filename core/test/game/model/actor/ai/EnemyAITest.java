@@ -1,13 +1,10 @@
 package game.model.actor.ai;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.ai.EnemyAI;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.util.Logger;
 
 import org.junit.Before;
@@ -62,7 +59,7 @@ public class EnemyAITest {
     }
 
     private Tower createTower(String name, String type, Vector2 centerPos, boolean outOfRange, boolean dead, boolean active){
-        Tower tower = TestUtil.createTower(type);
+        Tower tower = TestUtil.createTower(type, true);
         if(outOfRange){
             tower.setPositionCenter(300,300);
         } else {
