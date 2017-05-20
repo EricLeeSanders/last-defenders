@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
-import com.foxholedefense.game.model.actor.health.interfaces.IPlatedArmor;
+import com.foxholedefense.game.model.actor.health.interfaces.PlatedArmor;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.IRocket;
 /**
@@ -23,9 +23,9 @@ public abstract class AbstractTowerAI implements ITowerAI {
             if (actor instanceof Enemy) {
                 Enemy enemy = (Enemy)actor;
                 if (!enemy.isDead()) {
-                    if (CollisionDetection.targetWithinRange(enemy.getBody(), attacker.getRangeShape())) {
+                    if (CollisionDetection.shapesIntersect(enemy.getBody(), attacker.getRangeShape())) {
                         if (returnEnemy == null || swap(returnEnemy, enemy)) {
-                            if (!(enemy instanceof IPlatedArmor) || (attacker instanceof IRocket)) {
+                            if (!(enemy instanceof PlatedArmor) || (attacker instanceof IRocket)) {
                                 returnEnemy = enemy;
                             } else {
                                 // Attack the plated enemy if there are no

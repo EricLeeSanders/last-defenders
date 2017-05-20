@@ -19,7 +19,8 @@ import com.foxholedefense.util.ActorUtil;
 
 public class ArmorDestroyedEffect extends LabelEffect {
 
-    private static final float DURATION = 2;
+    public static final float DURATION = 2;
+    public static final float Y_END_OFFSET = 50;
     private static final float SCALE = 0.35f;
     private static final String MESSAGE = "ARMOR DESTROYED";
 
@@ -44,7 +45,7 @@ public class ArmorDestroyedEffect extends LabelEffect {
 
         addAction(
                 Actions.parallel(
-                        Actions.moveTo(getX(), getY() + 50, DURATION),
+                        Actions.moveTo(getX(), getY() + Y_END_OFFSET, DURATION),
                         Actions.fadeOut(DURATION)));
 
         return this;
@@ -56,8 +57,15 @@ public class ArmorDestroyedEffect extends LabelEffect {
         TextureRegion region = animation.getKeyFrame(stateTime, false);
 
         if (actor != null) {
-            setPosition(actor.getPositionCenter().x - 22, actor.getPositionCenter().y + 16);
-            batch.draw(region, getX(), getY(), 12, 13);
+            float x = actor.getPositionCenter().x;
+            float y = actor.getPositionCenter().y + 16;
+
+            if(actor.getHealthPercent() < 100){
+                x += -22;
+            } else {
+                x += -6;
+            }
+            batch.draw(region, x, y, 12, 13);
         }
     }
 

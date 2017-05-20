@@ -5,16 +5,11 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.health.interfaces.IPlatedArmor;
+import com.foxholedefense.game.model.actor.health.interfaces.PlatedArmor;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
-import com.foxholedefense.game.model.actor.projectile.Flame;
 import com.foxholedefense.util.Logger;
 /**
  * Class that deals damage
@@ -38,7 +33,7 @@ public class Damage {
 	}
 
 	public static void dealBulletDamage(IAttacker attacker, ITargetable target) {
-		if (!(target instanceof IPlatedArmor)) {
+		if (!(target instanceof PlatedArmor)) {
 			dealTargetDamage(attacker, target);
 		}
 	}
@@ -49,8 +44,8 @@ public class Damage {
 			ITargetable flameTarget = (ITargetable) actor;
 			if (flameTarget != null && !flameTarget.isDead()) {
 				Shape2D targetBody = flameTarget.getBody();
-				if (CollisionDetection.flameAndTarget(targetBody, flameBody)) {
-					if (!(flameTarget instanceof IPlatedArmor)) {
+				if (CollisionDetection.shapesIntersect(targetBody, flameBody)) {
+					if (!(flameTarget instanceof PlatedArmor)) {
 						dealTargetDamage(attacker, flameTarget);
 					}
 				}
@@ -65,7 +60,7 @@ public class Damage {
 			Actor actor = targetGroup.get(i);
 			ITargetable aoeTarget = (ITargetable) actor;
 			if (!aoeTarget.isDead()) {
-				if (CollisionDetection.explosionAndTarget( aoeTarget.getBody(), aoeRadius)) {
+				if (CollisionDetection.shapesIntersect( aoeTarget.getBody(), aoeRadius)) {
 					float damage = attacker.getAttack();
 					aoeTarget.takeDamage(damage);
 					if (aoeTarget.isDead() && attacker instanceof Tower) {

@@ -87,10 +87,13 @@ public class TowerTest {
         assertFalse(tower.hasArmor());
     }
 
+    /**
+     * Tests that tower attacks target
+     */
     @Test
-    public void testState1(){
+    public void testStateAttackTarget(){
         Tower tower = TestUtil.createTower("Rifle", true);
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle");
+        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
 
         tower.getTargetGroup().addActor(enemy);
 
@@ -102,5 +105,19 @@ public class TowerTest {
         tower.act(.0001f);
         verify(tower, times(1)).attackTarget(enemy);
 
+    }
+
+    /**
+     * Tests that tower switches to dead state
+     */
+    @Test
+    public void testDeadState(){
+        Tower tower = TestUtil.createTower("Rifle", true);
+
+        assertEquals(TowerState.ACTIVE, tower.getState());
+
+        tower.takeDamage(tower.getHealth());
+
+        verify(tower, times(1)).deadState();
     }
 }

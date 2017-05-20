@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
-import com.foxholedefense.game.model.actor.health.interfaces.IPlatedArmor;
+import com.foxholedefense.game.model.actor.health.interfaces.PlatedArmor;
 import com.foxholedefense.game.model.actor.interfaces.IRotatable;
 import com.foxholedefense.game.model.actor.interfaces.IRocket;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
@@ -30,7 +30,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  *
  */
-public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatable, IRocket {
+public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatable, IRocket {
 
 	private static final float HEALTH = 20;
 	private static final float ARMOR = 10;

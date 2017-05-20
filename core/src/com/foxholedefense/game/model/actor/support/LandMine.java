@@ -39,7 +39,7 @@ public class LandMine extends SupportActor implements IRocket {
 		if(isActive()){
 			for(Actor enemy : getTargetGroup().getChildren()){
 				if(enemy instanceof Enemy){
-					if(CollisionDetection.landMineAndEnemy(((Enemy)enemy).getBody(),getBody())){
+					if(CollisionDetection.shapesIntersect(((Enemy)enemy).getBody(),getBody())){
 						explode();
 						return;
 					}

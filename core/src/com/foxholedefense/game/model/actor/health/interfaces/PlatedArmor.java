@@ -7,6 +7,6 @@ package com.foxholedefense.game.model.actor.health.interfaces;
  * @author Eric
  *
  */
-public interface IPlatedArmor {
+public interface PlatedArmor {
 
 }

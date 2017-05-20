@@ -81,7 +81,7 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 		for(Actor actor : towerGroup.getChildren()){
 			if(actor instanceof Tower){
 				Tower tower = (Tower)actor;
-				if(CollisionDetection.targetWithinRange(tower.getBody(), getRangeShape())){
+				if(CollisionDetection.shapesIntersect(tower.getBody(), getRangeShape())){
 					tower.heal();
 					TowerHealEffect effect =  effectFactory.loadLabelEffect(TowerHealEffect.class);
 					effect.initialize(tower);

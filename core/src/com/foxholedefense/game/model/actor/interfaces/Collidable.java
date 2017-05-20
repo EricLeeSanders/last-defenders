@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
  * @author Eric
  *
  */
-public interface ICollision {
+public interface Collidable {
 	Vector2 getPositionCenter();
 
 	void setPositionCenter(Vector2 pos);
