@@ -103,9 +103,9 @@ public class TowerPlacement {
 				//TODO this is here mostly for testing. Can probably be removed for production
 				SnapshotArray<Actor> towers = actorGroups.getTowerGroup().getChildren();
 
-				if (CollisionDetection.CollisionWithPath(map.getPathBoundaries(), currentTower)) {
+				if (CollisionDetection.collisionWithPath(map.getPathBoundaries(), currentTower)) {
 					Logger.info("TowerPlacement: tower collides with path");
-				} else if (CollisionDetection.CollisionWithActors(towers, currentTower)) {
+				} else if (CollisionDetection.collisionWithActors(towers, currentTower)) {
 					Logger.info("TowerPlacement: tower collides with another Actor");
 				}
 			}
@@ -121,9 +121,9 @@ public class TowerPlacement {
 	private boolean towerCollides() {
 		SnapshotArray<Actor> towers = actorGroups.getTowerGroup().getChildren();
 
-		if (CollisionDetection.CollisionWithPath(map.getPathBoundaries(), currentTower)) {
+		if (CollisionDetection.collisionWithPath(map.getPathBoundaries(), currentTower)) {
 			return true;
-		} else if (CollisionDetection.CollisionWithActors(towers, currentTower)) {
+		} else if (CollisionDetection.collisionWithActors(towers, currentTower)) {
 			return true;
 		}
 		return false;

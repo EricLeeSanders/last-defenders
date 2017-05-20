@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
-import com.foxholedefense.game.model.actor.health.interfaces.IPlatedArmor;
+import com.foxholedefense.game.model.actor.health.interfaces.PlatedArmor;
 import com.foxholedefense.game.model.actor.interfaces.IRocket;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.model.actor.interfaces.IVehicle;
@@ -29,11 +29,11 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  *
  */
-public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRocket {
+public class EnemyTank extends Enemy implements PlatedArmor, IVehicle, IRocket {
 
 	private static final float HEALTH = 20;
 	private static final float ARMOR = 10;
-	private static final float ATTACK = 10;
+	private static final float ATTACK = 4;
 	private static final float ATTACK_SPEED = 0.9f;
 	private static final float RANGE = 80;
 	private static final float SPEED = 45;

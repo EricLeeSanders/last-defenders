@@ -91,7 +91,7 @@ public class TowerAITest {
     }
 
     private Enemy createEnemy( String name, String type, float lengthToEnd, float health, boolean outOfRange, boolean dead ){
-        Enemy enemy = TestUtil.createEnemy(type);
+        Enemy enemy = TestUtil.createEnemy(type, false);
         if(outOfRange) {
             enemy.setPositionCenter(300, 300);
         }
@@ -222,10 +222,6 @@ public class TowerAITest {
 
         Enemy enemy = new MostHPEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
         Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy4");
-
-        for(Actor actor : towerTargetGroup.getChildren()){
-            System.out.println(actor.getName() + ((CombatActor)actor).getPositionCenter());
-        }
 
         assertEquals(expectedEnemy, enemy);
     }

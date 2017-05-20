@@ -20,7 +20,9 @@ import com.foxholedefense.util.datastructures.Dimension;
 public class WaveOverCoinEffect extends LabelEffect {
 
     private static final float SCALE = 0.75f;
-    private static final float DURATION = 2f;
+    public static final float DURATION = 2;
+    public static final float Y_END_OFFSET = 100;
+    public static final float Y_BEGIN_OFFSET = (Resources.VIRTUAL_HEIGHT / 2) + 50;
     private static final Dimension ICON_SIZE = new Dimension(32, 32);
 
     private Animation animation;
@@ -41,12 +43,12 @@ public class WaveOverCoinEffect extends LabelEffect {
         pack();
 
         float x = ActorUtil.calcXBotLeftFromCenter((Resources.VIRTUAL_WIDTH / 2), getWidth());
-        float y = (Resources.VIRTUAL_HEIGHT / 2) + 50;
+        float y = Y_BEGIN_OFFSET;
 
         setPosition(x, y);
 
         addAction(Actions.sequence(
-                Actions.moveTo(x, y + 100, DURATION),
+                Actions.moveTo(x, y + Y_END_OFFSET, DURATION),
                 Actions.removeActor()));
     }
 

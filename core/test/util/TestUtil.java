@@ -63,7 +63,7 @@ public class TestUtil {
     private static Player playerMock = mock(Player.class);
     private static FHDAudio audioMock = mock(FHDAudio.class);
 
-    private static Resources createResourcesMock(){
+    public static Resources createResourcesMock(){
         Array<AtlasRegion> atlasRegion = new Array<AtlasRegion>();
         atlasRegion.add(null);
 
@@ -74,7 +74,7 @@ public class TestUtil {
         return resources;
     }
 
-    private static ProjectileFactory createProjectileFactoryMock(){
+    public static ProjectileFactory createProjectileFactoryMock(){
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
 
         Bullet bullet = mock(Bullet.class);
@@ -83,14 +83,14 @@ public class TestUtil {
         return projectileFactoryMock;
     }
 
-    private static EffectFactory createEffectFactoryMock(){
+    public static EffectFactory createEffectFactoryMock(){
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
 
         ArmorDestroyedEffect armorDestroyedEffect = mock(ArmorDestroyedEffect.class);
         doReturn(armorDestroyedEffect).when(effectFactoryMock).loadLabelEffect(ArmorDestroyedEffect.class);
 
         DeathEffect deathEffect = mock(BloodSplatter.class);
-        doReturn(deathEffect).when(effectFactoryMock).loadDeathEffect(any(DeathEffectType.class));
+        doReturn(deathEffect).when(effectFactoryMock).loadDeathEffect(isA(DeathEffectType.class));
 
         EnemyCoinEffect enemyCoinEffect = mock(EnemyCoinEffect.class);
         doReturn(enemyCoinEffect).when(effectFactoryMock).loadAnimationEffect(EnemyCoinEffect.class);
@@ -135,7 +135,7 @@ public class TestUtil {
     }
 
 
-    public static Enemy createEnemy(String name){
+    public static Enemy createEnemy(String name, boolean spy){
 
         Enemy enemy = null;
         Array<AtlasRegion> atlasRegion = new Array<AtlasRegion>();
@@ -155,6 +155,10 @@ public class TestUtil {
             enemy = new EnemyRocketLauncher(null, animatedRegions, null,  new Group(), projectileFactoryMock, audioMock);
         } else if(name.equals("EnemyTank")){
             enemy = new EnemyTank(null, null, animatedRegions, null,  new Group(), projectileFactoryMock, audioMock);
+        }
+
+        if(spy){
+            enemy = spy(enemy);
         }
 
         CombatActorPool<? extends CombatActor> pool = mock(CombatActorPool.class);

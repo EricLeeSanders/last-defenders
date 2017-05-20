@@ -15,7 +15,8 @@ import com.foxholedefense.util.ActorUtil;
 
 public class TowerHealEffect extends LabelEffect {
 
-    private static final float DURATION = 2;
+    public static final float DURATION = 2;
+    public static final float Y_END_OFFSET = 50;
     private static final float SCALE = 0.3f;
     private static final String MESSAGE = "+ HEALTH";
 
@@ -43,7 +44,7 @@ public class TowerHealEffect extends LabelEffect {
 
         addAction(
                 Actions.parallel(
-                        Actions.moveTo(getX(), getY() + 50, DURATION),
+                        Actions.moveTo(getX(), getY() + Y_END_OFFSET, DURATION),
                         Actions.fadeOut(DURATION)));
 
         return this;
