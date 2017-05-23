@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.foxholedefense.game.model.actor.interfaces.IRocket;
 import com.foxholedefense.game.service.factory.SupportActorFactory.SupportActorPool;
@@ -18,15 +20,18 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 public class AirStrike extends SupportActor implements IRocket {
+
 	public static final float AIRSTRIKE_DURATION = 2.5f;
 	public static final int COST = 1000;
 	public static final float ATTACK = 10f;
 	public static final float SPEED = 150f;
 	public static final float AIRSTRIKE_RADIUS = 60;
 	public static final int MAX_AIRSTRIKES = 3;
+
 	private static final Vector2 GUN_POS = UtilPool.getVector2();
 	private static final Dimension ROCKET_SIZE = new Dimension(46, 10);
 	private static final Dimension TEXTURE_SIZE = new Dimension(203, 125);
+
 	private Array<AirStrikeLocation> airStrikeLocations = new Array<AirStrikeLocation>();
 	private ProjectileFactory projectileFactory;
 	private FHDAudio audio;
@@ -40,13 +45,20 @@ public class AirStrike extends SupportActor implements IRocket {
 	public void addLocation(AirStrikeLocation location){
 		airStrikeLocations.add(location);
 	}
+
 	public void beginAirStrike(){
 		Logger.info("AirStrike: Beginning Air Strike Run");
+
 		setActive(true);
-		FHDVector2 centerPos = UtilPool.getVector2(0-this.getHeight(), Resources.VIRTUAL_HEIGHT/2);
+		FHDVector2 centerPos = UtilPool.getVector2(-getWidth() / 2, Resources.VIRTUAL_HEIGHT/2);
 		setPositionCenter(centerPos);
 		centerPos.free();
-		this.addAction(Actions.moveTo(Resources.VIRTUAL_WIDTH+this.getWidth(), ((Resources.VIRTUAL_HEIGHT/2) - (getHeight()/2)),  AIRSTRIKE_DURATION, Interpolation.linear));
+
+		MoveToAction moveAction = Actions.moveTo(Resources.VIRTUAL_WIDTH + getWidth(), (Resources.VIRTUAL_HEIGHT / 2), AIRSTRIKE_DURATION, Interpolation.linear);
+		moveAction.setAlignment(Align.center);
+		addAction(moveAction);
+
+		audio.playSound(FHDSound.ROCKET_LAUNCH);
 		for(AirStrikeLocation location : airStrikeLocations){
 			dropBomb(location);
 			location.setShowRange(false);
@@ -56,14 +68,13 @@ public class AirStrike extends SupportActor implements IRocket {
 	public void act(float delta) {
 		super.act(delta);
 		if(isActive()){
-			if(this.getActions().size <= 0){
-				this.freeActor();
+			if(getActions().size <= 0){
+				freeActor();
 			}
 		}
 	}
 	private void dropBomb(AirStrikeLocation location){
-		audio.playSound(FHDSound.ROCKET_LAUNCH);
-		projectileFactory.loadRocket().initialize(this, location.getLocation(), this.getTargetGroup(),this.getGunPos(), ROCKET_SIZE, AIRSTRIKE_RADIUS);
+		projectileFactory.loadRocket().initialize(this, location.getLocation(), ROCKET_SIZE, AIRSTRIKE_RADIUS);
 		
 		
 	}

@@ -34,10 +34,9 @@ import static org.mockito.Mockito.verify;
 @PrepareForTest({Logger.class})
 public class ArmorDestroyedEffectTest {
 
-    private ArmorDestroyedEffect armorDestroyedEffect;
     private LabelEffectPool labelEffectPoolMock = mock(LabelEffectPool.class);
 
-    public void createArmorDestroyedEffect(){
+    public ArmorDestroyedEffect createArmorDestroyedEffect(){
 
         Resources resourcesMock = TestUtil.createResourcesMock();
         Skin skinMock = mock(Skin.class);
@@ -49,7 +48,8 @@ public class ArmorDestroyedEffectTest {
 
         ArmorDestroyedEffect armorDestroyedEffect = new ArmorDestroyedEffect(resourcesMock.getAtlasRegion(""),labelEffectPoolMock, skinMock);
 
-        this.armorDestroyedEffect = armorDestroyedEffect;
+        return armorDestroyedEffect;
+
     }
     @Before
     public void initArmorDestroyedEffectTest() {
@@ -67,6 +67,7 @@ public class ArmorDestroyedEffectTest {
         Tower tower = TestUtil.createTower("Sniper", false);
         tower.setPositionCenter(150,150);
 
+        ArmorDestroyedEffect armorDestroyedEffect = createArmorDestroyedEffect();
         armorDestroyedEffect.initialize(tower);
 
         assertEquals(150, armorDestroyedEffect.getY(), TestUtil.DELTA);
@@ -94,6 +95,7 @@ public class ArmorDestroyedEffectTest {
         Tower tower = TestUtil.createTower("FlameThrower", false);
         tower.setPositionCenter(150,150);
 
+        ArmorDestroyedEffect armorDestroyedEffect = createArmorDestroyedEffect();
         armorDestroyedEffect.initialize(tower);
 
         assertEquals(1, armorDestroyedEffect.getActions().size);

@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.helper.Damage;
+import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.util.DebugOptions;
 import com.foxholedefense.util.datastructures.Dimension;
@@ -27,20 +28,21 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  *
  */
-public class Flame extends Actor implements Pool.Poolable {
+public class Flame extends GameActor implements Pool.Poolable {
 
 	private static final float FRAME_DURATION = 0.025f;
-	private static final float TICK_ATTACK_SPEED = 0.1f;
+	private static final int NUM_OF_FRAMES = 29;
+	public static final float DURATION = FRAME_DURATION * NUM_OF_FRAMES;
+	public static final float TICK_ATTACK_SPEED = 0.1f;
 
 	private Animation flameAnimation;
 	private float stateTime;
 	private float tickTime = TICK_ATTACK_SPEED;
-	private CombatActor shooter;
+	private CombatActor attacker;
 	private Dimension flameSize;
 	private Pool<Flame> pool;
 	private float[] bodyPoints = new float[8];
 	private Polygon flameBody = new Polygon();
-	private Vector2 maxFlameTextureSize = UtilPool.getVector2();
 	private Group targetGroup;
 
 	/**
@@ -50,18 +52,6 @@ public class Flame extends Actor implements Pool.Poolable {
 		this.pool = pool;
 		flameAnimation = new Animation(FRAME_DURATION, regions);
 		flameAnimation.setPlayMode(PlayMode.LOOP);
-		for(AtlasRegion region : regions){
-			float height = region.getRegionHeight();
-			float width = region.getRegionWidth();
-
-			if(height > maxFlameTextureSize.y){
-				maxFlameTextureSize.y = height;
-			}
-
-			if(width > maxFlameTextureSize.x){
-				maxFlameTextureSize.x = width;
-			}
-		}
 		bodyPoints[0] = bodyPoints[1] = bodyPoints[2] = bodyPoints[7] = 0;
 	}
 
@@ -69,16 +59,22 @@ public class Flame extends Actor implements Pool.Poolable {
 	 * Initializes a flame.
 	 *
 	 */
-	public Actor initialize(CombatActor shooter, Group targetGroup, Dimension flameSize) {
-		this.shooter = shooter;
+	public Actor initialize(CombatActor attacker, Group targetGroup, Dimension flameSize) {
+		this.attacker = attacker;
 		this.targetGroup = targetGroup;
 		stateTime = 0;
 		this.flameSize = flameSize;
-		this.setPosition(shooter.getGunPos().x, shooter.getGunPos().y  - getOriginY());
-		setRotation(shooter.getRotation());
+
+		// Use only width to make the flame fatter
+		setSize(new Dimension(flameSize.getWidth(), flameSize.getWidth()));
+		setOrigin(0, flameSize.getWidth() / 2);
+		setPosition(attacker.getGunPos().x, attacker.getGunPos().y  - getOriginY());
+		setRotation(attacker.getRotation());
+
 		bodyPoints[3] = bodyPoints[5] = flameSize.getHeight();
 		bodyPoints[4] = bodyPoints[6] = flameSize.getWidth();
 		flameBody.setVertices(bodyPoints);
+
 		return this;
 	}
 
@@ -87,10 +83,11 @@ public class Flame extends Actor implements Pool.Poolable {
 	public void act(float delta) {
 		super.act(delta);
 		stateTime += delta;
-		if (shooter.isDead() || flameAnimation.isAnimationFinished(stateTime)) {
+		if (attacker.isDead() || flameAnimation.isAnimationFinished(stateTime)) {
 			pool.free(this);
 		}
-
+		setRotation(attacker.getRotation());
+		setPosition(attacker.getGunPos().x, attacker.getGunPos().y  - getOriginY());
 		attackHandler(delta);
 	}
 
@@ -98,7 +95,7 @@ public class Flame extends Actor implements Pool.Poolable {
 
 		tickTime += delta;
 		if(tickTime > TICK_ATTACK_SPEED){
-			Damage.dealFlameGroupDamage(shooter, targetGroup.getChildren(), getFlameBody());
+			Damage.dealFlameGroupDamage(attacker, targetGroup.getChildren(), getFlameBody());
 			tickTime = 0;
 		}
 	}
@@ -109,28 +106,21 @@ public class Flame extends Actor implements Pool.Poolable {
 	 */
 	@Override
 	public void draw(Batch batch, float alpha) {
-		TextureRegion currentFlame = flameAnimation.getKeyFrame(stateTime, true);
-		this.setOrigin(0, currentFlame.getRegionHeight() / 2);
-		this.setPosition(shooter.getGunPos().x, shooter.getGunPos().y  - getOriginY());
-		setRotation(shooter.getRotation());
 
-		// Scale the textures. Only worry about width of the flameSize while scaling.
-		// If the texture's Length != Height then this won't work.
-		float heightScale = flameSize.getWidth() / currentFlame.getRegionHeight();
-		float widthScale = flameSize.getWidth() / currentFlame.getRegionWidth();
+		setTextureRegion(flameAnimation.getKeyFrame(stateTime, true));
 
 		if (DebugOptions.showTextureBoundaries) {
 			drawDebugBody(batch);
 		}
-		batch.draw(currentFlame, this.getX(), this.getY(), this.getOriginX(), this.getOriginY(), currentFlame.getRegionWidth(), currentFlame.getRegionHeight()
-				, widthScale, heightScale, this.getRotation());
+		super.draw(batch, alpha);
+
 	}
 
 	private void drawDebugBody(Batch batch){
 		ShapeRenderer flameOutline = Resources.getShapeRenderer();
 		batch.end();
 		Polygon poly = getFlameBody();
-		flameOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
+		flameOutline.setProjectionMatrix(getParent().getStage().getCamera().combined);
 		flameOutline.begin(ShapeType.Line);
 		flameOutline.setColor(Color.RED);
 		flameOutline.polygon(poly.getTransformedVertices());
@@ -145,9 +135,9 @@ public class Flame extends Actor implements Pool.Poolable {
 	 * @return
 	 */
 	public Polygon getFlameBody() {
-		flameBody.setPosition(shooter.getGunPos().x, shooter.getGunPos().y - (flameSize.getHeight() / 2));
+		flameBody.setPosition(attacker.getGunPos().x, attacker.getGunPos().y - (flameSize.getHeight() / 2));
 		flameBody.setOrigin(0, flameSize.getHeight() / 2);
-		flameBody.setRotation(this.getRotation());
+		flameBody.setRotation(getRotation());
 		return flameBody;
 	}
 

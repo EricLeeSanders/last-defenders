@@ -15,6 +15,10 @@ import com.foxholedefense.util.Logger;
  *
  */
 public class HealthBar extends Actor implements Pool.Poolable {
+	public static final float X_OFFSET = -10;
+	public static final float Y_OFFSET = 20;
+	public static final float MAX_BAR_WIDTH = 30;
+	public static final float BAR_HEIGHT = 4;
 	private CombatActor actor = null;
 	private Pool<HealthBar> pool;
 	private TextureRegion backgroundBar, healthBar, armorBar;
@@ -30,16 +34,16 @@ public class HealthBar extends Actor implements Pool.Poolable {
 			float healthPercentage = actor.getHealthPercent();
 			float armorPercentage = actor.getArmorPercent();
 			// Only show if the actor has been hit
-			if (((healthPercentage < 100 && actor.hasArmor() == false) || (actor.hasArmor() && armorPercentage < 100)) && healthPercentage > 0) {
-				float healthBarSize = (((30) * (healthPercentage)) / 100);
-				float armorBarSize = (((30) * (armorPercentage)) / 100);
-				setPosition(actor.getPositionCenter().x - 10, actor.getPositionCenter().y + 20);
+			if (((healthPercentage < 1 && !actor.hasArmor()) || (actor.hasArmor() && armorPercentage < 1)) && healthPercentage > 0) {
+				float healthBarSize = MAX_BAR_WIDTH * healthPercentage;
+				float armorBarSize = MAX_BAR_WIDTH * armorPercentage;
+				setPosition(actor.getPositionCenter().x + X_OFFSET, actor.getPositionCenter().y + Y_OFFSET);
 
-				batch.draw(backgroundBar, getX(), getY(), 30, 4);
-				batch.draw(healthBar, getX(), getY(), healthBarSize, 4);
+				batch.draw(backgroundBar, getX(), getY(), MAX_BAR_WIDTH, BAR_HEIGHT);
+				batch.draw(healthBar, getX(), getY(), healthBarSize, BAR_HEIGHT);
 
 				if (actor.hasArmor()) {
-					batch.draw(armorBar, getX(), getY(), armorBarSize, 4);
+					batch.draw(armorBar, getX(), getY(), armorBarSize, BAR_HEIGHT);
 				}
 			}
 		}

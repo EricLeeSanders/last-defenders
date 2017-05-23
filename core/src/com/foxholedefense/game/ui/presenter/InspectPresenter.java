@@ -5,8 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.actor.ai.TowerAI;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
+import com.foxholedefense.game.model.actor.ai.TowerAIType;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.level.state.ILevelStateObserver;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
@@ -99,7 +98,7 @@ public class InspectPresenter implements Updatable, IGameUIStateObserver, ILevel
 		Logger.info("Inspect Presenter: changing target priority");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if (selectedTower != null) {
-			TowerAI ai = TowerAI.values()[(selectedTower.getAI().getPosition() + 1) % 4];
+			TowerAIType ai = TowerAIType.values()[(selectedTower.getAI().getPosition() + 1) % 4];
 			selectedTower.setAI(ai);
 			view.update(selectedTower);
 		}

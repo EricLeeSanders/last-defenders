@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.ActorGroups;
-import com.foxholedefense.game.model.actor.projectile.AirStrikeBomb;
 import com.foxholedefense.game.model.actor.projectile.Bullet;
 import com.foxholedefense.game.model.actor.projectile.Explosion;
 import com.foxholedefense.game.model.actor.projectile.Flame;
@@ -93,7 +92,7 @@ public class ProjectileFactory {
      * @return Rocket
      */
     protected Rocket createRocket() {
-        Rocket rocket = new Rocket(rocketPool, explosionPool, resources.getTexture("rocket"));
+        Rocket rocket = new Rocket(rocketPool, this, resources.getTexture("rocket"));
         return rocket;
 
     }

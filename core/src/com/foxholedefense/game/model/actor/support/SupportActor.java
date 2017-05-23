@@ -25,6 +25,7 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	private Group getTargetGroup;
 	private boolean showRange;
 	private TextureRegion rangeTexture;
+	private Circle rangeShape;
 
 	public SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion, Dimension textureSize
 						, TextureRegion rangeTexture, float range, float attack, Vector2 gunPos, int cost) {
@@ -36,6 +37,7 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 		this.cost = cost;
 		this.getTargetGroup = targetGroup;
 		this.rangeTexture = rangeTexture;
+		rangeShape = new Circle(getPositionCenter().x, getPositionCenter().y, range);
 		setTextureRegion(textureRegion);
 	}
 	@Override
@@ -84,7 +86,8 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	
 	@Override
 	public Shape2D getRangeShape() {
-		return new Circle(getPositionCenter().x, getPositionCenter().y, range);
+		rangeShape.setPosition(getPositionCenter().x, getPositionCenter().y);
+		return rangeShape;
 	}
 
 	@Override

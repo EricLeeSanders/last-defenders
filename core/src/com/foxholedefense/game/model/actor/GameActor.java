@@ -32,6 +32,7 @@ public class GameActor extends Actor{
 
 		TextureRegion textureRegion = getTextureRegion();
 		if(textureRegion != null) {
+			System.out.println("not null");
 			batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 		}
 
@@ -46,7 +47,7 @@ public class GameActor extends Actor{
 		bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 		bodyOutline.begin(ShapeType.Line);
 		bodyOutline.setColor(Color.BLUE);
-		bodyOutline.rect(getX(),getY(), getWidth(), getHeight());
+		bodyOutline.rect(getX(),getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 		bodyOutline.end();
 		batch.begin();
 	}

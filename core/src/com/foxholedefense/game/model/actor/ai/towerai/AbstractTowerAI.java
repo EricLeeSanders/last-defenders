@@ -3,6 +3,7 @@ package com.foxholedefense.game.model.actor.ai.towerai;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.helper.CollisionDetection;
+import com.foxholedefense.game.model.actor.ai.TowerAI;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.health.interfaces.PlatedArmor;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
@@ -11,7 +12,7 @@ import com.foxholedefense.game.model.actor.interfaces.IRocket;
  * Created by Eric on 4/24/2017.
  */
 
-public abstract class AbstractTowerAI implements ITowerAI {
+public abstract class AbstractTowerAI implements TowerAI {
     @Override
     public Enemy findTarget(IAttacker attacker, SnapshotArray<Actor> enemies) {
         if (enemies.size == 0) {

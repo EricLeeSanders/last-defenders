@@ -69,7 +69,7 @@ public class LandMine extends SupportActor implements IRocket {
 	}
 	private void explode(){
 		Logger.info("Landmine: exploding");
-		projectileFactory.loadExplosion().initialize(this, RANGE, getTargetGroup(), this.getPositionCenter());
+		projectileFactory.loadExplosion().initialize(this, RANGE, this.getPositionCenter());
 		this.freeActor();
 	}
 	private Circle getBody(){

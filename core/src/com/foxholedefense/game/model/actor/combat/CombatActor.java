@@ -195,15 +195,20 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 
 	/**
 	 * Returns health percent
-	 * 0 - 100.
+	 * 0 - 1.
 	 *
      */
 	public float getHealthPercent() {
-		return ((this.getHealth() / this.getMaxHealth()) * 100);
+		return this.getHealth() / this.getMaxHealth();
 	}
 
+	/**
+	 * Returns armor percent
+	 * 0 - 1.
+	 *
+	 */
 	public float getArmorPercent() {
-		return ((this.armor / this.MAX_ARMOR) * 100);
+		return this.armor / this.MAX_ARMOR;
 	}
 
 	public float getMaxHealth() {
