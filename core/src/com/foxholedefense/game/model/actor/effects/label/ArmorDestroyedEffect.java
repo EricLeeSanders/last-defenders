@@ -60,7 +60,7 @@ public class ArmorDestroyedEffect extends LabelEffect {
             float x = actor.getPositionCenter().x;
             float y = actor.getPositionCenter().y + 16;
 
-            if(actor.getHealthPercent() < 100){
+            if(actor.getHealthPercent() < 1){
                 x += -22;
             } else {
                 x += -6;

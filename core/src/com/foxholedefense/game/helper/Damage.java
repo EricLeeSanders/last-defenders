@@ -25,7 +25,7 @@ public class Damage {
 			if (target.isDead() && attacker instanceof Tower) {
 				// Only give the tower a kill if it is alive.
 				if (!((Tower)attacker).isDead()) {
-					Logger.debug("Target: giving kill to shooter");
+					Logger.debug("Target: giving kill to attacker");
 					((Tower) attacker).giveKill();
 				}
 			}
@@ -65,7 +65,7 @@ public class Damage {
 					aoeTarget.takeDamage(damage);
 					if (aoeTarget.isDead() && attacker instanceof Tower) {
 						if (!((Tower)attacker).isDead()) {
-							Logger.debug("Explosion: giving kill to shooter");
+							Logger.debug("Explosion: giving kill to attacker");
 							((Tower) attacker).giveKill();
 						}
 					}

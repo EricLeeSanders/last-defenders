@@ -2,31 +2,21 @@ package game.model.actor.combat.tower.state.states;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.actor.ai.EnemyAI;
-import com.foxholedefense.game.model.actor.ai.TowerAI;
+import com.foxholedefense.game.model.actor.ai.TowerAIType;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
-import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager;
-import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
-import com.foxholedefense.game.model.actor.combat.enemy.state.states.EnemyAttackingState;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager;
 import com.foxholedefense.game.model.actor.combat.tower.state.states.TowerActiveState;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
-import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.util.Logger;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Matchers;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-
-import java.util.HashMap;
-import java.util.Map;
 
 import util.TestUtil;
 
@@ -38,7 +28,6 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.spy;
 
@@ -46,13 +35,13 @@ import static org.powermock.api.mockito.PowerMockito.spy;
  * Created by Eric on 5/15/2017.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class, TowerAI.class})
+@PrepareForTest({Logger.class, TowerAIType.class})
 public class TowerActiveStateTest {
 
     @Before
     public void initTowerActiveStateTest(){
         PowerMockito.mockStatic(Logger.class);
-        PowerMockito.mock(TowerAI.class);
+        PowerMockito.mock(TowerAIType.class);
     }
 
     /**
@@ -67,7 +56,7 @@ public class TowerActiveStateTest {
         TowerActiveState towerActiveState = new TowerActiveState(tower, stateManagerMock);
 
         SnapshotArray<Actor> targetGroupArray = tower.getTargetGroup().getChildren();
-        TowerAI ai = tower.getAI();
+        TowerAIType ai = tower.getAI();
         ai = spy(ai);
         doReturn(ai).when(tower).getAI();
 

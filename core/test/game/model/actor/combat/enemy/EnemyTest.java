@@ -42,16 +42,11 @@ public class EnemyTest {
 
         Array<FHDVector2> path = new Array<FHDVector2>();
 
-        FHDVector2 startPoint = new FHDVector2();
-        startPoint.set(50, 50);
-        FHDVector2 waypoint1 = new FHDVector2();
-        waypoint1.set(100, 100);
-        FHDVector2 waypoint2 = new FHDVector2();
-        waypoint2.set(150, 150);
-        FHDVector2 waypoint3 = new FHDVector2();
-        waypoint3.set(200, 200);
-        FHDVector2 waypoint4 = new FHDVector2();
-        waypoint4.set(250, 250);
+        FHDVector2 startPoint = new FHDVector2(50, 50);
+        FHDVector2 waypoint1 = new FHDVector2(100, 100);
+        FHDVector2 waypoint2 = new FHDVector2(150, 150);
+        FHDVector2 waypoint3 = new FHDVector2(200, 200);
+        FHDVector2 waypoint4 = new FHDVector2(250, 250);
 
         path.add(startPoint);
         path.add(waypoint1);
@@ -86,7 +81,7 @@ public class EnemyTest {
         enemy.setHasArmor(true);
         enemy.takeDamage(damageAmount);
 
-        assertEquals(enemy.getHealthPercent(), 100f, TestUtil.DELTA);
+        assertEquals(enemy.getHealthPercent(), 1f, TestUtil.DELTA);
         assertFalse(enemy.hasArmor());
     }
 
@@ -100,7 +95,7 @@ public class EnemyTest {
         enemy.setHasArmor(true);
         enemy.takeDamage(damageAmount);
 
-        assertEquals(enemy.getHealthPercent(), 100f, TestUtil.DELTA);
+        assertEquals(enemy.getHealthPercent(), 1, TestUtil.DELTA);
         assertTrue(enemy.hasArmor());
     }
 
@@ -114,7 +109,7 @@ public class EnemyTest {
         enemy.setHasArmor(true);
         enemy.takeDamage(damageAmount);
 
-        assertEquals(enemy.getHealthPercent(), 50f, TestUtil.DELTA);
+        assertEquals(enemy.getHealthPercent(), .5f, TestUtil.DELTA);
         assertFalse(enemy.hasArmor());
     }
 

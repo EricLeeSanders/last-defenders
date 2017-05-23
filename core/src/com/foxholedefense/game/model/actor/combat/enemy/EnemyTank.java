@@ -122,7 +122,7 @@ public class EnemyTank extends Enemy implements PlatedArmor, IVehicle, IRocket {
 	public void attackTarget(ITargetable target) {
 		if(target != null){
 			audio.playSound(FHDSound.ROCKET_LAUNCH);
-			projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), getTargetGroup(), this.getGunPos(), ROCKET_SIZE, AOE_RADIUS);
+			projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
 		}
 	}
 

@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IRotatable;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
@@ -192,7 +191,7 @@ public class TowerTurret extends Tower implements IRotatable {
 	public void attackTarget(ITargetable target) {
 		if(target != null){
 			audio.playSound(FHDSound.MACHINE_GUN);
-			projectileFactory.loadBullet().initialize(this,target, this.getGunPos(), BULLET_SIZE);
+			projectileFactory.loadBullet().initialize(this,target, BULLET_SIZE);
 		}
 	}
 

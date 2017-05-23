@@ -55,7 +55,7 @@ public class TowerTest {
         tower.setHasArmor(true);
         tower.takeDamage(damageAmount);
 
-        assertEquals(tower.getHealthPercent(), 100f, TestUtil.DELTA);
+        assertEquals(tower.getHealthPercent(), 1, TestUtil.DELTA);
         assertFalse(tower.hasArmor());
     }
 
@@ -69,7 +69,7 @@ public class TowerTest {
         tower.setHasArmor(true);
         tower.takeDamage(damageAmount);
 
-        assertEquals(tower.getHealthPercent(), 100f, TestUtil.DELTA);
+        assertEquals(tower.getHealthPercent(), 1, TestUtil.DELTA);
         assertTrue(tower.hasArmor());
     }
 
@@ -83,7 +83,7 @@ public class TowerTest {
         tower.setHasArmor(true);
         tower.takeDamage(damageAmount);
 
-        assertEquals(tower.getHealthPercent(), 50f, TestUtil.DELTA);
+        assertEquals(tower.getHealthPercent(), .5f, TestUtil.DELTA);
         assertFalse(tower.hasArmor());
     }
 

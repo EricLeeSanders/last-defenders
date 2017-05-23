@@ -35,10 +35,9 @@ import static org.mockito.Mockito.verify;
 @PrepareForTest({Logger.class})
 public class TowerHealEffectTest {
 
-    private TowerHealEffect towerHealEffect;
     private LabelEffectPool labelEffectPoolMock = mock(LabelEffectPool.class);
 
-    public void createTowerHealEffect(){
+    public TowerHealEffect createTowerHealEffect(){
 
         Skin skinMock = mock(Skin.class);
 
@@ -48,7 +47,8 @@ public class TowerHealEffectTest {
 
         TowerHealEffect towerHealEffect = new TowerHealEffect(labelEffectPoolMock, skinMock);
 
-        this.towerHealEffect = towerHealEffect;
+        return towerHealEffect;
+
     }
 
     @Before
@@ -66,6 +66,7 @@ public class TowerHealEffectTest {
         Tower tower = TestUtil.createTower("Sniper", false);
         tower.setPositionCenter(150,150);
 
+        TowerHealEffect towerHealEffect = createTowerHealEffect();
         towerHealEffect.initialize(tower);
 
         assertEquals(150, towerHealEffect.getY(), TestUtil.DELTA);
@@ -91,6 +92,7 @@ public class TowerHealEffectTest {
         Tower tower = TestUtil.createTower("Sniper", false);
         tower.setPositionCenter(150,150);
 
+        TowerHealEffect towerHealEffect = createTowerHealEffect();
         towerHealEffect.initialize(tower);
 
         assertEquals(1, towerHealEffect.getActions().size);

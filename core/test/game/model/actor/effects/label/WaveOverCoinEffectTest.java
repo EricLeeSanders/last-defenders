@@ -36,10 +36,9 @@ import static org.mockito.Mockito.verify;
 @PrepareForTest({Logger.class})
 public class WaveOverCoinEffectTest {
 
-    private WaveOverCoinEffect waveOverCoinEffect;
     private LabelEffectPool labelEffectPoolMock = mock(LabelEffectPool.class);
 
-    public void createWaveOverCoinEffect(){
+    public WaveOverCoinEffect createWaveOverCoinEffect(){
 
         Resources resourcesMock = TestUtil.createResourcesMock();
         Skin skinMock = mock(Skin.class);
@@ -52,11 +51,11 @@ public class WaveOverCoinEffectTest {
         waveOverCoinEffect = spy(waveOverCoinEffect);
         doNothing().when(waveOverCoinEffect).pack();
 
-        this.waveOverCoinEffect = waveOverCoinEffect;
+        return waveOverCoinEffect;
     }
 
     @Before
-    public void initWaveOverCoinEffect() {
+    public void initWaveOverCoinEffectTest() {
         PowerMockito.mockStatic(Logger.class);
         createWaveOverCoinEffect();
     }
@@ -68,6 +67,7 @@ public class WaveOverCoinEffectTest {
     @Test
     public void waveOverCoinEffectTest1(){
 
+        WaveOverCoinEffect waveOverCoinEffect = createWaveOverCoinEffect();
         waveOverCoinEffect.initialize(500);
 
         assertEquals(WaveOverCoinEffect.Y_BEGIN_OFFSET, waveOverCoinEffect.getY(), TestUtil.DELTA);

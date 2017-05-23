@@ -13,7 +13,7 @@ import com.foxholedefense.util.datastructures.Dimension;
  * Created by Eric on 4/2/2017.
  */
 
-public class AnimationEffect extends TextureEffect {
+public abstract class AnimationEffect extends TextureEffect {
     private Animation animation;
 
     public AnimationEffect(Pool<TextureEffect> pool, Array<AtlasRegion> regions, Dimension textureSize, PlayMode playMode, float duration, float frameDuration) {
