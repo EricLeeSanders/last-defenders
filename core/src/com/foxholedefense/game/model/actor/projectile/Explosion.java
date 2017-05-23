@@ -33,7 +33,7 @@ public class Explosion extends GameActor implements Pool.Poolable {
 	public static final float DURATION = FRAME_DURATION * NUM_OF_FRAMES;
 	private static final Dimension size = new Dimension(128,128);
 
-	private Animation explosionAnimation;
+	private Animation<TextureRegion> explosionAnimation;
 	private float stateTime; // counter for animation
 	private Pool<Explosion> pool;
 	private FHDAudio audio;
@@ -45,7 +45,7 @@ public class Explosion extends GameActor implements Pool.Poolable {
 		this.pool = pool;
 		this.audio = audio;
 		setRotation(90);
-		explosionAnimation = new Animation(0.05f, regions);
+		explosionAnimation = new Animation<TextureRegion>(0.05f, regions);
 		explosionAnimation.setPlayMode(PlayMode.LOOP);
 	}
 

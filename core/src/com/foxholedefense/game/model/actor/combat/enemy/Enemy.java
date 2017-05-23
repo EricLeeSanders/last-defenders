@@ -43,7 +43,7 @@ public abstract class Enemy extends CombatActor {
 	private int killReward;
 	private float lengthToEnd;
 	private boolean lengthToEndCalculated;
-	private Animation movementAnimation;
+	private Animation<TextureRegion> movementAnimation;
 	private TextureRegion stationaryTextureRegion;
 	private float rotationBeforeAttacking;
 
@@ -52,7 +52,7 @@ public abstract class Enemy extends CombatActor {
 	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
 				 float speed, float health, float armor, float attack, float attackSpeed, float range, int killReward, DeathEffectType deathEffectType) {
 		super(stationaryTextureRegion, textureSize, pool, targetGroup, gunPos, health, armor, attack, attackSpeed, range, deathEffectType);
-		movementAnimation = new Animation(FRAME_DURATION, animatedRegions);
+		movementAnimation = new Animation<TextureRegion>(FRAME_DURATION, animatedRegions);
 		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		this.speed = speed;
 		this.stationaryTextureRegion = stationaryTextureRegion;
