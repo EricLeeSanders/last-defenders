@@ -3,6 +3,7 @@ package com.foxholedefense.game.model.actor.effects.texture.animation;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
@@ -14,11 +15,11 @@ import com.foxholedefense.util.datastructures.Dimension;
  */
 
 public abstract class AnimationEffect extends TextureEffect {
-    private Animation animation;
+    private Animation<TextureRegion> animation;
 
     public AnimationEffect(Pool<TextureEffect> pool, Array<AtlasRegion> regions, Dimension textureSize, PlayMode playMode, float duration, float frameDuration) {
         super(pool, textureSize, duration);
-        animation = new Animation(frameDuration, regions);
+        animation = new Animation<TextureRegion>(frameDuration, regions);
         animation.setPlayMode(playMode);
     }
 

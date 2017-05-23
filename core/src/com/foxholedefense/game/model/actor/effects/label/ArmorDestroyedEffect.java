@@ -25,11 +25,11 @@ public class ArmorDestroyedEffect extends LabelEffect {
     private static final String MESSAGE = "ARMOR DESTROYED";
 
     private CombatActor actor = null;
-    private Animation animation;
+    private Animation<TextureRegion> animation;
 
     public ArmorDestroyedEffect(Array<AtlasRegion> regions, LabelEffectPool<ArmorDestroyedEffect> pool, Skin skin){
         super(pool, DURATION, skin);
-        animation = new Animation(DURATION, regions);
+        animation = new Animation<TextureRegion>(DURATION, regions);
         animation.setPlayMode(Animation.PlayMode.NORMAL);
 
         setText(MESSAGE);

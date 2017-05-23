@@ -35,7 +35,7 @@ public class Flame extends GameActor implements Pool.Poolable {
 	public static final float DURATION = FRAME_DURATION * NUM_OF_FRAMES;
 	public static final float TICK_ATTACK_SPEED = 0.1f;
 
-	private Animation flameAnimation;
+	private Animation<TextureRegion> flameAnimation;
 	private float stateTime;
 	private float tickTime = TICK_ATTACK_SPEED;
 	private CombatActor attacker;
@@ -50,7 +50,7 @@ public class Flame extends GameActor implements Pool.Poolable {
 	 */
 	public Flame(Pool<Flame> pool, Array<AtlasRegion> regions) {
 		this.pool = pool;
-		flameAnimation = new Animation(FRAME_DURATION, regions);
+		flameAnimation = new Animation<TextureRegion>(FRAME_DURATION, regions);
 		flameAnimation.setPlayMode(PlayMode.LOOP);
 		bodyPoints[0] = bodyPoints[1] = bodyPoints[2] = bodyPoints[7] = 0;
 	}

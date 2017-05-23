@@ -41,7 +41,7 @@ public class Apache extends SupportActor{
 	private ProjectileFactory projectileFactory;
 	private FHDAudio audio;
 	private TowerAI ai = new FirstEnemyAI();
-	private Animation movementAnimation;
+	private Animation<TextureRegion> movementAnimation;
 	private float movementAnimationStateTime;
 
 	public Apache(SupportActorPool<Apache> pool, Group targetGroup, ProjectileFactory projectileFactory, TextureRegion stationaryTextureRegion, TextureRegion [] textureRegions, TextureRegion rangeTexture, FHDAudio audio) {
@@ -49,7 +49,7 @@ public class Apache extends SupportActor{
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
 
-		movementAnimation = new Animation(FRAME_DURATION, textureRegions);
+		movementAnimation = new Animation<TextureRegion>(FRAME_DURATION, textureRegions);
 		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		attackCounter = ATTACK_SPEED;
 
