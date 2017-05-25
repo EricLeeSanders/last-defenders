@@ -57,7 +57,7 @@ public class AirStrikeTest {
     }
 
     public AirStrike createAirStrike(){
-        //SupportActorPool<AirStrike> pool, Group targetGroup, ProjectileFactory projectileFactory, TextureRegion textureRegion, TextureRegion rangeTexture, FHDAudio audio
+
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(rocketMock).when(projectileFactoryMock).loadRocket();
 

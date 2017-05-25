@@ -28,9 +28,7 @@ public class SupplyDropPlacement {
 	public void finishPlacement() {
 		Logger.info("SupplyDropPlacement: finishing placement");
 		if (isCurrentSupplyDropCrate()) {
-			float x = ActorUtil.calcXCenterFromBotLeft(currentSupplyDropCrate.getX(), currentSupplyDropCrate.getWidth());
-			float y = ActorUtil.calcYCenterFromBotLeft(currentSupplyDropCrate.getY(), currentSupplyDropCrate.getHeight());
-			supportActorFactory.loadSupplyDrop().beginSupplyDrop(x, y);
+			supportActorFactory.loadSupplyDrop().beginSupplyDrop(currentSupplyDropCrate.getPositionCenter());
 			currentSupplyDropCrate.setShowRange(false);
 			currentSupplyDropCrate.freeActor();
 			currentSupplyDropCrate = null;
