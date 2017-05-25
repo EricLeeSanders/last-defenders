@@ -16,11 +16,13 @@ import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 
 public class DynamicWaveGenerator {
+
 	private Random random = new Random();
 	private java.util.Map<Class<? extends Enemy>, Integer> towerMap = new HashMap<Class<? extends Enemy>, Integer>();
 	private Map map;
 	private ActorGroups actorGroups;
 	private CombatActorFactory combatActorFactory;
+
 	public DynamicWaveGenerator(Queue<SpawningEnemy> enemies, Map map, ActorGroups actorGroups, CombatActorFactory combatActorFactory){
 		this.map = map;
 		this.actorGroups = actorGroups;
@@ -102,6 +104,8 @@ public class DynamicWaveGenerator {
 		Array<FHDVector2> enemyPath = map.getPath();
 		for(int i = 0; i < n; i++){
 			String type = enemyClass.getSimpleName();
+			// Remove the enemy from the string (i.e. EnemyRifle -> Rifle)
+			type = type.replaceFirst("Enemy", "");
 			int randArmor = random.nextInt(3); //0-2
 			boolean armor = (randArmor == 0);
 			Enemy enemy = combatActorFactory.loadEnemy(type);

@@ -107,19 +107,19 @@ public class CombatActorFactory {
         Logger.info("Combat Actor Factory: loading Enemy: " + type);
 
         Enemy enemy = null;
-        if (type.equals("EnemyRifle")) {
+        if (type.equals("Rifle")) {
             enemy = (Enemy) enemyRiflePool.obtain();
-        } else if (type.equals("EnemyTank")) {
+        } else if (type.equals("Tank")) {
             enemy = (Enemy) enemyTankPool.obtain();
-        } else if (type.equals("EnemyFlameThrower")) {
+        } else if (type.equals("FlameThrower")) {
             enemy = (Enemy) enemyFlameThrowerPool.obtain();
-        } else if (type.equals("EnemyMachineGun")) {
+        } else if (type.equals("MachineGun")) {
             enemy = (Enemy) enemyMachinePool.obtain();
-        } else if (type.equals("EnemyRocketLauncher")) {
+        } else if (type.equals("RocketLauncher")) {
             enemy = (Enemy) enemyRocketLauncherPool.obtain();
-        } else if (type.equals("EnemySniper")) {
+        } else if (type.equals("Sniper")) {
             enemy = (Enemy) enemySniperPool.obtain();
-        } else if (type.equals("EnemyHumvee")) {
+        } else if (type.equals("Humvee")) {
             enemy = (Enemy) enemyHumveePool.obtain();
         }
 

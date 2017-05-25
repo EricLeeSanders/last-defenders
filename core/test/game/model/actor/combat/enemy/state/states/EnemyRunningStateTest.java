@@ -55,7 +55,7 @@ public class EnemyRunningStateTest {
 
     @Test
     public void enemyRunningStateTest1(){
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", true);
+        Enemy enemy = TestUtil.createEnemy("Rifle", true);
         Tower tower = TestUtil.createTower("Rifle", false);
 
         Array<Action> arrayAction = new Array<Action>();

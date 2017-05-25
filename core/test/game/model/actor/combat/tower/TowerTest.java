@@ -93,7 +93,7 @@ public class TowerTest {
     @Test
     public void testStateAttackTarget(){
         Tower tower = TestUtil.createTower("Rifle", true);
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
         tower.getTargetGroup().addActor(enemy);
 

@@ -45,7 +45,7 @@ public class DamageTest {
     @Test
     public void dealBulletDamageAttackEnemyTest(){
         Tower tower = TestUtil.createTower("Rifle", true);
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
         doReturn(1f).when(tower).getAttack();
 
@@ -57,7 +57,7 @@ public class DamageTest {
     @Test
     public void dealBulletDamageAttackTowerTest(){
         Tower tower = TestUtil.createTower("Rifle", false);
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", true);
+        Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
         doReturn(1f).when(enemy).getAttack();
 
@@ -69,7 +69,7 @@ public class DamageTest {
     @Test
     public void dealBulletDamageKillEnemyTest(){
         Tower tower = TestUtil.createTower("Rifle", true);
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
         doReturn(enemy.getHealth()).when(tower).getAttack();
 
@@ -82,7 +82,7 @@ public class DamageTest {
     @Test
     public void dealBulletDamageKillTowerTest(){
         Tower tower = TestUtil.createTower("Rifle", false);
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", true);
+        Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
         doReturn(tower.getHealth()).when(enemy).getAttack();
 
@@ -94,7 +94,7 @@ public class DamageTest {
     @Test
     public void dealBulletDamageAttackPlatedArmorTest(){
         Tower tower = TestUtil.createTower("Rifle", true);
-        Enemy enemy = TestUtil.createEnemy("EnemyTank", true);
+        Enemy enemy = TestUtil.createEnemy("Tank", true);
 
         Damage.dealBulletDamage(tower, enemy);
 
@@ -108,10 +108,10 @@ public class DamageTest {
 
         doReturn(1f).when(tower).getAttack();
 
-        Enemy enemy1 = TestUtil.createEnemy("EnemyRifle", false);
-        Enemy enemy2 = TestUtil.createEnemy("EnemySniper", false);
-        Enemy enemy3 = TestUtil.createEnemy("EnemyRocketLauncher", false);
-        Enemy enemy4 = TestUtil.createEnemy("EnemyTank", false);
+        Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy2 = TestUtil.createEnemy("Sniper", false);
+        Enemy enemy3 = TestUtil.createEnemy("RocketLauncher", false);
+        Enemy enemy4 = TestUtil.createEnemy("Tank", false);
 
         SnapshotArray<Actor> enemies = new SnapshotArray<Actor>();
         enemies.addAll(enemy1, enemy2, enemy3, enemy4);
@@ -139,10 +139,10 @@ public class DamageTest {
 
         doReturn(20f).when(tower).getAttack();
 
-        Enemy enemy1 = TestUtil.createEnemy("EnemyRifle", false);
-        Enemy enemy2 = TestUtil.createEnemy("EnemyHumvee", false);
-        Enemy enemy3 = TestUtil.createEnemy("EnemyRocketLauncher", false);
-        Enemy enemy4 = TestUtil.createEnemy("EnemyTank", false);
+        Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy2 = TestUtil.createEnemy("Humvee", false);
+        Enemy enemy3 = TestUtil.createEnemy("RocketLauncher", false);
+        Enemy enemy4 = TestUtil.createEnemy("Tank", false);
 
         SnapshotArray<Actor> enemies = new SnapshotArray<Actor>();
         enemies.addAll(enemy1, enemy2, enemy3, enemy4);
@@ -172,10 +172,10 @@ public class DamageTest {
 
         doReturn(1f).when(tower).getAttack();
 
-        Enemy enemy1 = TestUtil.createEnemy("EnemyRifle", false);
-        Enemy enemy2 = TestUtil.createEnemy("EnemySniper", false);
-        Enemy enemy3 = TestUtil.createEnemy("EnemyRocketLauncher", false);
-        Enemy enemy4 = TestUtil.createEnemy("EnemyTank", false);
+        Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy2 = TestUtil.createEnemy("Sniper", false);
+        Enemy enemy3 = TestUtil.createEnemy("RocketLauncher", false);
+        Enemy enemy4 = TestUtil.createEnemy("Tank", false);
 
         SnapshotArray<Actor> enemies = new SnapshotArray<Actor>();
         enemies.addAll(enemy1, enemy2, enemy3, enemy4);
@@ -202,10 +202,10 @@ public class DamageTest {
 
         doReturn(15f).when(tower).getAttack();
 
-        Enemy enemy1 = TestUtil.createEnemy("EnemyRifle", false);
-        Enemy enemy2 = TestUtil.createEnemy("EnemySniper", false);
-        Enemy enemy3 = TestUtil.createEnemy("EnemyRocketLauncher", false);
-        Enemy enemy4 = TestUtil.createEnemy("EnemyTank", false);
+        Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy2 = TestUtil.createEnemy("Sniper", false);
+        Enemy enemy3 = TestUtil.createEnemy("RocketLauncher", false);
+        Enemy enemy4 = TestUtil.createEnemy("Tank", false);
 
         SnapshotArray<Actor> enemies = new SnapshotArray<Actor>();
         enemies.addAll(enemy1, enemy2, enemy3, enemy4);

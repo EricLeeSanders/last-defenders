@@ -141,19 +141,19 @@ public class TestUtil {
         Array<AtlasRegion> atlasRegion = new Array<AtlasRegion>();
         atlasRegion.add(null);
         TextureRegion[] animatedRegions = atlasRegion.toArray(TextureRegion.class);
-        if(name.equals("EnemyRifle")){
+        if(name.equals("Rifle")){
             enemy = new EnemyRifle(null, animatedRegions, null,  new Group(), projectileFactoryMock, audioMock);
-        } else if(name.equals("EnemyMachineGun")){
+        } else if(name.equals("MachineGun")){
             enemy = new EnemyMachineGun(null, animatedRegions, null,  new Group(), projectileFactoryMock, audioMock);
-        } else if(name.equals("EnemySniper")){
+        } else if(name.equals("Sniper")){
             enemy = new EnemySniper(null, animatedRegions, null,  new Group(), projectileFactoryMock, audioMock);
-        } else if(name.equals("EnemyFlameThrower")){
+        } else if(name.equals("FlameThrower")){
             enemy = new EnemyFlameThrower(null, animatedRegions, null,  new Group(), projectileFactoryMock, audioMock);
-        } else if(name.equals("EnemyHumvee")){
+        } else if(name.equals("Humvee")){
             enemy = new EnemyHumvee(null, animatedRegions, null);
-        } else if(name.equals("EnemyRocketLauncher")){
+        } else if(name.equals("RocketLauncher")){
             enemy = new EnemyRocketLauncher(null, animatedRegions, null,  new Group(), projectileFactoryMock, audioMock);
-        } else if(name.equals("EnemyTank")){
+        } else if(name.equals("Tank")){
             enemy = new EnemyTank(null, null, animatedRegions, null,  new Group(), projectileFactoryMock, audioMock);
         }
 

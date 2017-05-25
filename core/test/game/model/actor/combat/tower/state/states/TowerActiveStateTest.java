@@ -49,7 +49,7 @@ public class TowerActiveStateTest {
      */
     @Test
     public void towerActiveStateTest1(){
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
         Tower tower = TestUtil.createTower("Rifle", true);
 
         TowerStateManager stateManagerMock = mock(TowerStateManager.class);

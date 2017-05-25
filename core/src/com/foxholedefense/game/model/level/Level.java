@@ -17,7 +17,9 @@ import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 
 public class Level{
+
 	public static final int MAX_WAVES = 1;
+
 	private float delayCount = 0;
 	private float enemyDelay = 0f;
 	private Map map;
@@ -92,7 +94,7 @@ public class Level{
 		JsonValue enemiesJson = json.get("wave");
 		Array<FHDVector2> enemyPath = map.getPath();
 		for (JsonValue enemyJson : enemiesJson.iterator()) {
-			Enemy enemy = combatActorFactory.loadEnemy("Enemy" + enemyJson.getString("enemy"));
+			Enemy enemy = combatActorFactory.loadEnemy(enemyJson.getString("enemy"));
 			enemy.setPath(enemyPath);
 			enemy.setHasArmor(enemyJson.getBoolean("armor"));
 			float delay = enemyJson.getFloat("delay");
