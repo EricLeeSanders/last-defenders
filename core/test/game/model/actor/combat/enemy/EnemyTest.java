@@ -62,7 +62,7 @@ public class EnemyTest {
      */
     @Test
     public void testEnemyDead() {
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
         enemy.setHasArmor(true);
         enemy.takeDamage(100);
 
@@ -76,7 +76,7 @@ public class EnemyTest {
      */
     @Test
     public void testEnemyArmor1(){
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
         float damageAmount = enemy.getHealth() / 2;
         enemy.setHasArmor(true);
         enemy.takeDamage(damageAmount);
@@ -90,7 +90,7 @@ public class EnemyTest {
      */
     @Test
     public void testEnemyArmor2(){
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
         float damageAmount = enemy.getHealth() / 4;
         enemy.setHasArmor(true);
         enemy.takeDamage(damageAmount);
@@ -104,7 +104,7 @@ public class EnemyTest {
      */
     @Test
     public void testEnemyArmor3(){
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
         float damageAmount = enemy.getHealth();
         enemy.setHasArmor(true);
         enemy.takeDamage(damageAmount);
@@ -116,7 +116,7 @@ public class EnemyTest {
     @Test
     public void testWaypointActions1(){
 
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
         Array<FHDVector2> path = createWaypoints();
 
@@ -136,7 +136,7 @@ public class EnemyTest {
     @Test
     public void testWaypointActions2(){
 
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
         Array<FHDVector2> path = createWaypoints();
 
@@ -158,7 +158,7 @@ public class EnemyTest {
     @Test
     public void testEnemyLengthToEnd1() {
 
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
         Array<FHDVector2> path = createWaypoints();
 
@@ -200,7 +200,7 @@ public class EnemyTest {
     @Test
     public void testRunningState() {
         Tower tower = TestUtil.createTower("Rifle", false);
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", true);
+        Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
         enemy.getTargetGroup().addActor(tower);
 
@@ -214,7 +214,7 @@ public class EnemyTest {
     @Test
     public void testAttackingState(){
         Tower tower = TestUtil.createTower("Rifle", false);
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", true);
+        Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
         enemy.getTargetGroup().addActor(tower);
 
@@ -235,7 +235,7 @@ public class EnemyTest {
     @Test
     public void testReachedEndState(){
 
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
         assertEquals(EnemyState.RUNNING, enemy.getState());
 
@@ -263,7 +263,7 @@ public class EnemyTest {
      */
     @Test
     public void testDeadState(){
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", true);
+        Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
         assertEquals(EnemyState.RUNNING, enemy.getState());
 

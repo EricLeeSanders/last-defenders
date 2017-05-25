@@ -79,7 +79,7 @@ public class EnemyAITest {
      */
     @Test
     public void testEnemyFindNearestSkipTank(){
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
         enemy.setPositionCenter(new Vector2(0,0));
         Group enemyTargetGroup = enemy.getTargetGroup();
         createTowerGroup(enemyTargetGroup);
@@ -96,7 +96,7 @@ public class EnemyAITest {
      */
     @Test
     public void testEnemyFindNearestAttackTank(){
-        Enemy enemy = TestUtil.createEnemy("EnemyRocketLauncher", false);
+        Enemy enemy = TestUtil.createEnemy("RocketLauncher", false);
         enemy.setPositionCenter(new Vector2(0,0));
         Group enemyTargetGroup = enemy.getTargetGroup();
         createTowerGroup(enemyTargetGroup);

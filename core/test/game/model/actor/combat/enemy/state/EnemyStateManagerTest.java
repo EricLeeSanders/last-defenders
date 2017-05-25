@@ -39,7 +39,7 @@ public class EnemyStateManagerTest {
 
     @Test
     public void transitionTest(){
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
         Player player = mock(Player.class);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
 
@@ -52,7 +52,7 @@ public class EnemyStateManagerTest {
 
     @Test
     public void transitionWithParametersTest(){
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", false);
+        Enemy enemy = TestUtil.createEnemy("Rifle", false);
         Tower tower = TestUtil.createTower("Rifle", false);
 
         Player player = mock(Player.class);

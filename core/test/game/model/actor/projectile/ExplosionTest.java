@@ -53,7 +53,7 @@ public class ExplosionTest {
 
     @Test
     public void explosionTest1(){
-        Enemy attacker = TestUtil.createEnemy("EnemyTank", false);
+        Enemy attacker = TestUtil.createEnemy("Tank", false);
         attacker.setPositionCenter(50,50);
         Tower target = TestUtil.createTower("Turret", false);
         target.setPositionCenter(200,200);
@@ -72,7 +72,7 @@ public class ExplosionTest {
      */
     @Test
     public void explosionTest2(){
-        Enemy attacker = TestUtil.createEnemy("EnemyTank", false);
+        Enemy attacker = TestUtil.createEnemy("Tank", false);
         attacker.setPositionCenter(50,50);
         Tower target = TestUtil.createTower("Turret", false);
         target.setPositionCenter(200,200);

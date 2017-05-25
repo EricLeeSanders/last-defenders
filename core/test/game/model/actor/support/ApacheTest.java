@@ -84,9 +84,9 @@ public class ApacheTest {
 
         Apache apache = createApache();
 
-        Enemy enemy1 = createEnemy("EnemyRifle", 200, new Vector2(250, 240));
-        Enemy enemy2 = createEnemy("EnemyFlameThrower", 100, new Vector2(250, 260));
-        Enemy enemy3 = createEnemy("EnemyRocketLauncher", 300, new Vector2(250, 150));
+        Enemy enemy1 = createEnemy("Rifle", 200, new Vector2(250, 240));
+        Enemy enemy2 = createEnemy("FlameThrower", 100, new Vector2(250, 260));
+        Enemy enemy3 = createEnemy("RocketLauncher", 300, new Vector2(250, 150));
 
         Group targetGroup = apache.getTargetGroup();
         targetGroup.addActor(enemy1);

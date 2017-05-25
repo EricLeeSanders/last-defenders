@@ -47,7 +47,7 @@ public class EnemyAttackingStateTest {
 
     @Test
     public void enemyAttackingStateTest1(){
-        Enemy enemy = TestUtil.createEnemy("EnemyRifle", true);
+        Enemy enemy = TestUtil.createEnemy("Rifle", true);
         Tower tower = TestUtil.createTower("Rifle", false);
 
         Map<String, Object> parameters = new HashMap<String, Object>();

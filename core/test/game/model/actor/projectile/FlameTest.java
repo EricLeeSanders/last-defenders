@@ -132,7 +132,7 @@ public class FlameTest {
      */
     @Test
     public void flameTest3() {
-        Enemy enemy = TestUtil.createEnemy("EnemyFlameThrower", true);
+        Enemy enemy = TestUtil.createEnemy("FlameThrower", true);
         enemy.setRotation(90);
         Vector2 gunPos = new Vector2(5, 5);
         doReturn(gunPos).when(enemy).getGunPos();
