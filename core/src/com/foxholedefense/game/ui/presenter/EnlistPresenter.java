@@ -5,7 +5,7 @@ import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.interfaces.IRotatable;
 import com.foxholedefense.game.service.actorplacement.TowerPlacement;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
 import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
@@ -19,7 +19,7 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  * @author Eric
  *
  */
-public class EnlistPresenter implements IGameUIStateObserver {
+public class EnlistPresenter implements GameUIStateObserver {
 	private TowerPlacement towerPlacement;
 	private GameUIStateManager uiStateManager;
 	private Player player;
@@ -44,7 +44,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	 */
 	public void setView(IEnlistView view) {
 		this.view = view;
-		changeUIState(uiStateManager.getState());
+		stateChange(uiStateManager.getState());
 	}
 
 	/**
@@ -146,7 +146,7 @@ public class EnlistPresenter implements IGameUIStateObserver {
 	}
 
 	@Override
-	public void changeUIState(GameUIState state) {
+	public void stateChange(GameUIState state) {
 		switch (state) {
 			case ENLISTING:
 				view.enlistingState();

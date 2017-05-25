@@ -2,7 +2,7 @@ package com.foxholedefense.game.ui.presenter;
 
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IGameOverView;
 import com.foxholedefense.screen.IScreenChanger;
@@ -16,7 +16,7 @@ import com.foxholedefense.util.Logger;
  * @author Eric
  *
  */
-public class GameOverPresenter implements IGameUIStateObserver {
+public class GameOverPresenter implements GameUIStateObserver {
 	private Player player;
 	private IScreenChanger screenChanger;
 	private GameUIStateManager uiStateManager;
@@ -37,7 +37,7 @@ public class GameOverPresenter implements IGameUIStateObserver {
 	 */
 	public void setView(IGameOverView view) {
 		this.view = view;
-		changeUIState(uiStateManager.getState());
+		stateChange(uiStateManager.getState());
 	}
 
 	/**
@@ -76,7 +76,7 @@ public class GameOverPresenter implements IGameUIStateObserver {
 	}
 
 	@Override
-	public void changeUIState(GameUIState state) {
+	public void stateChange(GameUIState state) {
 
 		switch (state) {
 		case GAME_OVER:

@@ -7,15 +7,16 @@ import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ai.TowerAIType;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.level.state.ILevelStateObserver;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
+import com.foxholedefense.game.model.level.state.LevelStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.view.interfaces.IInspectView;
 import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.game.ui.view.interfaces.Updatable;
+import com.foxholedefense.state.StateObserver;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
@@ -26,7 +27,7 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  * @author Eric
  *
  */
-public class InspectPresenter implements Updatable, IGameUIStateObserver, ILevelStateObserver {
+public class InspectPresenter implements Updatable, GameUIStateObserver, LevelStateObserver {
 	private GameUIStateManager uiStateManager;
 	private LevelStateManager levelStateManager;
 	private Tower selectedTower;
@@ -54,7 +55,7 @@ public class InspectPresenter implements Updatable, IGameUIStateObserver, ILevel
 	 */
 	public void setView(IInspectView view) {
 		this.view = view;
-		changeUIState(uiStateManager.getState());
+		stateChange(uiStateManager.getState());
 	}
 
 	@Override
@@ -261,35 +262,32 @@ public class InspectPresenter implements Updatable, IGameUIStateObserver, ILevel
 	}
 
 	@Override
-	public void changeUIState(GameUIState state) {
+	public void stateChange(GameUIState state) {
 
 		switch (state) {
-		case INSPECTING:
-			view.inspectingState();
-			view.update(selectedTower);
-			break;
-		default:
-			resetInspect();
-			view.standByState();
-			break;
+			case INSPECTING:
+				view.inspectingState();
+				view.update(selectedTower);
+				break;
+			default:
+				resetInspect();
+				view.standByState();
+				break;
 		}
-
 	}
 
 	@Override
-	public void changeLevelState(LevelState state) {
+	public void stateChange(LevelState state) {
 
 		switch(state){
-		case WAVE_IN_PROGRESS:
-			setDischargeDisabled(true);
-			break;
-		case STANDBY:
-			setDischargeDisabled(false);
-			break;
-		default:
-			break;
+			case WAVE_IN_PROGRESS:
+				setDischargeDisabled(true);
+				break;
+			case STANDBY:
+				setDischargeDisabled(false);
+				break;
+			default:
+				break;
 		}
-		
 	}
-
 }

@@ -8,7 +8,7 @@ import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
 import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
 import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.game.ui.view.interfaces.ISupportView;
@@ -23,7 +23,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  *
  */
-public class SupportPresenter implements IGameUIStateObserver {
+public class SupportPresenter implements GameUIStateObserver {
 	private SupportActorPlacement supportActorPlacement;
 	private AirStrikePlacement airStrikePlacement;
 	private SupplyDropPlacement supplyDropPlacement;
@@ -52,7 +52,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 */
 	public void setView(ISupportView view) {
 		this.view = view;
-		changeUIState(uiStateManager.getState());
+		stateChange(uiStateManager.getState());
 	}
 	
 	/** 
@@ -228,7 +228,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	}
 
 	@Override
-	public void changeUIState(GameUIState state) {
+	public void stateChange(GameUIState state) {
 
 		switch (state) {
 		case SUPPORT:

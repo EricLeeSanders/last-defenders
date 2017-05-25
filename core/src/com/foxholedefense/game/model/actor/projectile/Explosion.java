@@ -76,7 +76,6 @@ public class Explosion extends GameActor implements Pool.Poolable {
 
 	@Override
 	public void reset() {
-		System.out.println("reset");
 		this.clear();
 		this.remove();
 		stateTime = 0;

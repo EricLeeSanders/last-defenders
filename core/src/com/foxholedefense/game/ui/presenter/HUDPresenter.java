@@ -1,12 +1,12 @@
 package com.foxholedefense.game.ui.presenter;
 
-import com.foxholedefense.game.model.IPlayerObserver;
+import com.foxholedefense.game.model.PlayerObserver;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.level.Level;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IHUDView;
 import com.foxholedefense.state.GameStateManager;
@@ -21,7 +21,7 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  * @author Eric
  *
  */
-public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
+public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
 	private LevelStateManager levelStateManager;
 	private GameUIStateManager uiStateManager;
 	private GameStateManager gameStateManager;
@@ -45,7 +45,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 */
 	public void setView(IHUDView view) {
 		this.view = view;
-		changeUIState(uiStateManager.getState());
+		stateChange(uiStateManager.getState());
 		playerAttributeChange();
 	}
 
@@ -109,7 +109,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 
 
 	@Override
-	public void changeUIState(GameUIState state) {
+	public void stateChange(GameUIState state) {
 
 		switch (state) {
 			case GAME_OVER:

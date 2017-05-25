@@ -4,7 +4,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.foxholedefense.game.model.IPlayerObserver;
+import com.foxholedefense.game.model.PlayerObserver;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
@@ -37,7 +37,7 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  *
  */
-public class GameStage extends Stage implements IPlayerObserver{
+public class GameStage extends Stage implements PlayerObserver {
 	private static final int WAVE_OVER_MONEY_MULTIPLIER = 100;
 	private LevelStateManager levelStateManager;
 	private GameUIStateManager uiStateManager;

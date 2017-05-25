@@ -2,7 +2,7 @@ package com.foxholedefense.game.ui.presenter;
 
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.ILevelCompletedView;
 import com.foxholedefense.screen.IScreenChanger;
@@ -11,7 +11,7 @@ import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.Logger;
 
-public class LevelCompletedPresenter implements IGameUIStateObserver{
+public class LevelCompletedPresenter implements GameUIStateObserver {
 	private ILevelCompletedView view;
 	private IScreenChanger screenChanger;
 	private GameStateManager gameStateManager;
@@ -37,7 +37,7 @@ public class LevelCompletedPresenter implements IGameUIStateObserver{
 	 */
 	public void setView(ILevelCompletedView view) {
 		this.view = view;
-		changeUIState(uiStateManager.getState());
+		stateChange(uiStateManager.getState());
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public class LevelCompletedPresenter implements IGameUIStateObserver{
 	}
 	
 	@Override
-	public void changeUIState(GameUIState state) {
+	public void stateChange(GameUIState state) {
 
 		switch(state) {
 		case LEVEL_COMPLETED:
