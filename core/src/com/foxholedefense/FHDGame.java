@@ -11,13 +11,14 @@ import com.foxholedefense.menu.MenuScreen;
 import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
-import com.foxholedefense.state.IGameStateObserver;
+import com.foxholedefense.state.GameStateObserver;
+import com.foxholedefense.state.StateObserver;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.UserPreferences;
 
-public class FHDGame extends Game implements IScreenChanger, IGameStateObserver {
+public class FHDGame extends Game implements IScreenChanger, GameStateObserver {
 	private GameStateManager gameStateManager;
 	private Resources resources;
 	private UserPreferences userPreferences;
@@ -94,7 +95,7 @@ public class FHDGame extends Game implements IScreenChanger, IGameStateObserver 
 	}
 
 	@Override
-	public void changeGameState(GameState state) {
+	public void stateChange(GameState state) {
 		switch(state){
 			case QUIT:
 				Gdx.app.exit();

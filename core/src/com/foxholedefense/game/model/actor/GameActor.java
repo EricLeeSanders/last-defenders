@@ -32,7 +32,6 @@ public class GameActor extends Actor{
 
 		TextureRegion textureRegion = getTextureRegion();
 		if(textureRegion != null) {
-			System.out.println("not null");
 			batch.draw(getTextureRegion(), getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 		}
 

@@ -19,7 +19,4 @@ public class Logger {
 		Gdx.app.error(ERROR_TAG, message, exception);
 	}
 
-	public static void test(){
-		System.out.println("test");
-}
 }

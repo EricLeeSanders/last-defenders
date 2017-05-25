@@ -1,10 +1,6 @@
 package com.foxholedefense.game.ui;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,7 +21,7 @@ import com.foxholedefense.game.ui.presenter.OptionsPresenter;
 import com.foxholedefense.game.ui.presenter.QuitPresenter;
 import com.foxholedefense.game.ui.presenter.SupportPresenter;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.DebugView;
 import com.foxholedefense.game.ui.view.EnlistView;
@@ -51,7 +47,7 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  *
  */
-public class GameUIStage extends Stage implements IGameUIStateObserver{
+public class GameUIStage extends Stage implements GameUIStateObserver {
 	private Player player;
 	private GameUIStateManager uiStateManager;
 	private LevelStateManager levelStateManager;
@@ -174,7 +170,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		}
 	}
 	@Override
-	public void changeUIState(GameUIState state) {
+	public void stateChange(GameUIState state) {
 		Logger.info("GameUIStage: changing ui state: " + state.name());
 		if(resources.getUserPreferences().getPreferences().getBoolean("showRanges", false)){
 			showTowerRanges(true);

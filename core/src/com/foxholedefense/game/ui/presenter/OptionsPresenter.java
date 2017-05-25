@@ -1,14 +1,12 @@
 package com.foxholedefense.game.ui.presenter;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Preferences;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IOptionsView;
 import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
-import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -20,7 +18,7 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  * @author Eric
  *
  */
-public class OptionsPresenter implements IGameUIStateObserver {
+public class OptionsPresenter implements GameUIStateObserver {
 	private GameStateManager gameStateManager;
 	private GameUIStateManager uiStateManager;
 	private IScreenChanger screenChanger;
@@ -48,7 +46,7 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	
 	private void initView(){
 		Logger.info("Options Presenter: initializing view");
-		changeUIState(uiStateManager.getState());
+		stateChange(uiStateManager.getState());
 		view.setBtnMusicOn(audio.isMusicEnabled());
 		view.setBtnSoundOn(audio.isSoundEnabled());
 		view.setBtnShowRangesOn(isShowRangesEnabled());
@@ -131,7 +129,7 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	}
 	
 	@Override
-	public void changeUIState(GameUIState state) {
+	public void stateChange(GameUIState state) {
 
 		switch (state) {
 		case OPTIONS:

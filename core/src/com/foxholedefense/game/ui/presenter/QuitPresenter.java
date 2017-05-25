@@ -1,9 +1,8 @@
 package com.foxholedefense.game.ui.presenter;
 
-import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.view.interfaces.IQuitView;
 import com.foxholedefense.screen.IScreenChanger;
 import com.foxholedefense.state.GameStateManager;
@@ -16,7 +15,7 @@ import com.foxholedefense.util.Logger;
  * Created by Eric on 4/8/2017.
  */
 
-public class QuitPresenter implements IGameUIStateObserver{
+public class QuitPresenter implements GameUIStateObserver {
 
     private GameUIStateManager uiStateManager;
     private GameStateManager gameStateManager;
@@ -70,7 +69,7 @@ public class QuitPresenter implements IGameUIStateObserver{
     }
 
     @Override
-    public void changeUIState(GameUIState state) {
+    public void stateChange(GameUIState state) {
         switch(state){
             case QUIT_MENU:
                 quitState();
