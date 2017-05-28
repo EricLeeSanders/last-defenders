@@ -47,7 +47,7 @@ public class Player {
 	}
 
 	public void setMoney(int money) {
-		Logger.info("TowerPlacement: set money: " + money);
+		Logger.info("Player: set money: " + money);
 		this.money = money;
 		notifyObservers();
 	}
