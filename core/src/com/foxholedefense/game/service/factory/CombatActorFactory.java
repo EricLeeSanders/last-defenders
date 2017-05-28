@@ -25,6 +25,7 @@ import com.foxholedefense.game.model.actor.combat.tower.TowerSniper;
 import com.foxholedefense.game.model.actor.combat.tower.TowerTank;
 import com.foxholedefense.game.model.actor.combat.tower.TowerTurret;
 import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager;
+import com.foxholedefense.game.model.level.SpawningEnemy;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -34,6 +35,7 @@ import com.foxholedefense.util.Resources;
  */
 
 public class CombatActorFactory {
+
     private CombatActorPool<TowerRifle> towerRiflePool = new CombatActorPool<TowerRifle>(TowerRifle.class);
     private CombatActorPool<TowerTank> towerTankPool = new CombatActorPool<TowerTank>(TowerTank.class);
     private CombatActorPool<TowerFlameThrower> towerFlameThrowerPool = new CombatActorPool<TowerFlameThrower>(TowerFlameThrower.class);
@@ -41,6 +43,7 @@ public class CombatActorFactory {
     private CombatActorPool<TowerSniper> towerSniperPool = new CombatActorPool<TowerSniper>(TowerSniper.class);
     private CombatActorPool<TowerMachineGun> towerMachinePool = new CombatActorPool<TowerMachineGun>(TowerMachineGun.class);
     private CombatActorPool<TowerRocketLauncher> towerRocketLauncherPool = new CombatActorPool<TowerRocketLauncher>(TowerRocketLauncher.class);
+
     private CombatActorPool<EnemyRifle> enemyRiflePool = new CombatActorPool<EnemyRifle>(EnemyRifle.class);
     private CombatActorPool<EnemyTank> enemyTankPool = new CombatActorPool<EnemyTank>(EnemyTank.class);
     private CombatActorPool<EnemyFlameThrower> enemyFlameThrowerPool = new CombatActorPool<EnemyFlameThrower>(EnemyFlameThrower.class);
@@ -48,6 +51,8 @@ public class CombatActorFactory {
     private CombatActorPool<EnemyRocketLauncher> enemyRocketLauncherPool = new CombatActorPool<EnemyRocketLauncher>(EnemyRocketLauncher.class);
     private CombatActorPool<EnemySniper> enemySniperPool = new CombatActorPool<EnemySniper>(EnemySniper.class);
     private CombatActorPool<EnemyHumvee> enemyHumveePool = new CombatActorPool<EnemyHumvee>(EnemyHumvee.class);
+
+    private SpawningEnemyPool spawningEnemyPool = new SpawningEnemyPool();
 
     private FHDAudio audio;
     private ActorGroups actorGroups;
@@ -124,6 +129,15 @@ public class CombatActorFactory {
         }
 
         return enemy;
+    }
+
+    public SpawningEnemy loadSpawningEnemy(Enemy enemy, float spawnDelay){
+
+        SpawningEnemy spawningEnemy = spawningEnemyPool.obtain();
+        spawningEnemy.setEnemy(enemy);
+        spawningEnemy.setSpawnDelay(spawnDelay);
+
+        return spawningEnemy;
     }
 
     /**
@@ -203,6 +217,14 @@ public class CombatActorFactory {
         return actor;
     }
 
+    protected SpawningEnemy createSpawningEnemy(){
+
+        Logger.info("CombatActorFactory: creating SpawningEnemy");
+        SpawningEnemy spawningEnemy = new SpawningEnemy(spawningEnemyPool);
+
+        return spawningEnemy;
+    }
+
     public class CombatActorPool<T extends CombatActor> extends Pool<CombatActor> {
         private final Class<? extends CombatActor> type;
         public CombatActorPool(Class<? extends CombatActor> type){
@@ -215,5 +237,13 @@ public class CombatActorFactory {
         }
 
     }
+
+    public class SpawningEnemyPool extends Pool<SpawningEnemy> {
+        @Override
+        protected SpawningEnemy newObject() {
+            return createSpawningEnemy();
+        }
+    }
+
 
 }

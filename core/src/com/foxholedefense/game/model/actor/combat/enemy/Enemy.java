@@ -101,11 +101,9 @@ public abstract class Enemy extends CombatActor {
 
 		//create actions
 		FHDSequenceAction sequenceAction = UtilPool.getSequenceAction();
-		//FHDVector2 moveVector = UtilPool.getVector2();
 		for (int i = 1; i < path.size; i++) {
 			Vector2 prevWaypoint = newWaypoint;
 			newWaypoint = path.get(i);
-			//moveVector.set((newWaypoint.x - (this.getOriginX())), (newWaypoint.y - (this.getOriginY())));
 			float distance = newWaypoint.dst(prevWaypoint);
 			float duration = (distance / speed);
 			float rotation = ActorUtil.calculateRotation(newWaypoint.x, newWaypoint.y, prevWaypoint.x, prevWaypoint.y);
@@ -115,7 +113,6 @@ public abstract class Enemy extends CombatActor {
 
 		addAction(sequenceAction);
 
-		//moveVector.free();
 	}
 
 	private WaypointAction createWaypointAction(float x, float y, float duration, float rotation){

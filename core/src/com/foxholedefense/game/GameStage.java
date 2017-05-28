@@ -14,6 +14,8 @@ import com.foxholedefense.game.model.level.Level;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
+import com.foxholedefense.game.model.level.wave.impl.DynamicWaveLoader;
+import com.foxholedefense.game.model.level.wave.impl.FileWaveLoader;
 import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
 import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
 import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
@@ -75,7 +77,9 @@ public class GameStage extends Stage implements PlayerObserver {
 		createFactories(audio);
 		createPlacementServices(map);
 		mapRenderer = new MapRenderer(tiledMap, getCamera());
-		level = new Level(intLevel, getActorGroups(),combatActorFactory, healthFactory, map);
+		FileWaveLoader fileWaveLoader = new FileWaveLoader(combatActorFactory, map);
+		DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
+		level = new Level(intLevel, getActorGroups(), healthFactory, map, fileWaveLoader, dynamicWaveLoader);
 		player.attachObserver(this);
 
 	}
@@ -105,7 +109,7 @@ public class GameStage extends Stage implements PlayerObserver {
 	 */
 	public void loadFirstWave(){
 		Logger.info("Game Stage: loading first wave");
-		level.loadWave();
+		level.loadNextWave();
 		Logger.info("Game Stage: first wave loaded");
 	}
 
@@ -175,7 +179,7 @@ public class GameStage extends Stage implements PlayerObserver {
 		}
 		WaveOverCoinEffect waveOverCoinEffect = effectFactory.loadLabelEffect(WaveOverCoinEffect.class);
 		waveOverCoinEffect.initialize(money);
-		level.loadWave(); //load the next wave
+		level.loadNextWave(); //load the next wave
 		healTowers();
 	}
 	
