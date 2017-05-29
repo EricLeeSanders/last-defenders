@@ -89,7 +89,7 @@ public class GameStage extends Stage implements PlayerObserver {
 		healthFactory = new HealthFactory(actorGroups,resources);
 		projectileFactory = new ProjectileFactory(actorGroups, audio, resources);
 		supportActorFactory = new SupportActorFactory(actorGroups, audio, resources, effectFactory, projectileFactory);
-		combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory, healthFactory, projectileFactory, player);
+		combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory, projectileFactory, player);
 	}
 
 	public void createPlacementServices(Map map){

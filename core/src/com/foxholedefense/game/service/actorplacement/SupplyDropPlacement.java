@@ -26,8 +26,8 @@ public class SupplyDropPlacement {
 		currentSupplyDropCrate.setPositionCenter(location);
 	}
 	public void finishPlacement() {
-		Logger.info("SupplyDropPlacement: finishing placement");
 		if (isCurrentSupplyDropCrate()) {
+			Logger.info("SupplyDropPlacement: finishing placement");
 			supportActorFactory.loadSupplyDrop().beginSupplyDrop(currentSupplyDropCrate.getPositionCenter());
 			currentSupplyDropCrate.setShowRange(false);
 			currentSupplyDropCrate.freeActor();
@@ -36,8 +36,8 @@ public class SupplyDropPlacement {
 	}
 	
 	public void removeCurrentSupplyDropCrate(){
-		Logger.info("SupplyDropPlacement: remove supply drop");
 		if (isCurrentSupplyDropCrate()) {
+			Logger.info("SupplyDropPlacement: remove supply drop");
 			currentSupplyDropCrate.freeActor();
 			currentSupplyDropCrate = null;
 		}

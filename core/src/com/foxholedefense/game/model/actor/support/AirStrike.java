@@ -78,7 +78,7 @@ public class AirStrike extends SupportActor implements IRocket {
 		
 		
 	}
-	public boolean readyToBegin(){
+	public boolean isReadyToBegin(){
 		return (airStrikeLocations.size >= MAX_AIRSTRIKES);
 	}
 	@Override

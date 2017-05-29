@@ -111,10 +111,10 @@ public class SupportPresenter implements GameUIStateObserver {
 	 */
 	public void placeAirStrikeLocation(Vector2 location){
 		Logger.info("Support Presenter: placing air strike location");
-		if (!airStrikePlacement.getCurrentAirStrike().readyToBegin()) {
+		if (!airStrikePlacement.getCurrentAirStrike().isReadyToBegin()) {
 			airStrikePlacement.addLocation(UtilPool.getVector2(location));
 			Logger.info("Support Presenter: air strike location placed");
-			if(airStrikePlacement.getCurrentAirStrike().readyToBegin()){
+			if(airStrikePlacement.getCurrentAirStrike().isReadyToBegin()){
 				Logger.info("Support Presenter: air strike ready to begin");
 				view.showBtnPlace();
 			}
