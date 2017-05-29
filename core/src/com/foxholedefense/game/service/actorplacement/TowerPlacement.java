@@ -21,25 +21,18 @@ import com.foxholedefense.util.Logger;
  *
  */
 public class TowerPlacement {
+
 	private Tower currentTower;
 	private ActorGroups actorGroups;
 	private Map map;
 	private CombatActorFactory combatActorFactory;
 	private HealthFactory healthFactory;
+
 	public TowerPlacement(Map map, ActorGroups actorGroups, CombatActorFactory combatActorFactory, HealthFactory healthFactory) {
 		this.map = map;
 		this.actorGroups = actorGroups;
 		this.combatActorFactory = combatActorFactory;
 		this.healthFactory = healthFactory;
-	}
-
-	/**
-	 * Determines if the tower can be rotated or not
-	 * 
-	 * @return Boolean - tower is Rotatable
-	 */
-	public boolean isTowerRotatable() {
-		return (getCurrentTower() instanceof IRotatable);
 	}
 
 	/**

@@ -8,9 +8,11 @@ import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.util.Logger;
 
 public class SupportActorPlacement {
+
 	private SupportActor currentSupportActor;
 	private ActorGroups actorGroups;
 	private SupportActorFactory supportActorFactory;
+
 	public SupportActorPlacement(ActorGroups actorGroups, SupportActorFactory supportActorFactory) {
 		this.actorGroups = actorGroups;
 		this.supportActorFactory = supportActorFactory;
@@ -32,9 +34,7 @@ public class SupportActorPlacement {
 
 	public void moveSupportActor(Vector2 clickCoords) {
 		if (currentSupportActor != null) {
-			if (!currentSupportActor.isVisible()) {
-				currentSupportActor.setVisible(true);
-			}
+			currentSupportActor.setVisible(true);
 			currentSupportActor.setShowRange(true);
 			currentSupportActor.setPositionCenter(clickCoords);
 		}

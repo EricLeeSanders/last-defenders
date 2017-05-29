@@ -58,17 +58,15 @@ public class CombatActorFactory {
     private ActorGroups actorGroups;
     private Resources resources;
     private EffectFactory effectFactory;
-    private HealthFactory healthFactory;
     private ProjectileFactory projectileFactory;
     private Player player;
 
-    public CombatActorFactory(ActorGroups actorGroups, FHDAudio audio, Resources resources, EffectFactory effectFactory, HealthFactory healthFactory,
+    public CombatActorFactory(ActorGroups actorGroups, FHDAudio audio, Resources resources, EffectFactory effectFactory,
                               ProjectileFactory projectileFactory, Player player){
         this.actorGroups = actorGroups;
         this.audio = audio;
         this.resources = resources;
         this.effectFactory = effectFactory;
-        this.healthFactory = healthFactory;
         this.projectileFactory = projectileFactory;
         this.player = player;
 

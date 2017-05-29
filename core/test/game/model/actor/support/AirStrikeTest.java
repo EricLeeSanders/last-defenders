@@ -1,9 +1,6 @@
 package game.model.actor.support;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Pool;
-import com.foxholedefense.game.helper.Damage;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.projectile.Rocket;
 import com.foxholedefense.game.model.actor.support.AirStrike;
@@ -15,7 +12,6 @@ import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
-import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,7 +29,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -77,12 +72,12 @@ public class AirStrikeTest {
         AirStrikeLocation airStrikeLocation2 = mock(AirStrikeLocation.class);
         AirStrikeLocation airStrikeLocation3 = mock(AirStrikeLocation.class);
 
-        assertFalse(airStrike.readyToBegin());
+        assertFalse(airStrike.isReadyToBegin());
         airStrike.addLocation(airStrikeLocation1);
         airStrike.addLocation(airStrikeLocation2);
-        assertFalse(airStrike.readyToBegin());
+        assertFalse(airStrike.isReadyToBegin());
         airStrike.addLocation(airStrikeLocation3);
-        assertTrue(airStrike.readyToBegin());
+        assertTrue(airStrike.isReadyToBegin());
 
         assertFalse(airStrike.isActive());
 

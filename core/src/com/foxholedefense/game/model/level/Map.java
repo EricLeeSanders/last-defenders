@@ -71,7 +71,6 @@ public class Map implements Disposable{
 				pathBoundaries.add(boundary);
 			}
 		}
-		System.out.println(pathBoundaries);
 	}
 	public Array<Rectangle> getPathBoundaries(){
 		return pathBoundaries;
