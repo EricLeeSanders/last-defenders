@@ -160,7 +160,8 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	private void createTowerButton(Table enlistTable, Skin skin, String towerName, Integer towerCost, int attack, int health, int range, int speed){
 		EnlistButton towerButton = new EnlistButton(skin, attack, health, range, speed, towerName, towerCost);
 		enlistTable.add(towerButton).size(120,195).spaceBottom(5);
-		setTowerListener(towerButton,towerName);
+		String filteredTowerName = towerName.replaceAll(" ", "");
+		setTowerListener(towerButton,filteredTowerName);
 		enlistButtons.add(towerButton);
 	}
 
@@ -207,7 +208,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.createTower(tower,enlistButton.cost);
+				presenter.createTower(tower);
 			}
 		});
 	}

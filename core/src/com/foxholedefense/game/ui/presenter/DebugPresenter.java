@@ -13,6 +13,7 @@ import com.foxholedefense.util.Logger;
  */
 
 public class DebugPresenter implements GameUIStateObserver {
+
     private IDebugView view;
     private GameUIStateManager uiStateManager;
     private GameStateManager gameStateManager;
@@ -34,7 +35,6 @@ public class DebugPresenter implements GameUIStateObserver {
         stateChange(uiStateManager.getState());
         view.setFPSChecked(DebugOptions.showFPS);
         view.setTextureBoundariesChecked(DebugOptions.showTextureBoundaries);
-        Logger.info("Debug Presenter: view initialized");
     }
 
 
@@ -45,15 +45,16 @@ public class DebugPresenter implements GameUIStateObserver {
     }
 
     public void showTextureBoundariesPressed(){
-        DebugOptions.showTextureBoundaries= !DebugOptions.showTextureBoundaries;
+        DebugOptions.showTextureBoundaries = !DebugOptions.showTextureBoundaries;
     }
 
-    public void showFPSListener(){
+    public void showFPSPressed(){
         DebugOptions.showFPS = !DebugOptions.showFPS;
         view.showFPS(DebugOptions.showFPS);
     }
 
     public void crash(){
+        Logger.info("Debug Presenter: crashing game");
         Object o = null;
         o.toString();
     }

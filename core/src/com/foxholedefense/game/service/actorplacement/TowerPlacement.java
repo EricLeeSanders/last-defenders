@@ -140,7 +140,7 @@ public class TowerPlacement {
 	 * @return boolean
 	 */
 	public boolean isCurrentTower() {
-		return (currentTower != null);
+		return currentTower != null;
 	}
 
 	public Tower getCurrentTower() {
