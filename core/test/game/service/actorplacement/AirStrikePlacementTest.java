@@ -21,7 +21,7 @@ import game.model.actor.support.AirStrikeTest;
 import util.TestUtil;
 
 
-import static junit.framework.TestCase.assertFalse;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.mockito.Matchers.eq;

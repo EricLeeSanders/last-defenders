@@ -2,6 +2,13 @@ package com.foxholedefense.game.ui.presenter;
 
 import com.badlogic.gdx.math.Vector2;
 import com.foxholedefense.game.model.Player;
+import com.foxholedefense.game.model.actor.combat.tower.TowerFlameThrower;
+import com.foxholedefense.game.model.actor.combat.tower.TowerMachineGun;
+import com.foxholedefense.game.model.actor.combat.tower.TowerRifle;
+import com.foxholedefense.game.model.actor.combat.tower.TowerRocketLauncher;
+import com.foxholedefense.game.model.actor.combat.tower.TowerSniper;
+import com.foxholedefense.game.model.actor.combat.tower.TowerTank;
+import com.foxholedefense.game.model.actor.combat.tower.TowerTurret;
 import com.foxholedefense.game.model.actor.interfaces.IRotatable;
 import com.foxholedefense.game.service.actorplacement.TowerPlacement;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
@@ -13,6 +20,9 @@ import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Presenter for Enlist. Handles enlisting towers
  * 
@@ -20,21 +30,37 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  *
  */
 public class EnlistPresenter implements GameUIStateObserver {
+
 	private TowerPlacement towerPlacement;
 	private GameUIStateManager uiStateManager;
 	private Player player;
 	private IEnlistView view;
 	private FHDAudio audio;
 	private IMessageDisplayer messageDisplayer;
+	private Map<String, Integer> towerCosts = new HashMap<String, Integer>();
 
-	public EnlistPresenter(GameUIStateManager uiStateManager, Player player
-			, FHDAudio audio, TowerPlacement towerPlacement, IMessageDisplayer messageDisplayer) {
+	public EnlistPresenter(GameUIStateManager uiStateManager, Player player,
+			FHDAudio audio, TowerPlacement towerPlacement, IMessageDisplayer messageDisplayer) {
+
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.player = player;
 		this.audio = audio;
 		this.towerPlacement = towerPlacement;
 		this.messageDisplayer = messageDisplayer;
+		initTowerCostsMap();
+	}
+
+	private void initTowerCostsMap(){
+
+		towerCosts.put("Rifle", TowerRifle.COST);
+		towerCosts.put("MachineGun", TowerMachineGun.COST);
+		towerCosts.put("Sniper", TowerSniper.COST);
+		towerCosts.put("FlameThrower", TowerFlameThrower.COST);
+		towerCosts.put("RocketLauncher", TowerRocketLauncher.COST);
+		towerCosts.put("Tank", TowerTank.COST);
+		towerCosts.put("Turret", TowerTurret.COST);
+
 	}
 
 	/**
@@ -52,11 +78,11 @@ public class EnlistPresenter implements GameUIStateObserver {
 	 * 
 	 * @param strEnlistTower
 	 */
-	public void createTower(String strEnlistTower, int cost) {
+	public void createTower(String strEnlistTower) {
 		Logger.info("Enlist Presenter: creating tower");
+		int cost = towerCosts.get(strEnlistTower);
+		audio.playSound(FHDSound.SMALL_CLICK);
 		if(canAffordTower(cost)) {
-			audio.playSound(FHDSound.SMALL_CLICK);
-			towerPlacement.createTower(strEnlistTower.replaceAll(" ", ""));
 			uiStateManager.setState(GameUIState.PLACING_TOWER);
 			Logger.info("Enlist Presenter: tower created");
 		} else {
