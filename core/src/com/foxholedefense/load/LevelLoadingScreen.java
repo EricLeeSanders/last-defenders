@@ -6,7 +6,6 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -19,9 +18,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.foxholedefense.screen.AbstractScreen;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
-import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -30,7 +28,7 @@ import com.foxholedefense.util.datastructures.Dimension;
 public class LevelLoadingScreen extends AbstractScreen{
 	private static final Dimension LOADING_BAR_SIZE = new Dimension(515, 45);
 	private Resources resources;
-	private IScreenChanger screenChanger;
+	private ScreenChanger screenChanger;
 	private Stage stage;
 	private static final float MIN_LOAD_TIME = 3f;
 	private float loadTime = 0;
@@ -40,7 +38,7 @@ public class LevelLoadingScreen extends AbstractScreen{
 	private float endPos;
 	private float startPos;
 
-	public LevelLoadingScreen(GameStateManager gameStateManager, IScreenChanger screenChanger, Resources resources, int level ) {
+	public LevelLoadingScreen(GameStateManager gameStateManager, ScreenChanger screenChanger, Resources resources, int level ) {
 		super(gameStateManager);
 		this.resources = resources;
 		this.screenChanger = screenChanger;

@@ -9,9 +9,8 @@ import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.ui.GameUIStage;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.screen.AbstractScreen;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.Logger;
@@ -34,7 +33,7 @@ public class GameScreen extends AbstractScreen {
 	private GameUIStateManager uiStateManager;
 	private Resources resources;
 
-	public GameScreen(int intLevel, GameStateManager gameStateManager, IScreenChanger screenChanger, Resources resources, FHDAudio audio) {
+	public GameScreen(int intLevel, GameStateManager gameStateManager, ScreenChanger screenChanger, Resources resources, FHDAudio audio) {
 
 		super(gameStateManager);
 		this.player = new Player();

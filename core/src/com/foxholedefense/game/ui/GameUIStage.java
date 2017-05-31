@@ -35,7 +35,7 @@ import com.foxholedefense.game.ui.view.QuitView;
 import com.foxholedefense.game.ui.view.SupportView;
 import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.game.ui.view.interfaces.Updatable;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
@@ -52,7 +52,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 	private GameUIStateManager uiStateManager;
 	private LevelStateManager levelStateManager;
 	private GameStateManager gameStateManager;
-	private IScreenChanger screenChanger;
+	private ScreenChanger screenChanger;
 	private Group towerGroup;
 	private InputMultiplexer imp;
 	private Resources resources;
@@ -61,7 +61,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 
 	public GameUIStage(Player player, Group towerGroup
 			, GameUIStateManager uiStateManager, LevelStateManager levelStateManager
-			, GameStateManager gameStateManager, IScreenChanger screenChanger
+			, GameStateManager gameStateManager, ScreenChanger screenChanger
 			, InputMultiplexer imp, Viewport viewport, Resources resources
 			, FHDAudio audio, GameStage gameStage) {
 

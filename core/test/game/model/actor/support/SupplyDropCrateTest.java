@@ -1,5 +1,7 @@
 package game.model.actor.support;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
@@ -37,15 +39,14 @@ import static org.mockito.Mockito.verify;
 /**
  * Created by Eric on 5/23/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
+
 public class SupplyDropCrateTest {
     private SupplyDropCratePool supplyDropCratePoolMock = mock(SupplyDropCratePool.class);
     private TowerHealEffect towerHealEffectMock = mock(TowerHealEffect.class);
 
     @Before
     public void initSupplyDropCrateTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     public SupplyDropCrate createSupplyDropCrate(Group towerGroup){

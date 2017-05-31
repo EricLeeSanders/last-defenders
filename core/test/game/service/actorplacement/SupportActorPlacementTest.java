@@ -1,5 +1,7 @@
 package game.service.actorplacement;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.support.Apache;
@@ -33,15 +35,13 @@ import static org.powermock.api.mockito.PowerMockito.doReturn;
 /**
  * Created by Eric on 5/28/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class SupportActorPlacementTest {
     private ActorGroups actorGroups = mock(ActorGroups.class);
     private SupportActorFactory supportActorFactory = mock(SupportActorFactory.class);
 
     @Before
     public void initSupportActorPlacementTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     @Test

@@ -1,5 +1,7 @@
 package game.model.actor.effects.label;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -30,11 +32,14 @@ import static org.mockito.Mockito.verify;
  * Created by Eric on 5/20/2017.
  */
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class ArmorDestroyedEffectTest {
 
     private LabelEffectPool labelEffectPoolMock = mock(LabelEffectPool.class);
+
+    @Before
+    public void initArmorDestroyedEffectTest() {
+        Gdx.app = mock(Application.class);
+    }
 
     public ArmorDestroyedEffect createArmorDestroyedEffect(){
 
@@ -50,11 +55,6 @@ public class ArmorDestroyedEffectTest {
 
         return armorDestroyedEffect;
 
-    }
-    @Before
-    public void initArmorDestroyedEffectTest() {
-        PowerMockito.mockStatic(Logger.class);
-        createArmorDestroyedEffect();
     }
 
     /**

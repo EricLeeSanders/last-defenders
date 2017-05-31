@@ -1,5 +1,7 @@
 package game.service.actorplacement;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.support.AirStrike;
@@ -39,8 +41,6 @@ import static org.powermock.api.mockito.PowerMockito.verifyPrivate;
  * Created by Eric on 5/28/2017.
  */
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class AirStrikePlacementTest {
     private ActorGroups actorGroups = mock(ActorGroups.class);
     private SupportActorFactory supportActorFactory = mock(SupportActorFactory.class);
@@ -48,7 +48,7 @@ public class AirStrikePlacementTest {
 
     @Before
     public void initAirStrikePlacementTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     @Test

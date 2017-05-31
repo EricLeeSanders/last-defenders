@@ -1,5 +1,7 @@
 package game.model.actor.projectile;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeType.Size;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
@@ -35,7 +37,7 @@ import static org.mockito.Mockito.verify;
  * Created by Eric on 5/22/2017.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class, Damage.class})
+@PrepareForTest({Damage.class})
 public class RocketTest {
 
 
@@ -44,7 +46,7 @@ public class RocketTest {
 
     @Before
     public void initRocketTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
         PowerMockito.mockStatic(Damage.class);
     }
 

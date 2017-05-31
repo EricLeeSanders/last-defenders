@@ -1,5 +1,7 @@
 package game.ui.presenter;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.ui.presenter.DebugPresenter;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
@@ -7,14 +9,12 @@ import com.foxholedefense.game.ui.view.DebugView;
 import com.foxholedefense.game.ui.view.interfaces.IDebugView;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.DebugOptions;
-import com.foxholedefense.util.Logger;
-
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 
 import static org.junit.Assert.assertFalse;
@@ -24,26 +24,41 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 /**
  * Created by Eric on 5/29/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
+@RunWith(DataProviderRunner.class)
 public class DebugPresenterTest {
 
     private GameUIStateManager gameUIStateManagerMock = mock(GameUIStateManager.class);
     private GameStateManager gameStateManager = mock(GameStateManager.class);
     private IDebugView debugViewMock = mock(DebugView.class);
 
+
+    @DataProvider
+    public static Object[][] gameUIStateEnumsExcludingDebug() {
+
+        Object[][] gameUIStateEnums = new Object[GameUIState.values().length-1][1];
+
+        int count = 0;
+        for(GameUIState state : GameUIState.values()){
+            if(state == GameUIState.DEBUG){
+                continue;
+            }
+            gameUIStateEnums[count][0] = state;
+            count++;
+        }
+
+        return gameUIStateEnums;
+    }
+
     @Before
     public void initDebugPresenterTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     public DebugPresenter createDebugPresenter(){
@@ -142,76 +157,53 @@ public class DebugPresenterTest {
      * Test with starting state as all states other than Debug
     */
     @Test
-    public void initialStateTest2(){
+    @UseDataProvider( "gameUIStateEnumsExcludingDebug" )
+    public void initialStateTest2(GameUIState state){
 
         DebugPresenter debugPresenter = createDebugPresenter();
+        doReturn(state).when(gameUIStateManagerMock).getState();
 
-        for(GameUIState state : GameUIState.values()) {
+        debugPresenter.setView(debugViewMock);
 
-            if(state == GameUIState.DEBUG){
-                continue;
-            }
-
-            doReturn(state).when(gameUIStateManagerMock).getState();
-
-            debugPresenter.setView(debugViewMock);
-
-            verify(debugViewMock, never()).debugState();
-            verify(debugViewMock, times(1)).standByState();
-
-            reset(debugViewMock);
-        }
+        verify(debugViewMock, never()).debugState();
+        verify(debugViewMock, times(1)).standByState();
     }
 
     /**
      * Test with starting state as Debug and change to all other states
      */
     @Test
-    public void stateChangeTest1(){
+    @UseDataProvider( "gameUIStateEnumsExcludingDebug" )
+    public void stateChangeTest1(GameUIState state){
 
         DebugPresenter debugPresenter = createDebugPresenter();
+        doReturn(GameUIState.DEBUG).when(gameUIStateManagerMock).getState();
 
-        for(GameUIState state : GameUIState.values()) {
+        debugPresenter.setView(debugViewMock);
 
-            if (state == GameUIState.DEBUG) {
-                continue;
-            }
+        verify(debugViewMock, never()).standByState();
+        verify(debugViewMock, times(1)).debugState();
 
-            doReturn(GameUIState.DEBUG).when(gameUIStateManagerMock).getState();
-            debugPresenter.setView(debugViewMock);
-            verify(debugViewMock, never()).standByState();
-            verify(debugViewMock, times(1)).debugState();
-
-            debugPresenter.stateChange(state);
-            verify(debugViewMock, times(1)).standByState();
-
-            reset(debugViewMock);
-        }
-    }
+        debugPresenter.stateChange(state);
+        verify(debugViewMock, times(1)).standByState();
+}
 
     /**
      * Test with starting state as all states other than Debug and change to Debug
      */
     @Test
-    public void stateChangeTest2(){
+    @UseDataProvider( "gameUIStateEnumsExcludingDebug" )
+    public void stateChangeTest2(GameUIState state){
 
         DebugPresenter debugPresenter = createDebugPresenter();
+        doReturn(state).when(gameUIStateManagerMock).getState();
 
-        for(GameUIState state : GameUIState.values()) {
+        debugPresenter.setView(debugViewMock);
 
-            if (state == GameUIState.DEBUG) {
-                continue;
-            }
+        verify(debugViewMock, times(1)).standByState();
+        verify(debugViewMock, never()).debugState();
 
-            doReturn(state).when(gameUIStateManagerMock).getState();
-            debugPresenter.setView(debugViewMock);
-            verify(debugViewMock, times(1)).standByState();
-            verify(debugViewMock, never()).debugState();
-
-            debugPresenter.stateChange(GameUIState.DEBUG);
-            verify(debugViewMock, times(1)).debugState();
-
-            reset(debugViewMock);
-        }
+        debugPresenter.stateChange(GameUIState.DEBUG);
+        verify(debugViewMock, times(1)).debugState();
     }
 }

@@ -1,6 +1,6 @@
 package com.foxholedefense.menu.ui;
 
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.Logger;
@@ -12,10 +12,10 @@ import com.foxholedefense.util.Logger;
  *
  */
 public class MenuPresenter {
-	private IScreenChanger screenChanger;
+	private ScreenChanger screenChanger;
 	private IMenuView view;
 	private FHDAudio audio;
-	public MenuPresenter(IScreenChanger screenChanger, FHDAudio audio) {
+	public MenuPresenter(ScreenChanger screenChanger, FHDAudio audio) {
 		this.screenChanger = screenChanger;
 		this.audio = audio;
 	}

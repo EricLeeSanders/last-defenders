@@ -1,5 +1,7 @@
 package game.model.actor.combat.enemy;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Array;
@@ -29,13 +31,11 @@ import util.TestUtil;
 /**
  * Created by Eric on 4/23/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class EnemyTest {
 
     @Before
     public void initEnemyTest(){
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     private Array<FHDVector2> createWaypoints(){

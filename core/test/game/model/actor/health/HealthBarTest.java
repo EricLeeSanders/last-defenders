@@ -1,5 +1,7 @@
 package game.model.actor.health;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pool;
@@ -31,8 +33,6 @@ import static org.mockito.Mockito.verify;
 /**
  * Created by Eric on 5/20/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class HealthBarTest {
 
     private Batch batchMock = mock(Batch.class);
@@ -42,16 +42,16 @@ public class HealthBarTest {
     @SuppressWarnings("rawtypes")
     private Pool poolMock = mock(Pool.class);
 
+    @Before
+    public void initHealthBarTest() {
+        Gdx.app = mock(Application.class);
+    }
+
     public HealthBar createHealthBar(){
 
         HealthBar healthBar = new HealthBar(poolMock, backgroundBarMock, healthBarMock, armorBarMock);
 
         return healthBar;
-    }
-
-    @Before
-    public void initHealthBarTest() {
-        PowerMockito.mockStatic(Logger.class);
     }
 
     /**

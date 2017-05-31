@@ -8,17 +8,16 @@ import com.foxholedefense.levelselect.LevelSelectScreen;
 import com.foxholedefense.load.GameLoadingScreen;
 import com.foxholedefense.load.LevelLoadingScreen;
 import com.foxholedefense.menu.MenuScreen;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.state.GameStateObserver;
-import com.foxholedefense.state.StateObserver;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.UserPreferences;
 
-public class FHDGame extends Game implements IScreenChanger, GameStateObserver {
+public class FHDGame extends Game implements ScreenChanger, GameStateObserver {
 	private GameStateManager gameStateManager;
 	private Resources resources;
 	private UserPreferences userPreferences;

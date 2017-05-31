@@ -1,5 +1,7 @@
 package game.model.actor.combat.enemy.state.states;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -44,12 +46,12 @@ import static org.mockito.Mockito.when;
  * Created by Eric on 5/15/2017.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class, EnemyAI.class})
+@PrepareForTest({EnemyAI.class})
 public class EnemyRunningStateTest {
 
     @Before
     public void initEnemyRunningStateTest(){
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
         PowerMockito.mockStatic(EnemyAI.class);
     }
 

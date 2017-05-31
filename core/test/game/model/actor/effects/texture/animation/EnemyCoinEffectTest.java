@@ -1,5 +1,7 @@
 package game.model.actor.effects.texture.animation;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.foxholedefense.game.service.factory.EffectFactory.DeathEffectPool;
 import com.foxholedefense.util.Logger;
@@ -26,11 +28,14 @@ import static org.mockito.Mockito.verify;
  * Created by Eric on 5/20/2017.
  */
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class EnemyCoinEffectTest {
 
     private DeathEffectPool deathEffectPoolMock = mock(DeathEffectPool.class);
+
+    @Before
+    public void initEnemyCoinEffectTest() {
+        Gdx.app = mock(Application.class);
+    }
 
     public EnemyCoinEffect createEnemyCoinEffect(){
 
@@ -40,12 +45,6 @@ public class EnemyCoinEffectTest {
 
         return enemyCoinEffect;
 
-    }
-
-    @Before
-    public void initEnemyCoinEffectTest() {
-        PowerMockito.mockStatic(Logger.class);
-        createEnemyCoinEffect();
     }
 
     /**

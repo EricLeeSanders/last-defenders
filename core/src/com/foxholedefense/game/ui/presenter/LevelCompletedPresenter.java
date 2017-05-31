@@ -5,7 +5,7 @@ import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.ILevelCompletedView;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
@@ -13,13 +13,13 @@ import com.foxholedefense.util.Logger;
 
 public class LevelCompletedPresenter implements GameUIStateObserver {
 	private ILevelCompletedView view;
-	private IScreenChanger screenChanger;
+	private ScreenChanger screenChanger;
 	private GameStateManager gameStateManager;
 	private GameUIStateManager uiStateManager;
 	private Player player;
 	private FHDAudio audio;
 	public LevelCompletedPresenter(Player player, GameStateManager gameStateManager
-			, GameUIStateManager uiStateManager, IScreenChanger screenChanger, FHDAudio audio){
+			, GameUIStateManager uiStateManager, ScreenChanger screenChanger, FHDAudio audio){
 		
 		this.player = player;
 		this.screenChanger = screenChanger;

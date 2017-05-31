@@ -1,5 +1,7 @@
 package game.model.actor.combat.tower.state.states;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.ai.TowerAIType;
@@ -35,12 +37,12 @@ import static org.powermock.api.mockito.PowerMockito.spy;
  * Created by Eric on 5/15/2017.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class, TowerAIType.class})
+@PrepareForTest({TowerAIType.class})
 public class TowerActiveStateTest {
 
     @Before
     public void initTowerActiveStateTest(){
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
         PowerMockito.mock(TowerAIType.class);
     }
 

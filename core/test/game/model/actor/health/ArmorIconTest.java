@@ -1,5 +1,7 @@
 package game.model.actor.health;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pool;
@@ -28,13 +30,16 @@ import static org.mockito.Mockito.verify;
  * Created by Eric on 5/20/2017.
  */
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class ArmorIconTest {
 
     private Batch batchMock = mock(Batch.class);
     @SuppressWarnings("rawtypes")
     private Pool poolMock = mock(Pool.class);
+
+    @Before
+    public void initArmorIconTest() {
+        Gdx.app = mock(Application.class);
+    }
 
     public ArmorIcon createArmorIcon(){
 
@@ -46,11 +51,6 @@ public class ArmorIconTest {
         ArmorIcon armorIcon = new ArmorIcon(poolMock, iconMock);
 
         return armorIcon;
-    }
-
-    @Before
-    public void initArmorIconTest() {
-        PowerMockito.mockStatic(Logger.class);
     }
 
     /**

@@ -1,5 +1,7 @@
 package game.model.level.wave;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Queue;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
@@ -29,8 +31,7 @@ import static org.mockito.Mockito.mock;
 /**
  * Created by Eric on 5/26/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
+
 public class DynamicWaveLoaderTest {
 
     private SpawningEnemyPool spawningEnemyPool = mock(SpawningEnemyPool.class);
@@ -39,7 +40,7 @@ public class DynamicWaveLoaderTest {
 
     @Before
     public void initDynamicWaveLoaderTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     @Test

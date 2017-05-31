@@ -1,5 +1,7 @@
 package game.model.actor.projectile;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.helper.Damage;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
@@ -31,14 +33,14 @@ import static org.powermock.api.mockito.PowerMockito.verifyStatic;
  * Created by Eric on 5/21/2017.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class, Damage.class})
+@PrepareForTest({Damage.class})
 public class ExplosionTest {
 
     private Pool poolMock = mock(Pool.class);
 
     @Before
     public void initExplosionTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
         PowerMockito.mockStatic(Damage.class);
     }
 

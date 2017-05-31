@@ -1,5 +1,7 @@
 package game.model.actor.effects.texture.animation.death;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.math.Vector2;
@@ -37,11 +39,14 @@ import static org.mockito.Mockito.verify;
  * Created by Eric on 5/20/2017.
  */
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class DeathEffectTest {
 
     private DeathEffectPool deathEffectPoolMock = mock(DeathEffectPool.class);
+
+    @Before
+    public void initDeathEffectTest() {
+        Gdx.app = mock(Application.class);
+    }
 
     public DeathEffect createDeathEffect(){
 
@@ -51,12 +56,6 @@ public class DeathEffectTest {
 
         return deathEffect;
 
-    }
-
-    @Before
-    public void initDeathEffectTest() {
-        PowerMockito.mockStatic(Logger.class);
-        createDeathEffect();
     }
 
     /**

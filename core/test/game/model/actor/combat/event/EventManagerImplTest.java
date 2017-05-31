@@ -1,5 +1,7 @@
 package game.model.actor.combat.event;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.model.actor.combat.event.EventManagerImpl;
 import com.foxholedefense.game.model.actor.combat.event.interfaces.EventManager.CombatActorEventEnum;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
@@ -27,13 +29,11 @@ import static org.mockito.Mockito.verify;
  * Created by Eric on 5/20/2017.
  */
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class EventManagerImplTest {
 
     @Before
     public void initEventManagerImplTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     @Test
