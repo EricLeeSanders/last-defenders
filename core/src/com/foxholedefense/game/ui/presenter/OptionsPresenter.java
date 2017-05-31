@@ -5,7 +5,7 @@ import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IOptionsView;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
@@ -21,11 +21,11 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
 public class OptionsPresenter implements GameUIStateObserver {
 	private GameStateManager gameStateManager;
 	private GameUIStateManager uiStateManager;
-	private IScreenChanger screenChanger;
+	private ScreenChanger screenChanger;
 	private IOptionsView view;
 	private FHDAudio audio;
 	private Resources resources;
-	public OptionsPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager, IScreenChanger screenChanger, Resources resources, FHDAudio audio) {
+	public OptionsPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager, ScreenChanger screenChanger, Resources resources, FHDAudio audio) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.gameStateManager = gameStateManager;

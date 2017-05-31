@@ -1,12 +1,10 @@
 package com.foxholedefense.menu;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.screen.AbstractScreen;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.Logger;
@@ -23,7 +21,7 @@ public class MenuScreen extends AbstractScreen {
 	private MenuStage stage;
 	private GameStateManager gameStateManager;
 
-	public MenuScreen(IScreenChanger screenChanger, GameStateManager gameStateManager, Resources resources, FHDAudio audio) {
+	public MenuScreen(ScreenChanger screenChanger, GameStateManager gameStateManager, Resources resources, FHDAudio audio) {
 		super(gameStateManager);
 		this.gameStateManager = gameStateManager;
 		this.stage = new MenuStage(screenChanger, resources, audio, getViewport());

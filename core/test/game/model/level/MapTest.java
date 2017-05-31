@@ -1,5 +1,7 @@
 package game.model.level;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObject;
@@ -34,13 +36,13 @@ import static org.mockito.Mockito.reset;
  * Created by Eric on 5/26/2017.
  */
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class MapTest {
-    TiledMap tiledMap = mock(TiledMap.class);
+
+    private TiledMap tiledMap = mock(TiledMap.class);
+
     @Before
     public void initMapTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     @Test

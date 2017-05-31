@@ -1,5 +1,7 @@
 package game.ui.presenter;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.service.actorplacement.TowerPlacement;
@@ -11,6 +13,9 @@ import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.tngtech.java.junit.dataprovider.DataProvider;
+import com.tngtech.java.junit.dataprovider.DataProviderRunner;
+import com.tngtech.java.junit.dataprovider.UseDataProvider;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,8 +40,7 @@ import static org.mockito.Mockito.verify;
 /**
  * Created by Eric on 5/29/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
+@RunWith(DataProviderRunner.class)
 public class EnlistPresenterTest {
 
     private IEnlistView enlistView = mock(IEnlistView.class);
@@ -46,7 +50,7 @@ public class EnlistPresenterTest {
 
     @Before
     public void initEnlistPresenterTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     public EnlistPresenter createEnlistPresenter(){
@@ -57,6 +61,73 @@ public class EnlistPresenterTest {
         EnlistPresenter enlistPresenter = new EnlistPresenter(gameUIStateManagerMock, playerMock, audioMock, towerPlacementMock, messageDisplayerMock);
 
         return enlistPresenter;
+    }
+
+    @DataProvider
+    public static Object[][] filteredGameUIStateEnums() {
+
+        Object[][] gameUIStateEnums = new Object[GameUIState.values().length-2][1];
+
+        int count = 0;
+        for(GameUIState state : GameUIState.values()){
+            if(state == GameUIState.ENLISTING || state == GameUIState.PLACING_TOWER){
+                continue;
+            }
+            gameUIStateEnums[count][0] = state;
+            count++;
+        }
+
+        return gameUIStateEnums;
+    }
+
+    /**
+     * State change to Enlisting
+     */
+    @Test
+    public void stateChangeTest1(){
+        EnlistPresenter enlistPresenter = createEnlistPresenter();
+
+        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
+
+        enlistPresenter.setView(enlistView);
+        enlistPresenter.stateChange(GameUIState.ENLISTING);
+
+        verify(enlistView, times(1)).standByState();
+        verify(enlistView, times(1)).enlistingState();
+    }
+
+    /**
+     * State change to Placing Tower
+     */
+    @Test
+    public void stateChangeTest2(){
+        EnlistPresenter enlistPresenter = createEnlistPresenter();
+
+        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
+
+        enlistPresenter.setView(enlistView);
+        enlistPresenter.stateChange(GameUIState.PLACING_TOWER);
+
+        verify(enlistView, times(1)).standByState();
+        verify(enlistView, times(1)).placingTowerState();
+    }
+
+    /**
+     * Test with starting state as Standby and change to all other states excluding
+     * Enlisting and Placing Tower
+     */
+    @Test
+    @UseDataProvider( "filteredGameUIStateEnums" )
+    public void stateChangeTest3(GameUIState state){
+        EnlistPresenter enlistPresenter = createEnlistPresenter();
+
+        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
+
+        enlistPresenter.setView(enlistView);
+        enlistPresenter.stateChange(state);
+
+        verify(enlistView, times(2)).standByState();
+        verify(towerPlacementMock, times(2)).removeCurrentTower();
     }
 
     /**

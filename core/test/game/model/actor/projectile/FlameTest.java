@@ -1,5 +1,7 @@
 package game.model.actor.projectile;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -39,14 +41,14 @@ import static org.powermock.api.mockito.PowerMockito.verifyStatic;
  * Created by Eric on 5/21/2017.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class, Damage.class})
+@PrepareForTest({Damage.class})
 public class FlameTest {
 
     private Pool poolMock = mock(Pool.class);
 
     @Before
     public void initFlameTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
         PowerMockito.mockStatic(Damage.class);
     }
 

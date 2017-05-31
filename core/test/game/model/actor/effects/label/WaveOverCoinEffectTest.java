@@ -1,5 +1,7 @@
 package game.model.actor.effects.label;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -32,11 +34,14 @@ import static org.mockito.Mockito.verify;
  */
 
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class WaveOverCoinEffectTest {
 
     private LabelEffectPool labelEffectPoolMock = mock(LabelEffectPool.class);
+
+    @Before
+    public void initWaveOverCoinEffectTest() {
+        Gdx.app = mock(Application.class);
+    }
 
     public WaveOverCoinEffect createWaveOverCoinEffect(){
 
@@ -52,12 +57,6 @@ public class WaveOverCoinEffectTest {
         doNothing().when(waveOverCoinEffect).pack();
 
         return waveOverCoinEffect;
-    }
-
-    @Before
-    public void initWaveOverCoinEffectTest() {
-        PowerMockito.mockStatic(Logger.class);
-        createWaveOverCoinEffect();
     }
 
     /**

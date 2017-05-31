@@ -1,5 +1,7 @@
 package game.model.actor.support;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.foxholedefense.game.model.actor.support.SupplyDrop;
 import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
@@ -33,8 +35,7 @@ import static org.mockito.Mockito.verify;
 /**
  * Created by Eric on 5/23/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
+
 public class SupplyDropTest {
 
     private SupplyDropPool poolMock = mock(SupplyDropPool.class);
@@ -42,7 +43,7 @@ public class SupplyDropTest {
 
     @Before
     public void initSupplyDropTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     public SupplyDrop createSupplyDrop(){

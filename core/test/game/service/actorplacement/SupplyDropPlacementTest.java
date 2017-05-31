@@ -1,5 +1,7 @@
 package game.service.actorplacement;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.support.SupplyDrop;
 import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
@@ -35,8 +37,6 @@ import static org.mockito.Mockito.verify;
 /**
  * Created by Eric on 5/28/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class SupplyDropPlacementTest {
 
     private SupplyDropCrateTest supplyDropCrateTest = new SupplyDropCrateTest();
@@ -44,7 +44,7 @@ public class SupplyDropPlacementTest {
 
     @Before
     public void initSupplyDropPlacementTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     @Test

@@ -1,5 +1,7 @@
 package game.model.actor.effects.label;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
@@ -31,11 +33,14 @@ import static org.mockito.Mockito.verify;
  */
 
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class TowerHealEffectTest {
 
     private LabelEffectPool labelEffectPoolMock = mock(LabelEffectPool.class);
+
+    @Before
+    public void initTowerHealEffectTest() {
+        Gdx.app = mock(Application.class);
+    }
 
     public TowerHealEffect createTowerHealEffect(){
 
@@ -49,12 +54,6 @@ public class TowerHealEffectTest {
 
         return towerHealEffect;
 
-    }
-
-    @Before
-    public void initTowerHealEffectTest() {
-        PowerMockito.mockStatic(Logger.class);
-        createTowerHealEffect();
     }
 
     /**

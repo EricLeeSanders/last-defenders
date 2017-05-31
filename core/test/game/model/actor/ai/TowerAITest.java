@@ -1,5 +1,7 @@
 package game.model.actor.ai;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.ai.towerai.FirstEnemyAI;
@@ -25,14 +27,12 @@ import util.TestUtil;
 /**
  * Tests the Tower AI.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(Logger.class)
 public class TowerAITest {
 
 
     @Before
     public void initTowerAITest(){
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     private void createEnemyGroup(Group towerTargetGroup){

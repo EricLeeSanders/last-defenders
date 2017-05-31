@@ -1,5 +1,7 @@
 package game.model.actor.support;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
 import com.foxholedefense.game.model.actor.projectile.Rocket;
@@ -39,8 +41,6 @@ import static org.mockito.Mockito.verify;
  * Created by Eric on 5/22/2017.
  */
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class AirStrikeTest {
 
     private SupportActorPool poolMock = mock(SupportActorPool.class);
@@ -48,7 +48,7 @@ public class AirStrikeTest {
 
     @Before
     public void initAirStrikeTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     public AirStrike createAirStrike(){

@@ -1,5 +1,7 @@
 package game.service.actorplacement;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
@@ -42,7 +44,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
  * Created by Eric on 5/28/2017.
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class, CollisionDetection.class})
+@PrepareForTest({CollisionDetection.class})
 public class TowerPlacementTest {
 
     private Map map = mock(Map.class);
@@ -52,7 +54,7 @@ public class TowerPlacementTest {
 
     @Before
     public void initTowerPlacementTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
         PowerMockito.mockStatic(CollisionDetection.class);
     }
 

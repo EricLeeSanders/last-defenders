@@ -1,5 +1,7 @@
 package game.model.level;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Queue;
 import com.foxholedefense.game.model.actor.ActorGroups;
@@ -35,8 +37,6 @@ import static org.mockito.Mockito.mock;
  * Created by Eric on 5/26/2017.
  */
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class LevelTest {
 
     private SpawningEnemyPool spawningEnemyPool = mock(SpawningEnemyPool.class);
@@ -48,7 +48,7 @@ public class LevelTest {
 
     @Before
     public void initLevelTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     @Test

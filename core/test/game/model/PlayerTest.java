@@ -1,5 +1,7 @@
 package game.model;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.PlayerObserver;
 import com.foxholedefense.util.Logger;
@@ -21,12 +23,11 @@ import static org.mockito.Mockito.verify;
  * Created by Eric on 5/26/2017.
  */
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class PlayerTest {
+
     @Before
     public void initPlayerTest() {
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     @Test

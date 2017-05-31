@@ -4,7 +4,7 @@ import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.view.interfaces.IQuitView;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.FHDAudio;
@@ -19,12 +19,12 @@ public class QuitPresenter implements GameUIStateObserver {
 
     private GameUIStateManager uiStateManager;
     private GameStateManager gameStateManager;
-    private IScreenChanger screenChanger;
+    private ScreenChanger screenChanger;
     private FHDAudio audio;
     private IQuitView view;
     private boolean keepGamePaused;
 
-    public QuitPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager, IScreenChanger screenChanger, FHDAudio audio){
+    public QuitPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager, ScreenChanger screenChanger, FHDAudio audio){
         this.uiStateManager = uiStateManager;
         this.audio = audio;
         this.screenChanger = screenChanger;

@@ -5,7 +5,7 @@ import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IGameOverView;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.Logger;
@@ -17,12 +17,14 @@ import com.foxholedefense.util.Logger;
  *
  */
 public class GameOverPresenter implements GameUIStateObserver {
+
 	private Player player;
-	private IScreenChanger screenChanger;
+	private ScreenChanger screenChanger;
 	private GameUIStateManager uiStateManager;
 	private IGameOverView view;
 	private FHDAudio audio;
-	public GameOverPresenter(GameUIStateManager uiStateManager, IScreenChanger screenChanger, Player player, FHDAudio audio) {
+
+	public GameOverPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger, Player player, FHDAudio audio) {
 		this.player = player;
 		this.screenChanger = screenChanger;
 		this.uiStateManager = uiStateManager;

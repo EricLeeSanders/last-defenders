@@ -1,5 +1,7 @@
 package game.model.actor.combat.enemy.state.states;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager;
@@ -36,13 +38,11 @@ import static org.junit.Assert.*;
 /**
  * Created by Eric on 5/15/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class EnemyAttackingStateTest {
 
     @Before
     public void initEnemyAttackingStateTest(){
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     @Test

@@ -1,5 +1,7 @@
 package game.model.actor.combat.tower;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
@@ -22,13 +24,11 @@ import util.TestUtil;
 /**
  * Created by Eric on 4/23/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest(Logger.class)
 public class TowerTest {
 
     @Before
     public void initTowerTest(){
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
     }
 
     /**
