@@ -82,7 +82,7 @@ public class EnlistPresenter implements GameUIStateObserver {
 		Logger.info("Enlist Presenter: creating tower");
 		int cost = towerCosts.get(strEnlistTower);
 		audio.playSound(FHDSound.SMALL_CLICK);
-		if(canAffordTower(cost)) {
+		if(canCreateTower(cost)) {
 			uiStateManager.setState(GameUIState.PLACING_TOWER);
 			Logger.info("Enlist Presenter: tower created");
 		} else {
@@ -96,16 +96,18 @@ public class EnlistPresenter implements GameUIStateObserver {
 	 */
 	public void placeTower() {
 		Logger.info("Enlist Presenter: placing tower");
-		int cost = towerPlacement.getCurrentTower().getCost();
-		if (towerPlacement.placeTower()) {
-			audio.playSound(FHDSound.ACTOR_PLACE);
-			uiStateManager.setStateReturn();
-			player.spendMoney(cost);
-			towerPlacement.removeCurrentTower();
-			Logger.info("Enlist Presenter: tower placed");
-		} else {
-			Logger.info("Enlist Presenter: cannot place tower");
-			messageDisplayer.displayMessage("Cannot place a tower here!");
+		if(canPlaceTower()) {
+			int cost = towerPlacement.getCurrentTower().getCost();
+			if (towerPlacement.placeTower()) {
+				audio.playSound(FHDSound.ACTOR_PLACE);
+				uiStateManager.setStateReturn();
+				player.spendMoney(cost);
+				towerPlacement.removeCurrentTower();
+				Logger.info("Enlist Presenter: tower placed");
+			} else {
+				Logger.info("Enlist Presenter: cannot place tower");
+				messageDisplayer.displayMessage("Cannot place a tower here!");
+			}
 		}
 	}
 
@@ -130,7 +132,8 @@ public class EnlistPresenter implements GameUIStateObserver {
 	 *            - Position to move
 	 */
 	public void moveTower(Vector2 coords) {
-		if (towerPlacement.isCurrentTower() && uiStateManager.getState().equals(GameUIState.PLACING_TOWER)) {
+
+		if (canMoveTower()) {
 			towerPlacement.moveTower(coords);
 			view.showBtnPlace();
 			if(isTowerRotatable()){
@@ -143,7 +146,10 @@ public class EnlistPresenter implements GameUIStateObserver {
 	 * Rotate the tower
 	 */
 	public void rotateTower(float delta) {
-		towerPlacement.rotateTower(60 * delta);
+
+		if(isTowerRotatable()) {
+			towerPlacement.rotateTower(60 * delta);
+		}
 	}
 
 	/**
@@ -171,8 +177,40 @@ public class EnlistPresenter implements GameUIStateObserver {
 		return (towerCost <= player.getMoney());
 	}
 
+	/**
+	 * Determines if the tower can be moved
+	 * @return
+     */
+	public boolean canMoveTower(){
+
+		return uiStateManager.getState().equals(GameUIState.PLACING_TOWER)
+				&& towerPlacement.isCurrentTower();
+	}
+
+	/**
+	 * Determines if the tower can be placed
+	 * @return
+     */
+	public boolean canPlaceTower(){
+
+		return uiStateManager.getState().equals(GameUIState.PLACING_TOWER)
+				&& towerPlacement.isCurrentTower();
+	}
+
+	/**
+	 * Determines if the tower can be created
+	 * @param cost - cost of the tower
+	 * @return
+     */
+	public boolean canCreateTower(int cost){
+
+		return uiStateManager.getState().equals(GameUIState.ENLISTING)
+				&& canAffordTower(cost);
+	}
+
 	@Override
 	public void stateChange(GameUIState state) {
+
 		switch (state) {
 			case ENLISTING:
 				view.enlistingState();

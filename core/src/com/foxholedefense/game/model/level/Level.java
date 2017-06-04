@@ -16,7 +16,7 @@ import com.foxholedefense.util.Logger;
 
 public class Level {
 
-	public static final int MAX_WAVES = 1;
+	public static final int MAX_WAVES = 20;
 
 	private float delayCount = 0;
 	private float enemyDelay = 0f;
