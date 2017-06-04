@@ -30,6 +30,7 @@ import util.TestUtil;
 
 
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -162,7 +163,24 @@ public class EnlistPresenterTest {
 
         enlistPresenter.createTower("RocketLauncher");
 
-        verify(gameUIStateManagerMock, never()).setState(GameUIState.PLACING_TOWER);
+        verify(gameUIStateManagerMock, never()).setState(isA(GameUIState.class));
+
+    }
+
+    /**
+     * Test creating a tower without being in ENLISTING state
+     */
+    @Test
+    public void createTowerTest3(){
+        EnlistPresenter enlistPresenter = createEnlistPresenter();
+        doReturn(1).when(playerMock).getMoney();
+        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
+
+        enlistPresenter.setView(enlistView);
+
+        enlistPresenter.createTower("RocketLauncher");
+
+        verify(gameUIStateManagerMock, never()).setState(isA(GameUIState.class));
 
     }
 
@@ -183,6 +201,31 @@ public class EnlistPresenterTest {
 
         verify(towerPlacementMock, times(1)).moveTower(eq(moveCoords));
         verify(enlistView, times(1)).showBtnPlace();
+        verify(enlistView, never()).showBtnRotate();
+
+    }
+
+
+    /**
+     * Unsuccessfully move the tower
+     */
+    @Test
+    public void moveTowerTest2(){
+
+        EnlistPresenter enlistPresenter = createEnlistPresenter();
+
+        doReturn(GameUIState.ENLISTING).when(gameUIStateManagerMock).getState();
+        enlistPresenter.setView(enlistView);
+
+        Tower tower = TestUtil.createTower("Rifle", false);
+        doReturn(tower).when(towerPlacementMock).getCurrentTower();
+        doReturn(true).when(towerPlacementMock).isCurrentTower();
+
+        FHDVector2 moveCoords = new FHDVector2(100,100);
+        enlistPresenter.moveTower(moveCoords);
+
+        verify(towerPlacementMock, never()).moveTower(eq(moveCoords));
+        verify(enlistView, never()).showBtnPlace();
         verify(enlistView, never()).showBtnRotate();
 
     }

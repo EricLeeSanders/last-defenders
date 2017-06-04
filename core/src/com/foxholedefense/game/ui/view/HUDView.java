@@ -33,7 +33,7 @@ public class HUDView extends Group implements IHUDView {
 	private HUDPresenter presenter;
 	private Resources resources;
 	private Label messageLabel;
-	private boolean paused;
+
 	public HUDView(HUDPresenter presenter,Skin skin, Resources resources) {
 		this.presenter = presenter;
 		this.setTransform(false);
@@ -145,7 +145,6 @@ public class HUDView extends Group implements IHUDView {
 				presenter.resume();
 				btnResume.setVisible(false);
 				btnPause.setVisible(true);
-				paused = false;
 			}
 		});
 	}
@@ -158,7 +157,6 @@ public class HUDView extends Group implements IHUDView {
 				presenter.pause();
 				btnResume.setVisible(true);
 				btnPause.setVisible(false);
-				paused = true;
 			}
 		});
 	}
@@ -199,7 +197,7 @@ public class HUDView extends Group implements IHUDView {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.support();
+				presenter.addSupport();
 
 			}
 		});
@@ -296,8 +294,8 @@ public class HUDView extends Group implements IHUDView {
 		btnEnlist.setVisible(true);
 		btnSupport.setVisible(true);
 		btnOptions.setVisible(true);
-		btnPause.setVisible(!paused);
-		btnResume.setVisible(paused);
+		btnPause.setVisible(presenter.isGamePaused());
+		btnResume.setVisible(!presenter.isGamePaused());
 
 	}
 }

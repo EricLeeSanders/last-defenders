@@ -53,20 +53,24 @@ public class GameOverPresenter implements GameUIStateObserver {
 	 * Start a new game
 	 */
 	public void newGame() {
-		Logger.info("Game Over Presenter: new Game");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		screenChanger.changeToLevelSelect();
 
+		audio.playSound(FHDSound.SMALL_CLICK);
+		if(canSwitchToNewGame()) {
+			Logger.info("Game Over Presenter: new Game");
+			screenChanger.changeToLevelSelect();
+		}
 	}
 
 	/**
 	 * Change to main menu
 	 */
 	public void mainMenu() {
-		Logger.info("Game Over Presenter: main menu");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		screenChanger.changeToMenu();
 
+		audio.playSound(FHDSound.SMALL_CLICK);
+		if(canSwitchToMainMenu()) {
+			Logger.info("Game Over Presenter: main menu");
+			screenChanger.changeToMenu();
+		}
 	}
 
 	/**
@@ -77,18 +81,36 @@ public class GameOverPresenter implements GameUIStateObserver {
 		audio.playSound(FHDSound.SMALL_CLICK);
 	}
 
+	/**
+	 * Can only switch to New Game if the GAMEUIState == GAME_OVER
+	 * @return
+     */
+	public boolean canSwitchToNewGame(){
+
+		return uiStateManager.getState().equals(GameUIState.GAME_OVER);
+	}
+
+	/**
+	 * Can only switch to Main Menu if the GAMEUIState == GAME_OVER
+	 * @return
+	 */
+	public boolean canSwitchToMainMenu(){
+
+		return uiStateManager.getState().equals(GameUIState.GAME_OVER);
+	}
+
 	@Override
 	public void stateChange(GameUIState state) {
 
 		switch (state) {
-		case GAME_OVER:
-			view.gameOverState();
-			setWavesCompleted();
-			break;
-		default:
-			view.standByState();
-			break;
-		}
+			case GAME_OVER:
+				view.gameOverState();
+				setWavesCompleted();
+				break;
+			default:
+				view.standByState();
+				break;
+			}
 
 	}
 
