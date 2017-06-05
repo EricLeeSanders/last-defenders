@@ -10,7 +10,7 @@ import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
+import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
 import com.foxholedefense.game.ui.view.interfaces.ISupportView;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
@@ -31,10 +31,10 @@ public class SupportPresenter implements GameUIStateObserver {
 	private Player player;
 	private ISupportView view;
 	private FHDAudio audio;
-	private IMessageDisplayer messageDisplayer;
+	private MessageDisplayer messageDisplayer;
 	public SupportPresenter(GameUIStateManager uiStateManager, Player player, FHDAudio audio
 			, SupportActorPlacement supportActorPlacement, AirStrikePlacement airStrikePlacement, SupplyDropPlacement supplyDropPlacement
-			, IMessageDisplayer messageDisplayer) {
+			, MessageDisplayer messageDisplayer) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.audio = audio;

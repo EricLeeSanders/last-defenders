@@ -9,9 +9,8 @@ import com.foxholedefense.game.ui.presenter.EnlistPresenter;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
+import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
 import com.foxholedefense.util.FHDAudio;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
@@ -19,11 +18,7 @@ import com.tngtech.java.junit.dataprovider.UseDataProvider;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.After;
 import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 
 import util.TestUtil;
@@ -34,7 +29,6 @@ import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -57,7 +51,7 @@ public class EnlistPresenterTest {
     public EnlistPresenter createEnlistPresenter(){
 
         FHDAudio audioMock = mock(FHDAudio.class);
-        IMessageDisplayer messageDisplayerMock = mock(IMessageDisplayer.class);
+        MessageDisplayer messageDisplayerMock = mock(MessageDisplayer.class);
 
         EnlistPresenter enlistPresenter = new EnlistPresenter(gameUIStateManagerMock, playerMock, audioMock, towerPlacementMock, messageDisplayerMock);
 
