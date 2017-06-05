@@ -27,7 +27,7 @@ import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
+import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -54,7 +54,7 @@ public class GameStage extends Stage implements PlayerObserver {
 	private SupportActorPlacement supportActorPlacement;
 	private AirStrikePlacement airStrikePlacement;
 	private SupplyDropPlacement supplyDropPlacement;
-	private IMessageDisplayer messageDisplayer;
+	private MessageDisplayer messageDisplayer;
 	private CombatActorFactory combatActorFactory;
 	private HealthFactory healthFactory;
 	private ProjectileFactory projectileFactory;
@@ -250,11 +250,11 @@ public class GameStage extends Stage implements PlayerObserver {
 		return supplyDropPlacement;
 	}
 
-	public IMessageDisplayer getMessageDisplayer() {
+	public MessageDisplayer getMessageDisplayer() {
 		return messageDisplayer;
 	}
 
-	public void setMessageDisplayer(IMessageDisplayer messageDisplayer) {
+	public void setMessageDisplayer(MessageDisplayer messageDisplayer) {
 		this.messageDisplayer = messageDisplayer;
 	}
 

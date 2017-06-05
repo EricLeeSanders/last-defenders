@@ -29,11 +29,10 @@ import com.foxholedefense.game.ui.view.GameOverView;
 import com.foxholedefense.game.ui.view.HUDView;
 import com.foxholedefense.game.ui.view.InspectView;
 import com.foxholedefense.game.ui.view.LevelCompletedView;
-import com.foxholedefense.game.ui.view.MessageDisplayer;
 import com.foxholedefense.game.ui.view.OptionsView;
 import com.foxholedefense.game.ui.view.QuitView;
 import com.foxholedefense.game.ui.view.SupportView;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
+import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
 import com.foxholedefense.game.ui.view.interfaces.Updatable;
 import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
@@ -56,7 +55,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 	private Group towerGroup;
 	private InputMultiplexer imp;
 	private Resources resources;
-	private MessageDisplayer messageDisplayer;
+	private com.foxholedefense.game.ui.view.MessageDisplayer messageDisplayer;
 	private Array<Updatable> updatablePresenters = new Array<Updatable>();
 
 	public GameUIStage(Player player, Group towerGroup
@@ -91,7 +90,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 		HUDView hudView = new HUDView(hudPresenter, skin, resources);
 		hudPresenter.setView(hudView);
 
-		messageDisplayer = new MessageDisplayer(skin);
+		messageDisplayer = new com.foxholedefense.game.ui.view.MessageDisplayer(skin);
 
 		EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio,  gameStage.getTowerPlacement(), messageDisplayer);
 		EnlistView enlistView = new EnlistView(enlistPresenter, skin);
@@ -191,7 +190,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 	}
 
 
-	public IMessageDisplayer getMessageDisplayer(){
+	public MessageDisplayer getMessageDisplayer(){
 		return messageDisplayer;
 	}
 

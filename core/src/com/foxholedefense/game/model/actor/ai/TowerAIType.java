@@ -28,6 +28,12 @@ public enum TowerAIType implements TowerAI {
         return ai.findTarget(attacker, enemies);
     }
 
+    public TowerAIType getNextTowerAIType(){
+
+        int n = TowerAIType.values().length;
+        return TowerAIType.values()[(getPosition() + 1) % n];
+    }
+
     public int getPosition() {
         return position;
     }

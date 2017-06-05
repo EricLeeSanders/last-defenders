@@ -14,9 +14,8 @@ import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.view.interfaces.IInspectView;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
+import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
 import com.foxholedefense.game.ui.view.interfaces.Updatable;
-import com.foxholedefense.state.StateObserver;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
@@ -27,7 +26,8 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  * @author Eric
  *
  */
-public class InspectPresenter implements Updatable, GameUIStateObserver, LevelStateObserver {
+public class InspectPresenter implements Updatable, GameUIStateObserver{
+
 	private GameUIStateManager uiStateManager;
 	private LevelStateManager levelStateManager;
 	private Tower selectedTower;
@@ -35,13 +35,13 @@ public class InspectPresenter implements Updatable, GameUIStateObserver, LevelSt
 	private Group towerGroup;
 	private IInspectView view;
 	private FHDAudio audio;
-	private IMessageDisplayer messageDisplayer;
-	private boolean dischargeDisabled;
-	public InspectPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, Player player, Group towerGroup, FHDAudio audio, IMessageDisplayer messageDisplayer) {
+	private MessageDisplayer messageDisplayer;
+
+	public InspectPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, Player player, Group towerGroup, FHDAudio audio, MessageDisplayer messageDisplayer) {
+
 		this.uiStateManager = uiStateManager;
-		uiStateManager.attach(this);
 		this.levelStateManager = levelStateManager;
-		levelStateManager.attach(this);
+		uiStateManager.attach(this);
 		this.player = player;
 		this.towerGroup = towerGroup;
 		this.audio = audio;
@@ -61,7 +61,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver, LevelSt
 	@Override
 	public void update(float delta){
 
-		if(selectedTower != null && (selectedTower.isDead() || !selectedTower.isActive())){
+		if(isTowerInteractable()){
 			closeInspect();
 		}
 
@@ -75,6 +75,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver, LevelSt
 	 * Close and finishing inspecting
 	 */
 	public void closeInspect() {
+
 		Logger.info("Inspect Presenter: close inspect");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		resetInspect();
@@ -86,30 +87,30 @@ public class InspectPresenter implements Updatable, GameUIStateObserver, LevelSt
 	 * Resets the inspect
 	 */
 	private void resetInspect(){
+
 		Logger.info("Inspect Presenter: reset Inspect");
-		if(selectedTower != null){
-			selectedTower = null;
-		}
+		selectedTower = null;
 	}
 	
 	/**
 	 * Change the target priority of the tower
 	 */
 	public void changeTargetPriority() {
+
 		Logger.info("Inspect Presenter: changing target priority");
 		audio.playSound(FHDSound.SMALL_CLICK);
-		if (selectedTower != null) {
-			TowerAIType ai = TowerAIType.values()[(selectedTower.getAI().getPosition() + 1) % 4];
+		if (canChangeTargetPriority()) {
+			TowerAIType ai = selectedTower.getAI().getNextTowerAIType();
 			selectedTower.setAI(ai);
 			view.update(selectedTower);
 		}
-
 	}
 
 	/**
 	 * Increase the tower's attack
 	 */
 	public void increaseAttack() {
+
 		Logger.info("Inspect Presenter: increasing attack");
 		audio.playSound(FHDSound.SMALL_CLICK);
 
@@ -125,6 +126,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver, LevelSt
 	 * Give the tower armor
 	 */
 	public void giveArmor() {
+
 		Logger.info("Inspect Presenter: giving armor");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if(canUpgradeTower(selectedTower.getArmorCost(), selectedTower.hasArmor())) {
@@ -139,6 +141,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver, LevelSt
 	 * Increase the tower's range
 	 */
 	public void increaseRange() {
+
 		Logger.info("Inspect Presenter: increasing range");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if(canUpgradeTower(selectedTower.getRangeIncreaseCost(), selectedTower.hasIncreasedRange())) {
@@ -153,6 +156,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver, LevelSt
 	 * Increase the tower's attack speed
 	 */
 	public void increaseSpeed() {
+
 		Logger.info("Inspect Presenter: increasing speed");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if(canUpgradeTower(selectedTower.getSpeedIncreaseCost(), selectedTower.hasIncreasedSpeed())) {
@@ -164,15 +168,88 @@ public class InspectPresenter implements Updatable, GameUIStateObserver, LevelSt
 	}
 
 	/**
+	 * Discharge and Sell the tower
+	 */
+	public void dishcharge() {
+
+		Logger.info("Inspect Presenter: discharging");
+		if(canDischargeTower()) {
+			audio.playSound(FHDSound.SELL);
+			player.giveMoney(selectedTower.getSellCost());
+			selectedTower.sellTower();
+			closeInspect();
+		} else {
+			if(isDischargeDisabled()) {
+				messageDisplayer.displayMessage("Cannot discharge " + selectedTower.getName() + " while a wave is in progress!");
+			}
+		}
+	}
+
+	/**
+	 * Open the inspection window for a tower that is clicked.
+	 * 
+	 * @param coords
+	 */
+	public void inspectTower(Vector2 coords) {
+
+		if (canInspectTowers()) {
+			Actor hitActor = CollisionDetection.towerHit(towerGroup.getChildren(), coords);
+			if (hitActor != null) {
+				if (hitActor instanceof Tower && canInspectTower((Tower) hitActor)) {
+					Logger.info("Inspect Presenter: inspecting tower");
+					selectedTower = (Tower) hitActor;
+					uiStateManager.setState(GameUIState.INSPECTING);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Get the players amount of money
+	 * @return int - player money
+	 */
+	public int getPlayerMoney(){
+		return player.getMoney();
+	}
+
+	/**
+	 * Determines if the tower can be inspected
+	 * @return
+     */
+	private boolean canInspectTower(Tower tower){
+
+		return !tower.isDead() && tower.isActive();
+	}
+
+	/**
+	 * Determines if towers can be inspected
+	 * @return
+	 */
+	private boolean canInspectTowers(){
+
+		return uiStateManager.getState().equals(GameUIState.STANDBY)
+				|| uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS);
+	}
+	
+	/**
+	 * Determine if the the upgrade is affordable
+	 * 
+	 * @param upgradeCost - Cost of the upgrade
+	 * @return boolean
+	 */
+	public boolean canAffordUpgrade(int upgradeCost) {
+		return upgradeCost <= player.getMoney();
+	}
+
+	/**
 	 * Checks if we can upgrade the tower. May display a message to the user.
 	 * @param cost
 	 * @param hasUpgrade
-     * @return - boolean - if the tower can be upgraded
-     */
+	 * @return - boolean - if the tower can be upgraded
+	 */
 	private boolean canUpgradeTower(int cost, boolean hasUpgrade){
 
-		if (selectedTower == null) {
-			Logger.info("Inspect Presenter canUpgradeTower: selectdTower is null");
+		if (!isTowerInteractable() || !uiStateManager.getState().equals(GameUIState.INSPECTING)) {
 			return false;
 		}
 
@@ -192,73 +269,37 @@ public class InspectPresenter implements Updatable, GameUIStateObserver, LevelSt
 	}
 
 	/**
-	 * Discharge and Sell the tower
-	 */
-	public void dishcharge() {
-		Logger.info("Inspect Presenter: discharging");
-		if(isDischargeDisabled()){
-			messageDisplayer.displayMessage("Cannot discharge " + selectedTower.getName() + " while a wave is in progress!");
-			return;
-		}
-		if (selectedTower != null) {
-			audio.playSound(FHDSound.SELL);
-			player.giveMoney(selectedTower.getSellCost());
-			selectedTower.sellTower();
-			closeInspect();
-		}
+	 * Determines if the the target priority can be changed
+	 * @return
+     */
+	private boolean canChangeTargetPriority(){
+
+		return uiStateManager.getState().equals(GameUIState.INSPECTING)
+			&& isTowerInteractable();
 	}
 
 	/**
-	 * Open the inspection window for a tower that is clicked. Only open the
-	 * tower inspect if the state of the UI is in Standby or Wave In Progress
-	 * 
-	 * @param coords
-	 */
-	public void inspectTower(Vector2 coords) {
-		if (uiStateManager.getState().equals(GameUIState.STANDBY) || uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)) {
-			Actor hitActor = CollisionDetection.towerHit(towerGroup.getChildren(), coords);
-			if (hitActor != null) {
-				if (hitActor instanceof Tower) {
-					Logger.info("Inspect Presenter: inspecting tower");
-					selectedTower = (Tower) hitActor;
-					uiStateManager.setState(GameUIState.INSPECTING);
-				}
-			}
-		}
-	}
-	/**
-	 * Gets the type/name of the selected tower
+	 * Determines if the tower is interactable
 	 * @return
-	 */
-	public String getTowerName(){
-		return selectedTower.getName();
+     */
+	private boolean isTowerInteractable(){
+
+		return selectedTower != null && !selectedTower.isDead() && selectedTower.isActive();
 	}
-	
+
 	/**
-	 * Get the players amount of money
-	 * @return int - player money
-	 */
-	public int getPlayerMoney(){
-		return player.getMoney();
-	}
-	
-	/**
-	 * Determine if the the upgrade is affordable
-	 * 
-	 * @param upgradeCost - Cost of the upgrade
-	 * @return boolean
-	 */
-	public boolean canAffordUpgrade(int upgradeCost) {
-		return upgradeCost <= player.getMoney();
+	 * Determines if the tower can be discharged
+	 * @return
+     */
+	private boolean canDischargeTower(){
+
+		return uiStateManager.getState().equals(GameUIState.INSPECTING)
+				&& isTowerInteractable() && !isDischargeDisabled();
 	}
 
 	public boolean isDischargeDisabled(){
-		return dischargeDisabled;
-	}
 
-	public void setDischargeDisabled(boolean disabled){
-		this.dischargeDisabled = disabled;
-		view.dischargeDisabled(disabled);
+		return levelStateManager.getState().equals(LevelState.WAVE_IN_PROGRESS);
 	}
 
 	@Override
@@ -272,21 +313,6 @@ public class InspectPresenter implements Updatable, GameUIStateObserver, LevelSt
 			default:
 				resetInspect();
 				view.standByState();
-				break;
-		}
-	}
-
-	@Override
-	public void stateChange(LevelState state) {
-
-		switch(state){
-			case WAVE_IN_PROGRESS:
-				setDischargeDisabled(true);
-				break;
-			case STANDBY:
-				setDischargeDisabled(false);
-				break;
-			default:
 				break;
 		}
 	}

@@ -15,7 +15,7 @@ import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
+import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio.FHDSound;
@@ -36,11 +36,11 @@ public class EnlistPresenter implements GameUIStateObserver {
 	private Player player;
 	private IEnlistView view;
 	private FHDAudio audio;
-	private IMessageDisplayer messageDisplayer;
+	private MessageDisplayer messageDisplayer;
 	private Map<String, Integer> towerCosts = new HashMap<String, Integer>();
 
 	public EnlistPresenter(GameUIStateManager uiStateManager, Player player,
-			FHDAudio audio, TowerPlacement towerPlacement, IMessageDisplayer messageDisplayer) {
+			FHDAudio audio, TowerPlacement towerPlacement, MessageDisplayer messageDisplayer) {
 
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);

@@ -29,10 +29,12 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  *
  */
 public class InspectView extends Group implements InputProcessor, IInspectView {
+
 	private InspectPresenter presenter;
 	private DischargeButton btnDischarge;
 	private UpgradeButton btnArmor, btnSpeed, btnRange, btnAttack;
 	private Label lblTargetPriority, lblTitle, lblMoney, lblKills;
+
 	public InspectView(InspectPresenter presenter, Skin skin) {
 		this.presenter = presenter;
 		this.setTransform(false);
