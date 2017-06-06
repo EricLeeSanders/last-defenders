@@ -19,16 +19,16 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  *
  */
 public class OptionsPresenter implements GameUIStateObserver {
-	private GameStateManager gameStateManager;
+
 	private GameUIStateManager uiStateManager;
 	private ScreenChanger screenChanger;
 	private IOptionsView view;
 	private FHDAudio audio;
 	private Resources resources;
-	public OptionsPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager, ScreenChanger screenChanger, Resources resources, FHDAudio audio) {
+
+	public OptionsPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger, Resources resources, FHDAudio audio) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
-		this.gameStateManager = gameStateManager;
 		this.screenChanger = screenChanger;
 		this.audio = audio;
 		this.resources = resources;
@@ -50,7 +50,6 @@ public class OptionsPresenter implements GameUIStateObserver {
 		view.setBtnMusicOn(audio.isMusicEnabled());
 		view.setBtnSoundOn(audio.isSoundEnabled());
 		view.setBtnShowRangesOn(isShowRangesEnabled());
-		Logger.info("Options Presenter: view initialized");
 	}
 
 	/**
@@ -66,23 +65,30 @@ public class OptionsPresenter implements GameUIStateObserver {
 	 * Go to main menu
 	 */
 	public void mainMenu() {
-		Logger.info("Options Presenter: main menu");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		screenChanger.changeToMenu();
+		if(canChangeToMainMenu()) {
+			Logger.info("Options Presenter: main menu");
+			audio.playSound(FHDSound.SMALL_CLICK);
+			screenChanger.changeToMenu();
+		}
 	}
 
 	/**
 	 * Start a new game
 	 */
 	public void newGame() {
-		Logger.info("Options Presenter: new game");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		screenChanger.changeToLevelSelect();
+		if(canChangeToNewGame()) {
+			Logger.info("Options Presenter: new game");
+			audio.playSound(FHDSound.SMALL_CLICK);
+			screenChanger.changeToLevelSelect();
+		}
 	}
 
 	public void debug(){
-		Logger.info("Options Presenter: debug");
-		uiStateManager.setState(GameUIState.DEBUG);
+		if(canChangeToDebug()) {
+			Logger.info("Options Presenter: debug");
+			audio.playSound(FHDSound.SMALL_CLICK);
+			uiStateManager.setState(GameUIState.DEBUG);
+		}
 	}
 	
 	private boolean isShowRangesEnabled(){
@@ -126,6 +132,21 @@ public class OptionsPresenter implements GameUIStateObserver {
 	
 	public float getMasterVolume(){
 		return audio.getMasterVolume();
+	}
+
+	private boolean canChangeToMainMenu(){
+
+		return uiStateManager.getState().equals(GameUIState.OPTIONS);
+	}
+
+	private boolean canChangeToNewGame(){
+
+		return uiStateManager.getState().equals(GameUIState.OPTIONS);
+	}
+
+	private boolean canChangeToDebug(){
+
+		return uiStateManager.getState().equals(GameUIState.OPTIONS);
 	}
 	
 	@Override

@@ -84,6 +84,7 @@ public class EnlistPresenter implements GameUIStateObserver {
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if(canCreateTower(cost)) {
 			uiStateManager.setState(GameUIState.PLACING_TOWER);
+			towerPlacement.createTower(strEnlistTower);
 			Logger.info("Enlist Presenter: tower created");
 		} else {
 			Logger.info("Enlist Presenter: cannot afford " + strEnlistTower + " player: " + getPlayerMoney() + " cost: " + cost);
@@ -136,7 +137,7 @@ public class EnlistPresenter implements GameUIStateObserver {
 		if (canMoveTower()) {
 			towerPlacement.moveTower(coords);
 			view.showBtnPlace();
-			if(isTowerRotatable()){
+			if (isTowerRotatable()) {
 				view.showBtnRotate();
 			}
 		}
