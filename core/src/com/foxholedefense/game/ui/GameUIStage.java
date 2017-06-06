@@ -106,7 +106,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 		InspectView inspectView = new InspectView(inspectPresenter, skin);
 		inspectPresenter.setView(inspectView);
 
-		OptionsPresenter optionsPresenter = new OptionsPresenter(uiStateManager, gameStateManager, screenChanger, resources, audio);
+		OptionsPresenter optionsPresenter = new OptionsPresenter(uiStateManager, screenChanger, resources, audio);
 		OptionsView optionsView = new OptionsView(optionsPresenter, resources);
 		optionsPresenter.setView(optionsView);
 
@@ -114,7 +114,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 		GameOverView gameOverView = new GameOverView(gameOverPresenter, skin);
 		gameOverPresenter.setView(gameOverView);
 
-		LevelCompletedPresenter levelCompletedPresenter = new LevelCompletedPresenter(player, gameStateManager, uiStateManager, screenChanger, audio);
+		LevelCompletedPresenter levelCompletedPresenter = new LevelCompletedPresenter(uiStateManager, screenChanger, audio);
 		LevelCompletedView levelCompletedView = new LevelCompletedView(levelCompletedPresenter, skin);
 		levelCompletedPresenter.setView(levelCompletedView);
 

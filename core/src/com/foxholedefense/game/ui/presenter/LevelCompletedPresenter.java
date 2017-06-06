@@ -12,18 +12,15 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.Logger;
 
 public class LevelCompletedPresenter implements GameUIStateObserver {
+
 	private ILevelCompletedView view;
 	private ScreenChanger screenChanger;
-	private GameStateManager gameStateManager;
 	private GameUIStateManager uiStateManager;
-	private Player player;
 	private FHDAudio audio;
-	public LevelCompletedPresenter(Player player, GameStateManager gameStateManager
-			, GameUIStateManager uiStateManager, ScreenChanger screenChanger, FHDAudio audio){
+
+	public LevelCompletedPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger, FHDAudio audio){
 		
-		this.player = player;
 		this.screenChanger = screenChanger;
-		this.gameStateManager = gameStateManager;
 		this.uiStateManager = uiStateManager;
 		this.audio = audio;
 		
@@ -44,26 +41,50 @@ public class LevelCompletedPresenter implements GameUIStateObserver {
 	 * Change to level select
 	 */
 	public void levelSelect() {
-		Logger.info("Level Completed Presenter: level select");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		screenChanger.changeToLevelSelect();
+
+		if(canChangeToLevelSelect()) {
+			Logger.info("Level Completed Presenter: level select");
+			audio.playSound(FHDSound.SMALL_CLICK);
+			screenChanger.changeToLevelSelect();
+		}
 	}
 
 	/**
 	 * Change to main menu
 	 */
 	public void mainMenu() {
-		Logger.info("Level Completed Presenter: main menu");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		screenChanger.changeToMenu();
+
+		if(canChangeToMainMenu()) {
+			Logger.info("Level Completed Presenter: main menu");
+			audio.playSound(FHDSound.SMALL_CLICK);
+			screenChanger.changeToMenu();
+		}
 	}
 	/**
 	 * Continue the level
 	 */
 	public void continueLevel() {
-		Logger.info("Level Completed Presenter: continue level");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		uiStateManager.setState(GameUIState.STANDBY);
+
+		if(canContinueLevel()) {
+			Logger.info("Level Completed Presenter: continue level");
+			audio.playSound(FHDSound.SMALL_CLICK);
+			uiStateManager.setState(GameUIState.STANDBY);
+		}
+	}
+
+	private boolean canChangeToLevelSelect(){
+
+		return uiStateManager.getState().equals(GameUIState.LEVEL_COMPLETED);
+	}
+
+	private boolean canChangeToMainMenu(){
+
+		return uiStateManager.getState().equals(GameUIState.LEVEL_COMPLETED);
+	}
+
+	private boolean canContinueLevel(){
+
+		return uiStateManager.getState().equals(GameUIState.LEVEL_COMPLETED);
 	}
 	
 	@Override
