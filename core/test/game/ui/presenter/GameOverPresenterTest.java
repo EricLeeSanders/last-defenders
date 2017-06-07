@@ -10,9 +10,6 @@ import com.foxholedefense.game.ui.view.GameOverView;
 import com.foxholedefense.game.ui.view.interfaces.IGameOverView;
 import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.util.FHDAudio;
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +27,6 @@ import static org.mockito.Mockito.verify;
 /**
  * Created by Eric on 5/30/2017.
  */
-@RunWith(DataProviderRunner.class)
 public class GameOverPresenterTest {
 
     private GameUIStateManager gameUIStateManagerMock = mock(GameUIStateManager.class);
@@ -47,23 +43,6 @@ public class GameOverPresenterTest {
         FHDAudio audioMock = mock(FHDAudio.class);
 
         return new GameOverPresenter(gameUIStateManagerMock, screenChangerMock, playerMock, audioMock);
-    }
-
-    @DataProvider
-    public static Object[][] filteredGameUIStateEnums() {
-
-        Object[][] gameUIStateEnums = new Object[GameUIState.values().length - 1][1];
-
-        int count = 0;
-        for (GameUIState state : GameUIState.values()) {
-            if (state == GameUIState.GAME_OVER) {
-                continue;
-            }
-            gameUIStateEnums[count][0] = state;
-            count++;
-        }
-
-        return gameUIStateEnums;
     }
 
     /**
@@ -83,25 +62,6 @@ public class GameOverPresenterTest {
         verify(gameOverView, times(1)).standByState();
         verify(gameOverView, times(1)).gameOverState();
         verify(gameOverView, times(1)).setWavesCompleted(eq("10"));
-
-    }
-
-    /**
-     * Test with starting state as Standby and switch to every other state
-     * excluding game over
-     */
-    @Test
-    @UseDataProvider( "filteredGameUIStateEnums" )
-    public void stateChangeTest2(GameUIState state){
-
-        GameOverPresenter gameOverPresenter = createGameOverPresenter();
-
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
-
-        gameOverPresenter.setView(gameOverView);
-        gameOverPresenter.stateChange(state);
-
-        verify(gameOverView, times(2)).standByState();
 
     }
 

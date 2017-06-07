@@ -98,12 +98,11 @@ public class EnlistPresenter implements GameUIStateObserver {
 	public void placeTower() {
 		Logger.info("Enlist Presenter: placing tower");
 		if(canPlaceTower()) {
-			int cost = towerPlacement.getCurrentTower().getCost();
 			if (towerPlacement.placeTower()) {
 				audio.playSound(FHDSound.ACTOR_PLACE);
 				uiStateManager.setStateReturn();
+				int cost = towerPlacement.getCurrentTower().getCost();
 				player.spendMoney(cost);
-				towerPlacement.removeCurrentTower();
 				Logger.info("Enlist Presenter: tower placed");
 			} else {
 				Logger.info("Enlist Presenter: cannot place tower");

@@ -111,6 +111,7 @@ public class EnlistPresenterTest {
      * Test with starting state as Standby and change to all other states excluding
      * Enlisting and Placing Tower
      */
+    // Bit of an overkill... But I wanted to use a dataprovider at least once
     @Test
     @UseDataProvider( "filteredGameUIStateEnums" )
     public void stateChangeTest3(GameUIState state){
@@ -175,6 +176,84 @@ public class EnlistPresenterTest {
         enlistPresenter.createTower("RocketLauncher");
 
         verify(gameUIStateManagerMock, never()).setState(isA(GameUIState.class));
+
+    }
+
+    /**
+     * Test placing a tower
+     */
+    @Test
+    public void placeTowerTest1(){
+
+        EnlistPresenter enlistPresenter = createEnlistPresenter();
+        Tower towerMock = mock(Tower.class);
+        doReturn(GameUIState.PLACING_TOWER).when(gameUIStateManagerMock).getState();
+        doReturn(true).when(towerPlacementMock).isCurrentTower();
+        doReturn(true).when(towerPlacementMock).placeTower();
+        doReturn(towerMock).when(towerPlacementMock).getCurrentTower();
+        doReturn(1000).when(towerMock).getCost();
+
+        enlistPresenter.setView(enlistView);
+        enlistPresenter.placeTower();
+
+        verify(gameUIStateManagerMock, times(1)).setStateReturn();
+        verify(playerMock, times(1)).spendMoney(eq(1000));
+
+    }
+
+    /**
+     * Unsuccessfully place tower, state != PLACING_TOWER
+     */
+    @Test
+    public void placeTowerTest2(){
+
+        EnlistPresenter enlistPresenter = createEnlistPresenter();
+        doReturn(GameUIState.LEVEL_COMPLETED).when(gameUIStateManagerMock).getState();
+        doReturn(true).when(towerPlacementMock).isCurrentTower();
+
+        enlistPresenter.setView(enlistView);
+        enlistPresenter.placeTower();
+
+        verify(towerPlacementMock, never()).placeTower();
+
+
+    }
+
+    /**
+     * Unsuccessfully place tower, no current tower
+     */
+    @Test
+    public void placeTowerTest3(){
+
+        EnlistPresenter enlistPresenter = createEnlistPresenter();
+        doReturn(GameUIState.PLACING_TOWER).when(gameUIStateManagerMock).getState();
+        doReturn(false).when(towerPlacementMock).isCurrentTower();
+        doReturn(false).when(towerPlacementMock).placeTower();
+
+        enlistPresenter.setView(enlistView);
+        enlistPresenter.placeTower();
+
+        verify(towerPlacementMock, never()).placeTower();
+
+
+    }
+
+
+    /**
+     * Unsuccessfully place tower, method return false
+     */
+    @Test
+    public void placeTowerTest4(){
+
+        EnlistPresenter enlistPresenter = createEnlistPresenter();
+        doReturn(GameUIState.PLACING_TOWER).when(gameUIStateManagerMock).getState();
+        doReturn(true).when(towerPlacementMock).isCurrentTower();
+
+        enlistPresenter.setView(enlistView);
+        enlistPresenter.placeTower();
+
+        verify(gameUIStateManagerMock, never()).setStateReturn();
+
 
     }
 
