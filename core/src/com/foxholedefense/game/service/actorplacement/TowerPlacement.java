@@ -88,7 +88,7 @@ public class TowerPlacement {
 				healthBar.setActor(currentTower);
 				ArmorIcon armorIcon = healthFactory.loadArmorIcon();
 				armorIcon.setActor(currentTower);
-				currentTower = null;
+				removeCurrentTower();
 				Logger.info("TowerPlacement: placing tower");
 				return true;
 			} else {
