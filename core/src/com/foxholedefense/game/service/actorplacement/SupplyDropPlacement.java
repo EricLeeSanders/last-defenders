@@ -20,12 +20,12 @@ public class SupplyDropPlacement {
 		currentSupplyDropCrate.setVisible(false);
 	}
 	public void setLocation(Vector2 location){
-		Logger.info("SupplyDropPlacement: creating location");
+		Logger.info("SupplyDropPlacement: setting location");
 		currentSupplyDropCrate.setVisible(true);
 		currentSupplyDropCrate.setShowRange(true);
 		currentSupplyDropCrate.setPositionCenter(location);
 	}
-	public void finishPlacement() {
+	public void placeSupplyDrop() {
 		if (isCurrentSupplyDropCrate()) {
 			Logger.info("SupplyDropPlacement: finishing placement");
 			supportActorFactory.loadSupplyDrop().beginSupplyDrop(currentSupplyDropCrate.getPositionCenter());

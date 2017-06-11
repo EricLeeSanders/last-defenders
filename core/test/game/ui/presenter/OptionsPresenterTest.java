@@ -32,7 +32,7 @@ import static org.mockito.Mockito.verify;
  */
 
 public class OptionsPresenterTest {
-    //GameUIStateManager uiStateManager, ScreenChanger screenChanger, Resources resources, FHDAudio audio
+
     private GameUIStateManager uiStateManager = mock(GameUIStateManager.class);
     private ScreenChanger screenChanger = mock(ScreenChanger.class);
     private UserPreferences userPreferences = mock(UserPreferences.class);

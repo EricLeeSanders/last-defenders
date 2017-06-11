@@ -95,7 +95,5 @@ public class AirStrikePlacementTest {
         airStrikePlacement.finishCurrentAirStrike();
         verify(airStrike, times(1)).beginAirStrike();
 
-        assertNull(airStrikePlacement.getCurrentAirStrike());
-
     }
 }

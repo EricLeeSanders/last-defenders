@@ -7,19 +7,13 @@ import com.foxholedefense.game.model.actor.support.SupplyDrop;
 import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
 import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
 import com.foxholedefense.game.service.factory.SupportActorFactory;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 
 import game.model.actor.support.SupplyDropCrateTest;
-import game.model.actor.support.SupplyDropTest;
 import util.TestUtil;
 
 
@@ -76,7 +70,7 @@ public class SupplyDropPlacementTest {
         doReturn(supplyDropMock).when(supportActorFactory).loadSupplyDrop();
         doNothing().when(supplyDropMock).beginSupplyDrop(isA(FHDVector2.class));
 
-        supplyDropPlacement.finishPlacement();
+        supplyDropPlacement.placeSupplyDrop();
 
         assertFalse(supplyDropCrate.isShowRange());
         verify(supplyDropMock, times(1)).beginSupplyDrop(isA(FHDVector2.class));

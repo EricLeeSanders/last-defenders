@@ -25,6 +25,7 @@ import static org.mockito.Mockito.verify;
  */
 
 public class LevelCompletedPresenterTest {
+
     private GameUIStateManager uiStateManager = mock(GameUIStateManager.class);
     private ScreenChanger screenChanger = mock(ScreenChanger.class);
     private LevelCompletedView view = mock(LevelCompletedView.class);

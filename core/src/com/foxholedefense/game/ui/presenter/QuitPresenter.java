@@ -38,28 +38,46 @@ public class QuitPresenter implements GameUIStateObserver {
 
     public void resume(){
         Logger.info("QuitPresenter: Resume");
-        audio.playSound(FHDSound.SMALL_CLICK);
-        uiStateManager.setStateReturn();
-        if(!keepGamePaused){
-            gameStateManager.setState(GameState.PLAY);
+        if(canResume()) {
+            audio.playSound(FHDSound.SMALL_CLICK);
+            uiStateManager.setStateReturn();
+            if (!keepGamePaused) {
+                gameStateManager.setState(GameState.PLAY);
+            }
         }
     }
 
     public void newGame(){
         Logger.info("QuitPresenter: New Game");
-        audio.playSound(FHDSound.SMALL_CLICK);
-        screenChanger.changeToLevelSelect();
+        if(canChangeToNewGame()) {
+            audio.playSound(FHDSound.SMALL_CLICK);
+            screenChanger.changeToLevelSelect();
+        }
     }
 
     public void mainMenu() {
         Logger.info("QuitPresenter: Main Menu");
-        audio.playSound(FHDSound.SMALL_CLICK);
-        screenChanger.changeToMenu();
+        if(canChangeToMainMenu()) {
+            audio.playSound(FHDSound.SMALL_CLICK);
+            screenChanger.changeToMenu();
+        }
 
     }
 
     public void quit(){
         gameStateManager.setState(GameState.QUIT);
+    }
+
+    private boolean canResume(){
+        return uiStateManager.getState().equals(GameUIState.QUIT_MENU);
+    }
+
+    private boolean canChangeToNewGame(){
+        return uiStateManager.getState().equals(GameUIState.QUIT_MENU);
+    }
+
+    private boolean canChangeToMainMenu(){
+        return uiStateManager.getState().equals(GameUIState.QUIT_MENU);
     }
 
     private void quitState(){
