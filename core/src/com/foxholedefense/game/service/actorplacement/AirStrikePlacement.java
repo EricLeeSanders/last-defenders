@@ -49,7 +49,8 @@ public class AirStrikePlacement {
 		return (currentAirStrike != null);
 	}
 
-	public AirStrike getCurrentAirStrike() {
-		return currentAirStrike;
+	public boolean isReadyToBegin(){
+		return isCurrentAirStrike()
+				&& currentAirStrike.isReadyToBegin();
 	}
 }
