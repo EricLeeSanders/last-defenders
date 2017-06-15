@@ -3,7 +3,7 @@
 <module>
 	<source path="com/foxholedefense "/>
 
-	<extend-configuration-property name="gdx.reflect.include" value="com.foxholedefense.util.datastructures.pool.FHDVector2" />
+	<extend-configuration-property name="gdx.reflect.include" value="com.foxholedefense.testutil.datastructures.pool.FHDVector2" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.foxholedefense.action.FHDSequenceAction" />
 	<extend-configuration-property name="gdx.reflect.include" value="com.foxholedefense.action.WaypointAction" />
 </module>

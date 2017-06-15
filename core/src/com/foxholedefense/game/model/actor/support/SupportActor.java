@@ -51,8 +51,8 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	protected void drawRange(Batch batch){
 		float width = range * 2;
 		float height = range * 2;
-		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, width);
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, height);
+		float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, width);
+		float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, height);
 		batch.draw(rangeTexture,x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
 	}
 
@@ -93,7 +93,7 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	@Override
 	public Vector2 getGunPos() {
 		Vector2 centerPos = getPositionCenter();
-		FHDVector2 rotatedCoords = ActorUtil.getRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y), centerPos.x, centerPos.y, Math.toRadians(getRotation()));
+		FHDVector2 rotatedCoords = ActorUtil.calculateRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y), centerPos.x, centerPos.y, Math.toRadians(getRotation()));
 		rotatedGunPos.set(rotatedCoords.x, rotatedCoords.y);
 		rotatedCoords.free();
 		return rotatedGunPos;

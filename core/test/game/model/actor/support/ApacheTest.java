@@ -3,7 +3,6 @@ package game.model.actor.support;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
@@ -13,20 +12,14 @@ import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.FHDAudio;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.Dimension;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 
-import util.TestUtil;
+import testutil.TestUtil;
 
 
 import static org.junit.Assert.assertEquals;
@@ -36,7 +29,6 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 

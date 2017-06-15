@@ -8,7 +8,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.actor.ActorGroups;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
@@ -16,7 +15,6 @@ import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.service.actorplacement.TowerPlacement;
 import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.game.service.factory.HealthFactory;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 
 import org.junit.Before;
@@ -27,7 +25,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 
-import util.TestUtil;
+import testutil.TestUtil;
 
 
 import static org.junit.Assert.assertEquals;

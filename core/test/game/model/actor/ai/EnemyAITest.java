@@ -7,18 +7,16 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.ai.EnemyAI;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.util.Logger;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
-import org.powermock.api.mockito.PowerMockito;
-import static org.mockito.Mockito.*;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-import util.TestUtil;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+
+import testutil.TestUtil;
 
 
 import static org.mockito.Mockito.mock;

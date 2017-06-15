@@ -10,20 +10,15 @@ import com.foxholedefense.game.model.actor.support.AirStrikeLocation;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.foxholedefense.util.FHDAudio;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 
-import util.TestUtil;
+import testutil.TestUtil;
 
 
 import static org.junit.Assert.assertEquals;

@@ -40,8 +40,8 @@ public class ArmorDestroyedEffect extends LabelEffect {
 
     public Actor initialize(CombatActor actor){
         this.actor = actor;
-        setX(ActorUtil.calcXBotLeftFromCenter(actor.getPositionCenter().x, getWidth()));
-        setY(ActorUtil.calcYBotLeftFromCenter(actor.getPositionCenter().y, getHeight()));
+        setX(ActorUtil.calcBotLeftPointFromCenter(actor.getPositionCenter().x, getWidth()));
+        setY(ActorUtil.calcBotLeftPointFromCenter(actor.getPositionCenter().y, getHeight()));
 
         addAction(
                 Actions.parallel(

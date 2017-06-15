@@ -42,7 +42,7 @@ public class WaveOverCoinEffect extends LabelEffect {
         setFontScale(SCALE);
         pack();
 
-        float x = ActorUtil.calcXBotLeftFromCenter((Resources.VIRTUAL_WIDTH / 2), getWidth());
+        float x = ActorUtil.calcBotLeftPointFromCenter((Resources.VIRTUAL_WIDTH / 2), getWidth());
         float y = Y_BEGIN_OFFSET;
 
         setPosition(x, y);

@@ -1,4 +1,4 @@
-package util;
+package testutil;
 
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -29,22 +29,17 @@ import com.foxholedefense.game.model.actor.combat.tower.TowerTank;
 import com.foxholedefense.game.model.actor.combat.tower.TowerTurret;
 import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager;
 import com.foxholedefense.game.model.actor.effects.label.ArmorDestroyedEffect;
-import com.foxholedefense.game.model.actor.effects.label.LabelEffect;
 import com.foxholedefense.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.BloodSplatter;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.projectile.Bullet;
-import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.game.service.factory.HealthFactory;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
-
-
-import org.mockito.Matchers;
 
 
 import static org.mockito.Mockito.*;

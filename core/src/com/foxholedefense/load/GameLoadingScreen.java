@@ -52,8 +52,8 @@ public class GameLoadingScreen extends AbstractScreen{
 		resources.loadAssetSync(Resources.LOAD_ATLAS, TextureAtlas.class);
 		TextureAtlas atlas = resources.getAsset(Resources.LOAD_ATLAS, TextureAtlas.class);
 		Image image = new Image(atlas.findRegion("img-loading"));
-		float x = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, image.getWidth());
-		float y = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, image.getHeight());
+		float x = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, image.getWidth());
+		float y = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, image.getHeight());
 		image.setPosition(x, y);
 		loadTime = 0;
 		stage.addActor(image);

@@ -37,8 +37,8 @@ public class AirStrikeLocation extends Actor {
 	protected void drawRange(Batch batch){
 		float width = radius * 2;
 		float height = radius * 2;
-		float x = ActorUtil.calcXBotLeftFromCenter(location.x, width);
-		float y = ActorUtil.calcYBotLeftFromCenter(location.y, height);
+		float x = ActorUtil.calcBotLeftPointFromCenter(location.x, width);
+		float y = ActorUtil.calcBotLeftPointFromCenter(location.y, height);
 		batch.draw(rangeTexture,x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
 	}
 	

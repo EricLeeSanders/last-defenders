@@ -5,20 +5,17 @@ import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
-import com.foxholedefense.util.Logger;
+
 
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 
 import static org.mockito.Mockito.*;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-import util.TestUtil;
+
+import testutil.TestUtil;
 
 
 /**

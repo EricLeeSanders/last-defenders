@@ -2,7 +2,6 @@ package game.model.actor.projectile;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeType.Size;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.helper.Damage;
@@ -11,20 +10,18 @@ import com.foxholedefense.game.model.actor.projectile.Explosion;
 import com.foxholedefense.game.model.actor.projectile.Rocket;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.Dimension;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 
-import util.TestUtil;
+import testutil.TestUtil;
 
 
 import static org.junit.Assert.assertEquals;

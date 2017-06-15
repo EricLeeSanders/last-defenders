@@ -8,7 +8,6 @@ import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.projectile.Explosion;
 import com.foxholedefense.util.FHDAudio;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
 import org.junit.Before;
@@ -19,7 +18,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 
-import util.TestUtil;
+import testutil.TestUtil;
 
 
 import static org.junit.Assert.assertEquals;

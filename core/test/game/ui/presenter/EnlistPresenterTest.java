@@ -21,7 +21,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 
-import util.TestUtil;
+import testutil.TestUtil;
 
 
 import static org.mockito.Matchers.eq;
