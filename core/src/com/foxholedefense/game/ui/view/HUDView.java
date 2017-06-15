@@ -294,8 +294,8 @@ public class HUDView extends Group implements IHUDView {
 		btnEnlist.setVisible(true);
 		btnSupport.setVisible(true);
 		btnOptions.setVisible(true);
-		btnPause.setVisible(presenter.isGamePaused());
-		btnResume.setVisible(!presenter.isGamePaused());
+		btnPause.setVisible(!presenter.isGamePaused());
+		btnResume.setVisible(presenter.isGamePaused());
 
 	}
 }
