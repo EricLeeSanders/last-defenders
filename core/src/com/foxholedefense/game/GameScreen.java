@@ -3,6 +3,7 @@ package com.foxholedefense.game;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
@@ -42,9 +43,10 @@ public class GameScreen extends AbstractScreen {
 		LevelStateManager levelStateManager = new LevelStateManager();
 		uiStateManager = new GameUIStateManager(levelStateManager);
 		this.gameStateManager = gameStateManager;
-		gameStage = new GameStage(intLevel, player, actorGroups, audio, levelStateManager, uiStateManager, getViewport(), resources);
+		SpriteBatch spriteBatch = new SpriteBatch();
+		gameStage = new GameStage(intLevel, player, actorGroups, audio, levelStateManager, uiStateManager, getViewport(), resources, spriteBatch);
 		gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager, levelStateManager, gameStateManager
-						, screenChanger, super.getInputMultiplexer(), getViewport(), resources, audio, gameStage);
+						, screenChanger, super.getInputMultiplexer(), getViewport(), resources, audio, gameStage, spriteBatch);
 
 		gameStage.setMessageDisplayer(gameUIStage.getMessageDisplayer());
 

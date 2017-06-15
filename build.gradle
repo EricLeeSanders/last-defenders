@@ -110,7 +110,7 @@ project(":core") {
 
         testCompile 'junit:junit:4.12'
         testCompile "org.mockito:mockito-all:1.9.5"
-        
+
         testCompile 'org.powermock:powermock-api-mockito:1.6.1'
         testCompile 'org.powermock:powermock-module-junit4-rule-agent:1.6.1'
         testCompile 'org.powermock:powermock-module-junit4-rule:1.6.1'

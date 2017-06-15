@@ -1,6 +1,7 @@
 package com.foxholedefense.game.ui;
 
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -62,9 +63,9 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 			, GameUIStateManager uiStateManager, LevelStateManager levelStateManager
 			, GameStateManager gameStateManager, ScreenChanger screenChanger
 			, InputMultiplexer imp, Viewport viewport, Resources resources
-			, FHDAudio audio, GameStage gameStage) {
+			, FHDAudio audio, GameStage gameStage, SpriteBatch spriteBatch) {
 
-		super(viewport);
+		super(viewport, spriteBatch);
 		this.imp = imp;
 		this.player = player;
 		this.towerGroup = towerGroup;
