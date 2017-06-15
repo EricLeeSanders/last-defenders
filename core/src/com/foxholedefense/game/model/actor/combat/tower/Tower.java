@@ -107,8 +107,8 @@ public abstract class Tower extends CombatActor {
 		}
 		float width = getRange() * 2;
 		float height = getRange() * 2;
-		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, width);
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, height);
+		float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, width);
+		float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, height);
 		batch.draw(currentRangeRegion,x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
 	}
 	/**

@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -85,8 +84,8 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 		if(isShowRange()){
 			float width = RANGE * 2;
 			float height = RANGE * 2;
-			float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, width);
-			float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, height);
+			float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, width);
+			float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, height);
 			batch.draw(rangeTexture,x, y, getOriginX(), getOriginY(), width, height, 1, 1, getRotation());
 		}
 	}

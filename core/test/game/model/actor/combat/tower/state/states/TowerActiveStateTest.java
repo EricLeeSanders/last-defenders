@@ -10,7 +10,6 @@ import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager;
 import com.foxholedefense.game.model.actor.combat.tower.state.states.TowerActiveState;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
-import com.foxholedefense.util.Logger;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +19,7 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 
-import util.TestUtil;
+import testutil.TestUtil;
 
 
 import static org.mockito.Matchers.isA;

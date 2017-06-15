@@ -1,7 +1,5 @@
 package com.foxholedefense.game.model.actor.combat.enemy;
 
-import java.util.Random;
-
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
@@ -10,11 +8,9 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.action.FHDSequenceAction;
 import com.foxholedefense.action.WaypointAction;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager;
 import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.foxholedefense.game.model.actor.combat.state.CombatActorState;
 import com.foxholedefense.game.model.actor.combat.state.StateManager;
@@ -89,7 +85,7 @@ public abstract class Enemy extends CombatActor {
 		// That ensures that the entire body of the enemy is off the screen when spawning.
 		// rotatedCoords are the coords of the top/front of the enemy.
 		Vector2 centerPos = getPositionCenter();
-		FHDVector2 rotatedCoords = ActorUtil.getRotatedCoords(this.getX() + getWidth(), centerPos.y, centerPos.x,  centerPos.y, Math.toRadians(getRotation()));
+		FHDVector2 rotatedCoords = ActorUtil.calculateRotatedCoords(this.getX() + getWidth(), centerPos.y, centerPos.x,  centerPos.y, Math.toRadians(getRotation()));
 
 		// Reposition the enemy so that it is off the screen
 		float newX = this.getPositionCenter().x + (this.getPositionCenter().x - rotatedCoords.x);

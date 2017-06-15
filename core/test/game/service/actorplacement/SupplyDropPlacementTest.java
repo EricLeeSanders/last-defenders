@@ -14,7 +14,7 @@ import org.junit.Test;
 
 
 import game.model.actor.support.SupplyDropCrateTest;
-import util.TestUtil;
+import testutil.TestUtil;
 
 
 import static org.junit.Assert.assertEquals;

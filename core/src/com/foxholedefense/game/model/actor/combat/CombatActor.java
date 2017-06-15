@@ -143,7 +143,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 
 	public Vector2 getGunPos() {
 		Vector2 centerPosition = getPositionCenter();
-		FHDVector2 rotatedCoords = ActorUtil.getRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y), centerPosition.x, centerPosition.y, Math.toRadians(getRotation()));
+		FHDVector2 rotatedCoords = ActorUtil.calculateRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y), centerPosition.x, centerPosition.y, Math.toRadians(getRotation()));
 		rotatedGunPos.set(rotatedCoords.x, rotatedCoords.y);
 		rotatedCoords.free();
 		return rotatedGunPos;

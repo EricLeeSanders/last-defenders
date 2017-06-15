@@ -37,8 +37,8 @@ public class TowerHealEffect extends LabelEffect {
     public Actor initialize(Tower tower){
         this.tower = tower;
 
-        float x = ActorUtil.calcXBotLeftFromCenter(tower.getPositionCenter().x, getWidth());
-        float y = ActorUtil.calcYBotLeftFromCenter(tower.getPositionCenter().y, getHeight());
+        float x = ActorUtil.calcBotLeftPointFromCenter(tower.getPositionCenter().x, getWidth());
+        float y = ActorUtil.calcBotLeftPointFromCenter(tower.getPositionCenter().y, getHeight());
 
         setPosition(x, y );
 

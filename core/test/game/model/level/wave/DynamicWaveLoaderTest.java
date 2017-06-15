@@ -10,17 +10,12 @@ import com.foxholedefense.game.model.level.SpawningEnemy;
 import com.foxholedefense.game.model.level.wave.impl.DynamicWaveLoader;
 import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.game.service.factory.CombatActorFactory.SpawningEnemyPool;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-import util.TestUtil;
+import testutil.TestUtil;
 
 
 import static org.junit.Assert.assertTrue;

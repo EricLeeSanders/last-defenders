@@ -3,7 +3,6 @@ package com.foxholedefense.game.model.actor.combat.enemy;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
@@ -50,7 +49,7 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 	public Polygon getBody() {
 		body.setOrigin((this.getWidth() / 2), (this.getHeight() / 2));
 		body.setRotation(this.getRotation());
-		body.setPosition(ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, this.getWidth()), ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, this.getHeight()));
+		body.setPosition(ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, this.getWidth()), ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, this.getHeight()));
 		return body;
 	}
 }

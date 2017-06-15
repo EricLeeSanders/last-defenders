@@ -17,7 +17,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 
-import util.TestUtil;
+import testutil.TestUtil;
 
 
 import static org.mockito.Matchers.eq;

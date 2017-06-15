@@ -5,25 +5,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.effects.label.LabelEffect;
 import com.foxholedefense.game.model.actor.effects.label.TowerHealEffect;
-import com.foxholedefense.game.model.actor.support.SupplyDrop;
 import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
 import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory.SupplyDropCratePool;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 
-import util.TestUtil;
+import testutil.TestUtil;
 
 
 import static org.junit.Assert.assertEquals;

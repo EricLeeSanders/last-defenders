@@ -7,19 +7,13 @@ import com.foxholedefense.game.model.actor.support.SupplyDrop;
 import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
 import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory.SupplyDropPool;
-import com.foxholedefense.game.service.factory.SupportActorFactory.SupportActorPool;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 
-import util.TestUtil;
+import testutil.TestUtil;
 
 
 import static org.junit.Assert.assertEquals;

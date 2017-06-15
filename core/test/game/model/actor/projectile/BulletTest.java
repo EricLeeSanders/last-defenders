@@ -8,7 +8,6 @@ package game.model.actor.projectile;
         import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
         import com.foxholedefense.game.model.actor.combat.tower.Tower;
         import com.foxholedefense.game.model.actor.projectile.Bullet;
-        import com.foxholedefense.util.Logger;
         import com.foxholedefense.util.datastructures.Dimension;
 
 
@@ -20,7 +19,7 @@ package game.model.actor.projectile;
         import org.powermock.modules.junit4.PowerMockRunner;
 
 
-        import util.TestUtil;
+        import testutil.TestUtil;
 
 
         import static org.junit.Assert.assertEquals;

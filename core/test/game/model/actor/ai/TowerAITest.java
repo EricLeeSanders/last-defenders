@@ -2,27 +2,23 @@ package game.model.actor.ai;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.ai.towerai.FirstEnemyAI;
 import com.foxholedefense.game.model.actor.ai.towerai.LastEnemyAI;
 import com.foxholedefense.game.model.actor.ai.towerai.LeastHPEnemyAI;
 import com.foxholedefense.game.model.actor.ai.towerai.MostHPEnemyAI;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.util.Logger;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
-import org.powermock.api.mockito.PowerMockito;
-import static org.mockito.Mockito.*;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
-import util.TestUtil;
+
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
+
+
+import testutil.TestUtil;
 
 /**
  * Tests the Tower AI.

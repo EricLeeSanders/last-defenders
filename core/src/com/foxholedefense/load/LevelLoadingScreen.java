@@ -70,30 +70,30 @@ public class LevelLoadingScreen extends AbstractScreen{
 		TextureAtlas atlas = resources.getAsset(Resources.LOAD_ATLAS, TextureAtlas.class);
 		
 		Image loadingBar = new Image(atlas.findRegion("level-load-bar"));
-		startPos = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, LOADING_BAR_SIZE.getWidth());
+		startPos = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, LOADING_BAR_SIZE.getWidth());
 		endPos = LOADING_BAR_SIZE.getWidth();
 		loadingBar.setSize(LOADING_BAR_SIZE.getWidth(), LOADING_BAR_SIZE.getHeight());
-		loadingBar.setPosition(startPos, ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()));
+		loadingBar.setPosition(startPos, ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()));
 		
 		
 		loadingBarBg = new Image(atlas.findRegion("level-load-bar-bg"));
 		loadingBarBg.setSize(LOADING_BAR_SIZE.getWidth(), LOADING_BAR_SIZE.getHeight());
-		loadingBarBg.setPosition(startPos, ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()));
+		loadingBarBg.setPosition(startPos, ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()));
 
 		
 		loadingLabel = new Label("LOADING: 0%", resources.getSkin());
 		loadingLabel.setFontScale(0.75f);
 		loadingLabel.setAlignment(Align.left);
 		loadingLabel.setColor(1f, 1f, 1f, 1f);
-		float lblX = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, loadingLabel.getWidth()) + 30;
-		float lblY = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingLabel.getHeight()) ;
+		float lblX = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, loadingLabel.getWidth()) + 30;
+		float lblY = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingLabel.getHeight()) ;
 		loadingLabel.setPosition(lblX, lblY);
 		
 		
 		Image screen = new Image(atlas.findRegion("level-load-screen"));
 		screen.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
-		float screenX = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, screen.getWidth());
-		float screenY = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, screen.getHeight());
+		float screenX = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, screen.getWidth());
+		float screenY = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, screen.getHeight());
 		screen.setPosition(screenX, screenY);
 
 		stage.addActor(loadingBar);
