@@ -88,7 +88,6 @@ public class TowerPlacement {
 				healthBar.setActor(currentTower);
 				ArmorIcon armorIcon = healthFactory.loadArmorIcon();
 				armorIcon.setActor(currentTower);
-				removeCurrentTower();
 				Logger.info("TowerPlacement: placing tower");
 				return true;
 			} else {
@@ -126,10 +125,12 @@ public class TowerPlacement {
 	/**
 	 * Remove the current tower
 	 */
-	public void removeCurrentTower() {
+	public void removeCurrentTower(boolean free) {
 		Logger.info("TowerPlacement: removing tower");
 		if (isCurrentTower()) {
-			currentTower.freeActor();
+			if(free) {
+				currentTower.freeActor();
+			}
 			currentTower = null;
 		}
 	}

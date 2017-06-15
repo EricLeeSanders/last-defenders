@@ -108,9 +108,10 @@ public class TowerPlacementTest {
         doReturn(healthBar).when(healthFactory).loadHealthBar();
         doReturn(armorIcon).when(healthFactory).loadArmorIcon();
 
-        towerPlacement.placeTower();
+        boolean placed = towerPlacement.placeTower();
 
-        assertNull(towerPlacement.getCurrentTower());
+        assertTrue(placed);
+
 
     }
 
