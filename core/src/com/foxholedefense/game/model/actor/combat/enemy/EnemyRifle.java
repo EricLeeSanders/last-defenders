@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
@@ -50,7 +49,7 @@ public class EnemyRifle extends Enemy {
 	public void attackTarget(ITargetable target) {
 		if(target != null){
 			audio.playSound(FHDSound.RIFLE);
-			projectileFactory.loadBullet().initialize(this, target, this.getGunPos(), BULLET_SIZE);
+			projectileFactory.loadBullet().initialize(this, target, BULLET_SIZE);
 		}
 	}
 

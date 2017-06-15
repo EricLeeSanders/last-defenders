@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
+import com.foxholedefense.state.ObservableStateManager;
+import com.foxholedefense.state.StateObserver;
 import com.foxholedefense.util.Logger;
 
 /**
@@ -12,52 +15,17 @@ import com.foxholedefense.util.Logger;
  * @author Eric
  *
  */
-public class LevelStateManager {
+public class LevelStateManager extends ObservableStateManager<LevelState, LevelStateObserver>{
 
-	private LevelState state;
-	private SnapshotArray<ILevelStateObserver> observers = new SnapshotArray<ILevelStateObserver>();
 
 	public LevelStateManager() {
-		this.setState(LevelState.STANDBY);
+		setState(LevelState.STANDBY);
 	}
 
-	/**
-	 * Attach an observer and add it to observers list.
-	 * 
-	 * @param observer
-	 */
-	public void attach(ILevelStateObserver observer) {
-		observers.add(observer);
+	protected void notifyObserver(LevelStateObserver observer, LevelState state) {
+		observer.stateChange(state);
 	}
 
-	/**
-	 * Notify all observers of state change
-	 */
-	public void notifyObservers() {
-		Logger.info("Level state: Notify Observers");
-		Object[] objects = observers.begin();
-		for(int i = observers.size - 1; i >= 0; i--){
-			ILevelStateObserver observer = (ILevelStateObserver) objects[i];
-			Logger.info("Level State Notifying: " + observer.getClass().getName());
-			observer.changeLevelState(state);
-		}
-		observers.end();
-	}
-
-	/**
-	 * Set the state of the Level
-	 * 
-	 * @param state
-	 */
-	public void setState(LevelState state) {
-		Logger.info("Changing Level state: " + this.getState() + " to state: " + state);
-		this.state = state;
-		notifyObservers();
-	}
-
-	public LevelState getState() {
-		return state;
-	}
 
 	public enum LevelState {
 		WAVE_IN_PROGRESS, STANDBY, GAME_OVER

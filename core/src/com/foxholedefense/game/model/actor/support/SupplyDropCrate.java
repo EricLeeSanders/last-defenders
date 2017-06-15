@@ -9,6 +9,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
+import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.VisibleAction;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.actor.GameActor;
@@ -21,16 +24,19 @@ import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.Logger;
 
 public class SupplyDropCrate extends GameActor implements Pool.Poolable{
+
 	public static final int COST = 1000;
 	private static final float SUPPLYDROP_DURATION = 1f;
 	private static final float RANGE = 150f;
 	private static final Dimension TEXTURE_SIZE = new Dimension(50, 50);
+
 	private Circle rangeCircle = new Circle();
 	private boolean active, showRange;
 	private SupplyDropCratePool pool;
 	private EffectFactory effectFactory;
 	private Group towerGroup;
 	private TextureRegion rangeTexture;
+
 	public SupplyDropCrate(TextureRegion textureRegion, TextureRegion rangeTexture, SupplyDropCratePool pool,
 						   Group towerGroup, EffectFactory effectFactory) {
 		super(TEXTURE_SIZE);
@@ -42,20 +48,28 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 
 	}
 	
-	public SupplyDropCrate beginDrop(float dropDelay, float x, float y){
+	public SupplyDropCrate beginDrop(float dropDelay, Vector2 destination){
 		Logger.info("SupplyDropCrate: Beginning Crate drop");
-		active = true;
-		setPositionCenter(x, y);
-		addAction(Actions.delay(dropDelay, Actions.scaleTo(0.5f, 0.5f, SUPPLYDROP_DURATION, Interpolation.linear)));
+
 		setVisible(false);
-		addAction(Actions.delay(dropDelay, Actions.visible(true)));
+		setActive(true);
+		setPositionCenter(destination);
+
+		ScaleToAction scaleToAction = Actions.scaleTo(0.5f, 0.5f, SUPPLYDROP_DURATION, Interpolation.linear);
+		DelayAction scaleDelayAction = Actions.delay(dropDelay, scaleToAction);
+		addAction(scaleDelayAction);
+
+		VisibleAction visibleAction = Actions.visible(true);
+		DelayAction visibleDelayAction = Actions.delay(dropDelay, visibleAction);
+		addAction(visibleDelayAction);
+
 		return this;
 	}
 	
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		if(active){
+		if(isActive()){
 			if(this.getActions().size <= 0){
 				healActors();
 				pool.free(this);
@@ -70,8 +84,8 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 		if(isShowRange()){
 			float width = RANGE * 2;
 			float height = RANGE * 2;
-			float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, width);
-			float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, height);
+			float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, width);
+			float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, height);
 			batch.draw(rangeTexture,x, y, getOriginX(), getOriginY(), width, height, 1, 1, getRotation());
 		}
 	}
@@ -81,8 +95,9 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 		for(Actor actor : towerGroup.getChildren()){
 			if(actor instanceof Tower){
 				Tower tower = (Tower)actor;
-				if(CollisionDetection.targetWithinRange(tower.getBody(), getRangeShape())){
+				if(CollisionDetection.shapesIntersect(tower.getBody(), getRangeShape())){
 					tower.heal();
+					tower.resetArmor();
 					TowerHealEffect effect =  effectFactory.loadLabelEffect(TowerHealEffect.class);
 					effect.initialize(tower);
 
@@ -128,8 +143,8 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 	@Override
 	public void reset() {
 		Logger.info("SupplyDropCrate: Resetting");
-		active = false;
-		showRange = false;
+		setActive(false);
+		setShowRange(false);
 		this.setPosition(0, 0);
 		this.setRotation(0);
 		this.clear();

@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
-import com.foxholedefense.game.model.actor.health.interfaces.IPlatedArmor;
+import com.foxholedefense.game.model.actor.health.interfaces.PlatedArmor;
 import com.foxholedefense.game.model.actor.interfaces.IRocket;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.game.model.actor.interfaces.IVehicle;
@@ -17,6 +17,8 @@ import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPoo
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.DebugOptions;
+import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
@@ -27,11 +29,11 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  *
  */
-public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRocket {
+public class EnemyTank extends Enemy implements PlatedArmor, IVehicle, IRocket {
 
 	private static final float HEALTH = 20;
 	private static final float ARMOR = 10;
-	private static final float ATTACK = 10;
+	private static final float ATTACK = 4;
 	private static final float ATTACK_SPEED = 0.9f;
 	private static final float RANGE = 80;
 	private static final float SPEED = 45;
@@ -49,11 +51,13 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRocket 
 	private float bodyRotation;
 	private Polygon body;
 	private ProjectileFactory projectileFactory;
+	private FHDAudio audio;
 
-	public EnemyTank( TextureRegion bodyRegion, TextureRegion turretRegion, TextureRegion[] animatedRegions, CombatActorPool<EnemyTank> pool, Group targetGroup, ProjectileFactory projectileFactory) {
+	public EnemyTank( TextureRegion bodyRegion, TextureRegion turretRegion, TextureRegion[] animatedRegions, CombatActorPool<EnemyTank> pool, Group targetGroup, ProjectileFactory projectileFactory, FHDAudio audio) {
 		super(turretRegion, animatedRegions, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
 		this.bodyRegion = bodyRegion;
 		this.projectileFactory = projectileFactory;
+		this.audio = audio;
 		body = new Polygon(bodyPoints);
 	}
 
@@ -68,8 +72,8 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRocket 
 		if (!isAttacking()) {
 			bodyRotation = getRotation();
 		}
-		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
+		float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
+		float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
 		// draw body
 		batch.draw(bodyRegion, x, y, TEXTURE_SIZE_BODY.getWidth() / 2, TEXTURE_SIZE_BODY.getHeight() / 2, TEXTURE_SIZE_BODY.getWidth(), TEXTURE_SIZE_BODY.getHeight()
 				, 1, 1, bodyRotation);
@@ -101,8 +105,8 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRocket 
 		body.setOrigin(TEXTURE_SIZE_BODY.getWidth()/2, TEXTURE_SIZE_BODY.getHeight()/2);
 		body.setRotation(bodyRotation);
 
-		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
+		float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
+		float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
 		body.setPosition(x, y);
 
 		return body;
@@ -117,7 +121,8 @@ public class EnemyTank extends Enemy implements IPlatedArmor, IVehicle, IRocket 
 	@Override
 	public void attackTarget(ITargetable target) {
 		if(target != null){
-			projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), getTargetGroup(), this.getGunPos(), ROCKET_SIZE, AOE_RADIUS);
+			audio.playSound(FHDSound.ROCKET_LAUNCH);
+			projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
 		}
 	}
 

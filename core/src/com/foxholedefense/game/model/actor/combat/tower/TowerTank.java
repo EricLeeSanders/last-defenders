@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
-import com.foxholedefense.game.model.actor.health.interfaces.IPlatedArmor;
+import com.foxholedefense.game.model.actor.health.interfaces.PlatedArmor;
 import com.foxholedefense.game.model.actor.interfaces.IRotatable;
 import com.foxholedefense.game.model.actor.interfaces.IRocket;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
@@ -18,6 +18,8 @@ import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPoo
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.DebugOptions;
+import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
@@ -28,7 +30,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  *
  */
-public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatable, IRocket {
+public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatable, IRocket {
 
 	private static final float HEALTH = 20;
 	private static final float ARMOR = 10;
@@ -55,12 +57,14 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	private TextureRegion turretRegion;
 	private float bodyRotation;
 	private ProjectileFactory projectileFactory;
+	private FHDAudio audio;
 
-	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<TowerTank> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory) {
+	public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<TowerTank> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
 		super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
 		this.bodyRegion = bodyRegion;
 		this.turretRegion = turretRegion;
 		this.projectileFactory = projectileFactory;
+		this.audio = audio;
 		body = new Polygon(bodyPoints);
 	}
 
@@ -79,8 +83,8 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 			drawRange(batch);
 		}
 
-		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
+		float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
+		float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
 		// draw body
 		batch.draw(bodyRegion, x, y, TEXTURE_SIZE_BODY.getWidth() / 2, TEXTURE_SIZE_BODY.getHeight() / 2, TEXTURE_SIZE_BODY.getWidth(), TEXTURE_SIZE_BODY.getHeight()
 				, 1, 1, bodyRotation);
@@ -113,8 +117,8 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	public Polygon getBody() {
 		body.setOrigin(TEXTURE_SIZE_BODY.getWidth()/2, TEXTURE_SIZE_BODY.getHeight()/2);
 		body.setRotation(bodyRotation);
-		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
+		float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
+		float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
 		body.setPosition(x, y);
 
 		return body;
@@ -129,7 +133,8 @@ public class TowerTank extends Tower implements IVehicle, IPlatedArmor, IRotatab
 	@Override
 	public void attackTarget(ITargetable target) {
 		if(target != null){
-			projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), getTargetGroup(), this.getGunPos(), ROCKET_SIZE, AOE_RADIUS);
+			audio.playSound(FHDSound.ROCKET_LAUNCH);
+			projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
 		}
 	}
 	

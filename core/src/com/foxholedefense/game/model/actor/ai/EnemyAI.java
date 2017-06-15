@@ -5,7 +5,7 @@ import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.health.interfaces.IPlatedArmor;
+import com.foxholedefense.game.model.actor.health.interfaces.PlatedArmor;
 import com.foxholedefense.game.model.actor.interfaces.IRocket;
 
 /**
@@ -32,12 +32,12 @@ public class EnemyAI {
 			if(actor instanceof Tower){
 				Tower tower = (Tower)actor;
 				// Tower is active and not dead
-				if (tower.isDead() == false && tower.isActive()) {
-					if (CollisionDetection.targetWithinRange(tower.getBody(), enemy.getRangeShape())) {
+				if (!tower.isDead() && tower.isActive()) {
+					if (CollisionDetection.shapesIntersect(tower.getBody(), enemy.getRangeShape())) {
 						if (tower.getPositionCenter().dst(enemy.getPositionCenter()) < firstTowerDistance) {
 							// If the enemy is instanceof IRPG then it can
 							// attack plated towers.
-							if ((tower instanceof IPlatedArmor == false) || (enemy instanceof IRocket)) {
+							if ((!(tower instanceof PlatedArmor)) || (enemy instanceof IRocket)) {
 								firstTower = tower;
 								firstTowerDistance = tower.getPositionCenter().dst(enemy.getPositionCenter());
 							}

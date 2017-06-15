@@ -1,40 +1,41 @@
 package com.foxholedefense.game.model.level;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.JsonReader;
-import com.badlogic.gdx.utils.JsonValue;
+import com.badlogic.gdx.utils.Queue;
 import com.foxholedefense.game.model.actor.ActorGroups;
-import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
+import com.foxholedefense.game.model.level.state.LevelStateManager;
+import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
+import com.foxholedefense.game.model.level.state.LevelStateObserver;
+import com.foxholedefense.game.model.level.wave.WaveLoader;
+import com.foxholedefense.game.model.level.wave.impl.DynamicWaveLoader;
+import com.foxholedefense.game.model.level.wave.impl.FileWaveLoader;
 import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.game.service.factory.HealthFactory;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 
-public class Level{
-	public static final int MAX_WAVES = 1;
+public class Level {
+
+	public static final int MAX_WAVES = 20;
+
 	private float delayCount = 0;
 	private float enemyDelay = 0f;
 	private Map map;
 	private int currentWave = 0;
 	private Queue<SpawningEnemy> spawningEnemyQueue;
 	private int intLevel;
+	private WaveLoader waveLoader;
+	private DynamicWaveLoader dynamicWaveLoader;
 	private ActorGroups actorGroups;
-	private CombatActorFactory combatActorFactory;
 	private HealthFactory healthFactory;
-	private DynamicWaveGenerator waveGenerator;
 
-	public Level(int level, ActorGroups actorGroups, CombatActorFactory combatActorFactory, HealthFactory healthFactory, Map map) {
+	public Level(int level, ActorGroups actorGroups, HealthFactory healthFactory, Map map, FileWaveLoader fileWaveLoader, DynamicWaveLoader dynamicWaveLoader) {
 		this.intLevel = level;
+		this.map = map;
 		this.actorGroups = actorGroups;
 		this.healthFactory = healthFactory;
-		this.combatActorFactory = combatActorFactory;
-		this.map = map;
+		this.waveLoader = fileWaveLoader;
+		this.dynamicWaveLoader = dynamicWaveLoader;
 	}
 
 	/**
@@ -43,66 +44,59 @@ public class Level{
 	 * @param delta
 	 */
 	public void update(float delta) {
-		if(spawningEnemyQueue.size() > 0){
+		if(spawningEnemyQueue.size > 0){
+			delayCount += delta;
 			if (delayCount >= enemyDelay ) {
-				Logger.info("Level: Spawning Enemy");
-				delayCount = 0;
-				SpawningEnemy enemy = spawningEnemyQueue.remove();
-				actorGroups.getEnemyGroup().addActor(enemy.getEnemy());
-				HealthBar healthBar = healthFactory.loadHealthBar();
-				healthBar.setActor(enemy.getEnemy());
-				ArmorIcon armorIcon = healthFactory.loadArmorIcon();
-				armorIcon.setActor(enemy.getEnemy());
-				enemy.getEnemy().init();
-				enemyDelay = enemy.getDelay();
-			} else {
-				delayCount += delta;
+				spawnNextEnemy();
 			}
 		}
+	}
+
+	private void spawnNextEnemy(){
+		Logger.info("Level: Spawning Enemy");
+
+		delayCount = 0;
+
+		SpawningEnemy spawningEnemy = spawningEnemyQueue.removeFirst();
+		actorGroups.getEnemyGroup().addActor(spawningEnemy.getEnemy());
+
+		HealthBar healthBar = healthFactory.loadHealthBar();
+		healthBar.setActor(spawningEnemy.getEnemy());
+		ArmorIcon armorIcon = healthFactory.loadArmorIcon();
+		armorIcon.setActor(spawningEnemy.getEnemy());
+
+		spawningEnemy.getEnemy().init();
+
+		enemyDelay = spawningEnemy.getSpawnDelay();
+
+		spawningEnemy.free();
+
+
 	}
 
 	/**
 	 * Loads the wave
 	 */
-	public void loadWave() {
+	public void loadNextWave() {
 
 		currentWave++;
+
+		//Switch the wave loader when we reach MAX_WAVES
+		if(currentWave == MAX_WAVES + 1){
+			waveLoader = dynamicWaveLoader;
+		}
+		spawningEnemyQueue = waveLoader.loadWave(intLevel, currentWave);
 		delayCount = 0;
 		enemyDelay = 0;
-		if(currentWave > MAX_WAVES){
-			generateWave();
-		}
-		else {
-			loadWaveFromJSON();
-			//If we are on the last wave, then construct
-			//The DynamicWaveGenerator
-			if(currentWave == MAX_WAVES){
-				waveGenerator = new DynamicWaveGenerator(spawningEnemyQueue, map, actorGroups, combatActorFactory);
-			}
-		}
-	}
-	
-	private void generateWave(){
-		spawningEnemyQueue = waveGenerator.generateWave(currentWave);
-	}
-	private void loadWaveFromJSON(){
-		Logger.info("Level: Loading Wave from JSON");
-		JsonValue json = new JsonReader().parse(Gdx.files.internal("game/levels/level" + intLevel + "/waves/wave" + currentWave + ".json"));
-		spawningEnemyQueue = new LinkedList<SpawningEnemy>();
-		JsonValue enemiesJson = json.get("wave");
-		Array<FHDVector2> enemyPath = map.getPath();
-		for (JsonValue enemyJson : enemiesJson.iterator()) {
-			Enemy enemy = combatActorFactory.loadEnemy("Enemy" + enemyJson.getString("enemy"));
-			enemy.setPath(enemyPath);
-			enemy.setHasArmor(enemyJson.getBoolean("armor"));
-			float delay = enemyJson.getFloat("delay");
-			SpawningEnemy spawningEnemy = new SpawningEnemy(enemy, delay);
-			spawningEnemyQueue.add(spawningEnemy);
+
+		// Once we reach the MAX WAVES, initialize the dynamic wave loader
+		if(currentWave == MAX_WAVES){
+			dynamicWaveLoader.initDynamicWaveLoader(spawningEnemyQueue);
 		}
 	}
 
 	public int getSpawningEnemiesCount(){
-		return spawningEnemyQueue.size();
+		return spawningEnemyQueue.size;
 	}
 	
 	public int getCurrentWave() {

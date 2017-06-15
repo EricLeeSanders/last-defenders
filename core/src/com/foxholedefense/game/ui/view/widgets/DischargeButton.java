@@ -24,7 +24,7 @@ public class DischargeButton extends Group {
         lblCost.setFontScale(0.45f);
         lblCost.setAlignment(Align.center);
         lblCost.pack();
-        float lblCostX = ActorUtil.calcXBotLeftFromCenter(button.getWidth() / 2, lblCost.getWidth());
+        float lblCostX = ActorUtil.calcBotLeftPointFromCenter(button.getWidth() / 2, lblCost.getWidth());
         lblCost.setPosition(lblCostX,7);
         addActor(lblCost);
 
@@ -32,7 +32,7 @@ public class DischargeButton extends Group {
         lblTitle.setFontScale(0.4f);
         lblTitle.setAlignment(Align.center);
         lblTitle.pack();
-        float lblTitleX = ActorUtil.calcXBotLeftFromCenter(button.getWidth() / 2, lblTitle.getWidth());
+        float lblTitleX = ActorUtil.calcBotLeftPointFromCenter(button.getWidth() / 2, lblTitle.getWidth());
         lblTitle.setPosition(lblTitleX, 37);
         addActor(lblTitle);
     }

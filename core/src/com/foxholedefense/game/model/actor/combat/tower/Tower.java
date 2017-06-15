@@ -5,17 +5,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.SnapshotArray;
-import com.foxholedefense.game.model.actor.ai.TowerAI;
+import com.foxholedefense.game.model.actor.ai.TowerAIType;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.state.CombatActorState;
 import com.foxholedefense.game.model.actor.combat.state.StateManager;
 import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
-import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.Logger;
@@ -33,11 +29,10 @@ public abstract class Tower extends CombatActor {
 	public static final float TOWER_SELL_RATE = 0.75f;
 	private int cost, armorCost, speedIncreaseCost, rangeIncreaseCost, attackIncreaseCost;
 	private boolean rangeIncreaseEnabled, speedIncreaseEnabled, attackIncreaseEnabled;
-	private TowerAI ai = TowerAI.FIRST;
+	private TowerAIType ai = TowerAIType.FIRST;
 	private boolean showRange;
 	private TextureRegion rangeRegion, collidingRangeRegion;
 	private int kills;
-	private Pool<CombatActor> pool;
 	private boolean towerColliding;
 	private StateManager<TowerState, CombatActorState> stateManager;
 
@@ -51,7 +46,6 @@ public abstract class Tower extends CombatActor {
 		this.attackIncreaseCost = attackIncreaseCost;
 		this.collidingRangeRegion = collidingRangeRegion;
 		this.rangeRegion = rangeRegion;
-		this.pool = pool;
 	}
 
 	public void init(){
@@ -113,8 +107,8 @@ public abstract class Tower extends CombatActor {
 		}
 		float width = getRange() * 2;
 		float height = getRange() * 2;
-		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, width);
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, height);
+		float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, width);
+		float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, height);
 		batch.draw(currentRangeRegion,x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
 	}
 	/**
@@ -214,14 +208,14 @@ public abstract class Tower extends CombatActor {
 	}
 
 	public void removeTower() {
-		pool.free(this);
+		freeActor();
 	}
 
-	public TowerAI getAI() {
+	public TowerAIType getAI() {
 		return ai;
 	}
 
-	public void setAI(TowerAI ai) {
+	public void setAI(TowerAIType ai) {
 		this.ai = ai;
 	}
 	public void setTowerColliding(boolean towerColliding){
@@ -229,5 +223,9 @@ public abstract class Tower extends CombatActor {
 	}
 	public boolean isTowerColliding(){
 		return towerColliding;
+	}
+
+	public TowerState getState() {
+		return stateManager.getCurrentStateName();
 	}
 }

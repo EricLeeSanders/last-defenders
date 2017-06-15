@@ -47,10 +47,11 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
     }
 
     private void swapState(EnemyState oldState, EnemyState newState){
+
         Logger.info("Swapping states: " + oldState.name() + " to: " + newState.name());
         getState(oldState).postState();
-        getState(newState).preState();
         currentState = newState;
+        getState(newState).preState();
     }
 
     @Override

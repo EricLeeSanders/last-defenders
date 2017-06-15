@@ -8,7 +8,7 @@ import com.foxholedefense.util.datastructures.Dimension;
  * Created by Eric on 4/3/2017.
  */
 
-public class TextureEffect extends GameActor implements Pool.Poolable {
+public abstract class TextureEffect extends GameActor implements Pool.Poolable {
     protected float stateTime;
     private float duration;
     private Pool<TextureEffect> pool;

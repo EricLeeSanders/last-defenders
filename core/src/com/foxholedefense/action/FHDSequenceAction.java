@@ -14,7 +14,7 @@ public class FHDSequenceAction extends ParallelAction {
     public boolean act (float delta) {
         if (index >= getActions().size) return true;
         Pool pool = getPool();
-        setPool(null); // Ensure this action can't be returned to the pool while executings.
+        setPool(null); // Ensure this action can't be returned to the pool while executing.
         try {
             if (getActions().get(index).act(delta)) {
                 if (actor == null) return true; // This action was removed.

@@ -21,25 +21,18 @@ import com.foxholedefense.util.Logger;
  *
  */
 public class TowerPlacement {
+
 	private Tower currentTower;
 	private ActorGroups actorGroups;
 	private Map map;
 	private CombatActorFactory combatActorFactory;
 	private HealthFactory healthFactory;
+
 	public TowerPlacement(Map map, ActorGroups actorGroups, CombatActorFactory combatActorFactory, HealthFactory healthFactory) {
 		this.map = map;
 		this.actorGroups = actorGroups;
 		this.combatActorFactory = combatActorFactory;
 		this.healthFactory = healthFactory;
-	}
-
-	/**
-	 * Determines if the tower can be rotated or not
-	 * 
-	 * @return Boolean - tower is Rotatable
-	 */
-	public boolean isTowerRotatable() {
-		return (getCurrentTower() instanceof IRotatable);
 	}
 
 	/**
@@ -95,7 +88,6 @@ public class TowerPlacement {
 				healthBar.setActor(currentTower);
 				ArmorIcon armorIcon = healthFactory.loadArmorIcon();
 				armorIcon.setActor(currentTower);
-				currentTower = null;
 				Logger.info("TowerPlacement: placing tower");
 				return true;
 			} else {
@@ -103,9 +95,9 @@ public class TowerPlacement {
 				//TODO this is here mostly for testing. Can probably be removed for production
 				SnapshotArray<Actor> towers = actorGroups.getTowerGroup().getChildren();
 
-				if (CollisionDetection.CollisionWithPath(map.getPathBoundaries(), currentTower)) {
+				if (CollisionDetection.collisionWithPath(map.getPathBoundaries(), currentTower)) {
 					Logger.info("TowerPlacement: tower collides with path");
-				} else if (CollisionDetection.CollisionWithActors(towers, currentTower)) {
+				} else if (CollisionDetection.collisionWithActors(towers, currentTower)) {
 					Logger.info("TowerPlacement: tower collides with another Actor");
 				}
 			}
@@ -121,9 +113,9 @@ public class TowerPlacement {
 	private boolean towerCollides() {
 		SnapshotArray<Actor> towers = actorGroups.getTowerGroup().getChildren();
 
-		if (CollisionDetection.CollisionWithPath(map.getPathBoundaries(), currentTower)) {
+		if (CollisionDetection.collisionWithPath(map.getPathBoundaries(), currentTower)) {
 			return true;
-		} else if (CollisionDetection.CollisionWithActors(towers, currentTower)) {
+		} else if (CollisionDetection.collisionWithActors(towers, currentTower)) {
 			return true;
 		}
 		return false;
@@ -133,10 +125,12 @@ public class TowerPlacement {
 	/**
 	 * Remove the current tower
 	 */
-	public void removeCurrentTower() {
+	public void removeCurrentTower(boolean free) {
 		Logger.info("TowerPlacement: removing tower");
 		if (isCurrentTower()) {
-			currentTower.freeActor();
+			if(free) {
+				currentTower.freeActor();
+			}
 			currentTower = null;
 		}
 	}
@@ -147,7 +141,7 @@ public class TowerPlacement {
 	 * @return boolean
 	 */
 	public boolean isCurrentTower() {
-		return (currentTower != null);
+		return currentTower != null;
 	}
 
 	public Tower getCurrentTower() {

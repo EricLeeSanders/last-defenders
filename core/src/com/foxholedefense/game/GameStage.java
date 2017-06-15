@@ -1,10 +1,11 @@
 package com.foxholedefense.game;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.foxholedefense.game.model.IPlayerObserver;
+import com.foxholedefense.game.model.PlayerObserver;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
@@ -14,6 +15,8 @@ import com.foxholedefense.game.model.level.Level;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
+import com.foxholedefense.game.model.level.wave.impl.DynamicWaveLoader;
+import com.foxholedefense.game.model.level.wave.impl.FileWaveLoader;
 import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
 import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
 import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
@@ -25,7 +28,7 @@ import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
+import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -37,7 +40,7 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  *
  */
-public class GameStage extends Stage implements IPlayerObserver{
+public class GameStage extends Stage implements PlayerObserver {
 	private static final int WAVE_OVER_MONEY_MULTIPLIER = 100;
 	private LevelStateManager levelStateManager;
 	private GameUIStateManager uiStateManager;
@@ -52,7 +55,7 @@ public class GameStage extends Stage implements IPlayerObserver{
 	private SupportActorPlacement supportActorPlacement;
 	private AirStrikePlacement airStrikePlacement;
 	private SupplyDropPlacement supplyDropPlacement;
-	private IMessageDisplayer messageDisplayer;
+	private MessageDisplayer messageDisplayer;
 	private CombatActorFactory combatActorFactory;
 	private HealthFactory healthFactory;
 	private ProjectileFactory projectileFactory;
@@ -61,8 +64,9 @@ public class GameStage extends Stage implements IPlayerObserver{
 
 	public GameStage(int intLevel, Player player, ActorGroups actorGroups, FHDAudio audio,
 					 LevelStateManager levelStateManager, GameUIStateManager uiStateManager,
-					 Viewport viewport, Resources resources) {
-		super(viewport);
+					 Viewport viewport, Resources resources, SpriteBatch spriteBatch) {
+
+		super(viewport, spriteBatch);
 		this.player = player;
 		this.actorGroups = actorGroups;
 		this.levelStateManager = levelStateManager;
@@ -75,7 +79,9 @@ public class GameStage extends Stage implements IPlayerObserver{
 		createFactories(audio);
 		createPlacementServices(map);
 		mapRenderer = new MapRenderer(tiledMap, getCamera());
-		level = new Level(intLevel, getActorGroups(),combatActorFactory, healthFactory, map);
+		FileWaveLoader fileWaveLoader = new FileWaveLoader(combatActorFactory, map);
+		DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
+		level = new Level(intLevel, getActorGroups(), healthFactory, map, fileWaveLoader, dynamicWaveLoader);
 		player.attachObserver(this);
 
 	}
@@ -85,7 +91,7 @@ public class GameStage extends Stage implements IPlayerObserver{
 		healthFactory = new HealthFactory(actorGroups,resources);
 		projectileFactory = new ProjectileFactory(actorGroups, audio, resources);
 		supportActorFactory = new SupportActorFactory(actorGroups, audio, resources, effectFactory, projectileFactory);
-		combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory, healthFactory, projectileFactory, player);
+		combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory, projectileFactory, player);
 	}
 
 	public void createPlacementServices(Map map){
@@ -105,7 +111,7 @@ public class GameStage extends Stage implements IPlayerObserver{
 	 */
 	public void loadFirstWave(){
 		Logger.info("Game Stage: loading first wave");
-		level.loadWave();
+		level.loadNextWave();
 		Logger.info("Game Stage: first wave loaded");
 	}
 
@@ -175,7 +181,7 @@ public class GameStage extends Stage implements IPlayerObserver{
 		}
 		WaveOverCoinEffect waveOverCoinEffect = effectFactory.loadLabelEffect(WaveOverCoinEffect.class);
 		waveOverCoinEffect.initialize(money);
-		level.loadWave(); //load the next wave
+		level.loadNextWave(); //load the next wave
 		healTowers();
 	}
 	
@@ -246,11 +252,11 @@ public class GameStage extends Stage implements IPlayerObserver{
 		return supplyDropPlacement;
 	}
 
-	public IMessageDisplayer getMessageDisplayer() {
+	public MessageDisplayer getMessageDisplayer() {
 		return messageDisplayer;
 	}
 
-	public void setMessageDisplayer(IMessageDisplayer messageDisplayer) {
+	public void setMessageDisplayer(MessageDisplayer messageDisplayer) {
 		this.messageDisplayer = messageDisplayer;
 	}
 

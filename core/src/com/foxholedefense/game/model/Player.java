@@ -1,8 +1,5 @@
 package com.foxholedefense.game.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.util.Logger;
 
@@ -16,9 +13,9 @@ public class Player {
 	private int money = 20000;
 	private int lives = 15;
 	private int waveCount = 1;
-	private SnapshotArray<IPlayerObserver> observers = new SnapshotArray<IPlayerObserver>();
+	private SnapshotArray<PlayerObserver> observers = new SnapshotArray<PlayerObserver>();
 
-	public void attachObserver(IPlayerObserver observer) {
+	public void attachObserver(PlayerObserver observer) {
 		observers.add(observer);
 	}
 
@@ -26,7 +23,7 @@ public class Player {
 		Logger.info("Player: notifying observers");
 		Object[] objects = observers.begin();
 		for(int i = observers.size - 1; i >= 0; i--){
-			IPlayerObserver observer = (IPlayerObserver) objects[i];
+			PlayerObserver observer = (PlayerObserver) objects[i];
 			observer.playerAttributeChange();
 		}
 		observers.end();
@@ -50,7 +47,7 @@ public class Player {
 	}
 
 	public void setMoney(int money) {
-		Logger.info("TowerPlacement: set money: " + money);
+		Logger.info("Player: set money: " + money);
 		this.money = money;
 		notifyObservers();
 	}
