@@ -1,38 +1,19 @@
 package com.foxholedefense.game.ui.state;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.badlogic.gdx.utils.SnapshotArray;
-import com.foxholedefense.game.model.level.state.ILevelStateObserver;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
+import com.foxholedefense.game.model.level.state.LevelStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.state.ObservableStateManager;
 import com.foxholedefense.util.Logger;
 
-public class GameUIStateManager implements ILevelStateObserver {
+public class GameUIStateManager extends ObservableStateManager<GameUIState, GameUIStateObserver> implements LevelStateObserver {
 	private LevelStateManager levelStateManager;
-	private GameUIState state;
-	private SnapshotArray<IGameUIStateObserver> observers = new SnapshotArray<IGameUIStateObserver>();
 
 	public GameUIStateManager(LevelStateManager levelStateManager) {
 		this.levelStateManager = levelStateManager;
 		levelStateManager.attach(this);
-		this.setState(GameUIState.STANDBY);
-	}
-
-	public void attach(IGameUIStateObserver observer) {
-		observers.add(observer);
-	}
-
-	public void notifyObservers() {
-		Logger.info("GameUIState Actor: Notify Observers");
-		Object[] objects = observers.begin();
-		for(int i = observers.size - 1; i >= 0; i--){
-			IGameUIStateObserver observer = (IGameUIStateObserver) objects[i];
-			Logger.info("GameUIState Notifying: " + observer.getClass().getName());
-			observer.changeUIState(state);
-		}
-		observers.end();
+		setState(GameUIState.STANDBY);
 	}
 
 	// Determine the state to return to
@@ -44,23 +25,30 @@ public class GameUIStateManager implements ILevelStateObserver {
 		Logger.info("Game UI State: syncWithLevelState");
 		switch (levelStateManager.getState()) {
 		case WAVE_IN_PROGRESS:
-			this.setState(GameUIState.WAVE_IN_PROGRESS);
+			setState(GameUIState.WAVE_IN_PROGRESS);
 			break;
 		case STANDBY:
 		default:
-			this.setState(GameUIState.STANDBY);
+			setState(GameUIState.STANDBY);
 			break;
 		}
 	}
 
-	public void setState(GameUIState state) {
-		Logger.info("Changing UI state: " + this.getState() + " to state: " + state);
-		this.state = state;
-		notifyObservers();
+	@Override
+	public void stateChange(LevelState state) {
+		Logger.info("Game UI State: changeLevelState: " + state.name());
+		switch (state) {
+			case STANDBY:
+				if (getState() == GameUIState.WAVE_IN_PROGRESS) {
+					setState(GameUIState.STANDBY);
+				}
+			default:
+		}
 	}
 
-	public GameUIState getState() {
-		return state;
+	@Override
+	protected void notifyObserver(GameUIStateObserver observer, GameUIState state) {
+		observer.stateChange(state);
 	}
 
 	public enum GameUIState {
@@ -69,15 +57,4 @@ public class GameUIStateManager implements ILevelStateObserver {
 
 	}
 
-	@Override
-	public void changeLevelState(LevelState state) {
-		Logger.info("Game UI State: changeLevelState: " + state.name());
-		switch (state) {
-		case STANDBY:
-			if (this.getState() == GameUIState.WAVE_IN_PROGRESS) {
-				this.setState(GameUIState.STANDBY);
-			}
-		default:
-		}
-	}
 }

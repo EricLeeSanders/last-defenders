@@ -2,10 +2,10 @@ package com.foxholedefense.game.ui.presenter;
 
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IGameOverView;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.Logger;
@@ -16,13 +16,15 @@ import com.foxholedefense.util.Logger;
  * @author Eric
  *
  */
-public class GameOverPresenter implements IGameUIStateObserver {
+public class GameOverPresenter implements GameUIStateObserver {
+
 	private Player player;
-	private IScreenChanger screenChanger;
+	private ScreenChanger screenChanger;
 	private GameUIStateManager uiStateManager;
 	private IGameOverView view;
 	private FHDAudio audio;
-	public GameOverPresenter(GameUIStateManager uiStateManager, IScreenChanger screenChanger, Player player, FHDAudio audio) {
+
+	public GameOverPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger, Player player, FHDAudio audio) {
 		this.player = player;
 		this.screenChanger = screenChanger;
 		this.uiStateManager = uiStateManager;
@@ -37,7 +39,7 @@ public class GameOverPresenter implements IGameUIStateObserver {
 	 */
 	public void setView(IGameOverView view) {
 		this.view = view;
-		changeUIState(uiStateManager.getState());
+		stateChange(uiStateManager.getState());
 	}
 
 	/**
@@ -51,20 +53,24 @@ public class GameOverPresenter implements IGameUIStateObserver {
 	 * Start a new game
 	 */
 	public void newGame() {
-		Logger.info("Game Over Presenter: new Game");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		screenChanger.changeToLevelSelect();
 
+		audio.playSound(FHDSound.SMALL_CLICK);
+		if(canSwitchToNewGame()) {
+			Logger.info("Game Over Presenter: new Game");
+			screenChanger.changeToLevelSelect();
+		}
 	}
 
 	/**
 	 * Change to main menu
 	 */
 	public void mainMenu() {
-		Logger.info("Game Over Presenter: main menu");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		screenChanger.changeToMenu();
 
+		audio.playSound(FHDSound.SMALL_CLICK);
+		if(canSwitchToMainMenu()) {
+			Logger.info("Game Over Presenter: main menu");
+			screenChanger.changeToMenu();
+		}
 	}
 
 	/**
@@ -75,18 +81,36 @@ public class GameOverPresenter implements IGameUIStateObserver {
 		audio.playSound(FHDSound.SMALL_CLICK);
 	}
 
+	/**
+	 * Can only switch to New Game if the GAMEUIState == GAME_OVER
+	 * @return
+     */
+	public boolean canSwitchToNewGame(){
+
+		return uiStateManager.getState().equals(GameUIState.GAME_OVER);
+	}
+
+	/**
+	 * Can only switch to Main Menu if the GAMEUIState == GAME_OVER
+	 * @return
+	 */
+	public boolean canSwitchToMainMenu(){
+
+		return uiStateManager.getState().equals(GameUIState.GAME_OVER);
+	}
+
 	@Override
-	public void changeUIState(GameUIState state) {
+	public void stateChange(GameUIState state) {
 
 		switch (state) {
-		case GAME_OVER:
-			view.gameOverState();
-			setWavesCompleted();
-			break;
-		default:
-			view.standByState();
-			break;
-		}
+			case GAME_OVER:
+				view.gameOverState();
+				setWavesCompleted();
+				break;
+			default:
+				view.standByState();
+				break;
+			}
 
 	}
 

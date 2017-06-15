@@ -7,20 +7,14 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 public class ActorUtil {
 
-	public static float calcYCenterFromBotLeft(float y, float height){
-		return y + (height/2);
-	}
-
-	public static float calcXCenterFromBotLeft(float x, float width){
-		return x + (width/2);
-	}
-	
-	public static float calcXBotLeftFromCenter(float x, float width){
-		return x - (width / 2);
-	}
-	
-	public static float calcYBotLeftFromCenter(float y, float height){
-		return y - (height / 2);
+	/**
+	 * Calculates the bottom left point given a point and dimension
+	 * @param point
+	 * @param dimension
+     * @return
+     */
+	public static float calcBotLeftPointFromCenter(float point, float dimension){
+		return point - (dimension / 2);
 	}
 
 	/**
@@ -55,7 +49,7 @@ public class ActorUtil {
 	 * @param centerY
 	 * @param rotation - in radians
      */
-	public static FHDVector2 getRotatedCoords(float targetX, float targetY, float centerX, float centerY, double rotation ) {
+	public static FHDVector2 calculateRotatedCoords(float targetX, float targetY, float centerX, float centerY, double rotation ) {
 		// Math stuff here -
 		// http://math.stackexchange.com/questions/270194/how-to-find-the-vertices-angle-after-rotation
 		float cos = (float) Math.cos(rotation);

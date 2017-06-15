@@ -1,10 +1,7 @@
 package com.foxholedefense.game.ui;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,7 +22,7 @@ import com.foxholedefense.game.ui.presenter.OptionsPresenter;
 import com.foxholedefense.game.ui.presenter.QuitPresenter;
 import com.foxholedefense.game.ui.presenter.SupportPresenter;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.DebugView;
 import com.foxholedefense.game.ui.view.EnlistView;
@@ -33,13 +30,12 @@ import com.foxholedefense.game.ui.view.GameOverView;
 import com.foxholedefense.game.ui.view.HUDView;
 import com.foxholedefense.game.ui.view.InspectView;
 import com.foxholedefense.game.ui.view.LevelCompletedView;
-import com.foxholedefense.game.ui.view.MessageDisplayer;
 import com.foxholedefense.game.ui.view.OptionsView;
 import com.foxholedefense.game.ui.view.QuitView;
 import com.foxholedefense.game.ui.view.SupportView;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
+import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
 import com.foxholedefense.game.ui.view.interfaces.Updatable;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
@@ -51,25 +47,25 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  *
  */
-public class GameUIStage extends Stage implements IGameUIStateObserver{
+public class GameUIStage extends Stage implements GameUIStateObserver {
 	private Player player;
 	private GameUIStateManager uiStateManager;
 	private LevelStateManager levelStateManager;
 	private GameStateManager gameStateManager;
-	private IScreenChanger screenChanger;
+	private ScreenChanger screenChanger;
 	private Group towerGroup;
 	private InputMultiplexer imp;
 	private Resources resources;
-	private MessageDisplayer messageDisplayer;
+	private com.foxholedefense.game.ui.view.MessageDisplayer messageDisplayer;
 	private Array<Updatable> updatablePresenters = new Array<Updatable>();
 
 	public GameUIStage(Player player, Group towerGroup
 			, GameUIStateManager uiStateManager, LevelStateManager levelStateManager
-			, GameStateManager gameStateManager, IScreenChanger screenChanger
+			, GameStateManager gameStateManager, ScreenChanger screenChanger
 			, InputMultiplexer imp, Viewport viewport, Resources resources
-			, FHDAudio audio, GameStage gameStage) {
+			, FHDAudio audio, GameStage gameStage, SpriteBatch spriteBatch) {
 
-		super(viewport);
+		super(viewport, spriteBatch);
 		this.imp = imp;
 		this.player = player;
 		this.towerGroup = towerGroup;
@@ -95,7 +91,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		HUDView hudView = new HUDView(hudPresenter, skin, resources);
 		hudPresenter.setView(hudView);
 
-		messageDisplayer = new MessageDisplayer(skin);
+		messageDisplayer = new com.foxholedefense.game.ui.view.MessageDisplayer(skin);
 
 		EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio,  gameStage.getTowerPlacement(), messageDisplayer);
 		EnlistView enlistView = new EnlistView(enlistPresenter, skin);
@@ -111,7 +107,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		InspectView inspectView = new InspectView(inspectPresenter, skin);
 		inspectPresenter.setView(inspectView);
 
-		OptionsPresenter optionsPresenter = new OptionsPresenter(uiStateManager, gameStateManager, screenChanger, resources, audio);
+		OptionsPresenter optionsPresenter = new OptionsPresenter(uiStateManager, screenChanger, resources, audio);
 		OptionsView optionsView = new OptionsView(optionsPresenter, resources);
 		optionsPresenter.setView(optionsView);
 
@@ -119,7 +115,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		GameOverView gameOverView = new GameOverView(gameOverPresenter, skin);
 		gameOverPresenter.setView(gameOverView);
 
-		LevelCompletedPresenter levelCompletedPresenter = new LevelCompletedPresenter(player, gameStateManager, uiStateManager, screenChanger, audio);
+		LevelCompletedPresenter levelCompletedPresenter = new LevelCompletedPresenter(uiStateManager, screenChanger, audio);
 		LevelCompletedView levelCompletedView = new LevelCompletedView(levelCompletedPresenter, skin);
 		levelCompletedPresenter.setView(levelCompletedView);
 
@@ -174,7 +170,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 		}
 	}
 	@Override
-	public void changeUIState(GameUIState state) {
+	public void stateChange(GameUIState state) {
 		Logger.info("GameUIStage: changing ui state: " + state.name());
 		if(resources.getUserPreferences().getPreferences().getBoolean("showRanges", false)){
 			showTowerRanges(true);
@@ -195,7 +191,7 @@ public class GameUIStage extends Stage implements IGameUIStateObserver{
 	}
 
 
-	public IMessageDisplayer getMessageDisplayer(){
+	public MessageDisplayer getMessageDisplayer(){
 		return messageDisplayer;
 	}
 

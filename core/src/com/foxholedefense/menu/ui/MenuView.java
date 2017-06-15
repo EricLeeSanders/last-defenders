@@ -1,7 +1,6 @@
 package com.foxholedefense.menu.ui;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -15,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.util.ActorUtil;
@@ -60,15 +58,15 @@ public class MenuView extends Group implements IMenuView {
 		Skin skin = resources.getSkin();
 
 		Label lblTitle = new Label("FOXHOLE DEFENSE", skin);
-		float lblTitleX = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, lblTitle.getWidth());
-		float lblTitleY = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, lblTitle.getHeight()) + 110;
+		float lblTitleX = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, lblTitle.getWidth());
+		float lblTitleY = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, lblTitle.getHeight()) + 110;
 		lblTitle.setPosition(lblTitleX, lblTitleY);
 		addActor(lblTitle);
 
 		TextButton btnPlay = new TextButton("PLAY", skin, "transparent");
 		btnPlay.setSize(126, 56);
-		float btnPlayX = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, btnPlay.getWidth());
-		float btnPlayY = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, btnPlay.getHeight());
+		float btnPlayX = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, btnPlay.getWidth());
+		float btnPlayY = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, btnPlay.getHeight());
 		btnPlay.setPosition(btnPlayX, btnPlayY);
 		addActor(btnPlay);
 		setBtnPlayListener(btnPlay);

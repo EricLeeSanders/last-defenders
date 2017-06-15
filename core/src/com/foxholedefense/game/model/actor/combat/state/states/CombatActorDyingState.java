@@ -32,7 +32,7 @@ public class CombatActorDyingState<E> implements CombatActorState {
 
     @Override
     public void preState() {
-        // Has to be put in preState because Update is never called (Enemy is removed from stage)
+        // Has to be put in preState because Update is never called (CombatActor is removed from stage)
         effectFactory.loadDeathEffect(combatActor.getDeathEffectType()).initialize(combatActor.getPositionCenter());
         stateTransitioner.transition(transitionState);
     }

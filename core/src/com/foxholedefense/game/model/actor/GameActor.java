@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Align;
 import com.foxholedefense.util.DebugOptions;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
@@ -45,7 +46,7 @@ public class GameActor extends Actor{
 		bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 		bodyOutline.begin(ShapeType.Line);
 		bodyOutline.setColor(Color.BLUE);
-		bodyOutline.rect(getX(),getY(), getWidth(), getHeight());
+		bodyOutline.rect(getX(),getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 		bodyOutline.end();
 		batch.begin();
 	}
@@ -60,7 +61,7 @@ public class GameActor extends Actor{
 	}
 
 	public void setPositionCenter(float x, float y){
-		setPosition(x - getOriginX(), y - getOriginY());
+		setPosition(x, y, Align.center);
 	}
 
 	public TextureRegion getTextureRegion() {

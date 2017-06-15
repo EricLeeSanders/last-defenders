@@ -1,14 +1,12 @@
 package com.foxholedefense.game.ui.presenter;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Preferences;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IOptionsView;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
-import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -20,17 +18,17 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  * @author Eric
  *
  */
-public class OptionsPresenter implements IGameUIStateObserver {
-	private GameStateManager gameStateManager;
+public class OptionsPresenter implements GameUIStateObserver {
+
 	private GameUIStateManager uiStateManager;
-	private IScreenChanger screenChanger;
+	private ScreenChanger screenChanger;
 	private IOptionsView view;
 	private FHDAudio audio;
 	private Resources resources;
-	public OptionsPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager, IScreenChanger screenChanger, Resources resources, FHDAudio audio) {
+
+	public OptionsPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger, Resources resources, FHDAudio audio) {
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
-		this.gameStateManager = gameStateManager;
 		this.screenChanger = screenChanger;
 		this.audio = audio;
 		this.resources = resources;
@@ -48,11 +46,10 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	
 	private void initView(){
 		Logger.info("Options Presenter: initializing view");
-		changeUIState(uiStateManager.getState());
+		stateChange(uiStateManager.getState());
 		view.setBtnMusicOn(audio.isMusicEnabled());
 		view.setBtnSoundOn(audio.isSoundEnabled());
 		view.setBtnShowRangesOn(isShowRangesEnabled());
-		Logger.info("Options Presenter: view initialized");
 	}
 
 	/**
@@ -68,23 +65,30 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	 * Go to main menu
 	 */
 	public void mainMenu() {
-		Logger.info("Options Presenter: main menu");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		screenChanger.changeToMenu();
+		if(canChangeToMainMenu()) {
+			Logger.info("Options Presenter: main menu");
+			audio.playSound(FHDSound.SMALL_CLICK);
+			screenChanger.changeToMenu();
+		}
 	}
 
 	/**
 	 * Start a new game
 	 */
 	public void newGame() {
-		Logger.info("Options Presenter: new game");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		screenChanger.changeToLevelSelect();
+		if(canChangeToNewGame()) {
+			Logger.info("Options Presenter: new game");
+			audio.playSound(FHDSound.SMALL_CLICK);
+			screenChanger.changeToLevelSelect();
+		}
 	}
 
 	public void debug(){
-		Logger.info("Options Presenter: debug");
-		uiStateManager.setState(GameUIState.DEBUG);
+		if(canChangeToDebug()) {
+			Logger.info("Options Presenter: debug");
+			audio.playSound(FHDSound.SMALL_CLICK);
+			uiStateManager.setState(GameUIState.DEBUG);
+		}
 	}
 	
 	private boolean isShowRangesEnabled(){
@@ -129,9 +133,24 @@ public class OptionsPresenter implements IGameUIStateObserver {
 	public float getMasterVolume(){
 		return audio.getMasterVolume();
 	}
+
+	private boolean canChangeToMainMenu(){
+
+		return uiStateManager.getState().equals(GameUIState.OPTIONS);
+	}
+
+	private boolean canChangeToNewGame(){
+
+		return uiStateManager.getState().equals(GameUIState.OPTIONS);
+	}
+
+	private boolean canChangeToDebug(){
+
+		return uiStateManager.getState().equals(GameUIState.OPTIONS);
+	}
 	
 	@Override
-	public void changeUIState(GameUIState state) {
+	public void stateChange(GameUIState state) {
 
 		switch (state) {
 		case OPTIONS:

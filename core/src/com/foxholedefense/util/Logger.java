@@ -18,5 +18,5 @@ public class Logger {
 	public static void error(String message, Throwable exception){
 		Gdx.app.error(ERROR_TAG, message, exception);
 	}
-	
+
 }

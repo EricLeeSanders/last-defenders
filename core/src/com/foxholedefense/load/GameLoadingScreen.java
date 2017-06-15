@@ -1,7 +1,6 @@
 package com.foxholedefense.load;
 
 
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -11,9 +10,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.foxholedefense.screen.AbstractScreen;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
-import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
@@ -22,11 +20,11 @@ import com.foxholedefense.util.Resources;
 public class GameLoadingScreen extends AbstractScreen{
 	private Resources resources;
 	private FHDAudio audio;
-	private IScreenChanger screenChanger;
+	private ScreenChanger screenChanger;
 	private Stage stage;
 	private static final float MIN_LOAD_TIME = 3.50f;
 	private float loadTime = 0;
-	public GameLoadingScreen(GameStateManager gameStateManager, IScreenChanger screenChanger, Resources resources, FHDAudio audio ) {
+	public GameLoadingScreen(GameStateManager gameStateManager, ScreenChanger screenChanger, Resources resources, FHDAudio audio ) {
 		super(gameStateManager);
 		this.resources = resources;
 		this.screenChanger = screenChanger;
@@ -54,8 +52,8 @@ public class GameLoadingScreen extends AbstractScreen{
 		resources.loadAssetSync(Resources.LOAD_ATLAS, TextureAtlas.class);
 		TextureAtlas atlas = resources.getAsset(Resources.LOAD_ATLAS, TextureAtlas.class);
 		Image image = new Image(atlas.findRegion("img-loading"));
-		float x = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, image.getWidth());
-		float y = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, image.getHeight());
+		float x = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, image.getWidth());
+		float y = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, image.getHeight());
 		image.setPosition(x, y);
 		loadTime = 0;
 		stage.addActor(image);

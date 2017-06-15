@@ -57,6 +57,8 @@ public class Resources {
 	private Map<String, TextureRegion> loadedTextures = new HashMap<String, TextureRegion>();
 	private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<String, Array<TextureAtlas.AtlasRegion>>();
 
+	public Resources(){}
+
 	public Resources(UserPreferences userPreferences){
 		this.userPreferences = userPreferences;
 		shapeRenderer = new ShapeRenderer();

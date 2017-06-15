@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IRotatable;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
@@ -98,8 +97,8 @@ public class TowerTurret extends Tower implements IRotatable {
 			drawRange(batch);
 		}
 
-		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, TEXTURE_SIZE_BAGS.getWidth());
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, TEXTURE_SIZE_BAGS.getHeight());
+		float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BAGS.getWidth());
+		float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BAGS.getHeight());
 
 		batch.draw(bodyRegion, x, y	, TEXTURE_SIZE_BAGS.getWidth() / 2, TEXTURE_SIZE_BAGS.getHeight() / 2, TEXTURE_SIZE_BAGS.getWidth(), TEXTURE_SIZE_BAGS.getHeight()
 				, 1, 1, bodyRotation);
@@ -165,7 +164,7 @@ public class TowerTurret extends Tower implements IRotatable {
 		body.setRotation(bodyRotation);
 
 		float x = getX();
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, TEXTURE_SIZE_BAGS.getHeight());
+		float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BAGS.getHeight());
 		body.setPosition(x, y);
 
 		return body;
@@ -192,7 +191,7 @@ public class TowerTurret extends Tower implements IRotatable {
 	public void attackTarget(ITargetable target) {
 		if(target != null){
 			audio.playSound(FHDSound.MACHINE_GUN);
-			projectileFactory.loadBullet().initialize(this,target, this.getGunPos(), BULLET_SIZE);
+			projectileFactory.loadBullet().initialize(this,target, BULLET_SIZE);
 		}
 	}
 

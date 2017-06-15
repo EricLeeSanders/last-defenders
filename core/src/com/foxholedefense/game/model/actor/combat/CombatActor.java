@@ -15,8 +15,8 @@ import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.model.actor.combat.event.interfaces.EventManager;
 import com.foxholedefense.game.model.actor.combat.event.interfaces.EventManager.CombatActorEventEnum;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
+import com.foxholedefense.game.model.actor.interfaces.Collidable;
 import com.foxholedefense.game.model.actor.interfaces.IAttacker;
-import com.foxholedefense.game.model.actor.interfaces.ICollision;
 import com.foxholedefense.game.model.actor.interfaces.ITargetable;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.DebugOptions;
@@ -32,7 +32,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  *
  */
-public abstract class CombatActor extends GameActor implements Pool.Poolable, ICollision, IAttacker, ITargetable {
+public abstract class CombatActor extends GameActor implements Pool.Poolable, Collidable, IAttacker, ITargetable {
 	private final float RESET_ATTACK_SPEED, RESET_RANGE, MAX_HEALTH, MAX_ARMOR, RESET_ATTACK;
 	private float attackSpeed, range, health, attack, armor;
 	private Vector2 gunPos;
@@ -143,7 +143,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 	public Vector2 getGunPos() {
 		Vector2 centerPosition = getPositionCenter();
-		FHDVector2 rotatedCoords = ActorUtil.getRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y), centerPosition.x, centerPosition.y, Math.toRadians(getRotation()));
+		FHDVector2 rotatedCoords = ActorUtil.calculateRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y), centerPosition.x, centerPosition.y, Math.toRadians(getRotation()));
 		rotatedGunPos.set(rotatedCoords.x, rotatedCoords.y);
 		rotatedCoords.free();
 		return rotatedGunPos;
@@ -193,12 +193,22 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		return dead;
 	}
 
+	/**
+	 * Returns health percent
+	 * 0 - 1.
+	 *
+     */
 	public float getHealthPercent() {
-		return ((this.getHealth() / this.getMaxHealth()) * 100);
+		return this.getHealth() / this.getMaxHealth();
 	}
 
+	/**
+	 * Returns armor percent
+	 * 0 - 1.
+	 *
+	 */
 	public float getArmorPercent() {
-		return ((this.armor / this.MAX_ARMOR) * 100);
+		return this.armor / this.MAX_ARMOR;
 	}
 
 	public float getMaxHealth() {
@@ -252,5 +262,9 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	}
 
 	public void setActive(boolean active) {	this.active = active; }
+
+	public void setPool(Pool<CombatActor> pool){
+		this.pool = pool;
+	}
 
 }

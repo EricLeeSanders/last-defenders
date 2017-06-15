@@ -20,14 +20,16 @@ import com.foxholedefense.util.datastructures.Dimension;
 public class WaveOverCoinEffect extends LabelEffect {
 
     private static final float SCALE = 0.75f;
-    private static final float DURATION = 2f;
+    public static final float DURATION = 2;
+    public static final float Y_END_OFFSET = 100;
+    public static final float Y_BEGIN_OFFSET = (Resources.VIRTUAL_HEIGHT / 2) + 50;
     private static final Dimension ICON_SIZE = new Dimension(32, 32);
 
-    private Animation animation;
+    private Animation<TextureRegion> animation;
 
     public WaveOverCoinEffect(LabelEffectPool<WaveOverCoinEffect> pool, Skin skin, Array<AtlasRegion> regions){
         super(pool, DURATION, skin);
-        animation = new Animation(0.05f, regions);
+        animation = new Animation<TextureRegion>(0.05f, regions);
         animation.setPlayMode(Animation.PlayMode.LOOP);
         LabelStyle style = new LabelStyle(skin.get(LabelStyle.class));
         style.fontColor = Color.YELLOW;
@@ -40,13 +42,13 @@ public class WaveOverCoinEffect extends LabelEffect {
         setFontScale(SCALE);
         pack();
 
-        float x = ActorUtil.calcXBotLeftFromCenter((Resources.VIRTUAL_WIDTH / 2), getWidth());
-        float y = (Resources.VIRTUAL_HEIGHT / 2) + 50;
+        float x = ActorUtil.calcBotLeftPointFromCenter((Resources.VIRTUAL_WIDTH / 2), getWidth());
+        float y = Y_BEGIN_OFFSET;
 
         setPosition(x, y);
 
         addAction(Actions.sequence(
-                Actions.moveTo(x, y + 100, DURATION),
+                Actions.moveTo(x, y + Y_END_OFFSET, DURATION),
                 Actions.removeActor()));
     }
 
