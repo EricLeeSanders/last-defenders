@@ -1,5 +1,6 @@
 package com.foxholedefense.game;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -63,8 +64,9 @@ public class GameStage extends Stage implements PlayerObserver {
 
 	public GameStage(int intLevel, Player player, ActorGroups actorGroups, FHDAudio audio,
 					 LevelStateManager levelStateManager, GameUIStateManager uiStateManager,
-					 Viewport viewport, Resources resources) {
-		super(viewport);
+					 Viewport viewport, Resources resources, SpriteBatch spriteBatch) {
+
+		super(viewport, spriteBatch);
 		this.player = player;
 		this.actorGroups = actorGroups;
 		this.levelStateManager = levelStateManager;
