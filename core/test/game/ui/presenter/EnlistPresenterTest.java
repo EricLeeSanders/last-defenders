@@ -123,7 +123,7 @@ public class EnlistPresenterTest {
         enlistPresenter.stateChange(state);
 
         verify(enlistView, times(2)).standByState();
-        verify(towerPlacementMock, times(2)).removeCurrentTower();
+        verify(towerPlacementMock, times(2)).removeCurrentTower(eq(true));
     }
 
     /**

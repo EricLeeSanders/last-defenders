@@ -83,9 +83,9 @@ public class EnlistPresenter implements GameUIStateObserver {
 		int cost = towerCosts.get(strEnlistTower);
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if(canCreateTower(cost)) {
-			uiStateManager.setState(GameUIState.PLACING_TOWER);
 			towerPlacement.createTower(strEnlistTower);
 			Logger.info("Enlist Presenter: tower created");
+			uiStateManager.setState(GameUIState.PLACING_TOWER);
 		} else {
 			Logger.info("Enlist Presenter: cannot afford " + strEnlistTower + " player: " + getPlayerMoney() + " cost: " + cost);
 			messageDisplayer.displayMessage("You cannot afford to enlist a " + strEnlistTower + "!");
@@ -100,10 +100,11 @@ public class EnlistPresenter implements GameUIStateObserver {
 		if(canPlaceTower()) {
 			if (towerPlacement.placeTower()) {
 				audio.playSound(FHDSound.ACTOR_PLACE);
-				uiStateManager.setStateReturn();
 				int cost = towerPlacement.getCurrentTower().getCost();
 				player.spendMoney(cost);
 				Logger.info("Enlist Presenter: tower placed");
+				towerPlacement.removeCurrentTower(false);
+				uiStateManager.setStateReturn();
 			} else {
 				Logger.info("Enlist Presenter: cannot place tower");
 				messageDisplayer.displayMessage("Cannot place a tower here!");
@@ -114,7 +115,7 @@ public class EnlistPresenter implements GameUIStateObserver {
 
 	private void cancelEnlist() {
 		Logger.info("Enlist Presenter: canceling enlist");
-		towerPlacement.removeCurrentTower();
+		towerPlacement.removeCurrentTower(true);
 	}
 
 	/**
