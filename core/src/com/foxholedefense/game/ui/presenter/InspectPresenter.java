@@ -61,7 +61,11 @@ public class InspectPresenter implements Updatable, GameUIStateObserver{
 	@Override
 	public void update(float delta){
 
-		if(isTowerInteractable()){
+		if(!uiStateManager.getState().equals(GameUIState.INSPECTING)){
+			return;
+		}
+
+		if(!isTowerInteractable()){
 			closeInspect();
 		}
 
