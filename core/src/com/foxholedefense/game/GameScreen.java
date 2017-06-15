@@ -100,7 +100,7 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void resume() {
 		Logger.info("Game Screen: resume");
-		if(!uiStateManager.getState().equals(GameUIState.OPTIONS)){
+		if(!gameStateManager.getState().equals(GameState.PAUSE)){
 			gameStateManager.setState(GameState.PLAY);
 		}
 	}
