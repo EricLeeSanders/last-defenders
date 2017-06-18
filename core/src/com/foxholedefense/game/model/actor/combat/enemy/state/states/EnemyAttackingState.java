@@ -4,7 +4,7 @@ import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.foxholedefense.game.model.actor.combat.state.CombatActorState;
 import com.foxholedefense.game.model.actor.combat.state.StateTransitioner;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 
 import java.util.Map;
 
@@ -17,7 +17,7 @@ public class EnemyAttackingState implements CombatActorState {
     private final Enemy enemy;
     private final StateTransitioner<EnemyState> stateTransitioner;
     private float movementDelayCounter, attackCounter;
-    private ITargetable target;
+    private Targetable target;
 
     public EnemyAttackingState(Enemy enemy, StateTransitioner<EnemyState> stateTransitioner) {
         this.enemy = enemy;
@@ -27,11 +27,11 @@ public class EnemyAttackingState implements CombatActorState {
     @Override
     public void loadParameters(Map<String, Object> parameters) {
         Object targetObj = parameters.get("target");
-        if(targetObj == null || !(targetObj instanceof ITargetable)){
+        if(targetObj == null || !(targetObj instanceof Targetable)){
             throw new IllegalStateException("Must have a target to be in this state");
         }
 
-        target = (ITargetable) targetObj;
+        target = (Targetable) targetObj;
     }
 
     @Override

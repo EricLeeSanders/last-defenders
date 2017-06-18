@@ -15,7 +15,7 @@ import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.
 import com.foxholedefense.game.model.actor.combat.state.CombatActorState;
 import com.foxholedefense.game.model.actor.combat.state.StateManager;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
@@ -142,7 +142,7 @@ public abstract class Enemy extends CombatActor {
 		freeActor();
 	}
 
-	public void attack(ITargetable target){
+	public void attack(Targetable target){
 		this.setRotation(ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
 		this.attackTarget(target);
 		setTextureRegion(stationaryTextureRegion);

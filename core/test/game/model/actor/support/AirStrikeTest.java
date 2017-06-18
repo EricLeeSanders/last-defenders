@@ -3,7 +3,7 @@ package game.model.actor.support;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.interfaces.IAttacker;
+import com.foxholedefense.game.model.actor.interfaces.Attacker;
 import com.foxholedefense.game.model.actor.projectile.Rocket;
 import com.foxholedefense.game.model.actor.support.AirStrike;
 import com.foxholedefense.game.model.actor.support.AirStrikeLocation;
@@ -84,7 +84,7 @@ public class AirStrikeTest {
         verify(airStrikeLocation1, times(1)).setShowRange(eq(false));
         verify(airStrikeLocation2, times(1)).setShowRange(eq(false));
         verify(airStrikeLocation3, times(1)).setShowRange(eq(false));
-        verify(rocketMock, times(3)).initialize(any(IAttacker.class), any(FHDVector2.class), any(Dimension.class), any(Float.class));
+        verify(rocketMock, times(3)).initialize(any(Attacker.class), any(FHDVector2.class), any(Dimension.class), any(Float.class));
 
         airStrike.act(AirStrike.AIRSTRIKE_DURATION / 2);
         verify(poolMock, never()).free(airStrike);

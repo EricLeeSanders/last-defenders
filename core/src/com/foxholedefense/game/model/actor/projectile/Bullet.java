@@ -1,7 +1,6 @@
 package com.foxholedefense.game.model.actor.projectile;
 
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
@@ -12,9 +11,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.helper.Damage;
 import com.foxholedefense.game.model.actor.GameActor;
-import com.foxholedefense.game.model.actor.interfaces.IAttacker;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
-import com.foxholedefense.util.ActorUtil;
+import com.foxholedefense.game.model.actor.interfaces.Attacker;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 import com.foxholedefense.util.datastructures.Dimension;
 
 /**
@@ -25,9 +23,10 @@ import com.foxholedefense.util.datastructures.Dimension;
  */
 public class Bullet extends GameActor implements Pool.Poolable{
 	private static final float SPEED = 350f;
-	private ITargetable target;
-	private IAttacker attacker;
+	private Targetable target;
+	private Attacker attacker;
 	private Pool<Bullet> pool;
+	private boolean targetRemoved;
 
 	public Bullet(Pool<Bullet> pool, TextureRegion bulletTexture) {
 		this.pool = pool;
@@ -36,11 +35,11 @@ public class Bullet extends GameActor implements Pool.Poolable{
 
 	/**
 	 * Initializes the bullet with the following parameters
-	 *  @param attacker
-	 * @param target
-	 * @param size
+	 * @param attacker - The attacker
+	 * @param target - The target
+	 * @param size - The size of the bullet
 	 */
-	public Actor initialize(IAttacker attacker, ITargetable target, Dimension size) {
+	public Actor initialize(Attacker attacker, Targetable target, Dimension size) {
 		this.target = target;
 		this.attacker = attacker;
 
@@ -61,17 +60,21 @@ public class Bullet extends GameActor implements Pool.Poolable{
 
 	/**
 	 * Determines when the bullet has reached its destination and when it should
-	 * be freed to the pool. If the attacker is a tower, then it handles giving
-	 * the Tower a kill.
+	 * be freed to the pool. If the target is killed/removed, then finish the bullet animation
+	 * but the target should not take damage. See issue #259.
 	 *
 	 */
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		if(!target.isActive() || target.isDead()){
+			targetRemoved = true;
+		}
 		if (this.getActions().size == 0) {
-			Damage.dealBulletDamage(attacker, target);
+			if(!targetRemoved) {
+				Damage.dealBulletDamage(attacker, target);
+			}
 			pool.free(this);
-			return;
 		}
 	}
 
@@ -80,6 +83,7 @@ public class Bullet extends GameActor implements Pool.Poolable{
 		this.clear();
 		target = null;
 		attacker = null;
+		targetRemoved = false;
 		this.remove();
 	}
 
