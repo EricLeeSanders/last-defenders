@@ -33,6 +33,7 @@ public class GameScreen extends AbstractScreen {
 	private GameStateManager gameStateManager;
 	private GameUIStateManager uiStateManager;
 	private Resources resources;
+	private SpriteBatch spriteBatch;
 
 	public GameScreen(int intLevel, GameStateManager gameStateManager, ScreenChanger screenChanger, Resources resources, FHDAudio audio) {
 
@@ -43,7 +44,7 @@ public class GameScreen extends AbstractScreen {
 		LevelStateManager levelStateManager = new LevelStateManager();
 		uiStateManager = new GameUIStateManager(levelStateManager);
 		this.gameStateManager = gameStateManager;
-		SpriteBatch spriteBatch = new SpriteBatch();
+		spriteBatch = new SpriteBatch();
 		gameStage = new GameStage(intLevel, player, actorGroups, audio, levelStateManager, uiStateManager, getViewport(), resources, spriteBatch);
 		gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager, levelStateManager, gameStateManager
 						, screenChanger, super.getInputMultiplexer(), getViewport(), resources, audio, gameStage, spriteBatch);
@@ -109,6 +110,7 @@ public class GameScreen extends AbstractScreen {
 		Logger.info("Game Screen Dispose");
 		gameStage.dispose();
 		gameUIStage.dispose();
+		spriteBatch.dispose();
 	}
 
 

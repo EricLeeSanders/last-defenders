@@ -4,10 +4,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IFlame;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.datastructures.Dimension;
@@ -58,7 +57,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
 	}
 
 	@Override
-	public void attackTarget(ITargetable target) {
+	public void attackTarget(Targetable target) {
 		if(target != null){
 			audio.playSound(FHDSound.FLAME_BURST);
 			projectileFactory.loadFlame().initialize(this, getTargetGroup(), getFlameSize());
