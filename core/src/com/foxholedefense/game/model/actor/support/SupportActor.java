@@ -8,14 +8,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.GameActor;
-import com.foxholedefense.game.model.actor.interfaces.IAttacker;
+import com.foxholedefense.game.model.actor.interfaces.Attacker;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
 
-public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
+public class SupportActor extends GameActor implements Pool.Poolable, Attacker {
 	private Pool<SupportActor> pool;
 	private float range, attack;
 	private Vector2 gunPos;

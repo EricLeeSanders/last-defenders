@@ -1,20 +1,17 @@
 package com.foxholedefense.game.model.actor.projectile;
 
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.GameActor;
-import com.foxholedefense.game.model.actor.interfaces.IAttacker;
+import com.foxholedefense.game.model.actor.interfaces.Attacker;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
-import com.foxholedefense.game.service.factory.ProjectileFactory.ExplosionPool;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.datastructures.Dimension;
 
@@ -28,7 +25,7 @@ public class Rocket extends GameActor implements Pool.Poolable {
 
 	private static final float SPEED = 350f;
 
-	private IAttacker attacker;
+	private Attacker attacker;
 	private Vector2 destination = new Vector2(0,0);
 	private Pool<Rocket> pool;
 	private float radius;
@@ -43,7 +40,7 @@ public class Rocket extends GameActor implements Pool.Poolable {
 	 * Initializes an Rocket
 	 *
 	 */
-	public Actor initialize(IAttacker attacker, Vector2 destination, Dimension size, float radius) {
+	public Actor initialize(Attacker attacker, Vector2 destination, Dimension size, float radius) {
 		this.attacker = attacker;
 		this.radius = radius;
 		this.destination.set(destination);

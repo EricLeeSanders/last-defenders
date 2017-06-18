@@ -16,8 +16,8 @@ import com.foxholedefense.game.model.actor.combat.event.interfaces.EventManager;
 import com.foxholedefense.game.model.actor.combat.event.interfaces.EventManager.CombatActorEventEnum;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.Collidable;
-import com.foxholedefense.game.model.actor.interfaces.IAttacker;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
+import com.foxholedefense.game.model.actor.interfaces.Attacker;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.DebugOptions;
 import com.foxholedefense.util.datastructures.Dimension;
@@ -32,7 +32,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  *
  */
-public abstract class CombatActor extends GameActor implements Pool.Poolable, Collidable, IAttacker, ITargetable {
+public abstract class CombatActor extends GameActor implements Pool.Poolable, Collidable, Attacker, Targetable {
 	private final float RESET_ATTACK_SPEED, RESET_RANGE, MAX_HEALTH, MAX_ARMOR, RESET_ATTACK;
 	private float attackSpeed, range, health, attack, armor;
 	private Vector2 gunPos;
@@ -170,7 +170,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 		this.range = range;
 	}
 
-	public abstract void attackTarget(ITargetable target);
+	public abstract void attackTarget(Targetable target);
 	
 	public DeathEffectType getDeathEffectType(){
 		return deathEffectType;
@@ -257,6 +257,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 	 * It can be targeted, and attacked.
 	 * @return
      */
+	@Override
 	public boolean isActive() {
 		return active;
 	}

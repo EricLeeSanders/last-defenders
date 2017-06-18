@@ -1,8 +1,6 @@
 package com.foxholedefense.game.model.actor.projectile;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
@@ -11,10 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.foxholedefense.game.GameStage;
 import com.foxholedefense.game.helper.Damage;
 import com.foxholedefense.game.model.actor.GameActor;
-import com.foxholedefense.game.model.actor.interfaces.IAttacker;
+import com.foxholedefense.game.model.actor.interfaces.Attacker;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.datastructures.Dimension;
@@ -52,7 +49,7 @@ public class Explosion extends GameActor implements Pool.Poolable {
 	/**
 	 * Initializes an Explosion and deals Damage
 	 */
-	public Actor initialize(IAttacker attacker, float radius, Vector2 posCenter) {
+	public Actor initialize(Attacker attacker, float radius, Vector2 posCenter) {
 		audio.playSound(FHDSound.ROCKET_EXPLOSION);
 
 		this.setPositionCenter(posCenter);

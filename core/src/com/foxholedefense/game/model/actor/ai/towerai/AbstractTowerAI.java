@@ -6,7 +6,7 @@ import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.actor.ai.TowerAI;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.health.interfaces.PlatedArmor;
-import com.foxholedefense.game.model.actor.interfaces.IAttacker;
+import com.foxholedefense.game.model.actor.interfaces.Attacker;
 import com.foxholedefense.game.model.actor.interfaces.IRocket;
 /**
  * Created by Eric on 4/24/2017.
@@ -14,7 +14,7 @@ import com.foxholedefense.game.model.actor.interfaces.IRocket;
 
 public abstract class AbstractTowerAI implements TowerAI {
     @Override
-    public Enemy findTarget(IAttacker attacker, SnapshotArray<Actor> enemies) {
+    public Enemy findTarget(Attacker attacker, SnapshotArray<Actor> enemies) {
         if (enemies.size == 0) {
             return null;
         }
