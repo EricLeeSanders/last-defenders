@@ -8,7 +8,7 @@ import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.
 import com.foxholedefense.game.model.actor.combat.state.CombatActorState;
 import com.foxholedefense.game.model.actor.combat.state.StateTransitioner;
 import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +51,7 @@ public class EnemyRunningState implements CombatActorState {
         }
 
         if (!(enemy instanceof IPassiveEnemy) && isReadyToFindTarget()) {
-            ITargetable target = findTarget();
+            Targetable target = findTarget();
             if(target != null){
                 attackTransitionParameters.put("target", target);
                 stateTransitioner.transition(EnemyState.ATTACKING, attackTransitionParameters);
@@ -70,7 +70,7 @@ public class EnemyRunningState implements CombatActorState {
     /**
      * Finds a tower to attack.
      */
-    private ITargetable findTarget() {
+    private Targetable findTarget() {
         SnapshotArray<Actor> children = enemy.getTargetGroup().getChildren();
         return EnemyAI.findNearestTower(enemy, children);
     }

@@ -7,7 +7,7 @@ import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager;
 import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.foxholedefense.game.model.actor.combat.enemy.state.states.EnemyAttackingState;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -50,12 +50,12 @@ public class EnemyAttackingStateTest {
         attackingState.loadParameters(parameters);
 
         doReturn(Enemy.MOVEMENT_DELAY / 2).when(enemy).getAttackSpeed();
-        verify(enemy, never()).attackTarget(isA(ITargetable.class));
+        verify(enemy, never()).attackTarget(isA(Targetable.class));
 
         attackingState.update(Enemy.MOVEMENT_DELAY / 2);
         attackingState.update(Enemy.MOVEMENT_DELAY / 4);
 
-        verify(enemy, times(1)).attackTarget(isA(ITargetable.class));
+        verify(enemy, times(1)).attackTarget(isA(Targetable.class));
 
         attackingState.update(Enemy.MOVEMENT_DELAY / 4);
 

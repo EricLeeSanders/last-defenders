@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.datastructures.Dimension;
@@ -46,7 +46,7 @@ public class EnemyMachineGun extends Enemy {
 	}
 
 	@Override
-	public void attackTarget(ITargetable target) {
+	public void attackTarget(Targetable target) {
 		if(target != null){
 			audio.playSound(FHDSound.MACHINE_GUN);
 			projectileFactory.loadBullet().initialize(this, target, BULLET_SIZE);

@@ -9,7 +9,7 @@ import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager;
 import com.foxholedefense.game.model.actor.combat.tower.state.states.TowerActiveState;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -62,19 +62,19 @@ public class TowerActiveStateTest {
         doReturn(ai).when(tower).getAI();
 
         when(ai.findTarget(tower, targetGroupArray)).thenReturn(enemy);
-        verify(tower, never()).attackTarget(isA(ITargetable.class));
+        verify(tower, never()).attackTarget(isA(Targetable.class));
 
         // Should be ready to attack, but has not attacked yet
         towerActiveState.update(tower.getAttackSpeed());
-        verify(tower, never()).attackTarget(isA(ITargetable.class));
+        verify(tower, never()).attackTarget(isA(Targetable.class));
 
         // Should attack after this update
         towerActiveState.update(tower.getAttackSpeed() / 4);
-        verify(tower, times(1)).attackTarget(isA(ITargetable.class));
+        verify(tower, times(1)).attackTarget(isA(Targetable.class));
 
         // Should be ready to attack after this update, but not attack yet.
         towerActiveState.update(tower.getAttackSpeed() / 4);
-        verify(tower, times(1)).attackTarget(isA(ITargetable.class));
+        verify(tower, times(1)).attackTarget(isA(Targetable.class));
 
     }
 }

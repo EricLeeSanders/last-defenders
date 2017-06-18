@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Align;
 import com.foxholedefense.game.model.actor.ai.TowerAI;
 import com.foxholedefense.game.model.actor.ai.towerai.FirstEnemyAI;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.foxholedefense.util.ActorUtil;
@@ -96,7 +96,7 @@ public class Apache extends SupportActor{
 	}
 
 	private void attackHandler(float delta){
-		ITargetable target = findTarget();
+		Targetable target = findTarget();
 		attackCounter += delta;
 		if(target != null && !target.isDead()){
 			setRotation(ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
@@ -132,11 +132,11 @@ public class Apache extends SupportActor{
 	/**
 	 * Find a target using TowerAIType First Enemy
 	 */
-	public ITargetable findTarget() {
+	public Targetable findTarget() {
 		return ai.findTarget(this, getTargetGroup().getChildren());
 	}
 
-	public void attackTarget(ITargetable target) {
+	public void attackTarget(Targetable target) {
 		if(target != null && !target.isDead()){
 			audio.playSound(FHDSound.MACHINE_GUN);
 			projectileFactory.loadBullet().initialize(this, target, BULLET_SIZE);

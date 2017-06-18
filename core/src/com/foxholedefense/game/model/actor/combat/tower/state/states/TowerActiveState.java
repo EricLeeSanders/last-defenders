@@ -4,7 +4,7 @@ import com.foxholedefense.game.model.actor.combat.state.CombatActorState;
 import com.foxholedefense.game.model.actor.combat.state.StateTransitioner;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 import com.foxholedefense.util.ActorUtil;
 
 import java.util.Map;
@@ -36,7 +36,7 @@ public class TowerActiveState implements CombatActorState {
 
     @Override
     public void update(float delta) {
-        ITargetable target = findTarget();
+        Targetable target = findTarget();
         if(target != null && !target.isDead()) {
             tower.setRotation(ActorUtil.calculateRotation(target.getPositionCenter(), tower.getPositionCenter()));
             if (canAttack()) {
@@ -55,7 +55,7 @@ public class TowerActiveState implements CombatActorState {
     /**
      * Find a target based on the Target Priority
      */
-    public ITargetable findTarget() {
+    public Targetable findTarget() {
         return tower.getAI().findTarget(tower, tower.getTargetGroup().getChildren());
     }
 
