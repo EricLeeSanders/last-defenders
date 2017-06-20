@@ -15,17 +15,17 @@ import com.foxholedefense.util.datastructures.pool.FHDVector2;
  * Created by Eric on 5/25/2017.
  */
 
-public abstract class AbstractWaveLoader implements WaveLoader {
+abstract class AbstractWaveLoader implements WaveLoader {
     private CombatActorFactory combatActorFactory;
     private Map map;
 
-    public AbstractWaveLoader(CombatActorFactory combatActorFactory, Map map){
+    AbstractWaveLoader(CombatActorFactory combatActorFactory, Map map){
 
         this.combatActorFactory = combatActorFactory;
         this.map = map;
     }
 
-    protected SpawningEnemy loadSpawningEnemy(String type, boolean hasArmor, float spawnDelay ){
+    SpawningEnemy loadSpawningEnemy(String type, boolean hasArmor, float spawnDelay){
 
         Enemy enemy = combatActorFactory.loadEnemy(type);
 

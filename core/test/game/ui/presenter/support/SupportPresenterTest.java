@@ -44,7 +44,7 @@ public class SupportPresenterTest {
     SupplyDropPlacement supplyDropPlacement = mock(SupplyDropPlacement.class);
     SupportView supportView = mock(SupportView.class);
 
-    public SupportPresenter createSupportPresenter(){
+    SupportPresenter createSupportPresenter(){
         FHDAudio audio = mock(FHDAudio.class);
         MessageDisplayer messageDisplayer = mock(MessageDisplayer.class);
 

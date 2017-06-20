@@ -180,7 +180,7 @@ public class SupportPresenter implements GameUIStateObserver {
 				&& !airStrikePlacement.isReadyToBegin();
 	}
 	
-	public void finishAirStrikePlacement(){
+	private void finishAirStrikePlacement(){
 
 		Logger.info("Support Presenter: finishing air strike placement");
 		if (canFinishAirStrikePlacement()) {

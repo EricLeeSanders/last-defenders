@@ -147,14 +147,14 @@ public class LevelLoadingScreen extends AbstractScreen{
 		stage.dispose();
 	}
 	
-	public void load() {
+	private void load() {
 		resources.loadAsset(Resources.ACTOR_ATLAS, TextureAtlas.class);
 		resources.loadActorAtlasRegions();
 		resources.loadMap(level);
 		
 	}
 
-	public void finishedLoading() {
+	private void finishedLoading() {
 		screenChanger.changeToLevel(level);
 	}
 

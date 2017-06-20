@@ -34,7 +34,7 @@ public class AirStrikeLocation extends Actor {
 		super.draw(batch, alpha);
 	}
 
-	protected void drawRange(Batch batch){
+	private void drawRange(Batch batch){
 		float width = radius * 2;
 		float height = radius * 2;
 		float x = ActorUtil.calcBotLeftPointFromCenter(location.x, width);
@@ -50,7 +50,7 @@ public class AirStrikeLocation extends Actor {
 		return location;
 	}
 
-	public boolean isShowRange() {
+	private boolean isShowRange() {
 		return showRange;
 	}
 

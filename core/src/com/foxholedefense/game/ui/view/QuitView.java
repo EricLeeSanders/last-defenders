@@ -36,7 +36,7 @@ public class QuitView extends Group implements IQuitView {
     /**
      * Create controls
      */
-    public void createControls(Skin skin) {
+    private void createControls(Skin skin) {
         Logger.info("QuitView: creating controls");
 
         Table container = new Table();

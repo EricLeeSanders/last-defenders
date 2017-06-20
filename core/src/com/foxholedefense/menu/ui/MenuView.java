@@ -52,7 +52,7 @@ public class MenuView extends Group implements IMenuView {
         volSliderBg.setWidth(sliderEndPos - sliderEndPos * presenter.getMasterVolume());
 	}
 	
-	public void createControls(Resources resources) {
+	private void createControls(Resources resources) {
 		Logger.info("Menu view: initializing view");
 
 		Skin skin = resources.getSkin();
@@ -101,7 +101,7 @@ public class MenuView extends Group implements IMenuView {
 
 		Logger.info("Menu view: view initialized");
 	}
-	public void createOptionControls(Resources resources) {
+	private void createOptionControls(Resources resources) {
 		Logger.info("Menu view: creating option controls");
 		Skin skin = resources.getSkin();
 		

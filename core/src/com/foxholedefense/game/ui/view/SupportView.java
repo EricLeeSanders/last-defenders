@@ -54,7 +54,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 	/**
 	 * Creates the controls
 	 */
-	public void createControls(Skin skin) {
+	private void createControls(Skin skin) {
 
 		Logger.info("Support View: creating controls");
 

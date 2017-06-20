@@ -55,7 +55,7 @@ public class TowerActiveState implements CombatActorState {
     /**
      * Find a target based on the Target Priority
      */
-    public Targetable findTarget() {
+    private Targetable findTarget() {
         return tower.getAI().findTarget(tower, tower.getTargetGroup().getChildren());
     }
 

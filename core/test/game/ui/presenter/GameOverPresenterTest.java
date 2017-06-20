@@ -39,7 +39,7 @@ public class GameOverPresenterTest {
         Gdx.app = mock(Application.class);
     }
 
-    public GameOverPresenter createGameOverPresenter(){
+    private GameOverPresenter createGameOverPresenter(){
         FHDAudio audioMock = mock(FHDAudio.class);
 
         return new GameOverPresenter(gameUIStateManagerMock, screenChangerMock, playerMock, audioMock);

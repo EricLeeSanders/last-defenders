@@ -38,7 +38,7 @@ public class DebugPresenterTest {
         Gdx.app = mock(Application.class);
     }
 
-    public DebugPresenter createDebugPresenter(){
+    private DebugPresenter createDebugPresenter(){
 
         DebugPresenter debugPresenter = new DebugPresenter(gameUIStateManagerMock, gameStateManager);
 

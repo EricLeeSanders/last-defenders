@@ -35,7 +35,7 @@ public class LevelCompletedPresenterTest {
         Gdx.app = mock(Application.class);
     }
 
-    public LevelCompletedPresenter createLevelCompletedPresenter(){
+    private LevelCompletedPresenter createLevelCompletedPresenter(){
 
         FHDAudio audio = mock(FHDAudio.class);
 

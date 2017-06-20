@@ -40,7 +40,7 @@ public class QuitPresenterTest {
         Gdx.app = mock(Application.class);
     }
 
-    public QuitPresenter createQuitPresenter(){
+    private QuitPresenter createQuitPresenter(){
 
         FHDAudio audioMock = mock(FHDAudio.class);
         return new QuitPresenter(uiStateManager, gameStateManager, screenChanger, audioMock);

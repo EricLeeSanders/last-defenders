@@ -46,26 +46,26 @@ public class HealthFactory {
      *
      * @return HealthBar
      */
-    protected HealthBar createHealthBarActor() {
+    private HealthBar createHealthBarActor() {
         Logger.info("Actor Factory: creating healthbar");
         HealthBar healthBar = new HealthBar(healthPool, resources.getTexture("healthbar-bg"), resources.getTexture("healthbar-life"), resources.getTexture("healthbar-armor"));
         return healthBar;
 
     }
 
-    protected ArmorIcon createArmorIcon(){
+    private ArmorIcon createArmorIcon(){
         Logger.info("Actor Factory: creating ArmorIcon");
         return new ArmorIcon(armorIconPool, resources.getTexture("shield"));
     }
 
-    public class HealthPool extends Pool<HealthBar> {
+    private class HealthPool extends Pool<HealthBar> {
         @Override
         protected HealthBar newObject() {
             return createHealthBarActor();
         }
     }
 
-    public class ArmorIconPool extends Pool<ArmorIcon> {
+    private class ArmorIconPool extends Pool<ArmorIcon> {
         @Override
         protected ArmorIcon newObject() {
             return createArmorIcon();

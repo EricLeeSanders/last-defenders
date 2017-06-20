@@ -40,7 +40,7 @@ public class SupplyDropTest {
         Gdx.app = mock(Application.class);
     }
 
-    public SupplyDrop createSupplyDrop(){
+    private SupplyDrop createSupplyDrop(){
 
         SupportActorFactory supportActorFactoryMock = mock(SupportActorFactory.class);
         doReturn(supplyDropCrateMock).when(supportActorFactoryMock).loadSupplyDropCrate();

@@ -44,8 +44,8 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 	private Group targetGroup;
 	private EventManager eventManager;
 
-	public CombatActor(TextureRegion textureRegion, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
-						float health, float armor, float attack, float attackSpeed, float range, DeathEffectType deathEffectType) {
+	protected CombatActor(TextureRegion textureRegion, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
+						  float health, float armor, float attack, float attackSpeed, float range, DeathEffectType deathEffectType) {
 
 		super(textureSize);
 		this.MAX_HEALTH = health;
@@ -158,15 +158,15 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 		return attackSpeed;
 	}
 
-	public void setAttackSpeed(float attackSpeed) {
+	protected void setAttackSpeed(float attackSpeed) {
 		this.attackSpeed = attackSpeed;
 	}
 
-	public float getRange() {
+	protected float getRange() {
 		return range;
 	}
 
-	public void setRange(float range) {
+	protected void setRange(float range) {
 		this.range = range;
 	}
 
@@ -178,7 +178,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 
 	public abstract Shape2D getBody();
 
-	public abstract void deadState();
+	protected abstract void deadState();
 
 	public void setDead(boolean dead) {
 		this.dead = dead;
@@ -215,7 +215,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 		return MAX_HEALTH;
 	}
 
-	public void resetHealth() {
+	protected void resetHealth() {
 		health = MAX_HEALTH;
 	}
 	public void resetArmor() {
@@ -227,7 +227,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 		return attack;
 	}
 
-	public void setAttack(float attack) {
+	protected void setAttack(float attack) {
 		this.attack = attack;
 	}
 

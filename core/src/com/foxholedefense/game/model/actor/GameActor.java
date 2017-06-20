@@ -18,11 +18,11 @@ public class GameActor extends Actor{
 	private TextureRegion textureRegion;
 	private FHDVector2 positionCenter = UtilPool.getVector2();
 
-	public GameActor(){
+	protected GameActor(){
 
 	}
 
-	public GameActor(Dimension textureSize){
+	protected GameActor(Dimension textureSize){
 		this.setSize(textureSize.getWidth(),textureSize.getHeight());
 		this.setOrigin(textureSize.getWidth() / 2, textureSize.getHeight() / 2);
 	}
@@ -64,15 +64,15 @@ public class GameActor extends Actor{
 		setPosition(x, y, Align.center);
 	}
 
-	public TextureRegion getTextureRegion() {
+	private TextureRegion getTextureRegion() {
 		return textureRegion;
 	}
 
-	public void setTextureRegion(TextureRegion textureRegion) {
+	protected void setTextureRegion(TextureRegion textureRegion) {
 		this.textureRegion = textureRegion;
 	}
 
-	public void setSize(Dimension textureSize){
+	protected void setSize(Dimension textureSize){
 		this.setSize(textureSize.getWidth(),textureSize.getHeight());
 		this.setOrigin(textureSize.getWidth() / 2, textureSize.getHeight() / 2);
 	}

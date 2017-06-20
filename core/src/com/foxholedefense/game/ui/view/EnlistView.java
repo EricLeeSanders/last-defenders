@@ -58,7 +58,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	/**
 	 * Creates the controls
 	 */
-	public void createControls(Skin skin) {
+	private void createControls(Skin skin) {
 		Logger.info("Enlist View: creating controls");
 		Table container = new Table();
 		container.setTransform(false);

@@ -38,7 +38,7 @@ public class WaveOverCoinEffectTest {
         Gdx.app = mock(Application.class);
     }
 
-    public WaveOverCoinEffect createWaveOverCoinEffect(){
+    private WaveOverCoinEffect createWaveOverCoinEffect(){
 
         Resources resourcesMock = TestUtil.createResourcesMock();
         Skin skinMock = mock(Skin.class);

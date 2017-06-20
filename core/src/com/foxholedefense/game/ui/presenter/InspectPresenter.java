@@ -301,7 +301,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver{
 				&& isTowerInteractable() && !isDischargeDisabled();
 	}
 
-	public boolean isDischargeDisabled(){
+	private boolean isDischargeDisabled(){
 
 		return levelStateManager.getState().equals(LevelState.WAVE_IN_PROGRESS);
 	}

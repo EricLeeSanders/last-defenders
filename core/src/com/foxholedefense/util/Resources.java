@@ -26,7 +26,7 @@ public class Resources {
 	public static final String ACTOR_ATLAS = "game/actors/actors.atlas";
 	public static final String LEVEL_SELECT_ATLAS = "level_select/level_select.atlas";
 	public static final String SKIN_ATLAS = "skin/uiskin.atlas";
-	public static final String SKIN_JSON = "skin/uiskin.json";
+	private static final String SKIN_JSON = "skin/uiskin.json";
 
 	public static final float VIRTUAL_WIDTH = 640; // 16:9
 	public static final float VIRTUAL_HEIGHT = 360;
@@ -212,7 +212,7 @@ public class Resources {
 	}
 
 
-	public void loadSkinSync() {
+	private void loadSkinSync() {
 		Logger.info("Resources: sync loading skin");
 		loadSkin();
 		manager.finishLoading();

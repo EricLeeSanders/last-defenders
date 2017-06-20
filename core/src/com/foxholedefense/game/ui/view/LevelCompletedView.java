@@ -25,7 +25,7 @@ public class LevelCompletedView extends Group implements ILevelCompletedView{
 		createControls(skin);
 	}
 	
-	public void createControls(Skin skin){
+	private void createControls(Skin skin){
 
 		Logger.info("Level Completed View: creating controls");
 

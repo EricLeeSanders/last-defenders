@@ -31,7 +31,7 @@ public class EnemyCoinEffectTest {
         Gdx.app = mock(Application.class);
     }
 
-    public EnemyCoinEffect createEnemyCoinEffect(){
+    private EnemyCoinEffect createEnemyCoinEffect(){
 
         Resources resourcesMock = TestUtil.createResourcesMock();
 

@@ -36,7 +36,7 @@ public class ArmorDestroyedEffectTest {
         Gdx.app = mock(Application.class);
     }
 
-    public ArmorDestroyedEffect createArmorDestroyedEffect(){
+    private ArmorDestroyedEffect createArmorDestroyedEffect(){
 
         Resources resourcesMock = TestUtil.createResourcesMock();
         Skin skinMock = mock(Skin.class);

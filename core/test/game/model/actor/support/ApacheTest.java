@@ -57,7 +57,7 @@ public class ApacheTest {
 
     }
 
-    public Enemy createEnemy(String type, float lengthToEnd, Vector2 posCenter){
+    private Enemy createEnemy(String type, float lengthToEnd, Vector2 posCenter){
         Enemy enemy = TestUtil.createEnemy(type, true);
         enemy.setPositionCenter(posCenter);
         doReturn(lengthToEnd).when(enemy).getLengthToEnd();

@@ -41,7 +41,7 @@ public class HealthBarTest {
         Gdx.app = mock(Application.class);
     }
 
-    public HealthBar createHealthBar(){
+    private HealthBar createHealthBar(){
 
         HealthBar healthBar = new HealthBar(poolMock, backgroundBarMock, healthBarMock, armorBarMock);
 

@@ -88,7 +88,7 @@ public class GameLoadingScreen extends AbstractScreen{
 		stage.dispose();
 	}
 	
-	public void load() {
+	private void load() {
 		resources.loadSkin();
 		resources.loadAsset(Resources.MENU_ATLAS, TextureAtlas.class);
 		resources.loadAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class);
@@ -96,7 +96,7 @@ public class GameLoadingScreen extends AbstractScreen{
 		
 	}
 
-	public void finishedLoading() {
+	private void finishedLoading() {
 		resources.initFont();
 		screenChanger.changeToMenu();
 		

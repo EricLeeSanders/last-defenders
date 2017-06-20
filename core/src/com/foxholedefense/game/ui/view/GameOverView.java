@@ -36,7 +36,7 @@ public class GameOverView extends Group implements IGameOverView {
 	/**
 	 * Create controls 
 	 */
-	public void createControls(Skin skin) {
+	private void createControls(Skin skin) {
 		Logger.info("Game Over View: creating controls");
 
 		Table table = new Table();

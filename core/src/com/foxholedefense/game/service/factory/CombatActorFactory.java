@@ -144,7 +144,7 @@ public class CombatActorFactory {
      * @param type - Type of Game Actor
      * @return CombatActor
      */
-    protected CombatActor createCombatActor(Class<? extends CombatActor> type) {
+    private CombatActor createCombatActor(Class<? extends CombatActor> type) {
 
         Logger.info("Combat Actor Factory: creating combat actor: " + type.getSimpleName());
         CombatActor actor = null;
@@ -215,7 +215,7 @@ public class CombatActorFactory {
         return actor;
     }
 
-    protected SpawningEnemy createSpawningEnemy(){
+    private SpawningEnemy createSpawningEnemy(){
 
         Logger.info("CombatActorFactory: creating SpawningEnemy");
         SpawningEnemy spawningEnemy = new SpawningEnemy(spawningEnemyPool);
