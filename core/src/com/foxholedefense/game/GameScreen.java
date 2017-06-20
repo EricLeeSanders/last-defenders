@@ -98,6 +98,14 @@ public class GameScreen extends AbstractScreen {
 		gameUIStage.draw();
 
 	}
+
+	@Override
+	public void pause() {
+		Logger.info("Game Screen: pausing");
+		uiStateManager.setState(GameUIState.QUIT_MENU);
+		gameStateManager.setState(GameState.PAUSE);
+	}
+
 	@Override
 	public void resume() {
 		Logger.info("Game Screen: resume");
