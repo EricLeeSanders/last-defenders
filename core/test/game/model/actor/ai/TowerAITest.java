@@ -33,16 +33,17 @@ public class TowerAITest {
 
     private void createEnemyGroup(Group towerTargetGroup){
 
-        Enemy enemy1 = createEnemy("enemy1", "Rifle", 700, 10, false, false);
-        Enemy enemy2 = createEnemy("enemy2", "MachineGun", 800, 3, true, false);
-        Enemy enemy3 = createEnemy("enemy3", "Humvee", 100, 2, true, false);
-        Enemy enemy4 = createEnemy("enemy4", "Sniper", 300, 9, true, false);
-        Enemy enemy5 = createEnemy("enemy5", "Rifle", 400, 8, false, false);
-        Enemy enemy6 = createEnemy("enemy6", "Sniper", 200, 4, false, true);
-        Enemy enemy7 = createEnemy("enemy7", "FlameThrower", 500, 11, false, false);
-        Enemy enemy8 = createEnemy("enemy8", "Rifle", 400, 8, true, true);
-        Enemy enemy9 = createEnemy("enemy9", "Sniper", 200, 5, false, false);
-        Enemy enemy10 = createEnemy("enemy10", "FlameThrower", 700, 4, false, false);
+        Enemy enemy1 = createEnemy("enemy1", "Rifle", 700, 10, 2, false, false);
+        Enemy enemy2 = createEnemy("enemy2", "MachineGun", 800, 3, 0, true, false);
+        Enemy enemy3 = createEnemy("enemy3", "Humvee", 100, 2, 0, true, false);
+        Enemy enemy4 = createEnemy("enemy4", "Sniper", 300, 9, 3, true, false);
+        Enemy enemy5 = createEnemy("enemy5", "Rifle", 400, 8, 4, false, false);
+        Enemy enemy6 = createEnemy("enemy6", "Sniper", 200, 4, 1, false, true);
+        Enemy enemy7 = createEnemy("enemy7", "FlameThrower", 500, 11, 0, false, false);
+        Enemy enemy8 = createEnemy("enemy8", "Rifle", 400, 8, 6, true, true);
+        Enemy enemy9 = createEnemy("enemy9", "MachineGun", 400, 10, 5, false, false);
+        Enemy enemy10 = createEnemy("enemy10", "Sniper", 200, 5, 2, false, false);
+        Enemy enemy11 = createEnemy("enemy11", "FlameThrower", 700, 4, 0, false, false);
 
         towerTargetGroup.addActor(enemy1);
         towerTargetGroup.addActor(enemy2);
@@ -54,18 +55,19 @@ public class TowerAITest {
         towerTargetGroup.addActor(enemy8);
         towerTargetGroup.addActor(enemy9);
         towerTargetGroup.addActor(enemy10);
+        towerTargetGroup.addActor(enemy11);
 
     }
 
     private void createEnemyGroupWithTank(Group towerTargetGroup){
 
-        Enemy enemy1 = createEnemy("enemy1", "Tank", 500, 10, false, false);
-        Enemy enemy2 = createEnemy("enemy2", "Tank", 800, 3, false, true);
-        Enemy enemy3 = createEnemy("enemy3", "Tank", 100, 2, false, false);
-        Enemy enemy4 = createEnemy("enemy4", "Sniper", 300, 9, false, false);
-        Enemy enemy5 = createEnemy("enemy5", "Rifle", 400, 8, true, false);
-        Enemy enemy6 = createEnemy("enemy6", "Sniper", 200, 4, true, false);
-        Enemy enemy7 = createEnemy("enemy7", "FlameThrower", 500, 9, false, false);
+        Enemy enemy1 = createEnemy("enemy1", "Tank", 500, 10, 5, false, false);
+        Enemy enemy2 = createEnemy("enemy2", "Tank", 800, 3, 0, false, true);
+        Enemy enemy3 = createEnemy("enemy3", "Tank", 100, 2, 0, false, false);
+        Enemy enemy4 = createEnemy("enemy4", "Sniper", 300, 9, 5, false, false);
+        Enemy enemy5 = createEnemy("enemy5", "Rifle", 400, 8, 6, true, false);
+        Enemy enemy6 = createEnemy("enemy6", "Sniper", 200, 4, 1, true, false);
+        Enemy enemy7 = createEnemy("enemy7", "FlameThrower", 500, 9, 0, false, false);
 
         towerTargetGroup.addActor(enemy1);
         towerTargetGroup.addActor(enemy2);
@@ -77,16 +79,16 @@ public class TowerAITest {
     }
 
     private void createEnemyGroupWithOnlyTankInRange(Group towerTargetGroup){
-        Enemy enemy1 = createEnemy("enemy1", "Tank", 400, 10, false, false);
-        Enemy enemy2 = createEnemy("enemy2", "Sniper", 500, 12, false, true);
-        Enemy enemy3 = createEnemy("enemy3", "Rifle", 100, 2, true, false);
+        Enemy enemy1 = createEnemy("enemy1", "Tank", 400, 10, 10, false, false);
+        Enemy enemy2 = createEnemy("enemy2", "Sniper", 500, 12, 6, false, true);
+        Enemy enemy3 = createEnemy("enemy3", "Rifle", 100, 2, 0, true, false);
 
         towerTargetGroup.addActor(enemy1);
         towerTargetGroup.addActor(enemy2);
         towerTargetGroup.addActor(enemy3);
     }
 
-    private Enemy createEnemy( String name, String type, float lengthToEnd, float health, boolean outOfRange, boolean dead ){
+    private Enemy createEnemy( String name, String type, float lengthToEnd, float health, float armor, boolean outOfRange, boolean dead ){
         Enemy enemy = TestUtil.createEnemy(type, false);
         if(outOfRange) {
             enemy.setPositionCenter(300, 300);
@@ -98,6 +100,7 @@ public class TowerAITest {
 
         doReturn(lengthToEnd).when(enemySpy).getLengthToEnd();
         doReturn(health).when(enemySpy).getHealth();
+        doReturn(armor).when(enemySpy).getArmor();
 
         return enemySpy;
     }
@@ -112,7 +115,7 @@ public class TowerAITest {
         createEnemyGroup(towerTargetGroup);
 
         Enemy enemy = new FirstEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
-        Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy9");
+        Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy10");
 
         assertEquals(expectedEnemy, enemy);
     }
@@ -142,7 +145,7 @@ public class TowerAITest {
         createEnemyGroup(towerTargetGroup);
 
         Enemy enemy = new LeastHPEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
-        Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy10");
+        Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy11");
 
         assertEquals(expectedEnemy, enemy);
     }
@@ -157,7 +160,7 @@ public class TowerAITest {
         createEnemyGroup(towerTargetGroup);
 
         Enemy enemy = new MostHPEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
-        Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy7");
+        Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy9");
 
         assertEquals(expectedEnemy, enemy);
     }
@@ -202,7 +205,7 @@ public class TowerAITest {
         createEnemyGroupWithTank(towerTargetGroup);
 
         Enemy enemy = new LeastHPEnemyAI().findTarget(tower,towerTargetGroup.getChildren());
-        Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy4");
+        Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy7");
 
         assertEquals(expectedEnemy, enemy);
     }
@@ -363,7 +366,7 @@ public class TowerAITest {
         Tower tower = TestUtil.createTower("Rifle", false);
         Group towerTargetGroup = tower.getTargetGroup();
 
-        Enemy enemy1 = createEnemy("enemy1", "Rifle", 10, 10, false, false);
+        Enemy enemy1 = createEnemy("enemy1", "Rifle", 10, 10, 5, false, false);
         towerTargetGroup.addActor(enemy1);
 
         Enemy enemy = new MostHPEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
@@ -380,7 +383,7 @@ public class TowerAITest {
         Tower tower = TestUtil.createTower("Rifle", false);
         Group towerTargetGroup = tower.getTargetGroup();
 
-        Enemy enemy1 = createEnemy("enemy1", "Rifle", 10, 10, true, false);
+        Enemy enemy1 = createEnemy("enemy1", "Rifle", 10, 10, 0, true, false);
         towerTargetGroup.addActor(enemy1);
         Enemy enemy = new MostHPEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
 

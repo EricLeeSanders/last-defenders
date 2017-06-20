@@ -231,6 +231,10 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 		this.attack = attack;
 	}
 
+	public float getArmor(){
+		return armor;
+	}
+
 	public boolean hasArmor() {
 		return hasArmor;
 	}
