@@ -40,10 +40,10 @@ public class QuitPresenter implements GameUIStateObserver {
         Logger.info("QuitPresenter: Resume");
         if(canResume()) {
             audio.playSound(FHDSound.SMALL_CLICK);
-            uiStateManager.setStateReturn();
             if (!keepGamePaused) {
                 gameStateManager.setState(GameState.PLAY);
             }
+            uiStateManager.setStateReturn();
         }
     }
 
