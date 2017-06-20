@@ -172,20 +172,17 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 	@Override
 	public void stateChange(GameUIState state) {
 		Logger.info("GameUIStage: changing ui state: " + state.name());
-		if(resources.getUserPreferences().getPreferences().getBoolean("showRanges", false)){
-			showTowerRanges(true);
-			return;
-		}
+
 		switch (state) {
-		case PLACING_SUPPORT:
-		case PLACING_AIRSTRIKE:
-		case INSPECTING:
-		case PLACING_TOWER:
-			showTowerRanges(true);
-			break;
-		default:
-			showTowerRanges(false);
-			break;
+			case PLACING_SUPPORT:
+			case PLACING_AIRSTRIKE:
+			case INSPECTING:
+			case PLACING_TOWER:
+				showTowerRanges(true);
+				break;
+			default:
+				showTowerRanges(resources.getUserPreferences().getPreferences().getBoolean("showRanges", false));
+				break;
 		}
 		
 	}

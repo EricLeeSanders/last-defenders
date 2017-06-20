@@ -58,6 +58,7 @@ public class OptionsPresenter implements GameUIStateObserver {
 	public void closeOptions() {
 		Logger.info("Options Presenter: close options");
 		audio.playSound(FHDSound.SMALL_CLICK);
+		audio.saveMasterVolume();
 		uiStateManager.setStateReturn();
 	}
 
@@ -68,6 +69,7 @@ public class OptionsPresenter implements GameUIStateObserver {
 		if(canChangeToMainMenu()) {
 			Logger.info("Options Presenter: main menu");
 			audio.playSound(FHDSound.SMALL_CLICK);
+			audio.saveMasterVolume();
 			screenChanger.changeToMenu();
 		}
 	}
@@ -79,6 +81,7 @@ public class OptionsPresenter implements GameUIStateObserver {
 		if(canChangeToNewGame()) {
 			Logger.info("Options Presenter: new game");
 			audio.playSound(FHDSound.SMALL_CLICK);
+			audio.saveMasterVolume();
 			screenChanger.changeToLevelSelect();
 		}
 	}
@@ -87,6 +90,7 @@ public class OptionsPresenter implements GameUIStateObserver {
 		if(canChangeToDebug()) {
 			Logger.info("Options Presenter: debug");
 			audio.playSound(FHDSound.SMALL_CLICK);
+			audio.saveMasterVolume();
 			uiStateManager.setState(GameUIState.DEBUG);
 		}
 	}
@@ -153,13 +157,12 @@ public class OptionsPresenter implements GameUIStateObserver {
 	public void stateChange(GameUIState state) {
 
 		switch (state) {
-		case OPTIONS:
-			view.optionsState();
-			break;
-		default:
-			audio.saveMasterVolume();
-			view.standByState();
-			break;
+			case OPTIONS:
+				view.optionsState();
+				break;
+			default:
+				view.standByState();
+				break;
 		}
 
 	}

@@ -122,9 +122,12 @@ public class TowerPlacement {
 
 	}
 
+
 	/**
-	 * Remove the current tower
-	 */
+	 * Remove the current tower.
+	 *
+	 * @param free - if the tower should be freed as well
+     */
 	public void removeCurrentTower(boolean free) {
 		Logger.info("TowerPlacement: removing tower");
 		if (isCurrentTower()) {
