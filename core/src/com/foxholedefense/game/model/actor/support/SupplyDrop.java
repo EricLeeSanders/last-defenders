@@ -66,7 +66,7 @@ public class SupplyDrop extends GameActor implements Pool.Poolable{
 		}
 	}
 
-	public void setActive(boolean active){ this.active = active; }
+	private void setActive(boolean active){ this.active = active; }
 	
 	public boolean isActive(){
 		return active;

@@ -15,13 +15,13 @@ import com.foxholedefense.util.ActorUtil;
 public class UpgradeButton extends Group {
     public ImageButton button;
     private Label lblCost;
-    public UpgradeButton(Skin skin, String name, String iconName, int cost, int iconWidth, int iconHeight){
+    public UpgradeButton(Skin skin, String name, String iconName, int iconWidth, int iconHeight){
         this.setTransform(false);
         this.button = new ImageButton(skin, "upgrade");
         button.setSize(110, 115);
         addActor(button);
 
-        lblCost = new Label(String.valueOf(cost), skin);
+        lblCost = new Label(String.valueOf(0), skin);
         lblCost.setFontScale(0.45f);
         lblCost.setAlignment(Align.center);
         lblCost.pack();

@@ -27,8 +27,8 @@ public class SupportActor extends GameActor implements Pool.Poolable, Attacker {
 	private TextureRegion rangeTexture;
 	private Circle rangeShape;
 
-	public SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion, Dimension textureSize
-						, TextureRegion rangeTexture, float range, float attack, Vector2 gunPos, int cost) {
+	SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion, Dimension textureSize
+			, TextureRegion rangeTexture, float range, float attack, Vector2 gunPos, int cost) {
 		super(textureSize);
 		this.pool = pool;
 		this.range = range;
@@ -48,7 +48,7 @@ public class SupportActor extends GameActor implements Pool.Poolable, Attacker {
 		super.draw(batch, alpha);
 	}
 
-	protected void drawRange(Batch batch){
+	private void drawRange(Batch batch){
 		float width = range * 2;
 		float height = range * 2;
 		float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, width);

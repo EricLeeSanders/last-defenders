@@ -16,7 +16,7 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  *
  */
-public class MenuStage extends Stage {
+class MenuStage extends Stage {
 	private MenuPresenter presenter;
 	private MenuView menuView;
 	public MenuStage(ScreenChanger screenChanger, Resources resources, FHDAudio audio, Viewport viewport) {

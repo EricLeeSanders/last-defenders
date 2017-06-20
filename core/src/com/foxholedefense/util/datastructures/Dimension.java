@@ -10,13 +10,13 @@ public class Dimension {
 	public float getWidth() {
 		return width;
 	}
-	public void setWidth(float width) {
+	private void setWidth(float width) {
 		this.width = width;
 	}
 	public float getHeight() {
 		return height;
 	}
-	public void setHeight(float height) {
+	private void setHeight(float height) {
 		this.height = height;
 	}
 	public void set(float width, float height){

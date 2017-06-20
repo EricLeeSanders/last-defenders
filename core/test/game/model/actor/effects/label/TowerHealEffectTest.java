@@ -36,7 +36,7 @@ public class TowerHealEffectTest {
         Gdx.app = mock(Application.class);
     }
 
-    public TowerHealEffect createTowerHealEffect(){
+    private TowerHealEffect createTowerHealEffect(){
 
         Skin skinMock = mock(Skin.class);
 

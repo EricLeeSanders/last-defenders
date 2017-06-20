@@ -33,7 +33,7 @@ public abstract class AbstractScreen implements Screen {
 	private InputMultiplexer imp;
 	private GameStateManager gameStateManager;
 	private Viewport viewport;
-	public AbstractScreen(GameStateManager gameStateManager) {
+	protected AbstractScreen(GameStateManager gameStateManager) {
 		this.gameStateManager = gameStateManager;
 		camera = new OrthographicCamera();
 		imp = new InputMultiplexer();
@@ -41,7 +41,7 @@ public abstract class AbstractScreen implements Screen {
 		GLProfiler.enable();
 	}
 
-	public abstract void renderElements(float delta);
+	protected abstract void renderElements(float delta);
 
 	@Override
 	public void render(float delta) {
@@ -103,14 +103,14 @@ public abstract class AbstractScreen implements Screen {
 
 	}
 
-	public Camera getCamera() {
+	private Camera getCamera() {
 		return camera;
 	}
 
-	public Viewport getViewport(){
+	protected Viewport getViewport(){
 		return viewport;
 	}
-	public InputMultiplexer getInputMultiplexer() {
+	protected InputMultiplexer getInputMultiplexer() {
 		return imp;
 	}
 

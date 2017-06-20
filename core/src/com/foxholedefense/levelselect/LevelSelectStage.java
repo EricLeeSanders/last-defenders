@@ -16,7 +16,7 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  *
  */
-public class LevelSelectStage extends Stage {
+class LevelSelectStage extends Stage {
 	private Resources resources;
 	public LevelSelectStage(ScreenChanger screenChanger, Resources resources, FHDAudio audio, Viewport viewport) {
 		super(viewport);

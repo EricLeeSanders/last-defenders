@@ -80,7 +80,7 @@ public class ProjectileFactory {
      *
      * @return Bullet
      */
-    protected Bullet createBulletActor() {
+    private Bullet createBulletActor() {
         Bullet bullet = new Bullet(bulletPool, resources.getTexture("bullet"));
         return bullet;
 
@@ -91,7 +91,7 @@ public class ProjectileFactory {
      *
      * @return Rocket
      */
-    protected Rocket createRocket() {
+    private Rocket createRocket() {
         Rocket rocket = new Rocket(rocketPool, this, resources.getTexture("rocket"));
         return rocket;
 
@@ -102,7 +102,7 @@ public class ProjectileFactory {
      *
      * @return Explosion
      */
-    protected Explosion createExplosionActor() {
+    private Explosion createExplosionActor() {
         Array<TextureAtlas.AtlasRegion> atlasRegions = resources.getAtlasRegion("explosion");
         Explosion explosion = new Explosion(explosionPool, atlasRegions, audio);
         return explosion;
@@ -114,35 +114,35 @@ public class ProjectileFactory {
      *
      * @return Flame
      */
-    protected Flame createFlameActor() {
+    private Flame createFlameActor() {
         Array<TextureAtlas.AtlasRegion> atlasRegions = resources.getAtlasRegion("flame");
         Flame flame = new Flame(flamePool, atlasRegions);
         return flame;
 
     }
 
-    public class ExplosionPool extends Pool<Explosion> {
+    private class ExplosionPool extends Pool<Explosion> {
         @Override
         protected Explosion newObject() {
             return createExplosionActor();
         }
     }
 
-    public class BulletPool extends Pool<Bullet> {
+    private class BulletPool extends Pool<Bullet> {
         @Override
         protected Bullet newObject() {
             return createBulletActor();
         }
     }
 
-    public class rocketPool extends Pool<Rocket> {
+    private class rocketPool extends Pool<Rocket> {
         @Override
         protected Rocket newObject() {
             return createRocket();
         }
     }
 
-    public class FlamePool extends Pool<Flame> {
+    private class FlamePool extends Pool<Flame> {
         @Override
         protected Flame newObject() {
             return createFlameActor();

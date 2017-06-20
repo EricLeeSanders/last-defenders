@@ -32,7 +32,7 @@ public class DeathEffectTest {
         Gdx.app = mock(Application.class);
     }
 
-    public DeathEffect createDeathEffect(){
+    private DeathEffect createDeathEffect(){
 
         Resources resourcesMock = TestUtil.createResourcesMock();
 

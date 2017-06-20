@@ -103,7 +103,7 @@ public class SupportActorFactory {
      *
      * @return SupplyDrop
      */
-    protected SupplyDrop createSupplyDropActor() {
+    private SupplyDrop createSupplyDropActor() {
         TextureRegion supplyDropRegion = resources.getTexture("supply-drop");
         SupplyDrop supplyDrop = new SupplyDrop(supplyDropRegion, supplyDropPool, this);
         return supplyDrop;
@@ -114,14 +114,14 @@ public class SupportActorFactory {
      *
      * @return SupplyDropCrate
      */
-    protected SupplyDropCrate createSupplyDropCrateActor() {
+    private SupplyDropCrate createSupplyDropCrateActor() {
         TextureRegion supplyDropCrateRegion = resources.getTexture("supply-drop-crate");
         TextureRegion rangeTexture = resources.getTexture("range-black");
         SupplyDropCrate supplyDropCrate = new SupplyDropCrate(supplyDropCrateRegion, rangeTexture, supplyDropCratePool, actorGroups.getTowerGroup(), effectFactory);
         return supplyDropCrate;
     }
 
-    protected AirStrikeLocation createAirStrikeLocation() {
+    private AirStrikeLocation createAirStrikeLocation() {
         TextureRegion rangeTexture = resources.getTexture("range-black");
         AirStrikeLocation location = new AirStrikeLocation(airStrikeLocationPool,rangeTexture );
         return location;
@@ -132,7 +132,7 @@ public class SupportActorFactory {
      *
      * @return SupportActor
      */
-    protected SupportActor createSupportActor(Class<? extends SupportActor> type) {
+    private SupportActor createSupportActor(Class<? extends SupportActor> type) {
         Logger.info("Actor Factory: creating support actor: " + type.getSimpleName());
         Group targetGroup = actorGroups.getEnemyGroup();
         if (type.equals(Apache.class)) {

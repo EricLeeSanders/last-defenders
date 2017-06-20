@@ -130,7 +130,7 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 		return COST;
 	}
 	
-	public Shape2D getRangeShape() {
+	private Shape2D getRangeShape() {
 		rangeCircle.set(getPositionCenter().x, getPositionCenter().y, RANGE);
 		return rangeCircle;
 	}

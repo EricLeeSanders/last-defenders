@@ -69,7 +69,7 @@ public class TestUtil {
         return resources;
     }
 
-    public static ProjectileFactory createProjectileFactoryMock(){
+    private static ProjectileFactory createProjectileFactoryMock(){
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
 
         Bullet bullet = mock(Bullet.class);
@@ -78,7 +78,7 @@ public class TestUtil {
         return projectileFactoryMock;
     }
 
-    public static EffectFactory createEffectFactoryMock(){
+    private static EffectFactory createEffectFactoryMock(){
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
 
         ArmorDestroyedEffect armorDestroyedEffect = mock(ArmorDestroyedEffect.class);

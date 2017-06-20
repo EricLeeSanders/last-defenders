@@ -36,7 +36,7 @@ public class DebugView extends Group implements IDebugView {
     /**
      * Create controls
      */
-    public void createControls(Skin skin) {
+    private void createControls(Skin skin) {
 
         Logger.info("Debug View: creating controls");
 

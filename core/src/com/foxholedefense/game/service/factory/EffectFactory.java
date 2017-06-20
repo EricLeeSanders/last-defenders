@@ -99,7 +99,7 @@ public class EffectFactory {
      *
      * @return DeathEffect
      */
-    protected DeathEffect createDeathEffect(Class<? extends TextureEffect> type) {
+    private DeathEffect createDeathEffect(Class<? extends TextureEffect> type) {
 
         if (type.equals(BloodSplatter.class)) {
             Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("blood-splatter");
@@ -113,7 +113,7 @@ public class EffectFactory {
 
     }
 
-    protected LabelEffect createLabelEffect(Class<? extends LabelEffect> type){
+    private LabelEffect createLabelEffect(Class<? extends LabelEffect> type){
         if(type.equals(ArmorDestroyedEffect.class)){
             Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("shield-destroyed");
             return new ArmorDestroyedEffect(atlasRegions, armorDestroyedEffectPool, resources.getSkin());
@@ -127,7 +127,7 @@ public class EffectFactory {
         }
     }
 
-    protected AnimationEffect createAnimationEffect(Class<? extends AnimationEffect> type){
+    private AnimationEffect createAnimationEffect(Class<? extends AnimationEffect> type){
         if(type.equals(EnemyCoinEffect.class)){
             Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("coin");
             return new EnemyCoinEffect(enemyCoinEffectPool, atlasRegions);

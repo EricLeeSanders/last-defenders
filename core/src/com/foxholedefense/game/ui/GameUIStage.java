@@ -83,7 +83,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 	/**
 	 * Create and initialize the views and presenters of the Game UI
 	 */
-	public void createUI(Resources resources, FHDAudio audio, GameStage gameStage) {
+	private void createUI(Resources resources, FHDAudio audio, GameStage gameStage) {
 		Logger.info("GameUIStage: creating ui");
 		Skin skin = resources.getSkin();
 

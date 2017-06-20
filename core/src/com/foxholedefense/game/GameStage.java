@@ -94,7 +94,7 @@ public class GameStage extends Stage implements PlayerObserver {
 		combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory, projectileFactory, player);
 	}
 
-	public void createPlacementServices(Map map){
+	private void createPlacementServices(Map map){
 		Logger.info("Game Stage: creating placement services");
 		towerPlacement = new TowerPlacement(map, actorGroups, combatActorFactory, healthFactory);
 		supportActorPlacement = new SupportActorPlacement(actorGroups, supportActorFactory);
@@ -118,7 +118,7 @@ public class GameStage extends Stage implements PlayerObserver {
 	/**
 	 * Create the actor groups. Order matters
 	 */
-	public void createGroups() {
+	private void createGroups() {
 		Logger.info("Game Stage: creating groups");
 		this.addActor(getActorGroups().getDeathEffectGroup());
 		this.addActor(getActorGroups().getLandmineGroup());
@@ -162,7 +162,7 @@ public class GameStage extends Stage implements PlayerObserver {
 	/**
 	 * Determine if the wave is over
 	 */
-	public boolean isWaveOver() {
+	private boolean isWaveOver() {
 		return getActorGroups().getEnemyGroup().getChildren().size <= 0
 				&& level.getSpawningEnemiesCount() <= 0
 				&& getActorGroups().getProjectileGroup().getChildren().size <= 0
@@ -223,7 +223,7 @@ public class GameStage extends Stage implements PlayerObserver {
 		}
 	}
 
-	public ActorGroups getActorGroups() {
+	private ActorGroups getActorGroups() {
 		return actorGroups;
 	}
 

@@ -203,7 +203,7 @@ public abstract class Enemy extends CombatActor {
 
 	}
 
-	public boolean isAttacking(){
+	boolean isAttacking(){
 		return stateManager.getCurrentStateName().equals(EnemyState.ATTACKING);
 	}
 

@@ -35,7 +35,7 @@ public class ArmorIconTest {
         Gdx.app = mock(Application.class);
     }
 
-    public ArmorIcon createArmorIcon(){
+    private ArmorIcon createArmorIcon(){
 
         TextureRegion iconMock = mock(TextureRegion.class);
         doReturn(20).when(iconMock).getRegionWidth();

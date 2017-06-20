@@ -13,13 +13,13 @@ public abstract class TextureEffect extends GameActor implements Pool.Poolable {
     private float duration;
     private Pool<TextureEffect> pool;
 
-    public TextureEffect(Pool<TextureEffect> pool, Dimension textureSize, float duration){
+    protected TextureEffect(Pool<TextureEffect> pool, Dimension textureSize, float duration){
         this(pool, duration);
         setSize(textureSize);
 
     }
 
-    public TextureEffect(Pool<TextureEffect> pool, float duration){
+    private TextureEffect(Pool<TextureEffect> pool, float duration){
         this.pool = pool;
         this.duration = duration;
     }

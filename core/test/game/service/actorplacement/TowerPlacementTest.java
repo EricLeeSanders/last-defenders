@@ -48,7 +48,7 @@ public class TowerPlacementTest {
     private Map map = mock(Map.class);
     private ActorGroups actorGroups = mock(ActorGroups.class);
     private CombatActorFactory combatActorFactory = mock(CombatActorFactory.class);
-    HealthFactory healthFactory = mock(HealthFactory.class);
+    private HealthFactory healthFactory = mock(HealthFactory.class);
 
     @Before
     public void initTowerPlacementTest() {

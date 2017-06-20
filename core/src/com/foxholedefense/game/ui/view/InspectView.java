@@ -44,7 +44,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	/**
 	 * Create the controls
 	 */
-	public void createControls(Skin skin) {
+	private void createControls(Skin skin) {
 
 		Logger.info("Inspect View: creating controls");
 
@@ -98,19 +98,19 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
 		addActor(btnCancel);
 
-		btnArmor = new UpgradeButton(skin, "Armor", "shield", 100, 28, 30);
+		btnArmor = new UpgradeButton(skin, "Armor", "shield", 28, 30);
 		inspectTable.add(btnArmor).size(110,115);//.spaceBottom(10).spaceRight(10);
 		setArmorListener();
 
-		btnRange = new UpgradeButton(skin, "Increase Range", "range_icon", 100, 28, 30);
+		btnRange = new UpgradeButton(skin, "Increase Range", "range_icon", 28, 30);
 		inspectTable.add(btnRange).size(110,115);//.spaceBottom(10).spaceRight(10);
 		setIncreaseRangeListener();
 
-		btnSpeed = new UpgradeButton(skin, "Increase Speed", "speed_icon", 100,30,30);
+		btnSpeed = new UpgradeButton(skin, "Increase Speed", "speed_icon",30,30);
 		inspectTable.add(btnSpeed).size(110,115);//.spaceBottom(5).spaceRight(10);
 		setIncreaseSpeedListener();
 
-		btnAttack = new UpgradeButton(skin, "Increase Attack", "attack_icon", 100, 26,26);
+		btnAttack = new UpgradeButton(skin, "Increase Attack", "attack_icon", 26,26);
 		inspectTable.add(btnAttack).size(110,115);//.spaceBottom(5).spaceRight(10);
 		setIncreaseAttackListener();
 

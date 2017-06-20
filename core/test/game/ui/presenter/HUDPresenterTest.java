@@ -44,7 +44,7 @@ public class HUDPresenterTest {
         Gdx.app = mock(Application.class);
     }
 
-    public HUDPresenter createHUDPresenter(){
+    private HUDPresenter createHUDPresenter(){
 
         FHDAudio audioMock = mock(FHDAudio.class);
 
