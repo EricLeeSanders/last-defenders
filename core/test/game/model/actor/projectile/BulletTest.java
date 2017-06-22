@@ -10,6 +10,7 @@ package game.model.actor.projectile;
         import com.foxholedefense.game.model.actor.interfaces.Attacker;
         import com.foxholedefense.game.model.actor.interfaces.Targetable;
         import com.foxholedefense.game.model.actor.projectile.Bullet;
+        import com.foxholedefense.game.service.factory.ProjectileFactory.BulletPool;
         import com.foxholedefense.util.datastructures.Dimension;
 
 
@@ -44,7 +45,7 @@ package game.model.actor.projectile;
 @PrepareForTest({Damage.class})
 public class BulletTest {
     @SuppressWarnings("unchecked")
-    private Pool<Bullet> poolMock = (Pool<Bullet>) mock(Pool.class);
+    private BulletPool poolMock = mock(BulletPool.class);
     @Before
     public void initBulletTest() {
         Gdx.app = mock(Application.class);
