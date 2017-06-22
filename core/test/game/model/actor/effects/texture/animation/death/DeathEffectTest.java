@@ -25,7 +25,8 @@ import static org.mockito.Mockito.verify;
 
 public class DeathEffectTest {
 
-    private DeathEffectPool deathEffectPoolMock = mock(DeathEffectPool.class);
+    @SuppressWarnings("unchecked")
+    private DeathEffectPool<BloodSplatter> deathEffectPoolMock = mock(DeathEffectPool.class);
 
     @Before
     public void initDeathEffectTest() {

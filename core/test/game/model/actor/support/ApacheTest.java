@@ -38,7 +38,8 @@ import static org.mockito.Mockito.verify;
 
 public class ApacheTest {
 
-    private SupportActorPool poolMock = mock(SupportActorPool.class);
+    @SuppressWarnings("unchecked")
+    private SupportActorPool<Apache> poolMock = mock(SupportActorPool.class);
     private Bullet bulletMock = mock(Bullet.class);
     @Before
     public void initApacheTest() {

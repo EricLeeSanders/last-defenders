@@ -42,6 +42,7 @@ public class EffectFactory {
      * @param type
      * @param <T>
      */
+    @SuppressWarnings("unchecked")
     public <T extends DeathEffect> T loadDeathEffect(DeathEffectType type){
 
         T deathEffect = null;
@@ -64,6 +65,7 @@ public class EffectFactory {
      * @param type
      * @param <T>
      */
+    @SuppressWarnings("unchecked")
     public <T extends LabelEffect> T loadLabelEffect(Class<T> type){
 
         T labelEffect = null;
@@ -84,6 +86,7 @@ public class EffectFactory {
      * @param type
      * @param <T>
      */
+    @SuppressWarnings("unchecked")
     public <T extends AnimationEffect> T loadAnimationEffect(Class<T> type){
 
         T animationEffect = null;

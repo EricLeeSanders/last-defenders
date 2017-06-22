@@ -61,6 +61,7 @@ public class TowerPlacementTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void towerPlacementTest1(){
 
         TowerPlacement towerPlacement = createTowerPlacement();
@@ -80,7 +81,7 @@ public class TowerPlacementTest {
         assertEquals(0, tower.getY(), TestUtil.DELTA);
 
         // Move tower and mock collision detection
-        Array<Rectangle> pathBoundaries = new Array<Rectangle>();
+        Array<Rectangle> pathBoundaries = new Array<>();
         doReturn(pathBoundaries).when(map).getPathBoundaries();
         when(CollisionDetection.collisionWithPath(eq(pathBoundaries), eq(tower))).thenReturn(false);
         when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower))).thenReturn(false);
@@ -114,6 +115,7 @@ public class TowerPlacementTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void towerPlacementCollisionTest(){
 
         TowerPlacement towerPlacement = createTowerPlacement();
@@ -133,7 +135,7 @@ public class TowerPlacementTest {
         assertEquals(0, tower.getY(), TestUtil.DELTA);
 
         // Move tower and mock collision detection
-        Array<Rectangle> pathBoundaries = new Array<Rectangle>();
+        Array<Rectangle> pathBoundaries = new Array<>();
         doReturn(pathBoundaries).when(map).getPathBoundaries();
         when(CollisionDetection.collisionWithPath(eq(pathBoundaries), eq(tower))).thenReturn(true);
         when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower))).thenReturn(true);

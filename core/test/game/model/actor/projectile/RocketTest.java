@@ -3,12 +3,12 @@ package game.model.actor.projectile;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.helper.Damage;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.projectile.Explosion;
 import com.foxholedefense.game.model.actor.projectile.Rocket;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
+import com.foxholedefense.game.service.factory.ProjectileFactory.RocketPool;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.Dimension;
@@ -38,7 +38,7 @@ import static org.mockito.Mockito.verify;
 public class RocketTest {
 
 
-    private Pool poolMock = mock(Pool.class);
+    private RocketPool poolMock = mock(RocketPool.class);
     private Explosion explosionMock = mock(Explosion.class);
 
     @Before
@@ -52,9 +52,7 @@ public class RocketTest {
         doReturn(explosionMock).when(projectileFactoryMock).loadExplosion();
         Resources resourcesMock = TestUtil.createResourcesMock();
 
-        Rocket rocket = new Rocket(poolMock, projectileFactoryMock, resourcesMock.getTexture(""));
-
-        return rocket;
+        return new Rocket(poolMock, projectileFactoryMock, resourcesMock.getTexture(""));
     }
 
     @Test

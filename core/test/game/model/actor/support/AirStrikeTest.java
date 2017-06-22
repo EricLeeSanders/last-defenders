@@ -37,8 +37,8 @@ import static org.mockito.Mockito.verify;
  */
 
 public class AirStrikeTest {
-
-    private SupportActorPool poolMock = mock(SupportActorPool.class);
+    @SuppressWarnings("unchecked")
+    private SupportActorPool<AirStrike> poolMock = mock(SupportActorPool.class);
     private Rocket rocketMock = mock(Rocket.class);
 
     @Before

@@ -17,7 +17,7 @@ import com.foxholedefense.util.Resources;
 
 public class ProjectileFactory {
     private BulletPool bulletPool = new BulletPool();
-    private rocketPool rocketPool = new rocketPool();
+    private RocketPool rocketPool = new RocketPool();
     private ExplosionPool explosionPool = new ExplosionPool();
     private FlamePool flamePool = new FlamePool();
 
@@ -121,28 +121,28 @@ public class ProjectileFactory {
 
     }
 
-    private class ExplosionPool extends Pool<Explosion> {
+    public class ExplosionPool extends Pool<Explosion> {
         @Override
         protected Explosion newObject() {
             return createExplosionActor();
         }
     }
 
-    private class BulletPool extends Pool<Bullet> {
+    public class BulletPool extends Pool<Bullet> {
         @Override
         protected Bullet newObject() {
             return createBulletActor();
         }
     }
 
-    private class rocketPool extends Pool<Rocket> {
+    public class RocketPool extends Pool<Rocket> {
         @Override
         protected Rocket newObject() {
             return createRocket();
         }
     }
 
-    private class FlamePool extends Pool<Flame> {
+    public class FlamePool extends Pool<Flame> {
         @Override
         protected Flame newObject() {
             return createFlameActor();

@@ -31,7 +31,8 @@ import static org.mockito.Mockito.verify;
 
 public class LandMineTest {
 
-    private SupportActorPool poolMock = mock(SupportActorPool.class);
+    @SuppressWarnings("unchecked")
+    private SupportActorPool<LandMine> poolMock = mock(SupportActorPool.class);
     private Explosion explosionMock = mock(Explosion.class);
 
     @Before
@@ -45,9 +46,7 @@ public class LandMineTest {
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(explosionMock).when(projectileFactoryMock).loadExplosion();
 
-        LandMine landMine = new LandMine(poolMock, new Group(), projectileFactoryMock, resourcesMock.getTexture(""), resourcesMock.getTexture(""));
-
-        return landMine;
+        return new LandMine(poolMock, new Group(), projectileFactoryMock, resourcesMock.getTexture(""), resourcesMock.getTexture(""));
     }
 
     private Enemy createEnemy(String type, float lengthToEnd, Vector2 posCenter){

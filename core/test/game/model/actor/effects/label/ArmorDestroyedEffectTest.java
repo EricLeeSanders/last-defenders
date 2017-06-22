@@ -28,8 +28,8 @@ import static org.mockito.Mockito.verify;
  */
 
 public class ArmorDestroyedEffectTest {
-
-    private LabelEffectPool labelEffectPoolMock = mock(LabelEffectPool.class);
+    @SuppressWarnings("unchecked")
+    private LabelEffectPool<ArmorDestroyedEffect> labelEffectPoolMock = mock(LabelEffectPool.class);
 
     @Before
     public void initArmorDestroyedEffectTest() {
