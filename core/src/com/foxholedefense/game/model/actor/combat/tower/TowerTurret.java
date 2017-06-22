@@ -47,11 +47,11 @@ public class TowerTurret extends Tower implements IRotatable {
 	private static final Dimension TEXTURE_SIZE_BAGS = new Dimension(67, 49);
 	private static final Dimension TEXTURE_SIZE_TURRET = new Dimension(71, 24);
 	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
+	private static final float[] BODY_POINTS = {5, 14, 5, 36, 11, 46, 35, 46, 35, 3, 11, 3};
 
 	private float[] rangeCoords = new float[6];
-	private float[] bodyPoints = {5, 14, 5, 36, 11, 46, 35, 46, 35, 3, 11, 3};
-	private TextureRegion bodyRegion;
 
+	private TextureRegion bodyRegion;
 	private Polygon body;
 	private float bodyRotation;
 	private Polygon rangePoly;
@@ -64,7 +64,7 @@ public class TowerTurret extends Tower implements IRotatable {
 		this.bodyRegion = bodyRegion;
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
-		body = new Polygon(bodyPoints);
+		body = new Polygon(BODY_POINTS);
 		this.rangeRegion = rangeRegion;
 		this.collidingRangeRegion = collidingRangeRegion;
 

@@ -31,13 +31,13 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 	private static final Vector2 GUN_POS = UtilPool.getVector2();
 	private static final Dimension TEXTURE_SIZE = new Dimension(74, 32);
 	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.VEHCILE_EXPLOSION;
+	private static final float[] BODY_POINTS = {15,0, 15,32, 69,32, 69, 0 };
 
-	private float[] bodyPoints = {15,0, 15,32, 69,32, 69, 0 };
 	private Polygon body;
 	
 	public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<EnemyHumvee> pool) {
 		super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, null, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
-		this.body = new Polygon(bodyPoints);
+		this.body = new Polygon(BODY_POINTS);
 	}
 
 	@Override

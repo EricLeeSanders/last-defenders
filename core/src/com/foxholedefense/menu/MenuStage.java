@@ -17,13 +17,12 @@ import com.foxholedefense.util.Resources;
  *
  */
 class MenuStage extends Stage {
-	private MenuPresenter presenter;
-	private MenuView menuView;
+
 	public MenuStage(ScreenChanger screenChanger, Resources resources, FHDAudio audio, Viewport viewport) {
 		super(viewport);
 		resources.loadAsset(Resources.MENU_ATLAS, TextureAtlas.class);
-		presenter = new MenuPresenter(screenChanger, audio);
-		menuView = new MenuView(presenter, resources);
+		MenuPresenter presenter = new MenuPresenter(screenChanger, audio);
+		MenuView menuView = new MenuView(presenter, resources);
 		presenter.setView(menuView);
 		this.addActor(menuView);
 		menuView.setBackground(resources.getAsset(Resources.MENU_ATLAS, TextureAtlas.class));

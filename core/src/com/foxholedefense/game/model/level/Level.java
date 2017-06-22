@@ -20,7 +20,6 @@ public class Level {
 
 	private float delayCount = 0;
 	private float enemyDelay = 0f;
-	private Map map;
 	private int currentWave = 0;
 	private Queue<SpawningEnemy> spawningEnemyQueue;
 	private int intLevel;
@@ -29,9 +28,8 @@ public class Level {
 	private ActorGroups actorGroups;
 	private HealthFactory healthFactory;
 
-	public Level(int level, ActorGroups actorGroups, HealthFactory healthFactory, Map map, FileWaveLoader fileWaveLoader, DynamicWaveLoader dynamicWaveLoader) {
+	public Level(int level, ActorGroups actorGroups, HealthFactory healthFactory, FileWaveLoader fileWaveLoader, DynamicWaveLoader dynamicWaveLoader) {
 		this.intLevel = level;
-		this.map = map;
 		this.actorGroups = actorGroups;
 		this.healthFactory = healthFactory;
 		this.waveLoader = fileWaveLoader;

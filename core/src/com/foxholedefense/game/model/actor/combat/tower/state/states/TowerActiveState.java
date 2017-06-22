@@ -16,12 +16,10 @@ import java.util.Map;
 public class TowerActiveState implements CombatActorState {
 
     private final Tower tower;
-    private final StateTransitioner<TowerState> stateTransitioner;
     private float attackCounter;
 
     public TowerActiveState(Tower tower, StateTransitioner<TowerState> stateTransitioner){
         this.tower = tower;
-        this.stateTransitioner = stateTransitioner;
     }
 
     @Override
