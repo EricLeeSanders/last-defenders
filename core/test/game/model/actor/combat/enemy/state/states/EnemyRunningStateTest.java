@@ -50,6 +50,7 @@ public class EnemyRunningStateTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void enemyRunningStateTest1(){
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
         Tower tower = TestUtil.createTower("Rifle", false);
@@ -58,9 +59,6 @@ public class EnemyRunningStateTest {
         arrayAction.add(new SequenceAction());
 
         doReturn(arrayAction).when(enemy).getActions();
-
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("target", tower);
 
         EnemyStateManager stateManagerMock = mock(EnemyStateManager.class);
 

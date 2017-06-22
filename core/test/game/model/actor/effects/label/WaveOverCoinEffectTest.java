@@ -31,7 +31,8 @@ import static org.mockito.Mockito.verify;
 
 public class WaveOverCoinEffectTest {
 
-    private LabelEffectPool labelEffectPoolMock = mock(LabelEffectPool.class);
+    @SuppressWarnings("unchecked")
+    private LabelEffectPool<WaveOverCoinEffect> labelEffectPoolMock = mock(LabelEffectPool.class);
 
     @Before
     public void initWaveOverCoinEffectTest() {

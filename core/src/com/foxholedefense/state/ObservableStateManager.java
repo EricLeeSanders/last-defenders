@@ -24,6 +24,7 @@ public abstract class ObservableStateManager<S, O extends StateObserver>
     /**
      * Notify all observers of state change
      */
+    @SuppressWarnings("unchecked")
     private void notifyObservers() {
         Logger.info(getClass().getSimpleName() + ": Notify Observers");
         Object[] objects = observers.begin();
