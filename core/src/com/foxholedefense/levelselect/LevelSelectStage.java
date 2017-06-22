@@ -17,10 +17,8 @@ import com.foxholedefense.util.Resources;
  *
  */
 class LevelSelectStage extends Stage {
-	private Resources resources;
 	public LevelSelectStage(ScreenChanger screenChanger, Resources resources, FHDAudio audio, Viewport viewport) {
 		super(viewport);
-		this.resources = resources;
 		LevelSelectPresenter presenter = new LevelSelectPresenter(screenChanger);
 		resources.loadAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class);
 		LevelSelectView levelSelectView = new LevelSelectView(presenter, resources, audio);

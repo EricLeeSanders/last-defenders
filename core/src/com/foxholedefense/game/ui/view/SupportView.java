@@ -37,10 +37,11 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  */
 public class SupportView extends Group implements ISupportView, InputProcessor {
 	private Array<SupportButton> supportButtons = new Array<SupportButton>(4);
-	private ImageButton btnPlacingCancel, btnCancel, btnPlace;
+	private ImageButton btnPlacingCancel;
+	private ImageButton btnPlace;
 	private SupportPresenter presenter;
 	private Group choosingGroup;
-	private Label lblTitle, lblMoney;
+	private Label lblMoney;
 	
 	public SupportView(SupportPresenter presenter, Skin skin) {
 		this.presenter = presenter;
@@ -72,7 +73,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		container.add(scroll).expand().fill().colspan(1);
 		container.setBackground(skin.getDrawable("main-panel"));
 
-		lblTitle = new Label("SUPPORT", skin);
+		Label lblTitle = new Label("SUPPORT", skin);
 		lblTitle.setPosition(container.getX() + (container.getWidth()/2) - (lblTitle.getWidth()/2)
 					,container.getY() + container.getHeight() - lblTitle.getHeight() + 1 );
 		lblTitle.setAlignment(Align.center);
@@ -111,8 +112,8 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 		supportButtons.add(apacheButton);
 		supportTable.add(apacheButton).size(133,100).spaceBottom(5);
 		setApacheListener(apacheButton);
-		
-		btnCancel = new ImageButton(skin,"cancel");
+
+		ImageButton btnCancel = new ImageButton(skin, "cancel");
 		setCancelListener(btnCancel);
 		btnCancel.setSize(64, 64);
 		btnCancel.getImageCell().size(35,36);

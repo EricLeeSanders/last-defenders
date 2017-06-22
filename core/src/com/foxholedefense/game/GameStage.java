@@ -58,7 +58,6 @@ public class GameStage extends Stage implements PlayerObserver {
 	private MessageDisplayer messageDisplayer;
 	private CombatActorFactory combatActorFactory;
 	private HealthFactory healthFactory;
-	private ProjectileFactory projectileFactory;
 	private SupportActorFactory supportActorFactory;
 	private EffectFactory effectFactory;
 
@@ -81,7 +80,7 @@ public class GameStage extends Stage implements PlayerObserver {
 		mapRenderer = new MapRenderer(tiledMap, getCamera());
 		FileWaveLoader fileWaveLoader = new FileWaveLoader(combatActorFactory, map);
 		DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
-		level = new Level(intLevel, getActorGroups(), healthFactory, map, fileWaveLoader, dynamicWaveLoader);
+		level = new Level(intLevel, getActorGroups(), healthFactory, fileWaveLoader, dynamicWaveLoader);
 		player.attachObserver(this);
 
 	}
@@ -89,7 +88,7 @@ public class GameStage extends Stage implements PlayerObserver {
 	private void createFactories(FHDAudio audio){
 		effectFactory = new EffectFactory(actorGroups, resources);
 		healthFactory = new HealthFactory(actorGroups,resources);
-		projectileFactory = new ProjectileFactory(actorGroups, audio, resources);
+		ProjectileFactory projectileFactory = new ProjectileFactory(actorGroups, audio, resources);
 		supportActorFactory = new SupportActorFactory(actorGroups, audio, resources, effectFactory, projectileFactory);
 		combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory, projectileFactory, player);
 	}

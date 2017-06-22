@@ -50,8 +50,8 @@ public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatabl
 	private static final Dimension TEXTURE_SIZE_BODY = new Dimension(76,50);
 	private static final Dimension TEXTURE_SIZE_TURRET = new Dimension(120, 23);
 	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.VEHCILE_EXPLOSION;
+	private static final float[] BODY_POINTS = { 0, 0, 0, 50, 75, 50, 75, 0 };
 
-	private float[] bodyPoints = { 0, 0, 0, 50, 75, 50, 75, 0 };
 	private Polygon body;
 	private TextureRegion bodyRegion;
 	private TextureRegion turretRegion;
@@ -65,7 +65,7 @@ public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatabl
 		this.turretRegion = turretRegion;
 		this.projectileFactory = projectileFactory;
 		this.audio = audio;
-		body = new Polygon(bodyPoints);
+		body = new Polygon(BODY_POINTS);
 	}
 
 	/**

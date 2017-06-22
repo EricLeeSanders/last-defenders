@@ -27,12 +27,10 @@ import com.foxholedefense.util.Resources;
  */
 public class HUDView extends Group implements IHUDView {
 
-	private Image imgMoney, imgLife;
 	private ImageButton btnWave, btnEnlist, btnSupport, btnOptions, btnPause, btnResume;
 	private Label lblMoney, lblLives, lblWaveCount;
 	private HUDPresenter presenter;
 	private Resources resources;
-	private Label messageLabel;
 
 	public HUDView(HUDPresenter presenter,Skin skin, Resources resources) {
 		this.presenter = presenter;
@@ -46,7 +44,7 @@ public class HUDView extends Group implements IHUDView {
 		LabelStyle messageDisplayLabelStyle = new Label.LabelStyle(skin.get(LabelStyle.class));
 		messageDisplayLabelStyle.fontColor = Color.RED;
 
-		messageLabel = new Label("", resources.getSkin());
+		Label messageLabel = new Label("", resources.getSkin());
 		messageLabel.setStyle(messageDisplayLabelStyle);
 	}
 
@@ -109,15 +107,15 @@ public class HUDView extends Group implements IHUDView {
 		statsTable.setTransform(false);
 		statsTable.setFillParent(true);
 		addActor(statsTable);
-		
-		imgLife = new Image(skin.getAtlas().findRegion("heart"));
+
+		Image imgLife = new Image(skin.getAtlas().findRegion("heart"));
 		statsTable.add(imgLife).size(32,32).padRight(3);
 		lblLives = new Label("0", skin);
 		lblLives.setAlignment(Align.left);
 		lblLives.setFontScale(0.5f);
 		statsTable.add(lblLives).size(30,19).spaceRight(10);
-		
-		imgMoney = new Image(skin.getAtlas().findRegion("money"));
+
+		Image imgMoney = new Image(skin.getAtlas().findRegion("money"));
 		statsTable.add(imgMoney).size(32,32).padRight(3);
 		
 		lblMoney = new Label("0", skin);
