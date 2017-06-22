@@ -81,8 +81,7 @@ public class ProjectileFactory {
      * @return Bullet
      */
     private Bullet createBulletActor() {
-        Bullet bullet = new Bullet(bulletPool, resources.getTexture("bullet"));
-        return bullet;
+        return new Bullet(bulletPool, resources.getTexture("bullet"));
 
     }
 
@@ -92,8 +91,7 @@ public class ProjectileFactory {
      * @return Rocket
      */
     private Rocket createRocket() {
-        Rocket rocket = new Rocket(rocketPool, this, resources.getTexture("rocket"));
-        return rocket;
+        return new Rocket(rocketPool, this, resources.getTexture("rocket"));
 
     }
 
@@ -104,8 +102,7 @@ public class ProjectileFactory {
      */
     private Explosion createExplosionActor() {
         Array<TextureAtlas.AtlasRegion> atlasRegions = resources.getAtlasRegion("explosion");
-        Explosion explosion = new Explosion(explosionPool, atlasRegions, audio);
-        return explosion;
+        return new Explosion(explosionPool, atlasRegions, audio);
 
     }
 
@@ -116,8 +113,7 @@ public class ProjectileFactory {
      */
     private Flame createFlameActor() {
         Array<TextureAtlas.AtlasRegion> atlasRegions = resources.getAtlasRegion("flame");
-        Flame flame = new Flame(flamePool, atlasRegions);
-        return flame;
+        return new Flame(flamePool, atlasRegions);
 
     }
 

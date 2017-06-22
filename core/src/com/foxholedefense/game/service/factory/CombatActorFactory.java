@@ -218,9 +218,8 @@ public class CombatActorFactory {
     private SpawningEnemy createSpawningEnemy(){
 
         Logger.info("CombatActorFactory: creating SpawningEnemy");
-        SpawningEnemy spawningEnemy = new SpawningEnemy(spawningEnemyPool);
 
-        return spawningEnemy;
+        return new SpawningEnemy(spawningEnemyPool);
     }
 
     public class CombatActorPool<T extends CombatActor> extends Pool<CombatActor> {

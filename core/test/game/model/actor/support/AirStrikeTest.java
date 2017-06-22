@@ -54,9 +54,7 @@ public class AirStrikeTest {
         Resources resourcesMock = TestUtil.createResourcesMock();
         FHDAudio audioMock = mock(FHDAudio.class);
 
-        AirStrike airStrike = new AirStrike(poolMock, new Group(), projectileFactoryMock, resourcesMock.getTexture(""), resourcesMock.getTexture(""), audioMock);
-
-        return airStrike;
+        return new AirStrike(poolMock, new Group(), projectileFactoryMock, resourcesMock.getTexture(""), resourcesMock.getTexture(""), audioMock);
 
     }
 

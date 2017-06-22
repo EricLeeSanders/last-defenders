@@ -55,7 +55,6 @@ public class EnemyRunningState implements CombatActorState {
             if(target != null){
                 attackTransitionParameters.put("target", target);
                 stateTransitioner.transition(EnemyState.ATTACKING, attackTransitionParameters);
-                return;
             }
         } else {
             findTargetDelayCounter += delta;

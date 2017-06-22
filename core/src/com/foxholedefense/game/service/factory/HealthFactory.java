@@ -48,8 +48,7 @@ public class HealthFactory {
      */
     private HealthBar createHealthBarActor() {
         Logger.info("Actor Factory: creating healthbar");
-        HealthBar healthBar = new HealthBar(healthPool, resources.getTexture("healthbar-bg"), resources.getTexture("healthbar-life"), resources.getTexture("healthbar-armor"));
-        return healthBar;
+        return new HealthBar(healthPool, resources.getTexture("healthbar-bg"), resources.getTexture("healthbar-life"), resources.getTexture("healthbar-armor"));
 
     }
 

@@ -47,9 +47,7 @@ public class SupplyDropTest {
         doReturn(supplyDropCrateMock).when(supplyDropCrateMock).beginDrop(isA(Float.class), isA(Vector2.class));
         Resources resources = TestUtil.createResourcesMock();
 
-        SupplyDrop supplyDrop = new SupplyDrop(resources.getTexture(""), poolMock, supportActorFactoryMock);
-
-        return supplyDrop;
+        return new SupplyDrop(resources.getTexture(""), poolMock, supportActorFactoryMock);
     }
 
     @Test

@@ -105,8 +105,7 @@ public class SupportActorFactory {
      */
     private SupplyDrop createSupplyDropActor() {
         TextureRegion supplyDropRegion = resources.getTexture("supply-drop");
-        SupplyDrop supplyDrop = new SupplyDrop(supplyDropRegion, supplyDropPool, this);
-        return supplyDrop;
+        return new SupplyDrop(supplyDropRegion, supplyDropPool, this);
     }
 
     /**
@@ -117,14 +116,12 @@ public class SupportActorFactory {
     private SupplyDropCrate createSupplyDropCrateActor() {
         TextureRegion supplyDropCrateRegion = resources.getTexture("supply-drop-crate");
         TextureRegion rangeTexture = resources.getTexture("range-black");
-        SupplyDropCrate supplyDropCrate = new SupplyDropCrate(supplyDropCrateRegion, rangeTexture, supplyDropCratePool, actorGroups.getTowerGroup(), effectFactory);
-        return supplyDropCrate;
+        return new SupplyDropCrate(supplyDropCrateRegion, rangeTexture, supplyDropCratePool, actorGroups.getTowerGroup(), effectFactory);
     }
 
     private AirStrikeLocation createAirStrikeLocation() {
         TextureRegion rangeTexture = resources.getTexture("range-black");
-        AirStrikeLocation location = new AirStrikeLocation(airStrikeLocationPool,rangeTexture );
-        return location;
+        return new AirStrikeLocation(airStrikeLocationPool,rangeTexture );
     }
 
     /**

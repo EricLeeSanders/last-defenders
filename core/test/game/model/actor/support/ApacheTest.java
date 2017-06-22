@@ -52,9 +52,7 @@ public class ApacheTest {
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(bulletMock).when(projectileFactoryMock).loadBullet();
 
-        Apache apache = new Apache(poolMock, new Group(),  projectileFactoryMock, resourcesMock.getTexture(""), new TextureRegion[] {resourcesMock.getTexture("")}, resourcesMock.getTexture(""),  audioMock);
-
-        return apache;
+        return new Apache(poolMock, new Group(),  projectileFactoryMock, resourcesMock.getTexture(""), new TextureRegion[] {resourcesMock.getTexture("")}, resourcesMock.getTexture(""),  audioMock);
 
     }
 
