@@ -8,7 +8,7 @@ public interface EventManager{
     void sendEvent(CombatActorEventEnum event);
 
     enum CombatActorEventEnum {
-        ARMOR_DESTROYED;
+        ARMOR_DESTROYED
     }
 
 }

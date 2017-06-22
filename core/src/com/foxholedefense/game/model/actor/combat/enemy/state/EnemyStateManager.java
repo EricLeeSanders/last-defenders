@@ -94,7 +94,7 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
         DYING,
         RUNNING,
         REACHED_END,
-        STANDBY;
+        STANDBY
 
     }
 

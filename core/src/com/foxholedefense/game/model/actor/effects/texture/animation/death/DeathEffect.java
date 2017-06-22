@@ -17,7 +17,7 @@ public abstract class DeathEffect extends AnimationEffect {
 	}
 
 	public enum DeathEffectType {
-		BLOOD, VEHCILE_EXPLOSION;
+		BLOOD, VEHCILE_EXPLOSION
 	}
 
 }

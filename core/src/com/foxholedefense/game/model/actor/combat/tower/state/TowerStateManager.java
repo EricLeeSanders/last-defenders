@@ -86,6 +86,6 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
     public enum TowerState {
         ACTIVE,
         DYING,
-        STANDBY;
+        STANDBY
     }
 }
