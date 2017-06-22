@@ -138,7 +138,7 @@ public class TowerTurret extends Tower implements IRotatable {
 	}
 
 	@Override
-	protected void drawRange(Batch batch){
+    void drawRange(Batch batch){
 		TextureRegion currentRangeRegion = rangeRegion;
 		if(isTowerColliding()){
 			currentRangeRegion = collidingRangeRegion;
