@@ -39,7 +39,6 @@ public class LevelTest {
     private DynamicWaveLoader dynamicWaveLoader = mock(DynamicWaveLoader.class);
     private ActorGroups actorGroups = mock(ActorGroups.class);
     private HealthFactory healthFactory = mock(HealthFactory.class);
-    private Map map = mock(Map.class);
 
     @Before
     public void initLevelTest() {
@@ -48,7 +47,7 @@ public class LevelTest {
 
     @Test
     public void levelTest1(){
-        Level level = new Level(1, actorGroups, healthFactory, map, fileWaveLoader, dynamicWaveLoader);
+        Level level = new Level(1, actorGroups, healthFactory, fileWaveLoader, dynamicWaveLoader);
 
         Queue<SpawningEnemy> loadedEnemies = new Queue<SpawningEnemy>();
         Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
