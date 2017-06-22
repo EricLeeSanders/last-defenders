@@ -37,9 +37,7 @@ public class DeathEffectTest {
 
         Resources resourcesMock = TestUtil.createResourcesMock();
 
-        DeathEffect deathEffect = new BloodSplatter(deathEffectPoolMock, resourcesMock.getAtlasRegion(""));
-
-        return deathEffect;
+        return new BloodSplatter(deathEffectPoolMock, resourcesMock.getAtlasRegion(""));
 
     }
 

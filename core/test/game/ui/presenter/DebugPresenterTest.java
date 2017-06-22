@@ -40,9 +40,7 @@ public class DebugPresenterTest {
 
     private DebugPresenter createDebugPresenter(){
 
-        DebugPresenter debugPresenter = new DebugPresenter(gameUIStateManagerMock, gameStateManager);
-
-        return debugPresenter;
+        return new DebugPresenter(gameUIStateManagerMock, gameStateManager);
     }
 
     @Test

@@ -38,9 +38,7 @@ public class EnemyCoinEffectTest {
 
         Resources resourcesMock = TestUtil.createResourcesMock();
 
-        EnemyCoinEffect enemyCoinEffect = new EnemyCoinEffect(animationEffectPool, resourcesMock.getAtlasRegion(""));
-
-        return enemyCoinEffect;
+        return new EnemyCoinEffect(animationEffectPool, resourcesMock.getAtlasRegion(""));
 
     }
 

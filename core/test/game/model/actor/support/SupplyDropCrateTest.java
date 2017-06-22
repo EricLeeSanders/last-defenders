@@ -46,10 +46,9 @@ public class SupplyDropCrateTest {
         Resources resourcesMock = mock(Resources.class);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
         doReturn(towerHealEffectMock).when(effectFactoryMock).loadLabelEffect(eq(TowerHealEffect.class));
-        SupplyDropCrate supplyDropCrate = new SupplyDropCrate(resourcesMock.getTexture(""), resourcesMock.getTexture(""),
-                supplyDropCratePoolMock, towerGroup, effectFactoryMock);
 
-        return supplyDropCrate;
+        return new SupplyDropCrate(resourcesMock.getTexture(""), resourcesMock.getTexture(""),
+                supplyDropCratePoolMock, towerGroup, effectFactoryMock);
     }
 
     @Test

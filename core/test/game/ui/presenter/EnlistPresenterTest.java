@@ -53,9 +53,7 @@ public class EnlistPresenterTest {
         FHDAudio audioMock = mock(FHDAudio.class);
         MessageDisplayer messageDisplayerMock = mock(MessageDisplayer.class);
 
-        EnlistPresenter enlistPresenter = new EnlistPresenter(gameUIStateManagerMock, playerMock, audioMock, towerPlacementMock, messageDisplayerMock);
-
-        return enlistPresenter;
+        return new EnlistPresenter(gameUIStateManagerMock, playerMock, audioMock, towerPlacementMock, messageDisplayerMock);
     }
 
     @DataProvider
