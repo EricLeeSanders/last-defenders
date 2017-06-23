@@ -27,7 +27,7 @@ import com.foxholedefense.util.Resources;
 public class HUDView extends Group implements IHUDView {
 
 	private ImageButton btnWave, btnEnlist, btnSupport, btnOptions, btnPause, btnResume;
-	private Label lblMoney, lblLives, lblWaveCount;
+	private Label lblMoney, lblLives, lblWaveCount, lblPaused;
 	private HUDPresenter presenter;
 	private Resources resources;
 
@@ -131,6 +131,15 @@ public class HUDView extends Group implements IHUDView {
 		statsTable.top().left();
 		this.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 
+		lblPaused = new Label("PAUSED", skin);
+		LabelStyle lblPausedStyle = new LabelStyle(lblPaused.getStyle());
+		lblPausedStyle.fontColor = Color.RED;
+		lblPaused.setStyle(lblPausedStyle);
+		lblPaused.setAlignment(Align.center);
+		lblPaused.setPosition(Resources.VIRTUAL_WIDTH / 2 + 1, Resources.VIRTUAL_HEIGHT / 2 + 126, Align.center);
+		lblPaused.setVisible(false);
+		addActor(lblPaused);
+
 		Logger.info("HUD View: controls created");
 	}
 
@@ -142,6 +151,7 @@ public class HUDView extends Group implements IHUDView {
 				presenter.resume();
 				btnResume.setVisible(false);
 				btnPause.setVisible(true);
+				lblPaused.setVisible(false);
 			}
 		});
 	}
@@ -154,6 +164,7 @@ public class HUDView extends Group implements IHUDView {
 				presenter.pause();
 				btnResume.setVisible(true);
 				btnPause.setVisible(false);
+				lblPaused.setVisible(true);
 			}
 		});
 	}
