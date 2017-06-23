@@ -37,8 +37,8 @@ import static org.mockito.Mockito.verify;
  */
 
 public class AirStrikeTest {
-
-    private SupportActorPool poolMock = mock(SupportActorPool.class);
+    @SuppressWarnings("unchecked")
+    private SupportActorPool<AirStrike> poolMock = mock(SupportActorPool.class);
     private Rocket rocketMock = mock(Rocket.class);
 
     @Before
@@ -54,9 +54,7 @@ public class AirStrikeTest {
         Resources resourcesMock = TestUtil.createResourcesMock();
         FHDAudio audioMock = mock(FHDAudio.class);
 
-        AirStrike airStrike = new AirStrike(poolMock, new Group(), projectileFactoryMock, resourcesMock.getTexture(""), resourcesMock.getTexture(""), audioMock);
-
-        return airStrike;
+        return new AirStrike(poolMock, new Group(), projectileFactoryMock, resourcesMock.getTexture(""), resourcesMock.getTexture(""), audioMock);
 
     }
 

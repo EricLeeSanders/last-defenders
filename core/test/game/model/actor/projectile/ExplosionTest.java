@@ -2,11 +2,11 @@ package game.model.actor.projectile;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.helper.Damage;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.projectile.Explosion;
+import com.foxholedefense.game.service.factory.ProjectileFactory.ExplosionPool;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
 
@@ -35,7 +35,7 @@ import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 @PrepareForTest({Damage.class})
 public class ExplosionTest {
 
-    private Pool poolMock = mock(Pool.class);
+    private ExplosionPool poolMock = mock(ExplosionPool.class);
 
     @Before
     public void initExplosionTest() {
@@ -47,9 +47,8 @@ public class ExplosionTest {
         Resources resourcesMock = TestUtil.createResourcesMock();
         FHDAudio audioMock = mock(FHDAudio.class);
 
-        Explosion explosion = new Explosion(poolMock, resourcesMock.getAtlasRegion(""), audioMock);
+        return new Explosion(poolMock, resourcesMock.getAtlasRegion(""), audioMock);
 
-        return explosion;
     }
 
     @Test

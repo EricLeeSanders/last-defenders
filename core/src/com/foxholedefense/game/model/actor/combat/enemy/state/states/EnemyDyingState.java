@@ -3,7 +3,6 @@ package com.foxholedefense.game.model.actor.combat.enemy.state.states;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
-import com.foxholedefense.game.model.actor.combat.state.CombatActorState;
 import com.foxholedefense.game.model.actor.combat.state.StateTransitioner;
 import com.foxholedefense.game.model.actor.combat.state.states.CombatActorDyingState;
 import com.foxholedefense.game.model.actor.effects.texture.animation.EnemyCoinEffect;

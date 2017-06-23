@@ -28,15 +28,15 @@ import static org.mockito.Mockito.verify;
  */
 
 public class ArmorDestroyedEffectTest {
-
-    private LabelEffectPool labelEffectPoolMock = mock(LabelEffectPool.class);
+    @SuppressWarnings("unchecked")
+    private LabelEffectPool<ArmorDestroyedEffect> labelEffectPoolMock = mock(LabelEffectPool.class);
 
     @Before
     public void initArmorDestroyedEffectTest() {
         Gdx.app = mock(Application.class);
     }
 
-    public ArmorDestroyedEffect createArmorDestroyedEffect(){
+    private ArmorDestroyedEffect createArmorDestroyedEffect(){
 
         Resources resourcesMock = TestUtil.createResourcesMock();
         Skin skinMock = mock(Skin.class);
@@ -46,9 +46,7 @@ public class ArmorDestroyedEffectTest {
         LabelStyle style = new LabelStyle(bitmapFontMock,  Color.WHITE);
         doReturn(style).when(skinMock).get(LabelStyle.class);
 
-        ArmorDestroyedEffect armorDestroyedEffect = new ArmorDestroyedEffect(resourcesMock.getAtlasRegion(""),labelEffectPoolMock, skinMock);
-
-        return armorDestroyedEffect;
+        return new ArmorDestroyedEffect(resourcesMock.getAtlasRegion(""),labelEffectPoolMock, skinMock);
 
     }
 

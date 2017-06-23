@@ -13,13 +13,13 @@ public class Player {
 	private int money = 20000;
 	private int lives = 15;
 	private int waveCount = 1;
-	private SnapshotArray<PlayerObserver> observers = new SnapshotArray<PlayerObserver>();
+	private SnapshotArray<PlayerObserver> observers = new SnapshotArray<>();
 
 	public void attachObserver(PlayerObserver observer) {
 		observers.add(observer);
 	}
 
-	public void notifyObservers() {
+	private void notifyObservers() {
 		Logger.info("Player: notifying observers");
 		Object[] objects = observers.begin();
 		for(int i = observers.size - 1; i >= 0; i--){
@@ -46,7 +46,7 @@ public class Player {
 		return money;
 	}
 
-	public void setMoney(int money) {
+	private void setMoney(int money) {
 		Logger.info("Player: set money: " + money);
 		this.money = money;
 		notifyObservers();

@@ -28,7 +28,6 @@ import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -55,10 +54,8 @@ public class GameStage extends Stage implements PlayerObserver {
 	private SupportActorPlacement supportActorPlacement;
 	private AirStrikePlacement airStrikePlacement;
 	private SupplyDropPlacement supplyDropPlacement;
-	private MessageDisplayer messageDisplayer;
 	private CombatActorFactory combatActorFactory;
 	private HealthFactory healthFactory;
-	private ProjectileFactory projectileFactory;
 	private SupportActorFactory supportActorFactory;
 	private EffectFactory effectFactory;
 
@@ -81,7 +78,7 @@ public class GameStage extends Stage implements PlayerObserver {
 		mapRenderer = new MapRenderer(tiledMap, getCamera());
 		FileWaveLoader fileWaveLoader = new FileWaveLoader(combatActorFactory, map);
 		DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
-		level = new Level(intLevel, getActorGroups(), healthFactory, map, fileWaveLoader, dynamicWaveLoader);
+		level = new Level(intLevel, getActorGroups(), healthFactory, fileWaveLoader, dynamicWaveLoader);
 		player.attachObserver(this);
 
 	}
@@ -89,12 +86,12 @@ public class GameStage extends Stage implements PlayerObserver {
 	private void createFactories(FHDAudio audio){
 		effectFactory = new EffectFactory(actorGroups, resources);
 		healthFactory = new HealthFactory(actorGroups,resources);
-		projectileFactory = new ProjectileFactory(actorGroups, audio, resources);
+		ProjectileFactory projectileFactory = new ProjectileFactory(actorGroups, audio, resources);
 		supportActorFactory = new SupportActorFactory(actorGroups, audio, resources, effectFactory, projectileFactory);
 		combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory, projectileFactory, player);
 	}
 
-	public void createPlacementServices(Map map){
+	private void createPlacementServices(Map map){
 		Logger.info("Game Stage: creating placement services");
 		towerPlacement = new TowerPlacement(map, actorGroups, combatActorFactory, healthFactory);
 		supportActorPlacement = new SupportActorPlacement(actorGroups, supportActorFactory);
@@ -118,7 +115,7 @@ public class GameStage extends Stage implements PlayerObserver {
 	/**
 	 * Create the actor groups. Order matters
 	 */
-	public void createGroups() {
+	private void createGroups() {
 		Logger.info("Game Stage: creating groups");
 		this.addActor(getActorGroups().getDeathEffectGroup());
 		this.addActor(getActorGroups().getLandmineGroup());
@@ -162,7 +159,7 @@ public class GameStage extends Stage implements PlayerObserver {
 	/**
 	 * Determine if the wave is over
 	 */
-	public boolean isWaveOver() {
+	private boolean isWaveOver() {
 		return getActorGroups().getEnemyGroup().getChildren().size <= 0
 				&& level.getSpawningEnemiesCount() <= 0
 				&& getActorGroups().getProjectileGroup().getChildren().size <= 0
@@ -223,18 +220,9 @@ public class GameStage extends Stage implements PlayerObserver {
 		}
 	}
 
-	public ActorGroups getActorGroups() {
+	private ActorGroups getActorGroups() {
 		return actorGroups;
 	}
-
-	public void setActorGroups(ActorGroups actorGroups) {
-		this.actorGroups = actorGroups;
-	}
-	
-	public Map getMap(){
-		return map;
-	}
-
 
 	public TowerPlacement getTowerPlacement() {
 		return towerPlacement;
@@ -250,14 +238,6 @@ public class GameStage extends Stage implements PlayerObserver {
 
 	public SupplyDropPlacement getSupplyDropPlacement() {
 		return supplyDropPlacement;
-	}
-
-	public MessageDisplayer getMessageDisplayer() {
-		return messageDisplayer;
-	}
-
-	public void setMessageDisplayer(MessageDisplayer messageDisplayer) {
-		this.messageDisplayer = messageDisplayer;
 	}
 
 }

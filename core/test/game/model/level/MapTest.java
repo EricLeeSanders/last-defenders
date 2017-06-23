@@ -4,7 +4,6 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -14,23 +13,16 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.level.Map;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
 
 /**
  * Created by Eric on 5/26/2017.
@@ -73,7 +65,7 @@ public class MapTest {
         doReturn(pathX).when(polyline).getX();
         doReturn(pathY).when(polyline).getY();
 
-        Array<FHDVector2> pathCoords = new SnapshotArray<FHDVector2>(true, 14);
+        Array<FHDVector2> pathCoords = new SnapshotArray<>(true, 14);
         pathCoords.add(new FHDVector2(216.0f, 0.5f));
         pathCoords.add(new FHDVector2(216.0f, 105f));
         pathCoords.add(new FHDVector2(87.5f, 105f));
@@ -110,7 +102,7 @@ public class MapTest {
         doReturn(boundaryLayer).when(mapLayers).get(eq("Boundary"));
         doReturn(mapObjects).when(boundaryLayer).getObjects();
 
-        Array<Rectangle> pathBoundaries = new SnapshotArray<Rectangle>(true, 3);
+        Array<Rectangle> pathBoundaries = new SnapshotArray<>(true, 3);
         pathBoundaries.add(new Rectangle(50.0f,62.5f,50.0f,27.5f));
         pathBoundaries.add(new Rectangle(100.0f,62.5f,27.5f,50.0f));
         pathBoundaries.add(new Rectangle(100.0f,112.5f,50.0f,27.5f));

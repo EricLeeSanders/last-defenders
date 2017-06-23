@@ -5,12 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.helper.Damage;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.projectile.Flame;
+import com.foxholedefense.game.service.factory.ProjectileFactory.FlamePool;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.Dimension;
 
@@ -26,7 +26,6 @@ import testutil.TestUtil;
 
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -42,7 +41,7 @@ import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 @PrepareForTest({Damage.class})
 public class FlameTest {
 
-    private Pool poolMock = mock(Pool.class);
+    private FlamePool poolMock = mock(FlamePool.class);
 
     @Before
     public void initFlameTest() {
@@ -52,9 +51,9 @@ public class FlameTest {
 
     public Flame createFlame() {
         Resources resources = TestUtil.createResourcesMock();
-        Flame flame = new Flame(poolMock, resources.getAtlasRegion(""));
 
-        return flame;
+        return new Flame(poolMock, resources.getAtlasRegion(""));
+
     }
 
     @Test

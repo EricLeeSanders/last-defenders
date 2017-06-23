@@ -45,7 +45,7 @@ public class OptionsPresenterTest {
         Gdx.app = mock(Application.class);
     }
 
-    public OptionsPresenter createOptionsPresenter(){
+    private OptionsPresenter createOptionsPresenter(){
         Resources resources = TestUtil.createResourcesMock();
 
         doReturn(userPreferences).when(resources).getUserPreferences();

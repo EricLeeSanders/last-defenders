@@ -17,8 +17,7 @@ public class UtilPool {
 
     public static FHDSequenceAction getSequenceAction(){
         Pool<FHDSequenceAction> pool = Pools.get(FHDSequenceAction.class);
-        FHDSequenceAction sequenceAction = pool.obtain();
-        return sequenceAction;
+        return pool.obtain();
     }
 
     public static WaypointAction getWaypointAction(float x, float y, float duration, float rotation, Interpolation interpolation){

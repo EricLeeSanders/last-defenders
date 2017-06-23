@@ -1,9 +1,7 @@
 package com.foxholedefense.game.service.factory;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.support.AirStrike;
@@ -18,9 +16,6 @@ import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by Eric on 3/31/2017.
  */
@@ -30,9 +25,9 @@ public class SupportActorFactory {
     private SupplyDropPool supplyDropPool = new SupplyDropPool();
     private SupplyDropCratePool supplyDropCratePool = new SupplyDropCratePool();
     private AirStrikeLocationPool airStrikeLocationPool = new AirStrikeLocationPool();
-    private SupportActorPool<Apache> apachePool = new SupportActorPool<Apache>(Apache.class);
-    private SupportActorPool<AirStrike> airStrikePool = new SupportActorPool<AirStrike>(AirStrike.class);
-    private SupportActorPool<LandMine> landMinePool = new SupportActorPool<LandMine>(LandMine.class);
+    private SupportActorPool<Apache> apachePool = new SupportActorPool<>(Apache.class);
+    private SupportActorPool<AirStrike> airStrikePool = new SupportActorPool<>(AirStrike.class);
+    private SupportActorPool<LandMine> landMinePool = new SupportActorPool<>(LandMine.class);
 
     private ActorGroups actorGroups;
     private FHDAudio audio;
@@ -88,12 +83,16 @@ public class SupportActorFactory {
     public SupportActor loadSupportActor(String type) {
         Logger.info("Actor Factory: loading support actor: " + type);
         SupportActor supportActor = null;
-        if (type.equals("Apache")) {
-            supportActor = apachePool.obtain();
-        } else if(type.equals("AirStrike")) {
-            supportActor = airStrikePool.obtain();
-        } else if(type.equals("LandMine")) {
-            supportActor = landMinePool.obtain();
+        switch (type) {
+            case "Apache":
+                supportActor = apachePool.obtain();
+                break;
+            case "AirStrike":
+                supportActor = airStrikePool.obtain();
+                break;
+            case "LandMine":
+                supportActor = landMinePool.obtain();
+                break;
         }
         return supportActor;
     }
@@ -103,10 +102,9 @@ public class SupportActorFactory {
      *
      * @return SupplyDrop
      */
-    protected SupplyDrop createSupplyDropActor() {
+    private SupplyDrop createSupplyDropActor() {
         TextureRegion supplyDropRegion = resources.getTexture("supply-drop");
-        SupplyDrop supplyDrop = new SupplyDrop(supplyDropRegion, supplyDropPool, this);
-        return supplyDrop;
+        return new SupplyDrop(supplyDropRegion, supplyDropPool, this);
     }
 
     /**
@@ -114,17 +112,15 @@ public class SupportActorFactory {
      *
      * @return SupplyDropCrate
      */
-    protected SupplyDropCrate createSupplyDropCrateActor() {
+    private SupplyDropCrate createSupplyDropCrateActor() {
         TextureRegion supplyDropCrateRegion = resources.getTexture("supply-drop-crate");
         TextureRegion rangeTexture = resources.getTexture("range-black");
-        SupplyDropCrate supplyDropCrate = new SupplyDropCrate(supplyDropCrateRegion, rangeTexture, supplyDropCratePool, actorGroups.getTowerGroup(), effectFactory);
-        return supplyDropCrate;
+        return new SupplyDropCrate(supplyDropCrateRegion, rangeTexture, supplyDropCratePool, actorGroups.getTowerGroup(), effectFactory);
     }
 
-    protected AirStrikeLocation createAirStrikeLocation() {
+    private AirStrikeLocation createAirStrikeLocation() {
         TextureRegion rangeTexture = resources.getTexture("range-black");
-        AirStrikeLocation location = new AirStrikeLocation(airStrikeLocationPool,rangeTexture );
-        return location;
+        return new AirStrikeLocation(airStrikeLocationPool,rangeTexture );
     }
 
     /**
@@ -132,7 +128,7 @@ public class SupportActorFactory {
      *
      * @return SupportActor
      */
-    protected SupportActor createSupportActor(Class<? extends SupportActor> type) {
+    private SupportActor createSupportActor(Class<? extends SupportActor> type) {
         Logger.info("Actor Factory: creating support actor: " + type.getSimpleName());
         Group targetGroup = actorGroups.getEnemyGroup();
         if (type.equals(Apache.class)) {

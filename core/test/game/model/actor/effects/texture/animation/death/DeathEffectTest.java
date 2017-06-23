@@ -25,20 +25,19 @@ import static org.mockito.Mockito.verify;
 
 public class DeathEffectTest {
 
-    private DeathEffectPool deathEffectPoolMock = mock(DeathEffectPool.class);
+    @SuppressWarnings("unchecked")
+    private DeathEffectPool<BloodSplatter> deathEffectPoolMock = mock(DeathEffectPool.class);
 
     @Before
     public void initDeathEffectTest() {
         Gdx.app = mock(Application.class);
     }
 
-    public DeathEffect createDeathEffect(){
+    private DeathEffect createDeathEffect(){
 
         Resources resourcesMock = TestUtil.createResourcesMock();
 
-        DeathEffect deathEffect = new BloodSplatter(deathEffectPoolMock, resourcesMock.getAtlasRegion(""));
-
-        return deathEffect;
+        return new BloodSplatter(deathEffectPoolMock, resourcesMock.getAtlasRegion(""));
 
     }
 

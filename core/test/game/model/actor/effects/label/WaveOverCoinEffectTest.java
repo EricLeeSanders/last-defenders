@@ -31,14 +31,15 @@ import static org.mockito.Mockito.verify;
 
 public class WaveOverCoinEffectTest {
 
-    private LabelEffectPool labelEffectPoolMock = mock(LabelEffectPool.class);
+    @SuppressWarnings("unchecked")
+    private LabelEffectPool<WaveOverCoinEffect> labelEffectPoolMock = mock(LabelEffectPool.class);
 
     @Before
     public void initWaveOverCoinEffectTest() {
         Gdx.app = mock(Application.class);
     }
 
-    public WaveOverCoinEffect createWaveOverCoinEffect(){
+    private WaveOverCoinEffect createWaveOverCoinEffect(){
 
         Resources resourcesMock = TestUtil.createResourcesMock();
         Skin skinMock = mock(Skin.class);

@@ -4,7 +4,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.foxholedefense.util.ActorUtil;
@@ -31,8 +30,6 @@ public class EnlistButton extends Group {
         float lblCostX = ActorUtil.calcBotLeftPointFromCenter(button.getWidth() / 2, lblCost.getWidth());
         lblCost.setPosition(lblCostX,10);
         addActor(lblCost);
-
-        LabelStyle style = new LabelStyle(skin.get(LabelStyle.class));
 
         Label lblTitle = new Label(name.toUpperCase().replaceAll(" ", "\n"), skin);
         lblTitle.setFontScale(0.40f);

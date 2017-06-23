@@ -9,7 +9,6 @@ import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
 import com.foxholedefense.game.model.level.Level;
-import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.SpawningEnemy;
 import com.foxholedefense.game.model.level.wave.impl.DynamicWaveLoader;
 import com.foxholedefense.game.model.level.wave.impl.FileWaveLoader;
@@ -39,7 +38,6 @@ public class LevelTest {
     private DynamicWaveLoader dynamicWaveLoader = mock(DynamicWaveLoader.class);
     private ActorGroups actorGroups = mock(ActorGroups.class);
     private HealthFactory healthFactory = mock(HealthFactory.class);
-    private Map map = mock(Map.class);
 
     @Before
     public void initLevelTest() {
@@ -48,9 +46,9 @@ public class LevelTest {
 
     @Test
     public void levelTest1(){
-        Level level = new Level(1, actorGroups, healthFactory, map, fileWaveLoader, dynamicWaveLoader);
+        Level level = new Level(1, actorGroups, healthFactory, fileWaveLoader, dynamicWaveLoader);
 
-        Queue<SpawningEnemy> loadedEnemies = new Queue<SpawningEnemy>();
+        Queue<SpawningEnemy> loadedEnemies = new Queue<>();
         Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
         Enemy enemy2 = TestUtil.createEnemy("Tank", false);
         Enemy enemy3 = TestUtil.createEnemy("Humvee", false);

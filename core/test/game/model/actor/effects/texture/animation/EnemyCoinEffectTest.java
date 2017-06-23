@@ -3,7 +3,7 @@ package game.model.actor.effects.texture.animation;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.model.actor.effects.texture.animation.EnemyCoinEffect;
-import com.foxholedefense.game.service.factory.EffectFactory.DeathEffectPool;
+import com.foxholedefense.game.service.factory.EffectFactory.AnimationEffectPool;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 
@@ -24,20 +24,19 @@ import static org.mockito.Mockito.verify;
 
 public class EnemyCoinEffectTest {
 
-    private DeathEffectPool deathEffectPoolMock = mock(DeathEffectPool.class);
+    @SuppressWarnings("unchecked")
+    private AnimationEffectPool<EnemyCoinEffect> animationEffectPool = mock(AnimationEffectPool.class);
 
     @Before
     public void initEnemyCoinEffectTest() {
         Gdx.app = mock(Application.class);
     }
 
-    public EnemyCoinEffect createEnemyCoinEffect(){
+    private EnemyCoinEffect createEnemyCoinEffect(){
 
         Resources resourcesMock = TestUtil.createResourcesMock();
 
-        EnemyCoinEffect enemyCoinEffect = new EnemyCoinEffect(deathEffectPoolMock, resourcesMock.getAtlasRegion(""));
-
-        return enemyCoinEffect;
+        return new EnemyCoinEffect(animationEffectPool, resourcesMock.getAtlasRegion(""));
 
     }
 
@@ -54,6 +53,6 @@ public class EnemyCoinEffectTest {
         assertEquals(1, enemyCoinEffect.getActions().size);
         enemyCoinEffect.act(100f);
 
-        verify(deathEffectPoolMock, times(1)).free(enemyCoinEffect);
+        verify(animationEffectPool, times(1)).free(enemyCoinEffect);
     }
 }

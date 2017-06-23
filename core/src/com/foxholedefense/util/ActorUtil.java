@@ -1,7 +1,6 @@
 package com.foxholedefense.util;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
 

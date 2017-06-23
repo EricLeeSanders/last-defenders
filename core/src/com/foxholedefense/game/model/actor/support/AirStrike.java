@@ -23,16 +23,15 @@ public class AirStrike extends SupportActor implements IRocket {
 
 	public static final float AIRSTRIKE_DURATION = 2.5f;
 	public static final int COST = 1000;
-	public static final float ATTACK = 10f;
-	public static final float SPEED = 150f;
+	private static final float ATTACK = 10f;
 	public static final float AIRSTRIKE_RADIUS = 60;
-	public static final int MAX_AIRSTRIKES = 3;
+	private static final int MAX_AIRSTRIKES = 3;
 
 	private static final Vector2 GUN_POS = UtilPool.getVector2();
 	private static final Dimension ROCKET_SIZE = new Dimension(46, 10);
 	private static final Dimension TEXTURE_SIZE = new Dimension(203, 125);
 
-	private Array<AirStrikeLocation> airStrikeLocations = new Array<AirStrikeLocation>();
+	private Array<AirStrikeLocation> airStrikeLocations = new Array<>();
 	private ProjectileFactory projectileFactory;
 	private FHDAudio audio;
 

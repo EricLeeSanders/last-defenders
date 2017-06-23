@@ -34,7 +34,6 @@ public abstract class Enemy extends CombatActor {
 	public static final float MOVEMENT_DELAY = 1f; // The delay to wait after a target begins attacking
 	public static final float FIND_TARGET_DELAY = 2f;
 	private static final float FRAME_DURATION = 0.3f;
-	private Pool<CombatActor> pool;
 	private float speed;
 	private int killReward;
 	private float lengthToEnd;
@@ -48,7 +47,7 @@ public abstract class Enemy extends CombatActor {
 	public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
 				 float speed, float health, float armor, float attack, float attackSpeed, float range, int killReward, DeathEffectType deathEffectType) {
 		super(stationaryTextureRegion, textureSize, pool, targetGroup, gunPos, health, armor, attack, attackSpeed, range, deathEffectType);
-		movementAnimation = new Animation<TextureRegion>(FRAME_DURATION, animatedRegions);
+		movementAnimation = new Animation<>(FRAME_DURATION, animatedRegions);
 		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		this.speed = speed;
 		this.stationaryTextureRegion = stationaryTextureRegion;
@@ -70,7 +69,7 @@ public abstract class Enemy extends CombatActor {
 	 * @param path
 	 */
 	public void setPath(Array<FHDVector2> path) {
-		if(path == null | path.size <= 1){
+		if(path == null || path.size <= 1){
 			return;
 		}
 
@@ -203,7 +202,7 @@ public abstract class Enemy extends CombatActor {
 
 	}
 
-	public boolean isAttacking(){
+	boolean isAttacking(){
 		return stateManager.getCurrentStateName().equals(EnemyState.ATTACKING);
 	}
 

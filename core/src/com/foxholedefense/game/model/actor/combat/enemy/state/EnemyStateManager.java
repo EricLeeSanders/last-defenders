@@ -24,7 +24,7 @@ import java.util.Map;
 public class EnemyStateManager implements StateManager<EnemyState, CombatActorState>{
 
 
-    private Map<EnemyState, CombatActorState> enemyStates = new HashMap<EnemyState, CombatActorState>();
+    private Map<EnemyState, CombatActorState> enemyStates = new HashMap<>();
     private EnemyState currentState;
 
     public EnemyStateManager(Enemy enemy, EffectFactory effectFactory, Player player){
@@ -94,7 +94,7 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
         DYING,
         RUNNING,
         REACHED_END,
-        STANDBY;
+        STANDBY
 
     }
 

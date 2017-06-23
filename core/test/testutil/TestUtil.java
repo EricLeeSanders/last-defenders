@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.enemy.EnemyFlameThrower;
@@ -36,7 +35,6 @@ import com.foxholedefense.game.model.actor.effects.texture.animation.death.Death
 import com.foxholedefense.game.model.actor.projectile.Bullet;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.EffectFactory;
-import com.foxholedefense.game.service.factory.HealthFactory;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
@@ -50,16 +48,13 @@ import static org.mockito.Mockito.*;
 
 public class TestUtil {
     public static final double DELTA = 1e-15;
-    private static ActorGroups actorGroups = new ActorGroups();
-    private static Resources resourcesMock = createResourcesMock();
     private static EffectFactory effectFactoryMock = createEffectFactoryMock();
-    private static HealthFactory healthFactoryMock = mock(HealthFactory.class);
     private static ProjectileFactory projectileFactoryMock = createProjectileFactoryMock();
     private static Player playerMock = mock(Player.class);
     private static FHDAudio audioMock = mock(FHDAudio.class);
 
     public static Resources createResourcesMock(){
-        Array<AtlasRegion> atlasRegion = new Array<AtlasRegion>();
+        Array<AtlasRegion> atlasRegion = new Array<>();
         atlasRegion.add(null);
 
         Resources resources = mock(Resources.class);
@@ -69,7 +64,7 @@ public class TestUtil {
         return resources;
     }
 
-    public static ProjectileFactory createProjectileFactoryMock(){
+    private static ProjectileFactory createProjectileFactoryMock(){
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
 
         Bullet bullet = mock(Bullet.class);
@@ -78,7 +73,7 @@ public class TestUtil {
         return projectileFactoryMock;
     }
 
-    public static EffectFactory createEffectFactoryMock(){
+    private static EffectFactory createEffectFactoryMock(){
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
 
         ArmorDestroyedEffect armorDestroyedEffect = mock(ArmorDestroyedEffect.class);
@@ -95,7 +90,7 @@ public class TestUtil {
 
     public static Tower createTower(String name, boolean spy){
 
-        Tower tower = null;
+        Tower tower;
 
         switch (name) {
             case "Rifle":
@@ -145,8 +140,8 @@ public class TestUtil {
 
     public static Enemy createEnemy(String name, boolean spy){
 
-        Enemy enemy = null;
-        Array<AtlasRegion> atlasRegion = new Array<AtlasRegion>();
+        Enemy enemy;
+        Array<AtlasRegion> atlasRegion = new Array<>();
         atlasRegion.add(null);
         TextureRegion[] animatedRegions = atlasRegion.toArray(TextureRegion.class);
 

@@ -17,7 +17,7 @@ import com.foxholedefense.util.Resources;
 
 public class ProjectileFactory {
     private BulletPool bulletPool = new BulletPool();
-    private rocketPool rocketPool = new rocketPool();
+    private RocketPool rocketPool = new RocketPool();
     private ExplosionPool explosionPool = new ExplosionPool();
     private FlamePool flamePool = new FlamePool();
 
@@ -80,9 +80,8 @@ public class ProjectileFactory {
      *
      * @return Bullet
      */
-    protected Bullet createBulletActor() {
-        Bullet bullet = new Bullet(bulletPool, resources.getTexture("bullet"));
-        return bullet;
+    private Bullet createBulletActor() {
+        return new Bullet(bulletPool, resources.getTexture("bullet"));
 
     }
 
@@ -91,9 +90,8 @@ public class ProjectileFactory {
      *
      * @return Rocket
      */
-    protected Rocket createRocket() {
-        Rocket rocket = new Rocket(rocketPool, this, resources.getTexture("rocket"));
-        return rocket;
+    private Rocket createRocket() {
+        return new Rocket(rocketPool, this, resources.getTexture("rocket"));
 
     }
 
@@ -102,10 +100,9 @@ public class ProjectileFactory {
      *
      * @return Explosion
      */
-    protected Explosion createExplosionActor() {
+    private Explosion createExplosionActor() {
         Array<TextureAtlas.AtlasRegion> atlasRegions = resources.getAtlasRegion("explosion");
-        Explosion explosion = new Explosion(explosionPool, atlasRegions, audio);
-        return explosion;
+        return new Explosion(explosionPool, atlasRegions, audio);
 
     }
 
@@ -114,10 +111,9 @@ public class ProjectileFactory {
      *
      * @return Flame
      */
-    protected Flame createFlameActor() {
+    private Flame createFlameActor() {
         Array<TextureAtlas.AtlasRegion> atlasRegions = resources.getAtlasRegion("flame");
-        Flame flame = new Flame(flamePool, atlasRegions);
-        return flame;
+        return new Flame(flamePool, atlasRegions);
 
     }
 
@@ -135,7 +131,7 @@ public class ProjectileFactory {
         }
     }
 
-    public class rocketPool extends Pool<Rocket> {
+    public class RocketPool extends Pool<Rocket> {
         @Override
         protected Rocket newObject() {
             return createRocket();

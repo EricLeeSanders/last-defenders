@@ -3,13 +3,13 @@ package game.model.actor.projectile;
         import com.badlogic.gdx.Application;
         import com.badlogic.gdx.Gdx;
         import com.badlogic.gdx.graphics.g2d.TextureRegion;
-        import com.badlogic.gdx.utils.Pool;
         import com.foxholedefense.game.helper.Damage;
         import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
         import com.foxholedefense.game.model.actor.combat.tower.Tower;
         import com.foxholedefense.game.model.actor.interfaces.Attacker;
         import com.foxholedefense.game.model.actor.interfaces.Targetable;
         import com.foxholedefense.game.model.actor.projectile.Bullet;
+        import com.foxholedefense.game.service.factory.ProjectileFactory.BulletPool;
         import com.foxholedefense.util.datastructures.Dimension;
 
 
@@ -21,15 +21,12 @@ package game.model.actor.projectile;
         import org.powermock.modules.junit4.PowerMockRunner;
 
 
-        import jdk.nashorn.internal.ir.annotations.Ignore;
         import testutil.TestUtil;
 
 
         import static org.junit.Assert.assertEquals;
-        import static org.junit.Assert.assertTrue;
         import static org.mockito.Matchers.any;
         import static org.mockito.Matchers.eq;
-        import static org.mockito.Matchers.isA;
         import static org.mockito.Mockito.doReturn;
         import static org.mockito.Mockito.mock;
         import static org.mockito.Mockito.never;
@@ -44,7 +41,7 @@ package game.model.actor.projectile;
 @PrepareForTest({Damage.class})
 public class BulletTest {
     @SuppressWarnings("unchecked")
-    private Pool<Bullet> poolMock = (Pool<Bullet>) mock(Pool.class);
+    private BulletPool poolMock = mock(BulletPool.class);
     @Before
     public void initBulletTest() {
         Gdx.app = mock(Application.class);

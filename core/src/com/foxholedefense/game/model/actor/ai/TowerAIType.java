@@ -34,7 +34,7 @@ public enum TowerAIType implements TowerAI {
         return TowerAIType.values()[(getPosition() + 1) % n];
     }
 
-    public int getPosition() {
+    private int getPosition() {
         return position;
     }
 }

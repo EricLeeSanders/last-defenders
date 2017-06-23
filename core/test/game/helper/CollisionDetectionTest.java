@@ -46,7 +46,7 @@ public class CollisionDetectionTest {
         Rectangle rect2 = new Rectangle(35,15,15,20);
         Rectangle rect3 = new Rectangle(15,10,2,12);
 
-        Array<Rectangle> boundaries = new Array<Rectangle>();
+        Array<Rectangle> boundaries = new Array<>();
         boundaries.addAll(rect1, rect2, rect3);
 
         tower.setPositionCenter(15,15);
@@ -61,7 +61,7 @@ public class CollisionDetectionTest {
         Tower tower = TestUtil.createTower("FlameThrower", false);
         Rectangle rect1 = new Rectangle(10,10,12,12);
 
-        Array<Rectangle> boundaries = new Array<Rectangle>();
+        Array<Rectangle> boundaries = new Array<>();
         boundaries.add(rect1);
 
         tower.setPositionCenter(30,30);
@@ -78,7 +78,7 @@ public class CollisionDetectionTest {
         Rectangle rect1 = new Rectangle(10,10,20,20);
         Rectangle rect2 = new Rectangle(30,30,10,10);
 
-        Array<Rectangle> boundaries = new Array<Rectangle>();
+        Array<Rectangle> boundaries = new Array<>();
         boundaries.addAll(rect1, rect2);
 
         tower.setPositionCenter(20,20);
@@ -93,7 +93,7 @@ public class CollisionDetectionTest {
         Tower tower = TestUtil.createTower("Tank", false);
         Rectangle rect1 = new Rectangle(10,10,20,20);
 
-        Array<Rectangle> boundaries = new Array<Rectangle>();
+        Array<Rectangle> boundaries = new Array<>();
         boundaries.add(rect1);
 
         tower.setPositionCenter(69,55);
@@ -116,7 +116,7 @@ public class CollisionDetectionTest {
         tower3.setPositionCenter(95,75);
         tower3.rotateBy(35);
 
-        SnapshotArray<Actor> otherTowers = new SnapshotArray<Actor>();
+        SnapshotArray<Actor> otherTowers = new SnapshotArray<>();
         otherTowers.addAll(tower1, tower2, tower3);
 
         tower.setPositionCenter(75,75);
@@ -139,7 +139,7 @@ public class CollisionDetectionTest {
         tower3.setPositionCenter(133,75);
         tower3.rotateBy(35);
 
-        SnapshotArray<Actor> otherTowers = new SnapshotArray<Actor>();
+        SnapshotArray<Actor> otherTowers = new SnapshotArray<>();
         otherTowers.addAll(tower1, tower2, tower3);
 
         tower.setPositionCenter(75,75);
@@ -162,7 +162,7 @@ public class CollisionDetectionTest {
         tower3.setPositionCenter(95,75);
         tower3.rotateBy(35);
 
-        SnapshotArray<Actor> otherTowers = new SnapshotArray<Actor>();
+        SnapshotArray<Actor> otherTowers = new SnapshotArray<>();
         otherTowers.addAll(tower1, tower2, tower3);
 
         tower.setPositionCenter(75,75);
@@ -185,7 +185,7 @@ public class CollisionDetectionTest {
         tower3.setPositionCenter(250,75);
         tower3.rotateBy(35);
 
-        SnapshotArray<Actor> otherTowers = new SnapshotArray<Actor>();
+        SnapshotArray<Actor> otherTowers = new SnapshotArray<>();
         otherTowers.addAll(tower1, tower2, tower3);
 
         tower.setPositionCenter(75,75);
@@ -232,7 +232,7 @@ public class CollisionDetectionTest {
         tower1.setPositionCenter(20,20);
         tower2.setPositionCenter(250,75);
 
-        SnapshotArray<Actor> towers = new SnapshotArray<Actor>();
+        SnapshotArray<Actor> towers = new SnapshotArray<>();
         towers.addAll(tower1, tower2);
 
 

@@ -27,10 +27,9 @@ import com.foxholedefense.util.Resources;
  *
  */
 public class MenuView extends Group implements IMenuView {
-	private static final float PLAY_MOVE_DURATION = 0.5f;
+
 	private MenuPresenter presenter;
 	private ImageButton btnSound, btnMusic;
-	private CheckBox chkBoxSound, chkBoxMusic;
 	private Image volSliderBg;
 	private float sliderEndPos, sliderStartPos;
 	private Table optionsTable;
@@ -52,7 +51,7 @@ public class MenuView extends Group implements IMenuView {
         volSliderBg.setWidth(sliderEndPos - sliderEndPos * presenter.getMasterVolume());
 	}
 	
-	public void createControls(Resources resources) {
+	private void createControls(Resources resources) {
 		Logger.info("Menu view: initializing view");
 
 		Skin skin = resources.getSkin();
@@ -101,7 +100,7 @@ public class MenuView extends Group implements IMenuView {
 
 		Logger.info("Menu view: view initialized");
 	}
-	public void createOptionControls(Resources resources) {
+	private void createOptionControls(Resources resources) {
 		Logger.info("Menu view: creating option controls");
 		Skin skin = resources.getSkin();
 		
@@ -119,13 +118,13 @@ public class MenuView extends Group implements IMenuView {
 		lblOptionsTitle.setAlignment(Align.center);
 		lblOptionsTitle.setFontScale(0.7f);
 		this.addActor(lblOptionsTitle);
-	
-		chkBoxSound = new CheckBox(" Sound On", skin);
+
+		CheckBox chkBoxSound = new CheckBox(" Sound On", skin);
 		chkBoxSound.getLabel().setFontScale(0.45f);
 		chkBoxSound.getImageCell().width(32).height(32);
 		chkBoxSound.getImage().setScaling(Scaling.stretch);
-		
-		chkBoxMusic = new CheckBox(" Music On", skin);
+
+		CheckBox chkBoxMusic = new CheckBox(" Music On", skin);
 		chkBoxMusic.getLabel().setFontScale(0.45f);
 		chkBoxMusic.getImageCell().width(32).height(32);
 		chkBoxMusic.getImage().setScaling(Scaling.stretch);

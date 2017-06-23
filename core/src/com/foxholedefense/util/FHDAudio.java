@@ -15,7 +15,7 @@ import com.badlogic.gdx.audio.Sound;
  */
 public class FHDAudio {
 	private Music music;
-	private Map<FHDSound, Sound> sounds = new HashMap<FHDSound, Sound>();
+	private Map<FHDSound, Sound> sounds = new HashMap<>();
 	private boolean musicEnabled, soundEnabled;
 	private UserPreferences userPreferences;
 	private float volume;
@@ -103,11 +103,11 @@ public class FHDAudio {
 		music.stop();
 	}
 	
-	public void disposeMusic() {
+	private void disposeMusic() {
 		Logger.info("Disposing Music");
 		music.dispose();
 	}
-	public void disposeSound() {
+	private void disposeSound() {
 		Logger.info("Disposing Sounds");
 		for (FHDSound key : sounds.keySet()) {
 		    Sound sound = sounds.get(key);
@@ -136,7 +136,7 @@ public class FHDAudio {
 	public void changeMusicEnabled(){
 		setMusicEnabled(!musicEnabled);
 	}
-	public void setMusicEnabled(boolean enabled){
+	private void setMusicEnabled(boolean enabled){
 		Logger.info("Setting music to " + enabled);
 		musicEnabled = enabled;
 		music.setVolume(enabled ? volume : 0);
@@ -147,7 +147,7 @@ public class FHDAudio {
 	public void changeSoundEnabled(){
 		setSoundEnabled(!soundEnabled);
 	}
-	public void setSoundEnabled(boolean enabled){
+	private void setSoundEnabled(boolean enabled){
 		Logger.info("Setting sound to " + enabled);
 		soundEnabled = enabled;
 		userPreferences.getPreferences().putBoolean("soundEnabled", enabled);

@@ -1,10 +1,5 @@
 package com.foxholedefense.load;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
-
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
@@ -102,11 +97,6 @@ public class LevelLoadingScreen extends AbstractScreen{
 		stage.addActor(loadingLabel);
 		load();
 	}
-	
-	@Override
-	public void resize(int width, int height) {
-	    super.resize(width, height);
-	}
 		
 	@Override
 	public void renderElements(float delta) {
@@ -147,14 +137,14 @@ public class LevelLoadingScreen extends AbstractScreen{
 		stage.dispose();
 	}
 	
-	public void load() {
+	private void load() {
 		resources.loadAsset(Resources.ACTOR_ATLAS, TextureAtlas.class);
 		resources.loadActorAtlasRegions();
 		resources.loadMap(level);
 		
 	}
 
-	public void finishedLoading() {
+	private void finishedLoading() {
 		screenChanger.changeToLevel(level);
 	}
 

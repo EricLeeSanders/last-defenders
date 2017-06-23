@@ -56,7 +56,7 @@ public class EnemyStateManagerTest {
         EnemyStateManager stateManager = new EnemyStateManager(enemy, effectFactoryMock, player);
         assertEquals(EnemyState.STANDBY, stateManager.getCurrentStateName());
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
+        Map<String, Object> parameters = new HashMap<>();
         parameters.put("target", tower);
 
         stateManager.transition(EnemyState.ATTACKING, parameters);

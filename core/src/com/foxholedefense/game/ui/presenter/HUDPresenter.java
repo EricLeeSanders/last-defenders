@@ -134,7 +134,7 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
 	 * Can only pause the game when the wave is in progress and the game state is play
 	 * @return
      */
-	public boolean canPauseGame(){
+	private boolean canPauseGame(){
 
 		return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
 				&& gameStateManager.getState().equals(GameState.PLAY);
@@ -144,7 +144,7 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
 	 * Can only resume the game when the wave is in progress and the game is paused
 	 * @return
      */
-	public boolean canResumeGame(){
+	private boolean canResumeGame(){
 
 		return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
 				&& isGamePaused();
@@ -154,7 +154,7 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
 	 * Can only view options if the UI State is in Standby or Wave in Progress
 	 * @return
      */
-	public boolean canViewOptions(){
+	private boolean canViewOptions(){
 
 		return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
 				|| uiStateManager.getState().equals(GameUIState.STANDBY);
@@ -164,7 +164,7 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
 	 * Can only start a wave if the the UI State is in Standby
 	 * @return
      */
-	public boolean canStartWave(){
+	private boolean canStartWave(){
 
 		return uiStateManager.getState().equals(GameUIState.STANDBY);
 	}
@@ -173,7 +173,7 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
 	 * Can only enlist if the UI State is in Standby or Wave in Progress
 	 * @return
      */
-	public boolean canEnlist(){
+	private boolean canEnlist(){
 
 		return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
 				|| uiStateManager.getState().equals(GameUIState.STANDBY);
@@ -183,7 +183,7 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
 	 * Can only add Support if the UI State is in Standby or Wave in Progress
 	 * @return
 	 */
-	public boolean canAddSupport(){
+	private boolean canAddSupport(){
 
 		return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
 				|| uiStateManager.getState().equals(GameUIState.STANDBY);

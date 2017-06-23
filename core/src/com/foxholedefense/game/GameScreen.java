@@ -29,7 +29,6 @@ public class GameScreen extends AbstractScreen {
 
 	private GameStage gameStage;
 	private GameUIStage gameUIStage;
-	private Player player;
 	private GameStateManager gameStateManager;
 	private GameUIStateManager uiStateManager;
 	private Resources resources;
@@ -38,7 +37,7 @@ public class GameScreen extends AbstractScreen {
 	public GameScreen(int intLevel, GameStateManager gameStateManager, ScreenChanger screenChanger, Resources resources, FHDAudio audio) {
 
 		super(gameStateManager);
-		this.player = new Player();
+		Player player = new Player();
 		this.resources = resources;
 		ActorGroups actorGroups = new ActorGroups();
 		LevelStateManager levelStateManager = new LevelStateManager();
@@ -48,8 +47,6 @@ public class GameScreen extends AbstractScreen {
 		gameStage = new GameStage(intLevel, player, actorGroups, audio, levelStateManager, uiStateManager, getViewport(), resources, spriteBatch);
 		gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager, levelStateManager, gameStateManager
 						, screenChanger, super.getInputMultiplexer(), getViewport(), resources, audio, gameStage, spriteBatch);
-
-		gameStage.setMessageDisplayer(gameUIStage.getMessageDisplayer());
 
 		super.show();
 		audio.turnOffMusic();

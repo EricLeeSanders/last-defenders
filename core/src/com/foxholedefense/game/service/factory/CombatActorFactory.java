@@ -36,21 +36,21 @@ import com.foxholedefense.util.Resources;
 
 public class CombatActorFactory {
 
-    private CombatActorPool<TowerRifle> towerRiflePool = new CombatActorPool<TowerRifle>(TowerRifle.class);
-    private CombatActorPool<TowerTank> towerTankPool = new CombatActorPool<TowerTank>(TowerTank.class);
-    private CombatActorPool<TowerFlameThrower> towerFlameThrowerPool = new CombatActorPool<TowerFlameThrower>(TowerFlameThrower.class);
-    private CombatActorPool<TowerTurret> towerTurretPool = new CombatActorPool<TowerTurret>(TowerTurret.class);
-    private CombatActorPool<TowerSniper> towerSniperPool = new CombatActorPool<TowerSniper>(TowerSniper.class);
-    private CombatActorPool<TowerMachineGun> towerMachinePool = new CombatActorPool<TowerMachineGun>(TowerMachineGun.class);
-    private CombatActorPool<TowerRocketLauncher> towerRocketLauncherPool = new CombatActorPool<TowerRocketLauncher>(TowerRocketLauncher.class);
+    private CombatActorPool<TowerRifle> towerRiflePool = new CombatActorPool<>(TowerRifle.class);
+    private CombatActorPool<TowerTank> towerTankPool = new CombatActorPool<>(TowerTank.class);
+    private CombatActorPool<TowerFlameThrower> towerFlameThrowerPool = new CombatActorPool<>(TowerFlameThrower.class);
+    private CombatActorPool<TowerTurret> towerTurretPool = new CombatActorPool<>(TowerTurret.class);
+    private CombatActorPool<TowerSniper> towerSniperPool = new CombatActorPool<>(TowerSniper.class);
+    private CombatActorPool<TowerMachineGun> towerMachinePool = new CombatActorPool<>(TowerMachineGun.class);
+    private CombatActorPool<TowerRocketLauncher> towerRocketLauncherPool = new CombatActorPool<>(TowerRocketLauncher.class);
 
-    private CombatActorPool<EnemyRifle> enemyRiflePool = new CombatActorPool<EnemyRifle>(EnemyRifle.class);
-    private CombatActorPool<EnemyTank> enemyTankPool = new CombatActorPool<EnemyTank>(EnemyTank.class);
-    private CombatActorPool<EnemyFlameThrower> enemyFlameThrowerPool = new CombatActorPool<EnemyFlameThrower>(EnemyFlameThrower.class);
-    private CombatActorPool<EnemyMachineGun> enemyMachinePool = new CombatActorPool<EnemyMachineGun>(EnemyMachineGun.class);
-    private CombatActorPool<EnemyRocketLauncher> enemyRocketLauncherPool = new CombatActorPool<EnemyRocketLauncher>(EnemyRocketLauncher.class);
-    private CombatActorPool<EnemySniper> enemySniperPool = new CombatActorPool<EnemySniper>(EnemySniper.class);
-    private CombatActorPool<EnemyHumvee> enemyHumveePool = new CombatActorPool<EnemyHumvee>(EnemyHumvee.class);
+    private CombatActorPool<EnemyRifle> enemyRiflePool = new CombatActorPool<>(EnemyRifle.class);
+    private CombatActorPool<EnemyTank> enemyTankPool = new CombatActorPool<>(EnemyTank.class);
+    private CombatActorPool<EnemyFlameThrower> enemyFlameThrowerPool = new CombatActorPool<>(EnemyFlameThrower.class);
+    private CombatActorPool<EnemyMachineGun> enemyMachinePool = new CombatActorPool<>(EnemyMachineGun.class);
+    private CombatActorPool<EnemyRocketLauncher> enemyRocketLauncherPool = new CombatActorPool<>(EnemyRocketLauncher.class);
+    private CombatActorPool<EnemySniper> enemySniperPool = new CombatActorPool<>(EnemySniper.class);
+    private CombatActorPool<EnemyHumvee> enemyHumveePool = new CombatActorPool<>(EnemyHumvee.class);
 
     private SpawningEnemyPool spawningEnemyPool = new SpawningEnemyPool();
 
@@ -81,20 +81,28 @@ public class CombatActorFactory {
     public Tower loadTower(String type) {
         Logger.info("Combat Actor Factory: loading Tower: " + type);
         Tower tower = null;
-        if (type.equals("Rifle")) {
-            tower = (Tower) towerRiflePool.obtain();
-        } else if (type.equals("Tank")) {
-            tower = (Tower) towerTankPool.obtain();
-        } else if (type.equals("Turret")) {
-            tower = (Tower) towerTurretPool.obtain();
-        } else if (type.equals("Sniper")) {
-            tower = (Tower) towerSniperPool.obtain();
-        } else if (type.equals("MachineGun")) {
-            tower = (Tower) towerMachinePool.obtain();
-        } else if (type.equals("RocketLauncher")) {
-            tower = (Tower) towerRocketLauncherPool.obtain();
-        } else if (type.equals("FlameThrower")) {
-            tower = (Tower) towerFlameThrowerPool.obtain();
+        switch (type) {
+            case "Rifle":
+                tower = (Tower) towerRiflePool.obtain();
+                break;
+            case "Tank":
+                tower = (Tower) towerTankPool.obtain();
+                break;
+            case "Turret":
+                tower = (Tower) towerTurretPool.obtain();
+                break;
+            case "Sniper":
+                tower = (Tower) towerSniperPool.obtain();
+                break;
+            case "MachineGun":
+                tower = (Tower) towerMachinePool.obtain();
+                break;
+            case "RocketLauncher":
+                tower = (Tower) towerRocketLauncherPool.obtain();
+                break;
+            case "FlameThrower":
+                tower = (Tower) towerFlameThrowerPool.obtain();
+                break;
         }
 
         return tower;
@@ -110,20 +118,28 @@ public class CombatActorFactory {
         Logger.info("Combat Actor Factory: loading Enemy: " + type);
 
         Enemy enemy = null;
-        if (type.equals("Rifle")) {
-            enemy = (Enemy) enemyRiflePool.obtain();
-        } else if (type.equals("Tank")) {
-            enemy = (Enemy) enemyTankPool.obtain();
-        } else if (type.equals("FlameThrower")) {
-            enemy = (Enemy) enemyFlameThrowerPool.obtain();
-        } else if (type.equals("MachineGun")) {
-            enemy = (Enemy) enemyMachinePool.obtain();
-        } else if (type.equals("RocketLauncher")) {
-            enemy = (Enemy) enemyRocketLauncherPool.obtain();
-        } else if (type.equals("Sniper")) {
-            enemy = (Enemy) enemySniperPool.obtain();
-        } else if (type.equals("Humvee")) {
-            enemy = (Enemy) enemyHumveePool.obtain();
+        switch (type) {
+            case "Rifle":
+                enemy = (Enemy) enemyRiflePool.obtain();
+                break;
+            case "Tank":
+                enemy = (Enemy) enemyTankPool.obtain();
+                break;
+            case "FlameThrower":
+                enemy = (Enemy) enemyFlameThrowerPool.obtain();
+                break;
+            case "MachineGun":
+                enemy = (Enemy) enemyMachinePool.obtain();
+                break;
+            case "RocketLauncher":
+                enemy = (Enemy) enemyRocketLauncherPool.obtain();
+                break;
+            case "Sniper":
+                enemy = (Enemy) enemySniperPool.obtain();
+                break;
+            case "Humvee":
+                enemy = (Enemy) enemyHumveePool.obtain();
+                break;
         }
 
         return enemy;
@@ -144,10 +160,10 @@ public class CombatActorFactory {
      * @param type - Type of Game Actor
      * @return CombatActor
      */
-    protected CombatActor createCombatActor(Class<? extends CombatActor> type) {
+    private CombatActor createCombatActor(Class<? extends CombatActor> type) {
 
         Logger.info("Combat Actor Factory: creating combat actor: " + type.getSimpleName());
-        CombatActor actor = null;
+        CombatActor actor;
         if (type.equals(TowerRifle.class)) {
             TextureRegion rifleRegion = resources.getTexture("tower-rifle");
             actor = new TowerRifle(rifleRegion, towerRiflePool, actorGroups.getEnemyGroup(), resources.getTexture("range"), resources.getTexture("range-red"), projectileFactory, audio);
@@ -204,7 +220,7 @@ public class CombatActorFactory {
         if(actor instanceof Tower) {
             TowerStateManager towerStateManager = new TowerStateManager((Tower) actor, effectFactory);
             ((Tower)actor).setStateManager(towerStateManager);
-        } else if(actor instanceof Enemy) {
+        } else {
             EnemyStateManager enemyStateManager = new EnemyStateManager((Enemy) actor, effectFactory, player);
             ((Enemy)actor).setStateManager(enemyStateManager);
         }
@@ -215,12 +231,11 @@ public class CombatActorFactory {
         return actor;
     }
 
-    protected SpawningEnemy createSpawningEnemy(){
+    private SpawningEnemy createSpawningEnemy(){
 
         Logger.info("CombatActorFactory: creating SpawningEnemy");
-        SpawningEnemy spawningEnemy = new SpawningEnemy(spawningEnemyPool);
 
-        return spawningEnemy;
+        return new SpawningEnemy(spawningEnemyPool);
     }
 
     public class CombatActorPool<T extends CombatActor> extends Pool<CombatActor> {

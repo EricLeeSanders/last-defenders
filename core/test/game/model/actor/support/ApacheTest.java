@@ -38,7 +38,8 @@ import static org.mockito.Mockito.verify;
 
 public class ApacheTest {
 
-    private SupportActorPool poolMock = mock(SupportActorPool.class);
+    @SuppressWarnings("unchecked")
+    private SupportActorPool<Apache> poolMock = mock(SupportActorPool.class);
     private Bullet bulletMock = mock(Bullet.class);
     @Before
     public void initApacheTest() {
@@ -51,13 +52,11 @@ public class ApacheTest {
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(bulletMock).when(projectileFactoryMock).loadBullet();
 
-        Apache apache = new Apache(poolMock, new Group(),  projectileFactoryMock, resourcesMock.getTexture(""), new TextureRegion[] {resourcesMock.getTexture("")}, resourcesMock.getTexture(""),  audioMock);
-
-        return apache;
+        return new Apache(poolMock, new Group(),  projectileFactoryMock, resourcesMock.getTexture(""), new TextureRegion[] {resourcesMock.getTexture("")}, resourcesMock.getTexture(""),  audioMock);
 
     }
 
-    public Enemy createEnemy(String type, float lengthToEnd, Vector2 posCenter){
+    private Enemy createEnemy(String type, float lengthToEnd, Vector2 posCenter){
         Enemy enemy = TestUtil.createEnemy(type, true);
         enemy.setPositionCenter(posCenter);
         doReturn(lengthToEnd).when(enemy).getLengthToEnd();

@@ -23,10 +23,10 @@ import com.foxholedefense.util.Logger;
  *
  */
 public abstract class Tower extends CombatActor {
-	public static final float TOWER_RANGE_INCREASE_RATE = (1/2f);
-	public static final float TOWER_SPEED_INCREASE_RATE = 0.33f;
-	public static final float TOWER_ATTACK_INCREASE_RATE = 0.33f;
-	public static final float TOWER_SELL_RATE = 0.75f;
+	private static final float TOWER_RANGE_INCREASE_RATE = (1/2f);
+	private static final float TOWER_SPEED_INCREASE_RATE = 0.33f;
+	private static final float TOWER_ATTACK_INCREASE_RATE = 0.33f;
+	private static final float TOWER_SELL_RATE = 0.75f;
 	private int cost, armorCost, speedIncreaseCost, rangeIncreaseCost, attackIncreaseCost;
 	private boolean rangeIncreaseEnabled, speedIncreaseEnabled, attackIncreaseEnabled;
 	private TowerAIType ai = TowerAIType.FIRST;
@@ -100,7 +100,7 @@ public abstract class Tower extends CombatActor {
 		}
 		super.draw(batch, alpha);
 	}
-	protected void drawRange(Batch batch){
+	void drawRange(Batch batch){
 		TextureRegion currentRangeRegion = rangeRegion;
 		if(isTowerColliding()){
 			currentRangeRegion = collidingRangeRegion;
@@ -207,7 +207,7 @@ public abstract class Tower extends CombatActor {
 		kills++;
 	}
 
-	public void removeTower() {
+	private void removeTower() {
 		freeActor();
 	}
 
