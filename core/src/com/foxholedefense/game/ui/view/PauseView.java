@@ -9,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.foxholedefense.game.ui.presenter.QuitPresenter;
-import com.foxholedefense.game.ui.view.interfaces.IQuitView;
+import com.foxholedefense.game.ui.presenter.PausePresenter;
+import com.foxholedefense.game.ui.view.interfaces.IPauseView;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
@@ -18,11 +18,11 @@ import com.foxholedefense.util.Resources;
  * Created by Eric on 4/8/2017.
  */
 
-public class QuitView extends Group implements IQuitView {
+public class PauseView extends Group implements IPauseView {
 
-    private QuitPresenter presenter;
+    private PausePresenter presenter;
 
-    public QuitView(QuitPresenter presenter, Skin skin) {
+    public PauseView(PausePresenter presenter, Skin skin) {
         this.presenter = presenter;
         this.setTransform(false);
         createControls(skin);
@@ -33,11 +33,11 @@ public class QuitView extends Group implements IQuitView {
      * Create controls
      */
     private void createControls(Skin skin) {
-        Logger.info("QuitView: creating controls");
+        Logger.info("PauseView: creating controls");
 
         Table container = new Table();
         container.setTransform(false);
-        container.setBackground(skin.getDrawable("quit-panel"));
+        container.setBackground(skin.getDrawable("pause-panel"));
         container.setSize(190,307);
         container.setPosition((Resources.VIRTUAL_WIDTH/2)-(container.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(container.getHeight()/2));
         //container.debug();
@@ -130,7 +130,7 @@ public class QuitView extends Group implements IQuitView {
     }
 
     @Override
-    public void quitState() {
+    public void pauseState() {
         setVisible(true);
     }
 

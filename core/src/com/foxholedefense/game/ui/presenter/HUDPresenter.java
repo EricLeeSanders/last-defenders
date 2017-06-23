@@ -208,7 +208,7 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
 			case INSPECTING:
 				view.inspectingState();
 				break;
-			case QUIT_MENU:
+			case PAUSE_MENU:
 				view.quitState();
 				break;
 			case WAVE_IN_PROGRESS:

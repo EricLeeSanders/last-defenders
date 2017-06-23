@@ -374,7 +374,7 @@ press
   orig: 98, 97
   offset: 0, 0
   index: -1
-quit-panel
+pause-panel
   rotate: false
   xy: 1061, 584
   size: 190, 307
