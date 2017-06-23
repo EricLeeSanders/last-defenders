@@ -55,7 +55,6 @@ public class GameStage extends Stage implements PlayerObserver {
 	private SupportActorPlacement supportActorPlacement;
 	private AirStrikePlacement airStrikePlacement;
 	private SupplyDropPlacement supplyDropPlacement;
-	private MessageDisplayer messageDisplayer;
 	private CombatActorFactory combatActorFactory;
 	private HealthFactory healthFactory;
 	private SupportActorFactory supportActorFactory;
@@ -240,10 +239,6 @@ public class GameStage extends Stage implements PlayerObserver {
 
 	public SupplyDropPlacement getSupplyDropPlacement() {
 		return supplyDropPlacement;
-	}
-
-	public void setMessageDisplayer(MessageDisplayer messageDisplayer) {
-		this.messageDisplayer = messageDisplayer;
 	}
 
 }
