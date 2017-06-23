@@ -60,12 +60,7 @@ public class GameLoadingScreen extends AbstractScreen{
 		
 		load();
 	}
-	
-	@Override
-	public void resize(int width, int height) {
-	    super.resize(width, height);
-	}
-		
+
 	@Override
 	public void renderElements(float delta) {
 		stage.act(delta);

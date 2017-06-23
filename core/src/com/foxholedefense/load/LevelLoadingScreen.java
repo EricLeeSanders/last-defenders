@@ -102,11 +102,6 @@ public class LevelLoadingScreen extends AbstractScreen{
 		stage.addActor(loadingLabel);
 		load();
 	}
-	
-	@Override
-	public void resize(int width, int height) {
-	    super.resize(width, height);
-	}
 		
 	@Override
 	public void renderElements(float delta) {
