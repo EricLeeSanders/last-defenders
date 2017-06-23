@@ -226,15 +226,6 @@ public class GameStage extends Stage implements PlayerObserver {
 		return actorGroups;
 	}
 
-	public void setActorGroups(ActorGroups actorGroups) {
-		this.actorGroups = actorGroups;
-	}
-	
-	public Map getMap(){
-		return map;
-	}
-
-
 	public TowerPlacement getTowerPlacement() {
 		return towerPlacement;
 	}
@@ -249,10 +240,6 @@ public class GameStage extends Stage implements PlayerObserver {
 
 	public SupplyDropPlacement getSupplyDropPlacement() {
 		return supplyDropPlacement;
-	}
-
-	public MessageDisplayer getMessageDisplayer() {
-		return messageDisplayer;
 	}
 
 	public void setMessageDisplayer(MessageDisplayer messageDisplayer) {

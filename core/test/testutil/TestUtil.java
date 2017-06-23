@@ -50,10 +50,7 @@ import static org.mockito.Mockito.*;
 
 public class TestUtil {
     public static final double DELTA = 1e-15;
-    private static ActorGroups actorGroups = new ActorGroups();
-    private static Resources resourcesMock = createResourcesMock();
     private static EffectFactory effectFactoryMock = createEffectFactoryMock();
-    private static HealthFactory healthFactoryMock = mock(HealthFactory.class);
     private static ProjectileFactory projectileFactoryMock = createProjectileFactoryMock();
     private static Player playerMock = mock(Player.class);
     private static FHDAudio audioMock = mock(FHDAudio.class);

@@ -42,10 +42,6 @@ public class AirStrikeLocation extends Actor {
 		batch.draw(rangeTexture,x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
 	}
 	
-	public Shape2D getRangeShape() {
-		return new Circle(location.x, location.y, radius);
-	}
-	
 	public FHDVector2 getLocation() {
 		return location;
 	}
