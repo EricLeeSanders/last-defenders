@@ -22,7 +22,7 @@ public class FileWaveLoader extends AbstractWaveLoader {
     @Override
     public Queue<SpawningEnemy> loadWave(int level, int wave) {
 
-        Queue<SpawningEnemy> spawningEnemies = new Queue<SpawningEnemy>();
+        Queue<SpawningEnemy> spawningEnemies = new Queue<>();
 
         JsonValue json = new JsonReader().parse(Gdx.files.internal("game/levels/level" + level + "/waves/wave" + wave + ".json"));
         JsonValue enemiesJson = json.get("wave");

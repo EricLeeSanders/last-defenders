@@ -65,7 +65,7 @@ public class MapTest {
         doReturn(pathX).when(polyline).getX();
         doReturn(pathY).when(polyline).getY();
 
-        Array<FHDVector2> pathCoords = new SnapshotArray<FHDVector2>(true, 14);
+        Array<FHDVector2> pathCoords = new SnapshotArray<>(true, 14);
         pathCoords.add(new FHDVector2(216.0f, 0.5f));
         pathCoords.add(new FHDVector2(216.0f, 105f));
         pathCoords.add(new FHDVector2(87.5f, 105f));
@@ -102,7 +102,7 @@ public class MapTest {
         doReturn(boundaryLayer).when(mapLayers).get(eq("Boundary"));
         doReturn(mapObjects).when(boundaryLayer).getObjects();
 
-        Array<Rectangle> pathBoundaries = new SnapshotArray<Rectangle>(true, 3);
+        Array<Rectangle> pathBoundaries = new SnapshotArray<>(true, 3);
         pathBoundaries.add(new Rectangle(50.0f,62.5f,50.0f,27.5f));
         pathBoundaries.add(new Rectangle(100.0f,62.5f,27.5f,50.0f));
         pathBoundaries.add(new Rectangle(100.0f,112.5f,50.0f,27.5f));

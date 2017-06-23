@@ -54,8 +54,8 @@ public class Resources {
 	private UserPreferences userPreferences;
 	private AssetManager manager = new AssetManager();
 
-	private Map<String, TextureRegion> loadedTextures = new HashMap<String, TextureRegion>();
-	private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<String, Array<TextureAtlas.AtlasRegion>>();
+	private Map<String, TextureRegion> loadedTextures = new HashMap<>();
+	private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<>();
 
 	public Resources(){}
 

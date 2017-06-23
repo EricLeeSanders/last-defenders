@@ -35,7 +35,7 @@ public class EnemyTest {
 
     private Array<FHDVector2> createWaypoints(){
 
-        Array<FHDVector2> path = new Array<FHDVector2>();
+        Array<FHDVector2> path = new Array<>();
 
         FHDVector2 startPoint = new FHDVector2(50, 50);
         FHDVector2 waypoint1 = new FHDVector2(100, 100);

@@ -49,7 +49,7 @@ public class Apache extends SupportActor{
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
 
-		movementAnimation = new Animation<TextureRegion>(FRAME_DURATION, textureRegions);
+		movementAnimation = new Animation<>(FRAME_DURATION, textureRegions);
 		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		attackCounter = ATTACK_SPEED;
 

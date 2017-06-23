@@ -54,7 +54,7 @@ public class TestUtil {
     private static FHDAudio audioMock = mock(FHDAudio.class);
 
     public static Resources createResourcesMock(){
-        Array<AtlasRegion> atlasRegion = new Array<AtlasRegion>();
+        Array<AtlasRegion> atlasRegion = new Array<>();
         atlasRegion.add(null);
 
         Resources resources = mock(Resources.class);
@@ -141,7 +141,7 @@ public class TestUtil {
     public static Enemy createEnemy(String name, boolean spy){
 
         Enemy enemy = null;
-        Array<AtlasRegion> atlasRegion = new Array<AtlasRegion>();
+        Array<AtlasRegion> atlasRegion = new Array<>();
         atlasRegion.add(null);
         TextureRegion[] animatedRegions = atlasRegion.toArray(TextureRegion.class);
 

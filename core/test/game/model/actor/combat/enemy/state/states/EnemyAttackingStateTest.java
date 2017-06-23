@@ -41,7 +41,7 @@ public class EnemyAttackingStateTest {
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
         Tower tower = TestUtil.createTower("Rifle", false);
 
-        Map<String, Object> parameters = new HashMap<String, Object>();
+        Map<String, Object> parameters = new HashMap<>();
         parameters.put("target", tower);
 
         EnemyStateManager stateManagerMock = mock(EnemyStateManager.class);

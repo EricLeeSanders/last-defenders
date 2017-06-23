@@ -57,7 +57,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 	private InputMultiplexer imp;
 	private Resources resources;
 	private com.foxholedefense.game.ui.view.MessageDisplayer messageDisplayer;
-	private Array<Updatable> updatablePresenters = new Array<Updatable>();
+	private Array<Updatable> updatablePresenters = new Array<>();
 
 	public GameUIStage(Player player, Group towerGroup
 			, GameUIStateManager uiStateManager, LevelStateManager levelStateManager

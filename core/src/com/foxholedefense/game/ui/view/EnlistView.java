@@ -38,7 +38,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  *
  */
 public class EnlistView extends Group implements IEnlistView, InputProcessor {
-	private Array<EnlistButton> enlistButtons = new Array<EnlistButton>(7);
+	private Array<EnlistButton> enlistButtons = new Array<>(7);
 	private ImageButton btnPlacingCancel, btnPlace, btnRotate;
 	private ImageButton btnScrollUp;
 	private ImageButton btnScrollDown;

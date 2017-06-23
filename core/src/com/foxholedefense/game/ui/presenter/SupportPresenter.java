@@ -38,7 +38,7 @@ public class SupportPresenter implements GameUIStateObserver {
 	private ISupportView view;
 	private FHDAudio audio;
 	private MessageDisplayer messageDisplayer;
-	private Map<String, Integer> supportCosts = new HashMap<String, Integer>();
+	private Map<String, Integer> supportCosts = new HashMap<>();
 
 	public SupportPresenter(GameUIStateManager uiStateManager, Player player, FHDAudio audio
 			, SupportActorPlacement supportActorPlacement, AirStrikePlacement airStrikePlacement, SupplyDropPlacement supplyDropPlacement

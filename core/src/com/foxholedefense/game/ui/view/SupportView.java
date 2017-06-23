@@ -36,7 +36,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  *
  */
 public class SupportView extends Group implements ISupportView, InputProcessor {
-	private Array<SupportButton> supportButtons = new Array<SupportButton>(4);
+	private Array<SupportButton> supportButtons = new Array<>(4);
 	private ImageButton btnPlacingCancel;
 	private ImageButton btnPlace;
 	private SupportPresenter presenter;

@@ -22,8 +22,8 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  */
 public class Map implements Disposable{
 
-	private Array<FHDVector2> pathCoords = new SnapshotArray<FHDVector2>(true, 16);
-	private Array<Rectangle> pathBoundaries = new SnapshotArray<Rectangle>(true, 32);
+	private Array<FHDVector2> pathCoords = new SnapshotArray<>(true, 16);
+	private Array<Rectangle> pathBoundaries = new SnapshotArray<>(true, 32);
 	private TiledMap tiledMap;
 
 	public Map(TiledMap tiledMap) {

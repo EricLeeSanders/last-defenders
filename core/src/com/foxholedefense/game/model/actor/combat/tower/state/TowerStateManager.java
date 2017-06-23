@@ -19,7 +19,7 @@ import java.util.Map;
 
 public class TowerStateManager implements StateManager<TowerState, CombatActorState>{
 
-    private Map<TowerState, CombatActorState> towerStates = new HashMap<TowerState, CombatActorState>();
+    private Map<TowerState, CombatActorState> towerStates = new HashMap<>();
     private TowerState currentState;
     private final Tower tower;
     private final EffectFactory effectFactory;
@@ -38,7 +38,7 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
 
     private void initStateObjects(){
         towerStates.put(TowerState.ACTIVE, new TowerActiveState(tower, this));
-        towerStates.put(TowerState.DYING, new CombatActorDyingState<TowerState>(tower, this, TowerState.STANDBY, effectFactory));
+        towerStates.put(TowerState.DYING, new CombatActorDyingState<>(tower, this, TowerState.STANDBY, effectFactory));
         towerStates.put(TowerState.STANDBY, new CombatActorStandByState());
     }
 
