@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
@@ -20,7 +19,6 @@ import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.util.DebugOptions;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.Resources;
-import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 /**
  * Represents a Flame from a FlameThrower. Deals periodic damage as an AOE.

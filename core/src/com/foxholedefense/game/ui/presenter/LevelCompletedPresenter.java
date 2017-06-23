@@ -1,12 +1,10 @@
 package com.foxholedefense.game.ui.presenter;
 
-import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.ILevelCompletedView;
 import com.foxholedefense.screen.ScreenChanger;
-import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.Logger;

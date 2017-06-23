@@ -4,13 +4,9 @@ import com.badlogic.gdx.utils.Queue;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
-import com.foxholedefense.game.model.level.state.LevelStateManager;
-import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
-import com.foxholedefense.game.model.level.state.LevelStateObserver;
 import com.foxholedefense.game.model.level.wave.WaveLoader;
 import com.foxholedefense.game.model.level.wave.impl.DynamicWaveLoader;
 import com.foxholedefense.game.model.level.wave.impl.FileWaveLoader;
-import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.game.service.factory.HealthFactory;
 import com.foxholedefense.util.Logger;
 
@@ -20,7 +16,6 @@ public class Level {
 
 	private float delayCount = 0;
 	private float enemyDelay = 0f;
-	private Map map;
 	private int currentWave = 0;
 	private Queue<SpawningEnemy> spawningEnemyQueue;
 	private int intLevel;
@@ -29,9 +24,8 @@ public class Level {
 	private ActorGroups actorGroups;
 	private HealthFactory healthFactory;
 
-	public Level(int level, ActorGroups actorGroups, HealthFactory healthFactory, Map map, FileWaveLoader fileWaveLoader, DynamicWaveLoader dynamicWaveLoader) {
+	public Level(int level, ActorGroups actorGroups, HealthFactory healthFactory, FileWaveLoader fileWaveLoader, DynamicWaveLoader dynamicWaveLoader) {
 		this.intLevel = level;
-		this.map = map;
 		this.actorGroups = actorGroups;
 		this.healthFactory = healthFactory;
 		this.waveLoader = fileWaveLoader;

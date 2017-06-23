@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class EventManagerImpl implements EventManager {
 
-    private Map<CombatActorEventEnum, CombatActorEvent> events = new HashMap<CombatActorEventEnum, CombatActorEvent>();
+    private Map<CombatActorEventEnum, CombatActorEvent> events = new HashMap<>();
 
     public EventManagerImpl(CombatActor combatActor, EffectFactory effectFactory){
         initEventObjects(combatActor, effectFactory);

@@ -22,7 +22,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 
-import java.util.HashMap;
 import java.util.Map;
 
 import testutil.TestUtil;
@@ -50,17 +49,15 @@ public class EnemyRunningStateTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void enemyRunningStateTest1(){
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
         Tower tower = TestUtil.createTower("Rifle", false);
 
-        Array<Action> arrayAction = new Array<Action>();
+        Array<Action> arrayAction = new Array<>();
         arrayAction.add(new SequenceAction());
 
         doReturn(arrayAction).when(enemy).getActions();
-
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("target", tower);
 
         EnemyStateManager stateManagerMock = mock(EnemyStateManager.class);
 

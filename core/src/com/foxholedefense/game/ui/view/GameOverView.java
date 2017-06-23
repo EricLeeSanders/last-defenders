@@ -1,6 +1,5 @@
 package com.foxholedefense.game.ui.view;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -8,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.foxholedefense.game.ui.presenter.GameOverPresenter;
@@ -36,7 +34,7 @@ public class GameOverView extends Group implements IGameOverView {
 	/**
 	 * Create controls 
 	 */
-	public void createControls(Skin skin) {
+	private void createControls(Skin skin) {
 		Logger.info("Game Over View: creating controls");
 
 		Table table = new Table();

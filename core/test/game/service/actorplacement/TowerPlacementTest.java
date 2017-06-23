@@ -30,7 +30,6 @@ import testutil.TestUtil;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
@@ -48,7 +47,7 @@ public class TowerPlacementTest {
     private Map map = mock(Map.class);
     private ActorGroups actorGroups = mock(ActorGroups.class);
     private CombatActorFactory combatActorFactory = mock(CombatActorFactory.class);
-    HealthFactory healthFactory = mock(HealthFactory.class);
+    private HealthFactory healthFactory = mock(HealthFactory.class);
 
     @Before
     public void initTowerPlacementTest() {
@@ -61,6 +60,7 @@ public class TowerPlacementTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void towerPlacementTest1(){
 
         TowerPlacement towerPlacement = createTowerPlacement();
@@ -80,7 +80,7 @@ public class TowerPlacementTest {
         assertEquals(0, tower.getY(), TestUtil.DELTA);
 
         // Move tower and mock collision detection
-        Array<Rectangle> pathBoundaries = new Array<Rectangle>();
+        Array<Rectangle> pathBoundaries = new Array<>();
         doReturn(pathBoundaries).when(map).getPathBoundaries();
         when(CollisionDetection.collisionWithPath(eq(pathBoundaries), eq(tower))).thenReturn(false);
         when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower))).thenReturn(false);
@@ -114,6 +114,7 @@ public class TowerPlacementTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void towerPlacementCollisionTest(){
 
         TowerPlacement towerPlacement = createTowerPlacement();
@@ -133,7 +134,7 @@ public class TowerPlacementTest {
         assertEquals(0, tower.getY(), TestUtil.DELTA);
 
         // Move tower and mock collision detection
-        Array<Rectangle> pathBoundaries = new Array<Rectangle>();
+        Array<Rectangle> pathBoundaries = new Array<>();
         doReturn(pathBoundaries).when(map).getPathBoundaries();
         when(CollisionDetection.collisionWithPath(eq(pathBoundaries), eq(tower))).thenReturn(true);
         when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower))).thenReturn(true);

@@ -15,10 +15,6 @@ public class WaypointAction extends MoveToAction {
         this.rotation = rotation;
     }
 
-    public float getRotation(){
-        return rotation;
-    }
-
     @Override
     protected void begin () {
         super.begin();

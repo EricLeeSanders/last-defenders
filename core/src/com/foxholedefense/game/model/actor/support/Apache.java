@@ -25,7 +25,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
 public class Apache extends SupportActor{
 
 	public static final int COST = 2000;
-	public static final float FRAME_DURATION = 0.25f;
+	private static final float FRAME_DURATION = 0.25f;
 	public static final float TIME_ACTIVE_LIMIT = 10f;
 
 	private static final float ATTACK_SPEED = 0.2f;
@@ -49,7 +49,7 @@ public class Apache extends SupportActor{
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
 
-		movementAnimation = new Animation<TextureRegion>(FRAME_DURATION, textureRegions);
+		movementAnimation = new Animation<>(FRAME_DURATION, textureRegions);
 		movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
 		attackCounter = ATTACK_SPEED;
 
@@ -109,14 +109,13 @@ public class Apache extends SupportActor{
 		timeActive += delta;
 		if(timeActive >= TIME_ACTIVE_LIMIT){
 			setReadyToAttack(false);
-			setExitingStage(true);
 			exitStage();
 		}
 	}
 
 	private void exitStage(){
 		Logger.info("Apache: exiting stage");
-
+		exitingStage = true;
 		FHDVector2 destination = UtilPool.getVector2(getWidth() , Resources.VIRTUAL_HEIGHT / 2);
 
 		float duration = destination.dst(getPositionCenter()) / MOVE_SPEED;
@@ -132,11 +131,11 @@ public class Apache extends SupportActor{
 	/**
 	 * Find a target using TowerAIType First Enemy
 	 */
-	public Targetable findTarget() {
+	private Targetable findTarget() {
 		return ai.findTarget(this, getTargetGroup().getChildren());
 	}
 
-	public void attackTarget(Targetable target) {
+	private void attackTarget(Targetable target) {
 		if(target != null && !target.isDead()){
 			audio.playSound(FHDSound.MACHINE_GUN);
 			projectileFactory.loadBullet().initialize(this, target, BULLET_SIZE);
@@ -148,16 +147,12 @@ public class Apache extends SupportActor{
 		return readyToAttack;
 	}
 
-	public void setReadyToAttack(boolean readyToAttack) {
+	private void setReadyToAttack(boolean readyToAttack) {
 		this.readyToAttack = readyToAttack;
 	}
 
 	public boolean isExitingStage() {
 		return exitingStage;
-	}
-
-	public void setExitingStage(boolean exitingStage) {
-		this.exitingStage = exitingStage;
 	}
 
 }

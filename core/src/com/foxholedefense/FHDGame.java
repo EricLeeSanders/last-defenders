@@ -20,7 +20,6 @@ import com.foxholedefense.util.UserPreferences;
 public class FHDGame extends Game implements ScreenChanger, GameStateObserver {
 	private GameStateManager gameStateManager;
 	private Resources resources;
-	private UserPreferences userPreferences;
 	private FHDAudio audio;
 	private IPlayServices playServices;
 
@@ -38,7 +37,7 @@ public class FHDGame extends Game implements ScreenChanger, GameStateObserver {
 	public void create() {
 		Logger.info("FHDGame: Creating");
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		userPreferences = new UserPreferences();
+		UserPreferences userPreferences = new UserPreferences();
 		resources = new Resources(userPreferences);
 		audio = new FHDAudio(userPreferences);
 		gameStateManager = new GameStateManager();

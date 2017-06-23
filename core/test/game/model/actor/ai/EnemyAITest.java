@@ -19,9 +19,6 @@ import static org.mockito.Mockito.*;
 import testutil.TestUtil;
 
 
-import static org.mockito.Mockito.mock;
-
-
 /**
  * Tests the Tower AI.
  */

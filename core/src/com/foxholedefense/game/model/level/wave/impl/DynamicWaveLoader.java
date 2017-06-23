@@ -2,17 +2,14 @@ package com.foxholedefense.game.model.level.wave.impl;
 
 import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.level.Level;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.SpawningEnemy;
 import com.foxholedefense.game.service.factory.CombatActorFactory;
-import com.foxholedefense.game.service.factory.HealthFactory;
 import com.foxholedefense.util.Logger;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Random;
 
@@ -23,7 +20,7 @@ import java.util.Random;
 public class DynamicWaveLoader extends AbstractWaveLoader {
 
     private Random random = new Random();
-    private java.util.Map<String, Integer> enemyMap = new HashMap<String, Integer>();
+    private java.util.Map<String, Integer> enemyMap = new HashMap<>();
 
     public DynamicWaveLoader(CombatActorFactory combatActorFactory, Map map) {
         super(combatActorFactory, map);
@@ -73,17 +70,15 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
 
     private Queue<SpawningEnemy> createEnemies(){
 
-        SnapshotArray<SpawningEnemy> enemies = new SnapshotArray<SpawningEnemy>();
-        Iterator<Entry<String, Integer>> iter = enemyMap.entrySet().iterator();
+        SnapshotArray<SpawningEnemy> enemies = new SnapshotArray<>();
 
-        while(iter.hasNext()){
-            java.util.Map.Entry<String, Integer> entry = iter.next();
+        for (Entry<String, Integer> entry : enemyMap.entrySet()) {
             enemies.addAll(createEnemiesByType(entry.getValue(), entry.getKey()));
         }
 
         shuffle(enemies);
 
-        Queue<SpawningEnemy> spawningEnemiesQueue = new Queue<SpawningEnemy>(enemies. size);
+        Queue<SpawningEnemy> spawningEnemiesQueue = new Queue<>(enemies.size);
         for(SpawningEnemy spawningEnemy : enemies){
             spawningEnemiesQueue.addFirst(spawningEnemy);
         }
@@ -93,7 +88,7 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
 
     private SnapshotArray<SpawningEnemy> createEnemiesByType(int n, String type) {
 
-        SnapshotArray<SpawningEnemy> enemies = new SnapshotArray<SpawningEnemy>();
+        SnapshotArray<SpawningEnemy> enemies = new SnapshotArray<>();
 
         for(int i = 0; i < n; i++){
             int randArmor = random.nextInt(3); //0-2

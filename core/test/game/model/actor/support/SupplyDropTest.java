@@ -40,16 +40,14 @@ public class SupplyDropTest {
         Gdx.app = mock(Application.class);
     }
 
-    public SupplyDrop createSupplyDrop(){
+    private SupplyDrop createSupplyDrop(){
 
         SupportActorFactory supportActorFactoryMock = mock(SupportActorFactory.class);
         doReturn(supplyDropCrateMock).when(supportActorFactoryMock).loadSupplyDropCrate();
         doReturn(supplyDropCrateMock).when(supplyDropCrateMock).beginDrop(isA(Float.class), isA(Vector2.class));
         Resources resources = TestUtil.createResourcesMock();
 
-        SupplyDrop supplyDrop = new SupplyDrop(resources.getTexture(""), poolMock, supportActorFactoryMock);
-
-        return supplyDrop;
+        return new SupplyDrop(resources.getTexture(""), poolMock, supportActorFactoryMock);
     }
 
     @Test

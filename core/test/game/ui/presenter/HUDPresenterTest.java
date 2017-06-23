@@ -13,12 +13,9 @@ import com.foxholedefense.game.ui.view.interfaces.IHUDView;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.FHDAudio;
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 
 import static org.mockito.Matchers.isA;
@@ -44,7 +41,7 @@ public class HUDPresenterTest {
         Gdx.app = mock(Application.class);
     }
 
-    public HUDPresenter createHUDPresenter(){
+    private HUDPresenter createHUDPresenter(){
 
         FHDAudio audioMock = mock(FHDAudio.class);
 

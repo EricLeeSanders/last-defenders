@@ -10,7 +10,7 @@ import com.foxholedefense.util.Logger;
 public abstract class ObservableStateManager<S, O extends StateObserver>
 {
     private S state;
-    private SnapshotArray<O> observers = new SnapshotArray<O>();
+    private SnapshotArray<O> observers = new SnapshotArray<>();
 
     /**
      * Attach an observer and add it to observers list.
@@ -24,7 +24,8 @@ public abstract class ObservableStateManager<S, O extends StateObserver>
     /**
      * Notify all observers of state change
      */
-    public void notifyObservers() {
+    @SuppressWarnings("unchecked")
+    private void notifyObservers() {
         Logger.info(getClass().getSimpleName() + ": Notify Observers");
         Object[] objects = observers.begin();
         for(int i = observers.size - 1; i >= 0; i--){

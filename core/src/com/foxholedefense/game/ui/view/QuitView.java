@@ -3,16 +3,12 @@ package com.foxholedefense.game.ui.view;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.game.ui.presenter.QuitPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IQuitView;
 import com.foxholedefense.util.Logger;
@@ -36,7 +32,7 @@ public class QuitView extends Group implements IQuitView {
     /**
      * Create controls
      */
-    public void createControls(Skin skin) {
+    private void createControls(Skin skin) {
         Logger.info("QuitView: creating controls");
 
         Table container = new Table();

@@ -17,7 +17,7 @@ import com.foxholedefense.util.datastructures.Dimension;
 public abstract class AnimationEffect extends TextureEffect {
     private Animation<TextureRegion> animation;
 
-    public AnimationEffect(Pool<TextureEffect> pool, Array<AtlasRegion> regions, Dimension textureSize, PlayMode playMode, float duration, float frameDuration) {
+    protected AnimationEffect(Pool<TextureEffect> pool, Array<AtlasRegion> regions, Dimension textureSize, PlayMode playMode, float duration, float frameDuration) {
         super(pool, textureSize, duration);
         animation = new Animation<TextureRegion>(frameDuration, regions);
         animation.setPlayMode(playMode);

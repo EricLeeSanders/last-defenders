@@ -22,7 +22,7 @@ public class EnemyRunningState implements CombatActorState {
     private final Enemy enemy;
     private final StateTransitioner<EnemyState> stateTransitioner;
     private float movementAnimationStateTime, findTargetDelayCounter;
-    private Map<String, Object> attackTransitionParameters = new HashMap<String, Object>();
+    private Map<String, Object> attackTransitionParameters = new HashMap<>();
 
     public EnemyRunningState(Enemy enemy, StateTransitioner<EnemyState> stateTransitioner) {
         this.enemy = enemy;
@@ -55,7 +55,6 @@ public class EnemyRunningState implements CombatActorState {
             if(target != null){
                 attackTransitionParameters.put("target", target);
                 stateTransitioner.transition(EnemyState.ATTACKING, attackTransitionParameters);
-                return;
             }
         } else {
             findTargetDelayCounter += delta;

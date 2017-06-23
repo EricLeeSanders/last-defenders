@@ -20,7 +20,7 @@ public class MessageDisplayer extends Group implements com.foxholedefense.game.u
     private static final float MESSAGE_DURATION = 2;
     private static final float DEFAULT_FONT_SCALE = 0.35f;
     private static final Color DEFAULT_FONT_COLOR = Color.RED;
-    private Map<Color, LabelStyle> labelStyleMap = new HashMap<Color, LabelStyle>();
+    private Map<Color, LabelStyle> labelStyleMap = new HashMap<>();
     private Label messageLabel;
     private Skin skin;
 

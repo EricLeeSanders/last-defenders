@@ -37,7 +37,7 @@ public class EnlistPresenter implements GameUIStateObserver {
 	private IEnlistView view;
 	private FHDAudio audio;
 	private MessageDisplayer messageDisplayer;
-	private Map<String, Integer> towerCosts = new HashMap<String, Integer>();
+	private Map<String, Integer> towerCosts = new HashMap<>();
 
 	public EnlistPresenter(GameUIStateManager uiStateManager, Player player,
 			FHDAudio audio, TowerPlacement towerPlacement, MessageDisplayer messageDisplayer) {
@@ -158,7 +158,7 @@ public class EnlistPresenter implements GameUIStateObserver {
 	 * 
 	 * @return
 	 */
-	public boolean isTowerRotatable() {
+	private boolean isTowerRotatable() {
 		return towerPlacement.getCurrentTower() instanceof IRotatable;
 	}
 	/**
@@ -182,7 +182,7 @@ public class EnlistPresenter implements GameUIStateObserver {
 	 * Determines if the tower can be moved
 	 * @return
      */
-	public boolean canMoveTower(){
+	private boolean canMoveTower(){
 
 		return uiStateManager.getState().equals(GameUIState.PLACING_TOWER)
 				&& towerPlacement.isCurrentTower();
@@ -192,7 +192,7 @@ public class EnlistPresenter implements GameUIStateObserver {
 	 * Determines if the tower can be placed
 	 * @return
      */
-	public boolean canPlaceTower(){
+	private boolean canPlaceTower(){
 
 		return uiStateManager.getState().equals(GameUIState.PLACING_TOWER)
 				&& towerPlacement.isCurrentTower();
@@ -203,7 +203,7 @@ public class EnlistPresenter implements GameUIStateObserver {
 	 * @param cost - cost of the tower
 	 * @return
      */
-	public boolean canCreateTower(int cost){
+	private boolean canCreateTower(int cost){
 
 		return uiStateManager.getState().equals(GameUIState.ENLISTING)
 				&& canAffordTower(cost);

@@ -45,8 +45,8 @@ public class EnemyTank extends Enemy implements PlatedArmor, IVehicle, IRocket {
 	private static final Dimension TEXTURE_SIZE_BODY = new Dimension(76, 50);
 	private static final Dimension TEXTURE_SIZE_TURRET = new Dimension(120, 33);
 	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.VEHCILE_EXPLOSION;
+	private static final float[] BODY_POINTS = { 0, 0, 0, 50, 75, 50, 75, 0 };
 
-	private float[] bodyPoints = { 0, 0, 0, 50, 75, 50, 75, 0 };
 	private TextureRegion bodyRegion;
 	private float bodyRotation;
 	private Polygon body;
@@ -58,7 +58,7 @@ public class EnemyTank extends Enemy implements PlatedArmor, IVehicle, IRocket {
 		this.bodyRegion = bodyRegion;
 		this.projectileFactory = projectileFactory;
 		this.audio = audio;
-		body = new Polygon(bodyPoints);
+		body = new Polygon(BODY_POINTS);
 	}
 
 	/**

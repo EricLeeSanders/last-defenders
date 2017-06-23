@@ -45,7 +45,7 @@ public class GameOverPresenter implements GameUIStateObserver {
 	/**
 	 * Set how many waves have been completed
 	 */
-	public void setWavesCompleted() {
+	private void setWavesCompleted() {
 		view.setWavesCompleted(String.valueOf(player.getWavesCompleted()));
 	}
 
@@ -85,7 +85,7 @@ public class GameOverPresenter implements GameUIStateObserver {
 	 * Can only switch to New Game if the GAMEUIState == GAME_OVER
 	 * @return
      */
-	public boolean canSwitchToNewGame(){
+	private boolean canSwitchToNewGame(){
 
 		return uiStateManager.getState().equals(GameUIState.GAME_OVER);
 	}
@@ -94,7 +94,7 @@ public class GameOverPresenter implements GameUIStateObserver {
 	 * Can only switch to Main Menu if the GAMEUIState == GAME_OVER
 	 * @return
 	 */
-	public boolean canSwitchToMainMenu(){
+	private boolean canSwitchToMainMenu(){
 
 		return uiStateManager.getState().equals(GameUIState.GAME_OVER);
 	}

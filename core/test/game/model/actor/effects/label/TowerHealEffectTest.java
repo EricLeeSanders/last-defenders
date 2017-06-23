@@ -29,14 +29,15 @@ import static org.mockito.Mockito.verify;
 
 public class TowerHealEffectTest {
 
-    private LabelEffectPool labelEffectPoolMock = mock(LabelEffectPool.class);
+    @SuppressWarnings("unchecked")
+    private LabelEffectPool<TowerHealEffect> labelEffectPoolMock = mock(LabelEffectPool.class);
 
     @Before
     public void initTowerHealEffectTest() {
         Gdx.app = mock(Application.class);
     }
 
-    public TowerHealEffect createTowerHealEffect(){
+    private TowerHealEffect createTowerHealEffect(){
 
         Skin skinMock = mock(Skin.class);
 
@@ -44,10 +45,7 @@ public class TowerHealEffectTest {
         LabelStyle style = new LabelStyle(bitmapFontMock,  Color.WHITE);
         doReturn(style).when(skinMock).get(LabelStyle.class);
 
-        TowerHealEffect towerHealEffect = new TowerHealEffect(labelEffectPoolMock, skinMock);
-
-        return towerHealEffect;
-
+        return new TowerHealEffect(labelEffectPoolMock, skinMock);
     }
 
     /**

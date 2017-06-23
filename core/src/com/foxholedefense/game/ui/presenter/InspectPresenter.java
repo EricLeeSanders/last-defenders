@@ -9,7 +9,6 @@ import com.foxholedefense.game.model.actor.ai.TowerAIType;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
-import com.foxholedefense.game.model.level.state.LevelStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.state.GameUIStateObserver;
@@ -199,7 +198,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver{
 		if (canInspectTowers()) {
 			Actor hitActor = CollisionDetection.towerHit(towerGroup.getChildren(), coords);
 			if (hitActor != null) {
-				if (hitActor instanceof Tower && canInspectTower((Tower) hitActor)) {
+				if (canInspectTower((Tower) hitActor)) {
 					Logger.info("Inspect Presenter: inspecting tower");
 					selectedTower = (Tower) hitActor;
 					uiStateManager.setState(GameUIState.INSPECTING);
@@ -301,7 +300,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver{
 				&& isTowerInteractable() && !isDischargeDisabled();
 	}
 
-	public boolean isDischargeDisabled(){
+	private boolean isDischargeDisabled(){
 
 		return levelStateManager.getState().equals(LevelState.WAVE_IN_PROGRESS);
 	}

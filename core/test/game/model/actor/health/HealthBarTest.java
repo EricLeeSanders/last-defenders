@@ -4,9 +4,9 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.health.HealthBar;
+import com.foxholedefense.game.service.factory.HealthFactory.HealthPool;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,19 +33,16 @@ public class HealthBarTest {
     private TextureRegion backgroundBarMock = mock(TextureRegion.class);
     private TextureRegion healthBarMock = mock(TextureRegion.class);
     private TextureRegion armorBarMock = mock(TextureRegion.class);
-    @SuppressWarnings("rawtypes")
-    private Pool poolMock = mock(Pool.class);
+    private HealthPool poolMock = mock(HealthPool.class);
 
     @Before
     public void initHealthBarTest() {
         Gdx.app = mock(Application.class);
     }
 
-    public HealthBar createHealthBar(){
+    private HealthBar createHealthBar(){
 
-        HealthBar healthBar = new HealthBar(poolMock, backgroundBarMock, healthBarMock, armorBarMock);
-
-        return healthBar;
+        return new HealthBar(poolMock, backgroundBarMock, healthBarMock, armorBarMock);
     }
 
     /**

@@ -185,17 +185,6 @@ public final class CollisionDetection {
 		return Intersector.overlapConvexPolygons(poly1, poly2);
 	}
 
-	/**
-	 * Checks for a collision between 2 rectangles
-	 *
-	 * @param rect1
-	 * @param rect2
-	 * @return boolean - If there is a collision
-	 */
-	private static boolean rectangleAndRectangle(Rectangle rect1, Rectangle rect2) {
-		return Intersector.overlaps(rect1, rect2);
-	}
-
 	private static boolean circleAndRectangle(Circle circle, Rectangle rect){
 		return Intersector.overlaps(circle, rect);
 	}

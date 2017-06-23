@@ -22,7 +22,6 @@ import testutil.TestUtil;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -46,10 +45,9 @@ public class SupplyDropCrateTest {
         Resources resourcesMock = mock(Resources.class);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
         doReturn(towerHealEffectMock).when(effectFactoryMock).loadLabelEffect(eq(TowerHealEffect.class));
-        SupplyDropCrate supplyDropCrate = new SupplyDropCrate(resourcesMock.getTexture(""), resourcesMock.getTexture(""),
-                supplyDropCratePoolMock, towerGroup, effectFactoryMock);
 
-        return supplyDropCrate;
+        return new SupplyDropCrate(resourcesMock.getTexture(""), resourcesMock.getTexture(""),
+                supplyDropCratePoolMock, towerGroup, effectFactoryMock);
     }
 
     @Test
