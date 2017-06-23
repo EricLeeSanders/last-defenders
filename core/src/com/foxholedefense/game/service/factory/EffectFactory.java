@@ -68,7 +68,7 @@ public class EffectFactory {
     @SuppressWarnings("unchecked")
     public <T extends LabelEffect> T loadLabelEffect(Class<T> type){
 
-        T labelEffect = null;
+        T labelEffect;
         if(type.equals(ArmorDestroyedEffect.class)){
             labelEffect = (T) armorDestroyedEffectPool.obtain();
         } else if(type.equals(TowerHealEffect.class)){
@@ -91,7 +91,7 @@ public class EffectFactory {
     @SuppressWarnings("unchecked")
     public <T extends AnimationEffect> T loadAnimationEffect(Class<T> type){
 
-        T animationEffect = null;
+        T animationEffect;
         if(type.equals(EnemyCoinEffect.class)){
             animationEffect = (T) enemyCoinEffectPool.obtain();
         } else {
