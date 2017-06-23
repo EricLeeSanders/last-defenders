@@ -83,12 +83,16 @@ public class SupportActorFactory {
     public SupportActor loadSupportActor(String type) {
         Logger.info("Actor Factory: loading support actor: " + type);
         SupportActor supportActor = null;
-        if (type.equals("Apache")) {
-            supportActor = apachePool.obtain();
-        } else if(type.equals("AirStrike")) {
-            supportActor = airStrikePool.obtain();
-        } else if(type.equals("LandMine")) {
-            supportActor = landMinePool.obtain();
+        switch (type) {
+            case "Apache":
+                supportActor = apachePool.obtain();
+                break;
+            case "AirStrike":
+                supportActor = airStrikePool.obtain();
+                break;
+            case "LandMine":
+                supportActor = landMinePool.obtain();
+                break;
         }
         return supportActor;
     }

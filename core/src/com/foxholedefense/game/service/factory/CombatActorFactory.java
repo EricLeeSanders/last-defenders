@@ -81,20 +81,28 @@ public class CombatActorFactory {
     public Tower loadTower(String type) {
         Logger.info("Combat Actor Factory: loading Tower: " + type);
         Tower tower = null;
-        if (type.equals("Rifle")) {
-            tower = (Tower) towerRiflePool.obtain();
-        } else if (type.equals("Tank")) {
-            tower = (Tower) towerTankPool.obtain();
-        } else if (type.equals("Turret")) {
-            tower = (Tower) towerTurretPool.obtain();
-        } else if (type.equals("Sniper")) {
-            tower = (Tower) towerSniperPool.obtain();
-        } else if (type.equals("MachineGun")) {
-            tower = (Tower) towerMachinePool.obtain();
-        } else if (type.equals("RocketLauncher")) {
-            tower = (Tower) towerRocketLauncherPool.obtain();
-        } else if (type.equals("FlameThrower")) {
-            tower = (Tower) towerFlameThrowerPool.obtain();
+        switch (type) {
+            case "Rifle":
+                tower = (Tower) towerRiflePool.obtain();
+                break;
+            case "Tank":
+                tower = (Tower) towerTankPool.obtain();
+                break;
+            case "Turret":
+                tower = (Tower) towerTurretPool.obtain();
+                break;
+            case "Sniper":
+                tower = (Tower) towerSniperPool.obtain();
+                break;
+            case "MachineGun":
+                tower = (Tower) towerMachinePool.obtain();
+                break;
+            case "RocketLauncher":
+                tower = (Tower) towerRocketLauncherPool.obtain();
+                break;
+            case "FlameThrower":
+                tower = (Tower) towerFlameThrowerPool.obtain();
+                break;
         }
 
         return tower;
@@ -110,20 +118,28 @@ public class CombatActorFactory {
         Logger.info("Combat Actor Factory: loading Enemy: " + type);
 
         Enemy enemy = null;
-        if (type.equals("Rifle")) {
-            enemy = (Enemy) enemyRiflePool.obtain();
-        } else if (type.equals("Tank")) {
-            enemy = (Enemy) enemyTankPool.obtain();
-        } else if (type.equals("FlameThrower")) {
-            enemy = (Enemy) enemyFlameThrowerPool.obtain();
-        } else if (type.equals("MachineGun")) {
-            enemy = (Enemy) enemyMachinePool.obtain();
-        } else if (type.equals("RocketLauncher")) {
-            enemy = (Enemy) enemyRocketLauncherPool.obtain();
-        } else if (type.equals("Sniper")) {
-            enemy = (Enemy) enemySniperPool.obtain();
-        } else if (type.equals("Humvee")) {
-            enemy = (Enemy) enemyHumveePool.obtain();
+        switch (type) {
+            case "Rifle":
+                enemy = (Enemy) enemyRiflePool.obtain();
+                break;
+            case "Tank":
+                enemy = (Enemy) enemyTankPool.obtain();
+                break;
+            case "FlameThrower":
+                enemy = (Enemy) enemyFlameThrowerPool.obtain();
+                break;
+            case "MachineGun":
+                enemy = (Enemy) enemyMachinePool.obtain();
+                break;
+            case "RocketLauncher":
+                enemy = (Enemy) enemyRocketLauncherPool.obtain();
+                break;
+            case "Sniper":
+                enemy = (Enemy) enemySniperPool.obtain();
+                break;
+            case "Humvee":
+                enemy = (Enemy) enemyHumveePool.obtain();
+                break;
         }
 
         return enemy;
