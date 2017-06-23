@@ -10,7 +10,6 @@ import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.util.Logger;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.Random;
 
