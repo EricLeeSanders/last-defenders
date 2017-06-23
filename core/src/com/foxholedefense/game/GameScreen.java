@@ -48,8 +48,6 @@ public class GameScreen extends AbstractScreen {
 		gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager, levelStateManager, gameStateManager
 						, screenChanger, super.getInputMultiplexer(), getViewport(), resources, audio, gameStage, spriteBatch);
 
-		gameStage.setMessageDisplayer(gameUIStage.getMessageDisplayer());
-
 		super.show();
 		audio.turnOffMusic();
 		gameStage.loadFirstWave();
