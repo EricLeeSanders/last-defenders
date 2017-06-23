@@ -28,7 +28,6 @@ import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;

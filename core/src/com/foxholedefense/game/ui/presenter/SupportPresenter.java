@@ -2,13 +2,6 @@ package com.foxholedefense.game.ui.presenter;
 
 import com.badlogic.gdx.math.Vector2;
 import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.actor.combat.tower.TowerFlameThrower;
-import com.foxholedefense.game.model.actor.combat.tower.TowerMachineGun;
-import com.foxholedefense.game.model.actor.combat.tower.TowerRifle;
-import com.foxholedefense.game.model.actor.combat.tower.TowerRocketLauncher;
-import com.foxholedefense.game.model.actor.combat.tower.TowerSniper;
-import com.foxholedefense.game.model.actor.combat.tower.TowerTank;
-import com.foxholedefense.game.model.actor.combat.tower.TowerTurret;
 import com.foxholedefense.game.model.actor.support.AirStrike;
 import com.foxholedefense.game.model.actor.support.Apache;
 import com.foxholedefense.game.model.actor.support.LandMine;
@@ -24,7 +17,6 @@ import com.foxholedefense.game.ui.view.interfaces.ISupportView;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio.FHDSound;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 import java.util.HashMap;

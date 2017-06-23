@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.game.ui.presenter.HUDPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IHUDView;
-import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 

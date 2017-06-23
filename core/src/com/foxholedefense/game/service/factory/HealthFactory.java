@@ -1,16 +1,11 @@
 package com.foxholedefense.game.service.factory;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Eric on 3/31/2017.

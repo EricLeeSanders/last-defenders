@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.enemy.EnemyFlameThrower;
@@ -36,7 +35,6 @@ import com.foxholedefense.game.model.actor.effects.texture.animation.death.Death
 import com.foxholedefense.game.model.actor.projectile.Bullet;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.EffectFactory;
-import com.foxholedefense.game.service.factory.HealthFactory;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;

@@ -2,8 +2,6 @@ package com.foxholedefense.game.model.actor.support;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.foxholedefense.game.service.factory.SupportActorFactory.AirStrikeLocationPool;
 import com.foxholedefense.util.ActorUtil;

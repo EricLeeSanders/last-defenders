@@ -6,7 +6,6 @@ import com.foxholedefense.game.ui.presenter.QuitPresenter;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.QuitView;
-import com.foxholedefense.game.ui.view.interfaces.IQuitView;
 import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;

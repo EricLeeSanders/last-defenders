@@ -2,10 +2,8 @@ package game.model.actor.effects.texture.animation;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.model.actor.effects.texture.animation.AnimationEffect;
 import com.foxholedefense.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.foxholedefense.game.service.factory.EffectFactory.AnimationEffectPool;
-import com.foxholedefense.game.service.factory.EffectFactory.DeathEffectPool;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 

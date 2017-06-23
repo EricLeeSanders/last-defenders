@@ -1,6 +1,5 @@
 package com.foxholedefense.game.model.actor.interfaces;
 
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 
