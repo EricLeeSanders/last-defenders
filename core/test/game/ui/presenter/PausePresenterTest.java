@@ -2,10 +2,10 @@ package game.ui.presenter;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.ui.presenter.QuitPresenter;
+import com.foxholedefense.game.ui.presenter.PausePresenter;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.QuitView;
+import com.foxholedefense.game.ui.view.PauseView;
 import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
@@ -27,22 +27,22 @@ import static org.mockito.Mockito.verify;
  * Created by Eric on 6/7/2017.
  */
 
-public class QuitPresenterTest {
+public class PausePresenterTest {
 
     private GameUIStateManager uiStateManager = mock(GameUIStateManager.class);
     private GameStateManager gameStateManager = mock(GameStateManager.class);
     private ScreenChanger screenChanger = mock(ScreenChanger.class);
-    private QuitView quitView = mock(QuitView.class);
+    private PauseView pauseView = mock(PauseView.class);
 
     @Before
-    public void initQuitPresenterTest() {
+    public void initPausePresenterTest() {
         Gdx.app = mock(Application.class);
     }
 
-    private QuitPresenter createQuitPresenter(){
+    private PausePresenter createPausePresenter(){
 
         FHDAudio audioMock = mock(FHDAudio.class);
-        return new QuitPresenter(uiStateManager, gameStateManager, screenChanger, audioMock);
+        return new PausePresenter(uiStateManager, gameStateManager, screenChanger, audioMock);
     }
 
     /**
@@ -50,16 +50,16 @@ public class QuitPresenterTest {
      */
     @Test
     public void resumeTest1(){
-        QuitPresenter quitPresenter = createQuitPresenter();
-        doReturn(GameUIState.QUIT_MENU).when(uiStateManager).getState();
+        PausePresenter pausePresenter = createPausePresenter();
+        doReturn(GameUIState.PAUSE_MENU).when(uiStateManager).getState();
         doReturn(GameState.PLAY).when(gameStateManager).getState();
 
-        quitPresenter.setView(quitView);
-        quitPresenter.stateChange(GameUIState.QUIT_MENU);
-        quitPresenter.resume();
+        pausePresenter.setView(pauseView);
+        pausePresenter.stateChange(GameUIState.PAUSE_MENU);
+        pausePresenter.resume();
 
         verify(uiStateManager, times(1)).setStateReturn();
-        verify(quitView, times(1)).quitState();
+        verify(pauseView, times(1)).pauseState();
         verify(gameStateManager, times(1)).setState(eq(GameState.PAUSE));
         verify(gameStateManager, times(1)).setState(eq(GameState.PLAY));
     }
@@ -69,16 +69,16 @@ public class QuitPresenterTest {
      */
     @Test
     public void resumeTest2(){
-        QuitPresenter quitPresenter = createQuitPresenter();
-        doReturn(GameUIState.QUIT_MENU).when(uiStateManager).getState();
+        PausePresenter pausePresenter = createPausePresenter();
+        doReturn(GameUIState.PAUSE_MENU).when(uiStateManager).getState();
         doReturn(GameState.PAUSE).when(gameStateManager).getState();
 
-        quitPresenter.setView(quitView);
-        quitPresenter.stateChange(GameUIState.QUIT_MENU);
-        quitPresenter.resume();
+        pausePresenter.setView(pauseView);
+        pausePresenter.stateChange(GameUIState.PAUSE_MENU);
+        pausePresenter.resume();
 
         verify(uiStateManager, times(1)).setStateReturn();
-        verify(quitView, times(1)).quitState();
+        verify(pauseView, times(1)).pauseState();
         verify(gameStateManager, times(1)).setState(eq(GameState.PAUSE));
         verify(gameStateManager, never()).setState(eq(GameState.PLAY));
     }
@@ -88,11 +88,11 @@ public class QuitPresenterTest {
      */
     @Test
     public void resumeTest3(){
-        QuitPresenter quitPresenter = createQuitPresenter();
+        PausePresenter pausePresenter = createPausePresenter();
         doReturn(GameUIState.STANDBY).when(uiStateManager).getState();
 
-        quitPresenter.setView(quitView);
-        quitPresenter.resume();
+        pausePresenter.setView(pauseView);
+        pausePresenter.resume();
 
         verify(uiStateManager, never()).setStateReturn();
     }
@@ -102,13 +102,13 @@ public class QuitPresenterTest {
      */
     @Test
     public void changeToMainMenuTest1(){
-        QuitPresenter quitPresenter = createQuitPresenter();
-        doReturn(GameUIState.QUIT_MENU).when(uiStateManager).getState();
+        PausePresenter pausePresenter = createPausePresenter();
+        doReturn(GameUIState.PAUSE_MENU).when(uiStateManager).getState();
         doReturn(GameState.PAUSE).when(gameStateManager).getState();
 
-        quitPresenter.setView(quitView);
-        quitPresenter.stateChange(GameUIState.QUIT_MENU);
-        quitPresenter.mainMenu();
+        pausePresenter.setView(pauseView);
+        pausePresenter.stateChange(GameUIState.PAUSE_MENU);
+        pausePresenter.mainMenu();
 
         verify(screenChanger, times(1)).changeToMenu();
     }
@@ -118,11 +118,11 @@ public class QuitPresenterTest {
      */
     @Test
     public void changeToMainMenuTest2(){
-        QuitPresenter quitPresenter = createQuitPresenter();
+        PausePresenter pausePresenter = createPausePresenter();
         doReturn(GameUIState.WAVE_IN_PROGRESS).when(uiStateManager).getState();
 
-        quitPresenter.setView(quitView);
-        quitPresenter.mainMenu();
+        pausePresenter.setView(pauseView);
+        pausePresenter.mainMenu();
 
         verify(screenChanger, never()).changeToMenu();
     }
@@ -132,13 +132,13 @@ public class QuitPresenterTest {
      */
     @Test
     public void changeToNewGameTest1(){
-        QuitPresenter quitPresenter = createQuitPresenter();
-        doReturn(GameUIState.QUIT_MENU).when(uiStateManager).getState();
+        PausePresenter pausePresenter = createPausePresenter();
+        doReturn(GameUIState.PAUSE_MENU).when(uiStateManager).getState();
         doReturn(GameState.PAUSE).when(gameStateManager).getState();
 
-        quitPresenter.setView(quitView);
-        quitPresenter.stateChange(GameUIState.QUIT_MENU);
-        quitPresenter.newGame();
+        pausePresenter.setView(pauseView);
+        pausePresenter.stateChange(GameUIState.PAUSE_MENU);
+        pausePresenter.newGame();
 
         verify(screenChanger, times(1)).changeToLevelSelect();
     }
@@ -148,11 +148,11 @@ public class QuitPresenterTest {
      */
     @Test
     public void changeToNewGameTest2(){
-        QuitPresenter quitPresenter = createQuitPresenter();
+        PausePresenter pausePresenter = createPausePresenter();
         doReturn(GameUIState.PLACING_TOWER).when(uiStateManager).getState();
 
-        quitPresenter.setView(quitView);
-        quitPresenter.newGame();
+        pausePresenter.setView(pauseView);
+        pausePresenter.newGame();
 
         verify(screenChanger, never()).changeToLevelSelect();
     }
