@@ -19,7 +19,7 @@ import com.foxholedefense.game.ui.presenter.HUDPresenter;
 import com.foxholedefense.game.ui.presenter.InspectPresenter;
 import com.foxholedefense.game.ui.presenter.LevelCompletedPresenter;
 import com.foxholedefense.game.ui.presenter.OptionsPresenter;
-import com.foxholedefense.game.ui.presenter.QuitPresenter;
+import com.foxholedefense.game.ui.presenter.PausePresenter;
 import com.foxholedefense.game.ui.presenter.SupportPresenter;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateObserver;
@@ -31,7 +31,7 @@ import com.foxholedefense.game.ui.view.HUDView;
 import com.foxholedefense.game.ui.view.InspectView;
 import com.foxholedefense.game.ui.view.LevelCompletedView;
 import com.foxholedefense.game.ui.view.OptionsView;
-import com.foxholedefense.game.ui.view.QuitView;
+import com.foxholedefense.game.ui.view.PauseView;
 import com.foxholedefense.game.ui.view.SupportView;
 import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
 import com.foxholedefense.game.ui.view.interfaces.Updatable;
@@ -123,9 +123,9 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 		DebugView debugView = new DebugView(debugPresenter, resources.getSkin());
 		debugPresenter.setView(debugView);
 
-		QuitPresenter quitPresenter = new QuitPresenter(uiStateManager, gameStateManager, screenChanger, audio);
-		QuitView quitView = new QuitView(quitPresenter, resources.getSkin());
-		quitPresenter.setView(quitView);
+		PausePresenter pausePresenter = new PausePresenter(uiStateManager, gameStateManager, screenChanger, audio);
+		PauseView pauseView = new PauseView(pausePresenter, resources.getSkin());
+		pausePresenter.setView(pauseView);
 
 
 		this.addActor(hudView);
@@ -136,7 +136,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 		this.addActor(gameOverView);
 		this.addActor(levelCompletedView);
 		this.addActor(debugView);
-		this.addActor(quitView);
+		this.addActor(pauseView);
 		this.addActor(messageDisplayer);
 
 		imp.addProcessor(this);

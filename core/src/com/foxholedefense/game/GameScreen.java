@@ -62,7 +62,7 @@ public class GameScreen extends AbstractScreen {
 
 				if ((keycode == Keys.ESCAPE) || (keycode == Keys.BACK) ) {
 					Logger.info("GameScreen: Escape/Back pressed.");
-					uiStateManager.setState(GameUIState.QUIT_MENU);
+					uiStateManager.setState(GameUIState.PAUSE_MENU);
 				}
 				return false;
 			}
@@ -99,7 +99,7 @@ public class GameScreen extends AbstractScreen {
 	@Override
 	public void pause() {
 		Logger.info("Game Screen: pausing");
-		uiStateManager.setState(GameUIState.QUIT_MENU);
+		uiStateManager.setState(GameUIState.PAUSE_MENU);
 		gameStateManager.setState(GameState.PAUSE);
 	}
 
