@@ -135,11 +135,6 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable{
 		return rangeCircle;
 	}
 
-	@Override 
-	public void setPositionCenter(Vector2 pos){
-		super.setPositionCenter(pos);
-	}
-
 	@Override
 	public void reset() {
 		Logger.info("SupplyDropCrate: Resetting");

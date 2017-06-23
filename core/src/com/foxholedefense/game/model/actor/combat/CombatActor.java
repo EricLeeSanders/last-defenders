@@ -83,11 +83,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 	}
 
 	@Override
-	public void act(float delta) {
-		super.act(delta);
-	}
-
-	@Override
 	public void draw(Batch batch, float alpha) {
 
 		super.draw(batch, alpha);
@@ -101,7 +96,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 		this.eventManager = eventManager;
 	}
 
-								 private void drawDebugBody(Batch batch){
+	private void drawDebugBody(Batch batch){
 		batch.end();
 		ShapeRenderer debugBody = Resources.getShapeRenderer();
 		debugBody.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
