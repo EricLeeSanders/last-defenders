@@ -8,7 +8,6 @@ import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
-import com.foxholedefense.game.model.actor.interfaces.IRotatable;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.game.service.factory.HealthFactory;

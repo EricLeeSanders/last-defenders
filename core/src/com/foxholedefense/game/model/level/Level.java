@@ -4,13 +4,9 @@ import com.badlogic.gdx.utils.Queue;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
-import com.foxholedefense.game.model.level.state.LevelStateManager;
-import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
-import com.foxholedefense.game.model.level.state.LevelStateObserver;
 import com.foxholedefense.game.model.level.wave.WaveLoader;
 import com.foxholedefense.game.model.level.wave.impl.DynamicWaveLoader;
 import com.foxholedefense.game.model.level.wave.impl.FileWaveLoader;
-import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.game.service.factory.HealthFactory;
 import com.foxholedefense.util.Logger;
 

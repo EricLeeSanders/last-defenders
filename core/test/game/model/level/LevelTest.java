@@ -9,7 +9,6 @@ import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
 import com.foxholedefense.game.model.level.Level;
-import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.SpawningEnemy;
 import com.foxholedefense.game.model.level.wave.impl.DynamicWaveLoader;
 import com.foxholedefense.game.model.level.wave.impl.FileWaveLoader;

@@ -3,7 +3,6 @@ package game.model.actor.projectile;
         import com.badlogic.gdx.Application;
         import com.badlogic.gdx.Gdx;
         import com.badlogic.gdx.graphics.g2d.TextureRegion;
-        import com.badlogic.gdx.utils.Pool;
         import com.foxholedefense.game.helper.Damage;
         import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
         import com.foxholedefense.game.model.actor.combat.tower.Tower;
@@ -22,15 +21,12 @@ package game.model.actor.projectile;
         import org.powermock.modules.junit4.PowerMockRunner;
 
 
-        import jdk.nashorn.internal.ir.annotations.Ignore;
         import testutil.TestUtil;
 
 
         import static org.junit.Assert.assertEquals;
-        import static org.junit.Assert.assertTrue;
         import static org.mockito.Matchers.any;
         import static org.mockito.Matchers.eq;
-        import static org.mockito.Matchers.isA;
         import static org.mockito.Mockito.doReturn;
         import static org.mockito.Mockito.mock;
         import static org.mockito.Mockito.never;

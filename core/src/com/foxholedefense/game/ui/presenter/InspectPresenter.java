@@ -9,7 +9,6 @@ import com.foxholedefense.game.model.actor.ai.TowerAIType;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
-import com.foxholedefense.game.model.level.state.LevelStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.state.GameUIStateObserver;

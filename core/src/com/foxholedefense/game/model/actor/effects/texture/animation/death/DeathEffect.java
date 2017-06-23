@@ -3,8 +3,6 @@ package com.foxholedefense.game.model.actor.effects.texture.animation.death;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
-import com.foxholedefense.game.model.actor.effects.texture.TextureEffect;
 import com.foxholedefense.game.model.actor.effects.texture.animation.AnimationEffect;
 import com.foxholedefense.game.service.factory.EffectFactory.DeathEffectPool;
 import com.foxholedefense.util.datastructures.Dimension;

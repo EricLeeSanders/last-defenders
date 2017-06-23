@@ -10,8 +10,6 @@ import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory.SupplyDropPool;
-import com.foxholedefense.game.service.factory.SupportActorFactory.SupplyDropCratePool;
-import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;

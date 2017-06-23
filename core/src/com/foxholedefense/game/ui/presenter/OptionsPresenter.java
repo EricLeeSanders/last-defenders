@@ -6,7 +6,6 @@ import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IOptionsView;
 import com.foxholedefense.screen.ScreenChanger;
-import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
