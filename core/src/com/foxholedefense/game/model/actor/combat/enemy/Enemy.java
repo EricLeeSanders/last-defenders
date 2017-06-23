@@ -69,7 +69,7 @@ public abstract class Enemy extends CombatActor {
 	 * @param path
 	 */
 	public void setPath(Array<FHDVector2> path) {
-		if(path == null | path.size <= 1){
+		if(path == null || path.size <= 1){
 			return;
 		}
 

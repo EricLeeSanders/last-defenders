@@ -32,8 +32,6 @@ public class EnlistButton extends Group {
         lblCost.setPosition(lblCostX,10);
         addActor(lblCost);
 
-        LabelStyle style = new LabelStyle(skin.get(LabelStyle.class));
-
         Label lblTitle = new Label(name.toUpperCase().replaceAll(" ", "\n"), skin);
         lblTitle.setFontScale(0.40f);
         lblTitle.setAlignment(Align.center);

@@ -198,7 +198,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver{
 		if (canInspectTowers()) {
 			Actor hitActor = CollisionDetection.towerHit(towerGroup.getChildren(), coords);
 			if (hitActor != null) {
-				if (hitActor instanceof Tower && canInspectTower((Tower) hitActor)) {
+				if (canInspectTower((Tower) hitActor)) {
 					Logger.info("Inspect Presenter: inspecting tower");
 					selectedTower = (Tower) hitActor;
 					uiStateManager.setState(GameUIState.INSPECTING);

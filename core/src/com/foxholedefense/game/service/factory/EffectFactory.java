@@ -75,6 +75,8 @@ public class EffectFactory {
             labelEffect = (T) towerHealEffectPool.obtain();
         } else if(type.equals(WaveOverCoinEffect.class)){
             labelEffect = (T) waveOverCoinEffectPool.obtain();
+        } else {
+            throw new IllegalArgumentException("No type: " + type.getSimpleName() + " exists");
         }
         actorGroups.getEffectGroup().addActor(labelEffect);
         return labelEffect;
@@ -92,7 +94,10 @@ public class EffectFactory {
         T animationEffect = null;
         if(type.equals(EnemyCoinEffect.class)){
             animationEffect = (T) enemyCoinEffectPool.obtain();
+        } else {
+            throw new IllegalArgumentException("No type: " + type.getSimpleName() + " exists");
         }
+
         actorGroups.getEffectGroup().addActor(animationEffect);
         return animationEffect;
     }
