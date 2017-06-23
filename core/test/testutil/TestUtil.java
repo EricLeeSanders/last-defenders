@@ -90,7 +90,7 @@ public class TestUtil {
 
     public static Tower createTower(String name, boolean spy){
 
-        Tower tower = null;
+        Tower tower;
 
         switch (name) {
             case "Rifle":
@@ -140,7 +140,7 @@ public class TestUtil {
 
     public static Enemy createEnemy(String name, boolean spy){
 
-        Enemy enemy = null;
+        Enemy enemy;
         Array<AtlasRegion> atlasRegion = new Array<>();
         atlasRegion.add(null);
         TextureRegion[] animatedRegions = atlasRegion.toArray(TextureRegion.class);

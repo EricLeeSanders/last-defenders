@@ -163,7 +163,7 @@ public class CombatActorFactory {
     private CombatActor createCombatActor(Class<? extends CombatActor> type) {
 
         Logger.info("Combat Actor Factory: creating combat actor: " + type.getSimpleName());
-        CombatActor actor = null;
+        CombatActor actor;
         if (type.equals(TowerRifle.class)) {
             TextureRegion rifleRegion = resources.getTexture("tower-rifle");
             actor = new TowerRifle(rifleRegion, towerRiflePool, actorGroups.getEnemyGroup(), resources.getTexture("range"), resources.getTexture("range-red"), projectileFactory, audio);
@@ -220,7 +220,7 @@ public class CombatActorFactory {
         if(actor instanceof Tower) {
             TowerStateManager towerStateManager = new TowerStateManager((Tower) actor, effectFactory);
             ((Tower)actor).setStateManager(towerStateManager);
-        } else if(actor instanceof Enemy) {
+        } else {
             EnemyStateManager enemyStateManager = new EnemyStateManager((Enemy) actor, effectFactory, player);
             ((Enemy)actor).setStateManager(enemyStateManager);
         }
