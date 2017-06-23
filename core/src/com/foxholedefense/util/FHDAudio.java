@@ -15,7 +15,7 @@ import com.badlogic.gdx.audio.Sound;
  */
 public class FHDAudio {
 	private Music music;
-	private Map<FHDSound, Sound> sounds = new HashMap<FHDSound, Sound>();
+	private Map<FHDSound, Sound> sounds = new HashMap<>();
 	private boolean musicEnabled, soundEnabled;
 	private UserPreferences userPreferences;
 	private float volume;

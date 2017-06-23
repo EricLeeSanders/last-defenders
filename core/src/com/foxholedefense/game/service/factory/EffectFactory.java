@@ -22,12 +22,12 @@ import com.foxholedefense.util.Resources;
  */
 
 public class EffectFactory {
-    private DeathEffectPool<VehicleExplosion> vehicleExplosionPool = new DeathEffectPool<VehicleExplosion>(VehicleExplosion.class);
-    private DeathEffectPool<BloodSplatter> bloodPool = new DeathEffectPool<BloodSplatter>(BloodSplatter.class);
-    private LabelEffectPool<ArmorDestroyedEffect> armorDestroyedEffectPool = new LabelEffectPool<ArmorDestroyedEffect>(ArmorDestroyedEffect.class);
-    private LabelEffectPool<TowerHealEffect> towerHealEffectPool = new LabelEffectPool<TowerHealEffect>(TowerHealEffect.class);
-    private LabelEffectPool<WaveOverCoinEffect> waveOverCoinEffectPool = new LabelEffectPool<WaveOverCoinEffect>(WaveOverCoinEffect.class);
-    private AnimationEffectPool<EnemyCoinEffect> enemyCoinEffectPool = new AnimationEffectPool<EnemyCoinEffect>(EnemyCoinEffect.class);
+    private DeathEffectPool<VehicleExplosion> vehicleExplosionPool = new DeathEffectPool<>(VehicleExplosion.class);
+    private DeathEffectPool<BloodSplatter> bloodPool = new DeathEffectPool<>(BloodSplatter.class);
+    private LabelEffectPool<ArmorDestroyedEffect> armorDestroyedEffectPool = new LabelEffectPool<>(ArmorDestroyedEffect.class);
+    private LabelEffectPool<TowerHealEffect> towerHealEffectPool = new LabelEffectPool<>(TowerHealEffect.class);
+    private LabelEffectPool<WaveOverCoinEffect> waveOverCoinEffectPool = new LabelEffectPool<>(WaveOverCoinEffect.class);
+    private AnimationEffectPool<EnemyCoinEffect> enemyCoinEffectPool = new AnimationEffectPool<>(EnemyCoinEffect.class);
 
     private ActorGroups actorGroups;
     private Resources resources;

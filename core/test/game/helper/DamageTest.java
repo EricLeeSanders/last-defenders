@@ -112,7 +112,7 @@ public class DamageTest {
         Enemy enemy3 = TestUtil.createEnemy("RocketLauncher", false);
         Enemy enemy4 = TestUtil.createEnemy("Tank", false);
 
-        SnapshotArray<Actor> enemies = new SnapshotArray<Actor>();
+        SnapshotArray<Actor> enemies = new SnapshotArray<>();
         enemies.addAll(enemy1, enemy2, enemy3, enemy4);
 
         Polygon flameBody = new Polygon();
@@ -143,7 +143,7 @@ public class DamageTest {
         Enemy enemy3 = TestUtil.createEnemy("RocketLauncher", false);
         Enemy enemy4 = TestUtil.createEnemy("Tank", false);
 
-        SnapshotArray<Actor> enemies = new SnapshotArray<Actor>();
+        SnapshotArray<Actor> enemies = new SnapshotArray<>();
         enemies.addAll(enemy1, enemy2, enemy3, enemy4);
 
         Polygon flameBody = new Polygon();
@@ -176,7 +176,7 @@ public class DamageTest {
         Enemy enemy3 = TestUtil.createEnemy("RocketLauncher", false);
         Enemy enemy4 = TestUtil.createEnemy("Tank", false);
 
-        SnapshotArray<Actor> enemies = new SnapshotArray<Actor>();
+        SnapshotArray<Actor> enemies = new SnapshotArray<>();
         enemies.addAll(enemy1, enemy2, enemy3, enemy4);
 
         when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), any(Shape2D.class))).thenReturn(true);
@@ -206,7 +206,7 @@ public class DamageTest {
         Enemy enemy3 = TestUtil.createEnemy("RocketLauncher", false);
         Enemy enemy4 = TestUtil.createEnemy("Tank", false);
 
-        SnapshotArray<Actor> enemies = new SnapshotArray<Actor>();
+        SnapshotArray<Actor> enemies = new SnapshotArray<>();
         enemies.addAll(enemy1, enemy2, enemy3, enemy4);
 
         when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), any(Shape2D.class))).thenReturn(true);

@@ -48,7 +48,7 @@ public class LevelTest {
     public void levelTest1(){
         Level level = new Level(1, actorGroups, healthFactory, fileWaveLoader, dynamicWaveLoader);
 
-        Queue<SpawningEnemy> loadedEnemies = new Queue<SpawningEnemy>();
+        Queue<SpawningEnemy> loadedEnemies = new Queue<>();
         Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
         Enemy enemy2 = TestUtil.createEnemy("Tank", false);
         Enemy enemy3 = TestUtil.createEnemy("Humvee", false);

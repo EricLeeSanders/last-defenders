@@ -25,9 +25,9 @@ public class SupportActorFactory {
     private SupplyDropPool supplyDropPool = new SupplyDropPool();
     private SupplyDropCratePool supplyDropCratePool = new SupplyDropCratePool();
     private AirStrikeLocationPool airStrikeLocationPool = new AirStrikeLocationPool();
-    private SupportActorPool<Apache> apachePool = new SupportActorPool<Apache>(Apache.class);
-    private SupportActorPool<AirStrike> airStrikePool = new SupportActorPool<AirStrike>(AirStrike.class);
-    private SupportActorPool<LandMine> landMinePool = new SupportActorPool<LandMine>(LandMine.class);
+    private SupportActorPool<Apache> apachePool = new SupportActorPool<>(Apache.class);
+    private SupportActorPool<AirStrike> airStrikePool = new SupportActorPool<>(AirStrike.class);
+    private SupportActorPool<LandMine> landMinePool = new SupportActorPool<>(LandMine.class);
 
     private ActorGroups actorGroups;
     private FHDAudio audio;

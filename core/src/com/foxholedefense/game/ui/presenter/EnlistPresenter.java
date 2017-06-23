@@ -37,7 +37,7 @@ public class EnlistPresenter implements GameUIStateObserver {
 	private IEnlistView view;
 	private FHDAudio audio;
 	private MessageDisplayer messageDisplayer;
-	private Map<String, Integer> towerCosts = new HashMap<String, Integer>();
+	private Map<String, Integer> towerCosts = new HashMap<>();
 
 	public EnlistPresenter(GameUIStateManager uiStateManager, Player player,
 			FHDAudio audio, TowerPlacement towerPlacement, MessageDisplayer messageDisplayer) {

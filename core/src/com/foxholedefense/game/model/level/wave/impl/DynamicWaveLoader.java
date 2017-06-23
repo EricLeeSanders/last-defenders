@@ -21,7 +21,7 @@ import java.util.Random;
 public class DynamicWaveLoader extends AbstractWaveLoader {
 
     private Random random = new Random();
-    private java.util.Map<String, Integer> enemyMap = new HashMap<String, Integer>();
+    private java.util.Map<String, Integer> enemyMap = new HashMap<>();
 
     public DynamicWaveLoader(CombatActorFactory combatActorFactory, Map map) {
         super(combatActorFactory, map);
@@ -71,7 +71,7 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
 
     private Queue<SpawningEnemy> createEnemies(){
 
-        SnapshotArray<SpawningEnemy> enemies = new SnapshotArray<SpawningEnemy>();
+        SnapshotArray<SpawningEnemy> enemies = new SnapshotArray<>();
         Iterator<Entry<String, Integer>> iter = enemyMap.entrySet().iterator();
 
         while(iter.hasNext()){
@@ -81,7 +81,7 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
 
         shuffle(enemies);
 
-        Queue<SpawningEnemy> spawningEnemiesQueue = new Queue<SpawningEnemy>(enemies. size);
+        Queue<SpawningEnemy> spawningEnemiesQueue = new Queue<>(enemies.size);
         for(SpawningEnemy spawningEnemy : enemies){
             spawningEnemiesQueue.addFirst(spawningEnemy);
         }
@@ -91,7 +91,7 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
 
     private SnapshotArray<SpawningEnemy> createEnemiesByType(int n, String type) {
 
-        SnapshotArray<SpawningEnemy> enemies = new SnapshotArray<SpawningEnemy>();
+        SnapshotArray<SpawningEnemy> enemies = new SnapshotArray<>();
 
         for(int i = 0; i < n; i++){
             int randArmor = random.nextInt(3); //0-2
