@@ -158,11 +158,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	public void inspectingState() {
 		this.setVisible(true);
 	}
-	
-	@Override
-	public void dischargeDisabled(boolean disabled) {
-		btnDischarge.button.setDisabled(disabled);
-	}
+
 	/**
 	 * Binds to the Inspected Tower and updates the widgets
 	 */

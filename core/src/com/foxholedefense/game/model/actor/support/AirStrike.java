@@ -24,7 +24,6 @@ public class AirStrike extends SupportActor implements IRocket {
 	public static final float AIRSTRIKE_DURATION = 2.5f;
 	public static final int COST = 1000;
 	private static final float ATTACK = 10f;
-	public static final float SPEED = 150f;
 	public static final float AIRSTRIKE_RADIUS = 60;
 	private static final int MAX_AIRSTRIKES = 3;
 

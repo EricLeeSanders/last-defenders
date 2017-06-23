@@ -27,7 +27,6 @@ public class Explosion extends GameActor implements Pool.Poolable {
 
 	private static final float FRAME_DURATION = 0.05f;
 	private static final int NUM_OF_FRAMES = 11;
-	public static final float DURATION = FRAME_DURATION * NUM_OF_FRAMES;
 	private static final Dimension size = new Dimension(128,128);
 
 	private Animation<TextureRegion> explosionAnimation;

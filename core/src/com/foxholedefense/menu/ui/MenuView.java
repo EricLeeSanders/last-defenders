@@ -27,7 +27,7 @@ import com.foxholedefense.util.Resources;
  *
  */
 public class MenuView extends Group implements IMenuView {
-	private static final float PLAY_MOVE_DURATION = 0.5f;
+
 	private MenuPresenter presenter;
 	private ImageButton btnSound, btnMusic;
 	private Image volSliderBg;
