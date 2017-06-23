@@ -72,10 +72,8 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
     private Queue<SpawningEnemy> createEnemies(){
 
         SnapshotArray<SpawningEnemy> enemies = new SnapshotArray<>();
-        Iterator<Entry<String, Integer>> iter = enemyMap.entrySet().iterator();
 
-        while(iter.hasNext()){
-            java.util.Map.Entry<String, Integer> entry = iter.next();
+        for (Entry<String, Integer> entry : enemyMap.entrySet()) {
             enemies.addAll(createEnemiesByType(entry.getValue(), entry.getKey()));
         }
 
