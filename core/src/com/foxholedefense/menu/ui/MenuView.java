@@ -1,7 +1,6 @@
 package com.foxholedefense.menu.ui;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -15,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.util.ActorUtil;
@@ -29,10 +27,9 @@ import com.foxholedefense.util.Resources;
  *
  */
 public class MenuView extends Group implements IMenuView {
-	private static final float PLAY_MOVE_DURATION = 0.5f;
+
 	private MenuPresenter presenter;
 	private ImageButton btnSound, btnMusic;
-	private CheckBox chkBoxSound, chkBoxMusic;
 	private Image volSliderBg;
 	private float sliderEndPos, sliderStartPos;
 	private Table optionsTable;
@@ -54,21 +51,21 @@ public class MenuView extends Group implements IMenuView {
         volSliderBg.setWidth(sliderEndPos - sliderEndPos * presenter.getMasterVolume());
 	}
 	
-	public void createControls(Resources resources) {
+	private void createControls(Resources resources) {
 		Logger.info("Menu view: initializing view");
 
 		Skin skin = resources.getSkin();
 
 		Label lblTitle = new Label("FOXHOLE DEFENSE", skin);
-		float lblTitleX = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, lblTitle.getWidth());
-		float lblTitleY = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, lblTitle.getHeight()) + 110;
+		float lblTitleX = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, lblTitle.getWidth());
+		float lblTitleY = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, lblTitle.getHeight()) + 110;
 		lblTitle.setPosition(lblTitleX, lblTitleY);
 		addActor(lblTitle);
 
 		TextButton btnPlay = new TextButton("PLAY", skin, "transparent");
 		btnPlay.setSize(126, 56);
-		float btnPlayX = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, btnPlay.getWidth());
-		float btnPlayY = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, btnPlay.getHeight());
+		float btnPlayX = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, btnPlay.getWidth());
+		float btnPlayY = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, btnPlay.getHeight());
 		btnPlay.setPosition(btnPlayX, btnPlayY);
 		addActor(btnPlay);
 		setBtnPlayListener(btnPlay);
@@ -103,7 +100,7 @@ public class MenuView extends Group implements IMenuView {
 
 		Logger.info("Menu view: view initialized");
 	}
-	public void createOptionControls(Resources resources) {
+	private void createOptionControls(Resources resources) {
 		Logger.info("Menu view: creating option controls");
 		Skin skin = resources.getSkin();
 		
@@ -121,13 +118,13 @@ public class MenuView extends Group implements IMenuView {
 		lblOptionsTitle.setAlignment(Align.center);
 		lblOptionsTitle.setFontScale(0.7f);
 		this.addActor(lblOptionsTitle);
-	
-		chkBoxSound = new CheckBox(" Sound On", skin);
+
+		CheckBox chkBoxSound = new CheckBox(" Sound On", skin);
 		chkBoxSound.getLabel().setFontScale(0.45f);
 		chkBoxSound.getImageCell().width(32).height(32);
 		chkBoxSound.getImage().setScaling(Scaling.stretch);
-		
-		chkBoxMusic = new CheckBox(" Music On", skin);
+
+		CheckBox chkBoxMusic = new CheckBox(" Music On", skin);
 		chkBoxMusic.getLabel().setFontScale(0.45f);
 		chkBoxMusic.getImageCell().width(32).height(32);
 		chkBoxMusic.getImage().setScaling(Scaling.stretch);

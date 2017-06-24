@@ -3,15 +3,15 @@ package com.foxholedefense.game;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.ui.GameUIStage;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.screen.AbstractScreen;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.Logger;
@@ -29,25 +29,24 @@ public class GameScreen extends AbstractScreen {
 
 	private GameStage gameStage;
 	private GameUIStage gameUIStage;
-	private Player player;
 	private GameStateManager gameStateManager;
 	private GameUIStateManager uiStateManager;
 	private Resources resources;
+	private SpriteBatch spriteBatch;
 
-	public GameScreen(int intLevel, GameStateManager gameStateManager, IScreenChanger screenChanger, Resources resources, FHDAudio audio) {
+	public GameScreen(int intLevel, GameStateManager gameStateManager, ScreenChanger screenChanger, Resources resources, FHDAudio audio) {
 
 		super(gameStateManager);
-		this.player = new Player();
+		Player player = new Player();
 		this.resources = resources;
 		ActorGroups actorGroups = new ActorGroups();
 		LevelStateManager levelStateManager = new LevelStateManager();
 		uiStateManager = new GameUIStateManager(levelStateManager);
 		this.gameStateManager = gameStateManager;
-		gameStage = new GameStage(intLevel, player, actorGroups, audio, levelStateManager, uiStateManager, getViewport(), resources);
+		spriteBatch = new SpriteBatch();
+		gameStage = new GameStage(intLevel, player, actorGroups, audio, levelStateManager, uiStateManager, getViewport(), resources, spriteBatch);
 		gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager, levelStateManager, gameStateManager
-						, screenChanger, super.getInputMultiplexer(), getViewport(), resources, audio, gameStage);
-
-		gameStage.setMessageDisplayer(gameUIStage.getMessageDisplayer());
+						, screenChanger, super.getInputMultiplexer(), getViewport(), resources, audio, gameStage, spriteBatch);
 
 		super.show();
 		audio.turnOffMusic();
@@ -63,7 +62,7 @@ public class GameScreen extends AbstractScreen {
 
 				if ((keycode == Keys.ESCAPE) || (keycode == Keys.BACK) ) {
 					Logger.info("GameScreen: Escape/Back pressed.");
-					uiStateManager.setState(GameUIState.QUIT_MENU);
+					uiStateManager.setState(GameUIState.PAUSE_MENU);
 				}
 				return false;
 			}
@@ -96,10 +95,18 @@ public class GameScreen extends AbstractScreen {
 		gameUIStage.draw();
 
 	}
+
+	@Override
+	public void pause() {
+		Logger.info("Game Screen: pausing");
+		uiStateManager.setState(GameUIState.PAUSE_MENU);
+		gameStateManager.setState(GameState.PAUSE);
+	}
+
 	@Override
 	public void resume() {
 		Logger.info("Game Screen: resume");
-		if(!uiStateManager.getState().equals(GameUIState.OPTIONS)){
+		if(!gameStateManager.getState().equals(GameState.PAUSE)){
 			gameStateManager.setState(GameState.PLAY);
 		}
 	}
@@ -108,6 +115,7 @@ public class GameScreen extends AbstractScreen {
 		Logger.info("Game Screen Dispose");
 		gameStage.dispose();
 		gameUIStage.dispose();
+		spriteBatch.dispose();
 	}
 
 

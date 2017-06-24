@@ -22,12 +22,12 @@ import com.foxholedefense.util.Resources;
  */
 
 public class EffectFactory {
-    private DeathEffectPool<VehicleExplosion> vehicleExplosionPool = new DeathEffectPool<VehicleExplosion>(VehicleExplosion.class);
-    private DeathEffectPool<BloodSplatter> bloodPool = new DeathEffectPool<BloodSplatter>(BloodSplatter.class);
-    private LabelEffectPool<ArmorDestroyedEffect> armorDestroyedEffectPool = new LabelEffectPool<ArmorDestroyedEffect>(ArmorDestroyedEffect.class);
-    private LabelEffectPool<TowerHealEffect> towerHealEffectPool = new LabelEffectPool<TowerHealEffect>(TowerHealEffect.class);
-    private LabelEffectPool<WaveOverCoinEffect> waveOverCoinEffectPool = new LabelEffectPool<WaveOverCoinEffect>(WaveOverCoinEffect.class);
-    private AnimationEffectPool<EnemyCoinEffect> enemyCoinEffectPool = new AnimationEffectPool<EnemyCoinEffect>(EnemyCoinEffect.class);
+    private DeathEffectPool<VehicleExplosion> vehicleExplosionPool = new DeathEffectPool<>(VehicleExplosion.class);
+    private DeathEffectPool<BloodSplatter> bloodPool = new DeathEffectPool<>(BloodSplatter.class);
+    private LabelEffectPool<ArmorDestroyedEffect> armorDestroyedEffectPool = new LabelEffectPool<>(ArmorDestroyedEffect.class);
+    private LabelEffectPool<TowerHealEffect> towerHealEffectPool = new LabelEffectPool<>(TowerHealEffect.class);
+    private LabelEffectPool<WaveOverCoinEffect> waveOverCoinEffectPool = new LabelEffectPool<>(WaveOverCoinEffect.class);
+    private AnimationEffectPool<EnemyCoinEffect> enemyCoinEffectPool = new AnimationEffectPool<>(EnemyCoinEffect.class);
 
     private ActorGroups actorGroups;
     private Resources resources;
@@ -42,6 +42,7 @@ public class EffectFactory {
      * @param type
      * @param <T>
      */
+    @SuppressWarnings("unchecked")
     public <T extends DeathEffect> T loadDeathEffect(DeathEffectType type){
 
         T deathEffect = null;
@@ -64,15 +65,18 @@ public class EffectFactory {
      * @param type
      * @param <T>
      */
+    @SuppressWarnings("unchecked")
     public <T extends LabelEffect> T loadLabelEffect(Class<T> type){
 
-        T labelEffect = null;
+        T labelEffect;
         if(type.equals(ArmorDestroyedEffect.class)){
             labelEffect = (T) armorDestroyedEffectPool.obtain();
         } else if(type.equals(TowerHealEffect.class)){
             labelEffect = (T) towerHealEffectPool.obtain();
         } else if(type.equals(WaveOverCoinEffect.class)){
             labelEffect = (T) waveOverCoinEffectPool.obtain();
+        } else {
+            throw new IllegalArgumentException("No type: " + type.getSimpleName() + " exists");
         }
         actorGroups.getEffectGroup().addActor(labelEffect);
         return labelEffect;
@@ -84,12 +88,16 @@ public class EffectFactory {
      * @param type
      * @param <T>
      */
+    @SuppressWarnings("unchecked")
     public <T extends AnimationEffect> T loadAnimationEffect(Class<T> type){
 
-        T animationEffect = null;
+        T animationEffect;
         if(type.equals(EnemyCoinEffect.class)){
             animationEffect = (T) enemyCoinEffectPool.obtain();
+        } else {
+            throw new IllegalArgumentException("No type: " + type.getSimpleName() + " exists");
         }
+
         actorGroups.getEffectGroup().addActor(animationEffect);
         return animationEffect;
     }
@@ -99,7 +107,7 @@ public class EffectFactory {
      *
      * @return DeathEffect
      */
-    protected DeathEffect createDeathEffect(Class<? extends TextureEffect> type) {
+    private DeathEffect createDeathEffect(Class<? extends TextureEffect> type) {
 
         if (type.equals(BloodSplatter.class)) {
             Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("blood-splatter");
@@ -113,7 +121,7 @@ public class EffectFactory {
 
     }
 
-    protected LabelEffect createLabelEffect(Class<? extends LabelEffect> type){
+    private LabelEffect createLabelEffect(Class<? extends LabelEffect> type){
         if(type.equals(ArmorDestroyedEffect.class)){
             Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("shield-destroyed");
             return new ArmorDestroyedEffect(atlasRegions, armorDestroyedEffectPool, resources.getSkin());
@@ -127,7 +135,7 @@ public class EffectFactory {
         }
     }
 
-    protected AnimationEffect createAnimationEffect(Class<? extends AnimationEffect> type){
+    private AnimationEffect createAnimationEffect(Class<? extends AnimationEffect> type){
         if(type.equals(EnemyCoinEffect.class)){
             Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("coin");
             return new EnemyCoinEffect(enemyCoinEffectPool, atlasRegions);

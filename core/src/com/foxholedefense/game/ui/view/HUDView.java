@@ -15,7 +15,6 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.game.ui.presenter.HUDPresenter;
 import com.foxholedefense.game.ui.view.interfaces.IHUDView;
-import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
@@ -27,13 +26,11 @@ import com.foxholedefense.util.Resources;
  */
 public class HUDView extends Group implements IHUDView {
 
-	private Image imgMoney, imgLife;
 	private ImageButton btnWave, btnEnlist, btnSupport, btnOptions, btnPause, btnResume;
-	private Label lblMoney, lblLives, lblWaveCount;
+	private Label lblMoney, lblLives, lblWaveCount, lblPaused;
 	private HUDPresenter presenter;
 	private Resources resources;
-	private Label messageLabel;
-	private boolean paused;
+
 	public HUDView(HUDPresenter presenter,Skin skin, Resources resources) {
 		this.presenter = presenter;
 		this.setTransform(false);
@@ -46,7 +43,7 @@ public class HUDView extends Group implements IHUDView {
 		LabelStyle messageDisplayLabelStyle = new Label.LabelStyle(skin.get(LabelStyle.class));
 		messageDisplayLabelStyle.fontColor = Color.RED;
 
-		messageLabel = new Label("", resources.getSkin());
+		Label messageLabel = new Label("", resources.getSkin());
 		messageLabel.setStyle(messageDisplayLabelStyle);
 	}
 
@@ -109,15 +106,15 @@ public class HUDView extends Group implements IHUDView {
 		statsTable.setTransform(false);
 		statsTable.setFillParent(true);
 		addActor(statsTable);
-		
-		imgLife = new Image(skin.getAtlas().findRegion("heart"));
+
+		Image imgLife = new Image(skin.getAtlas().findRegion("heart"));
 		statsTable.add(imgLife).size(32,32).padRight(3);
 		lblLives = new Label("0", skin);
 		lblLives.setAlignment(Align.left);
 		lblLives.setFontScale(0.5f);
 		statsTable.add(lblLives).size(30,19).spaceRight(10);
-		
-		imgMoney = new Image(skin.getAtlas().findRegion("money"));
+
+		Image imgMoney = new Image(skin.getAtlas().findRegion("money"));
 		statsTable.add(imgMoney).size(32,32).padRight(3);
 		
 		lblMoney = new Label("0", skin);
@@ -134,6 +131,15 @@ public class HUDView extends Group implements IHUDView {
 		statsTable.top().left();
 		this.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
 
+		lblPaused = new Label("PAUSED", skin);
+		LabelStyle lblPausedStyle = new LabelStyle(lblPaused.getStyle());
+		lblPausedStyle.fontColor = Color.RED;
+		lblPaused.setStyle(lblPausedStyle);
+		lblPaused.setAlignment(Align.center);
+		lblPaused.setPosition(Resources.VIRTUAL_WIDTH / 2 + 1, Resources.VIRTUAL_HEIGHT / 2 + 126, Align.center);
+		lblPaused.setVisible(false);
+		addActor(lblPaused);
+
 		Logger.info("HUD View: controls created");
 	}
 
@@ -145,7 +151,7 @@ public class HUDView extends Group implements IHUDView {
 				presenter.resume();
 				btnResume.setVisible(false);
 				btnPause.setVisible(true);
-				paused = false;
+				lblPaused.setVisible(false);
 			}
 		});
 	}
@@ -158,7 +164,7 @@ public class HUDView extends Group implements IHUDView {
 				presenter.pause();
 				btnResume.setVisible(true);
 				btnPause.setVisible(false);
-				paused = true;
+				lblPaused.setVisible(true);
 			}
 		});
 	}
@@ -199,7 +205,7 @@ public class HUDView extends Group implements IHUDView {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.support();
+				presenter.addSupport();
 
 			}
 		});
@@ -296,8 +302,8 @@ public class HUDView extends Group implements IHUDView {
 		btnEnlist.setVisible(true);
 		btnSupport.setVisible(true);
 		btnOptions.setVisible(true);
-		btnPause.setVisible(!paused);
-		btnResume.setVisible(paused);
+		btnPause.setVisible(!presenter.isGamePaused());
+		btnResume.setVisible(presenter.isGamePaused());
 
 	}
 }

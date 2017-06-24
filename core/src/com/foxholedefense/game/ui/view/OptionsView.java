@@ -54,7 +54,7 @@ public class OptionsView extends Group implements IOptionsView {
 	/**
 	 * Create controls
 	 */
-	public void createControls(Resources resources) {
+    private void createControls(Resources resources) {
 
 		Logger.info("Options View: creating controls");
 

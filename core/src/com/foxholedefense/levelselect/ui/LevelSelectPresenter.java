@@ -1,6 +1,6 @@
 package com.foxholedefense.levelselect.ui;
 
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.util.Logger;
 
 /**
@@ -10,9 +10,9 @@ import com.foxholedefense.util.Logger;
  *
  */
 public class LevelSelectPresenter {
-	private IScreenChanger screenChanger;
+	private ScreenChanger screenChanger;
 
-	public LevelSelectPresenter(IScreenChanger screenChanger) {
+	public LevelSelectPresenter(ScreenChanger screenChanger) {
 		this.screenChanger = screenChanger;
 	}
 

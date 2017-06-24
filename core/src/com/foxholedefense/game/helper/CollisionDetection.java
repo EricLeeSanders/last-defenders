@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.interfaces.ICollision;
+import com.foxholedefense.game.model.actor.interfaces.Collidable;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.badlogic.gdx.math.Shape2D;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
@@ -30,7 +30,7 @@ public final class CollisionDetection {
 	 * @param placeActor - The actor that is being places
 	 * @return boolean - If there is a collision
 	 */
-	public static boolean CollisionWithPath(Array<Rectangle> boundaries, ICollision placeActor) {
+	public static boolean collisionWithPath(Array<Rectangle> boundaries, Collidable placeActor) {
 		Shape2D body = placeActor.getBody();
 		for (Rectangle boundary : boundaries) {
 			if (body instanceof Polygon) {
@@ -49,96 +49,49 @@ public final class CollisionDetection {
 	/**
 	 * Checks for collisions with actors when placing a tower
 	 *
-	 * @param Actors - A collection of Actors that implement ICollision
+	 * @param Actors - A collection of Actors that implement Collidable
 	 * @param placeActor - The actor that is being placed
 	 * @return boolean - If there is a collision
 	 */
-	public static boolean CollisionWithActors(SnapshotArray<Actor> Actors, ICollision placeActor) {
+	public static boolean collisionWithActors(SnapshotArray<Actor> Actors, Collidable placeActor) {
 		Shape2D placeBody = placeActor.getBody();
 		for (Actor actor : Actors) {
 			if (!actor.equals(placeActor) && actor instanceof Tower) {
 				Shape2D towerBody = ((CombatActor) actor).getBody();
-				if (placeBody instanceof Circle) {
-					if (towerBody instanceof Circle) {
-						if (circleAndCircle((Circle) towerBody, (Circle) placeBody)) {
-							return true;
-						}
-					} else if (towerBody instanceof Polygon){
-						if(polygonAndCircle((Polygon) towerBody, (Circle) placeBody)) {
-							return true;
-						}
-					}
-				} else if (placeBody instanceof Polygon) {
-					if (towerBody instanceof Circle) {
-						if (polygonAndCircle((Polygon) placeBody, (Circle) towerBody)) {
-							return true;
-						}
-					} else if (towerBody instanceof Polygon){
-						if (polygonAndPolygon((Polygon) placeBody, (Polygon) towerBody)) {
-							return true;
-						}
-					}
+				if(shapesIntersect(placeBody, towerBody)){
+					return true;
 				}
 			}
 		}
 		return false;
 	}
 
-	/**
-	 * Checks for collision between a LandMine and an Enemy
-	 *
-	 * @param targetBody - The body of the enemy
-	 * @param landMineBody - the body of the landmine
-	 * @return boolean - If there is a collision
-	 */
-	public static boolean landMineAndEnemy(Shape2D targetBody, Circle landMineBody){
-		if (targetBody instanceof Polygon) {
-			return (polygonAndCircle((Polygon)targetBody, landMineBody));
-		} else if(targetBody instanceof Circle){
-			return (circleAndCircle((Circle)targetBody, landMineBody));
+	public static boolean shapesIntersect(Shape2D shape1, Shape2D shape2){
+
+		if (shape1 instanceof Circle) {
+			if (shape2 instanceof Circle) {
+				if (circleAndCircle((Circle) shape2, (Circle) shape1)) {
+					return true;
+				}
+			} else if (shape2 instanceof Polygon){
+				if(polygonAndCircle((Polygon) shape2, (Circle) shape1)) {
+					return true;
+				}
+			}
+		} else if (shape1 instanceof Polygon) {
+			if (shape2 instanceof Circle) {
+				if (polygonAndCircle((Polygon) shape1, (Circle) shape2)) {
+					return true;
+				}
+			} else if (shape2 instanceof Polygon){
+				if (polygonAndPolygon((Polygon) shape1, (Polygon) shape2)) {
+					return true;
+				}
+			}
 		}
 
 		return false;
 	}
-
-
-	public static boolean explosionAndTarget(Shape2D targetBody, Circle explosion){
-		if (targetBody instanceof Polygon) {
-			return (polygonAndCircle((Polygon)targetBody, explosion));
-		} else if(targetBody instanceof Circle){
-			return (circleAndCircle((Circle)targetBody, explosion));
-		}
-
-		return false;
-	}
-
-	public static boolean flameAndTarget(Shape2D targetBody, Polygon flame) {
-		if (targetBody instanceof Polygon) {
-			return (polygonAndPolygon(flame, (Polygon)targetBody));
-		} else if(targetBody instanceof Circle){
-			return (polygonAndCircle(flame, (Circle)targetBody));
-		}
-
-		return false;
-	}
-
-	/**
-	 * Checks for collision between a bullet and its target
-	 *
-	 * @param targetBody - The body of the target
-	 * @param bullet - The bullet
-	 * @return boolean - If there is a collision
-	 */
-	public static boolean bulletAndTarget(Shape2D targetBody, Circle bullet) {
-		if (targetBody instanceof Polygon) {
-			return (polygonAndCircle((Polygon)targetBody, bullet));
-		} else if(targetBody instanceof Circle){
-			return (circleAndCircle((Circle)targetBody, bullet));
-		}
-
-		return false;
-	}
-
 	/**
 	 * Checks to see if a tower was hit when the user clicks
 	 *
@@ -161,30 +114,6 @@ public final class CollisionDetection {
 			}
 		}
 		return null;
-	}
-
-	/**
-	 * Checks to see if the target is within range
-	 *
-	 * @param targetBody - The target body
-	 * @param range - The range shape
-	 * @return boolean - If the target is within range
-	 */
-	public static boolean targetWithinRange(Shape2D targetBody, Shape2D range) {
-		if (targetBody instanceof Circle) {
-			if (range instanceof Circle) {
-				return circleAndCircle((Circle) targetBody, (Circle) range);
-			} else if (range instanceof Polygon) {
-				return polygonAndCircle((Polygon) range, (Circle) targetBody);
-			}
-		} else if (targetBody instanceof Polygon) {
-			if (range instanceof Circle) {
-				return polygonAndCircle((Polygon) targetBody, (Circle) range);
-			} else if (range instanceof Polygon) {
-				return polygonAndPolygon((Polygon) targetBody, (Polygon) range);
-			}
-		}
-		return false;
 	}
 
 	/**
@@ -254,17 +183,6 @@ public final class CollisionDetection {
 	 */
 	private static boolean polygonAndPolygon(Polygon poly1, Polygon poly2) {
 		return Intersector.overlapConvexPolygons(poly1, poly2);
-	}
-
-	/**
-	 * Checks for a collision between 2 rectangles
-	 *
-	 * @param rect1
-	 * @param rect2
-	 * @return boolean - If there is a collision
-	 */
-	private static boolean rectangleAndRectangle(Rectangle rect1, Rectangle rect2) {
-		return Intersector.overlaps(rect1, rect2);
 	}
 
 	private static boolean circleAndRectangle(Circle circle, Rectangle rect){

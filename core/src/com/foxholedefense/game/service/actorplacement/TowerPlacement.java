@@ -1,26 +1,17 @@
 package com.foxholedefense.game.service.actorplacement;
 
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.actor.ActorGroups;
-import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
-import com.foxholedefense.game.model.actor.interfaces.IRotatable;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.game.service.factory.HealthFactory;
 import com.foxholedefense.util.Logger;
-import com.foxholedefense.util.Resources;
 
 /**
  * Responsible for placing the Tower on the Stage
@@ -29,26 +20,18 @@ import com.foxholedefense.util.Resources;
  *
  */
 public class TowerPlacement {
+
 	private Tower currentTower;
 	private ActorGroups actorGroups;
 	private Map map;
 	private CombatActorFactory combatActorFactory;
 	private HealthFactory healthFactory;
-	private SnapshotArray<ICombatActorObserver> observers = new SnapshotArray<ICombatActorObserver>();
+
 	public TowerPlacement(Map map, ActorGroups actorGroups, CombatActorFactory combatActorFactory, HealthFactory healthFactory) {
 		this.map = map;
 		this.actorGroups = actorGroups;
 		this.combatActorFactory = combatActorFactory;
 		this.healthFactory = healthFactory;
-	}
-
-	/**
-	 * Determines if the tower can be rotated or not
-	 * 
-	 * @return Boolean - tower is Rotatable
-	 */
-	public boolean isTowerRotatable() {
-		return (getCurrentTower() instanceof IRotatable);
 	}
 
 	/**
@@ -99,13 +82,11 @@ public class TowerPlacement {
 		Logger.info("TowerPlacement: trying to place tower");
 		if (currentTower != null) {
 			if (!towerCollides()) {
-				currentTower.setActive(true);
-				currentTower.setDead(false);
+				currentTower.init();
 				HealthBar healthBar = healthFactory.loadHealthBar();
 				healthBar.setActor(currentTower);
 				ArmorIcon armorIcon = healthFactory.loadArmorIcon();
 				armorIcon.setActor(currentTower);
-				currentTower = null;
 				Logger.info("TowerPlacement: placing tower");
 				return true;
 			} else {
@@ -113,9 +94,9 @@ public class TowerPlacement {
 				//TODO this is here mostly for testing. Can probably be removed for production
 				SnapshotArray<Actor> towers = actorGroups.getTowerGroup().getChildren();
 
-				if (CollisionDetection.CollisionWithPath(map.getPathBoundaries(), currentTower)) {
+				if (CollisionDetection.collisionWithPath(map.getPathBoundaries(), currentTower)) {
 					Logger.info("TowerPlacement: tower collides with path");
-				} else if (CollisionDetection.CollisionWithActors(towers, currentTower)) {
+				} else if (CollisionDetection.collisionWithActors(towers, currentTower)) {
 					Logger.info("TowerPlacement: tower collides with another Actor");
 				}
 			}
@@ -131,22 +112,27 @@ public class TowerPlacement {
 	private boolean towerCollides() {
 		SnapshotArray<Actor> towers = actorGroups.getTowerGroup().getChildren();
 
-		if (CollisionDetection.CollisionWithPath(map.getPathBoundaries(), currentTower)) {
+		if (CollisionDetection.collisionWithPath(map.getPathBoundaries(), currentTower)) {
 			return true;
-		} else if (CollisionDetection.CollisionWithActors(towers, currentTower)) {
+		} else if (CollisionDetection.collisionWithActors(towers, currentTower)) {
 			return true;
 		}
 		return false;
 
 	}
 
+
 	/**
-	 * Remove the current tower
-	 */
-	public void removeCurrentTower() {
+	 * Remove the current tower.
+	 *
+	 * @param free - if the tower should be freed as well
+     */
+	public void removeCurrentTower(boolean free) {
 		Logger.info("TowerPlacement: removing tower");
 		if (isCurrentTower()) {
-			currentTower.freeActor();
+			if(free) {
+				currentTower.freeActor();
+			}
 			currentTower = null;
 		}
 	}
@@ -157,7 +143,7 @@ public class TowerPlacement {
 	 * @return boolean
 	 */
 	public boolean isCurrentTower() {
-		return (currentTower != null);
+		return currentTower != null;
 	}
 
 	public Tower getCurrentTower() {

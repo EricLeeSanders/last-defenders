@@ -3,6 +3,7 @@ package com.foxholedefense.util.datastructures.pool;
 
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
 import com.foxholedefense.action.FHDSequenceAction;
@@ -16,15 +17,14 @@ public class UtilPool {
 
     public static FHDSequenceAction getSequenceAction(){
         Pool<FHDSequenceAction> pool = Pools.get(FHDSequenceAction.class);
-        FHDSequenceAction sequenceAction = pool.obtain();
-        return sequenceAction;
+        return pool.obtain();
     }
 
     public static WaypointAction getWaypointAction(float x, float y, float duration, float rotation, Interpolation interpolation){
         Pool<WaypointAction> pool = Pools.get(WaypointAction.class);
         WaypointAction waypointAction = pool.obtain();
         waypointAction.setRotation(rotation);
-        waypointAction.setPosition(x,y);
+        waypointAction.setPosition(x,y, Align.center);
         waypointAction.setDuration(duration);
         waypointAction.setInterpolation(interpolation);
         waypointAction.setPool(pool);

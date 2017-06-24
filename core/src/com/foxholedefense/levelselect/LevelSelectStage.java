@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.foxholedefense.levelselect.ui.LevelSelectPresenter;
 import com.foxholedefense.levelselect.ui.LevelSelectView;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
@@ -16,11 +16,9 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  *
  */
-public class LevelSelectStage extends Stage {
-	private Resources resources;
-	public LevelSelectStage(IScreenChanger screenChanger, Resources resources, FHDAudio audio, Viewport viewport) {
+class LevelSelectStage extends Stage {
+	public LevelSelectStage(ScreenChanger screenChanger, Resources resources, FHDAudio audio, Viewport viewport) {
 		super(viewport);
-		this.resources = resources;
 		LevelSelectPresenter presenter = new LevelSelectPresenter(screenChanger);
 		resources.loadAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class);
 		LevelSelectView levelSelectView = new LevelSelectView(presenter, resources, audio);

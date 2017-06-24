@@ -1,23 +1,18 @@
 package com.foxholedefense.game.ui.presenter;
 
-import com.badlogic.gdx.math.Vector2;
-import com.foxholedefense.game.model.IPlayerObserver;
+import com.foxholedefense.game.model.PlayerObserver;
 import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
 import com.foxholedefense.game.model.level.Level;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.interfaces.IHUDView;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
-import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 
 /**
@@ -26,13 +21,15 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  * @author Eric
  *
  */
-public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
+public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
+
 	private LevelStateManager levelStateManager;
 	private GameUIStateManager uiStateManager;
 	private GameStateManager gameStateManager;
 	private Player player;
 	private IHUDView view;
 	private FHDAudio audio;
+
 	public HUDPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, GameStateManager gameStateManager, Player player, FHDAudio audio) {
 		this.levelStateManager = levelStateManager;
 		this.uiStateManager = uiStateManager;
@@ -49,8 +46,9 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 * @param view
 	 */
 	public void setView(IHUDView view) {
+
 		this.view = view;
-		changeUIState(uiStateManager.getState());
+		stateChange(uiStateManager.getState());
 		playerAttributeChange();
 	}
 
@@ -58,63 +56,141 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 * Pauses the game
 	 */
 	public void pause() {
-		Logger.info("HUD Presenter: pause");
+
 		audio.playSound(FHDSound.SMALL_CLICK);
-		gameStateManager.setState(GameState.PAUSE);
+		if(canPauseGame()) {
+			Logger.info("HUD Presenter: pause");
+			gameStateManager.setState(GameState.PAUSE);
+		}
 	}
 
 	/**
 	 * Resumes the game
 	 */
 	public void resume() {
-		Logger.info("HUD Presenter: resume");
+
 		audio.playSound(FHDSound.SMALL_CLICK);
-		gameStateManager.setState(GameState.PLAY);
+		if(canResumeGame()) {
+			Logger.info("HUD Presenter: resume");
+			gameStateManager.setState(GameState.PLAY);
+		}
 	}
 
 	/**
 	 * Show the options view.
 	 */
 	public void options() {
-		Logger.info("HUD Presenter: options");
+
 		audio.playSound(FHDSound.SMALL_CLICK);
-		uiStateManager.setState(GameUIState.OPTIONS);
+		if(canViewOptions()) {
+			Logger.info("HUD Presenter: options");
+			uiStateManager.setState(GameUIState.OPTIONS);
+		}
 	}
 
 	/**
 	 * Start the next wave
 	 */
 	public void startWave() {
-		Logger.info("HUD Presenter: starting wave");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		levelStateManager.setState(LevelState.WAVE_IN_PROGRESS);
-		uiStateManager.setState(GameUIState.WAVE_IN_PROGRESS);
 
+		audio.playSound(FHDSound.SMALL_CLICK);
+		if(canStartWave()) {
+			Logger.info("HUD Presenter: starting wave");
+			levelStateManager.setState(LevelState.WAVE_IN_PROGRESS);
+			uiStateManager.setState(GameUIState.WAVE_IN_PROGRESS);
+		}
 	}
 
 	/**
 	 * Show the Enlist view
 	 */
 	public void enlist() {
-		Logger.info("HUD Presenter: enlist");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		uiStateManager.setState(GameUIState.ENLISTING);
 
+		audio.playSound(FHDSound.SMALL_CLICK);
+		if(canEnlist()) {
+			Logger.info("HUD Presenter: enlist");
+			uiStateManager.setState(GameUIState.ENLISTING);
+		}
 	}
 
 	/**
 	 * Show the Support view
 	 */
-	public void support() {
-		Logger.info("HUD Presenter: support");
-		audio.playSound(FHDSound.SMALL_CLICK);
-		uiStateManager.setState(GameUIState.SUPPORT);
+	public void addSupport() {
 
+		audio.playSound(FHDSound.SMALL_CLICK);
+		if(canAddSupport()) {
+			Logger.info("HUD Presenter: addSupport");
+			uiStateManager.setState(GameUIState.SUPPORT);
+		}
 	}
 
+	public boolean isGamePaused(){
+
+		return gameStateManager.getState().equals(GameState.PAUSE);
+	}
+
+	/**
+	 * Can only pause the game when the wave is in progress and the game state is play
+	 * @return
+     */
+	private boolean canPauseGame(){
+
+		return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
+				&& gameStateManager.getState().equals(GameState.PLAY);
+	}
+
+	/**
+	 * Can only resume the game when the wave is in progress and the game is paused
+	 * @return
+     */
+	private boolean canResumeGame(){
+
+		return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
+				&& isGamePaused();
+	}
+
+	/**
+	 * Can only view options if the UI State is in Standby or Wave in Progress
+	 * @return
+     */
+	private boolean canViewOptions(){
+
+		return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
+				|| uiStateManager.getState().equals(GameUIState.STANDBY);
+	}
+
+	/**
+	 * Can only start a wave if the the UI State is in Standby
+	 * @return
+     */
+	private boolean canStartWave(){
+
+		return uiStateManager.getState().equals(GameUIState.STANDBY);
+	}
+
+	/**
+	 * Can only enlist if the UI State is in Standby or Wave in Progress
+	 * @return
+     */
+	private boolean canEnlist(){
+
+		return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
+				|| uiStateManager.getState().equals(GameUIState.STANDBY);
+	}
+
+	/**
+	 * Can only add Support if the UI State is in Standby or Wave in Progress
+	 * @return
+	 */
+	private boolean canAddSupport(){
+
+		return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
+				|| uiStateManager.getState().equals(GameUIState.STANDBY);
+	}
 
 	@Override
-	public void changeUIState(GameUIState state) {
+	public void stateChange(GameUIState state) {
 
 		switch (state) {
 			case GAME_OVER:
@@ -132,7 +208,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 			case INSPECTING:
 				view.inspectingState();
 				break;
-			case QUIT_MENU:
+			case PAUSE_MENU:
 				view.quitState();
 				break;
 			case WAVE_IN_PROGRESS:
@@ -151,6 +227,7 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	 */
 	@Override
 	public void playerAttributeChange() {
+
 		Logger.info("HUD Presenter: playerAttributeChange");
 		view.setLives(String.valueOf(player.getLives()));
 		view.setMoney(String.valueOf(player.getMoney()));
@@ -158,12 +235,13 @@ public class HUDPresenter implements IGameUIStateObserver, IPlayerObserver {
 	}
 	
 	private void setWaveCount(){
+
 		Logger.info("HUD Presenter: setWaveCount");
-		int waveCount = player.getWavesCompleted();
-		if(waveCount >= Level.MAX_WAVES){
-			view.setWaveCount(String.valueOf(player.getWaveCount()));
+		int waveCount = player.getWaveCount();
+		if(waveCount > Level.MAX_WAVES){
+			view.setWaveCount(String.valueOf(waveCount));
 		} else {
-			view.setWaveCount(String.valueOf(player.getWaveCount()) + "/" + Level.MAX_WAVES);
+			view.setWaveCount(String.valueOf(waveCount + "/" + Level.MAX_WAVES));
 		}
 	}
 

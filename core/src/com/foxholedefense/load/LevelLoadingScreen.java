@@ -1,12 +1,6 @@
 package com.foxholedefense.load;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeOut;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
-
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -19,9 +13,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.foxholedefense.screen.AbstractScreen;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
-import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -30,7 +23,7 @@ import com.foxholedefense.util.datastructures.Dimension;
 public class LevelLoadingScreen extends AbstractScreen{
 	private static final Dimension LOADING_BAR_SIZE = new Dimension(515, 45);
 	private Resources resources;
-	private IScreenChanger screenChanger;
+	private ScreenChanger screenChanger;
 	private Stage stage;
 	private static final float MIN_LOAD_TIME = 3f;
 	private float loadTime = 0;
@@ -40,7 +33,7 @@ public class LevelLoadingScreen extends AbstractScreen{
 	private float endPos;
 	private float startPos;
 
-	public LevelLoadingScreen(GameStateManager gameStateManager, IScreenChanger screenChanger, Resources resources, int level ) {
+	public LevelLoadingScreen(GameStateManager gameStateManager, ScreenChanger screenChanger, Resources resources, int level ) {
 		super(gameStateManager);
 		this.resources = resources;
 		this.screenChanger = screenChanger;
@@ -72,30 +65,30 @@ public class LevelLoadingScreen extends AbstractScreen{
 		TextureAtlas atlas = resources.getAsset(Resources.LOAD_ATLAS, TextureAtlas.class);
 		
 		Image loadingBar = new Image(atlas.findRegion("level-load-bar"));
-		startPos = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, LOADING_BAR_SIZE.getWidth());
+		startPos = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, LOADING_BAR_SIZE.getWidth());
 		endPos = LOADING_BAR_SIZE.getWidth();
 		loadingBar.setSize(LOADING_BAR_SIZE.getWidth(), LOADING_BAR_SIZE.getHeight());
-		loadingBar.setPosition(startPos, ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()));
+		loadingBar.setPosition(startPos, ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()));
 		
 		
 		loadingBarBg = new Image(atlas.findRegion("level-load-bar-bg"));
 		loadingBarBg.setSize(LOADING_BAR_SIZE.getWidth(), LOADING_BAR_SIZE.getHeight());
-		loadingBarBg.setPosition(startPos, ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()));
+		loadingBarBg.setPosition(startPos, ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()));
 
 		
 		loadingLabel = new Label("LOADING: 0%", resources.getSkin());
 		loadingLabel.setFontScale(0.75f);
 		loadingLabel.setAlignment(Align.left);
 		loadingLabel.setColor(1f, 1f, 1f, 1f);
-		float lblX = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, loadingLabel.getWidth()) + 30;
-		float lblY = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingLabel.getHeight()) ;
+		float lblX = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, loadingLabel.getWidth()) + 30;
+		float lblY = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingLabel.getHeight()) ;
 		loadingLabel.setPosition(lblX, lblY);
 		
 		
 		Image screen = new Image(atlas.findRegion("level-load-screen"));
 		screen.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
-		float screenX = ActorUtil.calcXBotLeftFromCenter(Resources.VIRTUAL_WIDTH / 2, screen.getWidth());
-		float screenY = ActorUtil.calcYBotLeftFromCenter(Resources.VIRTUAL_HEIGHT / 2, screen.getHeight());
+		float screenX = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, screen.getWidth());
+		float screenY = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, screen.getHeight());
 		screen.setPosition(screenX, screenY);
 
 		stage.addActor(loadingBar);
@@ -103,11 +96,6 @@ public class LevelLoadingScreen extends AbstractScreen{
 		stage.addActor(screen);
 		stage.addActor(loadingLabel);
 		load();
-	}
-	
-	@Override
-	public void resize(int width, int height) {
-	    super.resize(width, height);
 	}
 		
 	@Override
@@ -149,14 +137,14 @@ public class LevelLoadingScreen extends AbstractScreen{
 		stage.dispose();
 	}
 	
-	public void load() {
+	private void load() {
 		resources.loadAsset(Resources.ACTOR_ATLAS, TextureAtlas.class);
 		resources.loadActorAtlasRegions();
 		resources.loadMap(level);
 		
 	}
 
-	public void finishedLoading() {
+	private void finishedLoading() {
 		screenChanger.changeToLevel(level);
 	}
 

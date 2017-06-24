@@ -7,7 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -37,7 +36,7 @@ public class DebugView extends Group implements IDebugView {
     /**
      * Create controls
      */
-    public void createControls(Skin skin) {
+    private void createControls(Skin skin) {
 
         Logger.info("Debug View: creating controls");
 
@@ -126,7 +125,7 @@ public class DebugView extends Group implements IDebugView {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-                presenter.showFPSListener();
+                presenter.showFPSPressed();
             }
         });
     }

@@ -3,7 +3,6 @@ package com.foxholedefense.game.service.actorplacement;
 import com.badlogic.gdx.math.Vector2;
 import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
 import com.foxholedefense.game.service.factory.SupportActorFactory;
-import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Logger;
 
 public class SupplyDropPlacement {
@@ -20,17 +19,15 @@ public class SupplyDropPlacement {
 		currentSupplyDropCrate.setVisible(false);
 	}
 	public void setLocation(Vector2 location){
-		Logger.info("SupplyDropPlacement: creating location");
+		Logger.info("SupplyDropPlacement: setting location");
 		currentSupplyDropCrate.setVisible(true);
 		currentSupplyDropCrate.setShowRange(true);
 		currentSupplyDropCrate.setPositionCenter(location);
 	}
-	public void finishPlacement() {
-		Logger.info("SupplyDropPlacement: finishing placement");
+	public void placeSupplyDrop() {
 		if (isCurrentSupplyDropCrate()) {
-			float x = ActorUtil.calcXCenterFromBotLeft(currentSupplyDropCrate.getX(), currentSupplyDropCrate.getWidth());
-			float y = ActorUtil.calcYCenterFromBotLeft(currentSupplyDropCrate.getY(), currentSupplyDropCrate.getHeight());
-			supportActorFactory.loadSupplyDrop().beginSupplyDrop(x, y);
+			Logger.info("SupplyDropPlacement: finishing placement");
+			supportActorFactory.loadSupplyDrop().beginSupplyDrop(currentSupplyDropCrate.getPositionCenter());
 			currentSupplyDropCrate.setShowRange(false);
 			currentSupplyDropCrate.freeActor();
 			currentSupplyDropCrate = null;
@@ -38,8 +35,8 @@ public class SupplyDropPlacement {
 	}
 	
 	public void removeCurrentSupplyDropCrate(){
-		Logger.info("SupplyDropPlacement: remove supply drop");
 		if (isCurrentSupplyDropCrate()) {
+			Logger.info("SupplyDropPlacement: remove supply drop");
 			currentSupplyDropCrate.freeActor();
 			currentSupplyDropCrate = null;
 		}

@@ -15,6 +15,5 @@ public interface IInspectView {
 	void standByState();
 
 	void inspectingState();
-	
-	void dischargeDisabled(boolean enabled);
+
 }

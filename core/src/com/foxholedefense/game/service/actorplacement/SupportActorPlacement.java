@@ -8,9 +8,11 @@ import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.util.Logger;
 
 public class SupportActorPlacement {
+
 	private SupportActor currentSupportActor;
 	private ActorGroups actorGroups;
 	private SupportActorFactory supportActorFactory;
+
 	public SupportActorPlacement(ActorGroups actorGroups, SupportActorFactory supportActorFactory) {
 		this.actorGroups = actorGroups;
 		this.supportActorFactory = supportActorFactory;
@@ -32,15 +34,13 @@ public class SupportActorPlacement {
 
 	public void moveSupportActor(Vector2 clickCoords) {
 		if (currentSupportActor != null) {
-			if (!currentSupportActor.isVisible()) {
-				currentSupportActor.setVisible(true);
-			}
+			currentSupportActor.setVisible(true);
 			currentSupportActor.setShowRange(true);
 			currentSupportActor.setPositionCenter(clickCoords);
 		}
 	}
 
-	public boolean placeSupportActor() {
+	public void placeSupportActor() {
 		Logger.info("SupportActorPlacement: trying to place Support Actor");
 		if (currentSupportActor != null) {
 			//If it is an Apache that is being placed, then we need to call it's initialize method
@@ -51,9 +51,7 @@ public class SupportActorPlacement {
 			currentSupportActor.setShowRange(false);
 			currentSupportActor = null;
 			Logger.info("SupportActorPlacement: placing Support Actor");
-			return true;
 		}
-		return false;
 	}
 
 

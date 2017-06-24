@@ -19,16 +19,17 @@ import com.foxholedefense.util.ActorUtil;
 
 public class ArmorDestroyedEffect extends LabelEffect {
 
-    private static final float DURATION = 2;
+    public static final float DURATION = 2;
+    public static final float Y_END_OFFSET = 50;
     private static final float SCALE = 0.35f;
     private static final String MESSAGE = "ARMOR DESTROYED";
 
     private CombatActor actor = null;
-    private Animation animation;
+    private Animation<TextureRegion> animation;
 
     public ArmorDestroyedEffect(Array<AtlasRegion> regions, LabelEffectPool<ArmorDestroyedEffect> pool, Skin skin){
         super(pool, DURATION, skin);
-        animation = new Animation(DURATION, regions);
+        animation = new Animation<TextureRegion>(DURATION, regions);
         animation.setPlayMode(Animation.PlayMode.NORMAL);
 
         setText(MESSAGE);
@@ -39,12 +40,12 @@ public class ArmorDestroyedEffect extends LabelEffect {
 
     public Actor initialize(CombatActor actor){
         this.actor = actor;
-        setX(ActorUtil.calcXBotLeftFromCenter(actor.getPositionCenter().x, getWidth()));
-        setY(ActorUtil.calcYBotLeftFromCenter(actor.getPositionCenter().y, getHeight()));
+        setX(ActorUtil.calcBotLeftPointFromCenter(actor.getPositionCenter().x, getWidth()));
+        setY(ActorUtil.calcBotLeftPointFromCenter(actor.getPositionCenter().y, getHeight()));
 
         addAction(
                 Actions.parallel(
-                        Actions.moveTo(getX(), getY() + 50, DURATION),
+                        Actions.moveTo(getX(), getY() + Y_END_OFFSET, DURATION),
                         Actions.fadeOut(DURATION)));
 
         return this;
@@ -56,8 +57,15 @@ public class ArmorDestroyedEffect extends LabelEffect {
         TextureRegion region = animation.getKeyFrame(stateTime, false);
 
         if (actor != null) {
-            setPosition(actor.getPositionCenter().x - 22, actor.getPositionCenter().y + 16);
-            batch.draw(region, getX(), getY(), 12, 13);
+            float x = actor.getPositionCenter().x;
+            float y = actor.getPositionCenter().y + 16;
+
+            if(actor.getHealthPercent() < 1){
+                x += -22;
+            } else {
+                x += -6;
+            }
+            batch.draw(region, x, y, 12, 13);
         }
     }
 

@@ -29,8 +29,8 @@ public class AirStrikePlacement {
 		currentAirStrike.addLocation(airStrikeLocation);
 	}
 	public void finishCurrentAirStrike() {
-		Logger.info("AirStrikePlacement: finishing current air strike");
-		if (isCurrentAirStrike()) {
+		if (isCurrentAirStrike() && currentAirStrike.isReadyToBegin()) {
+			Logger.info("AirStrikePlacement: finishing current air strike");
 			currentAirStrike.beginAirStrike();
 			currentAirStrike.setVisible(true);
 			currentAirStrike = null;
@@ -38,8 +38,8 @@ public class AirStrikePlacement {
 	}
 	
 	public void removeCurrentAirStrike(){
-		Logger.info("AirStrikePlacement: removing current airstrike");
 		if (isCurrentAirStrike()) {
+			Logger.info("AirStrikePlacement: removing current airstrike");
 			currentAirStrike.freeActor();
 			currentAirStrike = null;
 		}
@@ -49,7 +49,8 @@ public class AirStrikePlacement {
 		return (currentAirStrike != null);
 	}
 
-	public AirStrike getCurrentAirStrike() {
-		return currentAirStrike;
+	public boolean isReadyToBegin(){
+		return isCurrentAirStrike()
+				&& currentAirStrike.isReadyToBegin();
 	}
 }

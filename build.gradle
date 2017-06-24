@@ -7,8 +7,8 @@ buildscript {
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
-        classpath 'com.android.tools.build:gradle:2.2.2'
-        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.2.0'
+        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.1'
     }
 }
 
@@ -19,8 +19,8 @@ allprojects {
     version = '1.0'
     ext {
         appName = "FoxholeDefense"
-        gdxVersion = '1.9.4'
-        roboVMVersion = '2.2.0'
+        gdxVersion = '1.9.6'
+        roboVMVersion = '2.3.1'
         box2DLightsVersion = '1.4'
         ashleyVersion = '1.7.0'
         aiVersion = '1.8.0'
@@ -42,7 +42,7 @@ project(":desktop") {
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-		compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
+        compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
     }
 }
 
@@ -62,7 +62,7 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
-	    compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-arm64-v8a"
@@ -82,7 +82,7 @@ project(":ios") {
         compile "com.mobidevelop.robovm:robovm-cocoatouch:$roboVMVersion"
         compile "com.badlogicgames.gdx:gdx-backend-robovm:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-ios"
-		compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
+        compile "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-ios"
     }
 }
 
@@ -102,10 +102,21 @@ project(":html") {
 project(":core") {
     apply plugin: "java"
 
+    sourceSets.test.java.srcDirs = ["/test"]
 
     dependencies {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
-		compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+        compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+
+        testCompile 'junit:junit:4.12'
+        testCompile "org.mockito:mockito-all:1.9.5"
+
+        testCompile 'org.powermock:powermock-api-mockito:1.6.1'
+        testCompile 'org.powermock:powermock-module-junit4-rule-agent:1.6.1'
+        testCompile 'org.powermock:powermock-module-junit4-rule:1.6.1'
+        testCompile 'org.powermock:powermock-module-junit4:1.6.1'
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+        testCompile group: 'com.tngtech.java', name: 'junit-dataprovider', version: '1.10.0'
     }
 }
 

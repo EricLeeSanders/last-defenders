@@ -8,10 +8,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.foxholedefense.game.model.actor.interfaces.IRotatable;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.ActorUtil;
@@ -48,11 +47,11 @@ public class TowerTurret extends Tower implements IRotatable {
 	private static final Dimension TEXTURE_SIZE_BAGS = new Dimension(67, 49);
 	private static final Dimension TEXTURE_SIZE_TURRET = new Dimension(71, 24);
 	private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
+	private static final float[] BODY_POINTS = {5, 14, 5, 36, 11, 46, 35, 46, 35, 3, 11, 3};
 
 	private float[] rangeCoords = new float[6];
-	private float[] bodyPoints = {5, 14, 5, 36, 11, 46, 35, 46, 35, 3, 11, 3};
-	private TextureRegion bodyRegion;
 
+	private TextureRegion bodyRegion;
 	private Polygon body;
 	private float bodyRotation;
 	private Polygon rangePoly;
@@ -65,7 +64,7 @@ public class TowerTurret extends Tower implements IRotatable {
 		this.bodyRegion = bodyRegion;
 		this.audio = audio;
 		this.projectileFactory = projectileFactory;
-		body = new Polygon(bodyPoints);
+		body = new Polygon(BODY_POINTS);
 		this.rangeRegion = rangeRegion;
 		this.collidingRangeRegion = collidingRangeRegion;
 
@@ -98,8 +97,8 @@ public class TowerTurret extends Tower implements IRotatable {
 			drawRange(batch);
 		}
 
-		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, TEXTURE_SIZE_BAGS.getWidth());
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, TEXTURE_SIZE_BAGS.getHeight());
+		float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BAGS.getWidth());
+		float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BAGS.getHeight());
 
 		batch.draw(bodyRegion, x, y	, TEXTURE_SIZE_BAGS.getWidth() / 2, TEXTURE_SIZE_BAGS.getHeight() / 2, TEXTURE_SIZE_BAGS.getWidth(), TEXTURE_SIZE_BAGS.getHeight()
 				, 1, 1, bodyRotation);
@@ -139,7 +138,7 @@ public class TowerTurret extends Tower implements IRotatable {
 	}
 
 	@Override
-	protected void drawRange(Batch batch){
+    void drawRange(Batch batch){
 		TextureRegion currentRangeRegion = rangeRegion;
 		if(isTowerColliding()){
 			currentRangeRegion = collidingRangeRegion;
@@ -165,7 +164,7 @@ public class TowerTurret extends Tower implements IRotatable {
 		body.setRotation(bodyRotation);
 
 		float x = getX();
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, TEXTURE_SIZE_BAGS.getHeight());
+		float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BAGS.getHeight());
 		body.setPosition(x, y);
 
 		return body;
@@ -189,10 +188,10 @@ public class TowerTurret extends Tower implements IRotatable {
 	}
 
 	@Override
-	public void attackTarget(ITargetable target) {
+	public void attackTarget(Targetable target) {
 		if(target != null){
 			audio.playSound(FHDSound.MACHINE_GUN);
-			projectileFactory.loadBullet().initialize(this,target, this.getGunPos(), BULLET_SIZE);
+			projectileFactory.loadBullet().initialize(this,target, BULLET_SIZE);
 		}
 	}
 
