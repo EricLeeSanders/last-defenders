@@ -7,8 +7,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.effects.texture.TextureEffect;
-import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.Dimension;
 
 /**

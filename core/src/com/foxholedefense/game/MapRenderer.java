@@ -11,7 +11,7 @@ import com.foxholedefense.util.Resources;
  * Created by Eric on 1/3/2017.
  */
 
-public class MapRenderer {
+class MapRenderer {
 
     private TiledMapRenderer tiledMapRenderer;
     public MapRenderer(TiledMap tiledMap, Camera camera){

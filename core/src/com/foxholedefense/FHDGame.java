@@ -8,19 +8,18 @@ import com.foxholedefense.levelselect.LevelSelectScreen;
 import com.foxholedefense.load.GameLoadingScreen;
 import com.foxholedefense.load.LevelLoadingScreen;
 import com.foxholedefense.menu.MenuScreen;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
-import com.foxholedefense.state.IGameStateObserver;
+import com.foxholedefense.state.GameStateObserver;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.UserPreferences;
 
-public class FHDGame extends Game implements IScreenChanger, IGameStateObserver {
+public class FHDGame extends Game implements ScreenChanger, GameStateObserver {
 	private GameStateManager gameStateManager;
 	private Resources resources;
-	private UserPreferences userPreferences;
 	private FHDAudio audio;
 	private IPlayServices playServices;
 
@@ -38,7 +37,7 @@ public class FHDGame extends Game implements IScreenChanger, IGameStateObserver 
 	public void create() {
 		Logger.info("FHDGame: Creating");
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		userPreferences = new UserPreferences();
+		UserPreferences userPreferences = new UserPreferences();
 		resources = new Resources(userPreferences);
 		audio = new FHDAudio(userPreferences);
 		gameStateManager = new GameStateManager();
@@ -94,7 +93,7 @@ public class FHDGame extends Game implements IScreenChanger, IGameStateObserver 
 	}
 
 	@Override
-	public void changeGameState(GameState state) {
+	public void stateChange(GameState state) {
 		switch(state){
 			case QUIT:
 				Gdx.app.exit();

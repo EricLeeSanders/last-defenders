@@ -8,14 +8,14 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.GameActor;
-import com.foxholedefense.game.model.actor.interfaces.IAttacker;
+import com.foxholedefense.game.model.actor.interfaces.Attacker;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
 
-public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
+public class SupportActor extends GameActor implements Pool.Poolable, Attacker {
 	private Pool<SupportActor> pool;
 	private float range, attack;
 	private Vector2 gunPos;
@@ -25,9 +25,10 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	private Group getTargetGroup;
 	private boolean showRange;
 	private TextureRegion rangeTexture;
+	private Circle rangeShape;
 
-	public SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion, Dimension textureSize
-						, TextureRegion rangeTexture, float range, float attack, Vector2 gunPos, int cost) {
+	SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion, Dimension textureSize
+			, TextureRegion rangeTexture, float range, float attack, Vector2 gunPos, int cost) {
 		super(textureSize);
 		this.pool = pool;
 		this.range = range;
@@ -36,6 +37,7 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 		this.cost = cost;
 		this.getTargetGroup = targetGroup;
 		this.rangeTexture = rangeTexture;
+		rangeShape = new Circle(getPositionCenter().x, getPositionCenter().y, range);
 		setTextureRegion(textureRegion);
 	}
 	@Override
@@ -46,11 +48,11 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 		super.draw(batch, alpha);
 	}
 
-	protected void drawRange(Batch batch){
+	private void drawRange(Batch batch){
 		float width = range * 2;
 		float height = range * 2;
-		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, width);
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, height);
+		float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, width);
+		float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, height);
 		batch.draw(rangeTexture,x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
 	}
 
@@ -84,13 +86,14 @@ public class SupportActor extends GameActor implements Pool.Poolable, IAttacker{
 	
 	@Override
 	public Shape2D getRangeShape() {
-		return new Circle(getPositionCenter().x, getPositionCenter().y, range);
+		rangeShape.setPosition(getPositionCenter().x, getPositionCenter().y);
+		return rangeShape;
 	}
 
 	@Override
 	public Vector2 getGunPos() {
 		Vector2 centerPos = getPositionCenter();
-		FHDVector2 rotatedCoords = ActorUtil.getRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y), centerPos.x, centerPos.y, Math.toRadians(getRotation()));
+		FHDVector2 rotatedCoords = ActorUtil.calculateRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y), centerPos.x, centerPos.y, Math.toRadians(getRotation()));
 		rotatedGunPos.set(rotatedCoords.x, rotatedCoords.y);
 		rotatedCoords.free();
 		return rotatedGunPos;

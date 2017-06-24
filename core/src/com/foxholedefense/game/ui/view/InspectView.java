@@ -29,10 +29,12 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  *
  */
 public class InspectView extends Group implements InputProcessor, IInspectView {
+
 	private InspectPresenter presenter;
 	private DischargeButton btnDischarge;
 	private UpgradeButton btnArmor, btnSpeed, btnRange, btnAttack;
 	private Label lblTargetPriority, lblTitle, lblMoney, lblKills;
+
 	public InspectView(InspectPresenter presenter, Skin skin) {
 		this.presenter = presenter;
 		this.setTransform(false);
@@ -42,7 +44,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	/**
 	 * Create the controls
 	 */
-	public void createControls(Skin skin) {
+	private void createControls(Skin skin) {
 
 		Logger.info("Inspect View: creating controls");
 
@@ -96,19 +98,19 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 		btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
 		addActor(btnCancel);
 
-		btnArmor = new UpgradeButton(skin, "Armor", "shield", 100, 28, 30);
+		btnArmor = new UpgradeButton(skin, "Armor", "shield", 28, 30);
 		inspectTable.add(btnArmor).size(110,115);//.spaceBottom(10).spaceRight(10);
 		setArmorListener();
 
-		btnRange = new UpgradeButton(skin, "Increase Range", "range_icon", 100, 28, 30);
+		btnRange = new UpgradeButton(skin, "Increase Range", "range_icon", 28, 30);
 		inspectTable.add(btnRange).size(110,115);//.spaceBottom(10).spaceRight(10);
 		setIncreaseRangeListener();
 
-		btnSpeed = new UpgradeButton(skin, "Increase Speed", "speed_icon", 100,30,30);
+		btnSpeed = new UpgradeButton(skin, "Increase Speed", "speed_icon",30,30);
 		inspectTable.add(btnSpeed).size(110,115);//.spaceBottom(5).spaceRight(10);
 		setIncreaseSpeedListener();
 
-		btnAttack = new UpgradeButton(skin, "Increase Attack", "attack_icon", 100, 26,26);
+		btnAttack = new UpgradeButton(skin, "Increase Attack", "attack_icon", 26,26);
 		inspectTable.add(btnAttack).size(110,115);//.spaceBottom(5).spaceRight(10);
 		setIncreaseAttackListener();
 
@@ -156,11 +158,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	public void inspectingState() {
 		this.setVisible(true);
 	}
-	
-	@Override
-	public void dischargeDisabled(boolean disabled) {
-		btnDischarge.button.setDisabled(disabled);
-	}
+
 	/**
 	 * Binds to the Inspected Tower and updates the widgets
 	 */
@@ -168,12 +166,8 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	public void update(Tower selectedTower) {
 		lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
 		lblKills.setText(String.valueOf(selectedTower.getNumOfKills()));
-		lblTitle.setText(selectedTower.getName().toUpperCase());
-		btnArmor.updateCost(selectedTower.getArmorCost());
-		btnSpeed.updateCost(selectedTower.getSpeedIncreaseCost());
-		btnRange.updateCost(selectedTower.getRangeIncreaseCost());
-		btnAttack.updateCost(selectedTower.getAttackIncreaseCost());
 		btnDischarge.updateCost(selectedTower.getSellCost());
+		lblTitle.setText(selectedTower.getName().toUpperCase());
 		lblTargetPriority.setText(selectedTower.getAI().name().replace('_', ' '));
 		updateUpgradeControl(btnArmor, selectedTower.hasArmor(), selectedTower.getArmorCost());
 		updateUpgradeControl(btnSpeed, selectedTower.hasIncreasedSpeed(), selectedTower.getSpeedIncreaseCost());
@@ -186,6 +180,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 	 *
 	 */
 	private void updateUpgradeControl(UpgradeButton upgradeButton, boolean towerHasUpgrade, int upgradeCost) {
+		upgradeButton.updateCost(upgradeCost);
 		boolean affordable = presenter.canAffordUpgrade(upgradeCost);
 		upgradeButton.button.setDisabled(!affordable && !towerHasUpgrade);
 		upgradeButton.setPurchased(towerHasUpgrade);

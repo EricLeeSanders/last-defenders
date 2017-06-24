@@ -4,9 +4,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.datastructures.Dimension;
@@ -25,7 +24,7 @@ public class TowerSniper extends Tower {
 	private static final float HEALTH = 8;
 	private static final float ARMOR = 4;
 	private static final float ATTACK = 7;
-	private static final float ATTACK_SPEED = 100;
+	private static final float ATTACK_SPEED = 1;
 	private static final float RANGE = 100;
 
 	public static final int COST = 400;
@@ -51,10 +50,10 @@ public class TowerSniper extends Tower {
 	}
 
 	@Override
-	public void attackTarget(ITargetable target) {
+	public void attackTarget(Targetable target) {
 		audio.playSound(FHDSound.SNIPER);
 		if(target != null){
-			projectileFactory.loadBullet().initialize(this, target, this.getGunPos(), BULLET_SIZE);
+			projectileFactory.loadBullet().initialize(this, target, BULLET_SIZE);
 		}
 	}
 	

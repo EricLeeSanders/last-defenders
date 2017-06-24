@@ -1,7 +1,5 @@
 package com.foxholedefense.screen;
 
-import java.math.BigInteger;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
@@ -9,13 +7,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.profiling.GLProfiler;
-import com.badlogic.gdx.utils.viewport.ExtendViewport;
-import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
@@ -33,7 +26,7 @@ public abstract class AbstractScreen implements Screen {
 	private InputMultiplexer imp;
 	private GameStateManager gameStateManager;
 	private Viewport viewport;
-	public AbstractScreen(GameStateManager gameStateManager) {
+	protected AbstractScreen(GameStateManager gameStateManager) {
 		this.gameStateManager = gameStateManager;
 		camera = new OrthographicCamera();
 		imp = new InputMultiplexer();
@@ -41,7 +34,7 @@ public abstract class AbstractScreen implements Screen {
 		GLProfiler.enable();
 	}
 
-	public abstract void renderElements(float delta);
+	protected abstract void renderElements(float delta);
 
 	@Override
 	public void render(float delta) {
@@ -103,14 +96,14 @@ public abstract class AbstractScreen implements Screen {
 
 	}
 
-	public Camera getCamera() {
+	private Camera getCamera() {
 		return camera;
 	}
 
-	public Viewport getViewport(){
+	protected Viewport getViewport(){
 		return viewport;
 	}
-	public InputMultiplexer getInputMultiplexer() {
+	protected InputMultiplexer getInputMultiplexer() {
 		return imp;
 	}
 

@@ -1,15 +1,12 @@
 package com.foxholedefense.game.ui.view.widgets;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.Resources;
 
 /**
  * Created by Eric on 11/4/2016.
@@ -30,18 +27,16 @@ public class EnlistButton extends Group {
         //lblCost.setAlignment(Align.center);
         lblCost.setFontScale(0.45f);
         lblCost.pack();
-        float lblCostX = ActorUtil.calcXBotLeftFromCenter(button.getWidth() / 2, lblCost.getWidth());
+        float lblCostX = ActorUtil.calcBotLeftPointFromCenter(button.getWidth() / 2, lblCost.getWidth());
         lblCost.setPosition(lblCostX,10);
         addActor(lblCost);
-
-        LabelStyle style = new LabelStyle(skin.get(LabelStyle.class));
 
         Label lblTitle = new Label(name.toUpperCase().replaceAll(" ", "\n"), skin);
         lblTitle.setFontScale(0.40f);
         lblTitle.setAlignment(Align.center);
         lblTitle.pack();
-        float lblTitleX = ActorUtil.calcXBotLeftFromCenter(button.getWidth() / 2, lblTitle.getWidth());
-        float lblTitleY = ActorUtil.calcYBotLeftFromCenter(155, lblTitle.getHeight());
+        float lblTitleX = ActorUtil.calcBotLeftPointFromCenter(button.getWidth() / 2, lblTitle.getWidth());
+        float lblTitleY = ActorUtil.calcBotLeftPointFromCenter(155, lblTitle.getHeight());
         lblTitle.setPosition(lblTitleX, lblTitleY);
         addActor(lblTitle);
 

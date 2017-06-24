@@ -2,8 +2,6 @@ package com.foxholedefense.game.model.actor.support;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.foxholedefense.game.service.factory.SupportActorFactory.AirStrikeLocationPool;
 import com.foxholedefense.util.ActorUtil;
@@ -34,23 +32,19 @@ public class AirStrikeLocation extends Actor {
 		super.draw(batch, alpha);
 	}
 
-	protected void drawRange(Batch batch){
+	private void drawRange(Batch batch){
 		float width = radius * 2;
 		float height = radius * 2;
-		float x = ActorUtil.calcXBotLeftFromCenter(location.x, width);
-		float y = ActorUtil.calcYBotLeftFromCenter(location.y, height);
+		float x = ActorUtil.calcBotLeftPointFromCenter(location.x, width);
+		float y = ActorUtil.calcBotLeftPointFromCenter(location.y, height);
 		batch.draw(rangeTexture,x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
-	}
-	
-	public Shape2D getRangeShape() {
-		return new Circle(location.x, location.y, radius);
 	}
 	
 	public FHDVector2 getLocation() {
 		return location;
 	}
 
-	public boolean isShowRange() {
+	private boolean isShowRange() {
 		return showRange;
 	}
 

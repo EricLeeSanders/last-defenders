@@ -1,14 +1,10 @@
 package com.foxholedefense.game.service.factory;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.SnapshotArray;
+import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.enemy.EnemyFlameThrower;
 import com.foxholedefense.game.model.actor.combat.enemy.EnemyHumvee;
@@ -17,8 +13,9 @@ import com.foxholedefense.game.model.actor.combat.enemy.EnemyRifle;
 import com.foxholedefense.game.model.actor.combat.enemy.EnemyRocketLauncher;
 import com.foxholedefense.game.model.actor.combat.enemy.EnemySniper;
 import com.foxholedefense.game.model.actor.combat.enemy.EnemyTank;
-import com.foxholedefense.game.model.actor.combat.enemy.IEnemyObserver;
-import com.foxholedefense.game.model.actor.combat.tower.ITowerObserver;
+import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager;
+import com.foxholedefense.game.model.actor.combat.event.EventManagerImpl;
+import com.foxholedefense.game.model.actor.combat.event.interfaces.EventManager;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.combat.tower.TowerFlameThrower;
 import com.foxholedefense.game.model.actor.combat.tower.TowerMachineGun;
@@ -27,67 +24,53 @@ import com.foxholedefense.game.model.actor.combat.tower.TowerRocketLauncher;
 import com.foxholedefense.game.model.actor.combat.tower.TowerSniper;
 import com.foxholedefense.game.model.actor.combat.tower.TowerTank;
 import com.foxholedefense.game.model.actor.combat.tower.TowerTurret;
+import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager;
+import com.foxholedefense.game.model.level.SpawningEnemy;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Eric on 3/31/2017.
  */
 
 public class CombatActorFactory {
-    private CombatActorPool<TowerRifle> towerRiflePool = new CombatActorPool<TowerRifle>(TowerRifle.class);
-    private CombatActorPool<TowerTank> towerTankPool = new CombatActorPool<TowerTank>(TowerTank.class);
-    private CombatActorPool<TowerFlameThrower> towerFlameThrowerPool = new CombatActorPool<TowerFlameThrower>(TowerFlameThrower.class);
-    private CombatActorPool<TowerTurret> towerTurretPool = new CombatActorPool<TowerTurret>(TowerTurret.class);
-    private CombatActorPool<TowerSniper> towerSniperPool = new CombatActorPool<TowerSniper>(TowerSniper.class);
-    private CombatActorPool<TowerMachineGun> towerMachinePool = new CombatActorPool<TowerMachineGun>(TowerMachineGun.class);
-    private CombatActorPool<TowerRocketLauncher> towerRocketLauncherPool = new CombatActorPool<TowerRocketLauncher>(TowerRocketLauncher.class);
-    private CombatActorPool<EnemyRifle> enemyRiflePool = new CombatActorPool<EnemyRifle>(EnemyRifle.class);
-    private CombatActorPool<EnemyTank> enemyTankPool = new CombatActorPool<EnemyTank>(EnemyTank.class);
-    private CombatActorPool<EnemyFlameThrower> enemyFlameThrowerPool = new CombatActorPool<EnemyFlameThrower>(EnemyFlameThrower.class);
-    private CombatActorPool<EnemyMachineGun> enemyMachinePool = new CombatActorPool<EnemyMachineGun>(EnemyMachineGun.class);
-    private CombatActorPool<EnemyRocketLauncher> enemyRocketLauncherPool = new CombatActorPool<EnemyRocketLauncher>(EnemyRocketLauncher.class);
-    private CombatActorPool<EnemySniper> enemySniperPool = new CombatActorPool<EnemySniper>(EnemySniper.class);
-    private CombatActorPool<EnemyHumvee> enemyHumveePool = new CombatActorPool<EnemyHumvee>(EnemyHumvee.class);
 
-    private SnapshotArray<ICombatActorObserver> combatActorObservers = new SnapshotArray<ICombatActorObserver>();
-    private SnapshotArray<ITowerObserver> towerObservers = new SnapshotArray<ITowerObserver>();
-    private SnapshotArray<IEnemyObserver> enemyObservers = new SnapshotArray<IEnemyObserver>();
+    private CombatActorPool<TowerRifle> towerRiflePool = new CombatActorPool<>(TowerRifle.class);
+    private CombatActorPool<TowerTank> towerTankPool = new CombatActorPool<>(TowerTank.class);
+    private CombatActorPool<TowerFlameThrower> towerFlameThrowerPool = new CombatActorPool<>(TowerFlameThrower.class);
+    private CombatActorPool<TowerTurret> towerTurretPool = new CombatActorPool<>(TowerTurret.class);
+    private CombatActorPool<TowerSniper> towerSniperPool = new CombatActorPool<>(TowerSniper.class);
+    private CombatActorPool<TowerMachineGun> towerMachinePool = new CombatActorPool<>(TowerMachineGun.class);
+    private CombatActorPool<TowerRocketLauncher> towerRocketLauncherPool = new CombatActorPool<>(TowerRocketLauncher.class);
+
+    private CombatActorPool<EnemyRifle> enemyRiflePool = new CombatActorPool<>(EnemyRifle.class);
+    private CombatActorPool<EnemyTank> enemyTankPool = new CombatActorPool<>(EnemyTank.class);
+    private CombatActorPool<EnemyFlameThrower> enemyFlameThrowerPool = new CombatActorPool<>(EnemyFlameThrower.class);
+    private CombatActorPool<EnemyMachineGun> enemyMachinePool = new CombatActorPool<>(EnemyMachineGun.class);
+    private CombatActorPool<EnemyRocketLauncher> enemyRocketLauncherPool = new CombatActorPool<>(EnemyRocketLauncher.class);
+    private CombatActorPool<EnemySniper> enemySniperPool = new CombatActorPool<>(EnemySniper.class);
+    private CombatActorPool<EnemyHumvee> enemyHumveePool = new CombatActorPool<>(EnemyHumvee.class);
+
+    private SpawningEnemyPool spawningEnemyPool = new SpawningEnemyPool();
 
     private FHDAudio audio;
     private ActorGroups actorGroups;
     private Resources resources;
     private EffectFactory effectFactory;
-    private HealthFactory healthFactory;
     private ProjectileFactory projectileFactory;
+    private Player player;
 
-    public CombatActorFactory(ActorGroups actorGroups, FHDAudio audio, Resources resources, EffectFactory effectFactory, HealthFactory healthFactory, ProjectileFactory projectileFactory){
+    public CombatActorFactory(ActorGroups actorGroups, FHDAudio audio, Resources resources, EffectFactory effectFactory,
+                              ProjectileFactory projectileFactory, Player player){
         this.actorGroups = actorGroups;
         this.audio = audio;
         this.resources = resources;
         this.effectFactory = effectFactory;
-        this.healthFactory = healthFactory;
         this.projectileFactory = projectileFactory;
+        this.player = player;
 
     }
-
-
-    public void attachCombatObserver(ICombatActorObserver observer){
-        combatActorObservers.add(observer);
-    }
-
-    public void attachTowerObserver(ITowerObserver observer) {
-        towerObservers.add(observer);
-    }
-
-    public void attachEnemyObserver(IEnemyObserver observer) {
-        enemyObservers.add(observer);
-    }
-
 
     /**
      * Obtains a tower from the pool
@@ -98,20 +81,28 @@ public class CombatActorFactory {
     public Tower loadTower(String type) {
         Logger.info("Combat Actor Factory: loading Tower: " + type);
         Tower tower = null;
-        if (type.equals("Rifle")) {
-            tower = (Tower) towerRiflePool.obtain();
-        } else if (type.equals("Tank")) {
-            tower = (Tower) towerTankPool.obtain();
-        } else if (type.equals("Turret")) {
-            tower = (Tower) towerTurretPool.obtain();
-        } else if (type.equals("Sniper")) {
-            tower = (Tower) towerSniperPool.obtain();
-        } else if (type.equals("MachineGun")) {
-            tower = (Tower) towerMachinePool.obtain();
-        } else if (type.equals("RocketLauncher")) {
-            tower = (Tower) towerRocketLauncherPool.obtain();
-        } else if (type.equals("FlameThrower")) {
-            tower = (Tower) towerFlameThrowerPool.obtain();
+        switch (type) {
+            case "Rifle":
+                tower = (Tower) towerRiflePool.obtain();
+                break;
+            case "Tank":
+                tower = (Tower) towerTankPool.obtain();
+                break;
+            case "Turret":
+                tower = (Tower) towerTurretPool.obtain();
+                break;
+            case "Sniper":
+                tower = (Tower) towerSniperPool.obtain();
+                break;
+            case "MachineGun":
+                tower = (Tower) towerMachinePool.obtain();
+                break;
+            case "RocketLauncher":
+                tower = (Tower) towerRocketLauncherPool.obtain();
+                break;
+            case "FlameThrower":
+                tower = (Tower) towerFlameThrowerPool.obtain();
+                break;
         }
 
         return tower;
@@ -127,23 +118,40 @@ public class CombatActorFactory {
         Logger.info("Combat Actor Factory: loading Enemy: " + type);
 
         Enemy enemy = null;
-        if (type.equals("EnemyRifle")) {
-            enemy = (Enemy) enemyRiflePool.obtain();
-        } else if (type.equals("EnemyTank")) {
-            enemy = (Enemy) enemyTankPool.obtain();
-        } else if (type.equals("EnemyFlameThrower")) {
-            enemy = (Enemy) enemyFlameThrowerPool.obtain();
-        } else if (type.equals("EnemyMachineGun")) {
-            enemy = (Enemy) enemyMachinePool.obtain();
-        } else if (type.equals("EnemyRocketLauncher")) {
-            enemy = (Enemy) enemyRocketLauncherPool.obtain();
-        } else if (type.equals("EnemySniper")) {
-            enemy = (Enemy) enemySniperPool.obtain();
-        } else if (type.equals("EnemyHumvee")) {
-            enemy = (Enemy) enemyHumveePool.obtain();
+        switch (type) {
+            case "Rifle":
+                enemy = (Enemy) enemyRiflePool.obtain();
+                break;
+            case "Tank":
+                enemy = (Enemy) enemyTankPool.obtain();
+                break;
+            case "FlameThrower":
+                enemy = (Enemy) enemyFlameThrowerPool.obtain();
+                break;
+            case "MachineGun":
+                enemy = (Enemy) enemyMachinePool.obtain();
+                break;
+            case "RocketLauncher":
+                enemy = (Enemy) enemyRocketLauncherPool.obtain();
+                break;
+            case "Sniper":
+                enemy = (Enemy) enemySniperPool.obtain();
+                break;
+            case "Humvee":
+                enemy = (Enemy) enemyHumveePool.obtain();
+                break;
         }
 
         return enemy;
+    }
+
+    public SpawningEnemy loadSpawningEnemy(Enemy enemy, float spawnDelay){
+
+        SpawningEnemy spawningEnemy = spawningEnemyPool.obtain();
+        spawningEnemy.setEnemy(enemy);
+        spawningEnemy.setSpawnDelay(spawnDelay);
+
+        return spawningEnemy;
     }
 
     /**
@@ -152,10 +160,10 @@ public class CombatActorFactory {
      * @param type - Type of Game Actor
      * @return CombatActor
      */
-    protected CombatActor createCombatActor(Class<? extends CombatActor> type) {
+    private CombatActor createCombatActor(Class<? extends CombatActor> type) {
 
         Logger.info("Combat Actor Factory: creating combat actor: " + type.getSimpleName());
-        CombatActor actor = null;
+        CombatActor actor;
         if (type.equals(TowerRifle.class)) {
             TextureRegion rifleRegion = resources.getTexture("tower-rifle");
             actor = new TowerRifle(rifleRegion, towerRiflePool, actorGroups.getEnemyGroup(), resources.getTexture("range"), resources.getTexture("range-red"), projectileFactory, audio);
@@ -174,7 +182,7 @@ public class CombatActorFactory {
         } else if (type.equals(TowerTank.class)) {
             TextureRegion tankRegion = resources.getTexture("tower-tank-body");
             TextureRegion turretRegion = resources.getTexture("tower-tank-turret");
-            actor = new TowerTank(tankRegion, turretRegion, towerTankPool, actorGroups.getEnemyGroup(), resources.getTexture("range"), resources.getTexture("range-red"), projectileFactory);
+            actor = new TowerTank(tankRegion, turretRegion, towerTankPool, actorGroups.getEnemyGroup(), resources.getTexture("range"), resources.getTexture("range-red"), projectileFactory, audio);
         } else if (type.equals(TowerTurret.class)) {
             TextureRegion machineRegion = resources.getTexture("tower-turret-turret");
             TextureRegion bagsRegion = resources.getTexture("tower-turret-bags");
@@ -205,18 +213,29 @@ public class CombatActorFactory {
         } else if (type.equals(EnemyTank.class)) {
             TextureRegion tankRegion = resources.getTexture("enemy-tank-body");
             TextureRegion turretRegion = resources.getTexture("enemy-tank-turret");
-            actor = new EnemyTank(tankRegion, turretRegion, new TextureRegion[]{turretRegion}, enemyTankPool, actorGroups.getTowerGroup(), projectileFactory);
+            actor = new EnemyTank(tankRegion, turretRegion, new TextureRegion[]{turretRegion}, enemyTankPool, actorGroups.getTowerGroup(), projectileFactory, audio);
         } else {
             throw new NullPointerException("Combat Actor Factory couldn't create: " + type.getSimpleName());
         }
         if(actor instanceof Tower) {
-            ((Tower)actor).attachAllTower(towerObservers);
-        } else if(actor instanceof Enemy) {
-            ((Enemy)actor).attachAllEnemy(enemyObservers);
+            TowerStateManager towerStateManager = new TowerStateManager((Tower) actor, effectFactory);
+            ((Tower)actor).setStateManager(towerStateManager);
+        } else {
+            EnemyStateManager enemyStateManager = new EnemyStateManager((Enemy) actor, effectFactory, player);
+            ((Enemy)actor).setStateManager(enemyStateManager);
         }
-        actor.attachAllCombatActor(combatActorObservers);
+
+        EventManager eventManager = new EventManagerImpl(actor, effectFactory);
+        actor.setEventManager(eventManager);
 
         return actor;
+    }
+
+    private SpawningEnemy createSpawningEnemy(){
+
+        Logger.info("CombatActorFactory: creating SpawningEnemy");
+
+        return new SpawningEnemy(spawningEnemyPool);
     }
 
     public class CombatActorPool<T extends CombatActor> extends Pool<CombatActor> {
@@ -231,5 +250,13 @@ public class CombatActorFactory {
         }
 
     }
+
+    public class SpawningEnemyPool extends Pool<SpawningEnemy> {
+        @Override
+        protected SpawningEnemy newObject() {
+            return createSpawningEnemy();
+        }
+    }
+
 
 }

@@ -5,8 +5,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.effects.label.ArmorDestroyedEffect;
-import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.util.Logger;
 
 /**
@@ -15,6 +13,9 @@ import com.foxholedefense.util.Logger;
 
 public class ArmorIcon extends Actor implements Pool.Poolable {
 
+    public static final float Y_OFFSET = 16;
+    public static final float X_HEALTH_BAR_DISPALYING_OFFSET = -22;
+    public static final float X_OFFSET = -6;
     private TextureRegion icon;
     private CombatActor actor = null;
     private Pool<ArmorIcon> pool;
@@ -26,13 +27,13 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
     @Override
     public void draw(Batch batch, float alpha) {
         if (actor != null && actor.hasArmor()) {
-            setY( actor.getPositionCenter().y + 16);
+            setY(actor.getPositionCenter().y + Y_OFFSET);
             // If the health bar is showing, place it to the left.
             // Other wise place it above the actor
-            if(actor.getHealthPercent() < 100 || actor.getArmorPercent() < 100) {
-                setX(actor.getPositionCenter().x - 22);
+            if(actor.getHealthPercent() < 1 || actor.getArmorPercent() < 1) {
+                setX(actor.getPositionCenter().x + X_HEALTH_BAR_DISPALYING_OFFSET);
             } else {
-                setX(actor.getPositionCenter().x - 6);
+                setX(actor.getPositionCenter().x + X_OFFSET);
             }
 
             batch.draw(icon, getX(), getY());
@@ -45,7 +46,6 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
         super.act(delta);
         if (actor == null || actor.isDead() || !actor.isActive()) {
             pool.free(this);
-            return;
         }
 
     }

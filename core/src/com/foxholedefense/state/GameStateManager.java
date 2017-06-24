@@ -1,10 +1,6 @@
 package com.foxholedefense.state;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.badlogic.gdx.utils.SnapshotArray;
-import com.foxholedefense.util.Logger;
+import com.foxholedefense.state.GameStateManager.GameState;
 
 /**
  * Game State Manager class that manages the state of the game
@@ -12,51 +8,15 @@ import com.foxholedefense.util.Logger;
  * @author Eric
  *
  */
-public class GameStateManager {
-
-	private GameState state;
-	private SnapshotArray<IGameStateObserver> observers = new SnapshotArray<IGameStateObserver>();
+public class GameStateManager extends ObservableStateManager<GameState, GameStateObserver>{
 
 	public GameStateManager() {
-		this.setState(GameState.PLAY);
+		setState(GameState.PLAY);
 	}
 
-	/**
-	 * Attach an observer and add it to observers list.
-	 * 
-	 * @param observer
-	 */
-	public void attach(IGameStateObserver observer) {
-		observers.add(observer);
-	}
-
-	/**
-	 * Notify all observers of state change
-	 */
-	public void notifyObservers() {
-		Logger.info("Game State: Notify Observers");
-		Object[] objects = observers.begin();
-		for(int i = observers.size - 1; i >= 0; i--){
-			IGameStateObserver observer = (IGameStateObserver) objects[i];
-			Logger.info("Game State Notifying: " + observer.getClass().getName());
-			observer.changeGameState(state);
-		}
-		observers.end();
-	}
-
-	/**
-	 * Set the state of the game
-	 * 
-	 * @param state
-	 */
-	public void setState(GameState state) {
-		Logger.info("Changing Game state: " + this.getState() + " to state: " + state);
-		this.state = state;
-		notifyObservers();
-	}
-
-	public GameState getState() {
-		return state;
+	@Override
+	protected void notifyObserver(GameStateObserver observer, GameState state) {
+		observer.stateChange(state);
 	}
 
 	public enum GameState {

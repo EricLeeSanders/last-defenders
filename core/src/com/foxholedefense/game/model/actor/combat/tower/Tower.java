@@ -5,14 +5,13 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.SnapshotArray;
-import com.foxholedefense.game.model.actor.ai.TowerAI;
+import com.foxholedefense.game.model.actor.ai.TowerAIType;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
+import com.foxholedefense.game.model.actor.combat.state.CombatActorState;
+import com.foxholedefense.game.model.actor.combat.state.StateManager;
+import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
-import com.foxholedefense.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.Logger;
@@ -24,20 +23,18 @@ import com.foxholedefense.util.Logger;
  *
  */
 public abstract class Tower extends CombatActor {
-	public static final float TOWER_RANGE_INCREASE_RATE = (1/2f);
-	public static final float TOWER_SPEED_INCREASE_RATE = 0.33f;
-	public static final float TOWER_ATTACK_INCREASE_RATE = 0.33f;
-	public static final float TOWER_SELL_RATE = 0.75f;
+	private static final float TOWER_RANGE_INCREASE_RATE = (1/2f);
+	private static final float TOWER_SPEED_INCREASE_RATE = 0.33f;
+	private static final float TOWER_ATTACK_INCREASE_RATE = 0.33f;
+	private static final float TOWER_SELL_RATE = 0.75f;
 	private int cost, armorCost, speedIncreaseCost, rangeIncreaseCost, attackIncreaseCost;
 	private boolean rangeIncreaseEnabled, speedIncreaseEnabled, attackIncreaseEnabled;
-	private TowerAI ai = TowerAI.FIRST;
+	private TowerAIType ai = TowerAIType.FIRST;
 	private boolean showRange;
-	private float attackCounter = getAttackSpeed(); //ready to attack
 	private TextureRegion rangeRegion, collidingRangeRegion;
 	private int kills;
-	private Pool<CombatActor> pool;
 	private boolean towerColliding;
-	private SnapshotArray<ITowerObserver> observers = new SnapshotArray<ITowerObserver>();
+	private StateManager<TowerState, CombatActorState> stateManager;
 
 	public Tower(TextureRegion textureRegion, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
 				 float health, float armor, float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost, int rangeIncreaseCost, int attackIncreaseCost, DeathEffectType deathEffectType) {
@@ -49,32 +46,16 @@ public abstract class Tower extends CombatActor {
 		this.attackIncreaseCost = attackIncreaseCost;
 		this.collidingRangeRegion = collidingRangeRegion;
 		this.rangeRegion = rangeRegion;
-		this.pool = pool;
 	}
 
-	public void detachTower(ITowerObserver observer){
-		Logger.info("Tower Detach: " + observer.getClass().getName());
-		observers.removeValue(observer, false);
+	public void init(){
+		stateManager.transition(TowerState.ACTIVE);
+		setActive(true);
+		setDead(false);
 	}
 
-	public void attachAllTower(Array<ITowerObserver> observers){
-		this.observers.addAll(observers);
-	}
-
-	public void attachTower(ITowerObserver observer){
-		Logger.info("Tower Actor Attach: " + observer.getClass().getName());
-		observers.add(observer);
-	}
-
-	protected void notifyObserversTower(ITowerObserver.TowerEvent event){
-		Logger.info("Tower Actor: Notify Observers");
-		Object[] objects = observers.begin();
-		for(int i = observers.size - 1; i >= 0; i--){
-			ITowerObserver observer = (ITowerObserver) objects[i];
-			Logger.info("Tower Actor Notifying: " + observer.getClass().getName());
-			observer.notifyTower(this, event);
-		}
-		observers.end();
+	public void setStateManager(StateManager<TowerState, CombatActorState> stateManager){
+		this.stateManager = stateManager;
 	}
 
 	/**
@@ -119,15 +100,15 @@ public abstract class Tower extends CombatActor {
 		}
 		super.draw(batch, alpha);
 	}
-	protected void drawRange(Batch batch){
+	void drawRange(Batch batch){
 		TextureRegion currentRangeRegion = rangeRegion;
 		if(isTowerColliding()){
 			currentRangeRegion = collidingRangeRegion;
 		}
 		float width = getRange() * 2;
 		float height = getRange() * 2;
-		float x = ActorUtil.calcXBotLeftFromCenter(getPositionCenter().x, width);
-		float y = ActorUtil.calcYBotLeftFromCenter(getPositionCenter().y, height);
+		float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, width);
+		float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, height);
 		batch.draw(currentRangeRegion,x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
 	}
 	/**
@@ -136,23 +117,7 @@ public abstract class Tower extends CombatActor {
 	@Override
 	public void act(float delta) {
 		super.act(delta);
-		if (isActive()) {
-			attackHandler(delta);
-		}
-	}
-
-	private void attackHandler(float delta){
-		ITargetable target = findTarget();
-		if(target != null && !target.isDead()){
-			setRotation(ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
-			if (attackCounter >= getAttackSpeed()) {
-				attackCounter = 0;
-				attackTarget(target);
-			}
-		}
-
-		attackCounter += delta;
-
+		stateManager.update(delta);
 	}
 
 	@Override
@@ -163,15 +128,12 @@ public abstract class Tower extends CombatActor {
 		speedIncreaseEnabled = false;
 		attackIncreaseEnabled = false;
 		kills = 0;
-		attackCounter = getAttackSpeed(); // ready to attack
 		this.setShowRange(false);
+		stateManager.transition(TowerState.STANDBY);
 	}
 
-	/**
-	 * Find a target based on the Target Priority
-	 */
-	public ITargetable findTarget() {
-		return getAI().findTarget(this, getTargetGroup().getChildren());
+	public void deadState(){
+		stateManager.transition(TowerState.DYING);
 	}
 
 	public void heal() {
@@ -243,18 +205,17 @@ public abstract class Tower extends CombatActor {
 	public void giveKill() {
 		Logger.info("Tower: " + this.getClass().getSimpleName() + " giving kill");
 		kills++;
-		notifyObserversTower(ITowerObserver.TowerEvent.KILLED_ENEMY);
 	}
 
-	public void removeTower() {
-		pool.free(this);
+	private void removeTower() {
+		freeActor();
 	}
 
-	public TowerAI getAI() {
+	public TowerAIType getAI() {
 		return ai;
 	}
 
-	public void setAI(TowerAI ai) {
+	public void setAI(TowerAIType ai) {
 		this.ai = ai;
 	}
 	public void setTowerColliding(boolean towerColliding){
@@ -262,5 +223,9 @@ public abstract class Tower extends CombatActor {
 	}
 	public boolean isTowerColliding(){
 		return towerColliding;
+	}
+
+	public TowerState getState() {
+		return stateManager.getCurrentStateName();
 	}
 }

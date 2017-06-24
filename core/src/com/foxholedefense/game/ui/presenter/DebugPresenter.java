@@ -1,18 +1,19 @@
 package com.foxholedefense.game.ui.presenter;
 
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.view.interfaces.IDebugView;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.DebugOptions;
-import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 
 /**
  * Created by Eric on 3/12/2017.
  */
 
-public class DebugPresenter implements IGameUIStateObserver {
+public class DebugPresenter implements GameUIStateObserver {
+
     private IDebugView view;
     private GameUIStateManager uiStateManager;
     private GameStateManager gameStateManager;
@@ -31,10 +32,9 @@ public class DebugPresenter implements IGameUIStateObserver {
 
     private void initView(){
         Logger.info("Debug Presenter: initializing view");
-        changeUIState(uiStateManager.getState());
+        stateChange(uiStateManager.getState());
         view.setFPSChecked(DebugOptions.showFPS);
         view.setTextureBoundariesChecked(DebugOptions.showTextureBoundaries);
-        Logger.info("Debug Presenter: view initialized");
     }
 
 
@@ -45,21 +45,22 @@ public class DebugPresenter implements IGameUIStateObserver {
     }
 
     public void showTextureBoundariesPressed(){
-        DebugOptions.showTextureBoundaries= !DebugOptions.showTextureBoundaries;
+        DebugOptions.showTextureBoundaries = !DebugOptions.showTextureBoundaries;
     }
 
-    public void showFPSListener(){
+    public void showFPSPressed(){
         DebugOptions.showFPS = !DebugOptions.showFPS;
         view.showFPS(DebugOptions.showFPS);
     }
 
     public void crash(){
+        Logger.info("Debug Presenter: crashing game");
         Object o = null;
         o.toString();
     }
 
     @Override
-    public void changeUIState(GameUIStateManager.GameUIState state) {
+    public void stateChange(GameUIState state) {
 
         switch(state){
             case DEBUG:

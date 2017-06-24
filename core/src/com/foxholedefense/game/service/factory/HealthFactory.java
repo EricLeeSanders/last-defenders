@@ -1,16 +1,11 @@
 package com.foxholedefense.game.service.factory;
 
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.ActorGroups;
 import com.foxholedefense.game.model.actor.health.ArmorIcon;
 import com.foxholedefense.game.model.actor.health.HealthBar;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by Eric on 3/31/2017.
@@ -46,14 +41,13 @@ public class HealthFactory {
      *
      * @return HealthBar
      */
-    protected HealthBar createHealthBarActor() {
+    private HealthBar createHealthBarActor() {
         Logger.info("Actor Factory: creating healthbar");
-        HealthBar healthBar = new HealthBar(healthPool, resources.getTexture("healthbar-bg"), resources.getTexture("healthbar-life"), resources.getTexture("healthbar-armor"));
-        return healthBar;
+        return new HealthBar(healthPool, resources.getTexture("healthbar-bg"), resources.getTexture("healthbar-life"), resources.getTexture("healthbar-armor"));
 
     }
 
-    protected ArmorIcon createArmorIcon(){
+    private ArmorIcon createArmorIcon(){
         Logger.info("Actor Factory: creating ArmorIcon");
         return new ArmorIcon(armorIconPool, resources.getTexture("shield"));
     }

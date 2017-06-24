@@ -4,9 +4,8 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
 import com.foxholedefense.screen.AbstractScreen;
-import com.foxholedefense.screen.IScreenChanger;
+import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
-import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
@@ -19,9 +18,9 @@ import com.foxholedefense.util.Resources;
  */
 public class LevelSelectScreen extends AbstractScreen {
 	private LevelSelectStage stage;
-	private IScreenChanger screenChanger;
+	private ScreenChanger screenChanger;
 
-	public LevelSelectScreen(IScreenChanger screenChanger, GameStateManager gameStateManager, Resources resources, FHDAudio audio) {
+	public LevelSelectScreen(ScreenChanger screenChanger, GameStateManager gameStateManager, Resources resources, FHDAudio audio) {
 		super(gameStateManager);
 		this.screenChanger = screenChanger;
 		this.stage = new LevelSelectStage(screenChanger,resources, audio, getViewport());

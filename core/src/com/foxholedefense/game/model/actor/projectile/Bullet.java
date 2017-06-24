@@ -1,84 +1,80 @@
 package com.foxholedefense.game.model.actor.projectile;
 
 
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.helper.Damage;
-import com.foxholedefense.game.model.actor.interfaces.IAttacker;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
-import com.foxholedefense.util.ActorUtil;
+import com.foxholedefense.game.model.actor.GameActor;
+import com.foxholedefense.game.model.actor.interfaces.Attacker;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 import com.foxholedefense.util.datastructures.Dimension;
 
 /**
- * Represents a bullet that is shot from an Actor. Has a attacker and a target
+ * Represents a bullet that is shot from an Actor. Has an attacker and a target
  * 
  * @author Eric
  *
  */
-public class Bullet extends Actor implements Pool.Poolable{
+public class Bullet extends GameActor implements Pool.Poolable{
 	private static final float SPEED = 350f;
-	private ITargetable target;
-	private IAttacker attacker;
+	private Targetable target;
+	private Attacker attacker;
 	private Pool<Bullet> pool;
-	private TextureRegion bulletTexture;
-	
+	private boolean targetRemoved;
+
 	public Bullet(Pool<Bullet> pool, TextureRegion bulletTexture) {
 		this.pool = pool;
-		this.bulletTexture = bulletTexture;
+		setTextureRegion(bulletTexture);
 	}
 
 	/**
 	 * Initializes the bullet with the following parameters
-	 * 
-	 * @param attacker
-	 * @param target
-	 * @param pos
-	 *            - Position to spawn the bullet
-	 * @param size
-	 *            - Size of the bullet
+	 * @param attacker - The attacker
+	 * @param target - The target
+	 * @param size - The size of the bullet
 	 */
-	public Actor initialize(IAttacker attacker, ITargetable target, Vector2 pos, Dimension size ) {
+	public Actor initialize(Attacker attacker, Targetable target, Dimension size) {
 		this.target = target;
 		this.attacker = attacker;
-		this.setSize(size.getWidth(), size.getHeight());
-		this.setOrigin(size.getWidth() / 2, size.getHeight() / 2);
 
-		float startX = ActorUtil.calcXBotLeftFromCenter(pos.x, size.getWidth());
-		float startY = ActorUtil.calcYBotLeftFromCenter(pos.y, size.getHeight());
-		this.setPosition(startX, startY);
+		setSize(size.getWidth(), size.getHeight());
+		setOrigin(size.getWidth() / 2, size.getHeight() / 2);
+
+		Vector2 startPos = attacker.getGunPos();
+		this.setPositionCenter(startPos);
 
 		Vector2 end = target.getPositionCenter();
-		MoveToAction moveAction = new MoveToAction();
-		float endX = ActorUtil.calcXBotLeftFromCenter(end.x, size.getWidth());
-		float endY = ActorUtil.calcYBotLeftFromCenter(end.y, size.getHeight());
-		moveAction.setPosition(endX, endY);
-		moveAction.setDuration(end.dst(pos) / SPEED);
+		float duration = end.dst(startPos) / SPEED;
+		MoveToAction moveAction = Actions.moveTo(end.x, end.y, duration, Interpolation.linear);
+		moveAction.setAlignment(Align.center);
 		addAction(moveAction);
-		return this;
-	}
 
-	@Override
-	public void draw(Batch batch, float alpha) {
-		batch.draw(bulletTexture, getX(), getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
+		return this;
 	}
 
 	/**
 	 * Determines when the bullet has reached its destination and when it should
-	 * be freed to the pool. If the attacker is a tower, then it handles giving
-	 * the Tower a kill.
+	 * be freed to the pool. If the target is killed/removed, then finish the bullet animation
+	 * but the target should not take damage. See issue #259.
 	 *
 	 */
 	@Override
 	public void act(float delta) {
 		super.act(delta);
+		if(!target.isActive() || target.isDead()){
+			targetRemoved = true;
+		}
 		if (this.getActions().size == 0) {
-			Damage.dealBulletDamage(attacker, target);
+			if(!targetRemoved) {
+				Damage.dealBulletDamage(attacker, target);
+			}
 			pool.free(this);
-			return;
 		}
 	}
 
@@ -87,6 +83,7 @@ public class Bullet extends Actor implements Pool.Poolable{
 		this.clear();
 		target = null;
 		attacker = null;
+		targetRemoved = false;
 		this.remove();
 	}
 

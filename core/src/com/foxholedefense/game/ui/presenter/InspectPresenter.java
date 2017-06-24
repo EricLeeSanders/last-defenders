@@ -5,19 +5,16 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.actor.ai.TowerAI;
-import com.foxholedefense.game.model.actor.combat.CombatActor;
-import com.foxholedefense.game.model.actor.combat.ICombatActorObserver;
-import com.foxholedefense.game.model.actor.combat.tower.ITowerObserver;
+import com.foxholedefense.game.model.actor.ai.TowerAIType;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.level.state.ILevelStateObserver;
 import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.view.interfaces.IInspectView;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
+import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
+import com.foxholedefense.game.ui.view.interfaces.Updatable;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
@@ -28,7 +25,8 @@ import com.foxholedefense.util.FHDAudio.FHDSound;
  * @author Eric
  *
  */
-public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserver, ITowerObserver, ICombatActorObserver {
+public class InspectPresenter implements Updatable, GameUIStateObserver{
+
 	private GameUIStateManager uiStateManager;
 	private LevelStateManager levelStateManager;
 	private Tower selectedTower;
@@ -36,13 +34,13 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	private Group towerGroup;
 	private IInspectView view;
 	private FHDAudio audio;
-	private IMessageDisplayer messageDisplayer;
-	private boolean dischargeDisabled;
-	public InspectPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, Player player, Group towerGroup, FHDAudio audio, IMessageDisplayer messageDisplayer) {
+	private MessageDisplayer messageDisplayer;
+
+	public InspectPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, Player player, Group towerGroup, FHDAudio audio, MessageDisplayer messageDisplayer) {
+
 		this.uiStateManager = uiStateManager;
-		uiStateManager.attach(this);
 		this.levelStateManager = levelStateManager;
-		levelStateManager.attach(this);
+		uiStateManager.attach(this);
 		this.player = player;
 		this.towerGroup = towerGroup;
 		this.audio = audio;
@@ -56,13 +54,31 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 */
 	public void setView(IInspectView view) {
 		this.view = view;
-		changeUIState(uiStateManager.getState());
+		stateChange(uiStateManager.getState());
 	}
+
+	@Override
+	public void update(float delta){
+
+		if(!uiStateManager.getState().equals(GameUIState.INSPECTING)){
+			return;
+		}
+
+		if(!isTowerInteractable()){
+			closeInspect();
+		}
+
+		if(selectedTower != null){
+			view.update(selectedTower);
+		}
+	}
+
 
 	/**
 	 * Close and finishing inspecting
 	 */
 	public void closeInspect() {
+
 		Logger.info("Inspect Presenter: close inspect");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		resetInspect();
@@ -74,31 +90,30 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Resets the inspect
 	 */
 	private void resetInspect(){
+
 		Logger.info("Inspect Presenter: reset Inspect");
-		if(selectedTower != null){
-			selectedTower.detachCombatActor(this);
-			selectedTower = null;
-		}
+		selectedTower = null;
 	}
 	
 	/**
 	 * Change the target priority of the tower
 	 */
 	public void changeTargetPriority() {
+
 		Logger.info("Inspect Presenter: changing target priority");
 		audio.playSound(FHDSound.SMALL_CLICK);
-		if (selectedTower != null) {
-			TowerAI ai = TowerAI.values()[(selectedTower.getAI().getPosition() + 1) % 4];
+		if (canChangeTargetPriority()) {
+			TowerAIType ai = selectedTower.getAI().getNextTowerAIType();
 			selectedTower.setAI(ai);
 			view.update(selectedTower);
 		}
-
 	}
 
 	/**
 	 * Increase the tower's attack
 	 */
 	public void increaseAttack() {
+
 		Logger.info("Inspect Presenter: increasing attack");
 		audio.playSound(FHDSound.SMALL_CLICK);
 
@@ -114,6 +129,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Give the tower armor
 	 */
 	public void giveArmor() {
+
 		Logger.info("Inspect Presenter: giving armor");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if(canUpgradeTower(selectedTower.getArmorCost(), selectedTower.hasArmor())) {
@@ -128,6 +144,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Increase the tower's range
 	 */
 	public void increaseRange() {
+
 		Logger.info("Inspect Presenter: increasing range");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if(canUpgradeTower(selectedTower.getRangeIncreaseCost(), selectedTower.hasIncreasedRange())) {
@@ -142,6 +159,7 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	 * Increase the tower's attack speed
 	 */
 	public void increaseSpeed() {
+
 		Logger.info("Inspect Presenter: increasing speed");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if(canUpgradeTower(selectedTower.getSpeedIncreaseCost(), selectedTower.hasIncreasedSpeed())) {
@@ -153,15 +171,88 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	}
 
 	/**
+	 * Discharge and Sell the tower
+	 */
+	public void dishcharge() {
+
+		Logger.info("Inspect Presenter: discharging");
+		if(canDischargeTower()) {
+			audio.playSound(FHDSound.SELL);
+			player.giveMoney(selectedTower.getSellCost());
+			selectedTower.sellTower();
+			closeInspect();
+		} else {
+			if(isDischargeDisabled()) {
+				messageDisplayer.displayMessage("Cannot discharge " + selectedTower.getName() + " while a wave is in progress!");
+			}
+		}
+	}
+
+	/**
+	 * Open the inspection window for a tower that is clicked.
+	 * 
+	 * @param coords
+	 */
+	public void inspectTower(Vector2 coords) {
+
+		if (canInspectTowers()) {
+			Actor hitActor = CollisionDetection.towerHit(towerGroup.getChildren(), coords);
+			if (hitActor != null) {
+				if (canInspectTower((Tower) hitActor)) {
+					Logger.info("Inspect Presenter: inspecting tower");
+					selectedTower = (Tower) hitActor;
+					uiStateManager.setState(GameUIState.INSPECTING);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Get the players amount of money
+	 * @return int - player money
+	 */
+	public int getPlayerMoney(){
+		return player.getMoney();
+	}
+
+	/**
+	 * Determines if the tower can be inspected
+	 * @return
+     */
+	private boolean canInspectTower(Tower tower){
+
+		return !tower.isDead() && tower.isActive();
+	}
+
+	/**
+	 * Determines if towers can be inspected
+	 * @return
+	 */
+	private boolean canInspectTowers(){
+
+		return uiStateManager.getState().equals(GameUIState.STANDBY)
+				|| uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS);
+	}
+	
+	/**
+	 * Determine if the the upgrade is affordable
+	 * 
+	 * @param upgradeCost - Cost of the upgrade
+	 * @return boolean
+	 */
+	public boolean canAffordUpgrade(int upgradeCost) {
+		return upgradeCost <= player.getMoney();
+	}
+
+	/**
 	 * Checks if we can upgrade the tower. May display a message to the user.
 	 * @param cost
 	 * @param hasUpgrade
-     * @return - boolean - if the tower can be upgraded
-     */
+	 * @return - boolean - if the tower can be upgraded
+	 */
 	private boolean canUpgradeTower(int cost, boolean hasUpgrade){
 
-		if (selectedTower == null) {
-			Logger.info("Inspect Presenter canUpgradeTower: selectdTower is null");
+		if (!isTowerInteractable() || !uiStateManager.getState().equals(GameUIState.INSPECTING)) {
 			return false;
 		}
 
@@ -181,121 +272,51 @@ public class InspectPresenter implements IGameUIStateObserver, ILevelStateObserv
 	}
 
 	/**
-	 * Discharge and Sell the tower
-	 */
-	public void dishcharge() {
-		Logger.info("Inspect Presenter: discharging");
-		if(isDischargeDisabled()){
-			messageDisplayer.displayMessage("Cannot discharge " + selectedTower.getName() + " while a wave is in progress!");
-			return;
-		}
-		if (selectedTower != null) {
-			audio.playSound(FHDSound.SELL);
-			player.giveMoney(selectedTower.getSellCost());
-			selectedTower.sellTower();
-			closeInspect();
-		}
-	}
-
-	/**
-	 * Open the inspection window for a tower that is clicked. Only open the
-	 * tower inspect if the state of the UI is in Standby or Wave In Progress
-	 * 
-	 * @param coords
-	 */
-	public void inspectTower(Vector2 coords) {
-		if (uiStateManager.getState().equals(GameUIState.STANDBY) || uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)) {
-			Actor hitActor = CollisionDetection.towerHit(towerGroup.getChildren(), coords);
-			if (hitActor != null) {
-				if (hitActor instanceof Tower) {
-					Logger.info("Inspect Presenter: inspecting tower");
-					selectedTower = (Tower) hitActor;
-					selectedTower.attachTower(this);
-					selectedTower.attachCombatActor(this);
-					uiStateManager.setState(GameUIState.INSPECTING);
-				}
-			}
-		}
-	}
-	/**
-	 * Gets the type/name of the selected tower
+	 * Determines if the the target priority can be changed
 	 * @return
-	 */
-	public String getTowerName(){
-		return selectedTower.getName();
-	}
-	
-	/**
-	 * Get the players amount of money
-	 * @return int - player money
-	 */
-	public int getPlayerMoney(){
-		return player.getMoney();
-	}
-	
-	/**
-	 * Determine if the the upgrade is affordable
-	 * 
-	 * @param upgradeCost - Cost of the upgrade
-	 * @return boolean
-	 */
-	public boolean canAffordUpgrade(int upgradeCost) {
-		return upgradeCost <= player.getMoney();
+     */
+	private boolean canChangeTargetPriority(){
+
+		return uiStateManager.getState().equals(GameUIState.INSPECTING)
+			&& isTowerInteractable();
 	}
 
-	public boolean isDischargeDisabled(){
-		return dischargeDisabled;
+	/**
+	 * Determines if the tower is interactable
+	 * @return
+     */
+	private boolean isTowerInteractable(){
+
+		return selectedTower != null && !selectedTower.isDead() && selectedTower.isActive();
 	}
 
-	public void setDischargeDisabled(boolean disabled){
-		this.dischargeDisabled = disabled;
-		view.dischargeDisabled(disabled);
+	/**
+	 * Determines if the tower can be discharged
+	 * @return
+     */
+	private boolean canDischargeTower(){
+
+		return uiStateManager.getState().equals(GameUIState.INSPECTING)
+				&& isTowerInteractable() && !isDischargeDisabled();
+	}
+
+	private boolean isDischargeDisabled(){
+
+		return levelStateManager.getState().equals(LevelState.WAVE_IN_PROGRESS);
 	}
 
 	@Override
-	public void changeUIState(GameUIState state) {
+	public void stateChange(GameUIState state) {
 
 		switch (state) {
-		case INSPECTING:
-			view.inspectingState();
-			view.update(selectedTower);
-			break;
-		default:
-			resetInspect();
-			view.standByState();
-			break;
+			case INSPECTING:
+				view.inspectingState();
+				view.update(selectedTower);
+				break;
+			default:
+				resetInspect();
+				view.standByState();
+				break;
 		}
-
-	}
-
-	@Override
-	public void changeLevelState(LevelState state) {
-
-		switch(state){
-		case WAVE_IN_PROGRESS:
-			setDischargeDisabled(true);
-			break;
-		case STANDBY:
-			setDischargeDisabled(false);
-			break;
-		default:
-			break;
-		}
-		
-	}
-
-	@Override
-	public void notifyCombatActor(CombatActor actor, CombatActorEvent event){
-
-		if(selectedTower == null
-			|| event.equals(CombatActorEvent.DEAD)){
-			closeInspect();
-		}
-	}
-
-	@Override
-	public void notifyTower(Tower tower, TowerEvent event) {
-
-		view.update(tower);
 	}
 }

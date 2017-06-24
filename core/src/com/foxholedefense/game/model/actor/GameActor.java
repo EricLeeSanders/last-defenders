@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Align;
 import com.foxholedefense.util.DebugOptions;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
@@ -17,11 +18,11 @@ public class GameActor extends Actor{
 	private TextureRegion textureRegion;
 	private FHDVector2 positionCenter = UtilPool.getVector2();
 
-	public GameActor(){
+	protected GameActor(){
 
 	}
 
-	public GameActor(Dimension textureSize){
+	protected GameActor(Dimension textureSize){
 		this.setSize(textureSize.getWidth(),textureSize.getHeight());
 		this.setOrigin(textureSize.getWidth() / 2, textureSize.getHeight() / 2);
 	}
@@ -45,7 +46,7 @@ public class GameActor extends Actor{
 		bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
 		bodyOutline.begin(ShapeType.Line);
 		bodyOutline.setColor(Color.BLUE);
-		bodyOutline.rect(getX(),getY(), getWidth(), getHeight());
+		bodyOutline.rect(getX(),getY(), getOriginX(), getOriginY(), getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 		bodyOutline.end();
 		batch.begin();
 	}
@@ -60,18 +61,18 @@ public class GameActor extends Actor{
 	}
 
 	public void setPositionCenter(float x, float y){
-		setPosition(x - getOriginX(), y - getOriginY());
+		setPosition(x, y, Align.center);
 	}
 
-	public TextureRegion getTextureRegion() {
+	private TextureRegion getTextureRegion() {
 		return textureRegion;
 	}
 
-	public void setTextureRegion(TextureRegion textureRegion) {
+	protected void setTextureRegion(TextureRegion textureRegion) {
 		this.textureRegion = textureRegion;
 	}
 
-	public void setSize(Dimension textureSize){
+	protected void setSize(Dimension textureSize){
 		this.setSize(textureSize.getWidth(),textureSize.getHeight());
 		this.setOrigin(textureSize.getWidth() / 2, textureSize.getHeight() / 2);
 	}

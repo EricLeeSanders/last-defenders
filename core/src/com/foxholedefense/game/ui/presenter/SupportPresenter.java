@@ -3,19 +3,24 @@ package com.foxholedefense.game.ui.presenter;
 import com.badlogic.gdx.math.Vector2;
 import com.foxholedefense.game.model.Player;
 import com.foxholedefense.game.model.actor.support.AirStrike;
+import com.foxholedefense.game.model.actor.support.Apache;
+import com.foxholedefense.game.model.actor.support.LandMine;
 import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
 import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
 import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
 import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.IGameUIStateObserver;
+import com.foxholedefense.game.ui.state.GameUIStateObserver;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
+import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
 import com.foxholedefense.game.ui.view.interfaces.ISupportView;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Presenter for Enlist. Handles enlisting towers
@@ -23,7 +28,8 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  *
  */
-public class SupportPresenter implements IGameUIStateObserver {
+public class SupportPresenter implements GameUIStateObserver {
+
 	private SupportActorPlacement supportActorPlacement;
 	private AirStrikePlacement airStrikePlacement;
 	private SupplyDropPlacement supplyDropPlacement;
@@ -31,10 +37,13 @@ public class SupportPresenter implements IGameUIStateObserver {
 	private Player player;
 	private ISupportView view;
 	private FHDAudio audio;
-	private IMessageDisplayer messageDisplayer;
+	private MessageDisplayer messageDisplayer;
+	private Map<String, Integer> supportCosts = new HashMap<>();
+
 	public SupportPresenter(GameUIStateManager uiStateManager, Player player, FHDAudio audio
 			, SupportActorPlacement supportActorPlacement, AirStrikePlacement airStrikePlacement, SupplyDropPlacement supplyDropPlacement
-			, IMessageDisplayer messageDisplayer) {
+			, MessageDisplayer messageDisplayer) {
+
 		this.uiStateManager = uiStateManager;
 		uiStateManager.attach(this);
 		this.audio = audio;
@@ -43,6 +52,13 @@ public class SupportPresenter implements IGameUIStateObserver {
 		this.supportActorPlacement = supportActorPlacement;
 		this.airStrikePlacement = airStrikePlacement;
 		this.messageDisplayer = messageDisplayer;
+		initSupportCostsMap();
+	}
+
+	private void initSupportCostsMap(){
+
+		supportCosts.put("Apache", Apache.COST);
+		supportCosts.put("LandMine", LandMine.COST);
 	}
 
 	/**
@@ -51,17 +67,19 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * @param view
 	 */
 	public void setView(ISupportView view) {
+
 		this.view = view;
-		changeUIState(uiStateManager.getState());
+		stateChange(uiStateManager.getState());
 	}
 	
 	/** 
 	 * Create a Supply Drop
 	 */
 	public void createSupplyDrop(){
+
 		Logger.info("Support Presenter: creating supply drop");
 		audio.playSound(FHDSound.SMALL_CLICK);
-		if(canAffordSupport(SupplyDropCrate.COST)) {
+		if(canCreateSupport(SupplyDropCrate.COST)) {
 			supplyDropPlacement.createSupplyDrop();
 			uiStateManager.setState(GameUIState.PLACING_SUPPLYDROP);
 			Logger.info("Support Presenter: supply drop created");
@@ -74,29 +92,51 @@ public class SupportPresenter implements IGameUIStateObserver {
 	
 	
 	/**
-	 * Place a supply drop
+	 * Move a supply drop
 	 */
-	public void placeSupplyDrop(Vector2 location){
-		Logger.info("Support Presenter: place supply drop");
-		supplyDropPlacement.setLocation(location);
-		view.showBtnPlace();
+	public void moveSupplyDrop(Vector2 location){
+
+		Logger.info("Support Presenter: move supply drop");
+		if(canMoveSupplyDrop()){
+			supplyDropPlacement.setLocation(location);
+			view.showBtnPlace();
+		}
+	}
+
+	/**
+	 * Determine if a supply drop can be moved
+	 * @return
+     */
+	private boolean canMoveSupplyDrop(){
+
+		return uiStateManager.getState().equals(GameUIState.PLACING_SUPPLYDROP)
+				&& supplyDropPlacement.isCurrentSupplyDropCrate();
 	}
 	
-	private void finishSupplyDropPlacement(){
-		Logger.info("Support Presenter: finishing supply drop placement");
-		if(supplyDropPlacement.isCurrentSupplyDropCrate() && uiStateManager.getState().equals(GameUIState.PLACING_SUPPLYDROP)){
-			supplyDropPlacement.finishPlacement();
-			Logger.info("Support Presenter: supply drop placement finished");
+	private void placeSupplyDrop(){
+		Logger.info("Support Presenter: place supply drop");
+		if(canPlaceSupplyDrop()){
+			int cost = SupplyDropCrate.COST;
+			player.spendMoney(cost);
+			supplyDropPlacement.placeSupplyDrop();
+			uiStateManager.setStateReturn();
 		}
+	}
+
+	private boolean canPlaceSupplyDrop(){
+
+		return uiStateManager.getState().equals(GameUIState.PLACING_SUPPLYDROP)
+				&& supplyDropPlacement.isCurrentSupplyDropCrate();
 	}
 	
 	/**
 	 * Create an AirStrike
 	 */
 	public void createAirStrike(){
+
 		Logger.info("Support Presenter: creating air strike");
 		audio.playSound(FHDSound.SMALL_CLICK);
-		if(canAffordSupport(AirStrike.COST)) {
+		if(canCreateSupport(AirStrike.COST)) {
 			airStrikePlacement.createAirStrike();
 			uiStateManager.setState(GameUIState.PLACING_AIRSTRIKE);
 			Logger.info("Support Presenter: air strike created");
@@ -110,32 +150,55 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 * Place an Air Strike Location
 	 */
 	public void placeAirStrikeLocation(Vector2 location){
+
 		Logger.info("Support Presenter: placing air strike location");
-		if (!airStrikePlacement.getCurrentAirStrike().readyToBegin()) {
+		if (canPlaceAirStrikeLocation()) {
 			airStrikePlacement.addLocation(UtilPool.getVector2(location));
-			Logger.info("Support Presenter: air strike location placed");
-			if(airStrikePlacement.getCurrentAirStrike().readyToBegin()){
+			if(airStrikePlacement.isReadyToBegin()){
 				Logger.info("Support Presenter: air strike ready to begin");
 				view.showBtnPlace();
 			}
 		}
 	}
+
+	/**
+	 * Determines if an air strike location can be placed
+	 * @return
+     */
+	private boolean canPlaceAirStrikeLocation(){
+
+		return uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)
+				&& airStrikePlacement.isCurrentAirStrike()
+				&& !airStrikePlacement.isReadyToBegin();
+	}
 	
-	public void finishAirStrikePlacement(){
+	private void finishAirStrikePlacement(){
+
 		Logger.info("Support Presenter: finishing air strike placement");
-		if (airStrikePlacement.isCurrentAirStrike() && uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)) {
+		if (canFinishAirStrikePlacement()) {
+			int cost = AirStrike.COST;
+			player.spendMoney(cost);
 			airStrikePlacement.finishCurrentAirStrike();
-			Logger.info("Support Presenter: air strike placement finished");
+			uiStateManager.setStateReturn();
 		}
+	}
+
+	private boolean canFinishAirStrikePlacement(){
+
+		return uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)
+				&& airStrikePlacement.isCurrentAirStrike()
+				&& airStrikePlacement.isReadyToBegin();
 	}
 	
 	/**
 	 * Create a Support Actor
 	 * 
 	 */
-	public void createSupportActor(String type, int cost) {
+	public void createSupportActor(String type) {
+
 		Logger.info("Support Presenter: creating support actor");
-		if(canAffordSupport(cost)) {
+		int cost = supportCosts.get(type);
+		if(canCreateSupport(cost)) {
 			audio.playSound(FHDSound.SMALL_CLICK);
 			supportActorPlacement.createSupportActor(type);
 			uiStateManager.setState(GameUIState.PLACING_SUPPORT);
@@ -144,39 +207,67 @@ public class SupportPresenter implements IGameUIStateObserver {
 			Logger.info("Support Presenter: cannot afford " + type + " player: " + getPlayerMoney() + " cost: " + cost);
 			messageDisplayer.displayMessage("You cannot afford a " + type + "!");
 		}
+	}
 
+	/**
+	 * Move a support actor
+	 * @param location
+     */
+	public void moveSupportActor(Vector2 location){
+
+		Logger.info("Support Presenter: move support actor");
+		if(canMoveSupportActor()) {
+			supportActorPlacement.moveSupportActor(location);
+			view.showBtnPlace();
+		}
+	}
+
+	/**
+	 * Determine if a support actor can be moved
+	 * @return
+     */
+	private boolean canMoveSupportActor(){
+
+		return uiStateManager.getState().equals(GameUIState.PLACING_SUPPORT)
+				&& supportActorPlacement.isCurrentSupportActor();
 
 	}
-	
+
 	/**
-	 * Try to place a Support Actor
+	 * Place a support actor
+	 * @return
+     */
+	private void placeSupportActor(){
+
+		Logger.info("Support Presenter: placing support actor");
+		if (canPlaceSupportActor()) {
+			int cost = supportActorPlacement.getCurrentSupportActor().getCost();
+			supportActorPlacement.placeSupportActor();
+			player.spendMoney(cost);
+			supportActorPlacement.removeCurrentSupportActor();
+			uiStateManager.setStateReturn();
+			Logger.info("Support Presenter: support actor placed");
+		}
+	}
+
+	private boolean canPlaceSupportActor(){
+
+		return uiStateManager.getState().equals(GameUIState.PLACING_SUPPORT)
+				&& supportActorPlacement.isCurrentSupportActor();
+	}
+
+	/**
+	 * Try to place actor
 	 */
-	public void placeSupportActor() {
+	public void placeActor() {
 		Logger.info("Support Presenter: placing support actor");
 		audio.playSound(FHDSound.SMALL_CLICK);
 		if(uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)){
-			Logger.info("Support Presenter: placing air strike");
-			int cost = airStrikePlacement.getCurrentAirStrike().getCost();
-			player.spendMoney(cost);
 			finishAirStrikePlacement();
-			uiStateManager.setStateReturn();
-			Logger.info("Support Presenter: air strike placed");
 		} else if (uiStateManager.getState().equals(GameUIState.PLACING_SUPPORT)){
-			Logger.info("Support Presenter: placing support actor");
-			int cost = supportActorPlacement.getCurrentSupportActor().getCost();
-			if (supportActorPlacement.placeSupportActor()) {
-				player.spendMoney(cost);
-				supportActorPlacement.removeCurrentSupportActor();
-				uiStateManager.setStateReturn();
-				Logger.info("Support Presenter: support actor placed");
-			}
+			placeSupportActor();
 		} else if (uiStateManager.getState().equals(GameUIState.PLACING_SUPPLYDROP)){
-			Logger.info("Support Presenter: placing supply drop");
-			int cost = supplyDropPlacement.getCurrentSupplyDropCrate().getCost();
-			player.spendMoney(cost);
-			finishSupplyDropPlacement();
-			uiStateManager.setStateReturn();
-			Logger.info("Support Presenter: supply drop placed");
+			placeSupplyDrop();
 		}
 	}
 	
@@ -193,6 +284,7 @@ public class SupportPresenter implements IGameUIStateObserver {
 	public void cancel(){
 		Logger.info("Support Presenter: cancel");
 		uiStateManager.setStateReturn();
+		cancelSupport();
 	}
 	
 	public int getPlayerMoney(){
@@ -206,14 +298,14 @@ public class SupportPresenter implements IGameUIStateObserver {
 	 *            - Position to move
 	 */
 	public void screenTouch(Vector2 coords, String touchType) {
+
 		if (supportActorPlacement.isCurrentSupportActor() && uiStateManager.getState().equals(GameUIState.PLACING_SUPPORT)) {
-			supportActorPlacement.moveSupportActor(coords);
-			view.showBtnPlace();
+			moveSupportActor(coords);
 		} else if (airStrikePlacement.isCurrentAirStrike() && uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)
 				&& touchType.equals("TouchDown")) {
-			this.placeAirStrikeLocation(coords);
+			placeAirStrikeLocation(coords);
 		} else if (supplyDropPlacement.isCurrentSupplyDropCrate() && uiStateManager.getState().equals(GameUIState.PLACING_SUPPLYDROP)){
-			this.placeSupplyDrop(coords);
+			moveSupplyDrop(coords);
 		}
 	}
 
@@ -227,8 +319,20 @@ public class SupportPresenter implements IGameUIStateObserver {
 		return (supportCost <= player.getMoney());
 	}
 
+	/**
+	 * Determines if support actors can be created
+	 * @param supportCost
+	 * @return
+     */
+	private boolean canCreateSupport(int supportCost){
+
+		return uiStateManager.getState().equals(GameUIState.SUPPORT)
+				&& canAffordSupport(supportCost);
+
+	}
+
 	@Override
-	public void changeUIState(GameUIState state) {
+	public void stateChange(GameUIState state) {
 
 		switch (state) {
 		case SUPPORT:

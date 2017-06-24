@@ -38,12 +38,13 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  *
  */
 public class EnlistView extends Group implements IEnlistView, InputProcessor {
-	private Array<EnlistButton> enlistButtons = new Array<EnlistButton>(7);
+	private Array<EnlistButton> enlistButtons = new Array<>(7);
 	private ImageButton btnPlacingCancel, btnPlace, btnRotate;
-	private ImageButton btnCancel, btnScrollUp, btnScrollDown;
+	private ImageButton btnScrollUp;
+	private ImageButton btnScrollDown;
 	private EnlistPresenter presenter;
 	private Group choosingGroup;
-	private Label lblTitle, lblMoney;
+	private Label lblMoney;
 	private ScrollPane scroll;
 
 	public EnlistView(EnlistPresenter presenter, Skin skin) {
@@ -58,7 +59,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	/**
 	 * Creates the controls
 	 */
-	public void createControls(Skin skin) {
+	private void createControls(Skin skin) {
 		Logger.info("Enlist View: creating controls");
 		Table container = new Table();
 		container.setTransform(false);
@@ -74,8 +75,8 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		
 		container.add(scroll).expand().fill();
 		container.setBackground(skin.getDrawable("main-panel"));
-		
-		lblTitle = new Label("ENLIST", skin);
+
+		Label lblTitle = new Label("ENLIST", skin);
 		lblTitle.setPosition(container.getX() + (container.getWidth()/2) - (lblTitle.getWidth()/2)
 					,container.getY() + container.getHeight() - lblTitle.getHeight()+1);
 		lblTitle.setAlignment(Align.center);
@@ -102,9 +103,9 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 		createTowerButton(enlistTable, skin, "Turret", TowerTurret.COST, 3, 7, 7, 8);
 		enlistTable.row();
 		createTowerButton(enlistTable, skin, "Tank", TowerTank.COST, 10, 10, 8, 10);
-		
-		
-		btnCancel = new ImageButton(skin,"cancel");
+
+
+		ImageButton btnCancel = new ImageButton(skin, "cancel");
 		btnCancel.setSize(64, 64);
 		btnCancel.getImageCell().size(35,36);
 		btnCancel.getImage().setScaling(Scaling.stretch);
@@ -160,7 +161,8 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 	private void createTowerButton(Table enlistTable, Skin skin, String towerName, Integer towerCost, int attack, int health, int range, int speed){
 		EnlistButton towerButton = new EnlistButton(skin, attack, health, range, speed, towerName, towerCost);
 		enlistTable.add(towerButton).size(120,195).spaceBottom(5);
-		setTowerListener(towerButton,towerName);
+		String filteredTowerName = towerName.replaceAll(" ", "");
+		setTowerListener(towerButton,filteredTowerName);
 		enlistButtons.add(towerButton);
 	}
 
@@ -207,7 +209,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 			@Override
 			public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 				super.touchUp(event, x, y, pointer, button);
-				presenter.createTower(tower,enlistButton.cost);
+				presenter.createTower(tower);
 			}
 		});
 	}

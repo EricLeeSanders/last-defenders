@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.foxholedefense.game.ui.view.interfaces.IMessageDisplayer;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
@@ -17,11 +16,11 @@ import java.util.Map;
  * Created by Eric on 3/31/2017.
  */
 
-public class MessageDisplayer extends Group implements IMessageDisplayer {
+public class MessageDisplayer extends Group implements com.foxholedefense.game.ui.view.interfaces.MessageDisplayer {
     private static final float MESSAGE_DURATION = 2;
     private static final float DEFAULT_FONT_SCALE = 0.35f;
     private static final Color DEFAULT_FONT_COLOR = Color.RED;
-    private Map<Color, LabelStyle> labelStyleMap = new HashMap<Color, LabelStyle>();
+    private Map<Color, LabelStyle> labelStyleMap = new HashMap<>();
     private Label messageLabel;
     private Skin skin;
 

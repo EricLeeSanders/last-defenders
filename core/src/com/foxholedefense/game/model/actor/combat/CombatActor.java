@@ -10,21 +10,20 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.actor.GameActor;
+import com.foxholedefense.game.model.actor.combat.event.interfaces.EventManager;
+import com.foxholedefense.game.model.actor.combat.event.interfaces.EventManager.CombatActorEventEnum;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
-import com.foxholedefense.game.model.actor.interfaces.IAttacker;
-import com.foxholedefense.game.model.actor.interfaces.ICollision;
-import com.foxholedefense.game.model.actor.interfaces.ITargetable;
+import com.foxholedefense.game.model.actor.interfaces.Collidable;
+import com.foxholedefense.game.model.actor.interfaces.Attacker;
+import com.foxholedefense.game.model.actor.interfaces.Targetable;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.DebugOptions;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
-import com.foxholedefense.game.model.actor.combat.ICombatActorObserver.CombatActorEvent;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 /**
@@ -33,7 +32,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  *
  */
-public abstract class CombatActor extends GameActor implements Pool.Poolable, ICollision, IAttacker, ITargetable {
+public abstract class CombatActor extends GameActor implements Pool.Poolable, Collidable, Attacker, Targetable {
 	private final float RESET_ATTACK_SPEED, RESET_RANGE, MAX_HEALTH, MAX_ARMOR, RESET_ATTACK;
 	private float attackSpeed, range, health, attack, armor;
 	private Vector2 gunPos;
@@ -41,12 +40,12 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	private Circle rangeCircle = new Circle();
 	private boolean hasArmor, dead, active;
 	private Pool<CombatActor> pool;
-	private SnapshotArray<ICombatActorObserver> observers = new SnapshotArray<ICombatActorObserver>();
 	private DeathEffectType deathEffectType;
 	private Group targetGroup;
+	private EventManager eventManager;
 
-	public CombatActor(TextureRegion textureRegion, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
-						float health, float armor, float attack, float attackSpeed, float range, DeathEffectType deathEffectType) {
+	protected CombatActor(TextureRegion textureRegion, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
+						  float health, float armor, float attack, float attackSpeed, float range, DeathEffectType deathEffectType) {
 
 		super(textureSize);
 		this.MAX_HEALTH = health;
@@ -67,29 +66,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		
 		
 	}
-	public void detachCombatActor(ICombatActorObserver observer){
-		Logger.info("Combat Actor Detach: " + observer.getClass().getName());
-		observers.removeValue(observer, false);
-	}
 
-	public void attachAllCombatActor(Array<ICombatActorObserver> observers){
-		this.observers.addAll(observers);
-	}
-
-	public void attachCombatActor(ICombatActorObserver observer){
-		Logger.info("Combat Actor Attach: " + observer.getClass().getName());
-		observers.add(observer);
-	}
-	protected void notifyObserversCombatActor(CombatActorEvent event){
-		Logger.info("Combat Actor: Notify Observers");
-		Object[] objects = observers.begin();
-		for(int i = observers.size - 1; i >= 0; i--){
-			ICombatActorObserver observer = (ICombatActorObserver) objects[i];
-			Logger.info("Combat Actor Notifying: " + observer.getClass().getName());
-			observer.notifyCombatActor(this, event);
-		}
-		observers.end();
-	}
 	@Override
 	public void reset() {
 		Logger.info("Combat Actor: " + this.getClass().getSimpleName() + " Resetting");
@@ -106,11 +83,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	}
 
 	@Override
-	public void act(float delta) {
-		super.act(delta);
-	}
-
-	@Override
 	public void draw(Batch batch, float alpha) {
 
 		super.draw(batch, alpha);
@@ -118,6 +90,10 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		if(DebugOptions.showTextureBoundaries){
 			drawDebugBody(batch);
 		}
+	}
+
+	public void setEventManager(EventManager eventManager){
+		this.eventManager = eventManager;
 	}
 
 	private void drawDebugBody(Batch batch){
@@ -162,7 +138,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 	public Vector2 getGunPos() {
 		Vector2 centerPosition = getPositionCenter();
-		FHDVector2 rotatedCoords = ActorUtil.getRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y), centerPosition.x, centerPosition.y, Math.toRadians(getRotation()));
+		FHDVector2 rotatedCoords = ActorUtil.calculateRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y), centerPosition.x, centerPosition.y, Math.toRadians(getRotation()));
 		rotatedGunPos.set(rotatedCoords.x, rotatedCoords.y);
 		rotatedCoords.free();
 		return rotatedGunPos;
@@ -177,19 +153,19 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		return attackSpeed;
 	}
 
-	public void setAttackSpeed(float attackSpeed) {
+	protected void setAttackSpeed(float attackSpeed) {
 		this.attackSpeed = attackSpeed;
 	}
 
-	public float getRange() {
+	protected float getRange() {
 		return range;
 	}
 
-	public void setRange(float range) {
+	protected void setRange(float range) {
 		this.range = range;
 	}
 
-	public abstract void attackTarget(ITargetable target);
+	public abstract void attackTarget(Targetable target);
 	
 	public DeathEffectType getDeathEffectType(){
 		return deathEffectType;
@@ -197,11 +173,13 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 
 	public abstract Shape2D getBody();
 
+	protected abstract void deadState();
+
 	public void setDead(boolean dead) {
 		this.dead = dead;
 		if (isDead()) {
 			Logger.info("Combat Actor: " + this.getClass().getSimpleName() + " Dead");
-			notifyObserversCombatActor(CombatActorEvent.DEAD);
+			deadState();
 			pool.free(this);
 		}
 	}
@@ -210,19 +188,29 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		return dead;
 	}
 
+	/**
+	 * Returns health percent
+	 * 0 - 1.
+	 *
+     */
 	public float getHealthPercent() {
-		return ((this.getHealth() / this.getMaxHealth()) * 100);
+		return this.getHealth() / this.getMaxHealth();
 	}
 
+	/**
+	 * Returns armor percent
+	 * 0 - 1.
+	 *
+	 */
 	public float getArmorPercent() {
-		return ((this.armor / this.MAX_ARMOR) * 100);
+		return this.armor / this.MAX_ARMOR;
 	}
 
 	public float getMaxHealth() {
 		return MAX_HEALTH;
 	}
 
-	public void resetHealth() {
+	protected void resetHealth() {
 		health = MAX_HEALTH;
 	}
 	public void resetArmor() {
@@ -234,8 +222,12 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 		return attack;
 	}
 
-	public void setAttack(float attack) {
+	protected void setAttack(float attack) {
 		this.attack = attack;
+	}
+
+	public float getArmor(){
+		return armor;
 	}
 
 	public boolean hasArmor() {
@@ -245,7 +237,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	public void setHasArmor(boolean hasArmor) {
 		if(hasArmor() && !hasArmor) {
 			armor = 0;
-			notifyObserversCombatActor(CombatActorEvent.ARMOR_BROKEN);
+			eventManager.sendEvent(CombatActorEventEnum.ARMOR_DESTROYED);
 		}
 		resetArmor();
 		this.hasArmor = hasArmor;
@@ -264,10 +256,15 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, IC
 	 * It can be targeted, and attacked.
 	 * @return
      */
+	@Override
 	public boolean isActive() {
 		return active;
 	}
 
 	public void setActive(boolean active) {	this.active = active; }
+
+	public void setPool(Pool<CombatActor> pool){
+		this.pool = pool;
+	}
 
 }

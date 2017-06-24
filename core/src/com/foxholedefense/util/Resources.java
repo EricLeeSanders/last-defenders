@@ -26,7 +26,7 @@ public class Resources {
 	public static final String ACTOR_ATLAS = "game/actors/actors.atlas";
 	public static final String LEVEL_SELECT_ATLAS = "level_select/level_select.atlas";
 	public static final String SKIN_ATLAS = "skin/uiskin.atlas";
-	public static final String SKIN_JSON = "skin/uiskin.json";
+	private static final String SKIN_JSON = "skin/uiskin.json";
 
 	public static final float VIRTUAL_WIDTH = 640; // 16:9
 	public static final float VIRTUAL_HEIGHT = 360;
@@ -54,8 +54,10 @@ public class Resources {
 	private UserPreferences userPreferences;
 	private AssetManager manager = new AssetManager();
 
-	private Map<String, TextureRegion> loadedTextures = new HashMap<String, TextureRegion>();
-	private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<String, Array<TextureAtlas.AtlasRegion>>();
+	private Map<String, TextureRegion> loadedTextures = new HashMap<>();
+	private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<>();
+
+	public Resources(){}
 
 	public Resources(UserPreferences userPreferences){
 		this.userPreferences = userPreferences;
@@ -210,7 +212,7 @@ public class Resources {
 	}
 
 
-	public void loadSkinSync() {
+	private void loadSkinSync() {
 		Logger.info("Resources: sync loading skin");
 		loadSkin();
 		manager.finishLoading();
