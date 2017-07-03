@@ -1,5 +1,13 @@
 package game.helper;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.powermock.api.mockito.PowerMockito.when;
+
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
@@ -10,24 +18,13 @@ import com.foxholedefense.game.helper.Damage;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.util.Logger;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.powermock.api.mockito.PowerMockito.when;
 
 /**
  * Created by Eric on 5/20/2017.
@@ -38,12 +35,14 @@ public class DamageTest {
 
     @Before
     public void initDamageTest() {
+
         PowerMockito.mockStatic(Logger.class);
         PowerMockito.mockStatic(CollisionDetection.class);
     }
 
     @Test
     public void dealBulletDamageAttackEnemyTest() {
+
         Tower tower = TestUtil.createTower("Rifle", true);
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
@@ -56,6 +55,7 @@ public class DamageTest {
 
     @Test
     public void dealBulletDamageAttackTowerTest() {
+
         Tower tower = TestUtil.createTower("Rifle", false);
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
@@ -68,6 +68,7 @@ public class DamageTest {
 
     @Test
     public void dealBulletDamageKillEnemyTest() {
+
         Tower tower = TestUtil.createTower("Rifle", true);
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
@@ -81,6 +82,7 @@ public class DamageTest {
 
     @Test
     public void dealBulletDamageKillTowerTest() {
+
         Tower tower = TestUtil.createTower("Rifle", false);
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
@@ -93,6 +95,7 @@ public class DamageTest {
 
     @Test
     public void dealBulletDamageAttackPlatedArmorTest() {
+
         Tower tower = TestUtil.createTower("Rifle", true);
         Enemy enemy = TestUtil.createEnemy("Tank", true);
 
@@ -118,10 +121,14 @@ public class DamageTest {
 
         Polygon flameBody = new Polygon();
 
-        when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), eq(flameBody))).thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), eq(flameBody))).thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), eq(flameBody))).thenReturn(false);
-        when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), eq(flameBody))).thenReturn(true);
+        when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), eq(flameBody)))
+            .thenReturn(true);
+        when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), eq(flameBody)))
+            .thenReturn(true);
+        when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), eq(flameBody)))
+            .thenReturn(false);
+        when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), eq(flameBody)))
+            .thenReturn(true);
 
         Damage.dealFlameGroupDamage(tower, enemies, flameBody);
 
@@ -149,10 +156,14 @@ public class DamageTest {
 
         Polygon flameBody = new Polygon();
 
-        when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), eq(flameBody))).thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), eq(flameBody))).thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), eq(flameBody))).thenReturn(false);
-        when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), eq(flameBody))).thenReturn(true);
+        when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), eq(flameBody)))
+            .thenReturn(true);
+        when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), eq(flameBody)))
+            .thenReturn(true);
+        when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), eq(flameBody)))
+            .thenReturn(false);
+        when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), eq(flameBody)))
+            .thenReturn(true);
 
         Damage.dealFlameGroupDamage(tower, enemies, flameBody);
 
@@ -180,10 +191,14 @@ public class DamageTest {
         SnapshotArray<Actor> enemies = new SnapshotArray<>();
         enemies.addAll(enemy1, enemy2, enemy3, enemy4);
 
-        when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), any(Shape2D.class))).thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), any(Shape2D.class))).thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), any(Shape2D.class))).thenReturn(false);
-        when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), any(Shape2D.class))).thenReturn(true);
+        when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), any(Shape2D.class)))
+            .thenReturn(true);
+        when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), any(Shape2D.class)))
+            .thenReturn(true);
+        when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), any(Shape2D.class)))
+            .thenReturn(false);
+        when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), any(Shape2D.class)))
+            .thenReturn(true);
 
         Damage.dealExplosionDamage(tower, 1, new Vector2(), enemies);
 
@@ -210,10 +225,14 @@ public class DamageTest {
         SnapshotArray<Actor> enemies = new SnapshotArray<>();
         enemies.addAll(enemy1, enemy2, enemy3, enemy4);
 
-        when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), any(Shape2D.class))).thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), any(Shape2D.class))).thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), any(Shape2D.class))).thenReturn(false);
-        when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), any(Shape2D.class))).thenReturn(true);
+        when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), any(Shape2D.class)))
+            .thenReturn(true);
+        when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), any(Shape2D.class)))
+            .thenReturn(true);
+        when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), any(Shape2D.class)))
+            .thenReturn(false);
+        when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), any(Shape2D.class)))
+            .thenReturn(true);
 
         Damage.dealExplosionDamage(tower, 1, new Vector2(), enemies);
 

@@ -1,21 +1,5 @@
 package game.service.actorplacement;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.support.SupplyDrop;
-import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
-import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
-import com.foxholedefense.game.service.factory.SupportActorFactory;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import game.model.actor.support.SupplyDropCrateTest;
-import testutil.TestUtil;
-
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -27,6 +11,19 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.foxholedefense.game.model.actor.support.SupplyDrop;
+import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
+import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
+import com.foxholedefense.game.service.factory.SupportActorFactory;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import game.model.actor.support.SupplyDropCrateTest;
+import org.junit.Before;
+import org.junit.Test;
+import testutil.TestUtil;
+
 /**
  * Created by Eric on 5/28/2017.
  */
@@ -37,6 +34,7 @@ public class SupplyDropPlacementTest {
 
     @Before
     public void initSupplyDropPlacementTest() {
+
         Gdx.app = mock(Application.class);
     }
 

@@ -1,5 +1,8 @@
 package game.model.actor.combat.enemy.state;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.model.Player;
@@ -8,18 +11,11 @@ import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager;
 import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.service.factory.EffectFactory;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.HashMap;
 import java.util.Map;
-
+import org.junit.Before;
+import org.junit.Test;
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
 
 /**
  * Created by Eric on 5/14/2017.
@@ -29,11 +25,13 @@ public class EnemyStateManagerTest {
 
     @Before
     public void initEnemyStateManagerTest() {
+
         Gdx.app = mock(Application.class);
     }
 
     @Test
     public void transitionTest() {
+
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         Player player = mock(Player.class);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
@@ -47,6 +45,7 @@ public class EnemyStateManagerTest {
 
     @Test
     public void transitionWithParametersTest() {
+
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         Tower tower = TestUtil.createTower("Rifle", false);
 

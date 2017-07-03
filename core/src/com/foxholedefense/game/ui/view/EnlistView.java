@@ -37,6 +37,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  */
 public class EnlistView extends Group implements IEnlistView, InputProcessor {
+
     private Array<EnlistButton> enlistButtons = new Array<>(7);
     private ImageButton btnPlacingCancel, btnPlace, btnRotate;
     private ImageButton btnScrollUp;
@@ -47,6 +48,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
     private ScrollPane scroll;
 
     public EnlistView(EnlistPresenter presenter, Skin skin) {
+
         this.presenter = presenter;
         choosingGroup = new Group();
         choosingGroup.setTransform(false);
@@ -59,6 +61,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
      * Creates the controls
      */
     private void createControls(Skin skin) {
+
         Logger.info("Enlist View: creating controls");
         Table container = new Table();
         container.setTransform(false);
@@ -76,12 +79,12 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
         container.setBackground(skin.getDrawable("main-panel"));
 
         Label lblTitle = new Label("ENLIST", skin);
-        lblTitle.setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2)
-                , container.getY() + container.getHeight() - lblTitle.getHeight() + 1);
+        lblTitle
+            .setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2),
+                container.getY() + container.getHeight() - lblTitle.getHeight() + 1);
         lblTitle.setAlignment(Align.center);
         lblTitle.setFontScale(.9f);
         choosingGroup.addActor(lblTitle);
-
 
         LabelStyle lblMoneyStyle = new LabelStyle(skin.get("money_label", LabelStyle.class));
         lblMoneyStyle.background.setLeftWidth(60);
@@ -98,11 +101,11 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
         createTowerButton(enlistTable, skin, "Sniper", TowerSniper.COST, 7, 8, 10, 1);
         enlistTable.row();
         createTowerButton(enlistTable, skin, "Flame Thrower", TowerFlameThrower.COST, 7, 4, 6, 2);
-        createTowerButton(enlistTable, skin, "Rocket Launcher", TowerRocketLauncher.COST, 10, 4, 6, 1);
+        createTowerButton(enlistTable, skin, "Rocket Launcher", TowerRocketLauncher.COST, 10, 4, 6,
+            1);
         createTowerButton(enlistTable, skin, "Turret", TowerTurret.COST, 3, 7, 7, 8);
         enlistTable.row();
         createTowerButton(enlistTable, skin, "Tank", TowerTank.COST, 10, 10, 8, 10);
-
 
         ImageButton btnCancel = new ImageButton(skin, "cancel");
         btnCancel.setSize(64, 64);
@@ -123,7 +126,8 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
         btnScrollDown.setSize(64, 64);
         btnScrollDown.getImageCell().size(35, 30);
         btnScrollDown.getImage().setScaling(Scaling.stretch);
-        btnScrollDown.setPosition(Resources.VIRTUAL_WIDTH - 75, (Resources.VIRTUAL_HEIGHT / 2) - 84);
+        btnScrollDown
+            .setPosition(Resources.VIRTUAL_WIDTH - 75, (Resources.VIRTUAL_HEIGHT / 2) - 84);
         choosingGroup.addActor(btnScrollDown);
 
         btnPlace = new ImageButton(skin, "select");
@@ -154,13 +158,12 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 
     /**
      * Creates a tower button and adds it to the map
-     *
-     * @param enlistTable
-     * @param skin
-     * @param towerName
      */
-    private void createTowerButton(Table enlistTable, Skin skin, String towerName, Integer towerCost, int attack, int health, int range, int speed) {
-        EnlistButton towerButton = new EnlistButton(skin, attack, health, range, speed, towerName, towerCost);
+    private void createTowerButton(Table enlistTable, Skin skin, String towerName,
+        Integer towerCost, int attack, int health, int range, int speed) {
+
+        EnlistButton towerButton = new EnlistButton(skin, attack, health, range, speed, towerName,
+            towerCost);
         enlistTable.add(towerButton).size(120, 195).spaceBottom(5);
         String filteredTowerName = towerName.replaceAll(" ", "");
         setTowerListener(towerButton, filteredTowerName);
@@ -171,6 +174,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
      * Updates the tower buttons to disable/enable.
      */
     private void updateTowerButtons() {
+
         Logger.info("Enlist View: updating tower buttons");
         for (EnlistButton button : enlistButtons) {
             boolean affordable = presenter.canAffordTower(button.cost);
@@ -184,6 +188,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
      */
     @Override
     public void act(float delta) {
+
         super.act(delta);
         if (btnRotate.isPressed()) {
             presenter.rotateTower(delta);
@@ -197,9 +202,11 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
     }
 
     private void setRotateListener() {
+
         btnRotate.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchDown(event, x, y, pointer, button);
                 return true;
             }
@@ -207,9 +214,11 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
     }
 
     private void setTowerListener(final EnlistButton enlistButton, final String tower) {
+
         enlistButton.addListener(new ActorGestureListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.createTower(tower);
             }
@@ -217,9 +226,11 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
     }
 
     private void setPlaceListener() {
+
         btnPlace.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.placeTower();
             }
@@ -227,9 +238,11 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
     }
 
     private void setCancelListener(Button button) {
+
         button.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.cancel();
 
@@ -238,43 +251,47 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
     }
 
     private void moveTower(float x, float y) {
-        FHDVector2 coords = (FHDVector2) this.getStage().screenToStageCoordinates(UtilPool.getVector2(x, y));
+
+        FHDVector2 coords = (FHDVector2) this.getStage()
+            .screenToStageCoordinates(UtilPool.getVector2(x, y));
         presenter.moveTower(coords);
         coords.free();
     }
 
     @Override
     public boolean keyDown(int keycode) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean keyTyped(char character) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+
         moveTower(screenX, screenY);
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
+
         moveTower(screenX, screenY);
         return false;
 
@@ -282,18 +299,19 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean scrolled(int amount) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public void enlistingState() {
+
         updateTowerButtons();
         lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
         choosingGroup.setVisible(true);
@@ -303,6 +321,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 
     @Override
     public void placingTowerState() {
+
         btnPlacingCancel.setVisible(true);
         choosingGroup.setVisible(false);
 
@@ -310,6 +329,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 
     @Override
     public void standByState() {
+
         btnPlacingCancel.setVisible(false);
         choosingGroup.setVisible(false);
         btnRotate.setVisible(false);
@@ -319,12 +339,14 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 
     @Override
     public void showBtnPlace() {
+
         btnPlace.setVisible(true);
 
     }
 
     @Override
     public void showBtnRotate() {
+
         btnRotate.setVisible(true);
 
     }

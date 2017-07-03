@@ -12,31 +12,38 @@ public class SpawningEnemy implements Poolable {
     private float spawnDelay;
 
     public SpawningEnemy(SpawningEnemyPool spawningEnemyPool) {
+
         this.spawningEnemyPool = spawningEnemyPool;
     }
 
     public Enemy getEnemy() {
+
         return enemy;
     }
 
     public void setEnemy(Enemy enemy) {
+
         this.enemy = enemy;
     }
 
     public float getSpawnDelay() {
+
         return spawnDelay;
     }
 
     public void setSpawnDelay(float spawnDelay) {
+
         this.spawnDelay = spawnDelay;
     }
 
     public void free() {
+
         spawningEnemyPool.free(this);
     }
 
     @Override
     public void reset() {
+
         enemy = null;
         spawnDelay = 0;
     }

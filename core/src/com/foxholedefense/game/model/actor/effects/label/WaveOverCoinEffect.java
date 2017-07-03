@@ -27,7 +27,9 @@ public class WaveOverCoinEffect extends LabelEffect {
 
     private Animation<TextureRegion> animation;
 
-    public WaveOverCoinEffect(LabelEffectPool<WaveOverCoinEffect> pool, Skin skin, Array<AtlasRegion> regions) {
+    public WaveOverCoinEffect(LabelEffectPool<WaveOverCoinEffect> pool, Skin skin,
+        Array<AtlasRegion> regions) {
+
         super(pool, DURATION, skin);
         animation = new Animation<TextureRegion>(0.05f, regions);
         animation.setPlayMode(Animation.PlayMode.LOOP);
@@ -37,6 +39,7 @@ public class WaveOverCoinEffect extends LabelEffect {
     }
 
     public void initialize(int money) {
+
         clearActions();
         setText(String.valueOf(money).toUpperCase());
         setFontScale(SCALE);
@@ -48,12 +51,13 @@ public class WaveOverCoinEffect extends LabelEffect {
         setPosition(x, y);
 
         addAction(Actions.sequence(
-                Actions.moveTo(x, y + Y_END_OFFSET, DURATION),
-                Actions.removeActor()));
+            Actions.moveTo(x, y + Y_END_OFFSET, DURATION),
+            Actions.removeActor()));
     }
 
     @Override
     public void draw(Batch batch, float alpha) {
+
         super.draw(batch, alpha);
 
         TextureRegion region = animation.getKeyFrame(stateTime, false);

@@ -40,8 +40,13 @@ public class TowerMachineGun extends Tower {
     private FHDAudio audio;
     private ProjectileFactory projectileFactory;
 
-    public TowerMachineGun(TextureRegion actorRegion, CombatActorPool<TowerMachineGun> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
-        super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
+    public TowerMachineGun(TextureRegion actorRegion, CombatActorPool<TowerMachineGun> pool,
+        Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
+        ProjectileFactory projectileFactory, FHDAudio audio) {
+
+        super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion,
+            collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST,
+            RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
         this.body = new Circle(this.getPositionCenter(), 10);
@@ -49,6 +54,7 @@ public class TowerMachineGun extends Tower {
 
     @Override
     public void attackTarget(Targetable target) {
+
         if (target != null) {
             audio.playSound(FHDSound.MACHINE_GUN);
             projectileFactory.loadBullet().initialize(this, target, BULLET_SIZE);
@@ -57,11 +63,13 @@ public class TowerMachineGun extends Tower {
 
     @Override
     public String getName() {
+
         return "Machine Gun";
     }
 
     @Override
     public Circle getBody() {
+
         body.setPosition(getPositionCenter().x, getPositionCenter().y);
         return body;
     }

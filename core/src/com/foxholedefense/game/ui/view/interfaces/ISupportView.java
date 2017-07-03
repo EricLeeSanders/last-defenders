@@ -6,6 +6,7 @@ package com.foxholedefense.game.ui.view.interfaces;
  * @author Eric
  */
 public interface ISupportView {
+
     void supportState();
 
     void placingSupportState();

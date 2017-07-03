@@ -13,7 +13,6 @@ import com.foxholedefense.game.model.actor.combat.state.StateManager;
 import com.foxholedefense.game.model.actor.combat.state.states.CombatActorStandByState;
 import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.util.Logger;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,11 +27,13 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
     private EnemyState currentState;
 
     public EnemyStateManager(Enemy enemy, EffectFactory effectFactory, Player player) {
+
         initStateObjects(enemy, effectFactory, player);
         currentState = EnemyState.STANDBY;
     }
 
     private void initStateObjects(Enemy enemy, EffectFactory effectFactory, Player player) {
+
         enemyStates.put(EnemyState.RUNNING, new EnemyRunningState(enemy, this));
         enemyStates.put(EnemyState.DYING, new EnemyDyingState(enemy, this, effectFactory, player));
         enemyStates.put(EnemyState.REACHED_END, new EnemyReachedEndState(enemy, this, player));
@@ -43,6 +44,7 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
 
     @Override
     public void update(float delta) {
+
         getCurrentState().update(delta);
     }
 
@@ -56,20 +58,24 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
 
     @Override
     public CombatActorState getState(EnemyState state) {
+
         return enemyStates.get(state);
     }
 
     @Override
     public CombatActorState getCurrentState() {
+
         return enemyStates.get(currentState);
     }
 
     private void setCurrentState(EnemyState state) {
+
         this.currentState = state;
     }
 
     @Override
     public EnemyState getCurrentStateName() {
+
         return currentState;
     }
 
@@ -85,6 +91,7 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
 
     @Override
     public void transition(EnemyState state, Map<String, Object> parameters) {
+
         getState(state).loadParameters(parameters);
         transition(state);
     }

@@ -1,5 +1,10 @@
 package game.model.level;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
@@ -14,15 +19,8 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
-
 import org.junit.Before;
 import org.junit.Test;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 /**
  * Created by Eric on 5/26/2017.
@@ -34,6 +32,7 @@ public class MapTest {
 
     @Before
     public void initMapTest() {
+
         Gdx.app = mock(Application.class);
     }
 
@@ -41,8 +40,8 @@ public class MapTest {
     public void mapTest1() {
 
         float[] pathVertices = new float[]{0.0f, -0.0f, 0.0f, 209.0f, -257.0f, 209.0f, -257.0f,
-                400.0f, 0.0f, 400.0f, 0.0f, 657.0f, 514.0f, 657.0f, 514.0f, 431.0f, 192.0f, 431.0f,
-                192.0f, 268.0f, 514.0f, 268.0f, 514.0f, 108.0f, 191.0f, 108.0f, 191.0f, 1.0f};
+            400.0f, 0.0f, 400.0f, 0.0f, 657.0f, 514.0f, 657.0f, 514.0f, 431.0f, 192.0f, 431.0f,
+            192.0f, 268.0f, 514.0f, 268.0f, 514.0f, 108.0f, 191.0f, 108.0f, 191.0f, 1.0f};
 
         //Mocks
         MapLayers mapLayers = mock(MapLayers.class);

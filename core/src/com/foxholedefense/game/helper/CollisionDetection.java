@@ -21,6 +21,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  */
 public final class CollisionDetection {
+
     /**
      * Checks to see if a tower was hit when the user clicks
      *
@@ -43,12 +44,12 @@ public final class CollisionDetection {
     /**
      * Checks for collision with the path boundaries when placing a tower
      *
-     * @param boundaries - Array of rectangles from TiledMap that represent the
-     *                   path boundary
+     * @param boundaries - Array of rectangles from TiledMap that represent the path boundary
      * @param placeActor - The actor that is being places
      * @return boolean - If there is a collision
      */
     public static boolean collisionWithPath(Array<Rectangle> boundaries, Collidable placeActor) {
+
         Shape2D body = placeActor.getBody();
         for (Rectangle boundary : boundaries) {
             if (body instanceof Polygon) {
@@ -67,11 +68,12 @@ public final class CollisionDetection {
     /**
      * Checks for collisions with actors when placing a tower
      *
-     * @param Actors     - A collection of Actors that implement Collidable
+     * @param Actors - A collection of Actors that implement Collidable
      * @param placeActor - The actor that is being placed
      * @return boolean - If there is a collision
      */
     public static boolean collisionWithActors(SnapshotArray<Actor> Actors, Collidable placeActor) {
+
         Shape2D placeBody = placeActor.getBody();
         for (Actor actor : Actors) {
             if (!actor.equals(placeActor) && actor instanceof Tower) {
@@ -112,14 +114,17 @@ public final class CollisionDetection {
     }
 
     public static Tower towerHit(SnapshotArray<Actor> Towers, Vector2 clickCoord) {
+
         clickRect.setPosition(clickCoord.x, clickCoord.y);
         clickRect.setSize(1, 1);
         for (Actor tower : Towers) {
             if (tower instanceof Tower) {
                 Shape2D towerBody = ((CombatActor) tower).getBody();
-                if (towerBody instanceof Polygon && polygonAndRectangle((Polygon) towerBody, clickRect)) {
+                if (towerBody instanceof Polygon && polygonAndRectangle((Polygon) towerBody,
+                    clickRect)) {
                     return (Tower) tower;
-                } else if (towerBody instanceof Circle && circleAndRectangle((Circle) towerBody, clickRect)) {
+                } else if (towerBody instanceof Circle && circleAndRectangle((Circle) towerBody,
+                    clickRect)) {
                     return (Tower) tower;
                 }
             }
@@ -132,11 +137,10 @@ public final class CollisionDetection {
      * native way to do this. This method creates a line between 2 vertices for
      * each vertex. Then checks to see if that line intersects the circle.
      *
-     * @param polygon
-     * @param circle
      * @return boolean - If there is an intersection
      */
     private static boolean polygonAndCircle(Polygon polygon, Circle circle) {
+
         float[] vertices = polygon.getTransformedVertices();
         FHDVector2 center = UtilPool.getVector2(circle.x, circle.y);
         FHDVector2 vectorA = UtilPool.getVector2();
@@ -161,6 +165,7 @@ public final class CollisionDetection {
     }
 
     private static boolean polygonAndRectangle(Polygon polygon, Rectangle rectangle) {
+
         rectanglePoints[0] = 0;
         rectanglePoints[1] = 0;
         rectanglePoints[2] = rectangle.width;
@@ -178,19 +183,20 @@ public final class CollisionDetection {
     /**
      * Checks for a collision between 2 polygons
      *
-     * @param poly1
-     * @param poly2
      * @return boolean - If there is a collision
      */
     private static boolean polygonAndPolygon(Polygon poly1, Polygon poly2) {
+
         return Intersector.overlapConvexPolygons(poly1, poly2);
     }
 
     private static boolean circleAndRectangle(Circle circle, Rectangle rect) {
+
         return Intersector.overlaps(circle, rect);
     }
 
     private static boolean circleAndCircle(Circle circle1, Circle circle2) {
+
         return Intersector.overlaps(circle1, circle2);
     }
 }

@@ -35,6 +35,7 @@ public class Explosion extends GameActor implements Pool.Poolable {
      * Constructs an Explosion.
      */
     public Explosion(Pool<Explosion> pool, Array<AtlasRegion> regions, FHDAudio audio) {
+
         super(size);
         this.pool = pool;
         this.audio = audio;
@@ -47,6 +48,7 @@ public class Explosion extends GameActor implements Pool.Poolable {
      * Initializes an Explosion and deals Damage
      */
     public Actor initialize(Attacker attacker, float radius, Vector2 posCenter) {
+
         audio.playSound(FHDSound.ROCKET_EXPLOSION);
 
         this.setPositionCenter(posCenter);
@@ -58,6 +60,7 @@ public class Explosion extends GameActor implements Pool.Poolable {
 
     @Override
     public void act(float delta) {
+
         super.act(delta);
         stateTime += delta;
 
@@ -70,6 +73,7 @@ public class Explosion extends GameActor implements Pool.Poolable {
 
     @Override
     public void reset() {
+
         this.clear();
         this.remove();
         stateTime = 0;

@@ -14,18 +14,24 @@ import com.foxholedefense.game.model.actor.interfaces.Attacker;
  */
 
 public enum TowerAIType implements TowerAI {
-    FIRST(new FirstEnemyAI(), 0), LAST(new LastEnemyAI(), 1), LEAST_HP(new LeastHPEnemyAI(), 2), MOST_HP(new MostHPEnemyAI(), 3);
+
+    FIRST(new FirstEnemyAI(), 0),
+    LAST(new LastEnemyAI(), 1),
+    LEAST_HP(new LeastHPEnemyAI(), 2),
+    MOST_HP(new MostHPEnemyAI(), 3);
 
     private TowerAI ai;
     private int position;
 
     TowerAIType(TowerAI ai, int position) {
+
         this.ai = ai;
         this.position = position;
     }
 
     @Override
     public Enemy findTarget(Attacker attacker, SnapshotArray<Actor> enemies) {
+
         return ai.findTarget(attacker, enemies);
     }
 
@@ -36,6 +42,7 @@ public enum TowerAIType implements TowerAI {
     }
 
     private int getPosition() {
+
         return position;
     }
 }

@@ -1,22 +1,19 @@
 package game.model.actor.effects.texture.animation;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.foxholedefense.game.service.factory.EffectFactory.AnimationEffectPool;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Eric on 5/20/2017.
@@ -25,10 +22,12 @@ import static org.mockito.Mockito.verify;
 public class EnemyCoinEffectTest {
 
     @SuppressWarnings("unchecked")
-    private AnimationEffectPool<EnemyCoinEffect> animationEffectPool = mock(AnimationEffectPool.class);
+    private AnimationEffectPool<EnemyCoinEffect> animationEffectPool = mock(
+        AnimationEffectPool.class);
 
     @Before
     public void initEnemyCoinEffectTest() {
+
         Gdx.app = mock(Application.class);
     }
 

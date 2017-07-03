@@ -16,6 +16,7 @@ import com.foxholedefense.util.Resources;
  */
 
 public class ProjectileFactory {
+
     private BulletPool bulletPool = new BulletPool();
     private RocketPool rocketPool = new RocketPool();
     private ExplosionPool explosionPool = new ExplosionPool();
@@ -27,6 +28,7 @@ public class ProjectileFactory {
     private Resources resources;
 
     public ProjectileFactory(ActorGroups actorGroups, FHDAudio audio, Resources resources) {
+
         this.actorGroups = actorGroups;
         this.audio = audio;
         this.resources = resources;
@@ -38,6 +40,7 @@ public class ProjectileFactory {
      * @return Bullet
      */
     public Bullet loadBullet() {
+
         Bullet bullet = bulletPool.obtain();
         actorGroups.getProjectileGroup().addActor(bullet);
         return bullet;
@@ -49,6 +52,7 @@ public class ProjectileFactory {
      * @return Rocket
      */
     public Rocket loadRocket() {
+
         Rocket rocket = rocketPool.obtain();
         actorGroups.getProjectileGroup().addActor(rocket);
         return rocket;
@@ -60,6 +64,7 @@ public class ProjectileFactory {
      * @return Explosion
      */
     public Explosion loadExplosion() {
+
         Explosion explosion = explosionPool.obtain();
         actorGroups.getProjectileGroup().addActor(explosion);
         return explosion;
@@ -71,6 +76,7 @@ public class ProjectileFactory {
      * @return Flame
      */
     public Flame loadFlame() {
+
         Flame flame = flamePool.obtain();
         actorGroups.getProjectileGroup().addActor(flame);
         return flame;
@@ -82,6 +88,7 @@ public class ProjectileFactory {
      * @return Bullet
      */
     private Bullet createBulletActor() {
+
         return new Bullet(bulletPool, resources.getTexture("bullet"));
 
     }
@@ -92,6 +99,7 @@ public class ProjectileFactory {
      * @return Rocket
      */
     private Rocket createRocket() {
+
         return new Rocket(rocketPool, this, resources.getTexture("rocket"));
 
     }
@@ -102,6 +110,7 @@ public class ProjectileFactory {
      * @return Explosion
      */
     private Explosion createExplosionActor() {
+
         Array<TextureAtlas.AtlasRegion> atlasRegions = resources.getAtlasRegion("explosion");
         return new Explosion(explosionPool, atlasRegions, audio);
 
@@ -113,35 +122,44 @@ public class ProjectileFactory {
      * @return Flame
      */
     private Flame createFlameActor() {
+
         Array<TextureAtlas.AtlasRegion> atlasRegions = resources.getAtlasRegion("flame");
         return new Flame(flamePool, atlasRegions);
 
     }
 
     public class ExplosionPool extends Pool<Explosion> {
+
         @Override
         protected Explosion newObject() {
+
             return createExplosionActor();
         }
     }
 
     public class BulletPool extends Pool<Bullet> {
+
         @Override
         protected Bullet newObject() {
+
             return createBulletActor();
         }
     }
 
     public class RocketPool extends Pool<Rocket> {
+
         @Override
         protected Rocket newObject() {
+
             return createRocket();
         }
     }
 
     public class FlamePool extends Pool<Flame> {
+
         @Override
         protected Flame newObject() {
+
             return createFlameActor();
         }
     }

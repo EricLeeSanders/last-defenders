@@ -1,5 +1,11 @@
 package game.model.actor.projectile;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -12,22 +18,13 @@ import com.foxholedefense.game.service.factory.ProjectileFactory.RocketPool;
 import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.Dimension;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Eric on 5/22/2017.
@@ -42,11 +39,13 @@ public class RocketTest {
 
     @Before
     public void initRocketTest() {
+
         Gdx.app = mock(Application.class);
         PowerMockito.mockStatic(Damage.class);
     }
 
     public Rocket createRocket() {
+
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(explosionMock).when(projectileFactoryMock).loadExplosion();
         Resources resourcesMock = TestUtil.createResourcesMock();
@@ -64,11 +63,11 @@ public class RocketTest {
         float radius = 50;
         Rocket rocket = createRocket();
 
-
         rocket.initialize(tower, destination, size, radius);
 
         //check rotation
-        assertEquals(ActorUtil.calculateRotation(destination, tower.getPositionCenter()), rocket.getRotation(), TestUtil.DELTA);
+        assertEquals(ActorUtil.calculateRotation(destination, tower.getPositionCenter()),
+            rocket.getRotation(), TestUtil.DELTA);
         //check size
         assertEquals(size.getWidth(), rocket.getWidth(), TestUtil.DELTA);
         assertEquals(size.getHeight(), rocket.getHeight(), TestUtil.DELTA);

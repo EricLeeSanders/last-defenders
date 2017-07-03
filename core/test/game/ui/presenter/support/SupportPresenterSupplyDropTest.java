@@ -1,13 +1,5 @@
 package game.ui.presenter.support;
 
-import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
-import com.foxholedefense.game.ui.presenter.SupportPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
-
-import org.junit.Test;
-
-
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
@@ -15,16 +7,24 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
+import com.foxholedefense.game.ui.presenter.SupportPresenter;
+import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import org.junit.Test;
+
 /**
  * Created by Eric on 6/10/2017.
  */
 
 public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
+
     /**
      * Successfully create a supply drop
      */
     @Test
     public void createSupplyDropTest1() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(SupplyDropCrate.COST).when(player).getMoney();
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
@@ -43,6 +43,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      */
     @Test
     public void createSupplyDropTest2() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(SupplyDropCrate.COST - 1).when(player).getMoney();
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
@@ -61,6 +62,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      */
     @Test
     public void createSupplyDropTest3() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(SupplyDropCrate.COST).when(player).getMoney();
         doReturn(GameUIState.GAME_OVER).when(uiStateManager).getState();
@@ -79,6 +81,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      */
     @Test
     public void moveSupplyDropTest1() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(supplyDropPlacement).isCurrentSupplyDropCrate();
         doReturn(GameUIState.PLACING_SUPPLYDROP).when(uiStateManager).getState();
@@ -98,6 +101,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      */
     @Test
     public void moveSupplyDropTest2() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(false).when(supplyDropPlacement).isCurrentSupplyDropCrate();
         doReturn(GameUIState.PLACING_SUPPLYDROP).when(uiStateManager).getState();
@@ -117,6 +121,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      */
     @Test
     public void moveSupplyDropTest3() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(supplyDropPlacement).isCurrentSupplyDropCrate();
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
@@ -136,6 +141,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      */
     @Test
     public void placeSupplyDropTest1() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(supplyDropPlacement).isCurrentSupplyDropCrate();
         doReturn(GameUIState.PLACING_SUPPLYDROP).when(uiStateManager).getState();
@@ -154,6 +160,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      */
     @Test
     public void placeSupplyDropTest2() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(false).when(supplyDropPlacement).isCurrentSupplyDropCrate();
         doReturn(GameUIState.PLACING_SUPPLYDROP).when(uiStateManager).getState();
@@ -172,6 +179,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      */
     @Test
     public void placeSupplyDropTest3() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(supplyDropPlacement).isCurrentSupplyDropCrate();
         doReturn(GameUIState.OPTIONS).when(uiStateManager).getState();

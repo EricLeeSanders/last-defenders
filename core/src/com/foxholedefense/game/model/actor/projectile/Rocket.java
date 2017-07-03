@@ -30,7 +30,9 @@ public class Rocket extends GameActor implements Pool.Poolable {
     private float radius;
     private ProjectileFactory projectileFactory;
 
-    public Rocket(Pool<Rocket> pool, ProjectileFactory projectileFactory, TextureRegion rocketTexture) {
+    public Rocket(Pool<Rocket> pool, ProjectileFactory projectileFactory,
+        TextureRegion rocketTexture) {
+
         this.pool = pool;
         this.projectileFactory = projectileFactory;
         setTextureRegion(rocketTexture);
@@ -40,6 +42,7 @@ public class Rocket extends GameActor implements Pool.Poolable {
      * Initializes an Rocket
      */
     public Actor initialize(Attacker attacker, Vector2 destination, Dimension size, float radius) {
+
         this.attacker = attacker;
         this.radius = radius;
         this.destination.set(destination);
@@ -52,7 +55,8 @@ public class Rocket extends GameActor implements Pool.Poolable {
         setPositionCenter(startPos);
 
         float duration = destination.dst(startPos) / SPEED;
-        MoveToAction moveAction = Actions.moveTo(destination.x, destination.y, duration, Interpolation.linear);
+        MoveToAction moveAction = Actions
+            .moveTo(destination.x, destination.y, duration, Interpolation.linear);
         moveAction.setAlignment(Align.center);
         addAction(moveAction);
 
@@ -68,6 +72,7 @@ public class Rocket extends GameActor implements Pool.Poolable {
      */
     @Override
     public void act(float delta) {
+
         super.act(delta);
         if (this.getActions().size == 0) {
             projectileFactory.loadExplosion().initialize(attacker, radius, destination);
@@ -77,6 +82,7 @@ public class Rocket extends GameActor implements Pool.Poolable {
 
     @Override
     public void reset() {
+
         this.clear();
         attacker = null;
         radius = 0;

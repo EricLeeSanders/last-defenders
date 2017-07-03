@@ -12,6 +12,7 @@ import com.foxholedefense.util.Resources;
  */
 
 public class HealthFactory {
+
     private ArmorIconPool armorIconPool = new ArmorIconPool();
     private HealthPool healthPool = new HealthPool();
 
@@ -19,11 +20,13 @@ public class HealthFactory {
     private Resources resources;
 
     public HealthFactory(ActorGroups actorGroups, Resources resources) {
+
         this.actorGroups = actorGroups;
         this.resources = resources;
     }
 
     public HealthBar loadHealthBar() {
+
         Logger.info("Actor Factory: loading healthbar");
         HealthBar healthBar = healthPool.obtain();
         actorGroups.getHealthGroup().addActor(healthBar);
@@ -31,6 +34,7 @@ public class HealthFactory {
     }
 
     public ArmorIcon loadArmorIcon() {
+
         Logger.info("Actor Factory: loading ArmorIcon");
         ArmorIcon armorIcon = armorIconPool.obtain();
         actorGroups.getHealthGroup().addActor(armorIcon);
@@ -43,26 +47,33 @@ public class HealthFactory {
      * @return HealthBar
      */
     private HealthBar createHealthBarActor() {
+
         Logger.info("Actor Factory: creating healthbar");
-        return new HealthBar(healthPool, resources.getTexture("healthbar-bg"), resources.getTexture("healthbar-life"), resources.getTexture("healthbar-armor"));
+        return new HealthBar(healthPool, resources.getTexture("healthbar-bg"),
+            resources.getTexture("healthbar-life"), resources.getTexture("healthbar-armor"));
 
     }
 
     private ArmorIcon createArmorIcon() {
+
         Logger.info("Actor Factory: creating ArmorIcon");
         return new ArmorIcon(armorIconPool, resources.getTexture("shield"));
     }
 
     public class HealthPool extends Pool<HealthBar> {
+
         @Override
         protected HealthBar newObject() {
+
             return createHealthBarActor();
         }
     }
 
     public class ArmorIconPool extends Pool<ArmorIcon> {
+
         @Override
         protected ArmorIcon newObject() {
+
             return createArmorIcon();
         }
     }

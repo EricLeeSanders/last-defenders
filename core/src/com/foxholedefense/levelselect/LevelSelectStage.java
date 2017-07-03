@@ -16,17 +16,22 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  */
 class LevelSelectStage extends Stage {
-    public LevelSelectStage(ScreenChanger screenChanger, Resources resources, FHDAudio audio, Viewport viewport) {
+
+    public LevelSelectStage(ScreenChanger screenChanger, Resources resources, FHDAudio audio,
+        Viewport viewport) {
+
         super(viewport);
         LevelSelectPresenter presenter = new LevelSelectPresenter(screenChanger);
         resources.loadAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class);
         LevelSelectView levelSelectView = new LevelSelectView(presenter, resources, audio);
         this.addActor(levelSelectView);
-        levelSelectView.setBackground(resources.getAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class));
+        levelSelectView
+            .setBackground(resources.getAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class));
     }
 
     @Override
     public void dispose() {
+
         Logger.info("Level Select Stage Dispose");
     }
 

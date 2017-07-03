@@ -7,6 +7,7 @@ package com.foxholedefense.game.ui.view.interfaces;
  * @author Eric
  */
 public interface IGameOverView {
+
     void setWavesCompleted(String wavesCompleted);
 
     void standByState();

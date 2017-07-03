@@ -29,7 +29,9 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
     private IHUDView view;
     private FHDAudio audio;
 
-    public HUDPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, GameStateManager gameStateManager, Player player, FHDAudio audio) {
+    public HUDPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager,
+        GameStateManager gameStateManager, Player player, FHDAudio audio) {
+
         this.levelStateManager = levelStateManager;
         this.uiStateManager = uiStateManager;
         uiStateManager.attach(this);
@@ -41,8 +43,6 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
 
     /**
      * Set the HUD view
-     *
-     * @param view
      */
     public void setView(IHUDView view) {
 
@@ -131,41 +131,33 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
 
     /**
      * Can only pause the game when the wave is in progress and the game state is play
-     *
-     * @return
      */
     private boolean canPauseGame() {
 
         return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
-                && gameStateManager.getState().equals(GameState.PLAY);
+            && gameStateManager.getState().equals(GameState.PLAY);
     }
 
     /**
      * Can only resume the game when the wave is in progress and the game is paused
-     *
-     * @return
      */
     private boolean canResumeGame() {
 
         return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
-                && isGamePaused();
+            && isGamePaused();
     }
 
     /**
      * Can only view options if the UI State is in Standby or Wave in Progress
-     *
-     * @return
      */
     private boolean canViewOptions() {
 
         return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
-                || uiStateManager.getState().equals(GameUIState.STANDBY);
+            || uiStateManager.getState().equals(GameUIState.STANDBY);
     }
 
     /**
      * Can only start a wave if the the UI State is in Standby
-     *
-     * @return
      */
     private boolean canStartWave() {
 
@@ -174,24 +166,20 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
 
     /**
      * Can only enlist if the UI State is in Standby or Wave in Progress
-     *
-     * @return
      */
     private boolean canEnlist() {
 
         return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
-                || uiStateManager.getState().equals(GameUIState.STANDBY);
+            || uiStateManager.getState().equals(GameUIState.STANDBY);
     }
 
     /**
      * Can only add Support if the UI State is in Standby or Wave in Progress
-     *
-     * @return
      */
     private boolean canAddSupport() {
 
         return uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS)
-                || uiStateManager.getState().equals(GameUIState.STANDBY);
+            || uiStateManager.getState().equals(GameUIState.STANDBY);
     }
 
     @Override

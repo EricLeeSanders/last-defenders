@@ -6,5 +6,6 @@ package com.foxholedefense.game.model;
  * @author Eric
  */
 public interface PlayerObserver {
+
     void playerAttributeChange();
 }

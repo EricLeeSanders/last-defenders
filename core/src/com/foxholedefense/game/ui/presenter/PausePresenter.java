@@ -24,7 +24,9 @@ public class PausePresenter implements GameUIStateObserver {
     private IPauseView view;
     private boolean keepGamePaused;
 
-    public PausePresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager, ScreenChanger screenChanger, FHDAudio audio) {
+    public PausePresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager,
+        ScreenChanger screenChanger, FHDAudio audio) {
+
         this.uiStateManager = uiStateManager;
         this.audio = audio;
         this.screenChanger = screenChanger;
@@ -33,10 +35,12 @@ public class PausePresenter implements GameUIStateObserver {
     }
 
     public void setView(IPauseView view) {
+
         this.view = view;
     }
 
     public void resume() {
+
         Logger.info("PausePresenter: Resume");
         if (canResume()) {
             audio.playSound(FHDSound.SMALL_CLICK);
@@ -48,6 +52,7 @@ public class PausePresenter implements GameUIStateObserver {
     }
 
     public void newGame() {
+
         Logger.info("PausePresenter: New Game");
         if (canChangeToNewGame()) {
             audio.playSound(FHDSound.SMALL_CLICK);
@@ -56,6 +61,7 @@ public class PausePresenter implements GameUIStateObserver {
     }
 
     public void mainMenu() {
+
         Logger.info("PausePresenter: Main Menu");
         if (canChangeToMainMenu()) {
             audio.playSound(FHDSound.SMALL_CLICK);
@@ -65,22 +71,27 @@ public class PausePresenter implements GameUIStateObserver {
     }
 
     public void quit() {
+
         gameStateManager.setState(GameState.QUIT);
     }
 
     private boolean canResume() {
+
         return uiStateManager.getState().equals(GameUIState.PAUSE_MENU);
     }
 
     private boolean canChangeToNewGame() {
+
         return uiStateManager.getState().equals(GameUIState.PAUSE_MENU);
     }
 
     private boolean canChangeToMainMenu() {
+
         return uiStateManager.getState().equals(GameUIState.PAUSE_MENU);
     }
 
     private void pauseState() {
+
         keepGamePaused = gameStateManager.getState().equals(GameState.PAUSE);
         view.pauseState();
         gameStateManager.setState(GameState.PAUSE);
@@ -88,6 +99,7 @@ public class PausePresenter implements GameUIStateObserver {
 
     @Override
     public void stateChange(GameUIState state) {
+
         switch (state) {
             case PAUSE_MENU:
                 pauseState();

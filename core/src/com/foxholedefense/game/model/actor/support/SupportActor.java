@@ -16,6 +16,7 @@ import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 public class SupportActor extends GameActor implements Pool.Poolable, Attacker {
+
     private Pool<SupportActor> pool;
     private float range, attack;
     private Vector2 gunPos;
@@ -27,8 +28,10 @@ public class SupportActor extends GameActor implements Pool.Poolable, Attacker {
     private TextureRegion rangeTexture;
     private Circle rangeShape;
 
-    SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion, Dimension textureSize
-            , TextureRegion rangeTexture, float range, float attack, Vector2 gunPos, int cost) {
+    SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion,
+        Dimension textureSize, TextureRegion rangeTexture, float range, float attack,
+        Vector2 gunPos, int cost) {
+
         super(textureSize);
         this.pool = pool;
         this.range = range;
@@ -43,6 +46,7 @@ public class SupportActor extends GameActor implements Pool.Poolable, Attacker {
 
     @Override
     public void draw(Batch batch, float alpha) {
+
         if (isShowRange()) {
             drawRange(batch);
         }
@@ -50,6 +54,7 @@ public class SupportActor extends GameActor implements Pool.Poolable, Attacker {
     }
 
     private void drawRange(Batch batch) {
+
         float width = range * 2;
         float height = range * 2;
         float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, width);
@@ -58,43 +63,55 @@ public class SupportActor extends GameActor implements Pool.Poolable, Attacker {
     }
 
     public Group getTargetGroup() {
+
         return getTargetGroup;
     }
 
     public void freeActor() {
+
         pool.free(this);
     }
 
     public boolean isActive() {
+
         return active;
     }
 
     public void setActive(boolean active) {
+
         this.active = active;
     }
 
     public int getCost() {
+
         return cost;
     }
 
     public boolean isShowRange() {
+
         return showRange;
     }
 
     public void setShowRange(boolean bool) {
+
         showRange = bool;
     }
 
     @Override
     public Shape2D getRangeShape() {
+
         rangeShape.setPosition(getPositionCenter().x, getPositionCenter().y);
         return rangeShape;
     }
 
     @Override
     public Vector2 getGunPos() {
+
         Vector2 centerPos = getPositionCenter();
-        FHDVector2 rotatedCoords = ActorUtil.calculateRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y), centerPos.x, centerPos.y, Math.toRadians(getRotation()));
+        FHDVector2 rotatedCoords = ActorUtil
+            .calculateRotatedCoords((getPositionCenter().x + gunPos.x),
+                (getPositionCenter().y + gunPos.y), centerPos.x, centerPos.y,
+                Math.toRadians(getRotation()));
         rotatedGunPos.set(rotatedCoords.x, rotatedCoords.y);
         rotatedCoords.free();
         return rotatedGunPos;
@@ -102,11 +119,13 @@ public class SupportActor extends GameActor implements Pool.Poolable, Attacker {
 
     @Override
     public float getAttack() {
+
         return attack;
     }
 
     @Override
     public void reset() {
+
         Logger.info("SupportActor: Resetting");
         this.setActive(false);
         this.setPosition(0, 0);

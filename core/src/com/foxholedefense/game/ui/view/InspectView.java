@@ -35,6 +35,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
     private Label lblTargetPriority, lblTitle, lblMoney, lblKills;
 
     public InspectView(InspectPresenter presenter, Skin skin) {
+
         this.presenter = presenter;
         this.setTransform(false);
         createControls(skin);
@@ -62,12 +63,11 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         container.add(inspectTable).expand().fill();
 
         lblTitle = new Label("Tower", skin);
-        lblTitle.setPosition((container.getWidth() / 2) - (lblTitle.getWidth() / 2)
-                , container.getY() + container.getHeight() - lblTitle.getHeight());
+        lblTitle.setPosition((container.getWidth() / 2) - (lblTitle.getWidth() / 2),
+            container.getY() + container.getHeight() - lblTitle.getHeight());
         lblTitle.setAlignment(Align.center);
         lblTitle.setFontScale(0.7f);
         addActor(lblTitle);
-
 
         LabelStyle lblMoneyStyle = new LabelStyle(skin.get("money_label", LabelStyle.class));
         lblMoneyStyle.background.setLeftWidth(60);
@@ -116,14 +116,14 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         Group grpTargetPriority = new Group();
         grpTargetPriority.setTransform(false);
 
-        LabelStyle lblTargetPriorityStyle = new LabelStyle(skin.get("hollow_label", LabelStyle.class));
+        LabelStyle lblTargetPriorityStyle = new LabelStyle(
+            skin.get("hollow_label", LabelStyle.class));
         lblTargetPriorityStyle.background.setLeftWidth(-2);
         lblTargetPriority = new Label("First", lblTargetPriorityStyle);
         lblTargetPriority.setAlignment(Align.center);
         lblTargetPriority.setSize(140, 41);
         lblTargetPriority.setFontScale(0.45f);
         grpTargetPriority.addActor(lblTargetPriority);
-
 
         Label lblTarget = new Label("PRIORITY", skin);
         lblTarget.setPosition(lblTargetPriority.getX() + 20, lblTargetPriority.getY() + 25);
@@ -132,7 +132,8 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 
         Button btnChangeTarget = new Button(skin, "arrow-right");
         btnChangeTarget.setSize(32, 22);
-        btnChangeTarget.setPosition(lblTargetPriority.getX() + lblTargetPriority.getWidth(), lblTargetPriority.getY() + 7);
+        btnChangeTarget.setPosition(lblTargetPriority.getX() + lblTargetPriority.getWidth(),
+            lblTargetPriority.getY() + 7);
         grpTargetPriority.addActor(btnChangeTarget);
         setTargetPriorityListener(grpTargetPriority);
 
@@ -150,11 +151,13 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 
     @Override
     public void standByState() {
+
         this.setVisible(false);
     }
 
     @Override
     public void inspectingState() {
+
         this.setVisible(true);
     }
 
@@ -163,21 +166,27 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
      */
     @Override
     public void update(Tower selectedTower) {
+
         lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
         lblKills.setText(String.valueOf(selectedTower.getNumOfKills()));
         btnDischarge.updateCost(selectedTower.getSellCost());
         lblTitle.setText(selectedTower.getName().toUpperCase());
         lblTargetPriority.setText(selectedTower.getAI().name().replace('_', ' '));
         updateUpgradeControl(btnArmor, selectedTower.hasArmor(), selectedTower.getArmorCost());
-        updateUpgradeControl(btnSpeed, selectedTower.hasIncreasedSpeed(), selectedTower.getSpeedIncreaseCost());
-        updateUpgradeControl(btnRange, selectedTower.hasIncreasedRange(), selectedTower.getRangeIncreaseCost());
-        updateUpgradeControl(btnAttack, selectedTower.hasIncreasedAttack(), selectedTower.getAttackIncreaseCost());
+        updateUpgradeControl(btnSpeed, selectedTower.hasIncreasedSpeed(),
+            selectedTower.getSpeedIncreaseCost());
+        updateUpgradeControl(btnRange, selectedTower.hasIncreasedRange(),
+            selectedTower.getRangeIncreaseCost());
+        updateUpgradeControl(btnAttack, selectedTower.hasIncreasedAttack(),
+            selectedTower.getAttackIncreaseCost());
     }
 
     /**
      * Updates the upgrade controls
      */
-    private void updateUpgradeControl(UpgradeButton upgradeButton, boolean towerHasUpgrade, int upgradeCost) {
+    private void updateUpgradeControl(UpgradeButton upgradeButton, boolean towerHasUpgrade,
+        int upgradeCost) {
+
         upgradeButton.updateCost(upgradeCost);
         boolean affordable = presenter.canAffordUpgrade(upgradeCost);
         upgradeButton.button.setDisabled(!affordable && !towerHasUpgrade);
@@ -185,9 +194,11 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
     }
 
     private void setCancelListener(Button btnCancel) {
+
         btnCancel.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.closeInspect();
             }
@@ -195,9 +206,11 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
     }
 
     private void setTargetPriorityListener(Group grpTargetPriority) {
+
         grpTargetPriority.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.changeTargetPriority();
             }
@@ -205,9 +218,11 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
     }
 
     private void setIncreaseAttackListener() {
+
         btnAttack.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.increaseAttack();
             }
@@ -215,9 +230,11 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
     }
 
     private void setArmorListener() {
+
         btnArmor.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.giveArmor();
             }
@@ -225,9 +242,11 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
     }
 
     private void setIncreaseRangeListener() {
+
         btnRange.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.increaseRange();
             }
@@ -235,9 +254,11 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
     }
 
     private void setIncreaseSpeedListener() {
+
         btnSpeed.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.increaseSpeed();
             }
@@ -245,9 +266,11 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
     }
 
     private void setDischargeListener() {
+
         btnDischarge.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.dishcharge();
             }
@@ -256,25 +279,27 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 
     @Override
     public boolean keyDown(int keycode) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean keyTyped(char character) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        FHDVector2 coords = (FHDVector2) this.getStage().screenToStageCoordinates(UtilPool.getVector2(screenX, screenY));
+
+        FHDVector2 coords = (FHDVector2) this.getStage()
+            .screenToStageCoordinates(UtilPool.getVector2(screenX, screenY));
         presenter.inspectTower(coords);
         coords.free();
         return false;
@@ -282,25 +307,25 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean scrolled(int amount) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 }

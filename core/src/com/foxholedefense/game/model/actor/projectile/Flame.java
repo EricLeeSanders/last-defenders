@@ -45,6 +45,7 @@ public class Flame extends GameActor implements Pool.Poolable {
      * Constructs a flame
      */
     public Flame(Pool<Flame> pool, Array<AtlasRegion> regions) {
+
         this.pool = pool;
         flameAnimation = new Animation<TextureRegion>(FRAME_DURATION, regions);
         flameAnimation.setPlayMode(PlayMode.LOOP);
@@ -55,6 +56,7 @@ public class Flame extends GameActor implements Pool.Poolable {
      * Initializes a flame.
      */
     public Actor initialize(CombatActor attacker, Group targetGroup, Dimension flameSize) {
+
         this.attacker = attacker;
         this.targetGroup = targetGroup;
         stateTime = 0;
@@ -76,6 +78,7 @@ public class Flame extends GameActor implements Pool.Poolable {
 
     @Override
     public void act(float delta) {
+
         super.act(delta);
         stateTime += delta;
         if (attacker.isDead() || flameAnimation.isAnimationFinished(stateTime)) {
@@ -111,6 +114,7 @@ public class Flame extends GameActor implements Pool.Poolable {
     }
 
     private void drawDebugBody(Batch batch) {
+
         ShapeRenderer flameOutline = Resources.getShapeRenderer();
         batch.end();
         Polygon poly = getFlameBody();
@@ -125,11 +129,11 @@ public class Flame extends GameActor implements Pool.Poolable {
     /**
      * Get the flame body.
      * Must be a polygon because a rectangle can't be rotated.
-     *
-     * @return
      */
     public Polygon getFlameBody() {
-        flameBody.setPosition(attacker.getGunPos().x, attacker.getGunPos().y - (flameSize.getHeight() / 2));
+
+        flameBody.setPosition(attacker.getGunPos().x,
+            attacker.getGunPos().y - (flameSize.getHeight() / 2));
         flameBody.setOrigin(0, flameSize.getHeight() / 2);
         flameBody.setRotation(getRotation());
         return flameBody;
@@ -137,6 +141,7 @@ public class Flame extends GameActor implements Pool.Poolable {
 
     @Override
     public void reset() {
+
         this.clear();
         this.remove();
         stateTime = 0;

@@ -24,7 +24,9 @@ public class OptionsPresenter implements GameUIStateObserver {
     private FHDAudio audio;
     private Resources resources;
 
-    public OptionsPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger, Resources resources, FHDAudio audio) {
+    public OptionsPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger,
+        Resources resources, FHDAudio audio) {
+
         this.uiStateManager = uiStateManager;
         uiStateManager.attach(this);
         this.screenChanger = screenChanger;
@@ -34,15 +36,15 @@ public class OptionsPresenter implements GameUIStateObserver {
 
     /**
      * Set the options view
-     *
-     * @param view
      */
     public void setView(IOptionsView view) {
+
         this.view = view;
         initView();
     }
 
     private void initView() {
+
         Logger.info("Options Presenter: initializing view");
         stateChange(uiStateManager.getState());
         view.setBtnMusicOn(audio.isMusicEnabled());
@@ -54,6 +56,7 @@ public class OptionsPresenter implements GameUIStateObserver {
      * Close options window
      */
     public void closeOptions() {
+
         Logger.info("Options Presenter: close options");
         audio.playSound(FHDSound.SMALL_CLICK);
         audio.saveMasterVolume();
@@ -64,6 +67,7 @@ public class OptionsPresenter implements GameUIStateObserver {
      * Go to main menu
      */
     public void mainMenu() {
+
         if (canChangeToMainMenu()) {
             Logger.info("Options Presenter: main menu");
             audio.playSound(FHDSound.SMALL_CLICK);
@@ -76,6 +80,7 @@ public class OptionsPresenter implements GameUIStateObserver {
      * Start a new game
      */
     public void newGame() {
+
         if (canChangeToNewGame()) {
             Logger.info("Options Presenter: new game");
             audio.playSound(FHDSound.SMALL_CLICK);
@@ -85,6 +90,7 @@ public class OptionsPresenter implements GameUIStateObserver {
     }
 
     public void debug() {
+
         if (canChangeToDebug()) {
             Logger.info("Options Presenter: debug");
             audio.playSound(FHDSound.SMALL_CLICK);
@@ -94,11 +100,13 @@ public class OptionsPresenter implements GameUIStateObserver {
     }
 
     private boolean isShowRangesEnabled() {
+
         Preferences prefs = resources.getUserPreferences().getPreferences();
         return prefs.getBoolean("showRanges", false);
     }
 
     public void showRangesPressed() {
+
         Logger.info("Options Presenter: show ranges pressed");
         Preferences prefs = resources.getUserPreferences().getPreferences();
         boolean isShowRangesEnabled = isShowRangesEnabled();
@@ -108,6 +116,7 @@ public class OptionsPresenter implements GameUIStateObserver {
     }
 
     public void soundPressed() {
+
         Logger.info("Options Presenter: sound pressed");
         audio.playSound(FHDSound.SMALL_CLICK);
         audio.changeSoundEnabled();
@@ -116,6 +125,7 @@ public class OptionsPresenter implements GameUIStateObserver {
 
 
     public void musicPressed() {
+
         Logger.info("Options Presenter: music pressed");
         audio.playSound(FHDSound.SMALL_CLICK);
         audio.changeMusicEnabled();
@@ -123,18 +133,22 @@ public class OptionsPresenter implements GameUIStateObserver {
     }
 
     public void speedChanged(float val) {
+
         resources.setGameSpeed(val);
     }
 
     public float getGameSpeed() {
+
         return resources.getGameSpeed();
     }
 
     public void volumeChanged(float vol) {
+
         audio.setMasterVolume(vol);
     }
 
     public float getMasterVolume() {
+
         return audio.getMasterVolume();
     }
 

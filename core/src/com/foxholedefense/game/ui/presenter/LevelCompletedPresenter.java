@@ -16,7 +16,8 @@ public class LevelCompletedPresenter implements GameUIStateObserver {
     private GameUIStateManager uiStateManager;
     private FHDAudio audio;
 
-    public LevelCompletedPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger, FHDAudio audio) {
+    public LevelCompletedPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger,
+        FHDAudio audio) {
 
         this.screenChanger = screenChanger;
         this.uiStateManager = uiStateManager;
@@ -27,10 +28,9 @@ public class LevelCompletedPresenter implements GameUIStateObserver {
 
     /**
      * Set the Level Completed view
-     *
-     * @param view
      */
     public void setView(ILevelCompletedView view) {
+
         this.view = view;
         stateChange(uiStateManager.getState());
     }

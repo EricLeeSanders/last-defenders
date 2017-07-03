@@ -14,8 +14,10 @@ import com.foxholedefense.game.model.actor.interfaces.IRocket;
  */
 
 public abstract class AbstractTowerAI implements TowerAI {
+
     @Override
     public Enemy findTarget(Attacker attacker, SnapshotArray<Actor> enemies) {
+
         if (enemies.size == 0) {
             return null;
         }
@@ -25,7 +27,8 @@ public abstract class AbstractTowerAI implements TowerAI {
             if (actor instanceof Enemy) {
                 Enemy enemy = (Enemy) actor;
                 if (!enemy.isDead()) {
-                    if (CollisionDetection.shapesIntersect(enemy.getBody(), attacker.getRangeShape())) {
+                    if (CollisionDetection
+                        .shapesIntersect(enemy.getBody(), attacker.getRangeShape())) {
                         if (returnEnemy == null || swap(returnEnemy, enemy)) {
                             if (!(enemy instanceof PlatedArmor) || (attacker instanceof IRocket)) {
                                 returnEnemy = enemy;

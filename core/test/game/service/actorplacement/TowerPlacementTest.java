@@ -1,5 +1,14 @@
 package game.service.actorplacement;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.mock;
+import static org.powermock.api.mockito.PowerMockito.doReturn;
+import static org.powermock.api.mockito.PowerMockito.when;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
@@ -16,25 +25,13 @@ import com.foxholedefense.game.service.actorplacement.TowerPlacement;
 import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.game.service.factory.HealthFactory;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.powermock.api.mockito.PowerMockito.doReturn;
-import static org.powermock.api.mockito.PowerMockito.when;
 
 /**
  * Created by Eric on 5/28/2017.
@@ -50,11 +47,13 @@ public class TowerPlacementTest {
 
     @Before
     public void initTowerPlacementTest() {
+
         Gdx.app = mock(Application.class);
         PowerMockito.mockStatic(CollisionDetection.class);
     }
 
     public TowerPlacement createTowerPlacement() {
+
         return new TowerPlacement(map, actorGroups, combatActorFactory, healthFactory);
     }
 
@@ -63,7 +62,6 @@ public class TowerPlacementTest {
     public void towerPlacementTest1() {
 
         TowerPlacement towerPlacement = createTowerPlacement();
-
 
         // Create tower
         Group towerGroup = new Group();
@@ -82,8 +80,8 @@ public class TowerPlacementTest {
         Array<Rectangle> pathBoundaries = new Array<>();
         doReturn(pathBoundaries).when(map).getPathBoundaries();
         when(CollisionDetection.collisionWithPath(eq(pathBoundaries), eq(tower))).thenReturn(false);
-        when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower))).thenReturn(false);
-
+        when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower)))
+            .thenReturn(false);
 
         FHDVector2 moveCoords = new FHDVector2(200, 100);
         towerPlacement.moveTower(moveCoords);
@@ -117,7 +115,6 @@ public class TowerPlacementTest {
 
         TowerPlacement towerPlacement = createTowerPlacement();
 
-
         // Create tower
         Group towerGroup = new Group();
         doReturn(towerGroup).when(actorGroups).getTowerGroup();
@@ -135,8 +132,8 @@ public class TowerPlacementTest {
         Array<Rectangle> pathBoundaries = new Array<>();
         doReturn(pathBoundaries).when(map).getPathBoundaries();
         when(CollisionDetection.collisionWithPath(eq(pathBoundaries), eq(tower))).thenReturn(true);
-        when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower))).thenReturn(true);
-
+        when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower)))
+            .thenReturn(true);
 
         FHDVector2 moveCoords = new FHDVector2(200, 100);
         towerPlacement.moveTower(moveCoords);

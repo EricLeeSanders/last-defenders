@@ -8,5 +8,6 @@ import com.foxholedefense.game.model.level.SpawningEnemy;
  */
 
 public interface WaveLoader {
+
     Queue<SpawningEnemy> loadWave(int level, int wave);
 }

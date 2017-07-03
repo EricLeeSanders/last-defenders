@@ -26,7 +26,9 @@ public class TowerPlacement {
     private CombatActorFactory combatActorFactory;
     private HealthFactory healthFactory;
 
-    public TowerPlacement(Map map, ActorGroups actorGroups, CombatActorFactory combatActorFactory, HealthFactory healthFactory) {
+    public TowerPlacement(Map map, ActorGroups actorGroups, CombatActorFactory combatActorFactory,
+        HealthFactory healthFactory) {
+
         this.map = map;
         this.actorGroups = actorGroups;
         this.combatActorFactory = combatActorFactory;
@@ -39,6 +41,7 @@ public class TowerPlacement {
      * @param type - Type of tower
      */
     public void createTower(String type) {
+
         Logger.info("TowerPlacement: creating tower: " + type);
         currentTower = combatActorFactory.loadTower(type);
         currentTower.setPosition(0, 0);
@@ -52,6 +55,7 @@ public class TowerPlacement {
      * @param clickCoords - Where to move the tower to
      */
     public void moveTower(Vector2 clickCoords) {
+
         if (currentTower != null) {
             currentTower.setVisible(true);
             currentTower.setPositionCenter(clickCoords);
@@ -66,6 +70,7 @@ public class TowerPlacement {
      * @param rotation - amount to rotate
      */
     public void rotateTower(float rotation) {
+
         if (currentTower != null) {
             currentTower.setRotation(currentTower.getRotation() - rotation);
             currentTower.setTowerColliding(towerCollides());
@@ -78,6 +83,7 @@ public class TowerPlacement {
      * @return boolean - if Tower was successfully placed
      */
     public boolean placeTower() {
+
         Logger.info("TowerPlacement: trying to place tower");
         if (currentTower != null) {
             if (!towerCollides()) {
@@ -109,6 +115,7 @@ public class TowerPlacement {
      * @return boolean - if Tower collides
      */
     private boolean towerCollides() {
+
         SnapshotArray<Actor> towers = actorGroups.getTowerGroup().getChildren();
 
         if (CollisionDetection.collisionWithPath(map.getPathBoundaries(), currentTower)) {
@@ -127,6 +134,7 @@ public class TowerPlacement {
      * @param free - if the tower should be freed as well
      */
     public void removeCurrentTower(boolean free) {
+
         Logger.info("TowerPlacement: removing tower");
         if (isCurrentTower()) {
             if (free) {
@@ -142,10 +150,12 @@ public class TowerPlacement {
      * @return boolean
      */
     public boolean isCurrentTower() {
+
         return currentTower != null;
     }
 
     public Tower getCurrentTower() {
+
         return currentTower;
     }
 

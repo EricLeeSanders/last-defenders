@@ -23,6 +23,7 @@ public class PauseView extends Group implements IPauseView {
     private PausePresenter presenter;
 
     public PauseView(PausePresenter presenter, Skin skin) {
+
         this.presenter = presenter;
         this.setTransform(false);
         createControls(skin);
@@ -33,19 +34,21 @@ public class PauseView extends Group implements IPauseView {
      * Create controls
      */
     private void createControls(Skin skin) {
+
         Logger.info("PauseView: creating controls");
 
         Table container = new Table();
         container.setTransform(false);
         container.setBackground(skin.getDrawable("pause-panel"));
         container.setSize(190, 307);
-        container.setPosition((Resources.VIRTUAL_WIDTH / 2) - (container.getWidth() / 2), (Resources.VIRTUAL_HEIGHT / 2) - (container.getHeight() / 2));
+        container.setPosition((Resources.VIRTUAL_WIDTH / 2) - (container.getWidth() / 2),
+            (Resources.VIRTUAL_HEIGHT / 2) - (container.getHeight() / 2));
         //container.debug();
         this.addActor(container);
 
-
         Label lblTitle = new Label("PAUSED", skin);
-        lblTitle.setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2)
+        lblTitle
+            .setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2)
                 , container.getY() + container.getHeight() - lblTitle.getHeight() + 5);
         lblTitle.setAlignment(Align.center);
         lblTitle.setFontScale(0.7f);
@@ -58,7 +61,6 @@ public class PauseView extends Group implements IPauseView {
         btnResume.setPosition(245, 229);
         addActor(btnResume);
         setBtnResumeListener(btnResume);
-
 
         TextButton btnQuit = new TextButton("QUIT", skin);
         btnQuit.getLabel().setFontScale(0.45f);
@@ -87,9 +89,11 @@ public class PauseView extends Group implements IPauseView {
     }
 
     private void setBtnResumeListener(Button button) {
+
         button.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.resume();
             }
@@ -97,9 +101,11 @@ public class PauseView extends Group implements IPauseView {
     }
 
     private void setBtnNewGameListener(Button button) {
+
         button.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.newGame();
             }
@@ -108,9 +114,11 @@ public class PauseView extends Group implements IPauseView {
     }
 
     private void setBtnMainMenuListener(Button button) {
+
         button.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.mainMenu();
             }
@@ -119,9 +127,11 @@ public class PauseView extends Group implements IPauseView {
     }
 
     private void setBtnQuitListener(Button button) {
+
         button.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.quit();
             }
@@ -131,11 +141,13 @@ public class PauseView extends Group implements IPauseView {
 
     @Override
     public void pauseState() {
+
         setVisible(true);
     }
 
     @Override
     public void standByState() {
+
         setVisible(false);
     }
 }

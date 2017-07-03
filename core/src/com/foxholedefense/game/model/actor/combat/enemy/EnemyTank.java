@@ -52,8 +52,12 @@ public class EnemyTank extends Enemy implements PlatedArmor, IVehicle, IRocket {
     private ProjectileFactory projectileFactory;
     private FHDAudio audio;
 
-    public EnemyTank(TextureRegion bodyRegion, TextureRegion turretRegion, TextureRegion[] animatedRegions, CombatActorPool<EnemyTank> pool, Group targetGroup, ProjectileFactory projectileFactory, FHDAudio audio) {
-        super(turretRegion, animatedRegions, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
+    public EnemyTank(TextureRegion bodyRegion, TextureRegion turretRegion,
+        TextureRegion[] animatedRegions, CombatActorPool<EnemyTank> pool, Group targetGroup,
+        ProjectileFactory projectileFactory, FHDAudio audio) {
+
+        super(turretRegion, animatedRegions, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, SPEED,
+            HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
         this.bodyRegion = bodyRegion;
         this.projectileFactory = projectileFactory;
         this.audio = audio;
@@ -71,11 +75,14 @@ public class EnemyTank extends Enemy implements PlatedArmor, IVehicle, IRocket {
         if (!isAttacking()) {
             bodyRotation = getRotation();
         }
-        float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
-        float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
+        float x = ActorUtil
+            .calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
+        float y = ActorUtil
+            .calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
         // draw body
-        batch.draw(bodyRegion, x, y, TEXTURE_SIZE_BODY.getWidth() / 2, TEXTURE_SIZE_BODY.getHeight() / 2, TEXTURE_SIZE_BODY.getWidth(), TEXTURE_SIZE_BODY.getHeight()
-                , 1, 1, bodyRotation);
+        batch.draw(bodyRegion, x, y, TEXTURE_SIZE_BODY.getWidth() / 2,
+            TEXTURE_SIZE_BODY.getHeight() / 2, TEXTURE_SIZE_BODY.getWidth(),
+            TEXTURE_SIZE_BODY.getHeight(), 1, 1, bodyRotation);
         super.draw(batch, alpha);
 
         if (DebugOptions.showTextureBoundaries) {
@@ -84,6 +91,7 @@ public class EnemyTank extends Enemy implements PlatedArmor, IVehicle, IRocket {
     }
 
     private void drawDebugBody(Batch batch) {
+
         ShapeRenderer bodyOutline = Resources.getShapeRenderer();
         batch.end();
         bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
@@ -101,11 +109,14 @@ public class EnemyTank extends Enemy implements PlatedArmor, IVehicle, IRocket {
      */
     @Override
     public Polygon getBody() {
+
         body.setOrigin(TEXTURE_SIZE_BODY.getWidth() / 2, TEXTURE_SIZE_BODY.getHeight() / 2);
         body.setRotation(bodyRotation);
 
-        float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
-        float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
+        float x = ActorUtil
+            .calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
+        float y = ActorUtil
+            .calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
         body.setPosition(x, y);
 
         return body;
@@ -113,15 +124,18 @@ public class EnemyTank extends Enemy implements PlatedArmor, IVehicle, IRocket {
 
     @Override
     public void reset() {
+
         super.reset();
         bodyRotation = 0;
     }
 
     @Override
     public void attackTarget(Targetable target) {
+
         if (target != null) {
             audio.playSound(FHDSound.ROCKET_LAUNCH);
-            projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
+            projectileFactory.loadRocket()
+                .initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
         }
     }
 }

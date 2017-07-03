@@ -22,8 +22,10 @@ public class Damage {
     private static Circle aoeRadius = new Circle();
 
     private static void dealTargetDamage(Attacker attacker, Targetable target) {
+
         if (target != null && !target.isDead() && target.isActive()) {
-            Logger.debug("Doing " + attacker.getAttack() + " damage to: " + target.getClass().getSimpleName());
+            Logger.debug("Doing " + attacker.getAttack() + " damage to: " + target.getClass()
+                .getSimpleName());
             target.takeDamage(attacker.getAttack());
             if (target.isDead() && attacker instanceof Tower) {
                 // Only give the tower a kill if it is alive.
@@ -36,12 +38,15 @@ public class Damage {
     }
 
     public static void dealBulletDamage(Attacker attacker, Targetable target) {
+
         if (!(target instanceof PlatedArmor)) {
             dealTargetDamage(attacker, target);
         }
     }
 
-    public static void dealFlameGroupDamage(Attacker attacker, SnapshotArray<Actor> targetGroup, Polygon flameBody) {
+    public static void dealFlameGroupDamage(Attacker attacker, SnapshotArray<Actor> targetGroup,
+        Polygon flameBody) {
+
         for (int i = targetGroup.size - 1; i >= 0; i--) {
             Actor actor = targetGroup.get(i);
             Targetable flameTarget = (Targetable) actor;
@@ -56,7 +61,9 @@ public class Damage {
         }
     }
 
-    public static void dealExplosionDamage(Attacker attacker, float radius, Vector2 position, SnapshotArray<Actor> targetGroup) {
+    public static void dealExplosionDamage(Attacker attacker, float radius, Vector2 position,
+        SnapshotArray<Actor> targetGroup) {
+
         aoeRadius.setPosition(position.x, position.y);
         aoeRadius.setRadius(radius);
         for (int i = targetGroup.size - 1; i >= 0; i--) {

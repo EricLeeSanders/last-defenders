@@ -21,10 +21,12 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  */
 public class GameOverView extends Group implements IGameOverView {
+
     private GameOverPresenter presenter;
     private Label lblWavesCompleted;
 
     public GameOverView(GameOverPresenter presenter, Skin skin) {
+
         this.presenter = presenter;
         this.setTransform(false);
         createControls(skin);
@@ -34,21 +36,22 @@ public class GameOverView extends Group implements IGameOverView {
      * Create controls
      */
     private void createControls(Skin skin) {
+
         Logger.info("Game Over View: creating controls");
 
         Table table = new Table();
         table.setTransform(false);
         table.setBackground(skin.getDrawable("main-panel"));
         table.setSize(325, 300);
-        table.setPosition((Resources.VIRTUAL_WIDTH / 2) - (table.getWidth() / 2), (Resources.VIRTUAL_HEIGHT / 2) - (table.getHeight() / 2));
+        table.setPosition((Resources.VIRTUAL_WIDTH / 2) - (table.getWidth() / 2),
+            (Resources.VIRTUAL_HEIGHT / 2) - (table.getHeight() / 2));
         this.addActor(table);
-
 
         Label lblTitle = new Label("GAME OVER", skin);
         lblTitle.setFontScale(0.45f);
         lblTitle.setAlignment(Align.center);
-        lblTitle.setPosition(table.getX() + (table.getWidth() / 2) - (lblTitle.getWidth() / 2)
-                , table.getY() + table.getHeight() - lblTitle.getHeight() + 4);
+        lblTitle.setPosition(table.getX() + (table.getWidth() / 2) - (lblTitle.getWidth() / 2),
+            table.getY() + table.getHeight() - lblTitle.getHeight() + 4);
         this.addActor(lblTitle);
 
         table.row();
@@ -56,7 +59,6 @@ public class GameOverView extends Group implements IGameOverView {
         lblWavesCompleted.setFontScale(0.45f);
         lblWavesCompleted.setAlignment(Align.center);
         table.add(lblWavesCompleted).width(275).height(40);
-
 
         table.row();
         TextButton btnNewGame = new TextButton("NEW GAME", skin);
@@ -81,23 +83,28 @@ public class GameOverView extends Group implements IGameOverView {
 
     @Override
     public void standByState() {
+
         this.setVisible(false);
     }
 
     @Override
     public void gameOverState() {
+
         this.setVisible(true);
     }
 
     @Override
     public void setWavesCompleted(String wavesCompleted) {
+
         lblWavesCompleted.setText(wavesCompleted + " WAVES COMPLETED");
     }
 
     private void setBtnNewGameListener(Button button) {
+
         button.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.newGame();
             }
@@ -106,9 +113,11 @@ public class GameOverView extends Group implements IGameOverView {
     }
 
     private void setBtnHighScoresListener(Button button) {
+
         button.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.highScores();
             }
@@ -117,9 +126,11 @@ public class GameOverView extends Group implements IGameOverView {
     }
 
     private void setBtnMainMenuListener(Button button) {
+
         button.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.mainMenu();
             }

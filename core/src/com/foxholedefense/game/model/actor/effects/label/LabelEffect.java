@@ -9,11 +9,13 @@ import com.badlogic.gdx.utils.Pool;
  */
 
 public abstract class LabelEffect extends Label implements Pool.Poolable {
+
     float stateTime;
     private Pool<LabelEffect> pool;
     private float duration;
 
     LabelEffect(Pool<LabelEffect> pool, float duration, Skin skin) {
+
         super("", skin);
         this.pool = pool;
         this.duration = duration;
@@ -21,6 +23,7 @@ public abstract class LabelEffect extends Label implements Pool.Poolable {
 
     @Override
     public void act(float delta) {
+
         super.act(delta);
         stateTime += delta;
         if (stateTime >= duration) {
@@ -33,11 +36,13 @@ public abstract class LabelEffect extends Label implements Pool.Poolable {
      * Otherwise, the object is placed in the pool twice.
      */
     void free() {
+
         pool.free(this);
     }
 
     @Override
     public void reset() {
+
         stateTime = 0;
         remove();
         clear();

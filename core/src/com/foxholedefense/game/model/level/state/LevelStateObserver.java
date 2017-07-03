@@ -11,5 +11,6 @@ import com.foxholedefense.state.StateObserver;
  */
 
 public interface LevelStateObserver extends StateObserver {
+
     void stateChange(LevelState state);
 }

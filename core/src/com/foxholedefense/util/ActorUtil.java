@@ -8,12 +8,9 @@ public class ActorUtil {
 
     /**
      * Calculates the bottom left point given a point and dimension
-     *
-     * @param point
-     * @param dimension
-     * @return
      */
     public static float calcBotLeftPointFromCenter(float point, float dimension) {
+
         return point - (dimension / 2);
     }
 
@@ -21,7 +18,9 @@ public class ActorUtil {
      * Calculates a rotation from the current position and the target
      * position.
      */
-    public static float calculateRotation(float targetX, float targetY, float centerX, float centerY) {
+    public static float calculateRotation(float targetX, float targetY, float centerX,
+        float centerY) {
+
         FHDVector2 vector = UtilPool.getVector2(targetX, targetY);
         FHDVector2 centerVector = UtilPool.getVector2(centerX, centerY);
         float rotation = calculateRotation(vector, centerVector);
@@ -35,6 +34,7 @@ public class ActorUtil {
      * position.
      */
     public static float calculateRotation(Vector2 target, Vector2 centerVector) {
+
         FHDVector2 targetCopy = UtilPool.getVector2(target);
         float rotation = targetCopy.sub(centerVector).angle();
         targetCopy.free();
@@ -45,13 +45,10 @@ public class ActorUtil {
      * Calculates rotated coords from a given center point to a target point.
      * The returned vector can be freed. Rotation needs to be in radians.
      *
-     * @param targetX
-     * @param targetY
-     * @param centerX
-     * @param centerY
      * @param rotation - in radians
      */
-    public static FHDVector2 calculateRotatedCoords(float targetX, float targetY, float centerX, float centerY, double rotation) {
+    public static FHDVector2 calculateRotatedCoords(float targetX, float targetY, float centerX,
+        float centerY, double rotation) {
         // Math stuff here -
         // http://math.stackexchange.com/questions/270194/how-to-find-the-vertices-angle-after-rotation
         float cos = (float) Math.cos(rotation);

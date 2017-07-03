@@ -6,9 +6,12 @@ import com.foxholedefense.game.service.factory.EffectFactory.DeathEffectPool;
 import com.foxholedefense.util.datastructures.Dimension;
 
 public class VehicleExplosion extends DeathEffect {
+
     private static final Dimension TEXTURE_SIZE = new Dimension(128, 128);
 
-    public VehicleExplosion(DeathEffectPool<VehicleExplosion> pool, Array<AtlasRegion> atlasRegions) {
+    public VehicleExplosion(DeathEffectPool<VehicleExplosion> pool,
+        Array<AtlasRegion> atlasRegions) {
+
         super(pool, atlasRegions, TEXTURE_SIZE);
         setRotation(90);
     }

@@ -42,8 +42,13 @@ public class TowerRocketLauncher extends Tower implements IRocket {
     private FHDAudio audio;
     private ProjectileFactory projectileFactory;
 
-    public TowerRocketLauncher(TextureRegion actorRegion, CombatActorPool<TowerRocketLauncher> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
-        super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
+    public TowerRocketLauncher(TextureRegion actorRegion, CombatActorPool<TowerRocketLauncher> pool,
+        Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
+        ProjectileFactory projectileFactory, FHDAudio audio) {
+
+        super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion,
+            collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST,
+            RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
         this.body = new Circle(this.getPositionCenter(), 10);
@@ -51,19 +56,23 @@ public class TowerRocketLauncher extends Tower implements IRocket {
 
     @Override
     public void attackTarget(Targetable target) {
+
         if (target != null) {
             audio.playSound(FHDSound.ROCKET_LAUNCH);
-            projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
+            projectileFactory.loadRocket()
+                .initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
         }
     }
 
     @Override
     public String getName() {
+
         return "Rocket Launcher";
     }
 
     @Override
     public Circle getBody() {
+
         body.setPosition(getPositionCenter().x, getPositionCenter().y);
         return body;
     }

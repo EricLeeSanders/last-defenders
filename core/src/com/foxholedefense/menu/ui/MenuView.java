@@ -35,6 +35,7 @@ public class MenuView extends Group implements IMenuView {
     private Label lblOptionsTitle;
 
     public MenuView(MenuPresenter presenter, Resources resources) {
+
         this.presenter = presenter;
         this.setTransform(false);
         createControls(resources);
@@ -44,6 +45,7 @@ public class MenuView extends Group implements IMenuView {
     }
 
     public void act(float delta) {
+
         super.act(delta);
         //This is a bit of a hack, but I need this here for the initial load of the screen.
         float startX = sliderStartPos + sliderEndPos * presenter.getMasterVolume();
@@ -52,20 +54,26 @@ public class MenuView extends Group implements IMenuView {
     }
 
     private void createControls(Resources resources) {
+
         Logger.info("Menu view: initializing view");
 
         Skin skin = resources.getSkin();
 
         Label lblTitle = new Label("FOXHOLE DEFENSE", skin);
-        float lblTitleX = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, lblTitle.getWidth());
-        float lblTitleY = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, lblTitle.getHeight()) + 110;
+        float lblTitleX = ActorUtil
+            .calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, lblTitle.getWidth());
+        float lblTitleY =
+            ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, lblTitle.getHeight())
+                + 110;
         lblTitle.setPosition(lblTitleX, lblTitleY);
         addActor(lblTitle);
 
         TextButton btnPlay = new TextButton("PLAY", skin, "transparent");
         btnPlay.setSize(126, 56);
-        float btnPlayX = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, btnPlay.getWidth());
-        float btnPlayY = ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, btnPlay.getHeight());
+        float btnPlayX = ActorUtil
+            .calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, btnPlay.getWidth());
+        float btnPlayY = ActorUtil
+            .calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, btnPlay.getHeight());
         btnPlay.setPosition(btnPlayX, btnPlayY);
         addActor(btnPlay);
         setBtnPlayListener(btnPlay);
@@ -76,7 +84,6 @@ public class MenuView extends Group implements IMenuView {
         btnSound.setPosition(175, 22);
         addActor(btnSound);
         setBtnSoundListener(btnSound);
-
 
         btnMusic = new ImageButton(skin, "music");
         btnMusic.setSize(64, 64);
@@ -102,6 +109,7 @@ public class MenuView extends Group implements IMenuView {
     }
 
     private void createOptionControls(Resources resources) {
+
         Logger.info("Menu view: creating option controls");
         Skin skin = resources.getSkin();
 
@@ -109,13 +117,15 @@ public class MenuView extends Group implements IMenuView {
         optionsTable.setTransform(false);
         optionsTable.setBackground(skin.getDrawable("main-panel"));
         optionsTable.setSize(500, 300);
-        optionsTable.setPosition((Resources.VIRTUAL_WIDTH / 2) - (optionsTable.getWidth() / 2), (Resources.VIRTUAL_HEIGHT / 2) - (optionsTable.getHeight() / 2));
+        optionsTable.setPosition((Resources.VIRTUAL_WIDTH / 2) - (optionsTable.getWidth() / 2),
+            (Resources.VIRTUAL_HEIGHT / 2) - (optionsTable.getHeight() / 2));
         //table.debug();
         this.addActor(optionsTable);
 
         lblOptionsTitle = new Label("Options", skin);
-        lblOptionsTitle.setPosition(optionsTable.getX() + (optionsTable.getWidth() / 2) - (lblOptionsTitle.getWidth() / 2)
-                , optionsTable.getY() + optionsTable.getHeight() - lblOptionsTitle.getHeight());
+        lblOptionsTitle.setPosition(
+            optionsTable.getX() + (optionsTable.getWidth() / 2) - (lblOptionsTitle.getWidth() / 2),
+            optionsTable.getY() + optionsTable.getHeight() - lblOptionsTitle.getHeight());
         lblOptionsTitle.setAlignment(Align.center);
         lblOptionsTitle.setFontScale(0.7f);
         this.addActor(lblOptionsTitle);
@@ -136,7 +146,6 @@ public class MenuView extends Group implements IMenuView {
         Stack volumeStack = new Stack();
         volumeStack.setTransform(false);
 
-
         Slider volumeSlider = new Slider(0, 1f, 0.01f, false, skin);
         volumeSlider.getStyle().knob.setMinWidth(33);
         volumeSlider.getStyle().knob.setMinHeight(24);
@@ -145,13 +154,13 @@ public class MenuView extends Group implements IMenuView {
         volumeSlider.setValue(presenter.getMasterVolume());
         volSliderListener(volumeSlider);
 
-
-        Image volSliderFull = new Image(resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
+        Image volSliderFull = new Image(
+            resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
         volSliderFull.setSize(300, 22);
 
-        volSliderBg = new Image(resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
+        volSliderBg = new Image(
+            resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
         volSliderBg.setSize(300, 22);
-
 
         this.sliderStartPos = volSliderBg.getX();
         this.sliderEndPos = volSliderBg.getX() + volSliderBg.getWidth() - 4;
@@ -159,7 +168,6 @@ public class MenuView extends Group implements IMenuView {
         volumeStack.add(volSliderFull);
         volumeStack.add(volSliderBg);
         volumeStack.add(volumeSlider);
-
 
         optionsTable.add(chkBoxMusic).left().spaceLeft(15).spaceBottom(10);
         optionsTable.row();
@@ -173,6 +181,7 @@ public class MenuView extends Group implements IMenuView {
     }
 
     public void setBackground(TextureAtlas menuAtlas) {
+
         Image background = new Image(menuAtlas.findRegion("main-menu-screen"));
         background.setFillParent(true);
         this.getStage().addActor(background);
@@ -181,20 +190,24 @@ public class MenuView extends Group implements IMenuView {
 
 
     private void volSliderListener(final Slider slider) {
+
         slider.addListener(new ClickListener() {
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
+
                 super.touchDragged(event, x, y, pointer);
                 moveSlider();
             }
 
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchDown(event, x, y, pointer, button);
                 moveSlider();
                 return true;
             }
 
             private void moveSlider() {
+
                 float startX = sliderStartPos + sliderEndPos * slider.getValue();
                 presenter.volumeChanged(slider.getValue());
                 volSliderBg.setX(startX);
@@ -204,9 +217,11 @@ public class MenuView extends Group implements IMenuView {
     }
 
     private void setBtnOptionsListener(Button btnOptions) {
+
         btnOptions.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 optionsTable.setVisible(true);
                 lblOptionsTitle.setVisible(true);
@@ -216,9 +231,11 @@ public class MenuView extends Group implements IMenuView {
     }
 
     private void setBtnPlayListener(Button btnPlay) {
+
         btnPlay.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.playGame();
             }
@@ -228,9 +245,11 @@ public class MenuView extends Group implements IMenuView {
     }
 
     private void setBtnSoundListener(Button btnSound) {
+
         btnSound.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.soundPressed();
             }
@@ -238,9 +257,11 @@ public class MenuView extends Group implements IMenuView {
     }
 
     private void setBtnMusicListener(Button btnMusic) {
+
         btnMusic.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.musicPressed();
             }
@@ -249,12 +270,14 @@ public class MenuView extends Group implements IMenuView {
 
     @Override
     public void setBtnSoundOn(boolean soundOn) {
+
         btnSound.setChecked(soundOn);
 
     }
 
     @Override
     public void setBtnMusicOn(boolean musicOn) {
+
         btnMusic.setChecked(musicOn);
 
     }

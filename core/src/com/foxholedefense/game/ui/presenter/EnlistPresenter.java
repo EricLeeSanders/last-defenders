@@ -19,7 +19,6 @@ import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.Logger;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +38,7 @@ public class EnlistPresenter implements GameUIStateObserver {
     private Map<String, Integer> towerCosts = new HashMap<>();
 
     public EnlistPresenter(GameUIStateManager uiStateManager, Player player,
-                           FHDAudio audio, TowerPlacement towerPlacement, MessageDisplayer messageDisplayer) {
+        FHDAudio audio, TowerPlacement towerPlacement, MessageDisplayer messageDisplayer) {
 
         this.uiStateManager = uiStateManager;
         uiStateManager.attach(this);
@@ -64,20 +63,18 @@ public class EnlistPresenter implements GameUIStateObserver {
 
     /**
      * Set the view for enlisting
-     *
-     * @param view
      */
     public void setView(IEnlistView view) {
+
         this.view = view;
         stateChange(uiStateManager.getState());
     }
 
     /**
      * Create a tower
-     *
-     * @param strEnlistTower
      */
     public void createTower(String strEnlistTower) {
+
         Logger.info("Enlist Presenter: creating tower");
         int cost = towerCosts.get(strEnlistTower);
         audio.playSound(FHDSound.SMALL_CLICK);
@@ -86,8 +83,11 @@ public class EnlistPresenter implements GameUIStateObserver {
             Logger.info("Enlist Presenter: tower created");
             uiStateManager.setState(GameUIState.PLACING_TOWER);
         } else {
-            Logger.info("Enlist Presenter: cannot afford " + strEnlistTower + " player: " + getPlayerMoney() + " cost: " + cost);
-            messageDisplayer.displayMessage("You cannot afford to enlist a " + strEnlistTower + "!");
+            Logger.info(
+                "Enlist Presenter: cannot afford " + strEnlistTower + " player: " + getPlayerMoney()
+                    + " cost: " + cost);
+            messageDisplayer
+                .displayMessage("You cannot afford to enlist a " + strEnlistTower + "!");
         }
     }
 
@@ -95,6 +95,7 @@ public class EnlistPresenter implements GameUIStateObserver {
      * Try to place a tower
      */
     public void placeTower() {
+
         Logger.info("Enlist Presenter: placing tower");
         if (canPlaceTower()) {
             if (towerPlacement.placeTower()) {
@@ -113,6 +114,7 @@ public class EnlistPresenter implements GameUIStateObserver {
 
 
     private void cancelEnlist() {
+
         Logger.info("Enlist Presenter: canceling enlist");
         towerPlacement.removeCurrentTower(true);
     }
@@ -121,6 +123,7 @@ public class EnlistPresenter implements GameUIStateObserver {
      * Cancel enlisting
      */
     public void cancel() {
+
         Logger.info("Enlist Presenter: cancel");
         uiStateManager.setStateReturn();
     }
@@ -153,10 +156,9 @@ public class EnlistPresenter implements GameUIStateObserver {
 
     /**
      * Determine if tower is able to be rotated
-     *
-     * @return
      */
     private boolean isTowerRotatable() {
+
         return towerPlacement.getCurrentTower() instanceof IRotatable;
     }
 
@@ -166,6 +168,7 @@ public class EnlistPresenter implements GameUIStateObserver {
      * @return int - player money
      */
     public int getPlayerMoney() {
+
         return player.getMoney();
     }
 
@@ -176,41 +179,37 @@ public class EnlistPresenter implements GameUIStateObserver {
      * @return boolean - if the tower can be purchased.
      */
     public boolean canAffordTower(int towerCost) {
+
         return (towerCost <= player.getMoney());
     }
 
     /**
      * Determines if the tower can be moved
-     *
-     * @return
      */
     private boolean canMoveTower() {
 
         return uiStateManager.getState().equals(GameUIState.PLACING_TOWER)
-                && towerPlacement.isCurrentTower();
+            && towerPlacement.isCurrentTower();
     }
 
     /**
      * Determines if the tower can be placed
-     *
-     * @return
      */
     private boolean canPlaceTower() {
 
         return uiStateManager.getState().equals(GameUIState.PLACING_TOWER)
-                && towerPlacement.isCurrentTower();
+            && towerPlacement.isCurrentTower();
     }
 
     /**
      * Determines if the tower can be created
      *
      * @param cost - cost of the tower
-     * @return
      */
     private boolean canCreateTower(int cost) {
 
         return uiStateManager.getState().equals(GameUIState.ENLISTING)
-                && canAffordTower(cost);
+            && canAffordTower(cost);
     }
 
     @Override

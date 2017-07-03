@@ -1,5 +1,12 @@
 package game.ui.presenter;
 
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.model.Player;
@@ -10,17 +17,8 @@ import com.foxholedefense.game.ui.view.GameOverView;
 import com.foxholedefense.game.ui.view.interfaces.IGameOverView;
 import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.util.FHDAudio;
-
 import org.junit.Before;
 import org.junit.Test;
-
-
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Eric on 5/30/2017.
@@ -34,13 +32,16 @@ public class GameOverPresenterTest {
 
     @Before
     public void initGameOverPresenterTest() {
+
         Gdx.app = mock(Application.class);
     }
 
     private GameOverPresenter createGameOverPresenter() {
+
         FHDAudio audioMock = mock(FHDAudio.class);
 
-        return new GameOverPresenter(gameUIStateManagerMock, screenChangerMock, playerMock, audioMock);
+        return new GameOverPresenter(gameUIStateManagerMock, screenChangerMock, playerMock,
+            audioMock);
     }
 
     /**
@@ -98,6 +99,7 @@ public class GameOverPresenterTest {
      */
     @Test
     public void mainMenuTest1() {
+
         GameOverPresenter gameOverPresenter = createGameOverPresenter();
         doReturn(GameUIState.GAME_OVER).when(gameUIStateManagerMock).getState();
 
@@ -112,6 +114,7 @@ public class GameOverPresenterTest {
      */
     @Test
     public void mainMenuTest2() {
+
         GameOverPresenter gameOverPresenter = createGameOverPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
 

@@ -10,5 +10,6 @@ import com.foxholedefense.game.model.actor.interfaces.Attacker;
  */
 
 public interface TowerAI {
+
     Enemy findTarget(Attacker attacker, SnapshotArray<Actor> enemies);
 }

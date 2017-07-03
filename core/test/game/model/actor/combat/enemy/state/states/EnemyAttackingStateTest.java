@@ -1,5 +1,12 @@
 package game.model.actor.combat.enemy.state.states;
 
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
@@ -8,22 +15,11 @@ import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.
 import com.foxholedefense.game.model.actor.combat.enemy.state.states.EnemyAttackingState;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.interfaces.Targetable;
-
-import org.junit.Before;
-import org.junit.Test;
-
 import java.util.HashMap;
 import java.util.Map;
-
+import org.junit.Before;
+import org.junit.Test;
 import testutil.TestUtil;
-
-
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Eric on 5/15/2017.
@@ -32,11 +28,13 @@ public class EnemyAttackingStateTest {
 
     @Before
     public void initEnemyAttackingStateTest() {
+
         Gdx.app = mock(Application.class);
     }
 
     @Test
     public void enemyAttackingStateTest1() {
+
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
         Tower tower = TestUtil.createTower("Rifle", false);
 
