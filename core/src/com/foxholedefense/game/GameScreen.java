@@ -14,109 +14,115 @@ import com.foxholedefense.screen.AbstractScreen;
 import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
 /**
  * Game Screen that creates the Game Stage and UI Stage as well as their
  * dependencies.
- * 
- * @author Eric
  *
+ * @author Eric
  */
 public class GameScreen extends AbstractScreen {
 
-	private GameStage gameStage;
-	private GameUIStage gameUIStage;
-	private GameStateManager gameStateManager;
-	private GameUIStateManager uiStateManager;
-	private Resources resources;
-	private SpriteBatch spriteBatch;
+    private GameStage gameStage;
+    private GameUIStage gameUIStage;
+    private GameStateManager gameStateManager;
+    private GameUIStateManager uiStateManager;
+    private Resources resources;
+    private SpriteBatch spriteBatch;
 
-	public GameScreen(int intLevel, GameStateManager gameStateManager, ScreenChanger screenChanger, Resources resources, FHDAudio audio) {
+    public GameScreen(int intLevel, GameStateManager gameStateManager, ScreenChanger screenChanger,
+        Resources resources, FHDAudio audio) {
 
-		super(gameStateManager);
-		Player player = new Player();
-		this.resources = resources;
-		ActorGroups actorGroups = new ActorGroups();
-		LevelStateManager levelStateManager = new LevelStateManager();
-		uiStateManager = new GameUIStateManager(levelStateManager);
-		this.gameStateManager = gameStateManager;
-		spriteBatch = new SpriteBatch();
-		gameStage = new GameStage(intLevel, player, actorGroups, audio, levelStateManager, uiStateManager, getViewport(), resources, spriteBatch);
-		gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager, levelStateManager, gameStateManager
-						, screenChanger, super.getInputMultiplexer(), getViewport(), resources, audio, gameStage, spriteBatch);
+        super(gameStateManager);
+        Player player = new Player();
+        this.resources = resources;
+        ActorGroups actorGroups = new ActorGroups();
+        LevelStateManager levelStateManager = new LevelStateManager();
+        uiStateManager = new GameUIStateManager(levelStateManager);
+        this.gameStateManager = gameStateManager;
+        spriteBatch = new SpriteBatch();
+        gameStage = new GameStage(intLevel, player, actorGroups, audio, levelStateManager,
+            uiStateManager, getViewport(), resources, spriteBatch);
+        gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager,
+            levelStateManager, gameStateManager, screenChanger, super.getInputMultiplexer(),
+            getViewport(), resources, audio, gameStage, spriteBatch);
 
-		super.show();
-		audio.turnOffMusic();
-		gameStage.loadFirstWave();
-		createBackListener();
-		gameStateManager.setState(GameState.PLAY);
-	}
+        super.show();
+        audio.turnOffMusic();
+        gameStage.loadFirstWave();
+        createBackListener();
+        gameStateManager.setState(GameState.PLAY);
+    }
 
-	private void createBackListener(){
-		InputProcessor backProcessor = new InputAdapter() {
-			@Override
-			public boolean keyUp(int keycode) {
+    private void createBackListener() {
 
-				if ((keycode == Keys.ESCAPE) || (keycode == Keys.BACK) ) {
-					Logger.info("GameScreen: Escape/Back pressed.");
-					uiStateManager.setState(GameUIState.PAUSE_MENU);
-				}
-				return false;
-			}
-		};
+        InputProcessor backProcessor = new InputAdapter() {
+            @Override
+            public boolean keyUp(int keycode) {
 
+                if ((keycode == Keys.ESCAPE) || (keycode == Keys.BACK)) {
+                    Logger.info("GameScreen: Escape/Back pressed.");
+                    uiStateManager.setState(GameUIState.PAUSE_MENU);
+                }
+                return false;
+            }
+        };
 
-		super.addInputProcessor(backProcessor);
-	}
+        super.addInputProcessor(backProcessor);
+    }
 
-	@Override
-	public void resize(int width, int height) {
-		gameStage.getViewport().setScreenSize(width, height); // update the size of ViewPort
-		gameUIStage.getViewport().setScreenSize(width, height); // update the size of ViewPort
-	    super.resize(width, height);
-	}
+    @Override
+    public void resize(int width, int height) {
 
-	/**
-	 * If the Game State is not play, then "pause" the Game Stage
-	 */
-	@Override
-	public void renderElements(float delta) {
-		if (gameStateManager.getState().equals(GameState.PLAY)) {
-			if(resources.getGameSpeed() > 0) {
-				gameStage.act(delta * resources.getGameSpeed());
-			}
-		}
-		gameStage.draw();
+        gameStage.getViewport().setScreenSize(width, height); // update the size of ViewPort
+        gameUIStage.getViewport().setScreenSize(width, height); // update the size of ViewPort
+        super.resize(width, height);
+    }
 
-		gameUIStage.act(delta);
-		gameUIStage.draw();
+    /**
+     * If the Game State is not play, then "pause" the Game Stage
+     */
+    @Override
+    public void renderElements(float delta) {
 
-	}
+        if (gameStateManager.getState().equals(GameState.PLAY)) {
+            if (resources.getGameSpeed() > 0) {
+                gameStage.act(delta * resources.getGameSpeed());
+            }
+        }
+        gameStage.draw();
 
-	@Override
-	public void pause() {
-		Logger.info("Game Screen: pausing");
-		uiStateManager.setState(GameUIState.PAUSE_MENU);
-		gameStateManager.setState(GameState.PAUSE);
-	}
+        gameUIStage.act(delta);
+        gameUIStage.draw();
 
-	@Override
-	public void resume() {
-		Logger.info("Game Screen: resume");
-		if(!gameStateManager.getState().equals(GameState.PAUSE)){
-			gameStateManager.setState(GameState.PLAY);
-		}
-	}
-	@Override
-	public void dispose() {
-		Logger.info("Game Screen Dispose");
-		gameStage.dispose();
-		gameUIStage.dispose();
-		spriteBatch.dispose();
-	}
+    }
 
+    @Override
+    public void pause() {
 
+        Logger.info("Game Screen: pausing");
+        uiStateManager.setState(GameUIState.PAUSE_MENU);
+        gameStateManager.setState(GameState.PAUSE);
+    }
+
+    @Override
+    public void resume() {
+
+        Logger.info("Game Screen: resume");
+        if (!gameStateManager.getState().equals(GameState.PAUSE)) {
+            gameStateManager.setState(GameState.PLAY);
+        }
+    }
+
+    @Override
+    public void dispose() {
+
+        Logger.info("Game Screen Dispose");
+        gameStage.dispose();
+        gameUIStage.dispose();
+        spriteBatch.dispose();
+    }
 }

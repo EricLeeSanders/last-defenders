@@ -17,72 +17,75 @@ import com.foxholedefense.util.datastructures.Dimension;
 
 /**
  * Represents an Rocket
- * 
- * @author Eric
  *
+ * @author Eric
  */
 public class Rocket extends GameActor implements Pool.Poolable {
 
-	private static final float SPEED = 350f;
+    private static final float SPEED = 350f;
 
-	private Attacker attacker;
-	private Vector2 destination = new Vector2(0,0);
-	private Pool<Rocket> pool;
-	private float radius;
-	private ProjectileFactory projectileFactory;
+    private Attacker attacker;
+    private Vector2 destination = new Vector2(0, 0);
+    private Pool<Rocket> pool;
+    private float radius;
+    private ProjectileFactory projectileFactory;
 
-	public Rocket(Pool<Rocket> pool, ProjectileFactory projectileFactory, TextureRegion rocketTexture){
-		this.pool = pool;
-		this.projectileFactory = projectileFactory;
-		setTextureRegion(rocketTexture);
-	}
-	/**
-	 * Initializes an Rocket
-	 *
-	 */
-	public Actor initialize(Attacker attacker, Vector2 destination, Dimension size, float radius) {
-		this.attacker = attacker;
-		this.radius = radius;
-		this.destination.set(destination);
+    public Rocket(Pool<Rocket> pool, ProjectileFactory projectileFactory,
+        TextureRegion rocketTexture) {
 
-		setRotation(ActorUtil.calculateRotation(destination, attacker.getPositionCenter()));
-		setSize(size.getWidth(), size.getHeight());
-		setOrigin(size.getWidth() / 2, size.getHeight() / 2);
+        this.pool = pool;
+        this.projectileFactory = projectileFactory;
+        setTextureRegion(rocketTexture);
+    }
 
-		Vector2 startPos = attacker.getGunPos();
-		setPositionCenter(startPos);
+    /**
+     * Initializes an Rocket
+     */
+    public Actor initialize(Attacker attacker, Vector2 destination, Dimension size, float radius) {
 
-		float duration = destination.dst(startPos) / SPEED;
-		MoveToAction moveAction = Actions.moveTo(destination.x, destination.y, duration, Interpolation.linear);
-		moveAction.setAlignment(Align.center);
-		addAction(moveAction);
+        this.attacker = attacker;
+        this.radius = radius;
+        this.destination.set(destination);
 
-		return this;
-	}
+        setRotation(ActorUtil.calculateRotation(destination, attacker.getPositionCenter()));
+        setSize(size.getWidth(), size.getHeight());
+        setOrigin(size.getWidth() / 2, size.getHeight() / 2);
 
-	/**
-	 * Determines when the rpg has reached its destination and when it should be
-	 * freed to the pool. If the attacker is a tower, then it handles giving the
-	 * Tower a kill.
-	 *
-	 * When the Rocket reaches its destination, create an explosion
-	 */
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-		if (this.getActions().size == 0) {
-			projectileFactory.loadExplosion().initialize(attacker, radius, destination);
-			pool.free(this);
-		}
-	}
+        Vector2 startPos = attacker.getGunPos();
+        setPositionCenter(startPos);
 
-	@Override
-	public void reset() {
-		this.clear();
-		attacker = null;
-		radius = 0;
-		this.remove();
-	}
+        float duration = destination.dst(startPos) / SPEED;
+        MoveToAction moveAction = Actions
+            .moveTo(destination.x, destination.y, duration, Interpolation.linear);
+        moveAction.setAlignment(Align.center);
+        addAction(moveAction);
 
+        return this;
+    }
 
+    /**
+     * Determines when the rpg has reached its destination and when it should be
+     * freed to the pool. If the attacker is a tower, then it handles giving the
+     * Tower a kill.
+     * <p>
+     * When the Rocket reaches its destination, create an explosion
+     */
+    @Override
+    public void act(float delta) {
+
+        super.act(delta);
+        if (this.getActions().size == 0) {
+            projectileFactory.loadExplosion().initialize(attacker, radius, destination);
+            pool.free(this);
+        }
+    }
+
+    @Override
+    public void reset() {
+
+        this.clear();
+        attacker = null;
+        radius = 0;
+        this.remove();
+    }
 }

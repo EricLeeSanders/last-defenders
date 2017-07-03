@@ -10,6 +10,7 @@ public class FirstEnemyAI extends AbstractTowerAI {
 
     @Override
     protected boolean swap(Enemy currentEnemy, Enemy replacingEnemy) {
+
         return replacingEnemy.getLengthToEnd() < currentEnemy.getLengthToEnd();
     }
 }

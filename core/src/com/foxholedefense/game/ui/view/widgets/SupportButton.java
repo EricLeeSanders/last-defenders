@@ -11,13 +11,16 @@ import com.foxholedefense.util.ActorUtil;
  * Created by Eric on 11/12/2016.
  */
 
-public class SupportButton extends Group{
+public class SupportButton extends Group {
+
     public ImageButton button;
     public int cost;
-    public SupportButton(Skin skin, String name, int cost){
+
+    public SupportButton(Skin skin, String name, int cost) {
+
         this.setTransform(false);
         this.button = new ImageButton(skin, "support");
-        button.setSize(133,100);
+        button.setSize(133, 100);
         this.cost = cost;
         addActor(button);
 
@@ -25,8 +28,10 @@ public class SupportButton extends Group{
         lblTitle.setFontScale(0.40f);
         lblTitle.setAlignment(Align.center);
         lblTitle.pack();
-        float lblTitleX = ActorUtil.calcBotLeftPointFromCenter(button.getWidth() / 2, lblTitle.getWidth());
-        float lblTitleY = ActorUtil.calcBotLeftPointFromCenter(button.getHeight() / 2, lblTitle.getHeight());
+        float lblTitleX = ActorUtil
+            .calcBotLeftPointFromCenter(button.getWidth() / 2, lblTitle.getWidth());
+        float lblTitleY = ActorUtil
+            .calcBotLeftPointFromCenter(button.getHeight() / 2, lblTitle.getHeight());
         lblTitle.setPosition(lblTitleX, lblTitleY + 12);
         addActor(lblTitle);
 
@@ -34,7 +39,8 @@ public class SupportButton extends Group{
         lblCost.setFontScale(0.45f);
         lblCost.setAlignment(Align.center);
         lblCost.pack();
-        float lblCostX = ActorUtil.calcBotLeftPointFromCenter(button.getWidth() / 2, lblCost.getWidth());
+        float lblCostX = ActorUtil
+            .calcBotLeftPointFromCenter(button.getWidth() / 2, lblCost.getWidth());
         lblCost.setPosition(lblCostX, 10);
         addActor(lblCost);
 

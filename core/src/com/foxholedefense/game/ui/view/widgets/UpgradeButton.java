@@ -13,9 +13,12 @@ import com.foxholedefense.util.ActorUtil;
  */
 
 public class UpgradeButton extends Group {
+
     public ImageButton button;
     private Label lblCost;
-    public UpgradeButton(Skin skin, String name, String iconName, int iconWidth, int iconHeight){
+
+    public UpgradeButton(Skin skin, String name, String iconName, int iconWidth, int iconHeight) {
+
         this.setTransform(false);
         this.button = new ImageButton(skin, "upgrade");
         button.setSize(110, 115);
@@ -25,17 +28,20 @@ public class UpgradeButton extends Group {
         lblCost.setFontScale(0.45f);
         lblCost.setAlignment(Align.center);
         lblCost.pack();
-        float lblCostX = ActorUtil.calcBotLeftPointFromCenter(button.getWidth() / 2, lblCost.getWidth());
-        lblCost.setPosition(lblCostX,5);
+        float lblCostX = ActorUtil
+            .calcBotLeftPointFromCenter(button.getWidth() / 2, lblCost.getWidth());
+        lblCost.setPosition(lblCostX, 5);
         addActor(lblCost);
 
         Label lblTitle = new Label(name.toUpperCase().replaceAll(" ", "\n"), skin);
         lblTitle.setFontScale(0.4f);
         lblTitle.setAlignment(Align.center);
         lblTitle.pack();
-        float lblTitleX = ActorUtil.calcBotLeftPointFromCenter(button.getWidth() / 2, lblTitle.getWidth());
-        float lblTitleY = ActorUtil.calcBotLeftPointFromCenter(button.getHeight() / 2, lblTitle.getHeight());
-        lblTitle.setPosition(lblTitleX, lblTitleY-5);
+        float lblTitleX = ActorUtil
+            .calcBotLeftPointFromCenter(button.getWidth() / 2, lblTitle.getWidth());
+        float lblTitleY = ActorUtil
+            .calcBotLeftPointFromCenter(button.getHeight() / 2, lblTitle.getHeight());
+        lblTitle.setPosition(lblTitleX, lblTitleY - 5);
         addActor(lblTitle);
 
         Image icon = new Image(skin.getAtlas().findRegion(iconName));
@@ -46,11 +52,13 @@ public class UpgradeButton extends Group {
         addActor(icon);
     }
 
-    public void updateCost(int cost){
+    public void updateCost(int cost) {
+
         lblCost.setText(String.valueOf(cost));
     }
 
-    public void setPurchased(boolean purchased){
+    public void setPurchased(boolean purchased) {
+
         button.setChecked(purchased);
     }
 

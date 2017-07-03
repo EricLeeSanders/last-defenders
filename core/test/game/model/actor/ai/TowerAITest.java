@@ -1,5 +1,11 @@
 package game.model.actor.ai;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -9,15 +15,8 @@ import com.foxholedefense.game.model.actor.ai.towerai.LeastHPEnemyAI;
 import com.foxholedefense.game.model.actor.ai.towerai.MostHPEnemyAI;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-
 import org.junit.Before;
 import org.junit.Test;
-
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-
 import testutil.TestUtil;
 
 /**
@@ -27,11 +26,12 @@ public class TowerAITest {
 
 
     @Before
-    public void initTowerAITest(){
+    public void initTowerAITest() {
+
         Gdx.app = mock(Application.class);
     }
 
-    private void createEnemyGroup(Group towerTargetGroup){
+    private void createEnemyGroup(Group towerTargetGroup) {
 
         Enemy enemy1 = createEnemy("enemy1", "Rifle", 700, 10, 2, false, false);
         Enemy enemy2 = createEnemy("enemy2", "MachineGun", 800, 3, 0, true, false);
@@ -59,7 +59,7 @@ public class TowerAITest {
 
     }
 
-    private void createEnemyGroupWithTank(Group towerTargetGroup){
+    private void createEnemyGroupWithTank(Group towerTargetGroup) {
 
         Enemy enemy1 = createEnemy("enemy1", "Tank", 500, 10, 5, false, false);
         Enemy enemy2 = createEnemy("enemy2", "Tank", 800, 3, 0, false, true);
@@ -78,7 +78,8 @@ public class TowerAITest {
         towerTargetGroup.addActor(enemy7);
     }
 
-    private void createEnemyGroupWithOnlyTankInRange(Group towerTargetGroup){
+    private void createEnemyGroupWithOnlyTankInRange(Group towerTargetGroup) {
+
         Enemy enemy1 = createEnemy("enemy1", "Tank", 400, 10, 10, false, false);
         Enemy enemy2 = createEnemy("enemy2", "Sniper", 500, 12, 6, false, true);
         Enemy enemy3 = createEnemy("enemy3", "Rifle", 100, 2, 0, true, false);
@@ -88,9 +89,11 @@ public class TowerAITest {
         towerTargetGroup.addActor(enemy3);
     }
 
-    private Enemy createEnemy( String name, String type, float lengthToEnd, float health, float armor, boolean outOfRange, boolean dead ){
+    private Enemy createEnemy(String name, String type, float lengthToEnd, float health,
+        float armor, boolean outOfRange, boolean dead) {
+
         Enemy enemy = TestUtil.createEnemy(type, false);
-        if(outOfRange) {
+        if (outOfRange) {
             enemy.setPositionCenter(300, 300);
         }
         enemy.setDead(dead);
@@ -109,7 +112,8 @@ public class TowerAITest {
      * Finds the First Enemy
      */
     @Test
-    public void testTowerFindFirst(){
+    public void testTowerFindFirst() {
+
         Tower tower = TestUtil.createTower("Rifle", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroup(towerTargetGroup);
@@ -124,7 +128,8 @@ public class TowerAITest {
      * Finds the Last Enemy
      */
     @Test
-    public void testTowerFindLast(){
+    public void testTowerFindLast() {
+
         Tower tower = TestUtil.createTower("FlameThrower", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroup(towerTargetGroup);
@@ -139,7 +144,8 @@ public class TowerAITest {
      * Finds the Least HP Enemy
      */
     @Test
-    public void testTowerFindLeastHP(){
+    public void testTowerFindLeastHP() {
+
         Tower tower = TestUtil.createTower("RocketLauncher", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroup(towerTargetGroup);
@@ -154,7 +160,8 @@ public class TowerAITest {
      * Finds the Most HP Enemy
      */
     @Test
-    public void testTowerFindMostHP(){
+    public void testTowerFindMostHP() {
+
         Tower tower = TestUtil.createTower("Tank", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroup(towerTargetGroup);
@@ -169,7 +176,8 @@ public class TowerAITest {
      * Finds the First Enemy and skips the Tank
      */
     @Test
-    public void testTowerFindFirstSkipTank(){
+    public void testTowerFindFirstSkipTank() {
+
         Tower tower = TestUtil.createTower("Rifle", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithTank(towerTargetGroup);
@@ -184,7 +192,8 @@ public class TowerAITest {
      * Finds the Last Enemy and skips the Tank
      */
     @Test
-    public void testTowerFindLastSkipTank(){
+    public void testTowerFindLastSkipTank() {
+
         Tower tower = TestUtil.createTower("FlameThrower", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithTank(towerTargetGroup);
@@ -199,12 +208,13 @@ public class TowerAITest {
      * Finds the Least HP Enemy and skips the Tank
      */
     @Test
-    public void testTowerFindLeastHPSkipTank(){
+    public void testTowerFindLeastHPSkipTank() {
+
         Tower tower = TestUtil.createTower("MachineGun", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithTank(towerTargetGroup);
 
-        Enemy enemy = new LeastHPEnemyAI().findTarget(tower,towerTargetGroup.getChildren());
+        Enemy enemy = new LeastHPEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
         Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy7");
 
         assertEquals(expectedEnemy, enemy);
@@ -214,7 +224,8 @@ public class TowerAITest {
      * Finds the Most HP Enemy and skips the Tank
      */
     @Test
-    public void testTowerFindMostHPSkipTank(){
+    public void testTowerFindMostHPSkipTank() {
+
         Tower tower = TestUtil.createTower("Turret", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithTank(towerTargetGroup);
@@ -229,7 +240,8 @@ public class TowerAITest {
      * Finds the First Enemy and attacks the Tank
      */
     @Test
-    public void testTowerFindFirstAttackTank(){
+    public void testTowerFindFirstAttackTank() {
+
         Tower tower = TestUtil.createTower("RocketLauncher", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithTank(towerTargetGroup);
@@ -244,7 +256,8 @@ public class TowerAITest {
      * Finds the Last Enemy and attacks the Tank
      */
     @Test
-    public void testTowerFindLastAttackTank(){
+    public void testTowerFindLastAttackTank() {
+
         Tower tower = TestUtil.createTower("Tank", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithTank(towerTargetGroup);
@@ -259,12 +272,13 @@ public class TowerAITest {
      * Finds the Least HP Enemy and attacks the Tank
      */
     @Test
-    public void testTowerFindLeastHPAttackTank(){
+    public void testTowerFindLeastHPAttackTank() {
+
         Tower tower = TestUtil.createTower("Tank", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithTank(towerTargetGroup);
 
-        Enemy enemy = new LeastHPEnemyAI().findTarget(tower,towerTargetGroup.getChildren());
+        Enemy enemy = new LeastHPEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
         Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy3");
 
         assertEquals(expectedEnemy, enemy);
@@ -274,7 +288,8 @@ public class TowerAITest {
      * Finds the Most HP Enemy and attacks the Tank
      */
     @Test
-    public void testTowerFindMostHPAttackTank(){
+    public void testTowerFindMostHPAttackTank() {
+
         Tower tower = TestUtil.createTower("RocketLauncher", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithTank(towerTargetGroup);
@@ -289,7 +304,8 @@ public class TowerAITest {
      * Finds the First Enemy. All enemies are out of range except for tank.
      */
     @Test
-    public void testTowerFindFirstOnlyTankInRange(){
+    public void testTowerFindFirstOnlyTankInRange() {
+
         Tower tower = TestUtil.createTower("Rifle", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithOnlyTankInRange(towerTargetGroup);
@@ -304,7 +320,8 @@ public class TowerAITest {
      * Finds the Last Enemy. All enemies are out of range except for tank.
      */
     @Test
-    public void testTowerFindLastOnlyTankInRange(){
+    public void testTowerFindLastOnlyTankInRange() {
+
         Tower tower = TestUtil.createTower("MachineGun", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithOnlyTankInRange(towerTargetGroup);
@@ -319,12 +336,13 @@ public class TowerAITest {
      * Finds the Least HP Enemy. All enemies are out of range except for tank.
      */
     @Test
-    public void testTowerFindLeastHPOnlyTankInRange(){
+    public void testTowerFindLeastHPOnlyTankInRange() {
+
         Tower tower = TestUtil.createTower("Turret", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithOnlyTankInRange(towerTargetGroup);
 
-        Enemy enemy = new LeastHPEnemyAI().findTarget(tower,towerTargetGroup.getChildren());
+        Enemy enemy = new LeastHPEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
         Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy1");
 
         assertEquals(expectedEnemy, enemy);
@@ -334,7 +352,8 @@ public class TowerAITest {
      * Finds the Most HP Enemy. All enemies are out of range except for tank.
      */
     @Test
-    public void testTowerFindMostHPOnlyTankInRange(){
+    public void testTowerFindMostHPOnlyTankInRange() {
+
         Tower tower = TestUtil.createTower("Rifle", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithOnlyTankInRange(towerTargetGroup);
@@ -349,7 +368,8 @@ public class TowerAITest {
      * Tower target group is empty.
      */
     @Test
-    public void testTargetGroupEmpty(){
+    public void testTargetGroupEmpty() {
+
         Tower tower = TestUtil.createTower("Rifle", false);
         Group towerTargetGroup = tower.getTargetGroup();
 
@@ -362,7 +382,8 @@ public class TowerAITest {
      * Target group size is 1 and the enemy is in range
      */
     @Test
-    public void testTargetGroupSizeOneInRange(){
+    public void testTargetGroupSizeOneInRange() {
+
         Tower tower = TestUtil.createTower("Rifle", false);
         Group towerTargetGroup = tower.getTargetGroup();
 
@@ -379,7 +400,8 @@ public class TowerAITest {
      * Target group size is 1 and the enemy is out of range
      */
     @Test
-    public void testTargetGroupSizeOneOutOfRange(){
+    public void testTargetGroupSizeOneOutOfRange() {
+
         Tower tower = TestUtil.createTower("Rifle", false);
         Group towerTargetGroup = tower.getTargetGroup();
 
@@ -389,7 +411,4 @@ public class TowerAITest {
 
         assertNull(enemy);
     }
-
-
-
 }
