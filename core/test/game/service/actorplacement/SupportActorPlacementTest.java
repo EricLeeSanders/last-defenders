@@ -13,7 +13,6 @@ import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import game.model.actor.support.ApacheTest;
 import game.model.actor.support.LandMineTest;
 import testutil.TestUtil;
@@ -40,7 +39,7 @@ public class SupportActorPlacementTest {
     }
 
     @Test
-    public void apachePlacementTest1(){
+    public void apachePlacementTest1() {
 
         SupportActorPlacement supportActorPlacement = new SupportActorPlacement(actorGroups, supportActorFactory);
 
@@ -110,5 +109,4 @@ public class SupportActorPlacementTest {
         assertFalse(landMine.isShowRange());
         assertNull(supportActorPlacement.getCurrentSupportActor());
     }
-
 }

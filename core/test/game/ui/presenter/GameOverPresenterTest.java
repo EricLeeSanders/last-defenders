@@ -37,7 +37,7 @@ public class GameOverPresenterTest {
         Gdx.app = mock(Application.class);
     }
 
-    private GameOverPresenter createGameOverPresenter(){
+    private GameOverPresenter createGameOverPresenter() {
         FHDAudio audioMock = mock(FHDAudio.class);
 
         return new GameOverPresenter(gameUIStateManagerMock, screenChangerMock, playerMock, audioMock);
@@ -47,7 +47,7 @@ public class GameOverPresenterTest {
      * State change to Game Over
      */
     @Test
-    public void stateChangeTest1(){
+    public void stateChangeTest1() {
 
         GameOverPresenter gameOverPresenter = createGameOverPresenter();
 
@@ -67,7 +67,7 @@ public class GameOverPresenterTest {
      * Successfully change to new game state
      */
     @Test
-    public void newGameTest1(){
+    public void newGameTest1() {
 
         GameOverPresenter gameOverPresenter = createGameOverPresenter();
         doReturn(GameUIState.GAME_OVER).when(gameUIStateManagerMock).getState();
@@ -82,7 +82,7 @@ public class GameOverPresenterTest {
      * Unsuccessfully change to new game state
      */
     @Test
-    public void newGameTest2(){
+    public void newGameTest2() {
 
         GameOverPresenter gameOverPresenter = createGameOverPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -97,7 +97,7 @@ public class GameOverPresenterTest {
      * Successfully change to main menu
      */
     @Test
-    public void mainMenuTest1(){
+    public void mainMenuTest1() {
         GameOverPresenter gameOverPresenter = createGameOverPresenter();
         doReturn(GameUIState.GAME_OVER).when(gameUIStateManagerMock).getState();
 
@@ -111,7 +111,7 @@ public class GameOverPresenterTest {
      * Unsuccessfully change to main menu
      */
     @Test
-    public void mainMenuTest2(){
+    public void mainMenuTest2() {
         GameOverPresenter gameOverPresenter = createGameOverPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
 

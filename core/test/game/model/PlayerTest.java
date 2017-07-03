@@ -26,7 +26,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void moneyTest1(){
+    public void moneyTest1() {
         Player player = new Player();
 
         int startingMoneyAmount = player.getMoney();
@@ -39,7 +39,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void livesTest1(){
+    public void livesTest1() {
         Player player = new Player();
 
         int startingLivesAmount = player.getLives();
@@ -51,7 +51,7 @@ public class PlayerTest {
     }
 
     @Test
-    public void observerTest1(){
+    public void observerTest1() {
         Player player = new Player();
 
         PlayerObserver playerObserver = mock(PlayerObserver.class);

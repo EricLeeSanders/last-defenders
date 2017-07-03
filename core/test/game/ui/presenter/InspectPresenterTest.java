@@ -19,7 +19,6 @@ import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +26,6 @@ import org.mockito.Matchers;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
 
 import testutil.TestUtil;
 
@@ -64,7 +62,7 @@ public class InspectPresenterTest {
         PowerMockito.mockStatic(CollisionDetection.class);
     }
 
-    public InspectPresenter createInspectPresenter(){
+    public InspectPresenter createInspectPresenter() {
         Group towerGroup = new Group();
         FHDAudio audio = mock(FHDAudio.class);
         MessageDisplayer messageDisplayer = mock(MessageDisplayer.class);
@@ -77,7 +75,7 @@ public class InspectPresenterTest {
      * State change to Inspecting
      */
     @Test
-    public void stateChangeTest1(){
+    public void stateChangeTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -94,7 +92,7 @@ public class InspectPresenterTest {
      * Successfully inspect a tower
      */
     @Test
-    public void inspectTowerTest1(){
+    public void inspectTowerTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.WAVE_IN_PROGRESS).when(gameUIStateManagerMock).getState();
@@ -103,7 +101,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         verify(gameUIStateManagerMock, times(1)).setState(eq(GameUIState.INSPECTING));
         inspectPresenter.stateChange(GameUIState.INSPECTING);
@@ -114,7 +112,7 @@ public class InspectPresenterTest {
      * Unsuccessfully inspect a tower because the state is not Standby or Wave in Progress
      */
     @Test
-    public void inspectTowerTest2(){
+    public void inspectTowerTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.OPTIONS).when(gameUIStateManagerMock).getState();
@@ -122,7 +120,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         verify(gameUIStateManagerMock, never()).setState(eq(GameUIState.INSPECTING));
     }
@@ -131,21 +129,21 @@ public class InspectPresenterTest {
      * Unsuccessfully inspect a tower because no tower was selected
      */
     @Test
-    public void inspectTowerTest3(){
+    public void inspectTowerTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.OPTIONS).when(gameUIStateManagerMock).getState();
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(null);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         verify(gameUIStateManagerMock, never()).setState(eq(GameUIState.INSPECTING));
     }
 
 
     @Test
-    public void changeTargetPriorityTest1(){
+    public void changeTargetPriorityTest1() {
 
         //TODO improve this test? Bit of code smell
         InspectPresenter inspectPresenter = createInspectPresenter();
@@ -154,7 +152,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(10,10));
+        inspectPresenter.inspectTower(new FHDVector2(10, 10));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -169,7 +167,7 @@ public class InspectPresenterTest {
      * Sucessfully increase attack
      */
     @Test
-    public void increaseAttackTest1(){
+    public void increaseAttackTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -177,7 +175,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -195,7 +193,7 @@ public class InspectPresenterTest {
      * Unsucessfully increase attack because there isn't enough money
      */
     @Test
-    public void increaseAttackTest2(){
+    public void increaseAttackTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -203,7 +201,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -221,7 +219,7 @@ public class InspectPresenterTest {
      * Unsucessfully increase attack because the state isn't INSPECTING
      */
     @Test
-    public void increaseAttackTest3(){
+    public void increaseAttackTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -229,7 +227,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.ENLISTING).when(gameUIStateManagerMock).getState();
@@ -246,7 +244,7 @@ public class InspectPresenterTest {
      * Unsucessfully increase attack because the tower already has upgrade
      */
     @Test
-    public void increaseAttackTest4(){
+    public void increaseAttackTest4() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -255,7 +253,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -272,7 +270,7 @@ public class InspectPresenterTest {
      * Sucessfully give armor
      */
     @Test
-    public void giveArmorTest1(){
+    public void giveArmorTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -280,7 +278,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -298,7 +296,7 @@ public class InspectPresenterTest {
      * Unsucessfully give armor because there isn't enough money
      */
     @Test
-    public void giveArmorTest2(){
+    public void giveArmorTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -306,7 +304,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -324,7 +322,7 @@ public class InspectPresenterTest {
      * Unsucessfully give armor because the state isn't INSPECTING
      */
     @Test
-    public void giveArmorTest3(){
+    public void giveArmorTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -332,7 +330,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.ENLISTING).when(gameUIStateManagerMock).getState();
@@ -349,7 +347,7 @@ public class InspectPresenterTest {
      * Unsucessfully give armor because the tower already has upgrade
      */
     @Test
-    public void giveArmorTest4(){
+    public void giveArmorTest4() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -358,7 +356,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -375,7 +373,7 @@ public class InspectPresenterTest {
      * Sucessfully increase range
      */
     @Test
-    public void increaseRangeTest1(){
+    public void increaseRangeTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -383,7 +381,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -401,7 +399,7 @@ public class InspectPresenterTest {
      * Unsucessfully increase range because there isn't enough money
      */
     @Test
-    public void increaseRangeTest2(){
+    public void increaseRangeTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -409,7 +407,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -427,7 +425,7 @@ public class InspectPresenterTest {
      * Unsucessfully increase range because the state isn't INSPECTING
      */
     @Test
-    public void increaseRangeTest3(){
+    public void increaseRangeTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -435,7 +433,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.ENLISTING).when(gameUIStateManagerMock).getState();
@@ -452,7 +450,7 @@ public class InspectPresenterTest {
      * Unsucessfully increase range because the tower already has upgrade
      */
     @Test
-    public void increaseRangeTest4(){
+    public void increaseRangeTest4() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -461,7 +459,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -478,7 +476,7 @@ public class InspectPresenterTest {
      * Sucessfully increase speed
      */
     @Test
-    public void increaseSpeedTest1(){
+    public void increaseSpeedTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -486,7 +484,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -504,7 +502,7 @@ public class InspectPresenterTest {
      * Unsucessfully increase speed because there isn't enough money
      */
     @Test
-    public void increaseSpeedTest2(){
+    public void increaseSpeedTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -512,7 +510,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -530,7 +528,7 @@ public class InspectPresenterTest {
      * Unsucessfully increase speed because the state isn't INSPECTING
      */
     @Test
-    public void increaseSpeedTest3(){
+    public void increaseSpeedTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -538,7 +536,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.ENLISTING).when(gameUIStateManagerMock).getState();
@@ -555,7 +553,7 @@ public class InspectPresenterTest {
      * Unsucessfully increase speed because the tower already has upgrade
      */
     @Test
-    public void increaseSpeedTest4(){
+    public void increaseSpeedTest4() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -564,7 +562,7 @@ public class InspectPresenterTest {
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -581,14 +579,14 @@ public class InspectPresenterTest {
      * Successfully discharge tower
      */
     @Test
-    public void dischargeTest1(){
+    public void dischargeTest1() {
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("FlameThrower", true);
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -604,14 +602,14 @@ public class InspectPresenterTest {
      * Unsuccessfully discharge tower, Level State == Wave in progress
      */
     @Test
-    public void dischargeTest2(){
+    public void dischargeTest2() {
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("FlameThrower", true);
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -627,14 +625,14 @@ public class InspectPresenterTest {
      * Unsuccessfully discharge tower, Tower is dead
      */
     @Test
-    public void dischargeTest3(){
+    public void dischargeTest3() {
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("FlameThrower", true);
         when(CollisionDetection.towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(FHDVector2.class))).thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new FHDVector2(20,20));
+        inspectPresenter.inspectTower(new FHDVector2(20, 20));
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();

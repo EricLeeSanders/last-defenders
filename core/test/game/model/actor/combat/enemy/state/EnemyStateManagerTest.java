@@ -17,8 +17,8 @@ import java.util.Map;
 
 import testutil.TestUtil;
 
-import static org.junit.Assert.*;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -28,12 +28,12 @@ public class EnemyStateManagerTest {
 
 
     @Before
-    public void initEnemyStateManagerTest(){
+    public void initEnemyStateManagerTest() {
         Gdx.app = mock(Application.class);
     }
 
     @Test
-    public void transitionTest(){
+    public void transitionTest() {
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         Player player = mock(Player.class);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
@@ -46,7 +46,7 @@ public class EnemyStateManagerTest {
     }
 
     @Test
-    public void transitionWithParametersTest(){
+    public void transitionWithParametersTest() {
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         Tower tower = TestUtil.createTower("Rifle", false);
 

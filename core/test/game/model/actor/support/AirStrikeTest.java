@@ -17,7 +17,6 @@ import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import testutil.TestUtil;
 
 
@@ -46,7 +45,7 @@ public class AirStrikeTest {
         Gdx.app = mock(Application.class);
     }
 
-    public AirStrike createAirStrike(){
+    public AirStrike createAirStrike() {
 
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(rocketMock).when(projectileFactoryMock).loadRocket();
@@ -59,7 +58,7 @@ public class AirStrikeTest {
     }
 
     @Test
-    public void airStrikeTest1(){
+    public void airStrikeTest1() {
         AirStrike airStrike = createAirStrike();
         AirStrikeLocation airStrikeLocation1 = mock(AirStrikeLocation.class);
         AirStrikeLocation airStrikeLocation2 = mock(AirStrikeLocation.class);
@@ -77,7 +76,7 @@ public class AirStrikeTest {
         airStrike.beginAirStrike();
 
         assertTrue(airStrike.isActive());
-        assertEquals(new FHDVector2(-airStrike.getWidth() / 2, Resources.VIRTUAL_HEIGHT/2), airStrike.getPositionCenter());
+        assertEquals(new FHDVector2(-airStrike.getWidth() / 2, Resources.VIRTUAL_HEIGHT / 2), airStrike.getPositionCenter());
 
         verify(airStrikeLocation1, times(1)).setShowRange(eq(false));
         verify(airStrikeLocation2, times(1)).setShowRange(eq(false));
@@ -89,8 +88,5 @@ public class AirStrikeTest {
         airStrike.act(AirStrike.AIRSTRIKE_DURATION / 2);
         verify(poolMock, times(1)).free(airStrike);
 
-
-
     }
-
 }

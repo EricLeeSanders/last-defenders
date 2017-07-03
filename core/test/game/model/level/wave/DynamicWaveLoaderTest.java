@@ -39,7 +39,7 @@ public class DynamicWaveLoaderTest {
     }
 
     @Test
-    public void dynamicWaveLoaderTest1(){
+    public void dynamicWaveLoaderTest1() {
 
         Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
         Enemy enemy2 = TestUtil.createEnemy("Sniper", false);

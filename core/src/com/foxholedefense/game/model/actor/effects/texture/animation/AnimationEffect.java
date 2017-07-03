@@ -23,7 +23,7 @@ public abstract class AnimationEffect extends TextureEffect {
         animation.setPlayMode(playMode);
     }
 
-    public void initialize(Vector2 pos){
+    public void initialize(Vector2 pos) {
         setPositionCenter(pos);
     }
 
@@ -37,5 +37,4 @@ public abstract class AnimationEffect extends TextureEffect {
         super.act(delta);
         setTextureRegion(animation.getKeyFrame(stateTime, false));
     }
-
 }

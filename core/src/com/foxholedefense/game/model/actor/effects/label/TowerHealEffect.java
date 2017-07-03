@@ -22,7 +22,7 @@ public class TowerHealEffect extends LabelEffect {
 
     private Tower tower = null;
 
-    public TowerHealEffect(LabelEffectPool<TowerHealEffect> pool, Skin skin){
+    public TowerHealEffect(LabelEffectPool<TowerHealEffect> pool, Skin skin) {
         super(pool, DURATION, skin);
 
         setText(MESSAGE);
@@ -34,13 +34,13 @@ public class TowerHealEffect extends LabelEffect {
     }
 
 
-    public Actor initialize(Tower tower){
+    public Actor initialize(Tower tower) {
         this.tower = tower;
 
         float x = ActorUtil.calcBotLeftPointFromCenter(tower.getPositionCenter().x, getWidth());
         float y = ActorUtil.calcBotLeftPointFromCenter(tower.getPositionCenter().y, getHeight());
 
-        setPosition(x, y );
+        setPosition(x, y);
 
         addAction(
                 Actions.parallel(
@@ -51,7 +51,7 @@ public class TowerHealEffect extends LabelEffect {
     }
 
     @Override
-    public void act(float delta){
+    public void act(float delta) {
         if (tower == null || tower.isDead() || !tower.isActive()) {
             free();
             return;
@@ -65,5 +65,4 @@ public class TowerHealEffect extends LabelEffect {
         tower = null;
         getColor().a = 1;
     }
-
 }

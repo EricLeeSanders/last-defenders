@@ -12,8 +12,8 @@ import org.junit.Test;
 
 import testutil.TestUtil;
 
-import static org.junit.Assert.*;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 
 /**
@@ -23,12 +23,12 @@ public class TowerStateManagerTest {
 
 
     @Before
-    public void initTowerStateManagerTest(){
+    public void initTowerStateManagerTest() {
         Gdx.app = mock(Application.class);
     }
 
     @Test
-    public void transitionTest(){
+    public void transitionTest() {
         Tower tower = TestUtil.createTower("Rifle", false);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
 

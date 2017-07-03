@@ -6,5 +6,6 @@ package com.foxholedefense.game.ui.view.interfaces;
 
 public interface IPauseView {
     void pauseState();
+
     void standByState();
 }

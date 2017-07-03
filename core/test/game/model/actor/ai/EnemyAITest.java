@@ -11,12 +11,12 @@ import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import org.junit.Before;
 import org.junit.Test;
 
-
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-
 import testutil.TestUtil;
+
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 
 
 /**
@@ -25,21 +25,21 @@ import testutil.TestUtil;
 public class EnemyAITest {
 
     @Before
-    public void initEnemyAITest(){
+    public void initEnemyAITest() {
         Gdx.app = mock(Application.class);
     }
 
-    private void createTowerGroup(Group enemyTargetGroup){
-        Tower tower1 = createTower("tower1", "Rifle", new Vector2(10,10), false, false, true);
-        Tower tower2 = createTower("tower2", "FlameThrower", new Vector2(2,2), false, true, true);
-        Tower tower3 = createTower("tower3", "MachineGun", new Vector2(5,5), false, false, true);
-        Tower tower4 = createTower("tower4", "Sniper", new Vector2(2,2), false, false, false);
-        Tower tower5 = createTower("tower5", "Sniper", new Vector2(2,2), false, true, false);
+    private void createTowerGroup(Group enemyTargetGroup) {
+        Tower tower1 = createTower("tower1", "Rifle", new Vector2(10, 10), false, false, true);
+        Tower tower2 = createTower("tower2", "FlameThrower", new Vector2(2, 2), false, true, true);
+        Tower tower3 = createTower("tower3", "MachineGun", new Vector2(5, 5), false, false, true);
+        Tower tower4 = createTower("tower4", "Sniper", new Vector2(2, 2), false, false, false);
+        Tower tower5 = createTower("tower5", "Sniper", new Vector2(2, 2), false, true, false);
         Tower tower6 = createTower("tower6", "Rifle", null, true, false, true);
         Tower tower7 = createTower("tower7", "Rifle", null, true, true, true);
         Tower tower8 = createTower("tower8", "Rifle", null, true, false, false);
         Tower tower9 = createTower("tower9", "Rifle", null, true, true, false);
-        Tower tower10 = createTower("tower10", "Tank", new Vector2(1,1), false, false, true);
+        Tower tower10 = createTower("tower10", "Tank", new Vector2(1, 1), false, false, true);
 
         enemyTargetGroup.addActor(tower1);
         enemyTargetGroup.addActor(tower2);
@@ -53,10 +53,10 @@ public class EnemyAITest {
         enemyTargetGroup.addActor(tower10);
     }
 
-    private Tower createTower(String name, String type, Vector2 centerPos, boolean outOfRange, boolean dead, boolean active){
+    private Tower createTower(String name, String type, Vector2 centerPos, boolean outOfRange, boolean dead, boolean active) {
         Tower tower = TestUtil.createTower(type, true);
-        if(outOfRange){
-            tower.setPositionCenter(300,300);
+        if (outOfRange) {
+            tower.setPositionCenter(300, 300);
         } else {
             tower.setPositionCenter(centerPos);
         }
@@ -73,9 +73,9 @@ public class EnemyAITest {
      * Finds the nearest tower
      */
     @Test
-    public void testEnemyFindNearestSkipTank(){
+    public void testEnemyFindNearestSkipTank() {
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
-        enemy.setPositionCenter(new Vector2(0,0));
+        enemy.setPositionCenter(new Vector2(0, 0));
         Group enemyTargetGroup = enemy.getTargetGroup();
         createTowerGroup(enemyTargetGroup);
 
@@ -90,9 +90,9 @@ public class EnemyAITest {
      * Finds the nearest tower
      */
     @Test
-    public void testEnemyFindNearestAttackTank(){
+    public void testEnemyFindNearestAttackTank() {
         Enemy enemy = TestUtil.createEnemy("RocketLauncher", false);
-        enemy.setPositionCenter(new Vector2(0,0));
+        enemy.setPositionCenter(new Vector2(0, 0));
         Group enemyTargetGroup = enemy.getTargetGroup();
         createTowerGroup(enemyTargetGroup);
 

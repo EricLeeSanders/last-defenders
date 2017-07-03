@@ -33,7 +33,7 @@ public class DeathEffectTest {
         Gdx.app = mock(Application.class);
     }
 
-    private DeathEffect createDeathEffect(){
+    private DeathEffect createDeathEffect() {
 
         Resources resourcesMock = TestUtil.createResourcesMock();
 
@@ -45,12 +45,12 @@ public class DeathEffectTest {
      * Tests that the DeathEffect is freed after finishing
      */
     @Test
-    public void deathEffectTest1(){
+    public void deathEffectTest1() {
 
         DeathEffect deathEffect = createDeathEffect();
-        deathEffect.initialize(new FHDVector2(20,20));
+        deathEffect.initialize(new FHDVector2(20, 20));
 
-        assertEquals(new FHDVector2(20,20), deathEffect.getPositionCenter());
+        assertEquals(new FHDVector2(20, 20), deathEffect.getPositionCenter());
 
         deathEffect.act(100f);
 

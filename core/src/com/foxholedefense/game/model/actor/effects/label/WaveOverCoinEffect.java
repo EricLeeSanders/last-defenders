@@ -19,15 +19,15 @@ import com.foxholedefense.util.datastructures.Dimension;
 
 public class WaveOverCoinEffect extends LabelEffect {
 
-    private static final float SCALE = 0.75f;
     public static final float DURATION = 2;
     public static final float Y_END_OFFSET = 100;
     public static final float Y_BEGIN_OFFSET = (Resources.VIRTUAL_HEIGHT / 2) + 50;
+    private static final float SCALE = 0.75f;
     private static final Dimension ICON_SIZE = new Dimension(32, 32);
 
     private Animation<TextureRegion> animation;
 
-    public WaveOverCoinEffect(LabelEffectPool<WaveOverCoinEffect> pool, Skin skin, Array<AtlasRegion> regions){
+    public WaveOverCoinEffect(LabelEffectPool<WaveOverCoinEffect> pool, Skin skin, Array<AtlasRegion> regions) {
         super(pool, DURATION, skin);
         animation = new Animation<TextureRegion>(0.05f, regions);
         animation.setPlayMode(Animation.PlayMode.LOOP);
@@ -36,7 +36,7 @@ public class WaveOverCoinEffect extends LabelEffect {
         setStyle(style);
     }
 
-    public void initialize(int money){
+    public void initialize(int money) {
         clearActions();
         setText(String.valueOf(money).toUpperCase());
         setFontScale(SCALE);
@@ -53,7 +53,7 @@ public class WaveOverCoinEffect extends LabelEffect {
     }
 
     @Override
-    public void draw(Batch batch, float alpha){
+    public void draw(Batch batch, float alpha) {
         super.draw(batch, alpha);
 
         TextureRegion region = animation.getKeyFrame(stateTime, false);
@@ -64,5 +64,4 @@ public class WaveOverCoinEffect extends LabelEffect {
         batch.draw(region, x, y, ICON_SIZE.getWidth(), ICON_SIZE.getHeight());
 
     }
-
 }

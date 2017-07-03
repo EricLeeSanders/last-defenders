@@ -9,6 +9,7 @@ import com.foxholedefense.game.ui.view.DebugView;
 import com.foxholedefense.game.ui.view.interfaces.IDebugView;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.util.DebugOptions;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,13 +39,13 @@ public class DebugPresenterTest {
         Gdx.app = mock(Application.class);
     }
 
-    private DebugPresenter createDebugPresenter(){
+    private DebugPresenter createDebugPresenter() {
 
         return new DebugPresenter(gameUIStateManagerMock, gameStateManager);
     }
 
     @Test
-    public void setViewTest1(){
+    public void setViewTest1() {
         DebugPresenter debugPresenter = createDebugPresenter();
 
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -58,7 +59,7 @@ public class DebugPresenterTest {
     }
 
     @Test
-    public void showTextureBoundariesPressedTest1(){
+    public void showTextureBoundariesPressedTest1() {
         // Rest static variable
         DebugOptions.showTextureBoundaries = false;
 
@@ -80,7 +81,7 @@ public class DebugPresenterTest {
     }
 
     @Test
-    public void showFPSPressedTest1(){
+    public void showFPSPressedTest1() {
         // Rest static variable
         DebugOptions.showFPS = false;
 
@@ -100,8 +101,8 @@ public class DebugPresenterTest {
         assertFalse(DebugOptions.showFPS);
     }
 
-    @Test(expected=NullPointerException.class)
-    public void crashTest1(){
+    @Test(expected = NullPointerException.class)
+    public void crashTest1() {
         DebugPresenter debugPresenter = createDebugPresenter();
         debugPresenter = spy(debugPresenter);
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -117,7 +118,7 @@ public class DebugPresenterTest {
      * Test with starting state as Debug
      */
     @Test
-    public void initialStateTest1(){
+    public void initialStateTest1() {
         DebugPresenter debugPresenter = createDebugPresenter();
 
         doReturn(GameUIState.DEBUG).when(gameUIStateManagerMock).getState();

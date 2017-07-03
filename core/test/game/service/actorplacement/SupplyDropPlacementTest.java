@@ -12,7 +12,6 @@ import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import game.model.actor.support.SupplyDropCrateTest;
 import testutil.TestUtil;
 
@@ -42,7 +41,7 @@ public class SupplyDropPlacementTest {
     }
 
     @Test
-    public void supplyDropPlacementTest1(){
+    public void supplyDropPlacementTest1() {
 
         SupplyDropPlacement supplyDropPlacement = new SupplyDropPlacement(supportActorFactory);
         SupplyDropCrate supplyDropCrate = supplyDropCrateTest.createSupplyDropCrate(new Group());
@@ -58,7 +57,7 @@ public class SupplyDropPlacementTest {
         assertEquals(0, supplyDropCrate.getY(), TestUtil.DELTA);
 
         // set location
-        FHDVector2 location = new FHDVector2(10,200);
+        FHDVector2 location = new FHDVector2(10, 200);
         supplyDropPlacement.setLocation(location);
 
         assertTrue(supplyDropCrate.isVisible());

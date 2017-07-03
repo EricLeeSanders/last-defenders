@@ -36,7 +36,7 @@ public class SupportActorFactory {
     private EffectFactory effectFactory;
     private ProjectileFactory projectileFactory;
 
-    public SupportActorFactory(ActorGroups actorGroups, FHDAudio audio, Resources resources, EffectFactory effectFactory, ProjectileFactory projectileFactory){
+    public SupportActorFactory(ActorGroups actorGroups, FHDAudio audio, Resources resources, EffectFactory effectFactory, ProjectileFactory projectileFactory) {
         this.actorGroups = actorGroups;
         this.audio = audio;
         this.resources = resources;
@@ -120,7 +120,7 @@ public class SupportActorFactory {
 
     private AirStrikeLocation createAirStrikeLocation() {
         TextureRegion rangeTexture = resources.getTexture("range-black");
-        return new AirStrikeLocation(airStrikeLocationPool,rangeTexture );
+        return new AirStrikeLocation(airStrikeLocationPool, rangeTexture);
     }
 
     /**
@@ -132,15 +132,15 @@ public class SupportActorFactory {
         Logger.info("Actor Factory: creating support actor: " + type.getSimpleName());
         Group targetGroup = actorGroups.getEnemyGroup();
         if (type.equals(Apache.class)) {
-            TextureRegion [] textureRegions = resources.getAtlasRegion("apache").toArray(TextureRegion.class);
+            TextureRegion[] textureRegions = resources.getAtlasRegion("apache").toArray(TextureRegion.class);
             TextureRegion rangeTexture = resources.getTexture("range");
             TextureRegion stationaryRegion = resources.getTexture("apache-stationary");
-            return new Apache(apachePool, targetGroup, projectileFactory,stationaryRegion, textureRegions, rangeTexture, audio);
-        } else if(type.equals(AirStrike.class)){
+            return new Apache(apachePool, targetGroup, projectileFactory, stationaryRegion, textureRegions, rangeTexture, audio);
+        } else if (type.equals(AirStrike.class)) {
             TextureRegion textureRegion = resources.getTexture("airstrike");
             TextureRegion rangeTexture = resources.getTexture("range-black");
             return new AirStrike(airStrikePool, targetGroup, projectileFactory, textureRegion, rangeTexture, audio);
-        } else if (type.equals(LandMine.class)){
+        } else if (type.equals(LandMine.class)) {
             TextureRegion textureRegion = resources.getTexture("landmine");
             TextureRegion rangeTexture = resources.getTexture("range");
             return new LandMine(landMinePool, targetGroup, projectileFactory, textureRegion, rangeTexture);

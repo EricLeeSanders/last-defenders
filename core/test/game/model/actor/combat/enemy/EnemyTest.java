@@ -11,16 +11,19 @@ import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 
-
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-
-import static org.mockito.Mockito.*;
-
-
 import testutil.TestUtil;
+
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 
 /**
@@ -29,11 +32,11 @@ import testutil.TestUtil;
 public class EnemyTest {
 
     @Before
-    public void initEnemyTest(){
+    public void initEnemyTest() {
         Gdx.app = mock(Application.class);
     }
 
-    private Array<FHDVector2> createWaypoints(){
+    private Array<FHDVector2> createWaypoints() {
 
         Array<FHDVector2> path = new Array<>();
 
@@ -70,7 +73,7 @@ public class EnemyTest {
      * Enemy has armor and takes damage equal to armor
      */
     @Test
-    public void testEnemyArmor1(){
+    public void testEnemyArmor1() {
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         float damageAmount = enemy.getHealth() / 2;
         enemy.setHasArmor(true);
@@ -84,7 +87,7 @@ public class EnemyTest {
      * Enemy has armor and takes damage < armor
      */
     @Test
-    public void testEnemyArmor2(){
+    public void testEnemyArmor2() {
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         float damageAmount = enemy.getHealth() / 4;
         enemy.setHasArmor(true);
@@ -98,7 +101,7 @@ public class EnemyTest {
      * Enemy has armor and takes damage > armor
      */
     @Test
-    public void testEnemyArmor3(){
+    public void testEnemyArmor3() {
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         float damageAmount = enemy.getHealth();
         enemy.setHasArmor(true);
@@ -109,7 +112,7 @@ public class EnemyTest {
     }
 
     @Test
-    public void testWaypointActions1(){
+    public void testWaypointActions1() {
 
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
@@ -129,7 +132,7 @@ public class EnemyTest {
     }
 
     @Test
-    public void testWaypointActions2(){
+    public void testWaypointActions2() {
 
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
@@ -140,7 +143,7 @@ public class EnemyTest {
 
         FHDSequenceAction sequenceAction = (FHDSequenceAction) enemy.getActions().first();
         // get 3 waypoints and complete;
-        for(int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             float duration = ((MoveToAction) sequenceAction.getCurrentAction()).getDuration();
             // complete waypoint
             sequenceAction.act(duration);
@@ -188,7 +191,7 @@ public class EnemyTest {
         float x2 = currentWaypoint.x;
         float y2 = currentWaypoint.y;
 
-        double distance = Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2));
+        double distance = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
         assertEquals(distance, lengthToEnd, 0.00001f);
     }
 
@@ -207,7 +210,7 @@ public class EnemyTest {
     }
 
     @Test
-    public void testAttackingState(){
+    public void testAttackingState() {
         Tower tower = TestUtil.createTower("Rifle", false);
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
@@ -228,7 +231,7 @@ public class EnemyTest {
     }
 
     @Test
-    public void testReachedEndState(){
+    public void testReachedEndState() {
 
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
@@ -240,7 +243,7 @@ public class EnemyTest {
         assertEquals(1, enemy.getActions().size);
 
         FHDSequenceAction sequenceAction = (FHDSequenceAction) enemy.getActions().first();
-        for(int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             float duration = ((MoveToAction) sequenceAction.getCurrentAction()).getDuration();
             // complete waypoint
             sequenceAction.act(duration);
@@ -257,7 +260,7 @@ public class EnemyTest {
      * Tests that enemy switches to dead state
      */
     @Test
-    public void testDeadState(){
+    public void testDeadState() {
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
         assertEquals(EnemyState.RUNNING, enemy.getState());

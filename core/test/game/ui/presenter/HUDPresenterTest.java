@@ -37,11 +37,11 @@ public class HUDPresenterTest {
     private Player playerMock = mock(Player.class);
 
     @Before
-    public void initHUDPresenterTest(){
+    public void initHUDPresenterTest() {
         Gdx.app = mock(Application.class);
     }
 
-    private HUDPresenter createHUDPresenter(){
+    private HUDPresenter createHUDPresenter() {
 
         FHDAudio audioMock = mock(FHDAudio.class);
 
@@ -49,7 +49,7 @@ public class HUDPresenterTest {
     }
 
     @Test
-    public void stateChangeTest(){
+    public void stateChangeTest() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -64,7 +64,7 @@ public class HUDPresenterTest {
      * Successfully pause the game
      */
     @Test
-    public void pauseTest1(){
+    public void pauseTest1() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.WAVE_IN_PROGRESS).when(gameUIStateManagerMock).getState();
@@ -80,7 +80,7 @@ public class HUDPresenterTest {
      * Unsuccessfully pause the game with the GameState PAUSE
      */
     @Test
-    public void pauseTest2(){
+    public void pauseTest2() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.WAVE_IN_PROGRESS).when(gameUIStateManagerMock).getState();
@@ -89,14 +89,14 @@ public class HUDPresenterTest {
         hudPresenter.setView(hudView);
         hudPresenter.pause();
 
-        verify(gameStateManagerMock,never()).setState(isA(GameState.class));
+        verify(gameStateManagerMock, never()).setState(isA(GameState.class));
     }
 
     /**
      * Unsuccessfully pause the game with GameUIState != WAVE_IN_PROGRESS
      */
     @Test
-    public void pauseTest3(){
+    public void pauseTest3() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -111,7 +111,7 @@ public class HUDPresenterTest {
      * Successfully resume the game
      */
     @Test
-    public void resumeTest1(){
+    public void resumeTest1() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.WAVE_IN_PROGRESS).when(gameUIStateManagerMock).getState();
@@ -127,7 +127,7 @@ public class HUDPresenterTest {
      * Unsuccessfully resume the game with the GameState == PLAY
      */
     @Test
-    public void resumeTest2(){
+    public void resumeTest2() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.WAVE_IN_PROGRESS).when(gameUIStateManagerMock).getState();
@@ -143,7 +143,7 @@ public class HUDPresenterTest {
      * Unsuccessfully resume the game with the GameUIState == Standby
      */
     @Test
-    public void resumeTest3(){
+    public void resumeTest3() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -158,7 +158,7 @@ public class HUDPresenterTest {
      * Successfully change ui state to OPTIONS
      */
     @Test
-    public void optionsTest1(){
+    public void optionsTest1() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -173,7 +173,7 @@ public class HUDPresenterTest {
      * Unsuccessfully change ui state to OPTIONS
      */
     @Test
-    public void optionsTest2(){
+    public void optionsTest2() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.ENLISTING).when(gameUIStateManagerMock).getState();
@@ -188,7 +188,7 @@ public class HUDPresenterTest {
      * Successfully start wave
      */
     @Test
-    public void startWaveTest1(){
+    public void startWaveTest1() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -204,7 +204,7 @@ public class HUDPresenterTest {
      * Unsuccessfully start wave
      */
     @Test
-    public void startWaveTest2(){
+    public void startWaveTest2() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.GAME_OVER).when(gameUIStateManagerMock).getState();
@@ -220,7 +220,7 @@ public class HUDPresenterTest {
      * Successfully change UI state to ENLISTING
      */
     @Test
-    public void enlistTest1(){
+    public void enlistTest1() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.WAVE_IN_PROGRESS).when(gameUIStateManagerMock).getState();
@@ -236,7 +236,7 @@ public class HUDPresenterTest {
      * Unsuccessfully change UI state to ENLISTING
      */
     @Test
-    public void enlistTest2(){
+    public void enlistTest2() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.OPTIONS).when(gameUIStateManagerMock).getState();
@@ -251,7 +251,7 @@ public class HUDPresenterTest {
      * Successfully change UI state to SUPPORT
      */
     @Test
-    public void addSupportTest1(){
+    public void addSupportTest1() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -266,7 +266,7 @@ public class HUDPresenterTest {
      * Unsuccessfully change UI state to ENLISTING
      */
     @Test
-    public void addSupportTest2(){
+    public void addSupportTest2() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.OPTIONS).when(gameUIStateManagerMock).getState();
@@ -278,7 +278,7 @@ public class HUDPresenterTest {
     }
 
     @Test
-    public void playerAttributeTest1(){
+    public void playerAttributeTest1() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -295,7 +295,7 @@ public class HUDPresenterTest {
     }
 
     @Test
-    public void playerAttributeTest2(){
+    public void playerAttributeTest2() {
 
         HUDPresenter hudPresenter = createHUDPresenter();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -310,6 +310,4 @@ public class HUDPresenterTest {
         verify(hudView, times(1)).setWaveCount("22");
 
     }
-
-
 }

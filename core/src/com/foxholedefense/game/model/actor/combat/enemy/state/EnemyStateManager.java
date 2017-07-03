@@ -21,18 +21,18 @@ import java.util.Map;
  * Created by Eric on 5/5/2017.
  */
 
-public class EnemyStateManager implements StateManager<EnemyState, CombatActorState>{
+public class EnemyStateManager implements StateManager<EnemyState, CombatActorState> {
 
 
     private Map<EnemyState, CombatActorState> enemyStates = new HashMap<>();
     private EnemyState currentState;
 
-    public EnemyStateManager(Enemy enemy, EffectFactory effectFactory, Player player){
+    public EnemyStateManager(Enemy enemy, EffectFactory effectFactory, Player player) {
         initStateObjects(enemy, effectFactory, player);
         currentState = EnemyState.STANDBY;
     }
 
-    private void initStateObjects(Enemy enemy, EffectFactory effectFactory, Player player){
+    private void initStateObjects(Enemy enemy, EffectFactory effectFactory, Player player) {
         enemyStates.put(EnemyState.RUNNING, new EnemyRunningState(enemy, this));
         enemyStates.put(EnemyState.DYING, new EnemyDyingState(enemy, this, effectFactory, player));
         enemyStates.put(EnemyState.REACHED_END, new EnemyReachedEndState(enemy, this, player));
@@ -42,11 +42,11 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
     }
 
     @Override
-    public void update(float delta){
+    public void update(float delta) {
         getCurrentState().update(delta);
     }
 
-    private void swapState(EnemyState oldState, EnemyState newState){
+    private void swapState(EnemyState oldState, EnemyState newState) {
 
         Logger.info("Swapping states: " + oldState.name() + " to: " + newState.name());
         getState(oldState).postState();
@@ -55,28 +55,28 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
     }
 
     @Override
-    public CombatActorState getState(EnemyState state){
+    public CombatActorState getState(EnemyState state) {
         return enemyStates.get(state);
     }
 
-    private void setCurrentState(EnemyState state){
+    @Override
+    public CombatActorState getCurrentState() {
+        return enemyStates.get(currentState);
+    }
+
+    private void setCurrentState(EnemyState state) {
         this.currentState = state;
     }
 
     @Override
-    public CombatActorState getCurrentState(){
-        return enemyStates.get(currentState);
-    }
-
-    @Override
-    public EnemyState getCurrentStateName(){
+    public EnemyState getCurrentStateName() {
         return currentState;
     }
 
     @Override
     public void transition(EnemyState state) {
 
-        if(currentState == null){
+        if (currentState == null) {
             setCurrentState(state);
         } else {
             swapState(currentState, state);
@@ -97,5 +97,4 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
         STANDBY
 
     }
-
 }

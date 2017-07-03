@@ -18,7 +18,7 @@ public class TowerActiveState implements CombatActorState {
     private final Tower tower;
     private float attackCounter;
 
-    public TowerActiveState(Tower tower, StateTransitioner<TowerState> stateTransitioner){
+    public TowerActiveState(Tower tower, StateTransitioner<TowerState> stateTransitioner) {
         this.tower = tower;
     }
 
@@ -35,7 +35,7 @@ public class TowerActiveState implements CombatActorState {
     @Override
     public void update(float delta) {
         Targetable target = findTarget();
-        if(target != null && !target.isDead()) {
+        if (target != null && !target.isDead()) {
             tower.setRotation(ActorUtil.calculateRotation(target.getPositionCenter(), tower.getPositionCenter()));
             if (canAttack()) {
                 attackCounter = 0;
@@ -46,7 +46,7 @@ public class TowerActiveState implements CombatActorState {
         attackCounter += delta;
     }
 
-    private boolean canAttack(){
+    private boolean canAttack() {
         return attackCounter >= tower.getAttackSpeed();
     }
 

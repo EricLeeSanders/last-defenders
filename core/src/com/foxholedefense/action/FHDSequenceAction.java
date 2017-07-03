@@ -12,7 +12,7 @@ public class FHDSequenceAction extends ParallelAction {
     private int index;
 
     @Override
-    public boolean act (float delta) {
+    public boolean act(float delta) {
         if (index >= getActions().size) return true;
         @SuppressWarnings("rawtypes")
         Pool pool = getPool();
@@ -29,16 +29,16 @@ public class FHDSequenceAction extends ParallelAction {
         }
     }
 
-    public Action getCurrentAction () {
+    public Action getCurrentAction() {
         return getActions().get(index);
     }
 
-    public int getIndex () {
+    public int getIndex() {
         return index;
     }
 
     @Override
-    public void restart () {
+    public void restart() {
         super.restart();
         index = 0;
     }

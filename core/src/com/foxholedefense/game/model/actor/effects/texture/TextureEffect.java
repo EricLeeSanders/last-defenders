@@ -13,22 +13,22 @@ public abstract class TextureEffect extends GameActor implements Pool.Poolable {
     private float duration;
     private Pool<TextureEffect> pool;
 
-    protected TextureEffect(Pool<TextureEffect> pool, Dimension textureSize, float duration){
+    protected TextureEffect(Pool<TextureEffect> pool, Dimension textureSize, float duration) {
         this(pool, duration);
         setSize(textureSize);
 
     }
 
-    private TextureEffect(Pool<TextureEffect> pool, float duration){
+    private TextureEffect(Pool<TextureEffect> pool, float duration) {
         this.pool = pool;
         this.duration = duration;
     }
 
     @Override
-    public void act(float delta){
+    public void act(float delta) {
         super.act(delta);
         stateTime += delta;
-        if (stateTime >= duration){
+        if (stateTime >= duration) {
             free();
         }
     }
@@ -37,7 +37,7 @@ public abstract class TextureEffect extends GameActor implements Pool.Poolable {
      * This method should not be called more than once.
      * Otherwise, the object is placed in the pool twice.
      */
-    protected void free(){
+    protected void free() {
         pool.free(this);
     }
 

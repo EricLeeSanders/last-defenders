@@ -35,7 +35,7 @@ public class EnemyReachedEndStateTest {
     }
 
     @Test
-    public void enemyReachedEndStateTest1(){
+    public void enemyReachedEndStateTest1() {
         Enemy enemy = mock(Enemy.class);
         EnemyStateManager stateManagerMock = mock(EnemyStateManager.class);
         Player playerMock = mock(Player.class);

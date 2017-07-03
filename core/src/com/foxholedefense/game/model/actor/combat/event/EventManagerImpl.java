@@ -17,11 +17,11 @@ public class EventManagerImpl implements EventManager {
 
     private Map<CombatActorEventEnum, CombatActorEvent> events = new HashMap<>();
 
-    public EventManagerImpl(CombatActor combatActor, EffectFactory effectFactory){
+    public EventManagerImpl(CombatActor combatActor, EffectFactory effectFactory) {
         initEventObjects(combatActor, effectFactory);
     }
 
-    private void initEventObjects(CombatActor combatActor, EffectFactory effectFactory){
+    private void initEventObjects(CombatActor combatActor, EffectFactory effectFactory) {
         events.put(CombatActorEventEnum.ARMOR_DESTROYED, new ArmorDestroyedEvent(combatActor, effectFactory));
     }
 
@@ -31,7 +31,7 @@ public class EventManagerImpl implements EventManager {
         event.beginEvent();
     }
 
-    private CombatActorEvent getEvent(CombatActorEventEnum eventEnum){
+    private CombatActorEvent getEvent(CombatActorEventEnum eventEnum) {
         return events.get(eventEnum);
     }
 }

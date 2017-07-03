@@ -24,7 +24,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-
 import testutil.TestUtil;
 
 
@@ -55,13 +54,13 @@ public class TowerPlacementTest {
         PowerMockito.mockStatic(CollisionDetection.class);
     }
 
-    public TowerPlacement createTowerPlacement(){
+    public TowerPlacement createTowerPlacement() {
         return new TowerPlacement(map, actorGroups, combatActorFactory, healthFactory);
     }
 
     @Test
     @SuppressWarnings("unchecked")
-    public void towerPlacementTest1(){
+    public void towerPlacementTest1() {
 
         TowerPlacement towerPlacement = createTowerPlacement();
 
@@ -86,7 +85,7 @@ public class TowerPlacementTest {
         when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower))).thenReturn(false);
 
 
-        FHDVector2 moveCoords = new FHDVector2(200,100);
+        FHDVector2 moveCoords = new FHDVector2(200, 100);
         towerPlacement.moveTower(moveCoords);
 
         assertTrue(tower.isVisible());
@@ -110,12 +109,11 @@ public class TowerPlacementTest {
 
         assertTrue(placed);
 
-
     }
 
     @Test
     @SuppressWarnings("unchecked")
-    public void towerPlacementCollisionTest(){
+    public void towerPlacementCollisionTest() {
 
         TowerPlacement towerPlacement = createTowerPlacement();
 
@@ -140,7 +138,7 @@ public class TowerPlacementTest {
         when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower))).thenReturn(true);
 
 
-        FHDVector2 moveCoords = new FHDVector2(200,100);
+        FHDVector2 moveCoords = new FHDVector2(200, 100);
         towerPlacement.moveTower(moveCoords);
 
         assertTrue(tower.isVisible());
@@ -151,7 +149,6 @@ public class TowerPlacementTest {
         // place tower
         towerPlacement.placeTower();
         assertEquals(tower, towerPlacement.getCurrentTower());
-
 
     }
 }

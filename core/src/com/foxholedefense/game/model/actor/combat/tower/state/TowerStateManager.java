@@ -17,14 +17,14 @@ import java.util.Map;
  * Created by Eric on 5/8/2017.
  */
 
-public class TowerStateManager implements StateManager<TowerState, CombatActorState>{
+public class TowerStateManager implements StateManager<TowerState, CombatActorState> {
 
-    private Map<TowerState, CombatActorState> towerStates = new HashMap<>();
-    private TowerState currentState;
     private final Tower tower;
     private final EffectFactory effectFactory;
+    private Map<TowerState, CombatActorState> towerStates = new HashMap<>();
+    private TowerState currentState;
 
-    public TowerStateManager(Tower tower, EffectFactory effectFactory){
+    public TowerStateManager(Tower tower, EffectFactory effectFactory) {
         this.tower = tower;
         this.effectFactory = effectFactory;
         initStateObjects();
@@ -36,7 +36,7 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
         getCurrentState().update(delta);
     }
 
-    private void initStateObjects(){
+    private void initStateObjects() {
         towerStates.put(TowerState.ACTIVE, new TowerActiveState(tower, this));
         towerStates.put(TowerState.DYING, new CombatActorDyingState<>(tower, this, TowerState.STANDBY, effectFactory));
         towerStates.put(TowerState.STANDBY, new CombatActorStandByState());
@@ -52,7 +52,7 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
         return towerStates.get(currentState);
     }
 
-    private void setCurrentState(TowerState state){
+    private void setCurrentState(TowerState state) {
         this.currentState = state;
     }
 
@@ -61,7 +61,7 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
         return currentState;
     }
 
-    private void swapState(TowerState oldState, TowerState newState){
+    private void swapState(TowerState oldState, TowerState newState) {
         Logger.info("Swapping states: " + oldState.name() + " to: " + newState.name());
         getState(oldState).postState();
         getState(newState).preState();
@@ -70,7 +70,7 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
 
     @Override
     public void transition(TowerState state) {
-        if(currentState == null){
+        if (currentState == null) {
             setCurrentState(state);
         } else {
             swapState(currentState, state);

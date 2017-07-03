@@ -20,7 +20,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-
 import testutil.TestUtil;
 
 
@@ -43,27 +42,14 @@ public class EnlistPresenterTest {
     private TowerPlacement towerPlacementMock = mock(TowerPlacement.class);
     private GameUIStateManager gameUIStateManagerMock = mock(GameUIStateManager.class);
 
-    @Before
-    public void initEnlistPresenterTest() {
-        Gdx.app = mock(Application.class);
-    }
-
-    public EnlistPresenter createEnlistPresenter(){
-
-        FHDAudio audioMock = mock(FHDAudio.class);
-        MessageDisplayer messageDisplayerMock = mock(MessageDisplayer.class);
-
-        return new EnlistPresenter(gameUIStateManagerMock, playerMock, audioMock, towerPlacementMock, messageDisplayerMock);
-    }
-
     @DataProvider
     public static Object[][] filteredGameUIStateEnums() {
 
-        Object[][] gameUIStateEnums = new Object[GameUIState.values().length-2][1];
+        Object[][] gameUIStateEnums = new Object[GameUIState.values().length - 2][1];
 
         int count = 0;
-        for(GameUIState state : GameUIState.values()){
-            if(state == GameUIState.ENLISTING || state == GameUIState.PLACING_TOWER){
+        for (GameUIState state : GameUIState.values()) {
+            if (state == GameUIState.ENLISTING || state == GameUIState.PLACING_TOWER) {
                 continue;
             }
             gameUIStateEnums[count][0] = state;
@@ -73,11 +59,24 @@ public class EnlistPresenterTest {
         return gameUIStateEnums;
     }
 
+    @Before
+    public void initEnlistPresenterTest() {
+        Gdx.app = mock(Application.class);
+    }
+
+    public EnlistPresenter createEnlistPresenter() {
+
+        FHDAudio audioMock = mock(FHDAudio.class);
+        MessageDisplayer messageDisplayerMock = mock(MessageDisplayer.class);
+
+        return new EnlistPresenter(gameUIStateManagerMock, playerMock, audioMock, towerPlacementMock, messageDisplayerMock);
+    }
+
     /**
      * State change to Enlisting
      */
     @Test
-    public void stateChangeTest1(){
+    public void stateChangeTest1() {
         EnlistPresenter enlistPresenter = createEnlistPresenter();
 
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -93,7 +92,7 @@ public class EnlistPresenterTest {
      * State change to Placing Tower
      */
     @Test
-    public void stateChangeTest2(){
+    public void stateChangeTest2() {
         EnlistPresenter enlistPresenter = createEnlistPresenter();
 
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -111,8 +110,8 @@ public class EnlistPresenterTest {
      */
     // Bit of an overkill... But I wanted to use a dataprovider at least once
     @Test
-    @UseDataProvider( "filteredGameUIStateEnums" )
-    public void stateChangeTest3(GameUIState state){
+    @UseDataProvider("filteredGameUIStateEnums")
+    public void stateChangeTest3(GameUIState state) {
         EnlistPresenter enlistPresenter = createEnlistPresenter();
 
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -129,7 +128,7 @@ public class EnlistPresenterTest {
      * having enough money.
      */
     @Test
-    public void createTowerTest1(){
+    public void createTowerTest1() {
         EnlistPresenter enlistPresenter = createEnlistPresenter();
         doReturn(100000000).when(playerMock).getMoney();
         doReturn(GameUIState.ENLISTING).when(gameUIStateManagerMock).getState();
@@ -147,7 +146,7 @@ public class EnlistPresenterTest {
      * NOT having enough money.
      */
     @Test
-    public void createTowerTest2(){
+    public void createTowerTest2() {
         EnlistPresenter enlistPresenter = createEnlistPresenter();
         doReturn(1).when(playerMock).getMoney();
         doReturn(GameUIState.ENLISTING).when(gameUIStateManagerMock).getState();
@@ -164,7 +163,7 @@ public class EnlistPresenterTest {
      * Test creating a tower without being in ENLISTING state
      */
     @Test
-    public void createTowerTest3(){
+    public void createTowerTest3() {
         EnlistPresenter enlistPresenter = createEnlistPresenter();
         doReturn(1).when(playerMock).getMoney();
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
@@ -181,7 +180,7 @@ public class EnlistPresenterTest {
      * Test placing a tower
      */
     @Test
-    public void placeTowerTest1(){
+    public void placeTowerTest1() {
 
         EnlistPresenter enlistPresenter = createEnlistPresenter();
         Tower towerMock = mock(Tower.class);
@@ -203,7 +202,7 @@ public class EnlistPresenterTest {
      * Unsuccessfully place tower, state != PLACING_TOWER
      */
     @Test
-    public void placeTowerTest2(){
+    public void placeTowerTest2() {
 
         EnlistPresenter enlistPresenter = createEnlistPresenter();
         doReturn(GameUIState.LEVEL_COMPLETED).when(gameUIStateManagerMock).getState();
@@ -221,7 +220,7 @@ public class EnlistPresenterTest {
      * Unsuccessfully place tower, no current tower
      */
     @Test
-    public void placeTowerTest3(){
+    public void placeTowerTest3() {
 
         EnlistPresenter enlistPresenter = createEnlistPresenter();
         doReturn(GameUIState.PLACING_TOWER).when(gameUIStateManagerMock).getState();
@@ -241,7 +240,7 @@ public class EnlistPresenterTest {
      * Unsuccessfully place tower, method return false
      */
     @Test
-    public void placeTowerTest4(){
+    public void placeTowerTest4() {
 
         EnlistPresenter enlistPresenter = createEnlistPresenter();
         doReturn(GameUIState.PLACING_TOWER).when(gameUIStateManagerMock).getState();
@@ -256,7 +255,7 @@ public class EnlistPresenterTest {
     }
 
     @Test
-    public void moveTowerTest1(){
+    public void moveTowerTest1() {
 
         EnlistPresenter enlistPresenter = createEnlistPresenter();
 
@@ -267,7 +266,7 @@ public class EnlistPresenterTest {
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 
-        FHDVector2 moveCoords = new FHDVector2(100,100);
+        FHDVector2 moveCoords = new FHDVector2(100, 100);
         enlistPresenter.moveTower(moveCoords);
 
         verify(towerPlacementMock, times(1)).moveTower(eq(moveCoords));
@@ -281,7 +280,7 @@ public class EnlistPresenterTest {
      * Unsuccessfully move the tower
      */
     @Test
-    public void moveTowerTest2(){
+    public void moveTowerTest2() {
 
         EnlistPresenter enlistPresenter = createEnlistPresenter();
 
@@ -292,7 +291,7 @@ public class EnlistPresenterTest {
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 
-        FHDVector2 moveCoords = new FHDVector2(100,100);
+        FHDVector2 moveCoords = new FHDVector2(100, 100);
         enlistPresenter.moveTower(moveCoords);
 
         verify(towerPlacementMock, never()).moveTower(eq(moveCoords));
@@ -302,7 +301,7 @@ public class EnlistPresenterTest {
     }
 
     @Test
-    public void moveTowerTestRotatableTower1(){
+    public void moveTowerTestRotatableTower1() {
 
         EnlistPresenter enlistPresenter = createEnlistPresenter();
 
@@ -313,7 +312,7 @@ public class EnlistPresenterTest {
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 
-        FHDVector2 moveCoords = new FHDVector2(100,100);
+        FHDVector2 moveCoords = new FHDVector2(100, 100);
         enlistPresenter.moveTower(moveCoords);
 
         verify(towerPlacementMock, times(1)).moveTower(eq(moveCoords));

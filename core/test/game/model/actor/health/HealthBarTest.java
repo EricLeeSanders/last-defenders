@@ -11,7 +11,6 @@ import com.foxholedefense.game.service.factory.HealthFactory.HealthPool;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import testutil.TestUtil;
 
 
@@ -40,7 +39,7 @@ public class HealthBarTest {
         Gdx.app = mock(Application.class);
     }
 
-    private HealthBar createHealthBar(){
+    private HealthBar createHealthBar() {
 
         return new HealthBar(poolMock, backgroundBarMock, healthBarMock, armorBarMock);
     }
@@ -50,11 +49,11 @@ public class HealthBarTest {
      * and the Healthbar is freed when the tower is killed. The tower does not have armor
      */
     @Test
-    public void healthBarNoArmorTest1(){
+    public void healthBarNoArmorTest1() {
         HealthBar healthBar = createHealthBar();
         healthBar = spy(healthBar);
         Tower tower = TestUtil.createTower("Rifle", false);
-        tower.setPositionCenter(20,20);
+        tower.setPositionCenter(20, 20);
 
         healthBar.setActor(tower);
         healthBar.draw(batchMock, 1);
@@ -88,12 +87,12 @@ public class HealthBarTest {
      * The tower has armor
      */
     @Test
-    public void healthBarWithArmorTest1(){
+    public void healthBarWithArmorTest1() {
         HealthBar healthBar = createHealthBar();
         healthBar = spy(healthBar);
         Tower tower = TestUtil.createTower("Rifle", false);
         tower.setHasArmor(true);
-        tower.setPositionCenter(20,20);
+        tower.setPositionCenter(20, 20);
 
         healthBar.setActor(tower);
         healthBar.draw(batchMock, 1);
@@ -116,9 +115,5 @@ public class HealthBarTest {
         healthBar.draw(batchMock, 1);
         verify(batchMock, times(3)).draw(isA(TextureRegion.class), isA(Float.class), isA(Float.class), isA(Float.class), isA(Float.class));
 
-
-
-
     }
-
 }

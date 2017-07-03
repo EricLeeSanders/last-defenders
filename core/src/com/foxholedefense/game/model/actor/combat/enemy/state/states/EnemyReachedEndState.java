@@ -12,7 +12,7 @@ import java.util.Map;
  * Created by Eric on 5/5/2017.
  */
 
-public class EnemyReachedEndState implements CombatActorState{
+public class EnemyReachedEndState implements CombatActorState {
 
     private final Enemy enemy;
     private final StateTransitioner<EnemyState> stateTransitioner;

@@ -5,10 +5,9 @@ import com.foxholedefense.util.datastructures.Dimension;
 
 /**
  * Interface for classes that have flames
- * 
- * @author Eric
  *
+ * @author Eric
  */
 public interface IFlame {
-	Dimension getFlameSize();
+    Dimension getFlameSize();
 }

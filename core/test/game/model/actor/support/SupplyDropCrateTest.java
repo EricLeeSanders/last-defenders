@@ -15,7 +15,6 @@ import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import testutil.TestUtil;
 
 
@@ -41,7 +40,7 @@ public class SupplyDropCrateTest {
         Gdx.app = mock(Application.class);
     }
 
-    public SupplyDropCrate createSupplyDropCrate(Group towerGroup){
+    public SupplyDropCrate createSupplyDropCrate(Group towerGroup) {
         Resources resourcesMock = mock(Resources.class);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
         doReturn(towerHealEffectMock).when(effectFactoryMock).loadLabelEffect(eq(TowerHealEffect.class));
@@ -51,7 +50,7 @@ public class SupplyDropCrateTest {
     }
 
     @Test
-    public void supplyDropCrateTest1(){
+    public void supplyDropCrateTest1() {
         float dropDelay = .75f;
         FHDVector2 destination = new FHDVector2(280, 360);
 
@@ -102,7 +101,6 @@ public class SupplyDropCrateTest {
         verify(towerHealEffectMock, times(1)).initialize(eq(tower3));
 
         verify(supplyDropCratePoolMock, times(1)).free(supplyDropCrate);
-
 
     }
 }

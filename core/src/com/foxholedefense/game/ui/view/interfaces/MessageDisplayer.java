@@ -8,7 +8,10 @@ import com.badlogic.gdx.graphics.Color;
 
 public interface MessageDisplayer {
     void displayMessage(String message);
+
     void displayMessage(String message, Color color);
+
     void displayMessage(String message, float fontScale);
+
     void displayMessage(String message, float fontScale, Color color);
 }

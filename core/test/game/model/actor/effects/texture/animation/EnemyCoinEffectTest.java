@@ -32,7 +32,7 @@ public class EnemyCoinEffectTest {
         Gdx.app = mock(Application.class);
     }
 
-    private EnemyCoinEffect createEnemyCoinEffect(){
+    private EnemyCoinEffect createEnemyCoinEffect() {
 
         Resources resourcesMock = TestUtil.createResourcesMock();
 
@@ -44,12 +44,12 @@ public class EnemyCoinEffectTest {
      * Tests that the EnemyCoinEffect is freed after finishing
      */
     @Test
-    public void enemyCoinEffectTest1(){
+    public void enemyCoinEffectTest1() {
 
         EnemyCoinEffect enemyCoinEffect = createEnemyCoinEffect();
-        enemyCoinEffect.initialize(new FHDVector2(20,20));
+        enemyCoinEffect.initialize(new FHDVector2(20, 20));
 
-        assertEquals(new FHDVector2(20,20), enemyCoinEffect.getPositionCenter());
+        assertEquals(new FHDVector2(20, 20), enemyCoinEffect.getPositionCenter());
         assertEquals(1, enemyCoinEffect.getActions().size);
         enemyCoinEffect.act(100f);
 

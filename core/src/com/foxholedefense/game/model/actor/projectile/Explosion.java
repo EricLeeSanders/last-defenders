@@ -1,10 +1,10 @@
 package com.foxholedefense.game.model.actor.projectile;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
@@ -19,62 +19,59 @@ import com.foxholedefense.util.datastructures.Dimension;
 /**
  * Represents an explosion that is the result of an Rocket bullet. Deals AOE
  * damage.
- * 
- * @author Eric
  *
+ * @author Eric
  */
 public class Explosion extends GameActor implements Pool.Poolable {
 
-	private static final Dimension size = new Dimension(128,128);
+    private static final Dimension size = new Dimension(128, 128);
 
-	private Animation<TextureRegion> explosionAnimation;
-	private float stateTime; // counter for animation
-	private Pool<Explosion> pool;
-	private FHDAudio audio;
-	/**
-	 * Constructs an Explosion.
-	 */
-	public Explosion(Pool<Explosion> pool, Array<AtlasRegion> regions, FHDAudio audio) {
-		super(size);
-		this.pool = pool;
-		this.audio = audio;
-		setRotation(90);
-		explosionAnimation = new Animation<TextureRegion>(0.05f, regions);
-		explosionAnimation.setPlayMode(PlayMode.LOOP);
-	}
+    private Animation<TextureRegion> explosionAnimation;
+    private float stateTime; // counter for animation
+    private Pool<Explosion> pool;
+    private FHDAudio audio;
 
-	/**
-	 * Initializes an Explosion and deals Damage
-	 */
-	public Actor initialize(Attacker attacker, float radius, Vector2 posCenter) {
-		audio.playSound(FHDSound.ROCKET_EXPLOSION);
+    /**
+     * Constructs an Explosion.
+     */
+    public Explosion(Pool<Explosion> pool, Array<AtlasRegion> regions, FHDAudio audio) {
+        super(size);
+        this.pool = pool;
+        this.audio = audio;
+        setRotation(90);
+        explosionAnimation = new Animation<TextureRegion>(0.05f, regions);
+        explosionAnimation.setPlayMode(PlayMode.LOOP);
+    }
 
-		this.setPositionCenter(posCenter);
-		Group targetGroup = attacker.getTargetGroup();
-		Damage.dealExplosionDamage(attacker, radius, posCenter, targetGroup.getChildren());
+    /**
+     * Initializes an Explosion and deals Damage
+     */
+    public Actor initialize(Attacker attacker, float radius, Vector2 posCenter) {
+        audio.playSound(FHDSound.ROCKET_EXPLOSION);
 
-		return this;
-	}
-	
-	@Override
-	public void act(float delta) {
-		super.act(delta);
-		stateTime += delta;
+        this.setPositionCenter(posCenter);
+        Group targetGroup = attacker.getTargetGroup();
+        Damage.dealExplosionDamage(attacker, radius, posCenter, targetGroup.getChildren());
 
-		if (explosionAnimation.isAnimationFinished(stateTime)) {
-			pool.free(this);
-		}
+        return this;
+    }
 
-		setTextureRegion(explosionAnimation.getKeyFrame(stateTime, true));
-	}
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        stateTime += delta;
 
-	@Override
-	public void reset() {
-		this.clear();
-		this.remove();
-		stateTime = 0;
-	}
-	
-	
+        if (explosionAnimation.isAnimationFinished(stateTime)) {
+            pool.free(this);
+        }
 
+        setTextureRegion(explosionAnimation.getKeyFrame(stateTime, true));
+    }
+
+    @Override
+    public void reset() {
+        this.clear();
+        this.remove();
+        stateTime = 0;
+    }
 }

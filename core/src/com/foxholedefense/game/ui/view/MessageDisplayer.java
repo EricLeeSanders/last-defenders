@@ -24,14 +24,14 @@ public class MessageDisplayer extends Group implements com.foxholedefense.game.u
     private Label messageLabel;
     private Skin skin;
 
-    public MessageDisplayer(Skin skin){
+    public MessageDisplayer(Skin skin) {
         this.skin = skin;
         messageLabel = new Label("", skin);
     }
 
     @Override
     public void displayMessage(String message) {
-        displayMessage(message, DEFAULT_FONT_SCALE, DEFAULT_FONT_COLOR );
+        displayMessage(message, DEFAULT_FONT_SCALE, DEFAULT_FONT_COLOR);
     }
 
     @Override
@@ -63,9 +63,9 @@ public class MessageDisplayer extends Group implements com.foxholedefense.game.u
 
     }
 
-    private LabelStyle getLabelStyleByColor(Color color){
+    private LabelStyle getLabelStyleByColor(Color color) {
         LabelStyle style = labelStyleMap.get(color);
-        if(style == null){
+        if (style == null) {
             style = new Label.LabelStyle(skin.get(LabelStyle.class));
             style.fontColor = color;
             labelStyleMap.put(color, style);
@@ -73,5 +73,4 @@ public class MessageDisplayer extends Group implements com.foxholedefense.game.u
 
         return style;
     }
-
 }

@@ -40,7 +40,12 @@ import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
 
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.isA;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
 
 /**
  * Created by Eric on 4/23/2017.
@@ -53,7 +58,7 @@ public class TestUtil {
     private static Player playerMock = mock(Player.class);
     private static FHDAudio audioMock = mock(FHDAudio.class);
 
-    public static Resources createResourcesMock(){
+    public static Resources createResourcesMock() {
         Array<AtlasRegion> atlasRegion = new Array<>();
         atlasRegion.add(null);
 
@@ -64,7 +69,7 @@ public class TestUtil {
         return resources;
     }
 
-    private static ProjectileFactory createProjectileFactoryMock(){
+    private static ProjectileFactory createProjectileFactoryMock() {
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
 
         Bullet bullet = mock(Bullet.class);
@@ -73,7 +78,7 @@ public class TestUtil {
         return projectileFactoryMock;
     }
 
-    private static EffectFactory createEffectFactoryMock(){
+    private static EffectFactory createEffectFactoryMock() {
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
 
         ArmorDestroyedEffect armorDestroyedEffect = mock(ArmorDestroyedEffect.class);
@@ -88,7 +93,7 @@ public class TestUtil {
         return effectFactoryMock;
     }
 
-    public static Tower createTower(String name, boolean spy){
+    public static Tower createTower(String name, boolean spy) {
 
         Tower tower;
 
@@ -119,7 +124,7 @@ public class TestUtil {
 
         }
 
-        if(spy){
+        if (spy) {
             tower = spy(tower);
         }
 
@@ -138,7 +143,7 @@ public class TestUtil {
     }
 
 
-    public static Enemy createEnemy(String name, boolean spy){
+    public static Enemy createEnemy(String name, boolean spy) {
 
         Enemy enemy;
         Array<AtlasRegion> atlasRegion = new Array<>();
@@ -171,7 +176,7 @@ public class TestUtil {
                 throw new NullPointerException("Type: " + name + " doesn't exist");
         }
 
-        if(spy){
+        if (spy) {
             enemy = spy(enemy);
         }
 
@@ -188,7 +193,4 @@ public class TestUtil {
 
         return enemy;
     }
-
-
-
 }
