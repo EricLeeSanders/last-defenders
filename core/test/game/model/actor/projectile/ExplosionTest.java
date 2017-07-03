@@ -17,7 +17,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-
 import testutil.TestUtil;
 
 
@@ -43,7 +42,7 @@ public class ExplosionTest {
         PowerMockito.mockStatic(Damage.class);
     }
 
-    public Explosion createExplosion(){
+    public Explosion createExplosion() {
         Resources resourcesMock = TestUtil.createResourcesMock();
         FHDAudio audioMock = mock(FHDAudio.class);
 
@@ -52,11 +51,11 @@ public class ExplosionTest {
     }
 
     @Test
-    public void explosionTest1(){
+    public void explosionTest1() {
         Enemy attacker = TestUtil.createEnemy("Tank", false);
-        attacker.setPositionCenter(50,50);
+        attacker.setPositionCenter(50, 50);
         Tower target = TestUtil.createTower("Turret", false);
-        target.setPositionCenter(200,200);
+        target.setPositionCenter(200, 200);
 
         Explosion explosion = createExplosion();
         explosion.initialize(attacker, 70.0f, target.getPositionCenter());
@@ -71,11 +70,11 @@ public class ExplosionTest {
      * Explosion is freed after running for its duration
      */
     @Test
-    public void explosionTest2(){
+    public void explosionTest2() {
         Enemy attacker = TestUtil.createEnemy("Tank", false);
-        attacker.setPositionCenter(50,50);
+        attacker.setPositionCenter(50, 50);
         Tower target = TestUtil.createTower("Turret", false);
-        target.setPositionCenter(200,200);
+        target.setPositionCenter(200, 200);
 
         Explosion explosion = createExplosion();
         explosion.initialize(attacker, 70.0f, target.getPositionCenter());

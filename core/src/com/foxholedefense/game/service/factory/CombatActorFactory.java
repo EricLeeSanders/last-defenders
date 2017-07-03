@@ -62,7 +62,7 @@ public class CombatActorFactory {
     private Player player;
 
     public CombatActorFactory(ActorGroups actorGroups, FHDAudio audio, Resources resources, EffectFactory effectFactory,
-                              ProjectileFactory projectileFactory, Player player){
+                              ProjectileFactory projectileFactory, Player player) {
         this.actorGroups = actorGroups;
         this.audio = audio;
         this.resources = resources;
@@ -145,7 +145,7 @@ public class CombatActorFactory {
         return enemy;
     }
 
-    public SpawningEnemy loadSpawningEnemy(Enemy enemy, float spawnDelay){
+    public SpawningEnemy loadSpawningEnemy(Enemy enemy, float spawnDelay) {
 
         SpawningEnemy spawningEnemy = spawningEnemyPool.obtain();
         spawningEnemy.setEnemy(enemy);
@@ -217,12 +217,12 @@ public class CombatActorFactory {
         } else {
             throw new NullPointerException("Combat Actor Factory couldn't create: " + type.getSimpleName());
         }
-        if(actor instanceof Tower) {
+        if (actor instanceof Tower) {
             TowerStateManager towerStateManager = new TowerStateManager((Tower) actor, effectFactory);
-            ((Tower)actor).setStateManager(towerStateManager);
+            ((Tower) actor).setStateManager(towerStateManager);
         } else {
             EnemyStateManager enemyStateManager = new EnemyStateManager((Enemy) actor, effectFactory, player);
-            ((Enemy)actor).setStateManager(enemyStateManager);
+            ((Enemy) actor).setStateManager(enemyStateManager);
         }
 
         EventManager eventManager = new EventManagerImpl(actor, effectFactory);
@@ -231,7 +231,7 @@ public class CombatActorFactory {
         return actor;
     }
 
-    private SpawningEnemy createSpawningEnemy(){
+    private SpawningEnemy createSpawningEnemy() {
 
         Logger.info("CombatActorFactory: creating SpawningEnemy");
 
@@ -240,7 +240,8 @@ public class CombatActorFactory {
 
     public class CombatActorPool<T extends CombatActor> extends Pool<CombatActor> {
         private final Class<? extends CombatActor> type;
-        public CombatActorPool(Class<? extends CombatActor> type){
+
+        public CombatActorPool(Class<? extends CombatActor> type) {
             this.type = type;
         }
 
@@ -257,6 +258,4 @@ public class CombatActorFactory {
             return createSpawningEnemy();
         }
     }
-
-
 }

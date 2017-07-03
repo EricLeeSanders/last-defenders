@@ -12,7 +12,6 @@ import com.foxholedefense.util.Resources;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import testutil.TestUtil;
 
 
@@ -40,7 +39,7 @@ public class SupplyDropTest {
         Gdx.app = mock(Application.class);
     }
 
-    private SupplyDrop createSupplyDrop(){
+    private SupplyDrop createSupplyDrop() {
 
         SupportActorFactory supportActorFactoryMock = mock(SupportActorFactory.class);
         doReturn(supplyDropCrateMock).when(supportActorFactoryMock).loadSupplyDropCrate();
@@ -51,9 +50,9 @@ public class SupplyDropTest {
     }
 
     @Test
-    public void supplyDropTest1(){
+    public void supplyDropTest1() {
         SupplyDrop supplyDrop = createSupplyDrop();
-        Vector2 destination = new Vector2(100,125);
+        Vector2 destination = new Vector2(100, 125);
 
         assertFalse(supplyDrop.isActive());
 
@@ -71,7 +70,5 @@ public class SupplyDropTest {
         assertEquals(0, supplyDrop.getActions().size);
         verify(poolMock, times(1)).free(supplyDrop);
 
-
     }
-
 }

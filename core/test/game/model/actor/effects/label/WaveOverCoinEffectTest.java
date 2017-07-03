@@ -39,13 +39,13 @@ public class WaveOverCoinEffectTest {
         Gdx.app = mock(Application.class);
     }
 
-    private WaveOverCoinEffect createWaveOverCoinEffect(){
+    private WaveOverCoinEffect createWaveOverCoinEffect() {
 
         Resources resourcesMock = TestUtil.createResourcesMock();
         Skin skinMock = mock(Skin.class);
 
         BitmapFont bitmapFontMock = mock(BitmapFont.class);
-        LabelStyle style = new LabelStyle(bitmapFontMock,  Color.WHITE);
+        LabelStyle style = new LabelStyle(bitmapFontMock, Color.WHITE);
         doReturn(style).when(skinMock).get(LabelStyle.class);
 
         WaveOverCoinEffect waveOverCoinEffect = new WaveOverCoinEffect(labelEffectPoolMock, skinMock, resourcesMock.getAtlasRegion(""));
@@ -60,7 +60,7 @@ public class WaveOverCoinEffectTest {
      * and is freed after it finishes.
      */
     @Test
-    public void waveOverCoinEffectTest1(){
+    public void waveOverCoinEffectTest1() {
 
         WaveOverCoinEffect waveOverCoinEffect = createWaveOverCoinEffect();
         waveOverCoinEffect.initialize(500);

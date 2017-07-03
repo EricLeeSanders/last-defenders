@@ -35,13 +35,13 @@ public class ArmorIconTest {
         Gdx.app = mock(Application.class);
     }
 
-    private ArmorIcon createArmorIcon(){
+    private ArmorIcon createArmorIcon() {
 
         TextureRegion iconMock = mock(TextureRegion.class);
         doReturn(20).when(iconMock).getRegionWidth();
         doReturn(20).when(iconMock).getRegionHeight();
 
-        @SuppressWarnings( "unchecked" )
+        @SuppressWarnings("unchecked")
         ArmorIcon armorIcon = new ArmorIcon(poolMock, iconMock);
 
         return armorIcon;
@@ -53,13 +53,13 @@ public class ArmorIconTest {
      * actor is killed.
      */
     @Test
-    @SuppressWarnings( "unchecked" )
-    public void armorIconTest1(){
+    @SuppressWarnings("unchecked")
+    public void armorIconTest1() {
 
         ArmorIcon armorIcon = createArmorIcon();
         Tower tower = TestUtil.createTower("Rifle", false);
         tower.setHasArmor(true);
-        tower.setPositionCenter(20,20);
+        tower.setPositionCenter(20, 20);
 
         armorIcon.setActor(tower);
 
@@ -69,7 +69,7 @@ public class ArmorIconTest {
         assertEquals(tower.getPositionCenter().x + ArmorIcon.X_OFFSET, armorIcon.getX(), TestUtil.DELTA);
 
         tower.takeDamage(1);
-        tower.setPositionCenter(50,50);
+        tower.setPositionCenter(50, 50);
         armorIcon.draw(batchMock, 1);
 
         assertEquals(tower.getPositionCenter().y + ArmorIcon.Y_OFFSET, armorIcon.getY(), TestUtil.DELTA);
@@ -79,7 +79,6 @@ public class ArmorIconTest {
         armorIcon.act(0.001f);
 
         verify(poolMock, times(1)).free(armorIcon);
-
 
     }
 }

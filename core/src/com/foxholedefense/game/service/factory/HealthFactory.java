@@ -18,7 +18,7 @@ public class HealthFactory {
     private ActorGroups actorGroups;
     private Resources resources;
 
-    public HealthFactory(ActorGroups actorGroups, Resources resources){
+    public HealthFactory(ActorGroups actorGroups, Resources resources) {
         this.actorGroups = actorGroups;
         this.resources = resources;
     }
@@ -30,12 +30,13 @@ public class HealthFactory {
         return healthBar;
     }
 
-    public ArmorIcon loadArmorIcon(){
+    public ArmorIcon loadArmorIcon() {
         Logger.info("Actor Factory: loading ArmorIcon");
         ArmorIcon armorIcon = armorIconPool.obtain();
         actorGroups.getHealthGroup().addActor(armorIcon);
         return armorIcon;
     }
+
     /**
      * Create a Health Bar
      *
@@ -47,7 +48,7 @@ public class HealthFactory {
 
     }
 
-    private ArmorIcon createArmorIcon(){
+    private ArmorIcon createArmorIcon() {
         Logger.info("Actor Factory: creating ArmorIcon");
         return new ArmorIcon(armorIconPool, resources.getTexture("shield"));
     }

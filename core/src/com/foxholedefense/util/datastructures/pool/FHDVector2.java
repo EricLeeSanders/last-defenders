@@ -10,19 +10,20 @@ import com.badlogic.gdx.utils.Pool;
 public class FHDVector2 extends Vector2 implements FHDPoolable {
     private Pool<FHDVector2> pool;
 
-    public FHDVector2(){}
+    public FHDVector2() {
+    }
 
-    public FHDVector2(float x, float y){
+    public FHDVector2(float x, float y) {
         super(x, y);
     }
 
     @Override
     public void reset() {
-        set(0,0);
+        set(0, 0);
     }
 
     @Override
-    public void free(){
+    public void free() {
         pool.free(this);
     }
 

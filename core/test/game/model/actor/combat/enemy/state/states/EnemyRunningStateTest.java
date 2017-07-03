@@ -21,10 +21,10 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-
 import java.util.Map;
 
 import testutil.TestUtil;
+
 
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
@@ -32,7 +32,6 @@ import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
 import static org.mockito.Mockito.when;
 
 /**
@@ -43,14 +42,14 @@ import static org.mockito.Mockito.when;
 public class EnemyRunningStateTest {
 
     @Before
-    public void initEnemyRunningStateTest(){
+    public void initEnemyRunningStateTest() {
         Gdx.app = mock(Application.class);
         PowerMockito.mockStatic(EnemyAI.class);
     }
 
     @Test
     @SuppressWarnings("unchecked")
-    public void enemyRunningStateTest1(){
+    public void enemyRunningStateTest1() {
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
         Tower tower = TestUtil.createTower("Rifle", false);
 
@@ -62,7 +61,6 @@ public class EnemyRunningStateTest {
         EnemyStateManager stateManagerMock = mock(EnemyStateManager.class);
 
         EnemyRunningState runningState = new EnemyRunningState(enemy, stateManagerMock);
-
 
 
         SnapshotArray<Actor> targetGroupArray = enemy.getTargetGroup().getChildren();

@@ -20,9 +20,10 @@ import org.powermock.modules.junit4.PowerMockRunner;
 
 import testutil.TestUtil;
 
-import static org.junit.Assert.*;
 
-
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
@@ -42,7 +43,7 @@ public class DamageTest {
     }
 
     @Test
-    public void dealBulletDamageAttackEnemyTest(){
+    public void dealBulletDamageAttackEnemyTest() {
         Tower tower = TestUtil.createTower("Rifle", true);
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
@@ -54,7 +55,7 @@ public class DamageTest {
     }
 
     @Test
-    public void dealBulletDamageAttackTowerTest(){
+    public void dealBulletDamageAttackTowerTest() {
         Tower tower = TestUtil.createTower("Rifle", false);
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
@@ -66,7 +67,7 @@ public class DamageTest {
     }
 
     @Test
-    public void dealBulletDamageKillEnemyTest(){
+    public void dealBulletDamageKillEnemyTest() {
         Tower tower = TestUtil.createTower("Rifle", true);
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
@@ -79,7 +80,7 @@ public class DamageTest {
     }
 
     @Test
-    public void dealBulletDamageKillTowerTest(){
+    public void dealBulletDamageKillTowerTest() {
         Tower tower = TestUtil.createTower("Rifle", false);
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
@@ -91,7 +92,7 @@ public class DamageTest {
     }
 
     @Test
-    public void dealBulletDamageAttackPlatedArmorTest(){
+    public void dealBulletDamageAttackPlatedArmorTest() {
         Tower tower = TestUtil.createTower("Rifle", true);
         Enemy enemy = TestUtil.createEnemy("Tank", true);
 
@@ -101,7 +102,7 @@ public class DamageTest {
     }
 
     @Test
-    public void dealFlameGroupDamageTest(){
+    public void dealFlameGroupDamageTest() {
 
         Tower tower = TestUtil.createTower("FlameThrower", true);
 
@@ -132,7 +133,7 @@ public class DamageTest {
     }
 
     @Test
-    public void dealFlameGroupDamageKillEnemiesTest(){
+    public void dealFlameGroupDamageKillEnemiesTest() {
 
         Tower tower = TestUtil.createTower("FlameThrower", true);
 
@@ -165,7 +166,7 @@ public class DamageTest {
     }
 
     @Test
-    public void dealExplosionDamageTest(){
+    public void dealExplosionDamageTest() {
 
         Tower tower = TestUtil.createTower("RocketLauncher", true);
 
@@ -195,7 +196,7 @@ public class DamageTest {
 
 
     @Test
-    public void dealExplosionDamageKillEnemiesTest(){
+    public void dealExplosionDamageKillEnemiesTest() {
 
         Tower tower = TestUtil.createTower("RocketLauncher", true);
 
@@ -222,5 +223,4 @@ public class DamageTest {
         assertFalse(enemy4.isDead());
 
     }
-
 }

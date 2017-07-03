@@ -10,7 +10,6 @@ import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import testutil.TestUtil;
 
 
@@ -29,7 +28,7 @@ public class ActorUtilTest {
     }
 
     @Test
-    public void calcBotLeftPointFromCenterTest(){
+    public void calcBotLeftPointFromCenterTest() {
 
         Tower tower = TestUtil.createTower("FlameThrower", false);
         tower.setPositionCenter(100, 200);
@@ -40,13 +39,13 @@ public class ActorUtilTest {
     }
 
     @Test
-    public void calculateRotationTest(){
+    public void calculateRotationTest() {
 
         Tower tower = TestUtil.createTower("Turret", false);
-        tower.setPositionCenter(100,100);
+        tower.setPositionCenter(100, 100);
 
         Enemy enemy = TestUtil.createEnemy("Tank", false);
-        enemy.setPositionCenter(200,200);
+        enemy.setPositionCenter(200, 200);
 
         float rotation = ActorUtil.calculateRotation(enemy.getPositionCenter(), tower.getPositionCenter());
 
@@ -54,14 +53,14 @@ public class ActorUtilTest {
     }
 
     @Test
-    public void calculateRotatedCoordsTest(){
+    public void calculateRotatedCoordsTest() {
 
         Tower tower = TestUtil.createTower("Rifle", false);
         tower.setPosition(75, 60);
         tower.setRotation(.5f);
 
         Enemy enemy = TestUtil.createEnemy("RocketLauncher", false);
-        enemy.setPositionCenter(200,200);
+        enemy.setPositionCenter(200, 200);
 
         float targetX = 80;
         float targetY = 75;
@@ -70,9 +69,8 @@ public class ActorUtilTest {
                 enemy.getPositionCenter().x, enemy.getPositionCenter().y,
                 Math.toRadians(tower.getRotation()));
 
-        FHDVector2 expectedCoords = new FHDVector2(81.09539f,73.95757f);
+        FHDVector2 expectedCoords = new FHDVector2(81.09539f, 73.95757f);
 
         assertEquals(expectedCoords, rotatedCoords);
     }
-
 }

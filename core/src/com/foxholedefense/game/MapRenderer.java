@@ -14,10 +14,12 @@ import com.foxholedefense.util.Resources;
 class MapRenderer {
 
     private TiledMapRenderer tiledMapRenderer;
-    public MapRenderer(TiledMap tiledMap, Camera camera){
+
+    public MapRenderer(TiledMap tiledMap, Camera camera) {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, Resources.TILED_MAP_SCALE);
         tiledMapRenderer.setView((OrthographicCamera) camera);
     }
+
     public void update() {
         tiledMapRenderer.render();
     }

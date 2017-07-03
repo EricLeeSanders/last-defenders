@@ -38,9 +38,9 @@ public class MapTest {
     }
 
     @Test
-    public void mapTest1(){
+    public void mapTest1() {
 
-        float [] pathVertices = new float[]{0.0f, -0.0f, 0.0f, 209.0f, -257.0f, 209.0f, -257.0f,
+        float[] pathVertices = new float[]{0.0f, -0.0f, 0.0f, 209.0f, -257.0f, 209.0f, -257.0f,
                 400.0f, 0.0f, 400.0f, 0.0f, 657.0f, 514.0f, 657.0f, 514.0f, 431.0f, 192.0f, 431.0f,
                 192.0f, 268.0f, 514.0f, 268.0f, 514.0f, 108.0f, 191.0f, 108.0f, 191.0f, 1.0f};
 
@@ -103,15 +103,14 @@ public class MapTest {
         doReturn(mapObjects).when(boundaryLayer).getObjects();
 
         Array<Rectangle> pathBoundaries = new SnapshotArray<>(true, 3);
-        pathBoundaries.add(new Rectangle(50.0f,62.5f,50.0f,27.5f));
-        pathBoundaries.add(new Rectangle(100.0f,62.5f,27.5f,50.0f));
-        pathBoundaries.add(new Rectangle(100.0f,112.5f,50.0f,27.5f));
+        pathBoundaries.add(new Rectangle(50.0f, 62.5f, 50.0f, 27.5f));
+        pathBoundaries.add(new Rectangle(100.0f, 62.5f, 27.5f, 50.0f));
+        pathBoundaries.add(new Rectangle(100.0f, 112.5f, 50.0f, 27.5f));
 
         Map map = new Map(tiledMap);
 
         assertEquals(pathCoords, map.getPath());
         assertEquals(pathBoundaries, map.getPathBoundaries());
-
 
     }
 }

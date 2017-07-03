@@ -13,13 +13,12 @@ import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import game.model.actor.support.AirStrikeTest;
 import testutil.TestUtil;
 
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doNothing;
@@ -45,7 +44,7 @@ public class AirStrikePlacementTest {
     }
 
     @Test
-    public void airStrikePlacementTest1(){
+    public void airStrikePlacementTest1() {
 
         AirStrikePlacement airStrikePlacement = new AirStrikePlacement(actorGroups, supportActorFactory);
 
@@ -67,9 +66,9 @@ public class AirStrikePlacementTest {
         assertEquals(0, airStrike.getY(), TestUtil.DELTA);
 
         // Add locations
-        FHDVector2 location1 = new FHDVector2(100,100);
-        FHDVector2 location2 = new FHDVector2(200,100);
-        FHDVector2 location3 = new FHDVector2(400,100);
+        FHDVector2 location1 = new FHDVector2(100, 100);
+        FHDVector2 location2 = new FHDVector2(200, 100);
+        FHDVector2 location3 = new FHDVector2(400, 100);
 
         AirStrikeLocation airStrikeLocMock = mock(AirStrikeLocation.class);
 

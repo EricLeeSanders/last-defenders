@@ -14,13 +14,13 @@ abstract class AbstractWaveLoader implements WaveLoader {
     private CombatActorFactory combatActorFactory;
     private Map map;
 
-    AbstractWaveLoader(CombatActorFactory combatActorFactory, Map map){
+    AbstractWaveLoader(CombatActorFactory combatActorFactory, Map map) {
 
         this.combatActorFactory = combatActorFactory;
         this.map = map;
     }
 
-    SpawningEnemy loadSpawningEnemy(String type, boolean hasArmor, float spawnDelay){
+    SpawningEnemy loadSpawningEnemy(String type, boolean hasArmor, float spawnDelay) {
 
         Enemy enemy = combatActorFactory.loadEnemy(type);
 
@@ -31,4 +31,3 @@ abstract class AbstractWaveLoader implements WaveLoader {
 
     }
 }
-

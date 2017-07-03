@@ -19,7 +19,8 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
     private TextureRegion icon;
     private CombatActor actor = null;
     private Pool<ArmorIcon> pool;
-    public ArmorIcon(Pool<ArmorIcon> pool, TextureRegion icon){
+
+    public ArmorIcon(Pool<ArmorIcon> pool, TextureRegion icon) {
         this.pool = pool;
         this.icon = icon;
     }
@@ -30,7 +31,7 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
             setY(actor.getPositionCenter().y + Y_OFFSET);
             // If the health bar is showing, place it to the left.
             // Other wise place it above the actor
-            if(actor.getHealthPercent() < 1 || actor.getArmorPercent() < 1) {
+            if (actor.getHealthPercent() < 1 || actor.getArmorPercent() < 1) {
                 setX(actor.getPositionCenter().x + X_HEALTH_BAR_DISPALYING_OFFSET);
             } else {
                 setX(actor.getPositionCenter().x + X_OFFSET);

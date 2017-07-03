@@ -18,7 +18,7 @@ public class CombatActorDyingState<E> implements CombatActorState {
     private final E transitionState;
     private final EffectFactory effectFactory;
 
-    public CombatActorDyingState(CombatActor combatActor, StateTransitioner<E> stateTransitioner, E transitionState, EffectFactory effectFactory){
+    public CombatActorDyingState(CombatActor combatActor, StateTransitioner<E> stateTransitioner, E transitionState, EffectFactory effectFactory) {
         this.combatActor = combatActor;
         this.stateTransitioner = stateTransitioner;
         this.transitionState = transitionState;

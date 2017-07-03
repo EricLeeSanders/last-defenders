@@ -10,107 +10,108 @@ import com.badlogic.gdx.utils.Pool;
 import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.model.actor.interfaces.Attacker;
 import com.foxholedefense.util.ActorUtil;
+import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.datastructures.Dimension;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
 
 public class SupportActor extends GameActor implements Pool.Poolable, Attacker {
-	private Pool<SupportActor> pool;
-	private float range, attack;
-	private Vector2 gunPos;
-	private Vector2 rotatedGunPos = UtilPool.getVector2();
-	private boolean active;
-	private int cost;
-	private Group getTargetGroup;
-	private boolean showRange;
-	private TextureRegion rangeTexture;
-	private Circle rangeShape;
+    private Pool<SupportActor> pool;
+    private float range, attack;
+    private Vector2 gunPos;
+    private Vector2 rotatedGunPos = UtilPool.getVector2();
+    private boolean active;
+    private int cost;
+    private Group getTargetGroup;
+    private boolean showRange;
+    private TextureRegion rangeTexture;
+    private Circle rangeShape;
 
-	SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion, Dimension textureSize
-			, TextureRegion rangeTexture, float range, float attack, Vector2 gunPos, int cost) {
-		super(textureSize);
-		this.pool = pool;
-		this.range = range;
-		this.attack = attack;
-		this.gunPos = gunPos;
-		this.cost = cost;
-		this.getTargetGroup = targetGroup;
-		this.rangeTexture = rangeTexture;
-		rangeShape = new Circle(getPositionCenter().x, getPositionCenter().y, range);
-		setTextureRegion(textureRegion);
-	}
-	@Override
-	public void draw(Batch batch, float alpha) {
-		if (isShowRange()) {
-			drawRange(batch);
-		}
-		super.draw(batch, alpha);
-	}
+    SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion, Dimension textureSize
+            , TextureRegion rangeTexture, float range, float attack, Vector2 gunPos, int cost) {
+        super(textureSize);
+        this.pool = pool;
+        this.range = range;
+        this.attack = attack;
+        this.gunPos = gunPos;
+        this.cost = cost;
+        this.getTargetGroup = targetGroup;
+        this.rangeTexture = rangeTexture;
+        rangeShape = new Circle(getPositionCenter().x, getPositionCenter().y, range);
+        setTextureRegion(textureRegion);
+    }
 
-	private void drawRange(Batch batch){
-		float width = range * 2;
-		float height = range * 2;
-		float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, width);
-		float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, height);
-		batch.draw(rangeTexture,x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
-	}
+    @Override
+    public void draw(Batch batch, float alpha) {
+        if (isShowRange()) {
+            drawRange(batch);
+        }
+        super.draw(batch, alpha);
+    }
 
-	public Group getTargetGroup(){
-		return getTargetGroup;
-	}
-	
-	public void freeActor() {
-		pool.free(this);
-	}
+    private void drawRange(Batch batch) {
+        float width = range * 2;
+        float height = range * 2;
+        float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, width);
+        float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, height);
+        batch.draw(rangeTexture, x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
+    }
 
-	public boolean isActive() {
-		return active;
-	}
+    public Group getTargetGroup() {
+        return getTargetGroup;
+    }
 
-	public void setActive(boolean active) {
-		this.active = active;
-	}
-	
-	public int getCost(){
-		return cost;
-	}
-	public void setShowRange(boolean bool) {
-		showRange = bool;
-	}
+    public void freeActor() {
+        pool.free(this);
+    }
 
-	public boolean isShowRange() {
-		return showRange;
-	}
+    public boolean isActive() {
+        return active;
+    }
 
-	
-	@Override
-	public Shape2D getRangeShape() {
-		rangeShape.setPosition(getPositionCenter().x, getPositionCenter().y);
-		return rangeShape;
-	}
+    public void setActive(boolean active) {
+        this.active = active;
+    }
 
-	@Override
-	public Vector2 getGunPos() {
-		Vector2 centerPos = getPositionCenter();
-		FHDVector2 rotatedCoords = ActorUtil.calculateRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y), centerPos.x, centerPos.y, Math.toRadians(getRotation()));
-		rotatedGunPos.set(rotatedCoords.x, rotatedCoords.y);
-		rotatedCoords.free();
-		return rotatedGunPos;
-	}
+    public int getCost() {
+        return cost;
+    }
 
-	@Override
-	public float getAttack() {
-		return attack;
-	}
-	@Override
-	public void reset() {
-		Logger.info("SupportActor: Resetting");
-		this.setActive(false);
-		this.setPosition(0, 0);
-		this.setRotation(0);
-		this.clear();
-		this.remove();
-	}
+    public boolean isShowRange() {
+        return showRange;
+    }
 
+    public void setShowRange(boolean bool) {
+        showRange = bool;
+    }
+
+    @Override
+    public Shape2D getRangeShape() {
+        rangeShape.setPosition(getPositionCenter().x, getPositionCenter().y);
+        return rangeShape;
+    }
+
+    @Override
+    public Vector2 getGunPos() {
+        Vector2 centerPos = getPositionCenter();
+        FHDVector2 rotatedCoords = ActorUtil.calculateRotatedCoords((getPositionCenter().x + gunPos.x), (getPositionCenter().y + gunPos.y), centerPos.x, centerPos.y, Math.toRadians(getRotation()));
+        rotatedGunPos.set(rotatedCoords.x, rotatedCoords.y);
+        rotatedCoords.free();
+        return rotatedGunPos;
+    }
+
+    @Override
+    public float getAttack() {
+        return attack;
+    }
+
+    @Override
+    public void reset() {
+        Logger.info("SupportActor: Resetting");
+        this.setActive(false);
+        this.setPosition(0, 0);
+        this.setRotation(0);
+        this.clear();
+        this.remove();
+    }
 }

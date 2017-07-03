@@ -20,7 +20,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-
 import testutil.TestUtil;
 
 
@@ -47,7 +46,7 @@ public class RocketTest {
         PowerMockito.mockStatic(Damage.class);
     }
 
-    public Rocket createRocket(){
+    public Rocket createRocket() {
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(explosionMock).when(projectileFactoryMock).loadExplosion();
         Resources resourcesMock = TestUtil.createResourcesMock();
@@ -56,12 +55,12 @@ public class RocketTest {
     }
 
     @Test
-    public void rocketTest1(){
+    public void rocketTest1() {
 
         Tower tower = TestUtil.createTower("Rifle", false);
-        tower.setPositionCenter(40,80);
-        Vector2 destination = new Vector2(100,100);
-        Dimension size = new Dimension(20,20);
+        tower.setPositionCenter(40, 80);
+        Vector2 destination = new Vector2(100, 100);
+        Dimension size = new Dimension(20, 20);
         float radius = 50;
         Rocket rocket = createRocket();
 

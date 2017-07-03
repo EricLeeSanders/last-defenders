@@ -12,10 +12,8 @@ import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.UserPreferences;
 
-
 import org.junit.Before;
 import org.junit.Test;
-
 
 import testutil.TestUtil;
 
@@ -45,7 +43,7 @@ public class OptionsPresenterTest {
         Gdx.app = mock(Application.class);
     }
 
-    private OptionsPresenter createOptionsPresenter(){
+    private OptionsPresenter createOptionsPresenter() {
         Resources resources = TestUtil.createResourcesMock();
 
         doReturn(userPreferences).when(resources).getUserPreferences();
@@ -56,7 +54,7 @@ public class OptionsPresenterTest {
     }
 
     @Test
-    public void initViewTest1(){
+    public void initViewTest1() {
 
         OptionsPresenter optionsPresenter = createOptionsPresenter();
 
@@ -73,7 +71,7 @@ public class OptionsPresenterTest {
     }
 
     @Test
-    public void closeTest1(){
+    public void closeTest1() {
 
         OptionsPresenter optionsPresenter = createOptionsPresenter();
 
@@ -89,7 +87,7 @@ public class OptionsPresenterTest {
      * Successfully change to main menu
      */
     @Test
-    public void mainMenuTest1(){
+    public void mainMenuTest1() {
 
         OptionsPresenter optionsPresenter = createOptionsPresenter();
 
@@ -105,7 +103,7 @@ public class OptionsPresenterTest {
      * Unsuccessfully change to main menu
      */
     @Test
-    public void mainMenuTest2(){
+    public void mainMenuTest2() {
 
         OptionsPresenter optionsPresenter = createOptionsPresenter();
 
@@ -121,7 +119,7 @@ public class OptionsPresenterTest {
      * Successfully change to new game
      */
     @Test
-    public void newGameTest1(){
+    public void newGameTest1() {
 
         OptionsPresenter optionsPresenter = createOptionsPresenter();
 
@@ -137,7 +135,7 @@ public class OptionsPresenterTest {
      * Unsuccessfully change to new game
      */
     @Test
-    public void newGameTest2(){
+    public void newGameTest2() {
 
         OptionsPresenter optionsPresenter = createOptionsPresenter();
 

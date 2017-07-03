@@ -40,16 +40,16 @@ public class CollisionDetectionTest {
     }
 
     @Test
-    public void collisionWithPathWithCircleBodyTest1(){
+    public void collisionWithPathWithCircleBodyTest1() {
         Tower tower = TestUtil.createTower("FlameThrower", false);
-        Rectangle rect1 = new Rectangle(10,10,20,20);
-        Rectangle rect2 = new Rectangle(35,15,15,20);
-        Rectangle rect3 = new Rectangle(15,10,2,12);
+        Rectangle rect1 = new Rectangle(10, 10, 20, 20);
+        Rectangle rect2 = new Rectangle(35, 15, 15, 20);
+        Rectangle rect3 = new Rectangle(15, 10, 2, 12);
 
         Array<Rectangle> boundaries = new Array<>();
         boundaries.addAll(rect1, rect2, rect3);
 
-        tower.setPositionCenter(15,15);
+        tower.setPositionCenter(15, 15);
         tower.rotateBy(90);
 
         assertTrue(CollisionDetection.collisionWithPath(boundaries, tower));
@@ -57,14 +57,14 @@ public class CollisionDetectionTest {
     }
 
     @Test
-    public void collisionWithPathWithCircleBodyTest2(){
+    public void collisionWithPathWithCircleBodyTest2() {
         Tower tower = TestUtil.createTower("FlameThrower", false);
-        Rectangle rect1 = new Rectangle(10,10,12,12);
+        Rectangle rect1 = new Rectangle(10, 10, 12, 12);
 
         Array<Rectangle> boundaries = new Array<>();
         boundaries.add(rect1);
 
-        tower.setPositionCenter(30,30);
+        tower.setPositionCenter(30, 30);
         tower.rotateBy(90);
 
         assertFalse(CollisionDetection.collisionWithPath(boundaries, tower));
@@ -73,15 +73,15 @@ public class CollisionDetectionTest {
     }
 
     @Test
-    public void collisionWithPathWithPolygonBodyTest1(){
+    public void collisionWithPathWithPolygonBodyTest1() {
         Tower tower = TestUtil.createTower("Tank", false);
-        Rectangle rect1 = new Rectangle(10,10,20,20);
-        Rectangle rect2 = new Rectangle(30,30,10,10);
+        Rectangle rect1 = new Rectangle(10, 10, 20, 20);
+        Rectangle rect2 = new Rectangle(30, 30, 10, 10);
 
         Array<Rectangle> boundaries = new Array<>();
         boundaries.addAll(rect1, rect2);
 
-        tower.setPositionCenter(20,20);
+        tower.setPositionCenter(20, 20);
         tower.rotateBy(65);
 
         assertTrue(CollisionDetection.collisionWithPath(boundaries, tower));
@@ -89,14 +89,14 @@ public class CollisionDetectionTest {
     }
 
     @Test
-    public void collisionWithPathWithPolygonBodyTest2(){
+    public void collisionWithPathWithPolygonBodyTest2() {
         Tower tower = TestUtil.createTower("Tank", false);
-        Rectangle rect1 = new Rectangle(10,10,20,20);
+        Rectangle rect1 = new Rectangle(10, 10, 20, 20);
 
         Array<Rectangle> boundaries = new Array<>();
         boundaries.add(rect1);
 
-        tower.setPositionCenter(69,55);
+        tower.setPositionCenter(69, 55);
         tower.rotateBy(65);
 
         assertFalse(CollisionDetection.collisionWithPath(boundaries, tower));
@@ -104,22 +104,22 @@ public class CollisionDetectionTest {
     }
 
     @Test
-    public void collisionWithActorsWithCircleBodyTest1(){
+    public void collisionWithActorsWithCircleBodyTest1() {
         Tower tower = TestUtil.createTower("Sniper", false);
 
         Tower tower1 = TestUtil.createTower("MachineGun", false);
         Tower tower2 = TestUtil.createTower("Rifle", false);
         Tower tower3 = TestUtil.createTower("Turret", false);
 
-        tower1.setPositionCenter(75,56);
-        tower2.setPositionCenter(56,75);
-        tower3.setPositionCenter(95,75);
+        tower1.setPositionCenter(75, 56);
+        tower2.setPositionCenter(56, 75);
+        tower3.setPositionCenter(95, 75);
         tower3.rotateBy(35);
 
         SnapshotArray<Actor> otherTowers = new SnapshotArray<>();
         otherTowers.addAll(tower1, tower2, tower3);
 
-        tower.setPositionCenter(75,75);
+        tower.setPositionCenter(75, 75);
 
 
         assertTrue(CollisionDetection.collisionWithActors(otherTowers, tower));
@@ -127,22 +127,22 @@ public class CollisionDetectionTest {
     }
 
     @Test
-    public void collisionWithActorsWithCircleBodyTest2(){
+    public void collisionWithActorsWithCircleBodyTest2() {
         Tower tower = TestUtil.createTower("Sniper", false);
 
         Tower tower1 = TestUtil.createTower("MachineGun", false);
         Tower tower2 = TestUtil.createTower("Rifle", false);
         Tower tower3 = TestUtil.createTower("Tank", false);
 
-        tower1.setPositionCenter(75,55);
-        tower2.setPositionCenter(55,75);
-        tower3.setPositionCenter(133,75);
+        tower1.setPositionCenter(75, 55);
+        tower2.setPositionCenter(55, 75);
+        tower3.setPositionCenter(133, 75);
         tower3.rotateBy(35);
 
         SnapshotArray<Actor> otherTowers = new SnapshotArray<>();
         otherTowers.addAll(tower1, tower2, tower3);
 
-        tower.setPositionCenter(75,75);
+        tower.setPositionCenter(75, 75);
 
         assertFalse(CollisionDetection.collisionWithActors(otherTowers, tower));
 
@@ -150,22 +150,22 @@ public class CollisionDetectionTest {
 
 
     @Test
-    public void collisionWithActorsWithPolygonBodyTest1(){
+    public void collisionWithActorsWithPolygonBodyTest1() {
         Tower tower = TestUtil.createTower("Tank", false);
 
         Tower tower1 = TestUtil.createTower("MachineGun", false);
         Tower tower2 = TestUtil.createTower("Rifle", false);
         Tower tower3 = TestUtil.createTower("Turret", false);
 
-        tower1.setPositionCenter(75,56);
-        tower2.setPositionCenter(56,75);
-        tower3.setPositionCenter(95,75);
+        tower1.setPositionCenter(75, 56);
+        tower2.setPositionCenter(56, 75);
+        tower3.setPositionCenter(95, 75);
         tower3.rotateBy(35);
 
         SnapshotArray<Actor> otherTowers = new SnapshotArray<>();
         otherTowers.addAll(tower1, tower2, tower3);
 
-        tower.setPositionCenter(75,75);
+        tower.setPositionCenter(75, 75);
         tower.rotateBy(70);
 
         assertTrue(CollisionDetection.collisionWithActors(otherTowers, tower));
@@ -173,22 +173,22 @@ public class CollisionDetectionTest {
     }
 
     @Test
-    public void collisionWithActorsWithPolygonBodyTest2(){
+    public void collisionWithActorsWithPolygonBodyTest2() {
         Tower tower = TestUtil.createTower("Tank", false);
 
         Tower tower1 = TestUtil.createTower("MachineGun", false);
         Tower tower2 = TestUtil.createTower("Rifle", false);
         Tower tower3 = TestUtil.createTower("Turret", false);
 
-        tower1.setPositionCenter(250,56);
-        tower2.setPositionCenter(56,250);
-        tower3.setPositionCenter(250,75);
+        tower1.setPositionCenter(250, 56);
+        tower2.setPositionCenter(56, 250);
+        tower3.setPositionCenter(250, 75);
         tower3.rotateBy(35);
 
         SnapshotArray<Actor> otherTowers = new SnapshotArray<>();
         otherTowers.addAll(tower1, tower2, tower3);
 
-        tower.setPositionCenter(75,75);
+        tower.setPositionCenter(75, 75);
         tower3.rotateBy(70);
 
         assertFalse(CollisionDetection.collisionWithActors(otherTowers, tower));
@@ -196,13 +196,13 @@ public class CollisionDetectionTest {
     }
 
     @Test
-    public void shapesIntersectTest1(){
+    public void shapesIntersectTest1() {
         Circle circle1 = new Circle(10, 10, 10);
         Circle circle2 = new Circle(20, 20, 20);
-        Polygon poly1 = new Polygon(new float[] { 0, 0, 0, 5, 10, 5, 10, 0 });
-        poly1.setPosition(15,15);
-        Polygon poly2 = new Polygon(new float[] { 0, 0, 0, 10, 15, 10, 15, 0 });
-        poly2.setPosition(20,20);
+        Polygon poly1 = new Polygon(new float[]{0, 0, 0, 5, 10, 5, 10, 0});
+        poly1.setPosition(15, 15);
+        Polygon poly2 = new Polygon(new float[]{0, 0, 0, 10, 15, 10, 15, 0});
+        poly2.setPosition(20, 20);
 
         assertTrue(CollisionDetection.shapesIntersect(circle1, circle2));
         assertTrue(CollisionDetection.shapesIntersect(circle1, poly1));
@@ -210,13 +210,13 @@ public class CollisionDetectionTest {
     }
 
     @Test
-    public void shapesIntersectTest2(){
+    public void shapesIntersectTest2() {
         Circle circle1 = new Circle(10, 10, 5);
         Circle circle2 = new Circle(105, 105, 10);
-        Polygon poly1 = new Polygon(new float[] { 0, 0, 0, 5, 10, 5, 10, 0 });
-        poly1.setPosition(25,25);
-        Polygon poly2 = new Polygon(new float[] { 0, 0, 0, 20, 30, 20, 30, 0 });
-        poly2.setPosition(65,65);
+        Polygon poly1 = new Polygon(new float[]{0, 0, 0, 5, 10, 5, 10, 0});
+        poly1.setPosition(25, 25);
+        Polygon poly2 = new Polygon(new float[]{0, 0, 0, 20, 30, 20, 30, 0});
+        poly2.setPosition(65, 65);
 
         assertFalse(CollisionDetection.shapesIntersect(circle1, circle2));
         assertFalse(CollisionDetection.shapesIntersect(circle1, poly2));
@@ -224,13 +224,13 @@ public class CollisionDetectionTest {
     }
 
     @Test
-    public void towerHitTest1(){
+    public void towerHitTest1() {
 
         Tower tower1 = TestUtil.createTower("MachineGun", false);
         Tower tower2 = TestUtil.createTower("Tank", false);
 
-        tower1.setPositionCenter(20,20);
-        tower2.setPositionCenter(250,75);
+        tower1.setPositionCenter(20, 20);
+        tower2.setPositionCenter(250, 75);
 
         SnapshotArray<Actor> towers = new SnapshotArray<>();
         towers.addAll(tower1, tower2);

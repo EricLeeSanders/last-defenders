@@ -14,7 +14,6 @@ import com.foxholedefense.util.Resources;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import testutil.TestUtil;
 
 
@@ -40,7 +39,7 @@ public class LandMineTest {
         Gdx.app = mock(Application.class);
     }
 
-    public LandMine createLandMine(){
+    public LandMine createLandMine() {
 
         Resources resourcesMock = TestUtil.createResourcesMock();
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
@@ -49,7 +48,7 @@ public class LandMineTest {
         return new LandMine(poolMock, new Group(), projectileFactoryMock, resourcesMock.getTexture(""), resourcesMock.getTexture(""));
     }
 
-    private Enemy createEnemy(String type, float lengthToEnd, Vector2 posCenter){
+    private Enemy createEnemy(String type, float lengthToEnd, Vector2 posCenter) {
         Enemy enemy = TestUtil.createEnemy(type, true);
         enemy.setPositionCenter(posCenter);
         doReturn(lengthToEnd).when(enemy).getLengthToEnd();
@@ -60,7 +59,7 @@ public class LandMineTest {
     }
 
     @Test
-    public void landMinTest1(){
+    public void landMinTest1() {
         LandMine landMine = createLandMine();
         landMine.setPositionCenter(250, 255);
         landMine.setActive(true);
@@ -80,5 +79,4 @@ public class LandMineTest {
         verify(poolMock, times(1)).free(landMine);
 
     }
-
 }

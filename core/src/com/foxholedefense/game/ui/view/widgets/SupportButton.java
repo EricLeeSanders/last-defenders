@@ -11,13 +11,14 @@ import com.foxholedefense.util.ActorUtil;
  * Created by Eric on 11/12/2016.
  */
 
-public class SupportButton extends Group{
+public class SupportButton extends Group {
     public ImageButton button;
     public int cost;
-    public SupportButton(Skin skin, String name, int cost){
+
+    public SupportButton(Skin skin, String name, int cost) {
         this.setTransform(false);
         this.button = new ImageButton(skin, "support");
-        button.setSize(133,100);
+        button.setSize(133, 100);
         this.cost = cost;
         addActor(button);
 

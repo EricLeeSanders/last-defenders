@@ -18,7 +18,6 @@ import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
-
 import testutil.TestUtil;
 
 
@@ -28,7 +27,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
 import static org.mockito.Mockito.when;
 import static org.powermock.api.mockito.PowerMockito.spy;
 
@@ -40,7 +38,7 @@ import static org.powermock.api.mockito.PowerMockito.spy;
 public class TowerActiveStateTest {
 
     @Before
-    public void initTowerActiveStateTest(){
+    public void initTowerActiveStateTest() {
         Gdx.app = mock(Application.class);
         PowerMockito.mock(TowerAIType.class);
     }
@@ -49,7 +47,7 @@ public class TowerActiveStateTest {
      * Test that the state attacks an enemy
      */
     @Test
-    public void towerActiveStateTest1(){
+    public void towerActiveStateTest1() {
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         Tower tower = TestUtil.createTower("Rifle", true);
 

@@ -14,7 +14,7 @@ public class ArmorDestroyedEvent implements CombatActorEvent {
     private final CombatActor combatActor;
     private final EffectFactory effectFactory;
 
-    public ArmorDestroyedEvent(CombatActor combatActor, EffectFactory effectFactory){
+    public ArmorDestroyedEvent(CombatActor combatActor, EffectFactory effectFactory) {
         this.combatActor = combatActor;
         this.effectFactory = effectFactory;
     }

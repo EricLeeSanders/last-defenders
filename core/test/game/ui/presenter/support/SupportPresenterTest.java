@@ -12,7 +12,6 @@ import com.foxholedefense.game.ui.view.MessageDisplayer;
 import com.foxholedefense.game.ui.view.SupportView;
 import com.foxholedefense.util.FHDAudio;
 
-
 import org.junit.Before;
 
 
@@ -33,7 +32,7 @@ public class SupportPresenterTest {
     SupplyDropPlacement supplyDropPlacement = mock(SupplyDropPlacement.class);
     SupportView supportView = mock(SupportView.class);
 
-    SupportPresenter createSupportPresenter(){
+    SupportPresenter createSupportPresenter() {
         FHDAudio audio = mock(FHDAudio.class);
         MessageDisplayer messageDisplayer = mock(MessageDisplayer.class);
 

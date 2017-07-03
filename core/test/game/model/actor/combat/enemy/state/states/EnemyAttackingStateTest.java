@@ -12,7 +12,6 @@ import com.foxholedefense.game.model.actor.interfaces.Targetable;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,12 +31,12 @@ import static org.mockito.Mockito.verify;
 public class EnemyAttackingStateTest {
 
     @Before
-    public void initEnemyAttackingStateTest(){
+    public void initEnemyAttackingStateTest() {
         Gdx.app = mock(Application.class);
     }
 
     @Test
-    public void enemyAttackingStateTest1(){
+    public void enemyAttackingStateTest1() {
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
         Tower tower = TestUtil.createTower("Rifle", false);
 

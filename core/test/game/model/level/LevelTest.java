@@ -18,7 +18,6 @@ import com.foxholedefense.game.service.factory.HealthFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import testutil.TestUtil;
 
 
@@ -45,7 +44,7 @@ public class LevelTest {
     }
 
     @Test
-    public void levelTest1(){
+    public void levelTest1() {
         Level level = new Level(1, actorGroups, healthFactory, fileWaveLoader, dynamicWaveLoader);
 
         Queue<SpawningEnemy> loadedEnemies = new Queue<>();
@@ -75,13 +74,12 @@ public class LevelTest {
         doReturn(armorIconMock).when(healthFactory).loadArmorIcon();
 
         // Calls FileWaveLoader and DynamicWaveLoader
-        for(int i = 0; i <= Level.MAX_WAVES + 1; i++){
+        for (int i = 0; i <= Level.MAX_WAVES + 1; i++) {
             level.loadNextWave();
-            for(int j = level.getSpawningEnemiesCount()-1; j >= 0; j--){
+            for (int j = level.getSpawningEnemiesCount() - 1; j >= 0; j--) {
                 level.update(spawnDelay);
                 assertEquals(j, level.getSpawningEnemiesCount());
             }
         }
-
     }
 }

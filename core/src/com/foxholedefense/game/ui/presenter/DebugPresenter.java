@@ -18,7 +18,7 @@ public class DebugPresenter implements GameUIStateObserver {
     private GameUIStateManager uiStateManager;
     private GameStateManager gameStateManager;
 
-    public DebugPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager){
+    public DebugPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager) {
         this.uiStateManager = uiStateManager;
         this.gameStateManager = gameStateManager;
         uiStateManager.attach(this);
@@ -30,7 +30,7 @@ public class DebugPresenter implements GameUIStateObserver {
     }
 
 
-    private void initView(){
+    private void initView() {
         Logger.info("Debug Presenter: initializing view");
         stateChange(uiStateManager.getState());
         view.setFPSChecked(DebugOptions.showFPS);
@@ -38,22 +38,22 @@ public class DebugPresenter implements GameUIStateObserver {
     }
 
 
-    public void resumeGame(){
+    public void resumeGame() {
         Logger.info("Debug Presenter: resume game");
         gameStateManager.setState(GameStateManager.GameState.PLAY);
         uiStateManager.setStateReturn();
     }
 
-    public void showTextureBoundariesPressed(){
+    public void showTextureBoundariesPressed() {
         DebugOptions.showTextureBoundaries = !DebugOptions.showTextureBoundaries;
     }
 
-    public void showFPSPressed(){
+    public void showFPSPressed() {
         DebugOptions.showFPS = !DebugOptions.showFPS;
         view.showFPS(DebugOptions.showFPS);
     }
 
-    public void crash(){
+    public void crash() {
         Logger.info("Debug Presenter: crashing game");
         Object o = null;
         o.toString();
@@ -62,7 +62,7 @@ public class DebugPresenter implements GameUIStateObserver {
     @Override
     public void stateChange(GameUIState state) {
 
-        switch(state){
+        switch (state) {
             case DEBUG:
                 view.debugState();
                 break;

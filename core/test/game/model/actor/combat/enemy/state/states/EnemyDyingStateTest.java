@@ -41,7 +41,7 @@ public class EnemyDyingStateTest {
     }
 
     @Test
-    public void enemyDyingStateTest1(){
+    public void enemyDyingStateTest1() {
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         EnemyStateManager stateManagerMock = mock(EnemyStateManager.class);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);

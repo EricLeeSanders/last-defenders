@@ -37,12 +37,12 @@ public class TowerHealEffectTest {
         Gdx.app = mock(Application.class);
     }
 
-    private TowerHealEffect createTowerHealEffect(){
+    private TowerHealEffect createTowerHealEffect() {
 
         Skin skinMock = mock(Skin.class);
 
         BitmapFont bitmapFontMock = mock(BitmapFont.class);
-        LabelStyle style = new LabelStyle(bitmapFontMock,  Color.WHITE);
+        LabelStyle style = new LabelStyle(bitmapFontMock, Color.WHITE);
         doReturn(style).when(skinMock).get(LabelStyle.class);
 
         return new TowerHealEffect(labelEffectPoolMock, skinMock);
@@ -53,9 +53,9 @@ public class TowerHealEffectTest {
      * and is freed after it finishes.
      */
     @Test
-    public void towerHealEffectTest1(){
+    public void towerHealEffectTest1() {
         Tower tower = TestUtil.createTower("Sniper", false);
-        tower.setPositionCenter(150,150);
+        tower.setPositionCenter(150, 150);
 
         TowerHealEffect towerHealEffect = createTowerHealEffect();
         towerHealEffect.initialize(tower);
@@ -79,9 +79,9 @@ public class TowerHealEffectTest {
      * Tests that the TowerHealEffect is freed when the actor dies
      */
     @Test
-    public void towerHealEffectTest2(){
+    public void towerHealEffectTest2() {
         Tower tower = TestUtil.createTower("Sniper", false);
-        tower.setPositionCenter(150,150);
+        tower.setPositionCenter(150, 150);
 
         TowerHealEffect towerHealEffect = createTowerHealEffect();
         towerHealEffect.initialize(tower);

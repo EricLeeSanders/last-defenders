@@ -26,7 +26,7 @@ public class ProjectileFactory {
     private FHDAudio audio;
     private Resources resources;
 
-    public ProjectileFactory(ActorGroups actorGroups, FHDAudio audio, Resources resources){
+    public ProjectileFactory(ActorGroups actorGroups, FHDAudio audio, Resources resources) {
         this.actorGroups = actorGroups;
         this.audio = audio;
         this.resources = resources;
@@ -53,6 +53,7 @@ public class ProjectileFactory {
         actorGroups.getProjectileGroup().addActor(rocket);
         return rocket;
     }
+
     /**
      * Obtains an Explosion from the pool
      *
@@ -144,6 +145,4 @@ public class ProjectileFactory {
             return createFlameActor();
         }
     }
-
-
 }

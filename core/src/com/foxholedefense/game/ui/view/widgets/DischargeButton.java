@@ -14,10 +14,11 @@ import com.foxholedefense.util.ActorUtil;
 public class DischargeButton extends Group {
     public ImageButton button;
     private Label lblCost;
-    public DischargeButton(Skin skin){
+
+    public DischargeButton(Skin skin) {
         this.setTransform(false);
         this.button = new ImageButton(skin, "discharge");
-        button.setSize(133,83);
+        button.setSize(133, 83);
         addActor(button);
 
         lblCost = new Label("", skin);
@@ -25,7 +26,7 @@ public class DischargeButton extends Group {
         lblCost.setAlignment(Align.center);
         lblCost.pack();
         float lblCostX = ActorUtil.calcBotLeftPointFromCenter(button.getWidth() / 2, lblCost.getWidth());
-        lblCost.setPosition(lblCostX,7);
+        lblCost.setPosition(lblCostX, 7);
         addActor(lblCost);
 
         Label lblTitle = new Label("DISCHARGE", skin);
@@ -37,7 +38,7 @@ public class DischargeButton extends Group {
         addActor(lblTitle);
     }
 
-    public void updateCost(int cost){
+    public void updateCost(int cost) {
         lblCost.setText(String.valueOf(cost));
     }
 }

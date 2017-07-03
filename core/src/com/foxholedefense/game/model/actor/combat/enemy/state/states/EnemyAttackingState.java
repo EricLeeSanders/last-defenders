@@ -27,7 +27,7 @@ public class EnemyAttackingState implements CombatActorState {
     @Override
     public void loadParameters(Map<String, Object> parameters) {
         Object targetObj = parameters.get("target");
-        if(targetObj == null || !(targetObj instanceof Targetable)){
+        if (targetObj == null || !(targetObj instanceof Targetable)) {
             throw new IllegalStateException("Must have a target to be in this state");
         }
 
@@ -45,13 +45,13 @@ public class EnemyAttackingState implements CombatActorState {
     public void update(float delta) {
 
         movementDelayCounter += delta;
-        if(movementDelayCounter >= Enemy.MOVEMENT_DELAY){
+        if (movementDelayCounter >= Enemy.MOVEMENT_DELAY) {
             stateTransitioner.transition(EnemyState.RUNNING);
             return;
         }
 
-        if(canAttack()){
-            if(target != null && !target.isDead()) {
+        if (canAttack()) {
+            if (target != null && !target.isDead()) {
                 enemy.attack(target);
                 attackCounter = 0;
             }
@@ -60,7 +60,7 @@ public class EnemyAttackingState implements CombatActorState {
         }
     }
 
-    private boolean canAttack(){
+    private boolean canAttack() {
         return attackCounter >= enemy.getAttackSpeed();
     }
 

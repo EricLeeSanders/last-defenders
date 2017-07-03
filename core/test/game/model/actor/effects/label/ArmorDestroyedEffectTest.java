@@ -36,17 +36,17 @@ public class ArmorDestroyedEffectTest {
         Gdx.app = mock(Application.class);
     }
 
-    private ArmorDestroyedEffect createArmorDestroyedEffect(){
+    private ArmorDestroyedEffect createArmorDestroyedEffect() {
 
         Resources resourcesMock = TestUtil.createResourcesMock();
         Skin skinMock = mock(Skin.class);
 
 
         BitmapFont bitmapFontMock = mock(BitmapFont.class);
-        LabelStyle style = new LabelStyle(bitmapFontMock,  Color.WHITE);
+        LabelStyle style = new LabelStyle(bitmapFontMock, Color.WHITE);
         doReturn(style).when(skinMock).get(LabelStyle.class);
 
-        return new ArmorDestroyedEffect(resourcesMock.getAtlasRegion(""),labelEffectPoolMock, skinMock);
+        return new ArmorDestroyedEffect(resourcesMock.getAtlasRegion(""), labelEffectPoolMock, skinMock);
 
     }
 
@@ -55,10 +55,10 @@ public class ArmorDestroyedEffectTest {
      * and is freed after it finishes.
      */
     @Test
-    public void armorDestroyedEffectTest1(){
+    public void armorDestroyedEffectTest1() {
 
         Tower tower = TestUtil.createTower("Sniper", false);
-        tower.setPositionCenter(150,150);
+        tower.setPositionCenter(150, 150);
 
         ArmorDestroyedEffect armorDestroyedEffect = createArmorDestroyedEffect();
         armorDestroyedEffect.initialize(tower);
@@ -83,10 +83,10 @@ public class ArmorDestroyedEffectTest {
      * Tests that the ArmorDestroyedEffect is freed when the actor dies
      */
     @Test
-    public void armorDestroyedEffectTest2(){
+    public void armorDestroyedEffectTest2() {
 
         Tower tower = TestUtil.createTower("FlameThrower", false);
-        tower.setPositionCenter(150,150);
+        tower.setPositionCenter(150, 150);
 
         ArmorDestroyedEffect armorDestroyedEffect = createArmorDestroyedEffect();
         armorDestroyedEffect.initialize(tower);
@@ -100,7 +100,6 @@ public class ArmorDestroyedEffectTest {
         armorDestroyedEffect.act(0.001f);
 
         verify(labelEffectPoolMock, times(1)).free(armorDestroyedEffect);
-
 
     }
 }

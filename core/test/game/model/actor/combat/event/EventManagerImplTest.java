@@ -32,7 +32,7 @@ public class EventManagerImplTest {
     }
 
     @Test
-    public void sendEventTest(){
+    public void sendEventTest() {
         Tower tower = TestUtil.createTower("Rifle", true);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
 
@@ -44,5 +44,4 @@ public class EventManagerImplTest {
 
         verify(armorDestroyedEffectMock, times(1)).initialize(eq(tower));
     }
-
 }
