@@ -1,14 +1,5 @@
 package game.ui.presenter.support;
 
-import com.foxholedefense.game.model.actor.support.Apache;
-import com.foxholedefense.game.model.actor.support.LandMine;
-import com.foxholedefense.game.ui.presenter.SupportPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
-
-import org.junit.Test;
-
-
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
@@ -17,17 +8,25 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import com.foxholedefense.game.model.actor.support.Apache;
+import com.foxholedefense.game.model.actor.support.LandMine;
+import com.foxholedefense.game.ui.presenter.SupportPresenter;
+import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import org.junit.Test;
+
 /**
  * Created by Eric on 6/11/2017.
  */
 
-public class SupportPresenterSupportActorTest  extends SupportPresenterTest {
+public class SupportPresenterSupportActorTest extends SupportPresenterTest {
 
     /**
      * Successfully create a support actor
      */
     @Test
-    public void createSupportActorTest1(){
+    public void createSupportActorTest1() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(Apache.COST).when(player).getMoney();
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
@@ -45,7 +44,8 @@ public class SupportPresenterSupportActorTest  extends SupportPresenterTest {
      * Unsuccessfully create a supportActor - Not enough money
      */
     @Test
-    public void createSupportActorTest2(){
+    public void createSupportActorTest2() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(Apache.COST - 1).when(player).getMoney();
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
@@ -63,7 +63,8 @@ public class SupportPresenterSupportActorTest  extends SupportPresenterTest {
      * Unsuccessfully create a supportActor - Wrong state
      */
     @Test
-    public void createSupportActorTest3(){
+    public void createSupportActorTest3() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(LandMine.COST).when(player).getMoney();
         doReturn(GameUIState.LEVEL_COMPLETED).when(uiStateManager).getState();
@@ -81,14 +82,14 @@ public class SupportPresenterSupportActorTest  extends SupportPresenterTest {
      * Successfully move a support actor
      */
     @Test
-    public void moveSupportActorTest1(){
+    public void moveSupportActorTest1() {
 
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(supportActorPlacement).isCurrentSupportActor();
         doReturn(GameUIState.PLACING_SUPPORT).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5,10);
+        FHDVector2 location = new FHDVector2(5, 10);
         supportPresenter.moveSupportActor(location);
 
         verify(supportView, times(1)).showBtnPlace();
@@ -101,15 +102,14 @@ public class SupportPresenterSupportActorTest  extends SupportPresenterTest {
      * Unsuccessfully move a support actor - No current support actor
      */
     @Test
-    public void moveSupportActorTest2(){
+    public void moveSupportActorTest2() {
 
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(false).when(supportActorPlacement).isCurrentSupportActor();
         doReturn(GameUIState.PLACING_SUPPORT).when(uiStateManager).getState();
 
-
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5,10);
+        FHDVector2 location = new FHDVector2(5, 10);
         supportPresenter.moveSupportActor(location);
 
         verify(supportView, never()).showBtnPlace();
@@ -122,15 +122,14 @@ public class SupportPresenterSupportActorTest  extends SupportPresenterTest {
      * Unsuccessfully move a support actor - Wrong state
      */
     @Test
-    public void moveSupportActorTest3(){
+    public void moveSupportActorTest3() {
 
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(supportActorPlacement).isCurrentSupportActor();
         doReturn(GameUIState.OPTIONS).when(uiStateManager).getState();
 
-
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5,10);
+        FHDVector2 location = new FHDVector2(5, 10);
         supportPresenter.moveSupportActor(location);
 
         verify(supportView, never()).showBtnPlace();
@@ -143,7 +142,8 @@ public class SupportPresenterSupportActorTest  extends SupportPresenterTest {
      * Successfully place a support actor
      */
     @Test
-    public void placeSupportActorTest1(){
+    public void placeSupportActorTest1() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         Apache apache = mock(Apache.class);
         doReturn(Apache.COST).when(apache).getCost();
@@ -164,7 +164,7 @@ public class SupportPresenterSupportActorTest  extends SupportPresenterTest {
      * Unsuccessfully place a support actor - No current support actor
      */
     @Test
-    public void placeSupportActorTest2(){
+    public void placeSupportActorTest2() {
 
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(false).when(supportActorPlacement).isCurrentSupportActor();
@@ -183,7 +183,7 @@ public class SupportPresenterSupportActorTest  extends SupportPresenterTest {
      * Unsuccessfully place a Support Actor - Wrong State
      */
     @Test
-    public void placeSupportActorTest3(){
+    public void placeSupportActorTest3() {
 
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(supportActorPlacement).isCurrentSupportActor();

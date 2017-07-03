@@ -9,7 +9,6 @@ import com.foxholedefense.game.model.actor.combat.state.CombatActorState;
 import com.foxholedefense.game.model.actor.combat.state.StateTransitioner;
 import com.foxholedefense.game.model.actor.interfaces.IPassiveEnemy;
 import com.foxholedefense.game.model.actor.interfaces.Targetable;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +24,7 @@ public class EnemyRunningState implements CombatActorState {
     private Map<String, Object> attackTransitionParameters = new HashMap<>();
 
     public EnemyRunningState(Enemy enemy, StateTransitioner<EnemyState> stateTransitioner) {
+
         this.enemy = enemy;
         this.stateTransitioner = stateTransitioner;
     }
@@ -36,6 +36,7 @@ public class EnemyRunningState implements CombatActorState {
 
     @Override
     public void preState() {
+
         movementAnimationStateTime = 0;
         findTargetDelayCounter = 0;
     }
@@ -45,14 +46,14 @@ public class EnemyRunningState implements CombatActorState {
 
         movementAnimationStateTime += delta;
         enemy.animationStep(movementAnimationStateTime);
-        if(hasEnemyReachedEnd()){
+        if (hasEnemyReachedEnd()) {
             stateTransitioner.transition(EnemyState.REACHED_END);
             return;
         }
 
         if (!(enemy instanceof IPassiveEnemy) && isReadyToFindTarget()) {
             Targetable target = findTarget();
-            if(target != null){
+            if (target != null) {
                 attackTransitionParameters.put("target", target);
                 stateTransitioner.transition(EnemyState.ATTACKING, attackTransitionParameters);
             }
@@ -61,7 +62,8 @@ public class EnemyRunningState implements CombatActorState {
         }
     }
 
-    private boolean isReadyToFindTarget(){
+    private boolean isReadyToFindTarget() {
+
         return findTargetDelayCounter >= Enemy.FIND_TARGET_DELAY;
     }
 
@@ -70,15 +72,17 @@ public class EnemyRunningState implements CombatActorState {
      * Finds a tower to attack.
      */
     private Targetable findTarget() {
+
         SnapshotArray<Actor> children = enemy.getTargetGroup().getChildren();
         return EnemyAI.findNearestTower(enemy, children);
     }
 
 
-    private boolean hasEnemyReachedEnd(){
+    private boolean hasEnemyReachedEnd() {
+
         return (enemy.getActions().size == 0
-                && !enemy.isDead()
-                && enemy.isActive());
+            && !enemy.isDead()
+            && enemy.isActive());
 
     }
 

@@ -3,30 +3,30 @@ package com.foxholedefense.game.ui.view.interfaces;
 /**
  * Interface for HUD View. Used by the HUD Presenter to communicate with the
  * view
- * 
- * @author Eric
  *
+ * @author Eric
  */
 public interface IHUDView {
-	void standByState();
-	
-	void supportState();
 
-	void enlistingState();
-	
-	void inspectingState();
+    void standByState();
 
-	void optionsState();
+    void supportState();
 
-	void gameOverState();
+    void enlistingState();
 
-	void quitState();
+    void inspectingState();
 
-	void waveInProgressState();
+    void optionsState();
 
-	void setMoney(String money);
+    void gameOverState();
 
-	void setLives(String lives);
+    void quitState();
 
-	void setWaveCount(String waveCount);
+    void waveInProgressState();
+
+    void setMoney(String money);
+
+    void setLives(String lives);
+
+    void setWaveCount(String waveCount);
 }

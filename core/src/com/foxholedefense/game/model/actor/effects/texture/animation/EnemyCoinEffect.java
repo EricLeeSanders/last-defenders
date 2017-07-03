@@ -14,19 +14,22 @@ import com.foxholedefense.util.datastructures.Dimension;
  */
 
 public class EnemyCoinEffect extends AnimationEffect {
-    private static final Dimension TEXTURE_SIZE = new Dimension(12,12);
+
+    private static final Dimension TEXTURE_SIZE = new Dimension(12, 12);
     private static final float DURATION = 2f;
     private static final float FRAME_DURATION = 0.05f;
 
     public EnemyCoinEffect(Pool<TextureEffect> pool, Array<AtlasRegion> regions) {
+
         super(pool, regions, TEXTURE_SIZE, PlayMode.LOOP, DURATION, FRAME_DURATION);
     }
 
-    public void initialize(Vector2 pos){
+    public void initialize(Vector2 pos) {
+
         this.setPositionCenter(pos);
 
         addAction(Actions.sequence(
-                Actions.moveTo(getX(), getY() + 25, DURATION),
-                Actions.removeActor()));
+            Actions.moveTo(getX(), getY() + 25, DURATION),
+            Actions.removeActor()));
     }
 }

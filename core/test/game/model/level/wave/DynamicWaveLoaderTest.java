@@ -1,5 +1,10 @@
 package game.model.level.wave;
 
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
@@ -11,17 +16,9 @@ import com.foxholedefense.game.model.level.wave.impl.DynamicWaveLoader;
 import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.game.service.factory.CombatActorFactory.SpawningEnemyPool;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 /**
  * Created by Eric on 5/26/2017.
@@ -35,11 +32,12 @@ public class DynamicWaveLoaderTest {
 
     @Before
     public void initDynamicWaveLoaderTest() {
+
         Gdx.app = mock(Application.class);
     }
 
     @Test
-    public void dynamicWaveLoaderTest1(){
+    public void dynamicWaveLoaderTest1() {
 
         Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
         Enemy enemy2 = TestUtil.createEnemy("Sniper", false);
@@ -62,7 +60,8 @@ public class DynamicWaveLoaderTest {
         initSpawningEnemyQueue.addFirst(spawningEnemy4);
 
         doReturn(new Array<FHDVector2>()).when(map).getPath();
-        doReturn(TestUtil.createEnemy("Rifle", false)).when(combatActorFactory).loadEnemy(isA(String.class));
+        doReturn(TestUtil.createEnemy("Rifle", false)).when(combatActorFactory)
+            .loadEnemy(isA(String.class));
 
         DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
         dynamicWaveLoader.initDynamicWaveLoader(initSpawningEnemyQueue);

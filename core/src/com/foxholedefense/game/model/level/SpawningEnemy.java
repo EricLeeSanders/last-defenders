@@ -6,38 +6,45 @@ import com.foxholedefense.game.service.factory.CombatActorFactory.SpawningEnemyP
 
 public class SpawningEnemy implements Poolable {
 
-	private SpawningEnemyPool spawningEnemyPool;
+    private SpawningEnemyPool spawningEnemyPool;
 
-	private Enemy enemy;
-	private float spawnDelay;
-	
-	public SpawningEnemy(SpawningEnemyPool spawningEnemyPool){
-		this.spawningEnemyPool = spawningEnemyPool;
-	}
+    private Enemy enemy;
+    private float spawnDelay;
 
-	public Enemy getEnemy() {
-		return enemy;
-	}
+    public SpawningEnemy(SpawningEnemyPool spawningEnemyPool) {
 
-	public void setEnemy(Enemy enemy) {
-		this.enemy = enemy;
-	}
+        this.spawningEnemyPool = spawningEnemyPool;
+    }
 
-	public float getSpawnDelay() {
-		return spawnDelay;
-	}
+    public Enemy getEnemy() {
 
-	public void setSpawnDelay(float spawnDelay) {
-		this.spawnDelay = spawnDelay;
-	}
+        return enemy;
+    }
 
-	public void free(){
-		spawningEnemyPool.free(this);
-	}
+    public void setEnemy(Enemy enemy) {
 
-	@Override
-	public void reset() {
-		enemy = null;
-		spawnDelay = 0;
-	}
+        this.enemy = enemy;
+    }
+
+    public float getSpawnDelay() {
+
+        return spawnDelay;
+    }
+
+    public void setSpawnDelay(float spawnDelay) {
+
+        this.spawnDelay = spawnDelay;
+    }
+
+    public void free() {
+
+        spawningEnemyPool.free(this);
+    }
+
+    @Override
+    public void reset() {
+
+        enemy = null;
+        spawnDelay = 0;
+    }
 }

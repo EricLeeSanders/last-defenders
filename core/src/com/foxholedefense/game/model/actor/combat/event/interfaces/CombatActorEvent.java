@@ -5,5 +5,6 @@ package com.foxholedefense.game.model.actor.combat.event.interfaces;
  */
 
 public interface CombatActorEvent {
+
     void beginEvent();
 }

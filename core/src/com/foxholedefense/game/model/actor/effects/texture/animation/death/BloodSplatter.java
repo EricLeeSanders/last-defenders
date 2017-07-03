@@ -6,10 +6,12 @@ import com.foxholedefense.game.service.factory.EffectFactory.DeathEffectPool;
 import com.foxholedefense.util.datastructures.Dimension;
 
 public class BloodSplatter extends DeathEffect {
-	private static final Dimension TEXTURE_SIZE = new Dimension(48,48);
-	public BloodSplatter( DeathEffectPool<BloodSplatter> pool, Array<AtlasRegion> atlasRegions) {
-		super(pool, atlasRegions, TEXTURE_SIZE);
-		setRotation(90);
-	}
 
+    private static final Dimension TEXTURE_SIZE = new Dimension(48, 48);
+
+    public BloodSplatter(DeathEffectPool<BloodSplatter> pool, Array<AtlasRegion> atlasRegions) {
+
+        super(pool, atlasRegions, TEXTURE_SIZE);
+        setRotation(90);
+    }
 }

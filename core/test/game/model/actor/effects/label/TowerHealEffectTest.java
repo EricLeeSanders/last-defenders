@@ -1,5 +1,11 @@
 package game.model.actor.effects.label;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -9,18 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.effects.label.TowerHealEffect;
 import com.foxholedefense.game.service.factory.EffectFactory.LabelEffectPool;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Eric on 5/20/2017.
@@ -34,15 +31,16 @@ public class TowerHealEffectTest {
 
     @Before
     public void initTowerHealEffectTest() {
+
         Gdx.app = mock(Application.class);
     }
 
-    private TowerHealEffect createTowerHealEffect(){
+    private TowerHealEffect createTowerHealEffect() {
 
         Skin skinMock = mock(Skin.class);
 
         BitmapFont bitmapFontMock = mock(BitmapFont.class);
-        LabelStyle style = new LabelStyle(bitmapFontMock,  Color.WHITE);
+        LabelStyle style = new LabelStyle(bitmapFontMock, Color.WHITE);
         doReturn(style).when(skinMock).get(LabelStyle.class);
 
         return new TowerHealEffect(labelEffectPoolMock, skinMock);
@@ -53,9 +51,10 @@ public class TowerHealEffectTest {
      * and is freed after it finishes.
      */
     @Test
-    public void towerHealEffectTest1(){
+    public void towerHealEffectTest1() {
+
         Tower tower = TestUtil.createTower("Sniper", false);
-        tower.setPositionCenter(150,150);
+        tower.setPositionCenter(150, 150);
 
         TowerHealEffect towerHealEffect = createTowerHealEffect();
         towerHealEffect.initialize(tower);
@@ -67,7 +66,8 @@ public class TowerHealEffectTest {
         towerHealEffect.act(TowerHealEffect.DURATION / 2);
         tower.setPositionCenter(175, 175); // Make sure moving the tower has no effect
 
-        assertEquals(150 + TowerHealEffect.Y_END_OFFSET / 2, towerHealEffect.getY(), TestUtil.DELTA);
+        assertEquals(150 + TowerHealEffect.Y_END_OFFSET / 2, towerHealEffect.getY(),
+            TestUtil.DELTA);
 
         // Finish it
         towerHealEffect.act(50f);
@@ -79,9 +79,10 @@ public class TowerHealEffectTest {
      * Tests that the TowerHealEffect is freed when the actor dies
      */
     @Test
-    public void towerHealEffectTest2(){
+    public void towerHealEffectTest2() {
+
         Tower tower = TestUtil.createTower("Sniper", false);
-        tower.setPositionCenter(150,150);
+        tower.setPositionCenter(150, 150);
 
         TowerHealEffect towerHealEffect = createTowerHealEffect();
         towerHealEffect.initialize(tower);

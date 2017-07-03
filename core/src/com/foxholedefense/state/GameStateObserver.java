@@ -9,5 +9,6 @@ import com.foxholedefense.state.GameStateManager.GameState;
  */
 
 public interface GameStateObserver extends StateObserver {
+
     void stateChange(GameState state);
 }
