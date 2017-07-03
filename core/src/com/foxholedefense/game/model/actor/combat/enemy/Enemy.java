@@ -30,6 +30,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  */
 public abstract class Enemy extends CombatActor {
+
     public static final float MOVEMENT_DELAY = 1f; // The delay to wait after a target begins attacking
     public static final float FIND_TARGET_DELAY = 2f;
     private static final float FRAME_DURATION = 0.3f;
@@ -43,9 +44,13 @@ public abstract class Enemy extends CombatActor {
 
     private StateManager<EnemyState, CombatActorState> stateManager;
 
-    public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
-                 float speed, float health, float armor, float attack, float attackSpeed, float range, int killReward, DeathEffectType deathEffectType) {
-        super(stationaryTextureRegion, textureSize, pool, targetGroup, gunPos, health, armor, attack, attackSpeed, range, deathEffectType);
+    public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions,
+        Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
+        float speed, float health, float armor, float attack, float attackSpeed, float range,
+        int killReward, DeathEffectType deathEffectType) {
+
+        super(stationaryTextureRegion, textureSize, pool, targetGroup, gunPos, health, armor,
+            attack, attackSpeed, range, deathEffectType);
         movementAnimation = new Animation<>(FRAME_DURATION, animatedRegions);
         movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
         this.speed = speed;
@@ -54,10 +59,12 @@ public abstract class Enemy extends CombatActor {
     }
 
     public void setStateManager(StateManager<EnemyState, CombatActorState> stateManager) {
+
         this.stateManager = stateManager;
     }
 
     public void init() {
+
         stateManager.transition(EnemyState.RUNNING);
         setActive(true);
         setDead(false);
@@ -65,10 +72,9 @@ public abstract class Enemy extends CombatActor {
 
     /**
      * Sets the path for the enemy. Starts off screen.
-     *
-     * @param path
      */
     public void setPath(Array<FHDVector2> path) {
+
         if (path == null || path.size <= 1) {
             return;
         }
@@ -84,7 +90,9 @@ public abstract class Enemy extends CombatActor {
         // That ensures that the entire body of the enemy is off the screen when spawning.
         // rotatedCoords are the coords of the top/front of the enemy.
         Vector2 centerPos = getPositionCenter();
-        FHDVector2 rotatedCoords = ActorUtil.calculateRotatedCoords(this.getX() + getWidth(), centerPos.y, centerPos.x, centerPos.y, Math.toRadians(getRotation()));
+        FHDVector2 rotatedCoords = ActorUtil
+            .calculateRotatedCoords(this.getX() + getWidth(), centerPos.y, centerPos.x, centerPos.y,
+                Math.toRadians(getRotation()));
 
         // Reposition the enemy so that it is off the screen
         float newX = this.getPositionCenter().x + (this.getPositionCenter().x - rotatedCoords.x);
@@ -101,8 +109,10 @@ public abstract class Enemy extends CombatActor {
             newWaypoint = path.get(i);
             float distance = newWaypoint.dst(prevWaypoint);
             float duration = (distance / speed);
-            float rotation = ActorUtil.calculateRotation(newWaypoint.x, newWaypoint.y, prevWaypoint.x, prevWaypoint.y);
-            WaypointAction waypointAction = createWaypointAction(newWaypoint.x, newWaypoint.y, duration, rotation);
+            float rotation = ActorUtil
+                .calculateRotation(newWaypoint.x, newWaypoint.y, prevWaypoint.x, prevWaypoint.y);
+            WaypointAction waypointAction = createWaypointAction(newWaypoint.x, newWaypoint.y,
+                duration, rotation);
             sequenceAction.addAction(waypointAction);
         }
 
@@ -111,6 +121,7 @@ public abstract class Enemy extends CombatActor {
     }
 
     private WaypointAction createWaypointAction(float x, float y, float duration, float rotation) {
+
         return UtilPool.getWaypointAction(x, y, duration, rotation, Interpolation.linear);
     }
 
@@ -132,30 +143,37 @@ public abstract class Enemy extends CombatActor {
     }
 
     public void animationStep(float stateTime) {
+
         setTextureRegion(movementAnimation.getKeyFrame(stateTime, true));
     }
 
 
     public void reachedEnd() {
+
         Logger.info("Enemy: " + this.getClass().getSimpleName() + " reached end");
         freeActor();
     }
 
     public void attack(Targetable target) {
-        this.setRotation(ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
+
+        this.setRotation(
+            ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
         this.attackTarget(target);
         setTextureRegion(stationaryTextureRegion);
     }
 
     public void preAttack() {
+
         rotationBeforeAttacking = getRotation();
     }
 
     public void postAttack() {
+
         setRotation(rotationBeforeAttacking);
     }
 
     public void deadState() {
+
         stateManager.transition(EnemyState.DYING);
     }
 
@@ -165,6 +183,7 @@ public abstract class Enemy extends CombatActor {
      */
     @Override
     public void reset() {
+
         super.reset();
         Logger.info("Enemy: " + this.getClass().getSimpleName() + " Resetting");
         this.setRotation(0);
@@ -190,12 +209,13 @@ public abstract class Enemy extends CombatActor {
         WaypointAction currentWaypoint = (WaypointAction) sequenceAction.getCurrentAction();
         lengthToEndCalculated = true;
 
-        float totalDistance = Vector2.dst(this.getX(), this.getY(), currentWaypoint.getX(), currentWaypoint.getY());
+        float totalDistance = Vector2
+            .dst(this.getX(), this.getY(), currentWaypoint.getX(), currentWaypoint.getY());
         for (int i = currentIndex; i < waypointActions.size - 1; i++) {
             WaypointAction waypoint = (WaypointAction) waypointActions.get(i);
             WaypointAction nextWaypoint = (WaypointAction) waypointActions.get(i + 1);
             totalDistance += Vector2.dst(waypoint.getX(), waypoint.getY()
-                    , nextWaypoint.getX(), nextWaypoint.getY());
+                , nextWaypoint.getX(), nextWaypoint.getY());
         }
 
         lengthToEnd = totalDistance;
@@ -203,10 +223,12 @@ public abstract class Enemy extends CombatActor {
     }
 
     boolean isAttacking() {
+
         return stateManager.getCurrentStateName().equals(EnemyState.ATTACKING);
     }
 
     public float getLengthToEnd() {
+
         if (!lengthToEndCalculated) {
             calcLengthToEnd();
         }
@@ -214,10 +236,12 @@ public abstract class Enemy extends CombatActor {
     }
 
     public int getKillReward() {
+
         return killReward;
     }
 
     public EnemyState getState() {
+
         return stateManager.getCurrentStateName();
     }
 

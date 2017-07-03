@@ -5,5 +5,6 @@ package com.foxholedefense.game.ui.view.interfaces;
  */
 
 public interface Updatable {
+
     void update(float delta);
 }

@@ -10,15 +10,19 @@ import com.foxholedefense.state.GameStateManager.GameState;
 public class GameStateManager extends ObservableStateManager<GameState, GameStateObserver> {
 
     public GameStateManager() {
+
         setState(GameState.PLAY);
     }
 
     @Override
     protected void notifyObserver(GameStateObserver observer, GameState state) {
+
         observer.stateChange(state);
     }
 
     public enum GameState {
-        PLAY, PAUSE, QUIT
+        PLAY,
+        PAUSE,
+        QUIT
     }
 }

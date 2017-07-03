@@ -22,6 +22,7 @@ import com.foxholedefense.util.datastructures.Dimension;
  * @author Eric
  */
 public abstract class Tower extends CombatActor {
+
     private static final float TOWER_RANGE_INCREASE_RATE = (1 / 2f);
     private static final float TOWER_SPEED_INCREASE_RATE = 0.33f;
     private static final float TOWER_ATTACK_INCREASE_RATE = 0.33f;
@@ -35,9 +36,14 @@ public abstract class Tower extends CombatActor {
     private boolean towerColliding;
     private StateManager<TowerState, CombatActorState> stateManager;
 
-    public Tower(TextureRegion textureRegion, Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
-                 float health, float armor, float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost, int rangeIncreaseCost, int attackIncreaseCost, DeathEffectType deathEffectType) {
-        super(textureRegion, textureSize, pool, targetGroup, gunPos, health, armor, attack, attackSpeed, range, deathEffectType);
+    public Tower(TextureRegion textureRegion, Dimension textureSize, Pool<CombatActor> pool,
+        Group targetGroup, Vector2 gunPos, TextureRegion rangeRegion,
+        TextureRegion collidingRangeRegion, float health, float armor, float attack,
+        float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost,
+        int rangeIncreaseCost, int attackIncreaseCost, DeathEffectType deathEffectType) {
+
+        super(textureRegion, textureSize, pool, targetGroup, gunPos, health, armor, attack,
+            attackSpeed, range, deathEffectType);
         this.cost = cost;
         this.armorCost = armorCost;
         this.speedIncreaseCost = speedIncreaseCost;
@@ -48,22 +54,23 @@ public abstract class Tower extends CombatActor {
     }
 
     public void init() {
+
         stateManager.transition(TowerState.ACTIVE);
         setActive(true);
         setDead(false);
     }
 
     public void setStateManager(StateManager<TowerState, CombatActorState> stateManager) {
+
         this.stateManager = stateManager;
     }
 
     /**
      * Gets the selling price for the tower. Adds up the upgraded attributes and
      * their cost and multiplies by a rate.
-     *
-     * @return
      */
     public int getSellCost() {
+
         int networth = cost;
         if (speedIncreaseEnabled) {
             networth += speedIncreaseCost;
@@ -82,19 +89,23 @@ public abstract class Tower extends CombatActor {
     }
 
     public int getCost() {
+
         return cost;
     }
 
     public boolean isShowRange() {
+
         return showRange;
     }
 
     public void setShowRange(boolean showRange) {
+
         this.showRange = showRange;
     }
 
     @Override
     public void draw(Batch batch, float alpha) {
+
         if (showRange) {
             drawRange(batch);
         }
@@ -102,6 +113,7 @@ public abstract class Tower extends CombatActor {
     }
 
     void drawRange(Batch batch) {
+
         TextureRegion currentRangeRegion = rangeRegion;
         if (isTowerColliding()) {
             currentRangeRegion = collidingRangeRegion;
@@ -118,12 +130,14 @@ public abstract class Tower extends CombatActor {
      */
     @Override
     public void act(float delta) {
+
         super.act(delta);
         stateManager.update(delta);
     }
 
     @Override
     public void reset() {
+
         super.reset();
         Logger.info("Tower: " + this.getClass().getSimpleName() + " Resetting");
         rangeIncreaseEnabled = false;
@@ -135,16 +149,19 @@ public abstract class Tower extends CombatActor {
     }
 
     public void deadState() {
+
         stateManager.transition(TowerState.DYING);
     }
 
     public void heal() {
+
         Logger.info("Tower: " + this.getClass().getSimpleName() + " Healing");
         resetHealth();
         resetArmor();
     }
 
     public void increaseRange() {
+
         if (!rangeIncreaseEnabled) {
             Logger.info("Tower: " + this.getClass().getSimpleName() + " Increasing Range");
             rangeIncreaseEnabled = true;
@@ -153,14 +170,17 @@ public abstract class Tower extends CombatActor {
     }
 
     public void increaseSpeed() {
+
         if (!speedIncreaseEnabled) {
             Logger.info("Tower: " + this.getClass().getSimpleName() + " Increasing Speed");
             speedIncreaseEnabled = true;
-            this.setAttackSpeed(this.getAttackSpeed() - (this.getAttackSpeed() * TOWER_SPEED_INCREASE_RATE));
+            this.setAttackSpeed(
+                this.getAttackSpeed() - (this.getAttackSpeed() * TOWER_SPEED_INCREASE_RATE));
         }
     }
 
     public void increaseAttack() {
+
         if (!attackIncreaseEnabled) {
             Logger.info("Tower: " + this.getClass().getSimpleName() + " Increasing attack");
             attackIncreaseEnabled = true;
@@ -169,67 +189,83 @@ public abstract class Tower extends CombatActor {
     }
 
     public boolean hasIncreasedRange() {
+
         return rangeIncreaseEnabled;
     }
 
     public boolean hasIncreasedAttack() {
+
         return attackIncreaseEnabled;
     }
 
     public boolean hasIncreasedSpeed() {
+
         return speedIncreaseEnabled;
     }
 
     public int getAttackIncreaseCost() {
+
         return attackIncreaseCost;
     }
 
     public int getArmorCost() {
+
         return armorCost;
     }
 
     public int getRangeIncreaseCost() {
+
         return rangeIncreaseCost;
     }
 
     public int getSpeedIncreaseCost() {
+
         return speedIncreaseCost;
     }
 
     public void sellTower() {
+
         removeTower();
     }
 
     public int getNumOfKills() {
+
         return kills;
     }
 
     public void giveKill() {
+
         Logger.info("Tower: " + this.getClass().getSimpleName() + " giving kill");
         kills++;
     }
 
     private void removeTower() {
+
         freeActor();
     }
 
     public TowerAIType getAI() {
+
         return ai;
     }
 
     public void setAI(TowerAIType ai) {
+
         this.ai = ai;
     }
 
     public boolean isTowerColliding() {
+
         return towerColliding;
     }
 
     public void setTowerColliding(boolean towerColliding) {
+
         this.towerColliding = towerColliding;
     }
 
     public TowerState getState() {
+
         return stateManager.getCurrentStateName();
     }
 }

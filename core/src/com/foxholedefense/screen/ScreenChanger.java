@@ -5,6 +5,7 @@ package com.foxholedefense.screen;
  */
 
 public interface ScreenChanger {
+
     void changeToMenu();
 
     void changeToLevelSelect();

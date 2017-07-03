@@ -57,8 +57,13 @@ public class TowerTurret extends Tower implements IRotatable {
     private ProjectileFactory projectileFactory;
     private TextureRegion rangeRegion, collidingRangeRegion;
 
-    public TowerTurret(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<TowerTurret> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
-        super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
+    public TowerTurret(TextureRegion bodyRegion, TextureRegion turretRegion,
+        CombatActorPool<TowerTurret> pool, Group targetGroup, TextureRegion rangeRegion,
+        TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
+
+        super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion,
+            collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST,
+            RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
         this.bodyRegion = bodyRegion;
         this.audio = audio;
         this.projectileFactory = projectileFactory;
@@ -71,6 +76,7 @@ public class TowerTurret extends Tower implements IRotatable {
     }
 
     private void createRangeCoords() {
+
         rangeCoords[0] = 0;
         rangeCoords[1] = (RANGE / 2);
         rangeCoords[2] = RANGE;
@@ -95,11 +101,14 @@ public class TowerTurret extends Tower implements IRotatable {
             drawRange(batch);
         }
 
-        float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BAGS.getWidth());
-        float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BAGS.getHeight());
+        float x = ActorUtil
+            .calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BAGS.getWidth());
+        float y = ActorUtil
+            .calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BAGS.getHeight());
 
-        batch.draw(bodyRegion, x, y, TEXTURE_SIZE_BAGS.getWidth() / 2, TEXTURE_SIZE_BAGS.getHeight() / 2, TEXTURE_SIZE_BAGS.getWidth(), TEXTURE_SIZE_BAGS.getHeight()
-                , 1, 1, bodyRotation);
+        batch.draw(bodyRegion, x, y, TEXTURE_SIZE_BAGS.getWidth() / 2,
+            TEXTURE_SIZE_BAGS.getHeight() / 2, TEXTURE_SIZE_BAGS.getWidth(),
+            TEXTURE_SIZE_BAGS.getHeight(), 1, 1, bodyRotation);
 
         super.draw(batch, alpha);
 
@@ -110,6 +119,7 @@ public class TowerTurret extends Tower implements IRotatable {
     }
 
     private void drawDebugBody(Batch batch) {
+
         batch.end();
 
         ShapeRenderer sr = Resources.getShapeRenderer();
@@ -137,6 +147,7 @@ public class TowerTurret extends Tower implements IRotatable {
 
     @Override
     void drawRange(Batch batch) {
+
         TextureRegion currentRangeRegion = rangeRegion;
         if (isTowerColliding()) {
             currentRangeRegion = collidingRangeRegion;
@@ -145,7 +156,8 @@ public class TowerTurret extends Tower implements IRotatable {
         float height = getRange();
         float x = getPositionCenter().x;
         float y = getPositionCenter().y - (getRange() / 2);
-        batch.draw(currentRangeRegion, x, y, 0, (getRange() / 2), width, height, 1, 1, bodyRotation);
+        batch
+            .draw(currentRangeRegion, x, y, 0, (getRange() / 2), width, height, 1, 1, bodyRotation);
     }
 
     /**
@@ -162,7 +174,8 @@ public class TowerTurret extends Tower implements IRotatable {
         body.setRotation(bodyRotation);
 
         float x = getX();
-        float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BAGS.getHeight());
+        float y = ActorUtil
+            .calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BAGS.getHeight());
         body.setPosition(x, y);
 
         return body;
@@ -170,12 +183,14 @@ public class TowerTurret extends Tower implements IRotatable {
 
     @Override
     public void reset() {
+
         super.reset();
         bodyRotation = 0;
     }
 
     @Override
     public Polygon getRangeShape() {
+
         float x = getPositionCenter().x;
         float y = getPositionCenter().y - (getRange() / 2);
         rangePoly.setOrigin(0, (getRange() / 2));
@@ -187,6 +202,7 @@ public class TowerTurret extends Tower implements IRotatable {
 
     @Override
     public void attackTarget(Targetable target) {
+
         if (target != null) {
             audio.playSound(FHDSound.MACHINE_GUN);
             projectileFactory.loadBullet().initialize(this, target, BULLET_SIZE);
@@ -195,6 +211,7 @@ public class TowerTurret extends Tower implements IRotatable {
 
     @Override
     public void increaseRange() {
+
         super.increaseRange();
 
         rangeCoords[0] = 0;
@@ -209,6 +226,7 @@ public class TowerTurret extends Tower implements IRotatable {
 
     @Override
     public String getName() {
+
         return "Turret";
     }
 }

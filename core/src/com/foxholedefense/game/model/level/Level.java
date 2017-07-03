@@ -24,7 +24,9 @@ public class Level {
     private ActorGroups actorGroups;
     private HealthFactory healthFactory;
 
-    public Level(int level, ActorGroups actorGroups, HealthFactory healthFactory, FileWaveLoader fileWaveLoader, DynamicWaveLoader dynamicWaveLoader) {
+    public Level(int level, ActorGroups actorGroups, HealthFactory healthFactory,
+        FileWaveLoader fileWaveLoader, DynamicWaveLoader dynamicWaveLoader) {
+
         this.intLevel = level;
         this.actorGroups = actorGroups;
         this.healthFactory = healthFactory;
@@ -34,10 +36,9 @@ public class Level {
 
     /**
      * Spwan enemies
-     *
-     * @param delta
      */
     public void update(float delta) {
+
         if (spawningEnemyQueue.size > 0) {
             delayCount += delta;
             if (delayCount >= enemyDelay) {
@@ -47,6 +48,7 @@ public class Level {
     }
 
     private void spawnNextEnemy() {
+
         Logger.info("Level: Spawning Enemy");
 
         delayCount = 0;
@@ -90,10 +92,12 @@ public class Level {
     }
 
     public int getSpawningEnemiesCount() {
+
         return spawningEnemyQueue.size;
     }
 
     public int getCurrentWave() {
+
         return currentWave;
     }
 

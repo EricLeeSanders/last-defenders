@@ -7,6 +7,7 @@ import java.util.Map;
  */
 
 public interface CombatActorState {
+
     void loadParameters(Map<String, Object> parameters);
 
     void preState();

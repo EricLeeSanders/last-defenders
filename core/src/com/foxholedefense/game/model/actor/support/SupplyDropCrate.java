@@ -37,8 +37,9 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable {
     private Group towerGroup;
     private TextureRegion rangeTexture;
 
-    public SupplyDropCrate(TextureRegion textureRegion, TextureRegion rangeTexture, SupplyDropCratePool pool,
-                           Group towerGroup, EffectFactory effectFactory) {
+    public SupplyDropCrate(TextureRegion textureRegion, TextureRegion rangeTexture,
+        SupplyDropCratePool pool, Group towerGroup, EffectFactory effectFactory) {
+
         super(TEXTURE_SIZE);
         this.pool = pool;
         this.towerGroup = towerGroup;
@@ -49,13 +50,15 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable {
     }
 
     public SupplyDropCrate beginDrop(float dropDelay, Vector2 destination) {
+
         Logger.info("SupplyDropCrate: Beginning Crate drop");
 
         setVisible(false);
         setActive(true);
         setPositionCenter(destination);
 
-        ScaleToAction scaleToAction = Actions.scaleTo(0.5f, 0.5f, SUPPLYDROP_DURATION, Interpolation.linear);
+        ScaleToAction scaleToAction = Actions
+            .scaleTo(0.5f, 0.5f, SUPPLYDROP_DURATION, Interpolation.linear);
         DelayAction scaleDelayAction = Actions.delay(dropDelay, scaleToAction);
         addAction(scaleDelayAction);
 
@@ -68,6 +71,7 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable {
 
     @Override
     public void act(float delta) {
+
         super.act(delta);
         if (isActive()) {
             if (this.getActions().size <= 0) {
@@ -80,17 +84,20 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable {
 
     @Override
     public void draw(Batch batch, float alpha) {
+
         super.draw(batch, alpha);
         if (isShowRange()) {
             float width = RANGE * 2;
             float height = RANGE * 2;
             float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, width);
             float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, height);
-            batch.draw(rangeTexture, x, y, getOriginX(), getOriginY(), width, height, 1, 1, getRotation());
+            batch.draw(rangeTexture, x, y, getOriginX(), getOriginY(), width, height, 1, 1,
+                getRotation());
         }
     }
 
     private void healActors() {
+
         Logger.info("Healing actors");
         for (Actor actor : towerGroup.getChildren()) {
             if (actor instanceof Tower) {
@@ -107,32 +114,39 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable {
     }
 
     public void freeActor() {
+
         pool.free(this);
     }
 
     public boolean isShowRange() {
+
         return showRange;
     }
 
     public void setShowRange(boolean showRange) {
+
         this.showRange = showRange;
     }
 
     public boolean isActive() {
+
         return active;
     }
 
     public void setActive(boolean active) {
+
         this.active = active;
     }
 
     private Shape2D getRangeShape() {
+
         rangeCircle.set(getPositionCenter().x, getPositionCenter().y, RANGE);
         return rangeCircle;
     }
 
     @Override
     public void reset() {
+
         Logger.info("SupplyDropCrate: Resetting");
         setActive(false);
         setShowRange(false);

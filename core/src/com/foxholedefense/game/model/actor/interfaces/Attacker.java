@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
  * @author Eric
  */
 public interface Attacker {
+
     Vector2 getPositionCenter();
 
     Shape2D getRangeShape();

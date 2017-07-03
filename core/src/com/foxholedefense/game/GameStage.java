@@ -39,6 +39,7 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  */
 public class GameStage extends Stage implements PlayerObserver {
+
     private static final int WAVE_OVER_MONEY_MULTIPLIER = 100;
     private LevelStateManager levelStateManager;
     private GameUIStateManager uiStateManager;
@@ -59,8 +60,8 @@ public class GameStage extends Stage implements PlayerObserver {
     private EffectFactory effectFactory;
 
     public GameStage(int intLevel, Player player, ActorGroups actorGroups, FHDAudio audio,
-                     LevelStateManager levelStateManager, GameUIStateManager uiStateManager,
-                     Viewport viewport, Resources resources, SpriteBatch spriteBatch) {
+        LevelStateManager levelStateManager, GameUIStateManager uiStateManager,
+        Viewport viewport, Resources resources, SpriteBatch spriteBatch) {
 
         super(viewport, spriteBatch);
         this.player = player;
@@ -77,20 +78,25 @@ public class GameStage extends Stage implements PlayerObserver {
         mapRenderer = new MapRenderer(tiledMap, getCamera());
         FileWaveLoader fileWaveLoader = new FileWaveLoader(combatActorFactory, map);
         DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
-        level = new Level(intLevel, getActorGroups(), healthFactory, fileWaveLoader, dynamicWaveLoader);
+        level = new Level(intLevel, getActorGroups(), healthFactory, fileWaveLoader,
+            dynamicWaveLoader);
         player.attachObserver(this);
 
     }
 
     private void createFactories(FHDAudio audio) {
+
         effectFactory = new EffectFactory(actorGroups, resources);
         healthFactory = new HealthFactory(actorGroups, resources);
         ProjectileFactory projectileFactory = new ProjectileFactory(actorGroups, audio, resources);
-        supportActorFactory = new SupportActorFactory(actorGroups, audio, resources, effectFactory, projectileFactory);
-        combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory, projectileFactory, player);
+        supportActorFactory = new SupportActorFactory(actorGroups, audio, resources, effectFactory,
+            projectileFactory);
+        combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory,
+            projectileFactory, player);
     }
 
     private void createPlacementServices(Map map) {
+
         Logger.info("Game Stage: creating placement services");
         towerPlacement = new TowerPlacement(map, actorGroups, combatActorFactory, healthFactory);
         supportActorPlacement = new SupportActorPlacement(actorGroups, supportActorFactory);
@@ -106,6 +112,7 @@ public class GameStage extends Stage implements PlayerObserver {
      * fully constructed before loading the wave.
      */
     public void loadFirstWave() {
+
         Logger.info("Game Stage: loading first wave");
         level.loadNextWave();
         Logger.info("Game Stage: first wave loaded");
@@ -115,6 +122,7 @@ public class GameStage extends Stage implements PlayerObserver {
      * Create the actor groups. Order matters
      */
     private void createGroups() {
+
         Logger.info("Game Stage: creating groups");
         this.addActor(getActorGroups().getDeathEffectGroup());
         this.addActor(getActorGroups().getLandmineGroup());
@@ -132,6 +140,7 @@ public class GameStage extends Stage implements PlayerObserver {
      */
     @Override
     public void act(float delta) {
+
         super.act(delta);
         if (levelStateManager.getState().equals(LevelState.WAVE_IN_PROGRESS)) {
             level.update(delta);
@@ -143,12 +152,14 @@ public class GameStage extends Stage implements PlayerObserver {
 
     @Override
     public void draw() {
+
         mapRenderer.update();
         super.draw();
     }
 
     @Override
     public void dispose() {
+
         Logger.info("Game Stage Dispose");
         map.dispose();
         resources.unloadMap(intLevel);
@@ -159,14 +170,16 @@ public class GameStage extends Stage implements PlayerObserver {
      * Determine if the wave is over
      */
     private boolean isWaveOver() {
+
         return getActorGroups().getEnemyGroup().getChildren().size <= 0
-                && level.getSpawningEnemiesCount() <= 0
-                && getActorGroups().getProjectileGroup().getChildren().size <= 0
-                && !(levelStateManager.getState().equals(LevelState.GAME_OVER));
+            && level.getSpawningEnemiesCount() <= 0
+            && getActorGroups().getProjectileGroup().getChildren().size <= 0
+            && !(levelStateManager.getState().equals(LevelState.GAME_OVER));
 
     }
 
     private void waveOver() {
+
         Logger.info("Game Stage: Wave over");
         int money = (int) (WAVE_OVER_MONEY_MULTIPLIER * (float) level.getCurrentWave());
         player.giveMoney(money);
@@ -175,7 +188,8 @@ public class GameStage extends Stage implements PlayerObserver {
         if (isLevelCompleted()) {
             levelComleted();
         }
-        WaveOverCoinEffect waveOverCoinEffect = effectFactory.loadLabelEffect(WaveOverCoinEffect.class);
+        WaveOverCoinEffect waveOverCoinEffect = effectFactory
+            .loadLabelEffect(WaveOverCoinEffect.class);
         waveOverCoinEffect.initialize(money);
         level.loadNextWave(); //load the next wave
         healTowers();
@@ -185,6 +199,7 @@ public class GameStage extends Stage implements PlayerObserver {
      * Determine if the level is completed
      */
     private boolean isLevelCompleted() {
+
         if (player.getWavesCompleted() == Level.MAX_WAVES) {
             Logger.info("Game Stage: Level Over");
             return true;
@@ -193,10 +208,12 @@ public class GameStage extends Stage implements PlayerObserver {
     }
 
     private void levelComleted() {
+
         uiStateManager.setState(GameUIState.LEVEL_COMPLETED);
     }
 
     private void healTowers() {
+
         Logger.info("Game Stage: healing towers");
         for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
             if (tower instanceof Tower) {
@@ -212,7 +229,9 @@ public class GameStage extends Stage implements PlayerObserver {
 
     @Override
     public void playerAttributeChange() {
-        if (player.getLives() <= 0 && !levelStateManager.getState().equals(LevelState.GAME_OVER)) { // end game
+
+        if (player.getLives() <= 0 && !levelStateManager.getState()
+            .equals(LevelState.GAME_OVER)) { // end game
             Logger.info("Game Stage: game over");
             levelStateManager.setState(LevelState.GAME_OVER);
             uiStateManager.setState(GameUIState.GAME_OVER);
@@ -220,22 +239,27 @@ public class GameStage extends Stage implements PlayerObserver {
     }
 
     private ActorGroups getActorGroups() {
+
         return actorGroups;
     }
 
     public TowerPlacement getTowerPlacement() {
+
         return towerPlacement;
     }
 
     public SupportActorPlacement getSupportActorPlacement() {
+
         return supportActorPlacement;
     }
 
     public AirStrikePlacement getAirStrikePlacement() {
+
         return airStrikePlacement;
     }
 
     public SupplyDropPlacement getSupplyDropPlacement() {
+
         return supplyDropPlacement;
     }
 

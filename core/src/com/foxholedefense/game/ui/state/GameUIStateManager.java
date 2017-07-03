@@ -7,10 +7,13 @@ import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.state.ObservableStateManager;
 import com.foxholedefense.util.Logger;
 
-public class GameUIStateManager extends ObservableStateManager<GameUIState, GameUIStateObserver> implements LevelStateObserver {
+public class GameUIStateManager extends
+    ObservableStateManager<GameUIState, GameUIStateObserver> implements LevelStateObserver {
+
     private LevelStateManager levelStateManager;
 
     public GameUIStateManager(LevelStateManager levelStateManager) {
+
         this.levelStateManager = levelStateManager;
         levelStateManager.attach(this);
         setState(GameUIState.STANDBY);
@@ -18,10 +21,12 @@ public class GameUIStateManager extends ObservableStateManager<GameUIState, Game
 
     // Determine the state to return to
     public void setStateReturn() {
+
         syncWithLevelState();
     }
 
     private void syncWithLevelState() {
+
         Logger.info("Game UI State: syncWithLevelState");
         switch (levelStateManager.getState()) {
             case WAVE_IN_PROGRESS:
@@ -36,6 +41,7 @@ public class GameUIStateManager extends ObservableStateManager<GameUIState, Game
 
     @Override
     public void stateChange(LevelState state) {
+
         Logger.info("Game UI State: changeLevelState: " + state.name());
         switch (state) {
             case STANDBY:
@@ -48,11 +54,26 @@ public class GameUIStateManager extends ObservableStateManager<GameUIState, Game
 
     @Override
     protected void notifyObserver(GameUIStateObserver observer, GameUIState state) {
+
         observer.stateChange(state);
     }
 
     public enum GameUIState {
-        ENLISTING, SUPPORT, INSPECTING, HIGH_SCORES, PAUSE_MENU, OPTIONS, STANDBY, GAME_OVER, DEBUG, PLACING_TOWER, PLACING_SUPPORT, PLACING_AIRSTRIKE, PLACING_SUPPLYDROP, WAVE_IN_PROGRESS, LEVEL_COMPLETED
+        ENLISTING,
+        SUPPORT,
+        INSPECTING,
+        HIGH_SCORES,
+        PAUSE_MENU,
+        OPTIONS,
+        STANDBY,
+        GAME_OVER,
+        DEBUG,
+        PLACING_TOWER,
+        PLACING_SUPPORT,
+        PLACING_AIRSTRIKE,
+        PLACING_SUPPLYDROP,
+        WAVE_IN_PROGRESS,
+        LEVEL_COMPLETED
 
     }
 }

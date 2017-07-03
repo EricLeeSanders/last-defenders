@@ -13,22 +13,25 @@ import com.foxholedefense.util.ActorUtil;
  */
 
 public class EnlistButton extends Group {
+
     public ImageButton button;
     public int cost;
 
-    public EnlistButton(Skin skin, float attack, float health, float range, float speed, String name, int cost) {
+    public EnlistButton(Skin skin, float attack, float health, float range, float speed,
+        String name, int cost) {
+
         this.setTransform(false);
         this.button = new ImageButton(skin, "enlist");
         button.setSize(120, 195);
         this.cost = cost;
         addActor(button);
 
-
         Label lblCost = new Label(String.valueOf(cost), skin);
         //lblCost.setAlignment(Align.center);
         lblCost.setFontScale(0.45f);
         lblCost.pack();
-        float lblCostX = ActorUtil.calcBotLeftPointFromCenter(button.getWidth() / 2, lblCost.getWidth());
+        float lblCostX = ActorUtil
+            .calcBotLeftPointFromCenter(button.getWidth() / 2, lblCost.getWidth());
         lblCost.setPosition(lblCostX, 10);
         addActor(lblCost);
 
@@ -36,7 +39,8 @@ public class EnlistButton extends Group {
         lblTitle.setFontScale(0.40f);
         lblTitle.setAlignment(Align.center);
         lblTitle.pack();
-        float lblTitleX = ActorUtil.calcBotLeftPointFromCenter(button.getWidth() / 2, lblTitle.getWidth());
+        float lblTitleX = ActorUtil
+            .calcBotLeftPointFromCenter(button.getWidth() / 2, lblTitle.getWidth());
         float lblTitleY = ActorUtil.calcBotLeftPointFromCenter(155, lblTitle.getHeight());
         lblTitle.setPosition(lblTitleX, lblTitleY);
         addActor(lblTitle);
@@ -47,7 +51,9 @@ public class EnlistButton extends Group {
         createBar(skin, speed, 35, "speed_icon", 18, 18, 2, 1);
     }
 
-    private void createBar(Skin skin, float attrValue, float y, String iconName, float iconWidth, float iconHeight, float iconX, float iconY) {
+    private void createBar(Skin skin, float attrValue, float y, String iconName, float iconWidth,
+        float iconHeight, float iconX, float iconY) {
+
         Image fullbar = new Image(skin.getAtlas().findRegion("tower-attr-full"));
         fullbar.setSize(64, 15);
         fullbar.setPosition(36, y);
@@ -69,6 +75,7 @@ public class EnlistButton extends Group {
     }
 
     private void setBgPosition(Image bg, float value, float start, float end) {
+
         float x = start + end * value;
         bg.setX(x);
         bg.setSize(end - (end * value), 15);

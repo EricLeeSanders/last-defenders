@@ -1,18 +1,16 @@
 package game.model;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.PlayerObserver;
-
-import org.junit.Before;
-import org.junit.Test;
-
-
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
+import com.foxholedefense.game.model.Player;
+import com.foxholedefense.game.model.PlayerObserver;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Created by Eric on 5/26/2017.
@@ -22,11 +20,13 @@ public class PlayerTest {
 
     @Before
     public void initPlayerTest() {
+
         Gdx.app = mock(Application.class);
     }
 
     @Test
     public void moneyTest1() {
+
         Player player = new Player();
 
         int startingMoneyAmount = player.getMoney();
@@ -40,6 +40,7 @@ public class PlayerTest {
 
     @Test
     public void livesTest1() {
+
         Player player = new Player();
 
         int startingLivesAmount = player.getLives();
@@ -52,6 +53,7 @@ public class PlayerTest {
 
     @Test
     public void observerTest1() {
+
         Player player = new Player();
 
         PlayerObserver playerObserver = mock(PlayerObserver.class);

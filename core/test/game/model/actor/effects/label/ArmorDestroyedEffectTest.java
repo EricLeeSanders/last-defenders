@@ -1,5 +1,11 @@
 package game.model.actor.effects.label;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -10,29 +16,22 @@ import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.effects.label.ArmorDestroyedEffect;
 import com.foxholedefense.game.service.factory.EffectFactory.LabelEffectPool;
 import com.foxholedefense.util.Resources;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Eric on 5/20/2017.
  */
 
 public class ArmorDestroyedEffectTest {
+
     @SuppressWarnings("unchecked")
     private LabelEffectPool<ArmorDestroyedEffect> labelEffectPoolMock = mock(LabelEffectPool.class);
 
     @Before
     public void initArmorDestroyedEffectTest() {
+
         Gdx.app = mock(Application.class);
     }
 
@@ -41,12 +40,12 @@ public class ArmorDestroyedEffectTest {
         Resources resourcesMock = TestUtil.createResourcesMock();
         Skin skinMock = mock(Skin.class);
 
-
         BitmapFont bitmapFontMock = mock(BitmapFont.class);
         LabelStyle style = new LabelStyle(bitmapFontMock, Color.WHITE);
         doReturn(style).when(skinMock).get(LabelStyle.class);
 
-        return new ArmorDestroyedEffect(resourcesMock.getAtlasRegion(""), labelEffectPoolMock, skinMock);
+        return new ArmorDestroyedEffect(resourcesMock.getAtlasRegion(""), labelEffectPoolMock,
+            skinMock);
 
     }
 
@@ -70,7 +69,8 @@ public class ArmorDestroyedEffectTest {
         armorDestroyedEffect.act(ArmorDestroyedEffect.DURATION / 2);
         tower.setPositionCenter(175, 175); // Make sure moving the tower has no effect
 
-        assertEquals(150 + ArmorDestroyedEffect.Y_END_OFFSET / 2, armorDestroyedEffect.getY(), TestUtil.DELTA);
+        assertEquals(150 + ArmorDestroyedEffect.Y_END_OFFSET / 2, armorDestroyedEffect.getY(),
+            TestUtil.DELTA);
 
         // Finish it
         armorDestroyedEffect.act(50f);

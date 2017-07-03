@@ -25,7 +25,9 @@ public class SupplyDrop extends GameActor implements Pool.Poolable {
     private SupplyDropPool pool;
     private SupportActorFactory supportActorFactory;
 
-    public SupplyDrop(TextureRegion textureRegion, SupplyDropPool pool, SupportActorFactory supportActorFactory) {
+    public SupplyDrop(TextureRegion textureRegion, SupplyDropPool pool,
+        SupportActorFactory supportActorFactory) {
+
         super(TEXTURE_SIZE);
         this.pool = pool;
         this.supportActorFactory = supportActorFactory;
@@ -44,11 +46,13 @@ public class SupplyDrop extends GameActor implements Pool.Poolable {
 
         float moveToX = Resources.VIRTUAL_WIDTH + getWidth();
         float moveToY = destination.y;
-        MoveToAction moveToAction = Actions.moveTo(moveToX, moveToY, SUPPLYDROP_DURATION, Interpolation.linear);
+        MoveToAction moveToAction = Actions
+            .moveTo(moveToX, moveToY, SUPPLYDROP_DURATION, Interpolation.linear);
         moveToAction.setAlignment(Align.center);
         addAction(moveToAction);
 
-        float dropDelay = SUPPLYDROP_DURATION * ((destination.x - (getWidth() / 4)) / Resources.VIRTUAL_WIDTH);
+        float dropDelay =
+            SUPPLYDROP_DURATION * ((destination.x - (getWidth() / 4)) / Resources.VIRTUAL_WIDTH);
 
         Logger.info("DropDelay: " + dropDelay);
 
@@ -57,6 +61,7 @@ public class SupplyDrop extends GameActor implements Pool.Poolable {
 
     @Override
     public void act(float delta) {
+
         super.act(delta);
         if (isActive()) {
             if (this.getActions().size <= 0) {
@@ -66,15 +71,18 @@ public class SupplyDrop extends GameActor implements Pool.Poolable {
     }
 
     public boolean isActive() {
+
         return active;
     }
 
     private void setActive(boolean active) {
+
         this.active = active;
     }
 
     @Override
     public void reset() {
+
         Logger.info("SupplyDrop: Resetting");
         setActive(false);
         this.setPosition(0, 0);

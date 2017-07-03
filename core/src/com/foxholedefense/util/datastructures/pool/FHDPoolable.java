@@ -7,5 +7,6 @@ import com.badlogic.gdx.utils.Pool;
  */
 
 public interface FHDPoolable extends Pool.Poolable {
+
     void free();
 }

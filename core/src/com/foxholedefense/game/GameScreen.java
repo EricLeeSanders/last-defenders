@@ -33,7 +33,8 @@ public class GameScreen extends AbstractScreen {
     private Resources resources;
     private SpriteBatch spriteBatch;
 
-    public GameScreen(int intLevel, GameStateManager gameStateManager, ScreenChanger screenChanger, Resources resources, FHDAudio audio) {
+    public GameScreen(int intLevel, GameStateManager gameStateManager, ScreenChanger screenChanger,
+        Resources resources, FHDAudio audio) {
 
         super(gameStateManager);
         Player player = new Player();
@@ -43,9 +44,11 @@ public class GameScreen extends AbstractScreen {
         uiStateManager = new GameUIStateManager(levelStateManager);
         this.gameStateManager = gameStateManager;
         spriteBatch = new SpriteBatch();
-        gameStage = new GameStage(intLevel, player, actorGroups, audio, levelStateManager, uiStateManager, getViewport(), resources, spriteBatch);
-        gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager, levelStateManager, gameStateManager
-                , screenChanger, super.getInputMultiplexer(), getViewport(), resources, audio, gameStage, spriteBatch);
+        gameStage = new GameStage(intLevel, player, actorGroups, audio, levelStateManager,
+            uiStateManager, getViewport(), resources, spriteBatch);
+        gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager,
+            levelStateManager, gameStateManager, screenChanger, super.getInputMultiplexer(),
+            getViewport(), resources, audio, gameStage, spriteBatch);
 
         super.show();
         audio.turnOffMusic();
@@ -55,6 +58,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void createBackListener() {
+
         InputProcessor backProcessor = new InputAdapter() {
             @Override
             public boolean keyUp(int keycode) {
@@ -67,12 +71,12 @@ public class GameScreen extends AbstractScreen {
             }
         };
 
-
         super.addInputProcessor(backProcessor);
     }
 
     @Override
     public void resize(int width, int height) {
+
         gameStage.getViewport().setScreenSize(width, height); // update the size of ViewPort
         gameUIStage.getViewport().setScreenSize(width, height); // update the size of ViewPort
         super.resize(width, height);
@@ -83,6 +87,7 @@ public class GameScreen extends AbstractScreen {
      */
     @Override
     public void renderElements(float delta) {
+
         if (gameStateManager.getState().equals(GameState.PLAY)) {
             if (resources.getGameSpeed() > 0) {
                 gameStage.act(delta * resources.getGameSpeed());
@@ -97,6 +102,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void pause() {
+
         Logger.info("Game Screen: pausing");
         uiStateManager.setState(GameUIState.PAUSE_MENU);
         gameStateManager.setState(GameState.PAUSE);
@@ -104,6 +110,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void resume() {
+
         Logger.info("Game Screen: resume");
         if (!gameStateManager.getState().equals(GameState.PAUSE)) {
             gameStateManager.setState(GameState.PLAY);
@@ -112,6 +119,7 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
+
         Logger.info("Game Screen Dispose");
         gameStage.dispose();
         gameUIStage.dispose();

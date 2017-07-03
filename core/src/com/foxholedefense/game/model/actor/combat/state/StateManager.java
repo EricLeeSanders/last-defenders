@@ -5,6 +5,7 @@ package com.foxholedefense.game.model.actor.combat.state;
  */
 
 public interface StateManager<E, V> extends StateTransitioner<E> {
+
     void update(float delta);
 
     V getState(E state);

@@ -35,7 +35,8 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
     private FHDAudio audio;
     private MessageDisplayer messageDisplayer;
 
-    public InspectPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager, Player player, Group towerGroup, FHDAudio audio, MessageDisplayer messageDisplayer) {
+    public InspectPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager,
+        Player player, Group towerGroup, FHDAudio audio, MessageDisplayer messageDisplayer) {
 
         this.uiStateManager = uiStateManager;
         this.levelStateManager = levelStateManager;
@@ -48,10 +49,9 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
 
     /**
      * Sets the Inspect View
-     *
-     * @param view
      */
     public void setView(IInspectView view) {
+
         this.view = view;
         stateChange(uiStateManager.getState());
     }
@@ -116,7 +116,8 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
         Logger.info("Inspect Presenter: increasing attack");
         audio.playSound(FHDSound.SMALL_CLICK);
 
-        if (canUpgradeTower(selectedTower.getAttackIncreaseCost(), selectedTower.hasIncreasedAttack())) {
+        if (canUpgradeTower(selectedTower.getAttackIncreaseCost(),
+            selectedTower.hasIncreasedAttack())) {
             Logger.info("Inspect Presenter: increased tower attack");
             player.spendMoney(selectedTower.getAttackIncreaseCost());
             selectedTower.increaseAttack();
@@ -146,7 +147,8 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
 
         Logger.info("Inspect Presenter: increasing range");
         audio.playSound(FHDSound.SMALL_CLICK);
-        if (canUpgradeTower(selectedTower.getRangeIncreaseCost(), selectedTower.hasIncreasedRange())) {
+        if (canUpgradeTower(selectedTower.getRangeIncreaseCost(),
+            selectedTower.hasIncreasedRange())) {
             Logger.info("Inspect Presenter: increased tower range");
             player.spendMoney(selectedTower.getRangeIncreaseCost());
             selectedTower.increaseRange();
@@ -161,7 +163,8 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
 
         Logger.info("Inspect Presenter: increasing speed");
         audio.playSound(FHDSound.SMALL_CLICK);
-        if (canUpgradeTower(selectedTower.getSpeedIncreaseCost(), selectedTower.hasIncreasedSpeed())) {
+        if (canUpgradeTower(selectedTower.getSpeedIncreaseCost(),
+            selectedTower.hasIncreasedSpeed())) {
             Logger.info("Inspect Presenter: increased tower speed");
             player.spendMoney(selectedTower.getSpeedIncreaseCost());
             selectedTower.increaseSpeed();
@@ -182,15 +185,14 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
             closeInspect();
         } else {
             if (isDischargeDisabled()) {
-                messageDisplayer.displayMessage("Cannot discharge " + selectedTower.getName() + " while a wave is in progress!");
+                messageDisplayer.displayMessage("Cannot discharge " + selectedTower.getName()
+                    + " while a wave is in progress!");
             }
         }
     }
 
     /**
      * Open the inspection window for a tower that is clicked.
-     *
-     * @param coords
      */
     public void inspectTower(Vector2 coords) {
 
@@ -212,13 +214,12 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
      * @return int - player money
      */
     public int getPlayerMoney() {
+
         return player.getMoney();
     }
 
     /**
      * Determines if the tower can be inspected
-     *
-     * @return
      */
     private boolean canInspectTower(Tower tower) {
 
@@ -227,13 +228,11 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
 
     /**
      * Determines if towers can be inspected
-     *
-     * @return
      */
     private boolean canInspectTowers() {
 
         return uiStateManager.getState().equals(GameUIState.STANDBY)
-                || uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS);
+            || uiStateManager.getState().equals(GameUIState.WAVE_IN_PROGRESS);
     }
 
     /**
@@ -243,14 +242,13 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
      * @return boolean
      */
     public boolean canAffordUpgrade(int upgradeCost) {
+
         return upgradeCost <= player.getMoney();
     }
 
     /**
      * Checks if we can upgrade the tower. May display a message to the user.
      *
-     * @param cost
-     * @param hasUpgrade
      * @return - boolean - if the tower can be upgraded
      */
     private boolean canUpgradeTower(int cost, boolean hasUpgrade) {
@@ -266,7 +264,8 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
         }
 
         if (!canAffordUpgrade(cost)) {
-            Logger.info("Upgrade cannot be afforded: player: " + player.getMoney() + " upgrade: " + cost);
+            Logger.info(
+                "Upgrade cannot be afforded: player: " + player.getMoney() + " upgrade: " + cost);
             messageDisplayer.displayMessage("Cannot afford this upgrade!");
             return false;
         }
@@ -276,19 +275,15 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
 
     /**
      * Determines if the the target priority can be changed
-     *
-     * @return
      */
     private boolean canChangeTargetPriority() {
 
         return uiStateManager.getState().equals(GameUIState.INSPECTING)
-                && isTowerInteractable();
+            && isTowerInteractable();
     }
 
     /**
      * Determines if the tower is interactable
-     *
-     * @return
      */
     private boolean isTowerInteractable() {
 
@@ -297,13 +292,11 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
 
     /**
      * Determines if the tower can be discharged
-     *
-     * @return
      */
     private boolean canDischargeTower() {
 
         return uiStateManager.getState().equals(GameUIState.INSPECTING)
-                && isTowerInteractable() && !isDischargeDisabled();
+            && isTowerInteractable() && !isDischargeDisabled();
     }
 
     private boolean isDischargeDisabled() {

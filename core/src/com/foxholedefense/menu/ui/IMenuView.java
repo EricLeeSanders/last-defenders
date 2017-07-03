@@ -7,6 +7,7 @@ package com.foxholedefense.menu.ui;
  * @author Eric
  */
 interface IMenuView {
+
     void setBtnSoundOn(boolean soundOn);
 
     void setBtnMusicOn(boolean musicOn);

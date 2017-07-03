@@ -34,8 +34,11 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 
     private Polygon body;
 
-    public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<EnemyHumvee> pool) {
-        super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, null, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
+    public EnemyHumvee(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions,
+        CombatActorPool<EnemyHumvee> pool) {
+
+        super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, null, GUN_POS, SPEED,
+            HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
         this.body = new Polygon(BODY_POINTS);
     }
 
@@ -46,9 +49,12 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
 
     @Override
     public Polygon getBody() {
+
         body.setOrigin((this.getWidth() / 2), (this.getHeight() / 2));
         body.setRotation(this.getRotation());
-        body.setPosition(ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, this.getWidth()), ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, this.getHeight()));
+        body.setPosition(
+            ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, this.getWidth()),
+            ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, this.getHeight()));
         return body;
     }
 }

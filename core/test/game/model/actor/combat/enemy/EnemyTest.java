@@ -1,5 +1,13 @@
 package game.model.actor.combat.enemy;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -10,20 +18,9 @@ import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 
 /**
@@ -33,6 +30,7 @@ public class EnemyTest {
 
     @Before
     public void initEnemyTest() {
+
         Gdx.app = mock(Application.class);
     }
 
@@ -60,6 +58,7 @@ public class EnemyTest {
      */
     @Test
     public void testEnemyDead() {
+
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         enemy.setHasArmor(true);
         enemy.takeDamage(100);
@@ -74,6 +73,7 @@ public class EnemyTest {
      */
     @Test
     public void testEnemyArmor1() {
+
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         float damageAmount = enemy.getHealth() / 2;
         enemy.setHasArmor(true);
@@ -88,6 +88,7 @@ public class EnemyTest {
      */
     @Test
     public void testEnemyArmor2() {
+
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         float damageAmount = enemy.getHealth() / 4;
         enemy.setHasArmor(true);
@@ -102,6 +103,7 @@ public class EnemyTest {
      */
     @Test
     public void testEnemyArmor3() {
+
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         float damageAmount = enemy.getHealth();
         enemy.setHasArmor(true);
@@ -184,7 +186,9 @@ public class EnemyTest {
         assertEquals(halfway.y / 2, enemy.getPositionCenter().y, TestUtil.DELTA);
 
         Vector2 currentWaypoint = new Vector2(secondWaypoint.getX(), secondWaypoint.getY());
-        float lengthToEnd = Vector2.dst(enemy.getPositionCenter().x, enemy.getPositionCenter().y, currentWaypoint.x, currentWaypoint.y);
+        float lengthToEnd = Vector2
+            .dst(enemy.getPositionCenter().x, enemy.getPositionCenter().y, currentWaypoint.x,
+                currentWaypoint.y);
 
         float x1 = enemy.getPositionCenter().x;
         float y1 = enemy.getPositionCenter().y;
@@ -197,6 +201,7 @@ public class EnemyTest {
 
     @Test
     public void testRunningState() {
+
         Tower tower = TestUtil.createTower("Rifle", false);
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
@@ -205,12 +210,12 @@ public class EnemyTest {
         Array<FHDVector2> path = createWaypoints();
         enemy.setPath(path);
 
-
         assertEquals(EnemyState.RUNNING, enemy.getState());
     }
 
     @Test
     public void testAttackingState() {
+
         Tower tower = TestUtil.createTower("Rifle", false);
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
@@ -261,6 +266,7 @@ public class EnemyTest {
      */
     @Test
     public void testDeadState() {
+
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
         assertEquals(EnemyState.RUNNING, enemy.getState());

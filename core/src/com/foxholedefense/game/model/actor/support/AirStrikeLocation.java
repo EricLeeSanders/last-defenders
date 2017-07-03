@@ -8,6 +8,7 @@ import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 
 public class AirStrikeLocation extends Actor {
+
     private FHDVector2 location;
     private float radius;
     private boolean showRange = true;
@@ -15,17 +16,20 @@ public class AirStrikeLocation extends Actor {
     private AirStrikeLocationPool pool;
 
     public AirStrikeLocation(AirStrikeLocationPool pool, TextureRegion rangeTexture) {
+
         this.pool = pool;
         this.rangeTexture = rangeTexture;
     }
 
     public void initialize(FHDVector2 location, float radius) {
+
         this.location = location;
         this.radius = radius;
     }
 
     @Override
     public void draw(Batch batch, float alpha) {
+
         if (isShowRange()) {
             drawRange(batch);
         }
@@ -33,6 +37,7 @@ public class AirStrikeLocation extends Actor {
     }
 
     private void drawRange(Batch batch) {
+
         float width = radius * 2;
         float height = radius * 2;
         float x = ActorUtil.calcBotLeftPointFromCenter(location.x, width);
@@ -41,19 +46,23 @@ public class AirStrikeLocation extends Actor {
     }
 
     public FHDVector2 getLocation() {
+
         return location;
     }
 
     private boolean isShowRange() {
+
         return showRange;
     }
 
     public void setShowRange(boolean showRange) {
+
         this.showRange = showRange;
     }
 
     @Override
     public void clear() {
+
         location.free();
         pool.free(this);
         showRange = true;

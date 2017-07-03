@@ -31,6 +31,7 @@ public class HUDView extends Group implements IHUDView {
     private Resources resources;
 
     public HUDView(HUDPresenter presenter, Skin skin, Resources resources) {
+
         this.presenter = presenter;
         this.setTransform(false);
         this.resources = resources;
@@ -39,6 +40,7 @@ public class HUDView extends Group implements IHUDView {
     }
 
     private void createMessageDisplayLabel(Skin skin) {
+
         LabelStyle messageDisplayLabelStyle = new Label.LabelStyle(skin.get(LabelStyle.class));
         messageDisplayLabelStyle.fontColor = Color.RED;
 
@@ -50,6 +52,7 @@ public class HUDView extends Group implements IHUDView {
      * Create the controls
      */
     private void createControls(Skin skin) {
+
         Logger.info("HUD View: creating controls");
 
         btnWave = new ImageButton(skin, "wave");
@@ -91,7 +94,6 @@ public class HUDView extends Group implements IHUDView {
         btnSupport.setPosition(Resources.VIRTUAL_WIDTH - 60, btnEnlist.getY() + 60);
         setBtnSupportListener();
         addActor(btnSupport);
-
 
         btnOptions = new ImageButton(skin, "options");
         btnOptions.setSize(50, 50);
@@ -135,7 +137,8 @@ public class HUDView extends Group implements IHUDView {
         lblPausedStyle.fontColor = Color.RED;
         lblPaused.setStyle(lblPausedStyle);
         lblPaused.setAlignment(Align.center);
-        lblPaused.setPosition(Resources.VIRTUAL_WIDTH / 2 + 1, Resources.VIRTUAL_HEIGHT / 2 + 126, Align.center);
+        lblPaused.setPosition(Resources.VIRTUAL_WIDTH / 2 + 1, Resources.VIRTUAL_HEIGHT / 2 + 126,
+            Align.center);
         lblPaused.setVisible(false);
         addActor(lblPaused);
 
@@ -143,9 +146,11 @@ public class HUDView extends Group implements IHUDView {
     }
 
     private void setBtnResumeListener() {
+
         btnResume.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.resume();
                 btnResume.setVisible(false);
@@ -156,9 +161,11 @@ public class HUDView extends Group implements IHUDView {
     }
 
     private void setBtnPauseListener() {
+
         btnPause.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.pause();
                 btnResume.setVisible(true);
@@ -169,9 +176,11 @@ public class HUDView extends Group implements IHUDView {
     }
 
     private void setBtnOptionsListener() {
+
         btnOptions.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.options();
             }
@@ -179,9 +188,11 @@ public class HUDView extends Group implements IHUDView {
     }
 
     private void setBtnWaveListener() {
+
         btnWave.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.startWave();
             }
@@ -189,9 +200,11 @@ public class HUDView extends Group implements IHUDView {
     }
 
     private void setBtnEnlistListener() {
+
         btnEnlist.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.enlist();
 
@@ -200,9 +213,11 @@ public class HUDView extends Group implements IHUDView {
     }
 
     private void setBtnSupportListener() {
+
         btnSupport.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.addSupport();
 
@@ -211,6 +226,7 @@ public class HUDView extends Group implements IHUDView {
     }
 
     private void setNormalButtonsVisible(boolean visible) {
+
         btnEnlist.setVisible(visible);
         btnSupport.setVisible(visible);
         btnWave.setVisible(visible);
@@ -218,27 +234,32 @@ public class HUDView extends Group implements IHUDView {
     }
 
     private void setPauseResumeButtonsVisible(boolean visible) {
+
         btnResume.setVisible(visible);
         btnPause.setVisible(visible);
     }
 
     @Override
     public void setMoney(String money) {
+
         lblMoney.setText(money);
     }
 
     @Override
     public void setLives(String lives) {
+
         lblLives.setText(lives);
     }
 
     @Override
     public void setWaveCount(String waveCount) {
+
         lblWaveCount.setText("WAVE: " + waveCount);
     }
 
     @Override
     public void standByState() {
+
         btnEnlist.setTouchable(Touchable.enabled);
         btnSupport.setTouchable(Touchable.enabled);
         btnWave.setTouchable(Touchable.enabled);
@@ -250,30 +271,35 @@ public class HUDView extends Group implements IHUDView {
 
     @Override
     public void supportState() {
+
         setNormalButtonsVisible(false);
         setPauseResumeButtonsVisible(false);
     }
 
     @Override
     public void enlistingState() {
+
         setNormalButtonsVisible(false);
         setPauseResumeButtonsVisible(false);
     }
 
     @Override
     public void inspectingState() {
+
         setNormalButtonsVisible(false);
         setPauseResumeButtonsVisible(false);
     }
 
     @Override
     public void quitState() {
+
         setNormalButtonsVisible(false);
         setPauseResumeButtonsVisible(false);
     }
 
     @Override
     public void optionsState() {
+
         btnEnlist.setTouchable(Touchable.disabled);
         btnSupport.setTouchable(Touchable.disabled);
         btnWave.setTouchable(Touchable.disabled);
@@ -284,6 +310,7 @@ public class HUDView extends Group implements IHUDView {
 
     @Override
     public void gameOverState() {
+
         btnEnlist.setTouchable(Touchable.disabled);
         btnSupport.setTouchable(Touchable.disabled);
         btnWave.setTouchable(Touchable.disabled);
@@ -294,6 +321,7 @@ public class HUDView extends Group implements IHUDView {
 
     @Override
     public void waveInProgressState() {
+
         btnEnlist.setTouchable(Touchable.enabled);
         btnSupport.setTouchable(Touchable.enabled);
         btnWave.setTouchable(Touchable.enabled);

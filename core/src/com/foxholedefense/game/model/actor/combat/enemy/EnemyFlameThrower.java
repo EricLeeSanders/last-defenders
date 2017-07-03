@@ -38,8 +38,12 @@ public class EnemyFlameThrower extends Enemy implements IFlame {
     private FHDAudio audio;
     private ProjectileFactory projectileFactory;
 
-    public EnemyFlameThrower(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<EnemyFlameThrower> pool, Group targetGroup, ProjectileFactory projectileFactory, FHDAudio audio) {
-        super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
+    public EnemyFlameThrower(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions,
+        CombatActorPool<EnemyFlameThrower> pool, Group targetGroup,
+        ProjectileFactory projectileFactory, FHDAudio audio) {
+
+        super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS,
+            SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
         this.body = new Circle(this.getPositionCenter(), 10);
@@ -47,12 +51,14 @@ public class EnemyFlameThrower extends Enemy implements IFlame {
 
     @Override
     public Dimension getFlameSize() {
+
         flameSize.set(this.getRange() - GUN_POS.x, this.getHeight());
         return flameSize;
     }
 
     @Override
     public void attackTarget(Targetable target) {
+
         if (target != null) {
             audio.playSound(FHDSound.FLAME_BURST);
             projectileFactory.loadFlame().initialize(this, getTargetGroup(), getFlameSize());
@@ -61,6 +67,7 @@ public class EnemyFlameThrower extends Enemy implements IFlame {
 
     @Override
     public Circle getBody() {
+
         body.setPosition(getPositionCenter().x, getPositionCenter().y);
         return body;
     }

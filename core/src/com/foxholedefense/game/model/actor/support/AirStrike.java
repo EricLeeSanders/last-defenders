@@ -35,18 +35,24 @@ public class AirStrike extends SupportActor implements IRocket {
     private ProjectileFactory projectileFactory;
     private FHDAudio audio;
 
-    public AirStrike(SupportActorPool<AirStrike> pool, Group targetGroup, ProjectileFactory projectileFactory, TextureRegion textureRegion, TextureRegion rangeTexture, FHDAudio audio) {
-        super(pool, targetGroup, textureRegion, TEXTURE_SIZE, rangeTexture, AIRSTRIKE_RADIUS, ATTACK, GUN_POS, COST);
+    public AirStrike(SupportActorPool<AirStrike> pool, Group targetGroup,
+        ProjectileFactory projectileFactory, TextureRegion textureRegion,
+        TextureRegion rangeTexture, FHDAudio audio) {
+
+        super(pool, targetGroup, textureRegion, TEXTURE_SIZE, rangeTexture, AIRSTRIKE_RADIUS,
+            ATTACK, GUN_POS, COST);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
 
     }
 
     public void addLocation(AirStrikeLocation location) {
+
         airStrikeLocations.add(location);
     }
 
     public void beginAirStrike() {
+
         Logger.info("AirStrike: Beginning Air Strike Run");
 
         setActive(true);
@@ -54,7 +60,9 @@ public class AirStrike extends SupportActor implements IRocket {
         setPositionCenter(centerPos);
         centerPos.free();
 
-        MoveToAction moveAction = Actions.moveTo(Resources.VIRTUAL_WIDTH + getWidth(), (Resources.VIRTUAL_HEIGHT / 2), AIRSTRIKE_DURATION, Interpolation.linear);
+        MoveToAction moveAction = Actions
+            .moveTo(Resources.VIRTUAL_WIDTH + getWidth(), (Resources.VIRTUAL_HEIGHT / 2),
+                AIRSTRIKE_DURATION, Interpolation.linear);
         moveAction.setAlignment(Align.center);
         addAction(moveAction);
 
@@ -67,6 +75,7 @@ public class AirStrike extends SupportActor implements IRocket {
 
     @Override
     public void act(float delta) {
+
         super.act(delta);
         if (isActive()) {
             if (getActions().size <= 0) {
@@ -76,17 +85,21 @@ public class AirStrike extends SupportActor implements IRocket {
     }
 
     private void dropBomb(AirStrikeLocation location) {
-        projectileFactory.loadRocket().initialize(this, location.getLocation(), ROCKET_SIZE, AIRSTRIKE_RADIUS);
+
+        projectileFactory.loadRocket()
+            .initialize(this, location.getLocation(), ROCKET_SIZE, AIRSTRIKE_RADIUS);
 
 
     }
 
     public boolean isReadyToBegin() {
+
         return (airStrikeLocations.size >= MAX_AIRSTRIKES);
     }
 
     @Override
     public void reset() {
+
         Logger.info("AirStrike: Resetting");
         for (AirStrikeLocation location : airStrikeLocations) {
             location.remove();

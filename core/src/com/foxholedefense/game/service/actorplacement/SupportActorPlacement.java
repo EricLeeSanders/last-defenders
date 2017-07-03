@@ -14,11 +14,13 @@ public class SupportActorPlacement {
     private SupportActorFactory supportActorFactory;
 
     public SupportActorPlacement(ActorGroups actorGroups, SupportActorFactory supportActorFactory) {
+
         this.actorGroups = actorGroups;
         this.supportActorFactory = supportActorFactory;
     }
 
     public void createSupportActor(String type) {
+
         Logger.info("SupportActorPlacement: creating supply actor: " + type);
         currentSupportActor = supportActorFactory.loadSupportActor(type);
         currentSupportActor.setPosition(0, 0);
@@ -33,6 +35,7 @@ public class SupportActorPlacement {
     }
 
     public void moveSupportActor(Vector2 clickCoords) {
+
         if (currentSupportActor != null) {
             currentSupportActor.setVisible(true);
             currentSupportActor.setShowRange(true);
@@ -41,6 +44,7 @@ public class SupportActorPlacement {
     }
 
     public void placeSupportActor() {
+
         Logger.info("SupportActorPlacement: trying to place Support Actor");
         if (currentSupportActor != null) {
             //If it is an Apache that is being placed, then we need to call it's initialize method
@@ -56,6 +60,7 @@ public class SupportActorPlacement {
 
 
     public void removeCurrentSupportActor() {
+
         Logger.info("SupportActorPlacement: removing Support Actor");
         if (isCurrentSupportActor()) {
             currentSupportActor.freeActor();
@@ -64,10 +69,12 @@ public class SupportActorPlacement {
     }
 
     public boolean isCurrentSupportActor() {
+
         return (currentSupportActor != null);
     }
 
     public SupportActor getCurrentSupportActor() {
+
         return currentSupportActor;
     }
 

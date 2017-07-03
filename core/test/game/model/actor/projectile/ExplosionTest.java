@@ -1,5 +1,12 @@
 package game.model.actor.projectile;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.helper.Damage;
@@ -9,23 +16,13 @@ import com.foxholedefense.game.model.actor.projectile.Explosion;
 import com.foxholedefense.game.service.factory.ProjectileFactory.ExplosionPool;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 /**
  * Created by Eric on 5/21/2017.
@@ -38,11 +35,13 @@ public class ExplosionTest {
 
     @Before
     public void initExplosionTest() {
+
         Gdx.app = mock(Application.class);
         PowerMockito.mockStatic(Damage.class);
     }
 
     public Explosion createExplosion() {
+
         Resources resourcesMock = TestUtil.createResourcesMock();
         FHDAudio audioMock = mock(FHDAudio.class);
 
@@ -52,6 +51,7 @@ public class ExplosionTest {
 
     @Test
     public void explosionTest1() {
+
         Enemy attacker = TestUtil.createEnemy("Tank", false);
         attacker.setPositionCenter(50, 50);
         Tower target = TestUtil.createTower("Turret", false);
@@ -62,7 +62,8 @@ public class ExplosionTest {
 
         assertEquals(target.getPositionCenter(), explosion.getPositionCenter());
         verifyStatic(times(1));
-        Damage.dealExplosionDamage(eq(attacker), eq(70.0f), eq(target.getPositionCenter()), eq(attacker.getTargetGroup().getChildren()));
+        Damage.dealExplosionDamage(eq(attacker), eq(70.0f), eq(target.getPositionCenter()),
+            eq(attacker.getTargetGroup().getChildren()));
 
     }
 
@@ -71,6 +72,7 @@ public class ExplosionTest {
      */
     @Test
     public void explosionTest2() {
+
         Enemy attacker = TestUtil.createEnemy("Tank", false);
         attacker.setPositionCenter(50, 50);
         Tower target = TestUtil.createTower("Turret", false);

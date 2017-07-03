@@ -1,5 +1,12 @@
 package game.model.actor.support;
 
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -10,19 +17,9 @@ import com.foxholedefense.game.model.actor.support.LandMine;
 import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.foxholedefense.util.Resources;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import testutil.TestUtil;
-
-
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Eric on 5/23/2017.
@@ -36,6 +33,7 @@ public class LandMineTest {
 
     @Before
     public void initLandMinTest() {
+
         Gdx.app = mock(Application.class);
     }
 
@@ -45,10 +43,12 @@ public class LandMineTest {
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(explosionMock).when(projectileFactoryMock).loadExplosion();
 
-        return new LandMine(poolMock, new Group(), projectileFactoryMock, resourcesMock.getTexture(""), resourcesMock.getTexture(""));
+        return new LandMine(poolMock, new Group(), projectileFactoryMock,
+            resourcesMock.getTexture(""), resourcesMock.getTexture(""));
     }
 
     private Enemy createEnemy(String type, float lengthToEnd, Vector2 posCenter) {
+
         Enemy enemy = TestUtil.createEnemy(type, true);
         enemy.setPositionCenter(posCenter);
         doReturn(lengthToEnd).when(enemy).getLengthToEnd();
@@ -60,6 +60,7 @@ public class LandMineTest {
 
     @Test
     public void landMinTest1() {
+
         LandMine landMine = createLandMine();
         landMine.setPositionCenter(250, 255);
         landMine.setActive(true);
@@ -75,7 +76,8 @@ public class LandMineTest {
 
         landMine.act(1f);
 
-        verify(explosionMock, times(1)).initialize(eq(landMine), isA(Float.class), eq(landMine.getPositionCenter()));
+        verify(explosionMock, times(1))
+            .initialize(eq(landMine), isA(Float.class), eq(landMine.getPositionCenter()));
         verify(poolMock, times(1)).free(landMine);
 
     }

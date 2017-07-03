@@ -26,6 +26,7 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  */
 public class OptionsView extends Group implements IOptionsView {
+
     private OptionsPresenter presenter;
     private TextButton btnClose, btnNewGame, btnMainMenu;
     private CheckBox btnShowRanges, btnSound, btnMusic;
@@ -33,12 +34,14 @@ public class OptionsView extends Group implements IOptionsView {
     private float volSliderEndPos, volSliderStartPos, speedSliderEndPos, speedSliderStartPos;
 
     public OptionsView(OptionsPresenter presenter, Resources resources) {
+
         this.presenter = presenter;
         this.setTransform(false);
         createControls(resources);
     }
 
     public void act(float delta) {
+
         super.act(delta);
         //This is a bit of a hack, but I need this here for the initial load of the screen.
         float volStartX = volSliderStartPos + volSliderEndPos * presenter.getMasterVolume();
@@ -63,7 +66,8 @@ public class OptionsView extends Group implements IOptionsView {
         container.setTransform(false);
         container.setBackground(skin.getDrawable("main-panel"));
         container.setSize(500, 360);
-        container.setPosition((Resources.VIRTUAL_WIDTH / 2) - (container.getWidth() / 2), (Resources.VIRTUAL_HEIGHT / 2) - (container.getHeight() / 2));
+        container.setPosition((Resources.VIRTUAL_WIDTH / 2) - (container.getWidth() / 2),
+            (Resources.VIRTUAL_HEIGHT / 2) - (container.getHeight() / 2));
         //table.debug();
         this.addActor(container);
 
@@ -73,8 +77,9 @@ public class OptionsView extends Group implements IOptionsView {
         container.add(mainTable);
 
         Label lblTitle = new Label("OPTIONS", skin);
-        lblTitle.setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2)
-                , container.getY() + container.getHeight() - lblTitle.getHeight());
+        lblTitle
+            .setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2),
+                container.getY() + container.getHeight() - lblTitle.getHeight());
         lblTitle.setAlignment(Align.center);
         lblTitle.setFontScale(0.7f);
         this.addActor(lblTitle);
@@ -184,9 +189,9 @@ public class OptionsView extends Group implements IOptionsView {
     }
 
     private Stack createSpeedSlider(Skin skin, Resources resources) {
+
         Stack speedStack = new Stack();
         speedStack.setTransform(false);
-
 
         Slider speedSlider = new Slider(0, 1f, 0.01f, false, skin);
         speedSlider.getStyle().knob.setMinWidth(33);
@@ -197,13 +202,13 @@ public class OptionsView extends Group implements IOptionsView {
         speedSlider.setValue(speedValue);
         speedSliderListener(speedSlider);
 
-
-        Image speedSliderFull = new Image(resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
+        Image speedSliderFull = new Image(
+            resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
         speedSliderFull.setSize(300, 22);
 
-        speedSliderBg = new Image(resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
+        speedSliderBg = new Image(
+            resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
         speedSliderBg.setSize(300, 22);
-
 
         this.speedSliderStartPos = speedSliderBg.getX() + 2;
         this.speedSliderEndPos = speedSliderBg.getX() + speedSliderBg.getWidth() - 6;
@@ -216,9 +221,9 @@ public class OptionsView extends Group implements IOptionsView {
     }
 
     private Stack createVolSlider(Skin skin, Resources resources) {
+
         Stack volumeStack = new Stack();
         volumeStack.setTransform(false);
-
 
         Slider volumeSlider = new Slider(0, 1f, 0.01f, false, skin);
         volumeSlider.getStyle().knob.setMinWidth(33);
@@ -228,13 +233,13 @@ public class OptionsView extends Group implements IOptionsView {
         volumeSlider.setValue(presenter.getMasterVolume());
         volSliderListener(volumeSlider);
 
-
-        Image volSliderFull = new Image(resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
+        Image volSliderFull = new Image(
+            resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
         volSliderFull.setSize(300, 22);
 
-        volSliderBg = new Image(resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
+        volSliderBg = new Image(
+            resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
         volSliderBg.setSize(300, 22);
-
 
         this.volSliderStartPos = volSliderBg.getX() + 2;
         this.volSliderEndPos = volSliderBg.getX() + volSliderBg.getWidth() - 6;
@@ -247,9 +252,11 @@ public class OptionsView extends Group implements IOptionsView {
     }
 
     private void setBtnCloseListener() {
+
         btnClose.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.closeOptions();
             }
@@ -258,9 +265,11 @@ public class OptionsView extends Group implements IOptionsView {
     }
 
     private void setBtnNewGameListener() {
+
         btnNewGame.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.newGame();
             }
@@ -269,9 +278,11 @@ public class OptionsView extends Group implements IOptionsView {
     }
 
     private void setBtnMainMenuListener() {
+
         btnMainMenu.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.mainMenu();
             }
@@ -280,9 +291,11 @@ public class OptionsView extends Group implements IOptionsView {
     }
 
     private void setBtnDebugListener(Button button) {
+
         button.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.debug();
             }
@@ -291,9 +304,11 @@ public class OptionsView extends Group implements IOptionsView {
     }
 
     private void setBtnShowRangesListener(Button btnShowRanges) {
+
         btnShowRanges.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.showRangesPressed();
             }
@@ -303,9 +318,11 @@ public class OptionsView extends Group implements IOptionsView {
 
 
     private void setBtnSoundListener(Button btnSound) {
+
         btnSound.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.soundPressed();
             }
@@ -313,9 +330,11 @@ public class OptionsView extends Group implements IOptionsView {
     }
 
     private void setBtnMusicListener(Button btnMusic) {
+
         btnMusic.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.musicPressed();
             }
@@ -323,21 +342,25 @@ public class OptionsView extends Group implements IOptionsView {
     }
 
     private void volSliderListener(final Slider slider) {
+
         slider.addListener(new ClickListener() {
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
+
                 super.touchDragged(event, x, y, pointer);
                 moveSlider();
             }
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchDown(event, x, y, pointer, button);
                 moveSlider();
                 return true;
             }
 
             private void moveSlider() {
+
                 float startX = volSliderStartPos + volSliderEndPos * slider.getValue();
                 presenter.volumeChanged(slider.getValue());
                 volSliderBg.setX(startX);
@@ -347,21 +370,25 @@ public class OptionsView extends Group implements IOptionsView {
     }
 
     private void speedSliderListener(final Slider slider) {
+
         slider.addListener(new ClickListener() {
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
+
                 super.touchDragged(event, x, y, pointer);
                 moveSlider();
             }
 
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchDown(event, x, y, pointer, button);
                 moveSlider();
                 return true;
             }
 
             private void moveSlider() {
+
                 float startX = speedSliderStartPos + speedSliderEndPos * slider.getValue();
                 presenter.speedChanged(slider.getValue() * Resources.MAX_GAME_SPEED);
                 speedSliderBg.setX(startX);
@@ -372,29 +399,34 @@ public class OptionsView extends Group implements IOptionsView {
 
     @Override
     public void optionsState() {
+
         this.setVisible(true);
     }
 
     @Override
     public void standByState() {
+
         this.setVisible(false);
 
     }
 
     @Override
     public void setBtnShowRangesOn(boolean showRangesOn) {
+
         btnShowRanges.setChecked(showRangesOn);
 
     }
 
     @Override
     public void setBtnSoundOn(boolean soundOn) {
+
         btnSound.setChecked(soundOn);
 
     }
 
     @Override
     public void setBtnMusicOn(boolean musicOn) {
+
         btnMusic.setChecked(musicOn);
 
     }

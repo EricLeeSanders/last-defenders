@@ -14,14 +14,14 @@ import com.foxholedefense.game.model.actor.interfaces.IRocket;
  * @author Eric
  */
 public class EnemyAI {
+
     /**
      * Finds the nearest tower relative to the enemy
      *
-     * @param enemy
-     * @param towers
      * @return Tower
      */
     public static Tower findNearestTower(Enemy enemy, SnapshotArray<Actor> towers) {
+
         if (towers.size == 0) {
             return null;
         }
@@ -32,13 +32,16 @@ public class EnemyAI {
                 Tower tower = (Tower) actor;
                 // Tower is active and not dead
                 if (!tower.isDead() && tower.isActive()) {
-                    if (CollisionDetection.shapesIntersect(tower.getBody(), enemy.getRangeShape())) {
-                        if (tower.getPositionCenter().dst(enemy.getPositionCenter()) < firstTowerDistance) {
+                    if (CollisionDetection
+                        .shapesIntersect(tower.getBody(), enemy.getRangeShape())) {
+                        if (tower.getPositionCenter().dst(enemy.getPositionCenter())
+                            < firstTowerDistance) {
                             // If the enemy is instanceof IRPG then it can
                             // attack plated towers.
                             if ((!(tower instanceof PlatedArmor)) || (enemy instanceof IRocket)) {
                                 firstTower = tower;
-                                firstTowerDistance = tower.getPositionCenter().dst(enemy.getPositionCenter());
+                                firstTowerDistance = tower.getPositionCenter()
+                                    .dst(enemy.getPositionCenter());
                             }
                         }
                     }

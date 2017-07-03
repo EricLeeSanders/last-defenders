@@ -31,14 +31,19 @@ public class LandMine extends SupportActor implements IRocket {
     private Circle body;
     private ProjectileFactory projectileFactory;
 
-    public LandMine(SupportActorPool<LandMine> pool, Group targetGroup, ProjectileFactory projectileFactory, TextureRegion textureRegion, TextureRegion rangeTexture) {
-        super(pool, targetGroup, textureRegion, TEXTURE_SIZE, rangeTexture, RANGE, ATTACK, GUN_POS, COST);
+    public LandMine(SupportActorPool<LandMine> pool, Group targetGroup,
+        ProjectileFactory projectileFactory, TextureRegion textureRegion,
+        TextureRegion rangeTexture) {
+
+        super(pool, targetGroup, textureRegion, TEXTURE_SIZE, rangeTexture, RANGE, ATTACK, GUN_POS,
+            COST);
         this.projectileFactory = projectileFactory;
         this.body = new Circle(getPositionCenter(), getWidth() / 2);
     }
 
     @Override
     public void act(float delta) {
+
         super.act(delta);
         if (isActive()) {
             for (Actor enemy : getTargetGroup().getChildren()) {
@@ -54,6 +59,7 @@ public class LandMine extends SupportActor implements IRocket {
 
     @Override
     public void draw(Batch batch, float alpha) {
+
         super.draw(batch, alpha);
         if (DebugOptions.showTextureBoundaries) {
             drawDebugBody(batch);
@@ -61,6 +67,7 @@ public class LandMine extends SupportActor implements IRocket {
     }
 
     private void drawDebugBody(Batch batch) {
+
         ShapeRenderer debugBody = Resources.getShapeRenderer();
         batch.end();
 
@@ -74,12 +81,14 @@ public class LandMine extends SupportActor implements IRocket {
     }
 
     private void explode() {
+
         Logger.info("Landmine: exploding");
         projectileFactory.loadExplosion().initialize(this, RANGE, getPositionCenter());
         freeActor();
     }
 
     private Circle getBody() {
+
         body.setPosition(getPositionCenter().x, getPositionCenter().y);
         return body;
     }

@@ -1,5 +1,10 @@
 package game.model.actor.effects.texture.animation.death;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.model.actor.effects.texture.animation.death.BloodSplatter;
@@ -7,17 +12,9 @@ import com.foxholedefense.game.model.actor.effects.texture.animation.death.Death
 import com.foxholedefense.game.service.factory.EffectFactory.DeathEffectPool;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Eric on 5/20/2017.
@@ -30,6 +27,7 @@ public class DeathEffectTest {
 
     @Before
     public void initDeathEffectTest() {
+
         Gdx.app = mock(Application.class);
     }
 

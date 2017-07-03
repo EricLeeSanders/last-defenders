@@ -23,7 +23,9 @@ public class GameOverPresenter implements GameUIStateObserver {
     private IGameOverView view;
     private FHDAudio audio;
 
-    public GameOverPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger, Player player, FHDAudio audio) {
+    public GameOverPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger,
+        Player player, FHDAudio audio) {
+
         this.player = player;
         this.screenChanger = screenChanger;
         this.uiStateManager = uiStateManager;
@@ -33,10 +35,9 @@ public class GameOverPresenter implements GameUIStateObserver {
 
     /**
      * Set the Game Over view
-     *
-     * @param view
      */
     public void setView(IGameOverView view) {
+
         this.view = view;
         stateChange(uiStateManager.getState());
     }
@@ -45,6 +46,7 @@ public class GameOverPresenter implements GameUIStateObserver {
      * Set how many waves have been completed
      */
     private void setWavesCompleted() {
+
         view.setWavesCompleted(String.valueOf(player.getWavesCompleted()));
     }
 
@@ -76,14 +78,13 @@ public class GameOverPresenter implements GameUIStateObserver {
      * Change to high scores
      */
     public void highScores() {
+
         Logger.info("Game Over Presenter: high scores");
         audio.playSound(FHDSound.SMALL_CLICK);
     }
 
     /**
      * Can only switch to New Game if the GAMEUIState == GAME_OVER
-     *
-     * @return
      */
     private boolean canSwitchToNewGame() {
 
@@ -92,8 +93,6 @@ public class GameOverPresenter implements GameUIStateObserver {
 
     /**
      * Can only switch to Main Menu if the GAMEUIState == GAME_OVER
-     *
-     * @return
      */
     private boolean canSwitchToMainMenu() {
 

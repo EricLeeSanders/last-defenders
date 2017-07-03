@@ -7,6 +7,7 @@ package com.foxholedefense.game.ui.view.interfaces;
  * @author Eric
  */
 public interface IHUDView {
+
     void standByState();
 
     void supportState();

@@ -1,5 +1,15 @@
 package game.model.actor.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -14,22 +24,9 @@ import com.foxholedefense.util.ActorUtil;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.Dimension;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Eric on 5/22/2017.
@@ -43,20 +40,25 @@ public class ApacheTest {
 
     @Before
     public void initApacheTest() {
+
         Gdx.app = mock(Application.class);
     }
 
     public Apache createApache() {
+
         Resources resourcesMock = TestUtil.createResourcesMock();
         FHDAudio audioMock = mock(FHDAudio.class);
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(bulletMock).when(projectileFactoryMock).loadBullet();
 
-        return new Apache(poolMock, new Group(), projectileFactoryMock, resourcesMock.getTexture(""), new TextureRegion[]{resourcesMock.getTexture("")}, resourcesMock.getTexture(""), audioMock);
+        return new Apache(poolMock, new Group(), projectileFactoryMock,
+            resourcesMock.getTexture(""), new TextureRegion[]{resourcesMock.getTexture("")},
+            resourcesMock.getTexture(""), audioMock);
 
     }
 
     private Enemy createEnemy(String type, float lengthToEnd, Vector2 posCenter) {
+
         Enemy enemy = TestUtil.createEnemy(type, true);
         enemy.setPositionCenter(posCenter);
         doReturn(lengthToEnd).when(enemy).getLengthToEnd();
@@ -71,6 +73,7 @@ public class ApacheTest {
      */
     @Test
     public void apacheTest1() {
+
         Vector2 destination = new Vector2(250, 250);
 
         Apache apache = createApache();
@@ -101,7 +104,9 @@ public class ApacheTest {
 
         assertTrue(apache.isReadyToAttack());
         verify(bulletMock, times(1)).initialize(eq(apache), eq(enemy2), isA(Dimension.class));
-        assertEquals(ActorUtil.calculateRotation(enemy2.getPositionCenter(), apache.getPositionCenter()), apache.getRotation(), TestUtil.DELTA);
+        assertEquals(
+            ActorUtil.calculateRotation(enemy2.getPositionCenter(), apache.getPositionCenter()),
+            apache.getRotation(), TestUtil.DELTA);
 
         apache.act(Apache.TIME_ACTIVE_LIMIT / 2);
 

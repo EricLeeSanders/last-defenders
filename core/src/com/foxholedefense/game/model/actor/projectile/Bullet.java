@@ -21,6 +21,7 @@ import com.foxholedefense.util.datastructures.Dimension;
  * @author Eric
  */
 public class Bullet extends GameActor implements Pool.Poolable {
+
     private static final float SPEED = 350f;
     private Targetable target;
     private Attacker attacker;
@@ -28,6 +29,7 @@ public class Bullet extends GameActor implements Pool.Poolable {
     private boolean targetRemoved;
 
     public Bullet(Pool<Bullet> pool, TextureRegion bulletTexture) {
+
         this.pool = pool;
         setTextureRegion(bulletTexture);
     }
@@ -36,10 +38,11 @@ public class Bullet extends GameActor implements Pool.Poolable {
      * Initializes the bullet with the following parameters
      *
      * @param attacker - The attacker
-     * @param target   - The target
-     * @param size     - The size of the bullet
+     * @param target - The target
+     * @param size - The size of the bullet
      */
     public Actor initialize(Attacker attacker, Targetable target, Dimension size) {
+
         this.target = target;
         this.attacker = attacker;
 
@@ -65,6 +68,7 @@ public class Bullet extends GameActor implements Pool.Poolable {
      */
     @Override
     public void act(float delta) {
+
         super.act(delta);
         if (!target.isActive() || target.isDead()) {
             targetRemoved = true;
@@ -79,6 +83,7 @@ public class Bullet extends GameActor implements Pool.Poolable {
 
     @Override
     public void reset() {
+
         this.clear();
         target = null;
         attacker = null;

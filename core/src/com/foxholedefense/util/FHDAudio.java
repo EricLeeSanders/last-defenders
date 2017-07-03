@@ -3,7 +3,6 @@ package com.foxholedefense.util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +12,7 @@ import java.util.Map;
  * @author Eric
  */
 public class FHDAudio {
+
     private Music music;
     private Map<FHDSound, Sound> sounds = new HashMap<>();
     private boolean musicEnabled, soundEnabled;
@@ -20,6 +20,7 @@ public class FHDAudio {
     private float volume;
 
     public FHDAudio(UserPreferences userPreferences) {
+
         this.userPreferences = userPreferences;
     }
 
@@ -27,17 +28,21 @@ public class FHDAudio {
      * Load the sounds and music
      */
     public void load() {
+
         Logger.info("FHDAudio: loading");
         music = Gdx.audio.newMusic(Gdx.files.internal(Resources.MENU_MUSIC));
         music.setLooping(true);
 
-        Sound rocketExplosion = Gdx.audio.newSound(Gdx.files.internal(Resources.ROCKET_EXPLOSION_SOUND));
+        Sound rocketExplosion = Gdx.audio
+            .newSound(Gdx.files.internal(Resources.ROCKET_EXPLOSION_SOUND));
         Sound rocketLaunch = Gdx.audio.newSound(Gdx.files.internal(Resources.ROCKET_LAUNCH_SOUND));
         Sound flameBurst = Gdx.audio.newSound(Gdx.files.internal(Resources.FLAME_SOUND));
         Sound rifleShot = Gdx.audio.newSound(Gdx.files.internal(Resources.RIFLE_SHOT_SOUND));
         Sound sniperShot = Gdx.audio.newSound(Gdx.files.internal(Resources.SNIPER_SHOT_SOUND));
-        Sound machineGunShot = Gdx.audio.newSound(Gdx.files.internal(Resources.MACHINE_GUN_SHOT_SOUND));
-        Sound vehicleExplosion = Gdx.audio.newSound(Gdx.files.internal(Resources.VEHICLE_EXPLOSION_SOUND));
+        Sound machineGunShot = Gdx.audio
+            .newSound(Gdx.files.internal(Resources.MACHINE_GUN_SHOT_SOUND));
+        Sound vehicleExplosion = Gdx.audio
+            .newSound(Gdx.files.internal(Resources.VEHICLE_EXPLOSION_SOUND));
         Sound actorPlace = Gdx.audio.newSound(Gdx.files.internal(Resources.ACTOR_PLACE_SOUND));
         Sound sell = Gdx.audio.newSound(Gdx.files.internal(Resources.SELL_SOUND));
         Sound smallClick = Gdx.audio.newSound(Gdx.files.internal(Resources.SMALL_CLICK));
@@ -74,10 +79,12 @@ public class FHDAudio {
     }
 
     public float getMasterVolume() {
+
         return volume;
     }
 
     public void setMasterVolume(float volume) {
+
         this.volume = volume;
         if (musicEnabled) {
             music.setVolume(volume);
@@ -85,12 +92,14 @@ public class FHDAudio {
     }
 
     public void saveMasterVolume() {
+
         Logger.info("Saving master volume");
         userPreferences.getPreferences().putFloat("masterVolume", volume);
         userPreferences.getPreferences().flush();
     }
 
     public void playMusic() {
+
         Logger.info("Playing Music");
         if (!music.isPlaying()) {
             music.play();
@@ -98,16 +107,19 @@ public class FHDAudio {
     }
 
     public void turnOffMusic() {
+
         Logger.info("Turning off Music");
         music.stop();
     }
 
     private void disposeMusic() {
+
         Logger.info("Disposing Music");
         music.dispose();
     }
 
     private void disposeSound() {
+
         Logger.info("Disposing Sounds");
         for (FHDSound key : sounds.keySet()) {
             Sound sound = sounds.get(key);
@@ -116,11 +128,13 @@ public class FHDAudio {
     }
 
     public void dispose() {
+
         disposeMusic();
         disposeSound();
     }
 
     public void playSound(FHDSound sound) {
+
         Logger.info("FHDAudio: playing sound: " + sound.name());
         if (!soundEnabled) {
             return;
@@ -133,18 +147,22 @@ public class FHDAudio {
     }
 
     public void changeMusicEnabled() {
+
         setMusicEnabled(!musicEnabled);
     }
 
     public void changeSoundEnabled() {
+
         setSoundEnabled(!soundEnabled);
     }
 
     public boolean isSoundEnabled() {
+
         return soundEnabled;
     }
 
     private void setSoundEnabled(boolean enabled) {
+
         Logger.info("Setting sound to " + enabled);
         soundEnabled = enabled;
         userPreferences.getPreferences().putBoolean("soundEnabled", enabled);
@@ -152,10 +170,12 @@ public class FHDAudio {
     }
 
     public boolean isMusicEnabled() {
+
         return musicEnabled;
     }
 
     private void setMusicEnabled(boolean enabled) {
+
         Logger.info("Setting music to " + enabled);
         musicEnabled = enabled;
         music.setVolume(enabled ? volume : 0);
@@ -165,7 +185,17 @@ public class FHDAudio {
     }
 
     public enum FHDSound {
-        ACTOR_PLACE, SELL, SMALL_CLICK, LARGE_CLICK, RIFLE, SNIPER, MACHINE_GUN, ROCKET_EXPLOSION, VEHICLE_EXPLOSION, ROCKET_LAUNCH, FLAME_BURST
+        ACTOR_PLACE,
+        SELL,
+        SMALL_CLICK,
+        LARGE_CLICK,
+        RIFLE,
+        SNIPER,
+        MACHINE_GUN,
+        ROCKET_EXPLOSION,
+        VEHICLE_EXPLOSION,
+        ROCKET_LAUNCH,
+        FLAME_BURST
     }
 
 }

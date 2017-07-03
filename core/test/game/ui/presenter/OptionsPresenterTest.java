@@ -1,5 +1,12 @@
 package game.ui.presenter;
 
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -11,19 +18,9 @@ import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.UserPreferences;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import testutil.TestUtil;
-
-
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Eric on 6/5/2017.
@@ -40,10 +37,12 @@ public class OptionsPresenterTest {
 
     @Before
     public void initOptionsPresenterTest() {
+
         Gdx.app = mock(Application.class);
     }
 
     private OptionsPresenter createOptionsPresenter() {
+
         Resources resources = TestUtil.createResourcesMock();
 
         doReturn(userPreferences).when(resources).getUserPreferences();

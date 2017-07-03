@@ -39,8 +39,12 @@ public class EnemyRocketLauncher extends Enemy implements IRocket {
     private FHDAudio audio;
     private ProjectileFactory projectileFactory;
 
-    public EnemyRocketLauncher(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, CombatActorPool<EnemyRocketLauncher> pool, Group targetGroup, ProjectileFactory projectileFactory, FHDAudio audio) {
-        super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS, SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
+    public EnemyRocketLauncher(TextureRegion stationaryTextureRegion,
+        TextureRegion[] animatedRegions, CombatActorPool<EnemyRocketLauncher> pool,
+        Group targetGroup, ProjectileFactory projectileFactory, FHDAudio audio) {
+
+        super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS,
+            SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
         this.body = new Circle(this.getPositionCenter(), 10);
@@ -48,14 +52,17 @@ public class EnemyRocketLauncher extends Enemy implements IRocket {
 
     @Override
     public void attackTarget(Targetable target) {
+
         if (target != null) {
             audio.playSound(FHDSound.ROCKET_LAUNCH);
-            projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
+            projectileFactory.loadRocket()
+                .initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
         }
     }
 
     @Override
     public Circle getBody() {
+
         body.setPosition(getPositionCenter().x, getPositionCenter().y);
         return body;
     }

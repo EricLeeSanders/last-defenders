@@ -21,12 +21,14 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
     private Pool<ArmorIcon> pool;
 
     public ArmorIcon(Pool<ArmorIcon> pool, TextureRegion icon) {
+
         this.pool = pool;
         this.icon = icon;
     }
 
     @Override
     public void draw(Batch batch, float alpha) {
+
         if (actor != null && actor.hasArmor()) {
             setY(actor.getPositionCenter().y + Y_OFFSET);
             // If the health bar is showing, place it to the left.
@@ -52,6 +54,7 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
     }
 
     public void setActor(CombatActor actor) {
+
         Logger.info("ArmorIcon: setting actor: " + actor.getClass().getSimpleName());
         this.actor = actor;
         this.setSize(icon.getRegionWidth(), icon.getRegionHeight());
@@ -60,6 +63,7 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
 
     @Override
     public void reset() {
+
         Logger.info("ArmorIcon: resetting");
         this.actor = null;
         this.remove();

@@ -6,7 +6,6 @@ import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
 import com.foxholedefense.game.model.actor.interfaces.Targetable;
 import com.foxholedefense.util.ActorUtil;
-
 import java.util.Map;
 
 /**
@@ -19,6 +18,7 @@ public class TowerActiveState implements CombatActorState {
     private float attackCounter;
 
     public TowerActiveState(Tower tower, StateTransitioner<TowerState> stateTransitioner) {
+
         this.tower = tower;
     }
 
@@ -29,14 +29,17 @@ public class TowerActiveState implements CombatActorState {
 
     @Override
     public void preState() {
+
         attackCounter = 100; // ready to attack
     }
 
     @Override
     public void update(float delta) {
+
         Targetable target = findTarget();
         if (target != null && !target.isDead()) {
-            tower.setRotation(ActorUtil.calculateRotation(target.getPositionCenter(), tower.getPositionCenter()));
+            tower.setRotation(
+                ActorUtil.calculateRotation(target.getPositionCenter(), tower.getPositionCenter()));
             if (canAttack()) {
                 attackCounter = 0;
                 tower.attackTarget(target);
@@ -47,6 +50,7 @@ public class TowerActiveState implements CombatActorState {
     }
 
     private boolean canAttack() {
+
         return attackCounter >= tower.getAttackSpeed();
     }
 
@@ -54,6 +58,7 @@ public class TowerActiveState implements CombatActorState {
      * Find a target based on the Target Priority
      */
     private Targetable findTarget() {
+
         return tower.getAI().findTarget(tower, tower.getTargetGroup().getChildren());
     }
 

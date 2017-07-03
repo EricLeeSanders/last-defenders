@@ -18,7 +18,6 @@ import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.datastructures.pool.UtilPool;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,9 +38,9 @@ public class SupportPresenter implements GameUIStateObserver {
     private MessageDisplayer messageDisplayer;
     private Map<String, Integer> supportCosts = new HashMap<>();
 
-    public SupportPresenter(GameUIStateManager uiStateManager, Player player, FHDAudio audio
-            , SupportActorPlacement supportActorPlacement, AirStrikePlacement airStrikePlacement, SupplyDropPlacement supplyDropPlacement
-            , MessageDisplayer messageDisplayer) {
+    public SupportPresenter(GameUIStateManager uiStateManager, Player player, FHDAudio audio,
+        SupportActorPlacement supportActorPlacement, AirStrikePlacement airStrikePlacement,
+        SupplyDropPlacement supplyDropPlacement, MessageDisplayer messageDisplayer) {
 
         this.uiStateManager = uiStateManager;
         uiStateManager.attach(this);
@@ -62,8 +61,6 @@ public class SupportPresenter implements GameUIStateObserver {
 
     /**
      * Set the view for enlisting
-     *
-     * @param view
      */
     public void setView(ISupportView view) {
 
@@ -83,7 +80,8 @@ public class SupportPresenter implements GameUIStateObserver {
             uiStateManager.setState(GameUIState.PLACING_SUPPLYDROP);
             Logger.info("Support Presenter: supply drop created");
         } else {
-            Logger.info("Support Presenter: cannot afford supply drop player: " + getPlayerMoney() + " cost: " + SupplyDropCrate.COST);
+            Logger.info("Support Presenter: cannot afford supply drop player: " + getPlayerMoney()
+                + " cost: " + SupplyDropCrate.COST);
             messageDisplayer.displayMessage("You cannot afford a supply drop!");
         }
 
@@ -104,16 +102,15 @@ public class SupportPresenter implements GameUIStateObserver {
 
     /**
      * Determine if a supply drop can be moved
-     *
-     * @return
      */
     private boolean canMoveSupplyDrop() {
 
         return uiStateManager.getState().equals(GameUIState.PLACING_SUPPLYDROP)
-                && supplyDropPlacement.isCurrentSupplyDropCrate();
+            && supplyDropPlacement.isCurrentSupplyDropCrate();
     }
 
     private void placeSupplyDrop() {
+
         Logger.info("Support Presenter: place supply drop");
         if (canPlaceSupplyDrop()) {
             int cost = SupplyDropCrate.COST;
@@ -126,7 +123,7 @@ public class SupportPresenter implements GameUIStateObserver {
     private boolean canPlaceSupplyDrop() {
 
         return uiStateManager.getState().equals(GameUIState.PLACING_SUPPLYDROP)
-                && supplyDropPlacement.isCurrentSupplyDropCrate();
+            && supplyDropPlacement.isCurrentSupplyDropCrate();
     }
 
     /**
@@ -141,7 +138,9 @@ public class SupportPresenter implements GameUIStateObserver {
             uiStateManager.setState(GameUIState.PLACING_AIRSTRIKE);
             Logger.info("Support Presenter: air strike created");
         } else {
-            Logger.info("Support Presenter: cannot afford airstrike player: " + getPlayerMoney() + " cost: " + SupplyDropCrate.COST);
+            Logger.info(
+                "Support Presenter: cannot afford airstrike player: " + getPlayerMoney() + " cost: "
+                    + SupplyDropCrate.COST);
             messageDisplayer.displayMessage("You cannot afford an airstrike!");
         }
     }
@@ -163,14 +162,12 @@ public class SupportPresenter implements GameUIStateObserver {
 
     /**
      * Determines if an air strike location can be placed
-     *
-     * @return
      */
     private boolean canPlaceAirStrikeLocation() {
 
         return uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)
-                && airStrikePlacement.isCurrentAirStrike()
-                && !airStrikePlacement.isReadyToBegin();
+            && airStrikePlacement.isCurrentAirStrike()
+            && !airStrikePlacement.isReadyToBegin();
     }
 
     private void finishAirStrikePlacement() {
@@ -187,8 +184,8 @@ public class SupportPresenter implements GameUIStateObserver {
     private boolean canFinishAirStrikePlacement() {
 
         return uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)
-                && airStrikePlacement.isCurrentAirStrike()
-                && airStrikePlacement.isReadyToBegin();
+            && airStrikePlacement.isCurrentAirStrike()
+            && airStrikePlacement.isReadyToBegin();
     }
 
     /**
@@ -204,15 +201,14 @@ public class SupportPresenter implements GameUIStateObserver {
             uiStateManager.setState(GameUIState.PLACING_SUPPORT);
             Logger.info("Support Presenter: support actor created");
         } else {
-            Logger.info("Support Presenter: cannot afford " + type + " player: " + getPlayerMoney() + " cost: " + cost);
+            Logger.info("Support Presenter: cannot afford " + type + " player: " + getPlayerMoney()
+                + " cost: " + cost);
             messageDisplayer.displayMessage("You cannot afford a " + type + "!");
         }
     }
 
     /**
      * Move a support actor
-     *
-     * @param location
      */
     public void moveSupportActor(Vector2 location) {
 
@@ -225,20 +221,16 @@ public class SupportPresenter implements GameUIStateObserver {
 
     /**
      * Determine if a support actor can be moved
-     *
-     * @return
      */
     private boolean canMoveSupportActor() {
 
         return uiStateManager.getState().equals(GameUIState.PLACING_SUPPORT)
-                && supportActorPlacement.isCurrentSupportActor();
+            && supportActorPlacement.isCurrentSupportActor();
 
     }
 
     /**
      * Place a support actor
-     *
-     * @return
      */
     private void placeSupportActor() {
 
@@ -256,13 +248,14 @@ public class SupportPresenter implements GameUIStateObserver {
     private boolean canPlaceSupportActor() {
 
         return uiStateManager.getState().equals(GameUIState.PLACING_SUPPORT)
-                && supportActorPlacement.isCurrentSupportActor();
+            && supportActorPlacement.isCurrentSupportActor();
     }
 
     /**
      * Try to place actor
      */
     public void placeActor() {
+
         Logger.info("Support Presenter: placing support actor");
         audio.playSound(FHDSound.SMALL_CLICK);
         if (uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)) {
@@ -278,6 +271,7 @@ public class SupportPresenter implements GameUIStateObserver {
      * Cancel Support
      */
     private void cancelSupport() {
+
         Logger.info("Support Presenter: canceling support");
         supportActorPlacement.removeCurrentSupportActor();
         airStrikePlacement.removeCurrentAirStrike();
@@ -285,12 +279,14 @@ public class SupportPresenter implements GameUIStateObserver {
     }
 
     public void cancel() {
+
         Logger.info("Support Presenter: cancel");
         uiStateManager.setStateReturn();
         cancelSupport();
     }
 
     public int getPlayerMoney() {
+
         return player.getMoney();
     }
 
@@ -301,12 +297,15 @@ public class SupportPresenter implements GameUIStateObserver {
      */
     public void screenTouch(Vector2 coords, String touchType) {
 
-        if (supportActorPlacement.isCurrentSupportActor() && uiStateManager.getState().equals(GameUIState.PLACING_SUPPORT)) {
+        if (supportActorPlacement.isCurrentSupportActor() && uiStateManager.getState()
+            .equals(GameUIState.PLACING_SUPPORT)) {
             moveSupportActor(coords);
-        } else if (airStrikePlacement.isCurrentAirStrike() && uiStateManager.getState().equals(GameUIState.PLACING_AIRSTRIKE)
-                && touchType.equals("TouchDown")) {
+        } else if (airStrikePlacement.isCurrentAirStrike() && uiStateManager.getState()
+            .equals(GameUIState.PLACING_AIRSTRIKE)
+            && touchType.equals("TouchDown")) {
             placeAirStrikeLocation(coords);
-        } else if (supplyDropPlacement.isCurrentSupplyDropCrate() && uiStateManager.getState().equals(GameUIState.PLACING_SUPPLYDROP)) {
+        } else if (supplyDropPlacement.isCurrentSupplyDropCrate() && uiStateManager.getState()
+            .equals(GameUIState.PLACING_SUPPLYDROP)) {
             moveSupplyDrop(coords);
         }
     }
@@ -318,19 +317,17 @@ public class SupportPresenter implements GameUIStateObserver {
      * @return boolean - if the tower can be purchased.
      */
     public boolean canAffordSupport(int supportCost) {
+
         return (supportCost <= player.getMoney());
     }
 
     /**
      * Determines if support actors can be created
-     *
-     * @param supportCost
-     * @return
      */
     private boolean canCreateSupport(int supportCost) {
 
         return uiStateManager.getState().equals(GameUIState.SUPPORT)
-                && canAffordSupport(supportCost);
+            && canAffordSupport(supportCost);
 
     }
 

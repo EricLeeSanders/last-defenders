@@ -5,6 +5,7 @@ package com.foxholedefense.game.ui.view.interfaces;
  */
 
 public interface IDebugView {
+
     void debugState();
 
     void standByState();

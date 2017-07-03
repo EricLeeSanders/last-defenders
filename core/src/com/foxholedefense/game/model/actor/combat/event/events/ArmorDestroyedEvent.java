@@ -15,12 +15,14 @@ public class ArmorDestroyedEvent implements CombatActorEvent {
     private final EffectFactory effectFactory;
 
     public ArmorDestroyedEvent(CombatActor combatActor, EffectFactory effectFactory) {
+
         this.combatActor = combatActor;
         this.effectFactory = effectFactory;
     }
 
     @Override
     public void beginEvent() {
+
         effectFactory.loadLabelEffect(ArmorDestroyedEffect.class).initialize(combatActor);
     }
 }

@@ -27,7 +27,9 @@ public class ArmorDestroyedEffect extends LabelEffect {
     private CombatActor actor = null;
     private Animation<TextureRegion> animation;
 
-    public ArmorDestroyedEffect(Array<AtlasRegion> regions, LabelEffectPool<ArmorDestroyedEffect> pool, Skin skin) {
+    public ArmorDestroyedEffect(Array<AtlasRegion> regions,
+        LabelEffectPool<ArmorDestroyedEffect> pool, Skin skin) {
+
         super(pool, DURATION, skin);
         animation = new Animation<TextureRegion>(DURATION, regions);
         animation.setPlayMode(Animation.PlayMode.NORMAL);
@@ -39,20 +41,22 @@ public class ArmorDestroyedEffect extends LabelEffect {
     }
 
     public Actor initialize(CombatActor actor) {
+
         this.actor = actor;
         setX(ActorUtil.calcBotLeftPointFromCenter(actor.getPositionCenter().x, getWidth()));
         setY(ActorUtil.calcBotLeftPointFromCenter(actor.getPositionCenter().y, getHeight()));
 
         addAction(
-                Actions.parallel(
-                        Actions.moveTo(getX(), getY() + Y_END_OFFSET, DURATION),
-                        Actions.fadeOut(DURATION)));
+            Actions.parallel(
+                Actions.moveTo(getX(), getY() + Y_END_OFFSET, DURATION),
+                Actions.fadeOut(DURATION)));
 
         return this;
     }
 
     @Override
     public void draw(Batch batch, float alpha) {
+
         super.draw(batch, alpha);
         TextureRegion region = animation.getKeyFrame(stateTime, false);
 
@@ -71,6 +75,7 @@ public class ArmorDestroyedEffect extends LabelEffect {
 
     @Override
     public void act(float delta) {
+
         if (actor == null || actor.isDead() || !actor.isActive()) {
             free();
             return;
@@ -80,6 +85,7 @@ public class ArmorDestroyedEffect extends LabelEffect {
 
     @Override
     public void reset() {
+
         super.reset();
         this.actor = null;
         getColor().a = 1;

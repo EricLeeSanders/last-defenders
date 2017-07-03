@@ -9,5 +9,6 @@ import com.foxholedefense.util.datastructures.Dimension;
  * @author Eric
  */
 public interface IFlame {
+
     Dimension getFlameSize();
 }

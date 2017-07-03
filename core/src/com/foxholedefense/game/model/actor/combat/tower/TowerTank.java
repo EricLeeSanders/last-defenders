@@ -57,8 +57,13 @@ public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatabl
     private ProjectileFactory projectileFactory;
     private FHDAudio audio;
 
-    public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion, CombatActorPool<TowerTank> pool, Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
-        super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion, collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST, RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
+    public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion,
+        CombatActorPool<TowerTank> pool, Group targetGroup, TextureRegion rangeRegion,
+        TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, FHDAudio audio) {
+
+        super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion,
+            collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST,
+            RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
         this.bodyRegion = bodyRegion;
         this.turretRegion = turretRegion;
         this.projectileFactory = projectileFactory;
@@ -81,12 +86,16 @@ public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatabl
             drawRange(batch);
         }
 
-        float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
-        float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
+        float x = ActorUtil
+            .calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
+        float y = ActorUtil
+            .calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
         // draw body
-        batch.draw(bodyRegion, x, y, TEXTURE_SIZE_BODY.getWidth() / 2, TEXTURE_SIZE_BODY.getHeight() / 2, TEXTURE_SIZE_BODY.getWidth(), TEXTURE_SIZE_BODY.getHeight()
-                , 1, 1, bodyRotation);
-        batch.draw(turretRegion, getX(), getY(), getOriginX(), getOriginY(), TEXTURE_SIZE_TURRET.getWidth(), TEXTURE_SIZE_TURRET.getHeight(), 1, 1, getRotation());
+        batch.draw(bodyRegion, x, y, TEXTURE_SIZE_BODY.getWidth() / 2,
+            TEXTURE_SIZE_BODY.getHeight() / 2, TEXTURE_SIZE_BODY.getWidth(),
+            TEXTURE_SIZE_BODY.getHeight(), 1, 1, bodyRotation);
+        batch.draw(turretRegion, getX(), getY(), getOriginX(), getOriginY(),
+            TEXTURE_SIZE_TURRET.getWidth(), TEXTURE_SIZE_TURRET.getHeight(), 1, 1, getRotation());
 
         if (DebugOptions.showTextureBoundaries) {
             drawDebugBody(batch);
@@ -94,6 +103,7 @@ public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatabl
     }
 
     private void drawDebugBody(Batch batch) {
+
         batch.end();
 
         ShapeRenderer bodyOutline = Resources.getShapeRenderer();
@@ -113,10 +123,13 @@ public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatabl
      */
     @Override
     public Polygon getBody() {
+
         body.setOrigin(TEXTURE_SIZE_BODY.getWidth() / 2, TEXTURE_SIZE_BODY.getHeight() / 2);
         body.setRotation(bodyRotation);
-        float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
-        float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
+        float x = ActorUtil
+            .calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
+        float y = ActorUtil
+            .calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
         body.setPosition(x, y);
 
         return body;
@@ -124,20 +137,24 @@ public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatabl
 
     @Override
     public void reset() {
+
         super.reset();
         bodyRotation = 0;
     }
 
     @Override
     public void attackTarget(Targetable target) {
+
         if (target != null) {
             audio.playSound(FHDSound.ROCKET_LAUNCH);
-            projectileFactory.loadRocket().initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
+            projectileFactory.loadRocket()
+                .initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
         }
     }
 
     @Override
     public String getName() {
+
         return "Tank";
     }
 

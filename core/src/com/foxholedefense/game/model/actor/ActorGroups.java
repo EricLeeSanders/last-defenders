@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
  * @author Eric
  */
 public class ActorGroups {
+
     private final Group projectileGroup = new Group();
     private final Group enemyGroup = new Group();
     private final Group towerGroup = new Group();
@@ -31,34 +32,42 @@ public class ActorGroups {
     }
 
     public Group getProjectileGroup() {
+
         return projectileGroup;
     }
 
     public Group getTowerGroup() {
+
         return towerGroup;
     }
 
     public Group getEnemyGroup() {
+
         return enemyGroup;
     }
 
     public Group getHealthGroup() {
+
         return healthBarGroup;
     }
 
     public Group getSupportGroup() {
+
         return supportGroup;
     }
 
     public Group getLandmineGroup() {
+
         return landmineGroup;
     }
 
     public Group getDeathEffectGroup() {
+
         return deathEffectGroup;
     }
 
     public Group getEffectGroup() {
+
         return effectGroup;
     }
 

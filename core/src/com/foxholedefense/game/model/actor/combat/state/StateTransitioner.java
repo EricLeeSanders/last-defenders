@@ -7,6 +7,7 @@ import java.util.Map;
  */
 
 public interface StateTransitioner<E> {
+
     void transition(E state);
 
     void transition(E state, Map<String, Object> parameters);

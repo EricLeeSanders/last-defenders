@@ -11,6 +11,7 @@ import com.foxholedefense.game.service.factory.CombatActorFactory;
  */
 
 abstract class AbstractWaveLoader implements WaveLoader {
+
     private CombatActorFactory combatActorFactory;
     private Map map;
 

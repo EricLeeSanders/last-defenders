@@ -16,10 +16,13 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  */
 public class LevelSelectScreen extends AbstractScreen {
+
     private LevelSelectStage stage;
     private ScreenChanger screenChanger;
 
-    public LevelSelectScreen(ScreenChanger screenChanger, GameStateManager gameStateManager, Resources resources, FHDAudio audio) {
+    public LevelSelectScreen(ScreenChanger screenChanger, GameStateManager gameStateManager,
+        Resources resources, FHDAudio audio) {
+
         super(gameStateManager);
         this.screenChanger = screenChanger;
         this.stage = new LevelSelectStage(screenChanger, resources, audio, getViewport());
@@ -28,6 +31,7 @@ public class LevelSelectScreen extends AbstractScreen {
     }
 
     private void createBackListener() {
+
         InputProcessor backProcessor = new InputAdapter() {
             @Override
             public boolean keyDown(int keycode) {
@@ -44,24 +48,28 @@ public class LevelSelectScreen extends AbstractScreen {
 
     @Override
     public void resize(int width, int height) {
+
         stage.getViewport().setScreenSize(width, height); // update the size of Viewport
         super.resize(width, height);
     }
 
     @Override
     public void show() {
+
         Logger.info("Level select screen: show");
         super.show();
     }
 
     @Override
     public void renderElements(float delta) {
+
         stage.act(delta);
         stage.draw();
     }
 
     @Override
     public void dispose() {
+
         Logger.info("Level Select Screen Dispose");
         super.dispose();
         stage.dispose();

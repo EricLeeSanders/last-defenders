@@ -47,6 +47,7 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  */
 public class GameUIStage extends Stage implements GameUIStateObserver {
+
     private Player player;
     private GameUIStateManager uiStateManager;
     private LevelStateManager levelStateManager;
@@ -58,11 +59,10 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
     private com.foxholedefense.game.ui.view.MessageDisplayer messageDisplayer;
     private Array<Updatable> updatablePresenters = new Array<>();
 
-    public GameUIStage(Player player, Group towerGroup
-            , GameUIStateManager uiStateManager, LevelStateManager levelStateManager
-            , GameStateManager gameStateManager, ScreenChanger screenChanger
-            , InputMultiplexer imp, Viewport viewport, Resources resources
-            , FHDAudio audio, GameStage gameStage, SpriteBatch spriteBatch) {
+    public GameUIStage(Player player, Group towerGroup, GameUIStateManager uiStateManager,
+        LevelStateManager levelStateManager, GameStateManager gameStateManager,
+        ScreenChanger screenChanger, InputMultiplexer imp, Viewport viewport, Resources resources,
+        FHDAudio audio, GameStage gameStage, SpriteBatch spriteBatch) {
 
         super(viewport, spriteBatch);
         this.imp = imp;
@@ -83,49 +83,57 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
      * Create and initialize the views and presenters of the Game UI
      */
     private void createUI(Resources resources, FHDAudio audio, GameStage gameStage) {
+
         Logger.info("GameUIStage: creating ui");
         Skin skin = resources.getSkin();
 
-        HUDPresenter hudPresenter = new HUDPresenter(uiStateManager, levelStateManager, gameStateManager, player, audio);
+        HUDPresenter hudPresenter = new HUDPresenter(uiStateManager, levelStateManager,
+            gameStateManager, player, audio);
         HUDView hudView = new HUDView(hudPresenter, skin, resources);
         hudPresenter.setView(hudView);
 
         messageDisplayer = new com.foxholedefense.game.ui.view.MessageDisplayer(skin);
 
-        EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio, gameStage.getTowerPlacement(), messageDisplayer);
+        EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio,
+            gameStage.getTowerPlacement(), messageDisplayer);
         EnlistView enlistView = new EnlistView(enlistPresenter, skin);
         enlistPresenter.setView(enlistView);
 
-        SupportPresenter supportPresenter = new SupportPresenter(uiStateManager, player, audio
-                , gameStage.getSupportActorPlacement(), gameStage.getAirStrikePlacement(), gameStage.getSupplyDropPlacement()
-                , messageDisplayer);
+        SupportPresenter supportPresenter = new SupportPresenter(uiStateManager, player, audio,
+            gameStage.getSupportActorPlacement(), gameStage.getAirStrikePlacement(),
+            gameStage.getSupplyDropPlacement(), messageDisplayer);
         SupportView supportView = new SupportView(supportPresenter, skin);
         supportPresenter.setView(supportView);
 
-        InspectPresenter inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager, player, towerGroup, audio, messageDisplayer);
+        InspectPresenter inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager,
+            player, towerGroup, audio, messageDisplayer);
         InspectView inspectView = new InspectView(inspectPresenter, skin);
         inspectPresenter.setView(inspectView);
 
-        OptionsPresenter optionsPresenter = new OptionsPresenter(uiStateManager, screenChanger, resources, audio);
+        OptionsPresenter optionsPresenter = new OptionsPresenter(uiStateManager, screenChanger,
+            resources, audio);
         OptionsView optionsView = new OptionsView(optionsPresenter, resources);
         optionsPresenter.setView(optionsView);
 
-        GameOverPresenter gameOverPresenter = new GameOverPresenter(uiStateManager, screenChanger, player, audio);
+        GameOverPresenter gameOverPresenter = new GameOverPresenter(uiStateManager, screenChanger,
+            player, audio);
         GameOverView gameOverView = new GameOverView(gameOverPresenter, skin);
         gameOverPresenter.setView(gameOverView);
 
-        LevelCompletedPresenter levelCompletedPresenter = new LevelCompletedPresenter(uiStateManager, screenChanger, audio);
-        LevelCompletedView levelCompletedView = new LevelCompletedView(levelCompletedPresenter, skin);
+        LevelCompletedPresenter levelCompletedPresenter = new LevelCompletedPresenter(
+            uiStateManager, screenChanger, audio);
+        LevelCompletedView levelCompletedView = new LevelCompletedView(levelCompletedPresenter,
+            skin);
         levelCompletedPresenter.setView(levelCompletedView);
 
         DebugPresenter debugPresenter = new DebugPresenter(uiStateManager, gameStateManager);
         DebugView debugView = new DebugView(debugPresenter, resources.getSkin());
         debugPresenter.setView(debugView);
 
-        PausePresenter pausePresenter = new PausePresenter(uiStateManager, gameStateManager, screenChanger, audio);
+        PausePresenter pausePresenter = new PausePresenter(uiStateManager, gameStateManager,
+            screenChanger, audio);
         PauseView pauseView = new PauseView(pausePresenter, resources.getSkin());
         pausePresenter.setView(pauseView);
-
 
         this.addActor(hudView);
         this.addActor(enlistView);
@@ -150,6 +158,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 
     @Override
     public void act(float delta) {
+
         super.act(delta);
         for (Updatable presenter : updatablePresenters) {
             presenter.update(delta);
@@ -158,10 +167,9 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 
     /**
      * Show/Hide tower ranges for all towers
-     *
-     * @param showRanges
      */
     private void showTowerRanges(boolean showRanges) {
+
         Logger.info("GameUIStage: showTowerRanges: " + showRanges);
         for (Actor tower : towerGroup.getChildren()) {
             if (tower instanceof Tower) {
@@ -172,6 +180,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 
     @Override
     public void stateChange(GameUIState state) {
+
         Logger.info("GameUIStage: changing ui state: " + state.name());
 
         switch (state) {
@@ -182,7 +191,8 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
                 showTowerRanges(true);
                 break;
             default:
-                showTowerRanges(resources.getUserPreferences().getPreferences().getBoolean("showRanges", false));
+                showTowerRanges(resources.getUserPreferences().getPreferences()
+                    .getBoolean("showRanges", false));
                 break;
         }
 
@@ -190,6 +200,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 
 
     public MessageDisplayer getMessageDisplayer() {
+
         return messageDisplayer;
     }
 

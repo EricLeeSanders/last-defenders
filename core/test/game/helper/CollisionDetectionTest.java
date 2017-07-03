@@ -1,5 +1,10 @@
 package game.helper;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
@@ -10,21 +15,13 @@ import com.badlogic.gdx.utils.SnapshotArray;
 import com.foxholedefense.game.helper.CollisionDetection;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.util.Logger;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by Eric on 5/17/2017.
@@ -36,11 +33,13 @@ public class CollisionDetectionTest {
 
     @Before
     public void initCollisionDetectionTest() {
+
         PowerMockito.mockStatic(Logger.class);
     }
 
     @Test
     public void collisionWithPathWithCircleBodyTest1() {
+
         Tower tower = TestUtil.createTower("FlameThrower", false);
         Rectangle rect1 = new Rectangle(10, 10, 20, 20);
         Rectangle rect2 = new Rectangle(35, 15, 15, 20);
@@ -58,6 +57,7 @@ public class CollisionDetectionTest {
 
     @Test
     public void collisionWithPathWithCircleBodyTest2() {
+
         Tower tower = TestUtil.createTower("FlameThrower", false);
         Rectangle rect1 = new Rectangle(10, 10, 12, 12);
 
@@ -74,6 +74,7 @@ public class CollisionDetectionTest {
 
     @Test
     public void collisionWithPathWithPolygonBodyTest1() {
+
         Tower tower = TestUtil.createTower("Tank", false);
         Rectangle rect1 = new Rectangle(10, 10, 20, 20);
         Rectangle rect2 = new Rectangle(30, 30, 10, 10);
@@ -90,6 +91,7 @@ public class CollisionDetectionTest {
 
     @Test
     public void collisionWithPathWithPolygonBodyTest2() {
+
         Tower tower = TestUtil.createTower("Tank", false);
         Rectangle rect1 = new Rectangle(10, 10, 20, 20);
 
@@ -105,6 +107,7 @@ public class CollisionDetectionTest {
 
     @Test
     public void collisionWithActorsWithCircleBodyTest1() {
+
         Tower tower = TestUtil.createTower("Sniper", false);
 
         Tower tower1 = TestUtil.createTower("MachineGun", false);
@@ -121,13 +124,13 @@ public class CollisionDetectionTest {
 
         tower.setPositionCenter(75, 75);
 
-
         assertTrue(CollisionDetection.collisionWithActors(otherTowers, tower));
 
     }
 
     @Test
     public void collisionWithActorsWithCircleBodyTest2() {
+
         Tower tower = TestUtil.createTower("Sniper", false);
 
         Tower tower1 = TestUtil.createTower("MachineGun", false);
@@ -151,6 +154,7 @@ public class CollisionDetectionTest {
 
     @Test
     public void collisionWithActorsWithPolygonBodyTest1() {
+
         Tower tower = TestUtil.createTower("Tank", false);
 
         Tower tower1 = TestUtil.createTower("MachineGun", false);
@@ -174,6 +178,7 @@ public class CollisionDetectionTest {
 
     @Test
     public void collisionWithActorsWithPolygonBodyTest2() {
+
         Tower tower = TestUtil.createTower("Tank", false);
 
         Tower tower1 = TestUtil.createTower("MachineGun", false);
@@ -197,6 +202,7 @@ public class CollisionDetectionTest {
 
     @Test
     public void shapesIntersectTest1() {
+
         Circle circle1 = new Circle(10, 10, 10);
         Circle circle2 = new Circle(20, 20, 20);
         Polygon poly1 = new Polygon(new float[]{0, 0, 0, 5, 10, 5, 10, 0});
@@ -211,6 +217,7 @@ public class CollisionDetectionTest {
 
     @Test
     public void shapesIntersectTest2() {
+
         Circle circle1 = new Circle(10, 10, 5);
         Circle circle2 = new Circle(105, 105, 10);
         Polygon poly1 = new Polygon(new float[]{0, 0, 0, 5, 10, 5, 10, 0});
@@ -234,7 +241,6 @@ public class CollisionDetectionTest {
 
         SnapshotArray<Actor> towers = new SnapshotArray<>();
         towers.addAll(tower1, tower2);
-
 
         assertNotNull(CollisionDetection.towerHit(towers, new Vector2(20, 20)));
         assertNotNull(CollisionDetection.towerHit(towers, new Vector2(250, 75)));

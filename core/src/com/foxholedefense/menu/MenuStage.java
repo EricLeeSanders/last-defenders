@@ -17,7 +17,9 @@ import com.foxholedefense.util.Resources;
  */
 class MenuStage extends Stage {
 
-    public MenuStage(ScreenChanger screenChanger, Resources resources, FHDAudio audio, Viewport viewport) {
+    public MenuStage(ScreenChanger screenChanger, Resources resources, FHDAudio audio,
+        Viewport viewport) {
+
         super(viewport);
         resources.loadAsset(Resources.MENU_ATLAS, TextureAtlas.class);
         MenuPresenter presenter = new MenuPresenter(screenChanger, audio);
@@ -29,6 +31,7 @@ class MenuStage extends Stage {
 
     @Override
     public void dispose() {
+
         Logger.info("Menu Stage: Dispose");
     }
 

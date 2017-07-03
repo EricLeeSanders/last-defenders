@@ -1,5 +1,12 @@
 package game.ui.presenter;
 
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.model.Player;
@@ -13,17 +20,8 @@ import com.foxholedefense.game.ui.view.interfaces.IHUDView;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
 import com.foxholedefense.util.FHDAudio;
-
 import org.junit.Before;
 import org.junit.Test;
-
-
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Eric on 5/30/2017.
@@ -38,6 +36,7 @@ public class HUDPresenterTest {
 
     @Before
     public void initHUDPresenterTest() {
+
         Gdx.app = mock(Application.class);
     }
 
@@ -45,7 +44,8 @@ public class HUDPresenterTest {
 
         FHDAudio audioMock = mock(FHDAudio.class);
 
-        return new HUDPresenter(gameUIStateManagerMock, levelStateManagerMock, gameStateManagerMock, playerMock, audioMock);
+        return new HUDPresenter(gameUIStateManagerMock, levelStateManagerMock, gameStateManagerMock,
+            playerMock, audioMock);
     }
 
     @Test

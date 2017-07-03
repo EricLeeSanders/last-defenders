@@ -8,7 +8,6 @@ import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.SpawningEnemy;
 import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.util.Logger;
-
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -23,22 +22,23 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
     private java.util.Map<String, Integer> enemyMap = new HashMap<>();
 
     public DynamicWaveLoader(CombatActorFactory combatActorFactory, Map map) {
+
         super(combatActorFactory, map);
     }
 
     /**
      * Init the Wave Loader with a a Queue of initial spawning enemies to start with
-     *
-     * @param initialSpawningEnemies
      */
     public void initDynamicWaveLoader(Queue<SpawningEnemy> initialSpawningEnemies) {
+
         for (SpawningEnemy spawningEnemy : initialSpawningEnemies) {
             incrementEnemyMapCount(convertEnemyClassToStringType(
-                    spawningEnemy.getEnemy().getClass()), 1);
+                spawningEnemy.getEnemy().getClass()), 1);
         }
     }
 
     private String convertEnemyClassToStringType(Class<? extends Enemy> enemyClass) {
+
         String type = enemyClass.getSimpleName();
         // Remove the enemy from the string (i.e. EnemyRifle -> Rifle)
         type = type.replaceFirst("Enemy", "");
@@ -103,6 +103,7 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
     }
 
     private void shuffle(SnapshotArray<SpawningEnemy> enemies) {
+
         int n = enemies.size;
         for (int i = 0; i < n; i++) {
             int rand = i + (int) (Math.random() * (n - i)); // between i and n-1
@@ -111,6 +112,7 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
     }
 
     private void swap(SnapshotArray<SpawningEnemy> enemies, int i, int j) {
+
         enemies.swap(i, j);
     }
 
@@ -159,6 +161,7 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
      * Add a Tank every sixth wave
      */
     private void everySixthWave() {
+
         incrementEnemyMapCount("Tank", 1);
     }
 

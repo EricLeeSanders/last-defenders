@@ -1,5 +1,9 @@
 package game.model.actor.ai;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -7,16 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.foxholedefense.game.model.actor.ai.EnemyAI;
 import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.combat.tower.Tower;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 
 
 /**
@@ -26,10 +23,12 @@ public class EnemyAITest {
 
     @Before
     public void initEnemyAITest() {
+
         Gdx.app = mock(Application.class);
     }
 
     private void createTowerGroup(Group enemyTargetGroup) {
+
         Tower tower1 = createTower("tower1", "Rifle", new Vector2(10, 10), false, false, true);
         Tower tower2 = createTower("tower2", "FlameThrower", new Vector2(2, 2), false, true, true);
         Tower tower3 = createTower("tower3", "MachineGun", new Vector2(5, 5), false, false, true);
@@ -53,7 +52,9 @@ public class EnemyAITest {
         enemyTargetGroup.addActor(tower10);
     }
 
-    private Tower createTower(String name, String type, Vector2 centerPos, boolean outOfRange, boolean dead, boolean active) {
+    private Tower createTower(String name, String type, Vector2 centerPos, boolean outOfRange,
+        boolean dead, boolean active) {
+
         Tower tower = TestUtil.createTower(type, true);
         if (outOfRange) {
             tower.setPositionCenter(300, 300);
@@ -74,6 +75,7 @@ public class EnemyAITest {
      */
     @Test
     public void testEnemyFindNearestSkipTank() {
+
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         enemy.setPositionCenter(new Vector2(0, 0));
         Group enemyTargetGroup = enemy.getTargetGroup();
@@ -91,6 +93,7 @@ public class EnemyAITest {
      */
     @Test
     public void testEnemyFindNearestAttackTank() {
+
         Enemy enemy = TestUtil.createEnemy("RocketLauncher", false);
         enemy.setPositionCenter(new Vector2(0, 0));
         Group enemyTargetGroup = enemy.getTargetGroup();

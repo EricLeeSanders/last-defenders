@@ -9,7 +9,6 @@ import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager.
 import com.foxholedefense.game.model.actor.combat.tower.state.states.TowerActiveState;
 import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.util.Logger;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +24,7 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
     private TowerState currentState;
 
     public TowerStateManager(Tower tower, EffectFactory effectFactory) {
+
         this.tower = tower;
         this.effectFactory = effectFactory;
         initStateObjects();
@@ -33,35 +33,43 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
 
     @Override
     public void update(float delta) {
+
         getCurrentState().update(delta);
     }
 
     private void initStateObjects() {
+
         towerStates.put(TowerState.ACTIVE, new TowerActiveState(tower, this));
-        towerStates.put(TowerState.DYING, new CombatActorDyingState<>(tower, this, TowerState.STANDBY, effectFactory));
+        towerStates.put(TowerState.DYING,
+            new CombatActorDyingState<>(tower, this, TowerState.STANDBY, effectFactory));
         towerStates.put(TowerState.STANDBY, new CombatActorStandByState());
     }
 
     @Override
     public CombatActorState getState(TowerState state) {
+
         return towerStates.get(state);
     }
 
     @Override
     public CombatActorState getCurrentState() {
+
         return towerStates.get(currentState);
     }
 
     private void setCurrentState(TowerState state) {
+
         this.currentState = state;
     }
 
     @Override
     public TowerState getCurrentStateName() {
+
         return currentState;
     }
 
     private void swapState(TowerState oldState, TowerState newState) {
+
         Logger.info("Swapping states: " + oldState.name() + " to: " + newState.name());
         getState(oldState).postState();
         getState(newState).preState();
@@ -70,6 +78,7 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
 
     @Override
     public void transition(TowerState state) {
+
         if (currentState == null) {
             setCurrentState(state);
         } else {
@@ -79,6 +88,7 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
 
     @Override
     public void transition(TowerState state, Map<String, Object> parameters) {
+
         getState(state).loadParameters(parameters);
         transition(state);
     }

@@ -43,8 +43,12 @@ public class Apache extends SupportActor {
     private Animation<TextureRegion> movementAnimation;
     private float movementAnimationStateTime;
 
-    public Apache(SupportActorPool<Apache> pool, Group targetGroup, ProjectileFactory projectileFactory, TextureRegion stationaryTextureRegion, TextureRegion[] textureRegions, TextureRegion rangeTexture, FHDAudio audio) {
-        super(pool, targetGroup, stationaryTextureRegion, TEXTURE_SIZE, rangeTexture, RANGE, ATTACK, GUN_POS, COST);
+    public Apache(SupportActorPool<Apache> pool, Group targetGroup,
+        ProjectileFactory projectileFactory, TextureRegion stationaryTextureRegion,
+        TextureRegion[] textureRegions, TextureRegion rangeTexture, FHDAudio audio) {
+
+        super(pool, targetGroup, stationaryTextureRegion, TEXTURE_SIZE, rangeTexture, RANGE, ATTACK,
+            GUN_POS, COST);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
 
@@ -55,13 +59,15 @@ public class Apache extends SupportActor {
     }
 
     public void initialize(Vector2 placePosition) {
+
         Logger.info("Apache: initializing");
         FHDVector2 centerPos = UtilPool.getVector2(-this.getWidth(), Resources.VIRTUAL_HEIGHT / 2);
         setPositionCenter(centerPos);
 
         FHDVector2 destination = UtilPool.getVector2(placePosition);
         float duration = destination.dst(getPositionCenter()) / MOVE_SPEED;
-        MoveToAction moveToAction = Actions.moveTo(destination.x, destination.y, duration, Interpolation.linear);
+        MoveToAction moveToAction = Actions
+            .moveTo(destination.x, destination.y, duration, Interpolation.linear);
         moveToAction.setAlignment(Align.center);
         addAction(moveToAction);
         setRotation(ActorUtil.calculateRotation(destination, getPositionCenter()));
@@ -71,6 +77,7 @@ public class Apache extends SupportActor {
 
     @Override
     public void reset() {
+
         Logger.info("Apache: resetting");
         setReadyToAttack(false);
         timeActive = 0;
@@ -81,6 +88,7 @@ public class Apache extends SupportActor {
 
     @Override
     public void act(float delta) {
+
         super.act(delta);
         movementAnimationStateTime += delta;
         setTextureRegion(movementAnimation.getKeyFrame(movementAnimationStateTime, true));
@@ -98,10 +106,12 @@ public class Apache extends SupportActor {
     }
 
     private void attackHandler(float delta) {
+
         Targetable target = findTarget();
         attackCounter += delta;
         if (target != null && !target.isDead()) {
-            setRotation(ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
+            setRotation(
+                ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
             if (attackCounter >= ATTACK_SPEED) {
                 attackCounter = 0;
                 attackTarget(target);
@@ -116,12 +126,14 @@ public class Apache extends SupportActor {
     }
 
     private void exitStage() {
+
         Logger.info("Apache: exiting stage");
         exitingStage = true;
         FHDVector2 destination = UtilPool.getVector2(getWidth(), Resources.VIRTUAL_HEIGHT / 2);
 
         float duration = destination.dst(getPositionCenter()) / MOVE_SPEED;
-        MoveToAction moveToAction = Actions.moveTo(destination.x, destination.y, duration, Interpolation.linear);
+        MoveToAction moveToAction = Actions
+            .moveTo(destination.x, destination.y, duration, Interpolation.linear);
         moveToAction.setAlignment(Align.center);
         addAction(moveToAction);
 
@@ -134,10 +146,12 @@ public class Apache extends SupportActor {
      * Find a target using TowerAIType First Enemy
      */
     private Targetable findTarget() {
+
         return ai.findTarget(this, getTargetGroup().getChildren());
     }
 
     private void attackTarget(Targetable target) {
+
         if (target != null && !target.isDead()) {
             audio.playSound(FHDSound.MACHINE_GUN);
             projectileFactory.loadBullet().initialize(this, target, BULLET_SIZE);
@@ -146,14 +160,17 @@ public class Apache extends SupportActor {
     }
 
     public boolean isReadyToAttack() {
+
         return readyToAttack;
     }
 
     private void setReadyToAttack(boolean readyToAttack) {
+
         this.readyToAttack = readyToAttack;
     }
 
     public boolean isExitingStage() {
+
         return exitingStage;
     }
 

@@ -1,14 +1,5 @@
 package game.ui.presenter.support;
 
-import com.foxholedefense.game.model.actor.support.Apache;
-import com.foxholedefense.game.model.actor.support.LandMine;
-import com.foxholedefense.game.ui.presenter.SupportPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
-
-import org.junit.Test;
-
-
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
@@ -16,6 +7,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import com.foxholedefense.game.model.actor.support.Apache;
+import com.foxholedefense.game.model.actor.support.LandMine;
+import com.foxholedefense.game.ui.presenter.SupportPresenter;
+import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import org.junit.Test;
 
 /**
  * Created by Eric on 6/11/2017.
@@ -28,6 +26,7 @@ public class SupportPresenterSupportActorTest extends SupportPresenterTest {
      */
     @Test
     public void createSupportActorTest1() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(Apache.COST).when(player).getMoney();
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
@@ -46,6 +45,7 @@ public class SupportPresenterSupportActorTest extends SupportPresenterTest {
      */
     @Test
     public void createSupportActorTest2() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(Apache.COST - 1).when(player).getMoney();
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
@@ -64,6 +64,7 @@ public class SupportPresenterSupportActorTest extends SupportPresenterTest {
      */
     @Test
     public void createSupportActorTest3() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(LandMine.COST).when(player).getMoney();
         doReturn(GameUIState.LEVEL_COMPLETED).when(uiStateManager).getState();
@@ -107,7 +108,6 @@ public class SupportPresenterSupportActorTest extends SupportPresenterTest {
         doReturn(false).when(supportActorPlacement).isCurrentSupportActor();
         doReturn(GameUIState.PLACING_SUPPORT).when(uiStateManager).getState();
 
-
         supportPresenter.setView(supportView);
         FHDVector2 location = new FHDVector2(5, 10);
         supportPresenter.moveSupportActor(location);
@@ -128,7 +128,6 @@ public class SupportPresenterSupportActorTest extends SupportPresenterTest {
         doReturn(true).when(supportActorPlacement).isCurrentSupportActor();
         doReturn(GameUIState.OPTIONS).when(uiStateManager).getState();
 
-
         supportPresenter.setView(supportView);
         FHDVector2 location = new FHDVector2(5, 10);
         supportPresenter.moveSupportActor(location);
@@ -144,6 +143,7 @@ public class SupportPresenterSupportActorTest extends SupportPresenterTest {
      */
     @Test
     public void placeSupportActorTest1() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         Apache apache = mock(Apache.class);
         doReturn(Apache.COST).when(apache).getCost();

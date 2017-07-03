@@ -14,13 +14,13 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
-
 import java.util.HashMap;
 import java.util.Map;
 
 //-agentlib:hprof=heap=dump,format=b
 
 public class Resources {
+
     public static final String LOAD_ATLAS = "load/load.atlas";
     public static final String MENU_ATLAS = "menu/menu.atlas";
     public static final String ACTOR_ATLAS = "game/actors/actors.atlas";
@@ -52,9 +52,11 @@ public class Resources {
     private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<>();
 
     public Resources() {
+
     }
 
     public Resources(UserPreferences userPreferences) {
+
         this.userPreferences = userPreferences;
         shapeRenderer = new ShapeRenderer();
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
@@ -62,10 +64,12 @@ public class Resources {
     }
 
     public static ShapeRenderer getShapeRenderer() {
+
         return shapeRenderer;
     }
 
     public void dispose() {
+
         Logger.info("Resources: dispose");
         manager.dispose();
         shapeRenderer.dispose();
@@ -74,6 +78,7 @@ public class Resources {
     }
 
     public void loadActorAtlasRegions() {
+
         Logger.info("Resources: initializing textures");
         TextureAtlas actorAtlas = getAsset(ACTOR_ATLAS, TextureAtlas.class);
 
@@ -99,12 +104,18 @@ public class Resources {
         loadedTextures.put("tower-turret-bags", actorAtlas.findRegion("tower-turret-bags"));
         loadedTextures.put("tower-tank-body", actorAtlas.findRegion("tower-tank-body"));
         loadedTextures.put("tower-tank-turret", actorAtlas.findRegion("tower-tank-turret"));
-        loadedTextures.put("enemy-rifle-stationary", actorAtlas.findRegion("enemy-rifle-stationary"));
-        loadedTextures.put("enemy-machine-gun-stationary", actorAtlas.findRegion("enemy-machine-gun-stationary"));
-        loadedTextures.put("enemy-sniper-stationary", actorAtlas.findRegion("enemy-sniper-stationary"));
-        loadedTextures.put("enemy-flame-thrower-stationary", actorAtlas.findRegion("enemy-flame-thrower-stationary"));
-        loadedTextures.put("enemy-rocket-launcher-stationary", actorAtlas.findRegion("enemy-rocket-launcher-stationary"));
-        loadedTextures.put("enemy-sprinter-stationary", actorAtlas.findRegion("enemy-sprinter-stationary"));
+        loadedTextures
+            .put("enemy-rifle-stationary", actorAtlas.findRegion("enemy-rifle-stationary"));
+        loadedTextures.put("enemy-machine-gun-stationary",
+            actorAtlas.findRegion("enemy-machine-gun-stationary"));
+        loadedTextures
+            .put("enemy-sniper-stationary", actorAtlas.findRegion("enemy-sniper-stationary"));
+        loadedTextures.put("enemy-flame-thrower-stationary",
+            actorAtlas.findRegion("enemy-flame-thrower-stationary"));
+        loadedTextures.put("enemy-rocket-launcher-stationary",
+            actorAtlas.findRegion("enemy-rocket-launcher-stationary"));
+        loadedTextures
+            .put("enemy-sprinter-stationary", actorAtlas.findRegion("enemy-sprinter-stationary"));
         loadedTextures.put("enemy-tank-body", actorAtlas.findRegion("enemy-tank-body"));
         loadedTextures.put("enemy-tank-turret", actorAtlas.findRegion("enemy-tank-turret"));
         loadedTextures.put("enemy-humvee", actorAtlas.findRegion("enemy-humvee"));
@@ -118,10 +129,12 @@ public class Resources {
         loadedAtlasRegions.put("blood-splatter", actorAtlas.findRegions("blood-splatter"));
         loadedAtlasRegions.put("smoke-ring", actorAtlas.findRegions("smoke-ring"));
         loadedAtlasRegions.put("enemy-rifle", actorAtlas.findRegions("enemy-rifle"));
-        loadedAtlasRegions.put("enemy-flame-thrower", actorAtlas.findRegions("enemy-flame-thrower"));
+        loadedAtlasRegions
+            .put("enemy-flame-thrower", actorAtlas.findRegions("enemy-flame-thrower"));
         loadedAtlasRegions.put("enemy-sniper", actorAtlas.findRegions("enemy-sniper"));
         loadedAtlasRegions.put("enemy-machine-gun", actorAtlas.findRegions("enemy-machine-gun"));
-        loadedAtlasRegions.put("enemy-rocket-launcher", actorAtlas.findRegions("enemy-rocket-launcher"));
+        loadedAtlasRegions
+            .put("enemy-rocket-launcher", actorAtlas.findRegions("enemy-rocket-launcher"));
         loadedAtlasRegions.put("enemy-sprinter", actorAtlas.findRegions("enemy-sprinter"));
         loadedAtlasRegions.put("apache", actorAtlas.findRegions("apache"));
         loadedAtlasRegions.put("shield-destroyed", actorAtlas.findRegions("shield-destroyed"));
@@ -131,23 +144,28 @@ public class Resources {
     }
 
     public TextureRegion getTexture(String texture) {
+
         return loadedTextures.get(texture);
     }
 
     public Array<AtlasRegion> getAtlasRegion(String region) {
+
         return loadedAtlasRegions.get(region);
     }
 
     public void activityResume() {
+
         shapeRenderer.dispose();
         shapeRenderer = new ShapeRenderer();
     }
 
     public UserPreferences getUserPreferences() {
+
         return userPreferences;
     }
 
     public void initFont() {
+
         Logger.info("Resources: initializing font");
         BitmapFont font = getSkin().getFont("default-font");
         font.setUseIntegerPositions(false);
@@ -163,6 +181,7 @@ public class Resources {
     }
 
     public void loadAsset(String file, Class<?> type) {
+
         Logger.info("Resources: loading asset: " + file);
         if (!manager.isLoaded(file)) {
             try {
@@ -175,6 +194,7 @@ public class Resources {
     }
 
     public void loadAssetSync(String file, Class<?> type) {
+
         Logger.info("Resources: sync loading asset: " + file);
         loadAsset(file, type);
         manager.finishLoading();
@@ -182,6 +202,7 @@ public class Resources {
     }
 
     public <T> T getAsset(String file, Class<T> type) {
+
         if (!manager.isLoaded(file)) {
             Logger.info(file + " not loaded. Loading...");
             loadAssetSync(file, type);
@@ -190,6 +211,7 @@ public class Resources {
     }
 
     public void unloadAsset(String file) {
+
         Logger.info("Resources: unloading: " + file);
         if (manager.isLoaded(file)) {
             manager.unload(file);
@@ -198,18 +220,22 @@ public class Resources {
     }
 
     public void loadMap(int level) {
+
         loadAsset("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
     }
 
     public TiledMap getMap(int level) {
+
         return getAsset("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
     }
 
     public void unloadMap(int level) {
+
         unloadAsset("game/levels/level" + level + "/level" + level + ".tmx");
     }
 
     private void loadSkinSync() {
+
         Logger.info("Resources: sync loading skin");
         loadSkin();
         manager.finishLoading();
@@ -217,6 +243,7 @@ public class Resources {
     }
 
     public void loadSkin() {
+
         Logger.info("Resources: loading skin");
         try {
             manager.load(SKIN_JSON, Skin.class, new SkinLoader.SkinParameter(SKIN_ATLAS));
@@ -227,6 +254,7 @@ public class Resources {
     }
 
     public Skin getSkin() {
+
         if (!manager.isLoaded(SKIN_JSON)) {
             Logger.info(SKIN_JSON + " (skin) not loaded. Loading");
             loadSkinSync();
@@ -235,14 +263,17 @@ public class Resources {
     }
 
     public float getGameSpeed() {
+
         return gameSpeed;
     }
 
     public void setGameSpeed(float gameSpeed) {
+
         this.gameSpeed = gameSpeed;
     }
 
     public AssetManager getManager() {
+
         return manager;
     }
 

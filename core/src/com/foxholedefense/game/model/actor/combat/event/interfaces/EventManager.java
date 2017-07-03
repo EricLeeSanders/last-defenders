@@ -5,6 +5,7 @@ package com.foxholedefense.game.model.actor.combat.event.interfaces;
  */
 
 public interface EventManager {
+
     void sendEvent(CombatActorEventEnum event);
 
     enum CombatActorEventEnum {

@@ -35,6 +35,7 @@ import com.foxholedefense.util.datastructures.pool.UtilPool;
  * @author Eric
  */
 public class SupportView extends Group implements ISupportView, InputProcessor {
+
     private Array<SupportButton> supportButtons = new Array<>(4);
     private ImageButton btnPlacingCancel;
     private ImageButton btnPlace;
@@ -43,6 +44,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
     private Label lblMoney;
 
     public SupportView(SupportPresenter presenter, Skin skin) {
+
         this.presenter = presenter;
         choosingGroup = new Group();
         choosingGroup.setTransform(false);
@@ -73,12 +75,12 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
         container.setBackground(skin.getDrawable("main-panel"));
 
         Label lblTitle = new Label("SUPPORT", skin);
-        lblTitle.setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2)
-                , container.getY() + container.getHeight() - lblTitle.getHeight() + 1);
+        lblTitle
+            .setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2),
+                container.getY() + container.getHeight() - lblTitle.getHeight() + 1);
         lblTitle.setAlignment(Align.center);
         lblTitle.setFontScale(.9f);
         choosingGroup.addActor(lblTitle);
-
 
         LabelStyle lblMoneyStyle = new LabelStyle(skin.get("money_label", LabelStyle.class));
         lblMoneyStyle.background.setLeftWidth(60);
@@ -95,7 +97,8 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
         supportTable.add(landmineButton).size(133, 100).spaceBottom(5);
         setLandmineListener(landmineButton);
 
-        SupportButton supplydropButton = new SupportButton(skin, "Supply Drop", SupplyDropCrate.COST);
+        SupportButton supplydropButton = new SupportButton(skin, "Supply Drop",
+            SupplyDropCrate.COST);
         supportButtons.add(supplydropButton);
         supportTable.add(supplydropButton).size(133, 100).spaceBottom(5);
         setSupplyDropListener(supplydropButton);
@@ -120,7 +123,6 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
         btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
         choosingGroup.addActor(btnCancel);
 
-
         btnPlace = new ImageButton(skin, "select");
         btnPlace.setSize(50, 50);
         btnPlace.getImageCell().size(30, 23);
@@ -137,7 +139,6 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
         setCancelListener(btnPlacingCancel);
         addActor(btnPlacingCancel);
 
-
         Logger.info("Support View: controls created");
     }
 
@@ -146,6 +147,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
      * Updates the Support buttons to disable/enable.
      */
     private void updateSupportButtons() {
+
         for (Actor actor : supportButtons) {
             SupportButton supportButton = (SupportButton) actor;
             boolean affordable = presenter.canAffordSupport(supportButton.cost);
@@ -154,9 +156,11 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
     }
 
     private void setLandmineListener(final SupportButton supportButton) {
+
         supportButton.addListener(new ActorGestureListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.createSupportActor("LandMine");
             }
@@ -165,9 +169,11 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
     }
 
     private void setSupplyDropListener(SupportButton button) {
+
         button.addListener(new ActorGestureListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.createSupplyDrop();
             }
@@ -175,9 +181,11 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
     }
 
     private void setAirStrikeListener(SupportButton button) {
+
         button.addListener(new ActorGestureListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.createAirStrike();
             }
@@ -185,9 +193,11 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
     }
 
     private void setApacheListener(final SupportButton supportButton) {
+
         supportButton.addListener(new ActorGestureListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.createSupportActor("Apache");
             }
@@ -195,9 +205,11 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
     }
 
     private void setPlaceListener() {
+
         btnPlace.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.placeActor();
             }
@@ -205,9 +217,11 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
     }
 
     private void setCancelListener(Button button) {
+
         button.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.cancel();
             }
@@ -216,25 +230,27 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean keyTyped(char character) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        FHDVector2 coords = (FHDVector2) this.getStage().screenToStageCoordinates(UtilPool.getVector2(screenX, screenY));
+
+        FHDVector2 coords = (FHDVector2) this.getStage()
+            .screenToStageCoordinates(UtilPool.getVector2(screenX, screenY));
         presenter.screenTouch(coords, "TouchDown");
         coords.free();
         return false;
@@ -248,7 +264,9 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 
     @Override
     public boolean touchDragged(int screenX, int screenY, int pointer) {
-        FHDVector2 coords = (FHDVector2) this.getStage().screenToStageCoordinates(UtilPool.getVector2(screenX, screenY));
+
+        FHDVector2 coords = (FHDVector2) this.getStage()
+            .screenToStageCoordinates(UtilPool.getVector2(screenX, screenY));
         presenter.screenTouch(coords, "Dragged");
         coords.free();
         return false;
@@ -257,18 +275,19 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public boolean scrolled(int amount) {
-        // TODO Auto-generated method stub
+
         return false;
     }
 
     @Override
     public void supportState() {
+
         updateSupportButtons();
         lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
         choosingGroup.setVisible(true);
@@ -278,12 +297,14 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 
     @Override
     public void placingSupportState() {
+
         btnPlacingCancel.setVisible(true);
         choosingGroup.setVisible(false);
     }
 
     @Override
     public void standByState() {
+
         btnPlacingCancel.setVisible(false);
         choosingGroup.setVisible(false);
         btnPlace.setVisible(false);
@@ -293,6 +314,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 
     @Override
     public void showBtnPlace() {
+
         btnPlace.setVisible(true);
     }
 

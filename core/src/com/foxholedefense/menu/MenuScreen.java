@@ -17,10 +17,13 @@ import com.foxholedefense.util.Resources;
  * @author Eric
  */
 public class MenuScreen extends AbstractScreen {
+
     private MenuStage stage;
     private GameStateManager gameStateManager;
 
-    public MenuScreen(ScreenChanger screenChanger, GameStateManager gameStateManager, Resources resources, FHDAudio audio) {
+    public MenuScreen(ScreenChanger screenChanger, GameStateManager gameStateManager,
+        Resources resources, FHDAudio audio) {
+
         super(gameStateManager);
         this.gameStateManager = gameStateManager;
         this.stage = new MenuStage(screenChanger, resources, audio, getViewport());
@@ -30,6 +33,7 @@ public class MenuScreen extends AbstractScreen {
     }
 
     private void createBackListener() {
+
         InputProcessor backProcessor = new InputAdapter() {
             @Override
             public boolean keyDown(int keycode) {
@@ -46,6 +50,7 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     public void show() {
+
         Logger.info("Menu Screen: show");
         super.show();
 
@@ -53,12 +58,14 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     public void resize(int width, int height) {
+
         stage.getViewport().setScreenSize(width, height); // update the size of Viewport
         super.resize(width, height);
     }
 
     @Override
     public void renderElements(float delta) {
+
         stage.act(delta);
         stage.draw();
 
@@ -66,6 +73,7 @@ public class MenuScreen extends AbstractScreen {
 
     @Override
     public void dispose() {
+
         super.dispose();
         Logger.info("Menu Screen: Dispose");
         stage.dispose();
