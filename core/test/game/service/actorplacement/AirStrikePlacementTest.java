@@ -1,25 +1,7 @@
 package game.service.actorplacement;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.ActorGroups;
-import com.foxholedefense.game.model.actor.support.AirStrike;
-import com.foxholedefense.game.model.actor.support.AirStrikeLocation;
-import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
-import com.foxholedefense.game.service.factory.SupportActorFactory;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
-
-import org.junit.Before;
-import org.junit.Test;
-
-
-import game.model.actor.support.AirStrikeTest;
-import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doNothing;
@@ -30,24 +12,41 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.powermock.api.mockito.PowerMockito.doReturn;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.foxholedefense.game.model.actor.ActorGroups;
+import com.foxholedefense.game.model.actor.support.AirStrike;
+import com.foxholedefense.game.model.actor.support.AirStrikeLocation;
+import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
+import com.foxholedefense.game.service.factory.SupportActorFactory;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import game.model.actor.support.AirStrikeTest;
+import org.junit.Before;
+import org.junit.Test;
+import testutil.TestUtil;
+
 /**
  * Created by Eric on 5/28/2017.
  */
 
 public class AirStrikePlacementTest {
+
     private ActorGroups actorGroups = mock(ActorGroups.class);
     private SupportActorFactory supportActorFactory = mock(SupportActorFactory.class);
     private AirStrikeTest airStrikeTest = new AirStrikeTest();
 
     @Before
     public void initAirStrikePlacementTest() {
+
         Gdx.app = mock(Application.class);
     }
 
     @Test
-    public void airStrikePlacementTest1(){
+    public void airStrikePlacementTest1() {
 
-        AirStrikePlacement airStrikePlacement = new AirStrikePlacement(actorGroups, supportActorFactory);
+        AirStrikePlacement airStrikePlacement = new AirStrikePlacement(actorGroups,
+            supportActorFactory);
 
         Group supportGroup = new Group();
         doReturn(supportGroup).when(actorGroups).getSupportGroup();
@@ -67,13 +66,14 @@ public class AirStrikePlacementTest {
         assertEquals(0, airStrike.getY(), TestUtil.DELTA);
 
         // Add locations
-        FHDVector2 location1 = new FHDVector2(100,100);
-        FHDVector2 location2 = new FHDVector2(200,100);
-        FHDVector2 location3 = new FHDVector2(400,100);
+        FHDVector2 location1 = new FHDVector2(100, 100);
+        FHDVector2 location2 = new FHDVector2(200, 100);
+        FHDVector2 location3 = new FHDVector2(400, 100);
 
         AirStrikeLocation airStrikeLocMock = mock(AirStrikeLocation.class);
 
-        doReturn(airStrikeLocMock).when(supportActorFactory).loadAirStrikeLocation(isA(FHDVector2.class), isA(Float.class));
+        doReturn(airStrikeLocMock).when(supportActorFactory)
+            .loadAirStrikeLocation(isA(FHDVector2.class), isA(Float.class));
 
         airStrikePlacement.addLocation(location1);
 

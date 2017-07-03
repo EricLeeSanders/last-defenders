@@ -4,7 +4,6 @@ import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.model.actor.combat.state.CombatActorState;
 import com.foxholedefense.game.model.actor.combat.state.StateTransitioner;
 import com.foxholedefense.game.service.factory.EffectFactory;
-
 import java.util.Map;
 
 /**
@@ -18,7 +17,9 @@ public class CombatActorDyingState<E> implements CombatActorState {
     private final E transitionState;
     private final EffectFactory effectFactory;
 
-    public CombatActorDyingState(CombatActor combatActor, StateTransitioner<E> stateTransitioner, E transitionState, EffectFactory effectFactory){
+    public CombatActorDyingState(CombatActor combatActor, StateTransitioner<E> stateTransitioner,
+        E transitionState, EffectFactory effectFactory) {
+
         this.combatActor = combatActor;
         this.stateTransitioner = stateTransitioner;
         this.transitionState = transitionState;
@@ -33,7 +34,8 @@ public class CombatActorDyingState<E> implements CombatActorState {
     @Override
     public void preState() {
         // Has to be put in preState because Update is never called (CombatActor is removed from stage)
-        effectFactory.loadDeathEffect(combatActor.getDeathEffectType()).initialize(combatActor.getPositionCenter());
+        effectFactory.loadDeathEffect(combatActor.getDeathEffectType())
+            .initialize(combatActor.getPositionCenter());
         stateTransitioner.transition(transitionState);
     }
 

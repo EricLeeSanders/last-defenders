@@ -1,5 +1,14 @@
 package game.model.actor.projectile;
 
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.powermock.api.mockito.PowerMockito.verifyStatic;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Polygon;
@@ -13,26 +22,13 @@ import com.foxholedefense.game.model.actor.projectile.Flame;
 import com.foxholedefense.game.service.factory.ProjectileFactory.FlamePool;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.Dimension;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 /**
  * Created by Eric on 5/21/2017.
@@ -45,11 +41,13 @@ public class FlameTest {
 
     @Before
     public void initFlameTest() {
+
         Gdx.app = mock(Application.class);
         PowerMockito.mockStatic(Damage.class);
     }
 
     public Flame createFlame() {
+
         Resources resources = TestUtil.createResourcesMock();
 
         return new Flame(poolMock, resources.getAtlasRegion(""));
@@ -58,6 +56,7 @@ public class FlameTest {
 
     @Test
     public void flameTest1() {
+
         Tower tower = TestUtil.createTower("FlameThrower", true);
         tower.setRotation(90);
         Vector2 gunPos = new Vector2(5, 5);
@@ -78,7 +77,8 @@ public class FlameTest {
 
         //Check flameBody
         assertEquals(gunPos.x, flame.getFlameBody().getX(), TestUtil.DELTA);
-        assertEquals(gunPos.y - (flameSize.getHeight() / 2), flame.getFlameBody().getY(), TestUtil.DELTA);
+        assertEquals(gunPos.y - (flameSize.getHeight() / 2), flame.getFlameBody().getY(),
+            TestUtil.DELTA);
         assertEquals(90.0f, flame.getRotation(), TestUtil.DELTA);
 
         // rotate tower
@@ -112,6 +112,7 @@ public class FlameTest {
      */
     @Test
     public void flameTest2() {
+
         Tower tower = TestUtil.createTower("FlameThrower", true);
         tower.setRotation(90);
         Vector2 gunPos = new Vector2(5, 5);
@@ -131,6 +132,7 @@ public class FlameTest {
      */
     @Test
     public void flameTest3() {
+
         Enemy enemy = TestUtil.createEnemy("FlameThrower", true);
         enemy.setRotation(90);
         Vector2 gunPos = new Vector2(5, 5);
@@ -152,6 +154,4 @@ public class FlameTest {
 
 
     }
-
-
 }

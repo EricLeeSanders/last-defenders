@@ -5,14 +5,14 @@ import com.badlogic.gdx.math.Vector2;
 
 /**
  * Interfaces for classes that can collide with various objects and actors
- * 
- * @author Eric
  *
+ * @author Eric
  */
 public interface Collidable {
-	Vector2 getPositionCenter();
 
-	void setPositionCenter(Vector2 pos);
+    Vector2 getPositionCenter();
 
-	Shape2D getBody();
+    void setPositionCenter(Vector2 pos);
+
+    Shape2D getBody();
 }

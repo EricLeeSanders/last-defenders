@@ -10,42 +10,44 @@ import com.foxholedefense.game.model.actor.interfaces.IRocket;
 
 /**
  * Contains Enemy AI methods to find towers.
- * 
- * @author Eric
  *
+ * @author Eric
  */
 public class EnemyAI {
-	/**
-	 * Finds the nearest tower relative to the enemy
-	 * 
-	 * @param enemy
-	 * @param towers
-	 * @return Tower
-	 */
-	public static Tower findNearestTower(Enemy enemy, SnapshotArray<Actor> towers) {
-		if (towers.size == 0) {
-			return null;
-		}
-		float firstTowerDistance = Integer.MAX_VALUE;
-		Tower firstTower = null;
-		for (Actor actor : towers) {
-			if(actor instanceof Tower){
-				Tower tower = (Tower)actor;
-				// Tower is active and not dead
-				if (!tower.isDead() && tower.isActive()) {
-					if (CollisionDetection.shapesIntersect(tower.getBody(), enemy.getRangeShape())) {
-						if (tower.getPositionCenter().dst(enemy.getPositionCenter()) < firstTowerDistance) {
-							// If the enemy is instanceof IRPG then it can
-							// attack plated towers.
-							if ((!(tower instanceof PlatedArmor)) || (enemy instanceof IRocket)) {
-								firstTower = tower;
-								firstTowerDistance = tower.getPositionCenter().dst(enemy.getPositionCenter());
-							}
-						}
-					}
-				}
-			}
-		}
-		return firstTower;
-	}
+
+    /**
+     * Finds the nearest tower relative to the enemy
+     *
+     * @return Tower
+     */
+    public static Tower findNearestTower(Enemy enemy, SnapshotArray<Actor> towers) {
+
+        if (towers.size == 0) {
+            return null;
+        }
+        float firstTowerDistance = Integer.MAX_VALUE;
+        Tower firstTower = null;
+        for (Actor actor : towers) {
+            if (actor instanceof Tower) {
+                Tower tower = (Tower) actor;
+                // Tower is active and not dead
+                if (!tower.isDead() && tower.isActive()) {
+                    if (CollisionDetection
+                        .shapesIntersect(tower.getBody(), enemy.getRangeShape())) {
+                        if (tower.getPositionCenter().dst(enemy.getPositionCenter())
+                            < firstTowerDistance) {
+                            // If the enemy is instanceof IRPG then it can
+                            // attack plated towers.
+                            if ((!(tower instanceof PlatedArmor)) || (enemy instanceof IRocket)) {
+                                firstTower = tower;
+                                firstTowerDistance = tower.getPositionCenter()
+                                    .dst(enemy.getPositionCenter());
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return firstTower;
+    }
 }

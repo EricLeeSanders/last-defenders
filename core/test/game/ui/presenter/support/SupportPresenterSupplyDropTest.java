@@ -1,13 +1,5 @@
 package game.ui.presenter.support;
 
-import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
-import com.foxholedefense.game.ui.presenter.SupportPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
-
-import org.junit.Test;
-
-
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
@@ -15,16 +7,24 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
+import com.foxholedefense.game.ui.presenter.SupportPresenter;
+import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import org.junit.Test;
+
 /**
  * Created by Eric on 6/10/2017.
  */
 
 public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
+
     /**
      * Successfully create a supply drop
      */
     @Test
-    public void createSupplyDropTest1(){
+    public void createSupplyDropTest1() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(SupplyDropCrate.COST).when(player).getMoney();
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
@@ -42,7 +42,8 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      * Unsuccessfully create a supply drop - Not enough money
      */
     @Test
-    public void createSupplyDropTest2(){
+    public void createSupplyDropTest2() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(SupplyDropCrate.COST - 1).when(player).getMoney();
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
@@ -60,7 +61,8 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      * Unsuccessfully create a supply drop - Wrong state
      */
     @Test
-    public void createSupplyDropTest3(){
+    public void createSupplyDropTest3() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(SupplyDropCrate.COST).when(player).getMoney();
         doReturn(GameUIState.GAME_OVER).when(uiStateManager).getState();
@@ -78,13 +80,14 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      * Successfully move a supply drop
      */
     @Test
-    public void moveSupplyDropTest1(){
+    public void moveSupplyDropTest1() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(supplyDropPlacement).isCurrentSupplyDropCrate();
         doReturn(GameUIState.PLACING_SUPPLYDROP).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5,10);
+        FHDVector2 location = new FHDVector2(5, 10);
         supportPresenter.moveSupplyDrop(location);
 
         verify(supportView, times(1)).showBtnPlace();
@@ -97,13 +100,14 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      * Unsuccessfully move a supply drop - No current supply drop
      */
     @Test
-    public void moveSupplyDropTest2(){
+    public void moveSupplyDropTest2() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(false).when(supplyDropPlacement).isCurrentSupplyDropCrate();
         doReturn(GameUIState.PLACING_SUPPLYDROP).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5,10);
+        FHDVector2 location = new FHDVector2(5, 10);
         supportPresenter.moveSupplyDrop(location);
 
         verify(supportView, never()).showBtnPlace();
@@ -116,13 +120,14 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      * Unsuccessfully move a supply drop - Wrong state
      */
     @Test
-    public void moveSupplyDropTest3(){
+    public void moveSupplyDropTest3() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(supplyDropPlacement).isCurrentSupplyDropCrate();
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5,10);
+        FHDVector2 location = new FHDVector2(5, 10);
         supportPresenter.moveSupplyDrop(location);
 
         verify(supportView, never()).showBtnPlace();
@@ -135,7 +140,8 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      * Successfully place a supply drop
      */
     @Test
-    public void placeSupplyDropTest1(){
+    public void placeSupplyDropTest1() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(supplyDropPlacement).isCurrentSupplyDropCrate();
         doReturn(GameUIState.PLACING_SUPPLYDROP).when(uiStateManager).getState();
@@ -153,7 +159,8 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      * Unsuccessfully place a supply drop - No current supply drop
      */
     @Test
-    public void placeSupplyDropTest2(){
+    public void placeSupplyDropTest2() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(false).when(supplyDropPlacement).isCurrentSupplyDropCrate();
         doReturn(GameUIState.PLACING_SUPPLYDROP).when(uiStateManager).getState();
@@ -171,7 +178,8 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
      * Unsuccessfully place a supply drop - Wrong State
      */
     @Test
-    public void placeSupplyDropTest3(){
+    public void placeSupplyDropTest3() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(supplyDropPlacement).isCurrentSupplyDropCrate();
         doReturn(GameUIState.OPTIONS).when(uiStateManager).getState();

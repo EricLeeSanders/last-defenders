@@ -6,47 +6,60 @@ import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.util.Logger;
 
 public class SupplyDropPlacement {
-	private SupplyDropCrate currentSupplyDropCrate;
-	private SupportActorFactory supportActorFactory;
-	public SupplyDropPlacement(SupportActorFactory supportActorFactory) {
-		this.supportActorFactory = supportActorFactory;
-	}
-	public void createSupplyDrop() {
-		Logger.info("SupplyDropPlacement: creating supply drop");
-		currentSupplyDropCrate = supportActorFactory.loadSupplyDropCrate();
-		currentSupplyDropCrate.setPosition(0, 0);
-		currentSupplyDropCrate.setActive(false);
-		currentSupplyDropCrate.setVisible(false);
-	}
-	public void setLocation(Vector2 location){
-		Logger.info("SupplyDropPlacement: setting location");
-		currentSupplyDropCrate.setVisible(true);
-		currentSupplyDropCrate.setShowRange(true);
-		currentSupplyDropCrate.setPositionCenter(location);
-	}
-	public void placeSupplyDrop() {
-		if (isCurrentSupplyDropCrate()) {
-			Logger.info("SupplyDropPlacement: finishing placement");
-			supportActorFactory.loadSupplyDrop().beginSupplyDrop(currentSupplyDropCrate.getPositionCenter());
-			currentSupplyDropCrate.setShowRange(false);
-			currentSupplyDropCrate.freeActor();
-			currentSupplyDropCrate = null;
-		}
-	}
-	
-	public void removeCurrentSupplyDropCrate(){
-		if (isCurrentSupplyDropCrate()) {
-			Logger.info("SupplyDropPlacement: remove supply drop");
-			currentSupplyDropCrate.freeActor();
-			currentSupplyDropCrate = null;
-		}
-	}
 
-	public boolean isCurrentSupplyDropCrate() {
-		return (currentSupplyDropCrate != null);
-	}
+    private SupplyDropCrate currentSupplyDropCrate;
+    private SupportActorFactory supportActorFactory;
 
-	public SupplyDropCrate getCurrentSupplyDropCrate() {
-		return currentSupplyDropCrate;
-	}
+    public SupplyDropPlacement(SupportActorFactory supportActorFactory) {
+
+        this.supportActorFactory = supportActorFactory;
+    }
+
+    public void createSupplyDrop() {
+
+        Logger.info("SupplyDropPlacement: creating supply drop");
+        currentSupplyDropCrate = supportActorFactory.loadSupplyDropCrate();
+        currentSupplyDropCrate.setPosition(0, 0);
+        currentSupplyDropCrate.setActive(false);
+        currentSupplyDropCrate.setVisible(false);
+    }
+
+    public void setLocation(Vector2 location) {
+
+        Logger.info("SupplyDropPlacement: setting location");
+        currentSupplyDropCrate.setVisible(true);
+        currentSupplyDropCrate.setShowRange(true);
+        currentSupplyDropCrate.setPositionCenter(location);
+    }
+
+    public void placeSupplyDrop() {
+
+        if (isCurrentSupplyDropCrate()) {
+            Logger.info("SupplyDropPlacement: finishing placement");
+            supportActorFactory.loadSupplyDrop()
+                .beginSupplyDrop(currentSupplyDropCrate.getPositionCenter());
+            currentSupplyDropCrate.setShowRange(false);
+            currentSupplyDropCrate.freeActor();
+            currentSupplyDropCrate = null;
+        }
+    }
+
+    public void removeCurrentSupplyDropCrate() {
+
+        if (isCurrentSupplyDropCrate()) {
+            Logger.info("SupplyDropPlacement: remove supply drop");
+            currentSupplyDropCrate.freeActor();
+            currentSupplyDropCrate = null;
+        }
+    }
+
+    public boolean isCurrentSupplyDropCrate() {
+
+        return (currentSupplyDropCrate != null);
+    }
+
+    public SupplyDropCrate getCurrentSupplyDropCrate() {
+
+        return currentSupplyDropCrate;
+    }
 }

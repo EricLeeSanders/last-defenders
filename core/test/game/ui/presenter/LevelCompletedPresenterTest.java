@@ -1,5 +1,11 @@
 package game.ui.presenter;
 
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.ui.presenter.LevelCompletedPresenter;
@@ -8,17 +14,8 @@ import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
 import com.foxholedefense.game.ui.view.LevelCompletedView;
 import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.util.FHDAudio;
-
-
 import org.junit.Before;
 import org.junit.Test;
-
-
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Eric on 6/5/2017.
@@ -32,10 +29,11 @@ public class LevelCompletedPresenterTest {
 
     @Before
     public void initLevelCompletedPresenterTest() {
+
         Gdx.app = mock(Application.class);
     }
 
-    private LevelCompletedPresenter createLevelCompletedPresenter(){
+    private LevelCompletedPresenter createLevelCompletedPresenter() {
 
         FHDAudio audio = mock(FHDAudio.class);
 
@@ -44,7 +42,7 @@ public class LevelCompletedPresenterTest {
     }
 
     @Test
-    public void stateChangeTest1(){
+    public void stateChangeTest1() {
 
         LevelCompletedPresenter presenter = createLevelCompletedPresenter();
         doReturn(GameUIState.STANDBY).when(uiStateManager).getState();
@@ -59,7 +57,7 @@ public class LevelCompletedPresenterTest {
      * Successfully change to level select
      */
     @Test
-    public void levelSelectTest1(){
+    public void levelSelectTest1() {
 
         LevelCompletedPresenter presenter = createLevelCompletedPresenter();
         doReturn(GameUIState.LEVEL_COMPLETED).when(uiStateManager).getState();
@@ -74,7 +72,7 @@ public class LevelCompletedPresenterTest {
      * Unsuccessfully change to level select because the state is not == LEVEL_COMPLETED
      */
     @Test
-    public void levelSelectTest2(){
+    public void levelSelectTest2() {
 
         LevelCompletedPresenter presenter = createLevelCompletedPresenter();
         doReturn(GameUIState.STANDBY).when(uiStateManager).getState();
@@ -89,7 +87,7 @@ public class LevelCompletedPresenterTest {
      * Successfully change to main menu
      */
     @Test
-    public void mainMenuTest1(){
+    public void mainMenuTest1() {
 
         LevelCompletedPresenter presenter = createLevelCompletedPresenter();
         doReturn(GameUIState.LEVEL_COMPLETED).when(uiStateManager).getState();
@@ -104,7 +102,7 @@ public class LevelCompletedPresenterTest {
      * Unsuccessfully change to main menu because the state is not == LEVEL_COMPLETED
      */
     @Test
-    public void mainMenuTest2(){
+    public void mainMenuTest2() {
 
         LevelCompletedPresenter presenter = createLevelCompletedPresenter();
         doReturn(GameUIState.STANDBY).when(uiStateManager).getState();
@@ -119,7 +117,7 @@ public class LevelCompletedPresenterTest {
      * Successfully change to continue level
      */
     @Test
-    public void continueLevelTest1(){
+    public void continueLevelTest1() {
 
         LevelCompletedPresenter presenter = createLevelCompletedPresenter();
         doReturn(GameUIState.LEVEL_COMPLETED).when(uiStateManager).getState();
@@ -134,7 +132,7 @@ public class LevelCompletedPresenterTest {
      * Unsuccessfully change to continue level because the state is not == LEVEL_COMPLETED
      */
     @Test
-    public void continueLevelTest2(){
+    public void continueLevelTest2() {
 
         LevelCompletedPresenter presenter = createLevelCompletedPresenter();
         doReturn(GameUIState.GAME_OVER).when(uiStateManager).getState();

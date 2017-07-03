@@ -5,6 +5,7 @@ package com.foxholedefense.util;
  */
 
 public class DebugOptions {
+
     public static boolean showFPS;
     public static boolean showTextureBoundaries;
 }

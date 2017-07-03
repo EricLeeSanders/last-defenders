@@ -1,19 +1,17 @@
 package game.ui.presenter.support;
 
-import com.foxholedefense.game.model.actor.support.AirStrike;
-import com.foxholedefense.game.ui.presenter.SupportPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
-
-import org.junit.Test;
-
-
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+
+import com.foxholedefense.game.model.actor.support.AirStrike;
+import com.foxholedefense.game.ui.presenter.SupportPresenter;
+import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import org.junit.Test;
 
 /**
  * Created by Eric on 6/10/2017.
@@ -64,6 +62,7 @@ public class SupportPresenterAirStrikeTest extends SupportPresenterTest {
      */
     @Test
     public void createAirStrikeTest3() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(AirStrike.COST).when(player).getMoney();
         doReturn(GameUIState.GAME_OVER).when(uiStateManager).getState();
@@ -82,6 +81,7 @@ public class SupportPresenterAirStrikeTest extends SupportPresenterTest {
      */
     @Test
     public void placeAirStrikeTest1() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(airStrikePlacement).isCurrentAirStrike();
         doReturn(false).when(airStrikePlacement).isReadyToBegin();
@@ -144,6 +144,7 @@ public class SupportPresenterAirStrikeTest extends SupportPresenterTest {
      */
     @Test
     public void finishAirStrikeTest1() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(airStrikePlacement).isCurrentAirStrike();
         doReturn(true).when(airStrikePlacement).isReadyToBegin();
@@ -163,6 +164,7 @@ public class SupportPresenterAirStrikeTest extends SupportPresenterTest {
      */
     @Test
     public void finishAirStrikeTest2() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(false).when(airStrikePlacement).isCurrentAirStrike();
         doReturn(GameUIState.PLACING_AIRSTRIKE).when(uiStateManager).getState();
@@ -181,6 +183,7 @@ public class SupportPresenterAirStrikeTest extends SupportPresenterTest {
      */
     @Test
     public void finishAirStrikeTest3() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(airStrikePlacement).isCurrentAirStrike();
         doReturn(false).when(airStrikePlacement).isReadyToBegin();
@@ -200,6 +203,7 @@ public class SupportPresenterAirStrikeTest extends SupportPresenterTest {
      */
     @Test
     public void finishAirStrikeTest4() {
+
         SupportPresenter supportPresenter = createSupportPresenter();
         doReturn(true).when(airStrikePlacement).isCurrentAirStrike();
         doReturn(false).when(airStrikePlacement).isReadyToBegin();

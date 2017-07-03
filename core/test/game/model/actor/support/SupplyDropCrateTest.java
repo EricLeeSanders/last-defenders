@@ -1,5 +1,14 @@
 package game.model.actor.support;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -11,47 +20,39 @@ import com.foxholedefense.game.service.factory.EffectFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory.SupplyDropCratePool;
 import com.foxholedefense.util.Resources;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
-
 import org.junit.Before;
 import org.junit.Test;
-
-
 import testutil.TestUtil;
-
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 /**
  * Created by Eric on 5/23/2017.
  */
 
 public class SupplyDropCrateTest {
+
     private SupplyDropCratePool supplyDropCratePoolMock = mock(SupplyDropCratePool.class);
     private TowerHealEffect towerHealEffectMock = mock(TowerHealEffect.class);
 
     @Before
     public void initSupplyDropCrateTest() {
+
         Gdx.app = mock(Application.class);
     }
 
-    public SupplyDropCrate createSupplyDropCrate(Group towerGroup){
+    public SupplyDropCrate createSupplyDropCrate(Group towerGroup) {
+
         Resources resourcesMock = mock(Resources.class);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
-        doReturn(towerHealEffectMock).when(effectFactoryMock).loadLabelEffect(eq(TowerHealEffect.class));
+        doReturn(towerHealEffectMock).when(effectFactoryMock)
+            .loadLabelEffect(eq(TowerHealEffect.class));
 
         return new SupplyDropCrate(resourcesMock.getTexture(""), resourcesMock.getTexture(""),
-                supplyDropCratePoolMock, towerGroup, effectFactoryMock);
+            supplyDropCratePoolMock, towerGroup, effectFactoryMock);
     }
 
     @Test
-    public void supplyDropCrateTest1(){
+    public void supplyDropCrateTest1() {
+
         float dropDelay = .75f;
         FHDVector2 destination = new FHDVector2(280, 360);
 
@@ -102,7 +103,6 @@ public class SupplyDropCrateTest {
         verify(towerHealEffectMock, times(1)).initialize(eq(tower3));
 
         verify(supplyDropCratePoolMock, times(1)).free(supplyDropCrate);
-
 
     }
 }

@@ -11,6 +11,6 @@ import com.foxholedefense.state.StateObserver;
  */
 
 public interface GameUIStateObserver extends StateObserver {
-    void stateChange(GameUIState state);
 
+    void stateChange(GameUIState state);
 }
