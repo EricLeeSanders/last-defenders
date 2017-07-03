@@ -15,27 +15,31 @@ import com.foxholedefense.util.datastructures.Dimension;
  */
 
 public abstract class AnimationEffect extends TextureEffect {
+
     private Animation<TextureRegion> animation;
 
-    protected AnimationEffect(Pool<TextureEffect> pool, Array<AtlasRegion> regions, Dimension textureSize, PlayMode playMode, float duration, float frameDuration) {
+    protected AnimationEffect(Pool<TextureEffect> pool, Array<AtlasRegion> regions,
+        Dimension textureSize, PlayMode playMode, float duration, float frameDuration) {
+
         super(pool, textureSize, duration);
         animation = new Animation<TextureRegion>(frameDuration, regions);
         animation.setPlayMode(playMode);
     }
 
-    public void initialize(Vector2 pos){
+    public void initialize(Vector2 pos) {
+
         setPositionCenter(pos);
     }
 
     @Override
     public void act(float delta) {
+
         if (animation.getPlayMode() != PlayMode.LOOP &&
-                animation.isAnimationFinished(stateTime)) {
+            animation.isAnimationFinished(stateTime)) {
             free();
             return;
         }
         super.act(delta);
         setTextureRegion(animation.getKeyFrame(stateTime, false));
     }
-
 }

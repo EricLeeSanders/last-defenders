@@ -7,67 +7,76 @@ import com.foxholedefense.screen.AbstractScreen;
 import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
 import com.foxholedefense.state.GameStateManager.GameState;
-import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.FHDAudio;
+import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
 
 /**
  * Screen class for the Main Menu. Creates the view and stage
- * 
- * @author Eric
  *
+ * @author Eric
  */
 public class MenuScreen extends AbstractScreen {
-	private MenuStage stage;
-	private GameStateManager gameStateManager;
 
-	public MenuScreen(ScreenChanger screenChanger, GameStateManager gameStateManager, Resources resources, FHDAudio audio) {
-		super(gameStateManager);
-		this.gameStateManager = gameStateManager;
-		this.stage = new MenuStage(screenChanger, resources, audio, getViewport());
-		super.addInputProcessor(stage);
-		audio.playMusic();
-		createBackListener();
-	}
+    private MenuStage stage;
+    private GameStateManager gameStateManager;
 
-	private void createBackListener(){
-		InputProcessor backProcessor = new InputAdapter() {
-			@Override
-			public boolean keyDown(int keycode) {
+    public MenuScreen(ScreenChanger screenChanger, GameStateManager gameStateManager,
+        Resources resources, FHDAudio audio) {
 
-				if ((keycode == Keys.ESCAPE) || (keycode == Keys.BACK) ) {
-					Logger.info("MenuScreen: Escape/Back pressed.");
-					gameStateManager.setState(GameState.QUIT);
-				}
-				return false;
-			}
-		};
-		super.addInputProcessor(backProcessor);
-	}
+        super(gameStateManager);
+        this.gameStateManager = gameStateManager;
+        this.stage = new MenuStage(screenChanger, resources, audio, getViewport());
+        super.addInputProcessor(stage);
+        audio.playMusic();
+        createBackListener();
+    }
 
-	@Override
-	public void show() {
-		Logger.info("Menu Screen: show");
-		super.show();
+    private void createBackListener() {
 
-	}
-	@Override
-	public void resize(int width, int height) {
-		stage.getViewport().setScreenSize(width, height); // update the size of Viewport
-	    super.resize(width, height);
-	}
-	@Override
-	public void renderElements(float delta) {
-		stage.act(delta);
-		stage.draw();
+        InputProcessor backProcessor = new InputAdapter() {
+            @Override
+            public boolean keyDown(int keycode) {
 
-	}
+                if ((keycode == Keys.ESCAPE) || (keycode == Keys.BACK)) {
+                    Logger.info("MenuScreen: Escape/Back pressed.");
+                    gameStateManager.setState(GameState.QUIT);
+                }
+                return false;
+            }
+        };
+        super.addInputProcessor(backProcessor);
+    }
 
-	@Override
-	public void dispose() {
-		super.dispose();
-		Logger.info("Menu Screen: Dispose");
-		stage.dispose();
+    @Override
+    public void show() {
 
-	}
+        Logger.info("Menu Screen: show");
+        super.show();
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+        stage.getViewport().setScreenSize(width, height); // update the size of Viewport
+        super.resize(width, height);
+    }
+
+    @Override
+    public void renderElements(float delta) {
+
+        stage.act(delta);
+        stage.draw();
+
+    }
+
+    @Override
+    public void dispose() {
+
+        super.dispose();
+        Logger.info("Menu Screen: Dispose");
+        stage.dispose();
+
+    }
 }

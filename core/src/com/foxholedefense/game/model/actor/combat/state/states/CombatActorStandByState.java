@@ -1,7 +1,6 @@
 package com.foxholedefense.game.model.actor.combat.state.states;
 
 import com.foxholedefense.game.model.actor.combat.state.CombatActorState;
-
 import java.util.Map;
 
 /**
@@ -9,6 +8,7 @@ import java.util.Map;
  */
 
 public class CombatActorStandByState implements CombatActorState {
+
     @Override
     public void loadParameters(Map<String, Object> parameters) {
 

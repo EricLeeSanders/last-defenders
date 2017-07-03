@@ -8,16 +8,19 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
  */
 
 public class WaypointAction extends MoveToAction {
+
     private float rotation;
 
+    public void setRotation(float rotation) {
 
-    public void setRotation(float rotation){
         this.rotation = rotation;
     }
 
     @Override
-    protected void begin () {
+    protected void begin() {
+
         super.begin();
         getTarget().setRotation(rotation);
     }
 }
+

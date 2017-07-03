@@ -2,16 +2,16 @@ package com.foxholedefense.game.ui.view.interfaces;
 
 /**
  * Interface for Support view.
- * 
- * @author Eric
  *
+ * @author Eric
  */
 public interface ISupportView {
-	void supportState();
 
-	void placingSupportState();
+    void supportState();
 
-	void standByState();
+    void placingSupportState();
 
-	void showBtnPlace();
+    void standByState();
+
+    void showBtnPlace();
 }

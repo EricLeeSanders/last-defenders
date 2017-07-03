@@ -8,13 +8,16 @@ import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
 import com.foxholedefense.game.model.actor.health.interfaces.PlatedArmor;
 import com.foxholedefense.game.model.actor.interfaces.Attacker;
 import com.foxholedefense.game.model.actor.interfaces.IRocket;
+
 /**
  * Created by Eric on 4/24/2017.
  */
 
 public abstract class AbstractTowerAI implements TowerAI {
+
     @Override
     public Enemy findTarget(Attacker attacker, SnapshotArray<Actor> enemies) {
+
         if (enemies.size == 0) {
             return null;
         }
@@ -22,9 +25,10 @@ public abstract class AbstractTowerAI implements TowerAI {
         Enemy platedReturnEnemy = null;
         for (Actor actor : enemies) {
             if (actor instanceof Enemy) {
-                Enemy enemy = (Enemy)actor;
+                Enemy enemy = (Enemy) actor;
                 if (!enemy.isDead()) {
-                    if (CollisionDetection.shapesIntersect(enemy.getBody(), attacker.getRangeShape())) {
+                    if (CollisionDetection
+                        .shapesIntersect(enemy.getBody(), attacker.getRangeShape())) {
                         if (returnEnemy == null || swap(returnEnemy, enemy)) {
                             if (!(enemy instanceof PlatedArmor) || (attacker instanceof IRocket)) {
                                 returnEnemy = enemy;

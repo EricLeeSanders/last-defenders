@@ -1,5 +1,14 @@
 package game.model.actor.combat.tower.state.states;
 
+import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.powermock.api.mockito.PowerMockito.spy;
+
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -10,27 +19,13 @@ import com.foxholedefense.game.model.actor.combat.tower.Tower;
 import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager;
 import com.foxholedefense.game.model.actor.combat.tower.state.states.TowerActiveState;
 import com.foxholedefense.game.model.actor.interfaces.Targetable;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-
 import testutil.TestUtil;
-
-
-import static org.mockito.Matchers.isA;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
-import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.spy;
 
 /**
  * Created by Eric on 5/15/2017.
@@ -40,7 +35,8 @@ import static org.powermock.api.mockito.PowerMockito.spy;
 public class TowerActiveStateTest {
 
     @Before
-    public void initTowerActiveStateTest(){
+    public void initTowerActiveStateTest() {
+
         Gdx.app = mock(Application.class);
         PowerMockito.mock(TowerAIType.class);
     }
@@ -49,7 +45,8 @@ public class TowerActiveStateTest {
      * Test that the state attacks an enemy
      */
     @Test
-    public void towerActiveStateTest1(){
+    public void towerActiveStateTest1() {
+
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
         Tower tower = TestUtil.createTower("Rifle", true);
 

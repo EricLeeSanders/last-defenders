@@ -6,13 +6,18 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 
 /**
  * Interface for a class that can attack actors
- * @author Eric
  *
+ * @author Eric
  */
 public interface Attacker {
-	Vector2 getPositionCenter();
-	Shape2D getRangeShape();
-	Vector2 getGunPos();
-	float getAttack();
-	Group getTargetGroup();
+
+    Vector2 getPositionCenter();
+
+    Shape2D getRangeShape();
+
+    Vector2 getGunPos();
+
+    float getAttack();
+
+    Group getTargetGroup();
 }

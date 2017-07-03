@@ -1,6 +1,13 @@
 package testutil;
 
 
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.isA;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.when;
+
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -39,21 +46,20 @@ import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Resources;
 
-
-import static org.mockito.Mockito.*;
-
 /**
  * Created by Eric on 4/23/2017.
  */
 
 public class TestUtil {
+
     public static final double DELTA = 1e-15;
     private static EffectFactory effectFactoryMock = createEffectFactoryMock();
     private static ProjectileFactory projectileFactoryMock = createProjectileFactoryMock();
     private static Player playerMock = mock(Player.class);
     private static FHDAudio audioMock = mock(FHDAudio.class);
 
-    public static Resources createResourcesMock(){
+    public static Resources createResourcesMock() {
+
         Array<AtlasRegion> atlasRegion = new Array<>();
         atlasRegion.add(null);
 
@@ -64,7 +70,8 @@ public class TestUtil {
         return resources;
     }
 
-    private static ProjectileFactory createProjectileFactoryMock(){
+    private static ProjectileFactory createProjectileFactoryMock() {
+
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
 
         Bullet bullet = mock(Bullet.class);
@@ -73,57 +80,68 @@ public class TestUtil {
         return projectileFactoryMock;
     }
 
-    private static EffectFactory createEffectFactoryMock(){
+    private static EffectFactory createEffectFactoryMock() {
+
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
 
         ArmorDestroyedEffect armorDestroyedEffect = mock(ArmorDestroyedEffect.class);
-        doReturn(armorDestroyedEffect).when(effectFactoryMock).loadLabelEffect(ArmorDestroyedEffect.class);
+        doReturn(armorDestroyedEffect).when(effectFactoryMock)
+            .loadLabelEffect(ArmorDestroyedEffect.class);
 
         DeathEffect deathEffect = mock(BloodSplatter.class);
         doReturn(deathEffect).when(effectFactoryMock).loadDeathEffect(isA(DeathEffectType.class));
 
         EnemyCoinEffect enemyCoinEffect = mock(EnemyCoinEffect.class);
-        doReturn(enemyCoinEffect).when(effectFactoryMock).loadAnimationEffect(EnemyCoinEffect.class);
+        doReturn(enemyCoinEffect).when(effectFactoryMock)
+            .loadAnimationEffect(EnemyCoinEffect.class);
 
         return effectFactoryMock;
     }
 
-    public static Tower createTower(String name, boolean spy){
+    public static Tower createTower(String name, boolean spy) {
 
         Tower tower;
 
         switch (name) {
             case "Rifle":
-                tower = new TowerRifle(null, null, new Group(), null, null, projectileFactoryMock, audioMock);
+                tower = new TowerRifle(null, null, new Group(), null, null, projectileFactoryMock,
+                    audioMock);
                 break;
             case "MachineGun":
-                tower = new TowerMachineGun(null, null, new Group(), null, null, projectileFactoryMock, audioMock);
+                tower = new TowerMachineGun(null, null, new Group(), null, null,
+                    projectileFactoryMock, audioMock);
                 break;
             case "Sniper":
-                tower = new TowerSniper(null, null, new Group(), null, null, projectileFactoryMock, audioMock);
+                tower = new TowerSniper(null, null, new Group(), null, null, projectileFactoryMock,
+                    audioMock);
                 break;
             case "RocketLauncher":
-                tower = new TowerRocketLauncher(null, null, new Group(), null, null, projectileFactoryMock, audioMock);
+                tower = new TowerRocketLauncher(null, null, new Group(), null, null,
+                    projectileFactoryMock, audioMock);
                 break;
             case "FlameThrower":
-                tower = new TowerFlameThrower(null, null, new Group(), null, null, projectileFactoryMock, audioMock);
+                tower = new TowerFlameThrower(null, null, new Group(), null, null,
+                    projectileFactoryMock, audioMock);
                 break;
             case "Tank":
-                tower = new TowerTank(null, null, null, new Group(), null, null, projectileFactoryMock, audioMock);
+                tower = new TowerTank(null, null, null, new Group(), null, null,
+                    projectileFactoryMock, audioMock);
                 break;
             case "Turret":
-                tower = new TowerTurret(null, null, null, new Group(), null, null, projectileFactoryMock, audioMock);
+                tower = new TowerTurret(null, null, null, new Group(), null, null,
+                    projectileFactoryMock, audioMock);
                 break;
             default:
                 throw new NullPointerException("Type: " + name + " doesn't exist");
 
         }
 
-        if(spy){
+        if (spy) {
             tower = spy(tower);
         }
 
-        CombatActorPool<? extends CombatActor> pool = (CombatActorPool<? extends CombatActor>) mock(CombatActorPool.class);
+        CombatActorPool<? extends CombatActor> pool = (CombatActorPool<? extends CombatActor>) mock(
+            CombatActorPool.class);
         tower.setPool(pool);
 
         TowerStateManager stateManager = new TowerStateManager(tower, effectFactoryMock);
@@ -138,7 +156,7 @@ public class TestUtil {
     }
 
 
-    public static Enemy createEnemy(String name, boolean spy){
+    public static Enemy createEnemy(String name, boolean spy) {
 
         Enemy enemy;
         Array<AtlasRegion> atlasRegion = new Array<>();
@@ -147,38 +165,46 @@ public class TestUtil {
 
         switch (name) {
             case "Rifle":
-                enemy = new EnemyRifle(null, animatedRegions, null, new Group(), projectileFactoryMock, audioMock);
+                enemy = new EnemyRifle(null, animatedRegions, null, new Group(),
+                    projectileFactoryMock, audioMock);
                 break;
             case "MachineGun":
-                enemy = new EnemyMachineGun(null, animatedRegions, null, new Group(), projectileFactoryMock, audioMock);
+                enemy = new EnemyMachineGun(null, animatedRegions, null, new Group(),
+                    projectileFactoryMock, audioMock);
                 break;
             case "Sniper":
-                enemy = new EnemySniper(null, animatedRegions, null, new Group(), projectileFactoryMock, audioMock);
+                enemy = new EnemySniper(null, animatedRegions, null, new Group(),
+                    projectileFactoryMock, audioMock);
                 break;
             case "FlameThrower":
-                enemy = new EnemyFlameThrower(null, animatedRegions, null, new Group(), projectileFactoryMock, audioMock);
+                enemy = new EnemyFlameThrower(null, animatedRegions, null, new Group(),
+                    projectileFactoryMock, audioMock);
                 break;
             case "Humvee":
                 enemy = new EnemyHumvee(null, animatedRegions, null);
                 break;
             case "RocketLauncher":
-                enemy = new EnemyRocketLauncher(null, animatedRegions, null, new Group(), projectileFactoryMock, audioMock);
+                enemy = new EnemyRocketLauncher(null, animatedRegions, null, new Group(),
+                    projectileFactoryMock, audioMock);
                 break;
             case "Tank":
-                enemy = new EnemyTank(null, null, animatedRegions, null, new Group(), projectileFactoryMock, audioMock);
+                enemy = new EnemyTank(null, null, animatedRegions, null, new Group(),
+                    projectileFactoryMock, audioMock);
                 break;
             default:
                 throw new NullPointerException("Type: " + name + " doesn't exist");
         }
 
-        if(spy){
+        if (spy) {
             enemy = spy(enemy);
         }
 
-        CombatActorPool<? extends CombatActor> pool = (CombatActorPool<? extends CombatActor>) mock(CombatActorPool.class);
+        CombatActorPool<? extends CombatActor> pool = (CombatActorPool<? extends CombatActor>) mock(
+            CombatActorPool.class);
         enemy.setPool(pool);
 
-        EnemyStateManager stateManager = new EnemyStateManager(enemy, effectFactoryMock, playerMock);
+        EnemyStateManager stateManager = new EnemyStateManager(enemy, effectFactoryMock,
+            playerMock);
         enemy.setStateManager(stateManager);
 
         EventManager eventManager = new EventManagerImpl(enemy, effectFactoryMock);
@@ -188,7 +214,4 @@ public class TestUtil {
 
         return enemy;
     }
-
-
-
 }

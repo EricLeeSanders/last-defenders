@@ -16,6 +16,7 @@ import com.foxholedefense.game.service.factory.CombatActorFactory;
 public class FileWaveLoader extends AbstractWaveLoader {
 
     public FileWaveLoader(CombatActorFactory combatActorFactory, Map map) {
+
         super(combatActorFactory, map);
     }
 
@@ -24,7 +25,8 @@ public class FileWaveLoader extends AbstractWaveLoader {
 
         Queue<SpawningEnemy> spawningEnemies = new Queue<>();
 
-        JsonValue json = new JsonReader().parse(Gdx.files.internal("game/levels/level" + level + "/waves/wave" + wave + ".json"));
+        JsonValue json = new JsonReader().parse(
+            Gdx.files.internal("game/levels/level" + level + "/waves/wave" + wave + ".json"));
         JsonValue enemiesJson = json.get("wave");
 
         for (JsonValue enemyJson : enemiesJson.iterator()) {

@@ -22,12 +22,14 @@ import com.foxholedefense.util.Resources;
  */
 
 public class DebugView extends Group implements IDebugView {
+
     private DebugPresenter presenter;
     private Label framesLabel;
     private CheckBox btnShowTextureBoundaries, btnShowFPS;
     private TextButton btnResume;
 
-    public DebugView(DebugPresenter presenter, Skin skin){
+    public DebugView(DebugPresenter presenter, Skin skin) {
+
         this.presenter = presenter;
         this.setTransform(false);
         createControls(skin);
@@ -43,8 +45,9 @@ public class DebugView extends Group implements IDebugView {
         Table container = new Table();
         container.setTransform(false);
         container.setBackground(skin.getDrawable("main-panel"));
-        container.setSize(500,360);
-        container.setPosition((Resources.VIRTUAL_WIDTH/2)-(container.getWidth()/2), (Resources.VIRTUAL_HEIGHT/2)-(container.getHeight()/2));
+        container.setSize(500, 360);
+        container.setPosition((Resources.VIRTUAL_WIDTH / 2) - (container.getWidth() / 2),
+            (Resources.VIRTUAL_HEIGHT / 2) - (container.getHeight() / 2));
         //table.debug();
         this.addActor(container);
 
@@ -54,8 +57,9 @@ public class DebugView extends Group implements IDebugView {
         container.add(mainTable);
 
         Label lblTitle = new Label("DEBUG", skin);
-        lblTitle.setPosition(container.getX() + (container.getWidth()/2) - (lblTitle.getWidth()/2)
-                ,container.getY() + container.getHeight() - lblTitle.getHeight() );
+        lblTitle
+            .setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2),
+                container.getY() + container.getHeight() - lblTitle.getHeight());
         lblTitle.setAlignment(Align.center);
         lblTitle.setFontScale(0.7f);
         this.addActor(lblTitle);
@@ -65,14 +69,12 @@ public class DebugView extends Group implements IDebugView {
         framesLabel.setColor(1f, 1f, 1f, 0.30f);
         framesLabel.setPosition(200, 320);
 
-
-        btnResume = new TextButton("RESUME",skin);
+        btnResume = new TextButton("RESUME", skin);
         btnResume.getLabel().setFontScale(0.45f);
         btnResume.pack();
-        btnResume.setPosition(112,20);
+        btnResume.setPosition(112, 20);
         addActor(btnResume);
         setBtnResumeListener();
-
 
         btnShowFPS = new CheckBox(" SHOW FPS", skin);
         btnShowFPS.getLabel().setFontScale(0.45f);
@@ -86,11 +88,10 @@ public class DebugView extends Group implements IDebugView {
         btnShowTextureBoundaries.getImage().setScaling(Scaling.stretch);
         setBtnShowTextureBoundariesListener(btnShowTextureBoundaries);
 
-        TextButton btnCrash =  new TextButton("TEST CRASH",skin);
+        TextButton btnCrash = new TextButton("TEST CRASH", skin);
         btnCrash.getLabel().setFontScale(0.45f);
         btnCrash.pack();
         setBtnCrashListener(btnCrash);
-
 
         mainTable.add(btnShowFPS).left().spaceLeft(15).spaceBottom(10);
 
@@ -106,34 +107,43 @@ public class DebugView extends Group implements IDebugView {
     }
 
     @Override
-    public void act (float delta) {
-        framesLabel.setText("FPS: " + Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
+    public void act(float delta) {
+
+        framesLabel
+            .setText("FPS: " + Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
     }
 
     private void setBtnCrashListener(Button button) {
+
         button.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.crash();
             }
         });
 
     }
-    private void setBtnShowFPSListener(Button button){
+
+    private void setBtnShowFPSListener(Button button) {
+
         button.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.showFPSPressed();
             }
         });
     }
 
-    private void setBtnShowTextureBoundariesListener(Button button){
+    private void setBtnShowTextureBoundariesListener(Button button) {
+
         button.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.showTextureBoundariesPressed();
             }
@@ -141,9 +151,11 @@ public class DebugView extends Group implements IDebugView {
     }
 
     private void setBtnResumeListener() {
+
         btnResume.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
                 super.touchUp(event, x, y, pointer, button);
                 presenter.resumeGame();
             }
@@ -152,9 +164,9 @@ public class DebugView extends Group implements IDebugView {
     }
 
     @Override
-    public void showFPS(boolean show){
+    public void showFPS(boolean show) {
 
-        if(show){
+        if (show) {
             this.getParent().addActor(framesLabel);
         } else {
             this.getParent().removeActor(framesLabel);
@@ -163,21 +175,25 @@ public class DebugView extends Group implements IDebugView {
 
     @Override
     public void setFPSChecked(boolean isChecked) {
+
         btnShowFPS.setChecked(isChecked);
     }
 
     @Override
     public void setTextureBoundariesChecked(boolean isChecked) {
+
         btnShowTextureBoundaries.setChecked(isChecked);
     }
 
     @Override
     public void debugState() {
+
         this.setVisible(true);
     }
 
     @Override
     public void standByState() {
+
         this.setVisible(false);
     }
 }
