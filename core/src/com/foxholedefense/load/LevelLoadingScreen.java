@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
@@ -29,10 +31,8 @@ public class LevelLoadingScreen extends AbstractScreen {
     private Stage stage;
     private float loadTime = 0;
     private int level;
-    private Image loadingBarBg;
     private Label loadingLabel;
-    private float endPos;
-    private float startPos;
+    private ProgressBar progressBar;
 
     public LevelLoadingScreen(GameStateManager gameStateManager, ScreenChanger screenChanger,
         Resources resources, int level) {
@@ -65,22 +65,22 @@ public class LevelLoadingScreen extends AbstractScreen {
 
         Logger.info("Level loading screen: show");
         super.show();
-        loadTime = 0;
 
         resources.loadAssetSync(Resources.LOAD_ATLAS, TextureAtlas.class);
         TextureAtlas atlas = resources.getAsset(Resources.LOAD_ATLAS, TextureAtlas.class);
+        loadTime = 0;
 
         Image loadingBar = new Image(atlas.findRegion("level-load-bar"));
-        startPos = ActorUtil
-            .calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, LOADING_BAR_SIZE.getWidth());
-        endPos = LOADING_BAR_SIZE.getWidth();
-        loadingBar.setSize(LOADING_BAR_SIZE.getWidth(), LOADING_BAR_SIZE.getHeight());
-        loadingBar.setPosition(startPos, ActorUtil
-            .calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()));
-
-        loadingBarBg = new Image(atlas.findRegion("level-load-bar-bg"));
-        loadingBarBg.setSize(LOADING_BAR_SIZE.getWidth(), LOADING_BAR_SIZE.getHeight());
-        loadingBarBg.setPosition(startPos, ActorUtil
+        loadingBar.setFillParent(true);
+        Image loadingBarBg = new Image(atlas.findRegion("level-load-bar-bg"));
+        ProgressBarStyle barStyle = new ProgressBarStyle(loadingBar.getDrawable(), loadingBarBg.getDrawable());
+        barStyle.knobAfter = barStyle.knob;
+        progressBar = new ProgressBar(0, 1, 0.000000001f, false, barStyle);
+        progressBar.getStyle().knob.setMinHeight( LOADING_BAR_SIZE.getHeight());
+        progressBar.setRound(false);
+        progressBar.setSize(LOADING_BAR_SIZE.getWidth(), LOADING_BAR_SIZE.getHeight());
+        progressBar.setPosition(ActorUtil
+            .calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, LOADING_BAR_SIZE.getWidth()), ActorUtil
             .calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()));
 
         loadingLabel = new Label("LOADING: 0%", resources.getSkin());
@@ -101,10 +101,9 @@ public class LevelLoadingScreen extends AbstractScreen {
             .calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, screen.getHeight());
         screen.setPosition(screenX, screenY);
 
-        stage.addActor(loadingBar);
-        stage.addActor(loadingBarBg);
-        stage.addActor(screen);
+        stage.addActor(progressBar);
         stage.addActor(loadingLabel);
+        stage.addActor(screen);
         load();
     }
 
@@ -129,10 +128,9 @@ public class LevelLoadingScreen extends AbstractScreen {
         if (percent > 1) {
             percent = 1;
         }
+
+        progressBar.setValue(percent);
         loadingLabel.setText("LOADING: " + Math.round(percent * 100) + "%");
-        float startX = startPos + endPos * percent;
-        loadingBarBg.setX(startX);
-        loadingBarBg.setWidth(endPos - endPos * percent);
 
         super.render(delta);
         if (resources.getManager().update() && loadTime >= MIN_LOAD_TIME) {
