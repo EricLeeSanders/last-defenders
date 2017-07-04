@@ -9,9 +9,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
@@ -38,20 +38,7 @@ public class OptionsView extends Group implements IOptionsView {
         this.presenter = presenter;
         this.setTransform(false);
         createControls(resources);
-    }
 
-    public void act(float delta) {
-
-        super.act(delta);
-        //This is a bit of a hack, but I need this here for the initial load of the screen.
-        float volStartX = volSliderStartPos + volSliderEndPos * presenter.getMasterVolume();
-        volSliderBg.setX(volStartX);
-        volSliderBg.setWidth(volSliderEndPos - volSliderEndPos * presenter.getMasterVolume());
-
-        float speedValue = presenter.getGameSpeed() / Resources.MAX_GAME_SPEED;
-        float speedStartX = speedSliderStartPos + speedSliderEndPos * speedValue;
-        speedSliderBg.setX(speedStartX);
-        speedSliderBg.setWidth(speedSliderEndPos - speedSliderEndPos * speedValue);
     }
 
     /**
@@ -68,8 +55,7 @@ public class OptionsView extends Group implements IOptionsView {
         container.setSize(500, 360);
         container.setPosition((Resources.VIRTUAL_WIDTH / 2) - (container.getWidth() / 2),
             (Resources.VIRTUAL_HEIGHT / 2) - (container.getHeight() / 2));
-        //table.debug();
-        this.addActor(container);
+        addActor(container);
 
         Table mainTable = new Table();
         mainTable.setTransform(false);
@@ -82,7 +68,7 @@ public class OptionsView extends Group implements IOptionsView {
                 container.getY() + container.getHeight() - lblTitle.getHeight());
         lblTitle.setAlignment(Align.center);
         lblTitle.setFontScale(0.7f);
-        this.addActor(lblTitle);
+        addActor(lblTitle);
 
         btnClose = new TextButton("CLOSE", skin);
         btnClose.getLabel().setFontScale(0.45f);
@@ -139,7 +125,7 @@ public class OptionsView extends Group implements IOptionsView {
         Label lblVol = new Label("VOLUME", skin);
         lblVol.setFontScale(0.5f);
 
-        Stack volumeStack = createVolSlider(skin, resources);
+        WidgetGroup volSlider = createVolSlider(skin, resources);
 
         Label lblSpeedZero = new Label("0", skin);
         lblSpeedZero.setFontScale(0.35f);
@@ -150,19 +136,16 @@ public class OptionsView extends Group implements IOptionsView {
         Label lblSpeed = new Label("SPEED", skin);
         lblSpeed.setFontScale(0.5f);
 
-        Stack speedStack = createSpeedSlider(skin, resources);
+        WidgetGroup speedSlider = createSpeedSlider(skin, resources);
 
-        //mainTable.add(btnResume).width(128).height(41).spaceBottom(10);
         mainTable.add(btnShowRanges).colspan(2).left().spaceLeft(15).spaceBottom(10);
 
         mainTable.row();
 
-        //mainTable.add(btnNewGame).width(128).height(41).spaceBottom(10);
         mainTable.add(btnMusic).colspan(2).left().spaceLeft(15).spaceBottom(10);
 
         mainTable.row();
 
-        //mainTable.add(btnMainMenu).width(128).height(41).spaceBottom(10);
         mainTable.add(btnSound).colspan(2).left().spaceLeft(15);
 
         mainTable.row();
@@ -173,7 +156,7 @@ public class OptionsView extends Group implements IOptionsView {
 
         mainTable.row();
 
-        mainTable.add(volumeStack).colspan(3).width(300).height(18);
+        mainTable.add(volSlider).colspan(3).width(300).height(18);
 
         mainTable.row();
 
@@ -183,15 +166,15 @@ public class OptionsView extends Group implements IOptionsView {
 
         mainTable.row();
 
-        mainTable.add(speedStack).colspan(3).width(300).height(18).spaceTop(1);
+        mainTable.add(speedSlider).colspan(3).width(300).height(18).spaceTop(2);
 
         Logger.info("Options View: controls created");
     }
 
-    private Stack createSpeedSlider(Skin skin, Resources resources) {
+    private WidgetGroup createSpeedSlider(Skin skin, Resources resources) {
 
-        Stack speedStack = new Stack();
-        speedStack.setTransform(false);
+        WidgetGroup group = new WidgetGroup();
+        group.setTransform(false);
 
         Slider speedSlider = new Slider(0, 1f, 0.01f, false, skin);
         speedSlider.getStyle().knob.setMinWidth(33);
@@ -200,30 +183,39 @@ public class OptionsView extends Group implements IOptionsView {
         speedSlider.getStyle().background.setMinWidth(300);
         float speedValue = presenter.getGameSpeed() / Resources.MAX_GAME_SPEED;
         speedSlider.setValue(speedValue);
+        speedSlider.setSize(300, 22);
         speedSliderListener(speedSlider);
 
         Image speedSliderFull = new Image(
             resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
-        speedSliderFull.setSize(300, 22);
+        speedSliderFull.setSize(299, 20);
+        speedSliderFull.setPosition(0, 1);
+        speedSliderFull.setAlign(Align.center);
 
         speedSliderBg = new Image(
             resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
-        speedSliderBg.setSize(300, 22);
+        speedSliderBg.setSize(299, 20);
+        speedSliderBg.setPosition(0, 1);
+        speedSliderBg.setAlign(Align.center);
 
-        this.speedSliderStartPos = speedSliderBg.getX() + 2;
+        this.speedSliderStartPos = speedSliderBg.getX() + 3;
         this.speedSliderEndPos = speedSliderBg.getX() + speedSliderBg.getWidth() - 6;
 
-        speedStack.add(speedSliderFull);
-        speedStack.add(speedSliderBg);
-        speedStack.add(speedSlider);
+        group.addActor(speedSliderFull);
+        group.addActor(speedSliderBg);
+        group.addActor(speedSlider);
 
-        return speedStack;
+        float speedStartX = speedSliderStartPos + speedSliderEndPos * speedValue;
+        speedSliderBg.setX(speedStartX);
+        speedSliderBg.setWidth(speedSliderEndPos - speedSliderEndPos * speedValue);
+
+        return group;
     }
 
-    private Stack createVolSlider(Skin skin, Resources resources) {
+    private WidgetGroup createVolSlider(Skin skin, Resources resources) {
 
-        Stack volumeStack = new Stack();
-        volumeStack.setTransform(false);
+        WidgetGroup group = new WidgetGroup();
+        group.setTransform(false);
 
         Slider volumeSlider = new Slider(0, 1f, 0.01f, false, skin);
         volumeSlider.getStyle().knob.setMinWidth(33);
@@ -231,24 +223,34 @@ public class OptionsView extends Group implements IOptionsView {
         volumeSlider.getStyle().background.setMinHeight(22);
         volumeSlider.getStyle().background.setMinWidth(300);
         volumeSlider.setValue(presenter.getMasterVolume());
+        volumeSlider.setSize(300, 22);
         volSliderListener(volumeSlider);
 
         Image volSliderFull = new Image(
             resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
-        volSliderFull.setSize(300, 22);
+        volSliderFull.setSize(299, 20);
+        volSliderFull.setPosition(0, 1);
+        volSliderFull.setAlign(Align.center);
 
         volSliderBg = new Image(
             resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
-        volSliderBg.setSize(300, 22);
+        volSliderBg.setSize(299, 20);
+        volSliderBg.setPosition(0, 1);
+        volSliderBg.setAlign(Align.center);
 
-        this.volSliderStartPos = volSliderBg.getX() + 2;
+        this.volSliderStartPos = volSliderBg.getX() + 3;
         this.volSliderEndPos = volSliderBg.getX() + volSliderBg.getWidth() - 6;
 
-        volumeStack.add(volSliderFull);
-        volumeStack.add(volSliderBg);
-        volumeStack.add(volumeSlider);
+        group.addActor(volSliderFull);
+        group.addActor(volSliderBg);
+        group.addActor(volumeSlider);
 
-        return volumeStack;
+        float volValue = (volSliderEndPos - volSliderEndPos * presenter.getMasterVolume());
+        float volStartX = volSliderStartPos + volSliderEndPos * presenter.getMasterVolume();
+        volSliderBg.setX(volStartX);
+        volSliderBg.setWidth(volValue);
+
+        return group;
     }
 
     private void setBtnCloseListener() {
