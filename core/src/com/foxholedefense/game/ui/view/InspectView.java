@@ -170,6 +170,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
         lblKills.setText(String.valueOf(selectedTower.getNumOfKills()));
         btnDischarge.updateCost(selectedTower.getSellCost());
+        btnDischarge.button.setDisabled(presenter.isDischargeDisabled());
         lblTitle.setText(selectedTower.getName().toUpperCase());
         lblTargetPriority.setText(selectedTower.getAI().name().replace('_', ' '));
         updateUpgradeControl(btnArmor, selectedTower.hasArmor(), selectedTower.getArmorCost());
