@@ -13,6 +13,19 @@ import java.util.Map;
  */
 public class FHDAudio {
 
+    public static final String MENU_MUSIC = "audio/big_action_trailer.mp3";
+    public static final String ROCKET_EXPLOSION_SOUND = "audio/rocket_explosion.mp3";
+    public static final String ROCKET_LAUNCH_SOUND = "audio/rocket_launch.mp3";
+    public static final String FLAME_SOUND = "audio/flame_burst.mp3";
+    public static final String RIFLE_SHOT_SOUND = "audio/rifle_shot.mp3";
+    public static final String MACHINE_GUN_SHOT_SOUND = "audio/machine_gun_shot.mp3";
+    public static final String SNIPER_SHOT_SOUND = "audio/sniper_shot.mp3";
+    public static final String ACTOR_PLACE_SOUND = "audio/actor_place.mp3";
+    public static final String SELL_SOUND = "audio/sell.mp3";
+    public static final String SMALL_CLICK = "audio/button_small_click.mp3";
+    public static final String LARGE_CLICK = "audio/button_large_click.mp3";
+    public static final String VEHICLE_EXPLOSION_SOUND = "audio/vehicle_explosion.mp3";
+
     private Music music;
     private Map<FHDSound, Sound> sounds = new HashMap<>();
     private boolean musicEnabled, soundEnabled;
@@ -30,23 +43,23 @@ public class FHDAudio {
     public void load() {
 
         Logger.info("FHDAudio: loading");
-        music = Gdx.audio.newMusic(Gdx.files.internal(Resources.MENU_MUSIC));
+        music = Gdx.audio.newMusic(Gdx.files.internal(MENU_MUSIC));
         music.setLooping(true);
 
         Sound rocketExplosion = Gdx.audio
-            .newSound(Gdx.files.internal(Resources.ROCKET_EXPLOSION_SOUND));
-        Sound rocketLaunch = Gdx.audio.newSound(Gdx.files.internal(Resources.ROCKET_LAUNCH_SOUND));
-        Sound flameBurst = Gdx.audio.newSound(Gdx.files.internal(Resources.FLAME_SOUND));
-        Sound rifleShot = Gdx.audio.newSound(Gdx.files.internal(Resources.RIFLE_SHOT_SOUND));
-        Sound sniperShot = Gdx.audio.newSound(Gdx.files.internal(Resources.SNIPER_SHOT_SOUND));
+            .newSound(Gdx.files.internal(ROCKET_EXPLOSION_SOUND));
+        Sound rocketLaunch = Gdx.audio.newSound(Gdx.files.internal(ROCKET_LAUNCH_SOUND));
+        Sound flameBurst = Gdx.audio.newSound(Gdx.files.internal(FLAME_SOUND));
+        Sound rifleShot = Gdx.audio.newSound(Gdx.files.internal(RIFLE_SHOT_SOUND));
+        Sound sniperShot = Gdx.audio.newSound(Gdx.files.internal(SNIPER_SHOT_SOUND));
         Sound machineGunShot = Gdx.audio
-            .newSound(Gdx.files.internal(Resources.MACHINE_GUN_SHOT_SOUND));
+            .newSound(Gdx.files.internal(MACHINE_GUN_SHOT_SOUND));
         Sound vehicleExplosion = Gdx.audio
-            .newSound(Gdx.files.internal(Resources.VEHICLE_EXPLOSION_SOUND));
-        Sound actorPlace = Gdx.audio.newSound(Gdx.files.internal(Resources.ACTOR_PLACE_SOUND));
-        Sound sell = Gdx.audio.newSound(Gdx.files.internal(Resources.SELL_SOUND));
-        Sound smallClick = Gdx.audio.newSound(Gdx.files.internal(Resources.SMALL_CLICK));
-        Sound largeClick = Gdx.audio.newSound(Gdx.files.internal(Resources.LARGE_CLICK));
+            .newSound(Gdx.files.internal(VEHICLE_EXPLOSION_SOUND));
+        Sound actorPlace = Gdx.audio.newSound(Gdx.files.internal(ACTOR_PLACE_SOUND));
+        Sound sell = Gdx.audio.newSound(Gdx.files.internal(SELL_SOUND));
+        Sound smallClick = Gdx.audio.newSound(Gdx.files.internal(SMALL_CLICK));
+        Sound largeClick = Gdx.audio.newSound(Gdx.files.internal(LARGE_CLICK));
 
         sounds.put(FHDSound.ROCKET_EXPLOSION, rocketExplosion);
         sounds.put(FHDSound.ROCKET_LAUNCH, rocketLaunch);
