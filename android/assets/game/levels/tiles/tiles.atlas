@@ -304,132 +304,90 @@ size: 512,256
 format: RGBA8888
 filter: MipMapLinearNearest,Nearest
 repeat: none
-bridge/bridge-horz
+bridge/bridge-0-0
   rotate: false
   xy: 1, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 1
-bridge/bridge-horz
+  index: -1
+bridge/bridge-0-1
   rotate: false
   xy: 67, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 2
-bridge/bridge-horz
+  index: -1
+bridge/bridge-0-2
   rotate: false
   xy: 133, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 3
-bridge/bridge-horz
+  index: -1
+bridge/bridge-1-0
   rotate: false
   xy: 199, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 4
-bridge/bridge-horz
+  index: -1
+bridge/bridge-1-1
   rotate: false
   xy: 265, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 5
-bridge/bridge-horz
+  index: -1
+bridge/bridge-1-2
   rotate: false
   xy: 331, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 6
-bridge/bridge-horz
+  index: -1
+bridge/bridge-horz-0-0
   rotate: false
   xy: 397, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 7
-bridge/bridge-horz
+  index: -1
+bridge/bridge-horz-0-1
   rotate: false
   xy: 1, 67
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 8
-bridge/bridge-horz
+  index: -1
+bridge/bridge-horz-1-0
   rotate: false
   xy: 67, 67
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 9
-bridge/bridge-vert
+  index: -1
+bridge/bridge-horz-1-1
   rotate: false
   xy: 133, 67
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 1
-bridge/bridge-vert
+  index: -1
+bridge/bridge-horz-2-0
   rotate: false
   xy: 199, 67
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 2
-bridge/bridge-vert
+  index: -1
+bridge/bridge-horz-2-1
   rotate: false
   xy: 265, 67
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
-  index: 3
-bridge/bridge-vert
-  rotate: false
-  xy: 331, 67
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 4
-bridge/bridge-vert
-  rotate: false
-  xy: 397, 67
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 5
-bridge/bridge-vert
-  rotate: false
-  xy: 1, 133
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 6
-bridge/bridge-vert
-  rotate: false
-  xy: 67, 133
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 7
-bridge/bridge-vert
-  rotate: false
-  xy: 133, 133
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 8
-bridge/bridge-vert
-  rotate: false
-  xy: 199, 133
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: 9
+  index: -1
 
 tiles3.png
 size: 512,512
@@ -1264,6 +1222,19 @@ trees/tree-9-lg
 trees/tree-9-sm
   rotate: false
   xy: 133, 793
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+
+tiles5.png
+size: 128,128
+format: RGBA8888
+filter: MipMapLinearNearest,Nearest
+repeat: none
+z_Other/skull
+  rotate: false
+  xy: 1, 1
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
