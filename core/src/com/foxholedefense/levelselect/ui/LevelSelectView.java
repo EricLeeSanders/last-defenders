@@ -2,6 +2,7 @@ package com.foxholedefense.levelselect.ui;
 
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.FHDAudio.FHDSound;
@@ -24,12 +26,14 @@ import com.foxholedefense.util.Resources;
  */
 public class LevelSelectView extends Group {
 
+    private static final int MAX_LEVELS = 6;
+
     private LevelSelectPresenter presenter;
     private Label lblLevel;
-    private Image level1, level2, level3, level4, level5;
+    private Array<Image> levels = new Array<Image>(true, MAX_LEVELS);
     private Group levelGroup;
-    private int selectedLevel;
     private FHDAudio audio;
+    private int selectedLevel;
 
     public LevelSelectView(LevelSelectPresenter presenter, Resources resources, FHDAudio audio) {
 
@@ -68,23 +72,30 @@ public class LevelSelectView extends Group {
         ImageButton btnLevel3 = new ImageButton(
             new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
         btnLevel3.setSize(64, 64);
-        btnLevel3.setPosition(528 - (btnLevel3.getWidth() / 2), 85);
+        btnLevel3.setPosition(400 - (btnLevel3.getWidth() / 2), 70);
         this.addActor(btnLevel3);
         setBtnLevelListener(btnLevel3, 3);
 
         ImageButton btnLevel4 = new ImageButton(
             new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
         btnLevel4.setSize(64, 64);
-        btnLevel4.setPosition(467 - (btnLevel4.getWidth() / 2), 228);
+        btnLevel4.setPosition(528 - (btnLevel4.getWidth() / 2), 85);
         this.addActor(btnLevel4);
         setBtnLevelListener(btnLevel4, 4);
 
         ImageButton btnLevel5 = new ImageButton(
             new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
         btnLevel5.setSize(64, 64);
-        btnLevel5.setPosition(380 - (btnLevel5.getWidth() / 2), 300);
+        btnLevel5.setPosition(467 - (btnLevel5.getWidth() / 2), 228);
         this.addActor(btnLevel5);
         setBtnLevelListener(btnLevel5, 5);
+
+        ImageButton btnLevel6 = new ImageButton(
+            new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
+        btnLevel6.setSize(64, 64);
+        btnLevel6.setPosition(380 - (btnLevel6.getWidth() / 2), 300);
+        this.addActor(btnLevel6);
+        setBtnLevelListener(btnLevel6, 6);
 
         ImageButton btnMenu = new ImageButton(skin, "arrow-left");
         btnMenu.setSize(64, 64);
@@ -109,30 +120,10 @@ public class LevelSelectView extends Group {
 
         Logger.info("Level select view: creating confirm level controls");
 
-        level1 = new Image(levelSelectAtlas.findRegion("level1"));
-        level1.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
-        level1.setVisible(false);
-        levelGroup.addActor(level1);
-
-        level2 = new Image(levelSelectAtlas.findRegion("level2"));
-        level2.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
-        level2.setVisible(false);
-        levelGroup.addActor(level2);
-
-        level3 = new Image(levelSelectAtlas.findRegion("level3"));
-        level3.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
-        level3.setVisible(false);
-        levelGroup.addActor(level3);
-
-        level4 = new Image(levelSelectAtlas.findRegion("level4"));
-        level4.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
-        level4.setVisible(false);
-        levelGroup.addActor(level4);
-
-        level5 = new Image(levelSelectAtlas.findRegion("level5"));
-        level5.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
-        level5.setVisible(false);
-        levelGroup.addActor(level5);
+        for(int i = 0; i < MAX_LEVELS; i++){
+            Image level = createLevelImage(i+1, levelSelectAtlas);
+            levels.add(level);
+        }
 
         ImageButton btnMap = new ImageButton(
             new TextureRegionDrawable(levelSelectAtlas.findRegion("map_icon")));
@@ -157,47 +148,26 @@ public class LevelSelectView extends Group {
         Logger.info("Level select presenter: confirm level controls created");
     }
 
-    private void showConfirmWindow(boolean visible) {
+    private Image createLevelImage(int intLevel, TextureAtlas levelSelectAtlas){
 
-        Logger.info("Level select presenter: show confirm window: " + visible);
+        Image level = new Image(levelSelectAtlas.findRegion("level" + intLevel));
+        level.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+        level.setVisible(false);
+        levelGroup.addActor(level);
 
-        levelGroup.setVisible(visible);
-        if (visible) {
-            if (selectedLevel == 1) {
-                lblLevel.setText("LEVEL 1");
-                level1.setVisible(true);
-                level2.setVisible(false);
-                level3.setVisible(false);
-                level4.setVisible(false);
-                level5.setVisible(false);
-            } else if (selectedLevel == 2) {
-                lblLevel.setText("LEVEL 2");
-                level1.setVisible(false);
-                level2.setVisible(true);
-                level3.setVisible(false);
-                level4.setVisible(false);
-                level5.setVisible(false);
-            } else if (selectedLevel == 3) {
-                lblLevel.setText("LEVEL 3");
-                level1.setVisible(false);
-                level2.setVisible(false);
-                level3.setVisible(true);
-                level4.setVisible(false);
-                level5.setVisible(false);
-            } else if (selectedLevel == 4) {
-                lblLevel.setText("LEVEL 4");
-                level1.setVisible(false);
-                level2.setVisible(false);
-                level3.setVisible(false);
-                level4.setVisible(true);
-                level5.setVisible(false);
-            } else if (selectedLevel == 5) {
-                lblLevel.setText("LEVEL 5");
-                level1.setVisible(false);
-                level2.setVisible(false);
-                level3.setVisible(false);
-                level4.setVisible(false);
-                level5.setVisible(true);
+        return level;
+    }
+
+    private void showConfirmWindow() {
+
+        Logger.info("Level select presenter: show confirm window");
+
+        lblLevel.setText("LEVEL " + selectedLevel);
+        for(int i = 0; i < MAX_LEVELS; i++){
+            if((i+1) == selectedLevel){
+                levels.get(i).setVisible(true);
+            } else {
+                levels.get(i).setVisible(false);
             }
         }
     }
@@ -223,9 +193,10 @@ public class LevelSelectView extends Group {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                selectedLevel = level;
                 audio.playSound(FHDSound.SMALL_CLICK);
-                showConfirmWindow(true);
+                selectedLevel = level;
+                levelGroup.setVisible(true);
+                showConfirmWindow();
 
             }
         });
@@ -239,7 +210,7 @@ public class LevelSelectView extends Group {
 
                 super.touchUp(event, x, y, pointer, button);
                 audio.playSound(FHDSound.LARGE_CLICK);
-                showConfirmWindow(false);
+                levelGroup.setVisible(false);
 
             }
         });

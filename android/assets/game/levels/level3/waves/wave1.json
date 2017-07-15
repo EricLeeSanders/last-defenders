@@ -1,63 +1,8 @@
 {
 "wave": [
     {
-        "enemy": Tank,
-        "delay": .45,
-        "armor": false
-    },
-    {
-        "enemy": Humvee,
-        "delay": .45,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .45,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .60,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .75,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .30,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .9,
-        "armor": false
-    },
-        {
-        "enemy": Rifle,
-        "delay": .5,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .5,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .5,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .5,
-        "armor": false
-    },
-    {
-        "enemy": Rifle,
-        "delay": .5,
+        "enemy": "Rifle",
+        "delay": .05,
         "armor": false
     }
 ]
