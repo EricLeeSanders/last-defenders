@@ -10,6 +10,7 @@ import com.foxholedefense.game.model.level.state.LevelStateManager;
 import com.foxholedefense.game.ui.GameUIStage;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.levelselect.LevelName;
 import com.foxholedefense.screen.AbstractScreen;
 import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
@@ -33,7 +34,7 @@ public class GameScreen extends AbstractScreen {
     private Resources resources;
     private SpriteBatch spriteBatch;
 
-    public GameScreen(int intLevel, GameStateManager gameStateManager, ScreenChanger screenChanger,
+    public GameScreen(LevelName levelName, GameStateManager gameStateManager, ScreenChanger screenChanger,
         Resources resources, FHDAudio audio) {
 
         super(gameStateManager);
@@ -44,7 +45,7 @@ public class GameScreen extends AbstractScreen {
         uiStateManager = new GameUIStateManager(levelStateManager);
         this.gameStateManager = gameStateManager;
         spriteBatch = new SpriteBatch();
-        gameStage = new GameStage(intLevel, player, actorGroups, audio, levelStateManager,
+        gameStage = new GameStage(levelName, player, actorGroups, audio, levelStateManager,
             uiStateManager, getViewport(), resources, spriteBatch);
         gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager,
             levelStateManager, gameStateManager, screenChanger, super.getInputMultiplexer(),

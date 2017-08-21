@@ -7,6 +7,7 @@ import com.foxholedefense.game.model.level.Level;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.SpawningEnemy;
 import com.foxholedefense.game.service.factory.CombatActorFactory;
+import com.foxholedefense.levelselect.LevelName;
 import com.foxholedefense.util.Logger;
 import java.util.HashMap;
 import java.util.Map.Entry;
@@ -47,7 +48,7 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
     }
 
     @Override
-    public Queue<SpawningEnemy> loadWave(int level, int wave) {
+    public Queue<SpawningEnemy> loadWave(LevelName levelName, int wave) {
 
         Logger.info("DynamicWaveGenerator: Generating Wave: " + wave);
 

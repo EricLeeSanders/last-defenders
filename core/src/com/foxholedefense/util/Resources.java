@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.foxholedefense.levelselect.LevelName;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class Resources {
     public static final String SKIN_ATLAS = "skin/uiskin.atlas";
     public static final float VIRTUAL_WIDTH = 640; // 16:9
     public static final float VIRTUAL_HEIGHT = 360;
-    public static final float TILED_MAP_SCALE = 0.5f;
+    public static final float TILED_MAP_SCALE = 0.25f;
     public static final float MAX_GAME_SPEED = 2.0f;
 
     private static final String SKIN_JSON = "skin/uiskin.json";
@@ -208,19 +209,19 @@ public class Resources {
         }
     }
 
-    public void loadMap(int level) {
+    public void loadMap(LevelName level) {
 
-        loadAsset("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
+        loadAsset("game/levels/" + level.toString() + "/" + level.toString() + ".tmx", TiledMap.class);
     }
 
-    public TiledMap getMap(int level) {
+    public TiledMap getMap(LevelName level) {
 
-        return getAsset("game/levels/level" + level + "/level" + level + ".tmx", TiledMap.class);
+        return getAsset("game/levels/" + level.toString() + "/" + level.toString() + ".tmx", TiledMap.class);
     }
 
-    public void unloadMap(int level) {
+    public void unloadMap(LevelName level) {
 
-        unloadAsset("game/levels/level" + level + "/level" + level + ".tmx");
+        unloadAsset("game/levels/" + level.toString() + "/" + level.toString() + ".tmx");
     }
 
     private void loadSkinSync() {
