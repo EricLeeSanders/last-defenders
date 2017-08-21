@@ -1,5 +1,6 @@
 package com.foxholedefense.levelselect.ui;
 
+import com.foxholedefense.levelselect.LevelName;
 import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.util.Logger;
 
@@ -26,7 +27,7 @@ public class LevelSelectPresenter {
     /**
      * Sets the screen state to the level selected
      */
-    public void loadLevel(int level) {
+    public void loadLevel(LevelName level) {
 
         Logger.info("Level select presenter: load level");
         screenChanger.changeToLevelLoad(level);

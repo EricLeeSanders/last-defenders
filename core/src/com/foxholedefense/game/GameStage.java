@@ -28,6 +28,7 @@ import com.foxholedefense.game.service.factory.ProjectileFactory;
 import com.foxholedefense.game.service.factory.SupportActorFactory;
 import com.foxholedefense.game.ui.state.GameUIStateManager;
 import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
+import com.foxholedefense.levelselect.LevelName;
 import com.foxholedefense.util.FHDAudio;
 import com.foxholedefense.util.Logger;
 import com.foxholedefense.util.Resources;
@@ -45,7 +46,7 @@ public class GameStage extends Stage implements PlayerObserver {
     private GameUIStateManager uiStateManager;
     private Level level;
     private Player player;
-    private int intLevel;
+    private LevelName levelName;
     private ActorGroups actorGroups;
     private Map map;
     private MapRenderer mapRenderer;
@@ -59,7 +60,7 @@ public class GameStage extends Stage implements PlayerObserver {
     private SupportActorFactory supportActorFactory;
     private EffectFactory effectFactory;
 
-    public GameStage(int intLevel, Player player, ActorGroups actorGroups, FHDAudio audio,
+    public GameStage(LevelName levelName, Player player, ActorGroups actorGroups, FHDAudio audio,
         LevelStateManager levelStateManager, GameUIStateManager uiStateManager,
         Viewport viewport, Resources resources, SpriteBatch spriteBatch) {
 
@@ -68,9 +69,9 @@ public class GameStage extends Stage implements PlayerObserver {
         this.actorGroups = actorGroups;
         this.levelStateManager = levelStateManager;
         this.uiStateManager = uiStateManager;
-        this.intLevel = intLevel;
+        this.levelName = levelName;
         this.resources = resources;
-        TiledMap tiledMap = resources.getMap(intLevel);
+        TiledMap tiledMap = resources.getMap(levelName);
         map = new Map(tiledMap);
         createGroups();
         createFactories(audio);
@@ -78,7 +79,7 @@ public class GameStage extends Stage implements PlayerObserver {
         mapRenderer = new MapRenderer(tiledMap, getCamera());
         FileWaveLoader fileWaveLoader = new FileWaveLoader(combatActorFactory, map);
         DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
-        level = new Level(intLevel, getActorGroups(), healthFactory, fileWaveLoader,
+        level = new Level(levelName, getActorGroups(), healthFactory, fileWaveLoader,
             dynamicWaveLoader);
         player.attachObserver(this);
 
@@ -162,7 +163,7 @@ public class GameStage extends Stage implements PlayerObserver {
 
         Logger.info("Game Stage Dispose");
         map.dispose();
-        resources.unloadMap(intLevel);
+        resources.unloadMap(levelName);
         super.dispose();
     }
 

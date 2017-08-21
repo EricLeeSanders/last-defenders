@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.foxholedefense.game.GameScreen;
+import com.foxholedefense.levelselect.LevelName;
 import com.foxholedefense.levelselect.LevelSelectScreen;
 import com.foxholedefense.load.GameLoadingScreen;
 import com.foxholedefense.load.LevelLoadingScreen;
@@ -87,17 +88,17 @@ public class FHDGame extends Game implements ScreenChanger, GameStateObserver {
     }
 
     @Override
-    public void changeToLevelLoad(int level) {
+    public void changeToLevelLoad(LevelName level) {
 
-        Logger.info("FHDGame: Changing to level load");
+        Logger.info("FHDGame: Changing to level load: " + level.toString());
         this.getScreen().dispose(); // dispose current screen
         this.setScreen(new LevelLoadingScreen(gameStateManager, this, resources, level));
     }
 
     @Override
-    public void changeToLevel(int level) {
+    public void changeToLevel(LevelName level) {
 
-        Logger.info("FHDGame: Changing to level: " + level);
+        Logger.info("FHDGame: Changing to level: " + level.toString());
         this.getScreen().dispose(); // dispose current screen
         this.setScreen(new GameScreen(level, gameStateManager, this, resources, audio));
     }
