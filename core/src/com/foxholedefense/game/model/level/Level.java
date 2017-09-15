@@ -8,6 +8,7 @@ import com.foxholedefense.game.model.level.wave.WaveLoader;
 import com.foxholedefense.game.model.level.wave.impl.DynamicWaveLoader;
 import com.foxholedefense.game.model.level.wave.impl.FileWaveLoader;
 import com.foxholedefense.game.service.factory.HealthFactory;
+import com.foxholedefense.levelselect.LevelName;
 import com.foxholedefense.util.Logger;
 
 public class Level {
@@ -18,16 +19,16 @@ public class Level {
     private float enemyDelay = 0f;
     private int currentWave = 0;
     private Queue<SpawningEnemy> spawningEnemyQueue;
-    private int intLevel;
+    private LevelName levelName;
     private WaveLoader waveLoader;
     private DynamicWaveLoader dynamicWaveLoader;
     private ActorGroups actorGroups;
     private HealthFactory healthFactory;
 
-    public Level(int level, ActorGroups actorGroups, HealthFactory healthFactory,
+    public Level(LevelName levelName, ActorGroups actorGroups, HealthFactory healthFactory,
         FileWaveLoader fileWaveLoader, DynamicWaveLoader dynamicWaveLoader) {
 
-        this.intLevel = level;
+        this.levelName = levelName;
         this.actorGroups = actorGroups;
         this.healthFactory = healthFactory;
         this.waveLoader = fileWaveLoader;
@@ -81,7 +82,7 @@ public class Level {
         if (currentWave == MAX_WAVES + 1) {
             waveLoader = dynamicWaveLoader;
         }
-        spawningEnemyQueue = waveLoader.loadWave(intLevel, currentWave);
+        spawningEnemyQueue = waveLoader.loadWave(levelName, currentWave);
         delayCount = 0;
         enemyDelay = 0;
 

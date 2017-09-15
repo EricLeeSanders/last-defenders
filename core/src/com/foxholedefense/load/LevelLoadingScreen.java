@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.foxholedefense.levelselect.LevelName;
 import com.foxholedefense.screen.AbstractScreen;
 import com.foxholedefense.screen.ScreenChanger;
 import com.foxholedefense.state.GameStateManager;
@@ -30,17 +31,17 @@ public class LevelLoadingScreen extends AbstractScreen {
     private ScreenChanger screenChanger;
     private Stage stage;
     private float loadTime = 0;
-    private int level;
+    private LevelName levelName;
     private Label loadingLabel;
     private ProgressBar progressBar;
 
     public LevelLoadingScreen(GameStateManager gameStateManager, ScreenChanger screenChanger,
-        Resources resources, int level) {
+        Resources resources, LevelName levelName) {
 
         super(gameStateManager);
         this.resources = resources;
         this.screenChanger = screenChanger;
-        this.level = level;
+        this.levelName = levelName;
         this.stage = new Stage(
             new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT,
                 new OrthographicCamera()));
@@ -153,13 +154,13 @@ public class LevelLoadingScreen extends AbstractScreen {
 
         resources.loadAsset(Resources.ACTOR_ATLAS, TextureAtlas.class);
         resources.loadActorAtlasRegions();
-        resources.loadMap(level);
+        resources.loadMap(levelName);
 
     }
 
     private void finishedLoading() {
 
-        screenChanger.changeToLevel(level);
+        screenChanger.changeToLevel(levelName);
     }
 
 }

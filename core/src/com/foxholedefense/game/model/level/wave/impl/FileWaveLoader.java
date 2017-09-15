@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Queue;
 import com.foxholedefense.game.model.level.Map;
 import com.foxholedefense.game.model.level.SpawningEnemy;
 import com.foxholedefense.game.service.factory.CombatActorFactory;
+import com.foxholedefense.levelselect.LevelName;
 
 
 /**
@@ -21,12 +22,12 @@ public class FileWaveLoader extends AbstractWaveLoader {
     }
 
     @Override
-    public Queue<SpawningEnemy> loadWave(int level, int wave) {
+    public Queue<SpawningEnemy> loadWave(LevelName levelName, int wave) {
 
         Queue<SpawningEnemy> spawningEnemies = new Queue<>();
 
         JsonValue json = new JsonReader().parse(
-            Gdx.files.internal("game/levels/level" + level + "/waves/wave" + wave + ".json"));
+            Gdx.files.internal("game/levels/" + levelName.toString() + "/waves/wave" + wave + ".json"));
         JsonValue enemiesJson = json.get("wave");
 
         for (JsonValue enemyJson : enemiesJson.iterator()) {
