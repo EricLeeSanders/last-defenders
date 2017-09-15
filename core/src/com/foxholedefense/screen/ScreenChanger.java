@@ -1,5 +1,7 @@
 package com.foxholedefense.screen;
 
+import com.foxholedefense.levelselect.LevelName;
+
 /**
  * Created by Eric on 1/30/2017.
  */
@@ -10,7 +12,7 @@ public interface ScreenChanger {
 
     void changeToLevelSelect();
 
-    void changeToLevel(int level);
+    void changeToLevel(LevelName level);
 
-    void changeToLevelLoad(int level);
+    void changeToLevelLoad(LevelName level);
 }
