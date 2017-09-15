@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="64" tileheight="64" nextobjectid="26">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="64" tileheight="64" nextobjectid="42">
  <tileset firstgid="1" name="tiles" tilewidth="64" tileheight="64" spacing="2" tilecount="49" columns="7">
   <image source="../tiles/tiles.png" width="512" height="512"/>
   <terraintypes>
@@ -150,22 +150,26 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup name="Path">
-  <object id="1" name="PathLine" x="734" y="1472">
-   <polyline points="0,0 0,-414 -450,-414 -450,-993 388,-993 388,-350 962,-350 962,-864 1286,-864 1286,-1250 835,-1250 835,-1472"/>
+ <objectgroup name="Path" visible="0">
+  <object id="37" name="PathLine" x="734" y="1504">
+   <polyline points="0,-32 0,-448 -448,-448 -448,-1024 384,-1024 384,-384 960,-384 960,-896 1280,-896 1280,-1280 832,-1280 832,-1504"/>
   </object>
  </objectgroup>
  <objectgroup name="Boundary">
-  <object id="2" x="652" y="984" width="166" height="484"/>
-  <object id="5" x="224" y="974" width="582" height="166"/>
-  <object id="6" x="206.667" y="424" width="164" height="708"/>
-  <object id="8" x="210.667" y="401.333" width="976" height="158.667"/>
-  <object id="13" x="1038.67" y="410" width="162.667" height="783.333"/>
-  <object id="14" x="1053" y="1039" width="711.667" height="162.667"/>
-  <object id="15" x="1614" y="544" width="168" height="638"/>
-  <object id="18" x="1621" y="530" width="468" height="160"/>
-  <object id="21" x="1930.67" y="152" width="169.333" height="525.333"/>
-  <object id="24" x="1497.33" y="142.667" width="590.667" height="164"/>
-  <object id="25" x="1485.33" y="1.33333" width="164" height="290.667"/>
+  <object id="26" x="653.5" y="986.667" width="166.917" height="484.833"/>
+  <object id="27" x="217.542" y="973.129" width="589.667" height="166.788"/>
+  <object id="28" x="205.708" y="410.167" width="166.917" height="719.166"/>
+  <object id="29" x="218.5" y="397.273" width="973.622" height="166.788"/>
+  <object id="30" x="1037.46" y="409.25" width="166.417" height="782.416"/>
+  <object id="31" x="1050.44" y="1037.7" width="717.273" height="166.788"/>
+  <object id="32" x="1613.97" y="537.265" width="166.917" height="654.621"/>
+  <object id="33" x="1625.53" y="525.394" width="461.667" height="166.788"/>
+  <object id="34" x="1933.16" y="152.834" width="166.917" height="527.083"/>
+  <object id="35" x="1497.17" y="141.606" width="589.167" height="165.788"/>
+  <object id="36" x="1485.54" y="0.166833" width="166.917" height="296.416"/>
+  <object id="38" x="0" y="653.333" width="745.25" height="102.667"/>
+  <object id="39" x="653.375" y="152.208" width="103.333" height="592.167"/>
+  <object id="40" x="663.5" y="141.417" width="529.716" height="102.667"/>
+  <object id="41" x="1101.5" y="0.333167" width="103.333" height="230.792"/>
  </objectgroup>
 </map>
