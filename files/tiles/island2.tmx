@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="64" tileheight="64" nextobjectid="74">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="64" tileheight="64" nextobjectid="26">
  <tileset firstgid="1" name="tiles" tilewidth="64" tileheight="64" spacing="2" tilecount="49" columns="7">
-  <image source="../tiles/tiles.png" width="512" height="512"/>
+  <image source="tiles/tiles.png" width="512" height="512"/>
   <terraintypes>
    <terrain name="Water" tile="33"/>
    <terrain name="path" tile="18"/>
@@ -34,13 +34,13 @@
   <tile id="41" terrain=",0,0,0"/>
  </tileset>
  <tileset firstgid="50" name="tiles2" tilewidth="64" tileheight="64" spacing="2" tilecount="21" columns="7">
-  <image source="../tiles/tiles2.png" width="512" height="256"/>
+  <image source="tiles/tiles2.png" width="512" height="256"/>
  </tileset>
  <tileset firstgid="71" name="tiles3" tilewidth="64" tileheight="64" spacing="2" tilecount="49" columns="7">
-  <image source="../tiles/tiles3.png" width="512" height="512"/>
+  <image source="tiles/tiles3.png" width="512" height="512"/>
  </tileset>
  <tileset firstgid="120" name="tiles4" tilewidth="64" tileheight="64" spacing="2" tilecount="105" columns="7">
-  <image source="../tiles/tiles4.png" width="512" height="1024"/>
+  <image source="tiles/tiles4.png" width="512" height="1024"/>
  </tileset>
  <layer name="Tile Layer 1" width="40" height="23">
   <data encoding="csv">
@@ -66,7 +66,7 @@
 28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,
 28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,
 28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,
-28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,0
+28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28,28
 </data>
  </layer>
  <layer name="Tile Layer 2" width="40" height="23">
@@ -93,7 +93,7 @@
 34,34,34,34,34,34,34,34,34,41,31,31,31,31,31,31,31,31,31,31,31,42,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,
 34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,
 34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,
-34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34
+34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,34,39
 </data>
  </layer>
  <layer name="Tile Layer 3" width="40" height="23">
@@ -124,57 +124,22 @@
 </data>
  </layer>
  <objectgroup name="Boundary">
-  <object id="8" x="1101.55" y="731.216" width="167" height="740.208"/>
-  <object id="11" x="218.5" y="716.989" width="1036.5" height="167.011"/>
-  <object id="19" x="1293.67" y="414.667" width="166" height="454.667"/>
-  <object id="26" x="205.5" y="473.896" width="167" height="396.632"/>
-  <object id="27" x="219.75" y="460.828" width="780.75" height="167.011"/>
-  <object id="28" x="845.5" y="90.896" width="167" height="522.208"/>
-  <object id="29" x="859.75" y="77.4945" width="1036.5" height="167.011"/>
-  <object id="30" x="1741.5" y="90.684" width="167" height="459.299"/>
-  <object id="31" x="1306.56" y="397.313" width="588.75" height="167.011"/>
-  <object id="32" x="1306.42" y="717.04" width="910.045" height="167.011"/>
-  <object id="33" x="2062.41" y="472.502" width="167" height="396.632"/>
-  <object id="34" x="2074.05" y="461.101" width="482.78" height="167.011"/>
-  <object id="36" x="0" y="269.5" width="618.186" height="166"/>
-  <object id="38" x="0" y="205.293" width="103.667" height="63.8333"/>
-  <object id="39" x="204.333" y="220.623" width="30.3333" height="52.583"/>
-  <object id="40" x="84.8333" y="216.709" width="30.3333" height="52.583"/>
-  <object id="41" x="217.166" y="204.583" width="107.667" height="63.8333"/>
-  <object id="42" x="267" y="157.062" width="30.3333" height="52.583"/>
-  <object id="43" x="279.833" y="141.022" width="107.667" height="63.8333"/>
-  <object id="44" x="333.333" y="0.666667" width="294.667" height="424"/>
-  <object id="45" x="663.833" y="239.625" width="30.3333" height="52.583"/>
-  <object id="46" x="574.439" y="244.402" width="107.667" height="63.3333"/>
-  <object id="47" x="629" y="0" width="127.75" height="231"/>
-  <object id="48" x="626.833" y="180.833" width="117" height="63.3333"/>
-  <object id="49" x="1997.27" y="152.773" width="67.7273" height="145.364"/>
-  <object id="50" x="2061.33" y="-1.33333" width="494" height="308.333"/>
-  <object id="51" x="2008.42" y="140.917" width="60.6667" height="15.3333"/>
-  <object id="52" x="2011.42" y="294.833" width="60.6667" height="15.3333"/>
-  <object id="53" x="2061.27" y="305.667" width="412.727" height="65.3333"/>
-  <object id="54" x="2070.97" y="358.833" width="274.545" height="77"/>
-  <object id="56" x="2060.83" y="359.375" width="30.3333" height="66.2497"/>
-  <object id="57" x="2328.47" y="362.951" width="30.3333" height="54.8557"/>
-  <object id="58" x="2455.83" y="302.322" width="30.3333" height="54.8557"/>
-  <object id="59" x="0" y="1165.33" width="619.061" height="305.303"/>
-  <object id="60" x="0" y="1037" width="357" height="143"/>
-  <object id="61" x="152.166" y="973.083" width="144" height="63.8333"/>
-  <object id="62" x="277.625" y="984.625" width="30.3333" height="52.583"/>
-  <object id="63" x="139.379" y="989.709" width="30.3333" height="52.583"/>
-  <object id="64" x="612" y="1229.33" width="1942" height="242.167"/>
-  <object id="65" x="1367" y="1165.39" width="1188.52" height="64.6061"/>
-  <object id="66" x="1355.17" y="1182.04" width="30.3333" height="52.583"/>
-  <object id="67" x="1421.38" y="986.125" width="167" height="186"/>
-  <object id="68" x="1432" y="973.25" width="144.5" height="15"/>
-  <object id="69" x="2135.73" y="1101.36" width="420.273" height="67.1364"/>
-  <object id="71" x="2124" y="1114.75" width="30.75" height="51.75"/>
-  <object id="72" x="2253.33" y="859.333" width="293.333" height="246.667"/>
-  <object id="73" x="2264.5" y="845.5" width="269.125" height="20"/>
+  <object id="8" x="1101" y="726" width="167" height="743"/>
+  <object id="11" x="224" y="716.333" width="1023" height="167.667"/>
+  <object id="13" x="206" y="478" width="163" height="394"/>
+  <object id="14" x="212" y="463" width="789" height="163"/>
+  <object id="15" x="846.667" y="93.33" width="164" height="518.67"/>
+  <object id="16" x="856" y="77.33" width="1038.67" height="165.333"/>
+  <object id="17" x="1741.33" y="86.67" width="165.333" height="462.67"/>
+  <object id="18" x="1302.67" y="397.333" width="594.667" height="165.333"/>
+  <object id="19" x="1292.67" y="414.667" width="166" height="454.667"/>
+  <object id="20" x="1306" y="717.333" width="909.333" height="166.667"/>
+  <object id="21" x="2062" y="470.667" width="165.333" height="399.333"/>
+  <object id="22" x="2080" y="461" width="477.333" height="165.333"/>
  </objectgroup>
- <objectgroup name="Path" visible="0">
-  <object id="35" name="PathLine" x="1184" y="1503.33">
-   <polyline points="0,-32 0,-703.333 -896,-703.333 -896,-959.333 -256,-959.333 -256,-1343.33 640,-1343.33 640,-1023.33 192,-1023.33 192,-703.333 960,-703.333 960,-959.333 1376,-959.333"/>
+ <objectgroup name="Path">
+  <object id="25" name="PathLine" x="1188" y="1472">
+   <polyline points="0,0 0,-668 -902,-668 -902,-934 -254,-934 -254,-1318 642,-1318 642,-990 190,-990 190,-670 962,-670 962,-930 1368,-930"/>
   </object>
  </objectgroup>
 </map>

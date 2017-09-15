@@ -99,6 +99,13 @@ public class LevelSelectView extends Group {
         this.addActor(btnLevel6);
         setBtnLevelListener(btnLevel6, LevelName.THE_BADLANDS);
 
+        ImageButton btnLevel7 = new ImageButton(
+            new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
+        btnLevel7.setSize(64, 64);
+        btnLevel7.setPosition(150 - (btnLevel7.getWidth() / 2), 250);
+        this.addActor(btnLevel7);
+        setBtnLevelListener(btnLevel7, LevelName.WHISPERING_THICKET);
+
         ImageButton btnMenu = new ImageButton(skin, "arrow-left");
         btnMenu.setSize(64, 64);
         btnMenu.getImageCell().size(40, 27);

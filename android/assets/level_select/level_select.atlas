@@ -79,3 +79,16 @@ TUNDRA
   orig: 1280, 720
   offset: 0, 0
   index: -1
+
+level_select4.png
+size: 2048,1024
+format: RGBA8888
+filter: MipMapLinearNearest,Nearest
+repeat: none
+WHISPERING_THICKET
+  rotate: false
+  xy: 1, 1
+  size: 1280, 720
+  orig: 1280, 720
+  offset: 0, 0
+  index: -1
