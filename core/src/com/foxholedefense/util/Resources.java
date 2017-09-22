@@ -1,8 +1,12 @@
 package com.foxholedefense.util;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
+import com.badlogic.gdx.assets.loaders.TextureAtlasLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
+import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver.Resolution;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -49,7 +53,23 @@ public class Resources {
 
         this.userPreferences = userPreferences;
         shapeRenderer = new ShapeRenderer();
+
+        Resolution[] resolutions = {new Resolution(1, 1, "lo"),
+            new Resolution(360, 640, "med"),
+            new Resolution(720, 1280, "hi")};
+
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
+        ResolutionFileResolver fileResolver = new ResolutionFileResolver(
+            new InternalFileHandleResolver(), resolutions);
+        manager.setLoader(TextureAtlas.class, new TextureAtlasLoader(fileResolver));
+        Logger.info(fileResolver.choose(resolutions).folder);
+        int w = Gdx.graphics.getWidth(), h = Gdx.graphics.getHeight();
+        Logger.info("w: " + w + ", " + h);
+
+        Logger.info(resolutions[1].portraitHeight + "," + resolutions[1].portraitHeight + ","
+            + resolutions[0].portraitHeight + "," + resolutions[1].portraitWidth
+            + "," + resolutions[1].portraitWidth + "," + resolutions[0].portraitWidth);
+
         Texture.setAssetManager(manager);
     }
 
@@ -211,12 +231,14 @@ public class Resources {
 
     public void loadMap(LevelName level) {
 
-        loadAsset("game/levels/" + level.toString() + "/" + level.toString() + ".tmx", TiledMap.class);
+        loadAsset("game/levels/" + level.toString() + "/" + level.toString() + ".tmx",
+            TiledMap.class);
     }
 
     public TiledMap getMap(LevelName level) {
 
-        return getAsset("game/levels/" + level.toString() + "/" + level.toString() + ".tmx", TiledMap.class);
+        return getAsset("game/levels/" + level.toString() + "/" + level.toString() + ".tmx",
+            TiledMap.class);
     }
 
     public void unloadMap(LevelName level) {

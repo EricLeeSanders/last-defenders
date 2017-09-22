@@ -1,0 +1,9 @@
+Resolution Max / Image resolution -> Resolution Min / GDX resolution -- Folder name
+
+
+Do it this way so that images are always scaled down. The folder name is always the ceiling or largest resolution supported.
+
+640x360 ->  1x1 -- lo
+800x480 -> 640x360 -- med-lo
+1280x720 -> 800x480 -- med-hi
+1920x1080 -> 1280x720 --hi
