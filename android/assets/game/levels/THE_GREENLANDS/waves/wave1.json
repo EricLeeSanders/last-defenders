@@ -1,7 +1,7 @@
 {
     "wave": [
         {
-            "enemy": FlameThrower,
+            "enemy": Humvee,
             "delay": 1,
             "armor": false
         },
@@ -12,41 +12,6 @@
         },
         {
             "enemy": FlameThrower,
-            "delay": 1,
-            "armor": false
-        },
-        {
-            "enemy": MachineGun,
-            "delay": 1,
-            "armor": false
-        },
-        {
-            "enemy": FlameThrower,
-            "delay": 1,
-            "armor": false
-        },
-        {
-            "enemy": MachineGun,
-            "delay": 1,
-            "armor": false
-        },
-        {
-            "enemy": FlameThrower,
-            "delay": 1,
-            "armor": false
-        },
-        {
-            "enemy": MachineGun,
-            "delay": 1,
-            "armor": false
-        },
-        {
-            "enemy": FlameThrower,
-            "delay": 1,
-            "armor": false
-        },
-        {
-            "enemy": MachineGun,
             "delay": 1,
             "armor": false
         }

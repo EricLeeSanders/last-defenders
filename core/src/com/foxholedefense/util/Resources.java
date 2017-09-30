@@ -55,8 +55,8 @@ public class Resources {
         shapeRenderer = new ShapeRenderer();
 
         Resolution[] resolutions = {new Resolution(1, 1, "lo"),
-            new Resolution(360, 640, "med"),
-            new Resolution(720, 1280, "hi")};
+            new Resolution(361, 641, "med"),
+            new Resolution(721, 1281, "hi")};
 
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         ResolutionFileResolver fileResolver = new ResolutionFileResolver(
@@ -196,6 +196,8 @@ public class Resources {
         if (!manager.isLoaded(file)) {
             try {
                 manager.load(file, type);
+                System.out.println(manager.getLoader(type, file).getClass().getCanonicalName());
+
                 Logger.info("Resources: asset loaded: " + file);
             } catch (GdxRuntimeException e) {
                 Logger.error("Resources: asset load error", e);

@@ -28,7 +28,7 @@ public class EnemyHumvee extends Enemy implements IVehicle, IPassiveEnemy {
     private static final int KILL_REWARD = 15;
 
     private static final Vector2 GUN_POS = UtilPool.getVector2();
-    private static final Dimension TEXTURE_SIZE = new Dimension(74, 32);
+    private static final Dimension TEXTURE_SIZE = new Dimension(100, 43);
     private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.VEHCILE_EXPLOSION;
     private static final float[] BODY_POINTS = {15, 0, 15, 32, 69, 32, 69, 0};
 
