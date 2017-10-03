@@ -43,7 +43,7 @@ public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatabl
     private static final int SPEED_INCREASE_COST = 650;
     private static final int ATTACK_INCREASE_COST = 650;
 
-    private static final Dimension ROCKET_SIZE = new Dimension(23, 5);
+    private static final Dimension ROCKET_SIZE = new Dimension(23, 6);
     private static final Vector2 GUN_POS = UtilPool.getVector2(57, 0);
     private static final Dimension TEXTURE_SIZE_BODY = new Dimension(76, 50);
     private static final Dimension TEXTURE_SIZE_TURRET = new Dimension(120, 23);

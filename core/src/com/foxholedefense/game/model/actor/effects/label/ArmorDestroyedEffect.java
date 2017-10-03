@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.game.service.factory.EffectFactory.LabelEffectPool;
 import com.foxholedefense.util.ActorUtil;
+import com.foxholedefense.util.datastructures.Dimension;
 
 /**
  * Created by Eric on 1/6/2017.
@@ -22,6 +23,7 @@ public class ArmorDestroyedEffect extends LabelEffect {
     public static final float DURATION = 2;
     public static final float Y_END_OFFSET = 50;
     private static final float SCALE = 0.35f;
+    private static final Dimension TEXTURE_SIZE = new Dimension(12, 13);
     private static final String MESSAGE = "ARMOR DESTROYED";
 
     private CombatActor actor = null;
@@ -69,7 +71,7 @@ public class ArmorDestroyedEffect extends LabelEffect {
             } else {
                 x += -6;
             }
-            batch.draw(region, x, y, 12, 13);
+            batch.draw(region, x, y, TEXTURE_SIZE.getWidth(), TEXTURE_SIZE.getHeight());
         }
     }
 

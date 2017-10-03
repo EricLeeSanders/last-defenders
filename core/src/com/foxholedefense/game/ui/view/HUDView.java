@@ -73,7 +73,7 @@ public class HUDView extends Group implements IHUDView {
 
         btnResume = new ImageButton(skin, "resume");
         btnResume.setSize(50, 50);
-        btnResume.getImageCell().size(27, 30);
+        btnResume.getImageCell().size(23, 30);
         btnResume.getImage().setScaling(Scaling.stretch);
         btnResume.setPosition(10, 10);
         setBtnResumeListener();
@@ -89,7 +89,7 @@ public class HUDView extends Group implements IHUDView {
 
         btnSupport = new ImageButton(skin, "support_hud");
         btnSupport.setSize(50, 50);
-        btnSupport.getImageCell().size(23, 35);
+        btnSupport.getImageCell().size(22, 35);
         btnSupport.getImage().setScaling(Scaling.stretch);
         btnSupport.setPosition(Resources.VIRTUAL_WIDTH - 60, btnEnlist.getY() + 60);
         setBtnSupportListener();
@@ -109,14 +109,14 @@ public class HUDView extends Group implements IHUDView {
         addActor(statsTable);
 
         Image imgLife = new Image(skin.getAtlas().findRegion("heart"));
-        statsTable.add(imgLife).size(32, 32).padRight(3);
+        statsTable.add(imgLife).size(32, 31).padRight(3);
         lblLives = new Label("0", skin);
         lblLives.setAlignment(Align.left);
         lblLives.setFontScale(0.5f);
         statsTable.add(lblLives).size(30, 19).spaceRight(10);
 
         Image imgMoney = new Image(skin.getAtlas().findRegion("money"));
-        statsTable.add(imgMoney).size(32, 32).padRight(3);
+        statsTable.add(imgMoney).size(23, 32).padRight(3);
 
         lblMoney = new Label("0", skin);
         lblMoney.setAlignment(Align.left);

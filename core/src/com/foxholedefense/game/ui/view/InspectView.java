@@ -97,7 +97,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
         addActor(btnCancel);
 
-        btnArmor = new UpgradeButton(skin, "Armor", "shield", 28, 30);
+        btnArmor = new UpgradeButton(skin, "Armor", "shield", 27, 30);
         inspectTable.add(btnArmor).size(110, 115);//.spaceBottom(10).spaceRight(10);
         setArmorListener();
 
@@ -109,7 +109,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         inspectTable.add(btnSpeed).size(110, 115);//.spaceBottom(5).spaceRight(10);
         setIncreaseSpeedListener();
 
-        btnAttack = new UpgradeButton(skin, "Increase Attack", "attack_icon", 26, 26);
+        btnAttack = new UpgradeButton(skin, "Increase Attack", "attack_icon", 26, 25);
         inspectTable.add(btnAttack).size(110, 115);//.spaceBottom(5).spaceRight(10);
         setIncreaseAttackListener();
 
