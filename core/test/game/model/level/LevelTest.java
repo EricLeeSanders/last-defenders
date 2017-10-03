@@ -19,6 +19,7 @@ import com.foxholedefense.game.model.level.wave.impl.DynamicWaveLoader;
 import com.foxholedefense.game.model.level.wave.impl.FileWaveLoader;
 import com.foxholedefense.game.service.factory.CombatActorFactory.SpawningEnemyPool;
 import com.foxholedefense.game.service.factory.HealthFactory;
+import com.foxholedefense.levelselect.LevelName;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -44,7 +45,7 @@ public class LevelTest {
     @Test
     public void levelTest1() {
 
-        Level level = new Level(1, actorGroups, healthFactory, fileWaveLoader, dynamicWaveLoader);
+        Level level = new Level(LevelName.SERPENTINE_RIVER, actorGroups, healthFactory, fileWaveLoader, dynamicWaveLoader);
 
         Queue<SpawningEnemy> loadedEnemies = new Queue<>();
         Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
@@ -65,9 +66,9 @@ public class LevelTest {
         loadedEnemies.addFirst(spawningEnemy3);
 
         doReturn(loadedEnemies).when(fileWaveLoader)
-            .loadWave(isA(Integer.class), isA(Integer.class));
+            .loadWave(isA(LevelName.class), isA(Integer.class));
         doReturn(loadedEnemies).when(dynamicWaveLoader)
-            .loadWave(isA(Integer.class), isA(Integer.class));
+            .loadWave(isA(LevelName.class), isA(Integer.class));
         doReturn(new Group()).when(actorGroups).getEnemyGroup();
         HealthBar healthBarMock = mock(HealthBar.class);
         doReturn(healthBarMock).when(healthFactory).loadHealthBar();

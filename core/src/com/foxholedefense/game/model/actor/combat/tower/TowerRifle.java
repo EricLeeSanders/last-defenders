@@ -29,7 +29,7 @@ public class TowerRifle extends Tower {
     private static final Vector2 GUN_POS = UtilPool.getVector2(26, -4);
     private static final Dimension TEXTURE_SIZE = new Dimension(53, 26);
     private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
-    private static float HEALTH = 8;
+    private static float HEALTH = 800;
     private static float ARMOR = 4;
     private static float ATTACK = 4;
     private static float ATTACK_SPEED = 0.8f;

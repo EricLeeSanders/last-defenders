@@ -4,7 +4,7 @@
     paddingY: 2,
     bleed: true,
     edgePadding: true,
-    duplicatePadding: true,
+    duplicatePadding: false,
     rotation: false,
     minWidth: 16,
     minHeight: 16,

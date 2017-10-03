@@ -87,7 +87,7 @@ public class MenuView extends Group implements IMenuView {
 
         btnMusic = new ImageButton(skin, "music");
         btnMusic.setSize(64, 64);
-        btnMusic.getImageCell().size(36, 36);
+        btnMusic.getImageCell().size(28, 36);
         btnMusic.setPosition(250, 22);
         addActor(btnMusic);
         setBtnMusicListener(btnMusic);

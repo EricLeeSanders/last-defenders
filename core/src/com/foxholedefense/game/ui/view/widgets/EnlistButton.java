@@ -46,7 +46,7 @@ public class EnlistButton extends Group {
         addActor(lblTitle);
 
         createBar(skin, attack, 110, "attack_icon", 18, 18, 2, 3);
-        createBar(skin, health, 85, "heart", 18, 18, 2, 2);
+        createBar(skin, health, 85, "heart", 18, 17, 2, 2);
         createBar(skin, range, 60, "range_icon", 18, 19, 2, 1);
         createBar(skin, speed, 35, "speed_icon", 18, 18, 2, 1);
     }
