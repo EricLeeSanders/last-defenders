@@ -33,7 +33,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
     private static final int ATTACK_INCREASE_COST = 450;
 
     private static final Vector2 GUN_POS = UtilPool.getVector2(26, 4);
-    private static final Dimension TEXTURE_SIZE = new Dimension(56, 36);
+    private static final Dimension TEXTURE_SIZE = new Dimension(56, 26);
     private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
 
     private Circle body;
