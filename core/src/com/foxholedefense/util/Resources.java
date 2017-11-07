@@ -33,7 +33,6 @@ public class Resources {
     public static final String SKIN_ATLAS = "skin/uiskin.atlas";
     public static final float VIRTUAL_WIDTH = 640; // 16:9
     public static final float VIRTUAL_HEIGHT = 360;
-    public static final float TILED_MAP_SCALE = 0.25f;
     public static final float MAX_GAME_SPEED = 2.0f;
 
     private static final String SKIN_JSON = "skin/uiskin.json";
@@ -41,6 +40,7 @@ public class Resources {
     private float gameSpeed = 1;
     private UserPreferences userPreferences;
     private AssetManager manager = new AssetManager();
+    private String assetFolder;
 
     private Map<String, TextureRegion> loadedTextures = new HashMap<>();
     private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<>();
@@ -63,6 +63,7 @@ public class Resources {
             new InternalFileHandleResolver(), resolutions);
         manager.setLoader(TextureAtlas.class, new TextureAtlasLoader(fileResolver));
         Logger.info(fileResolver.choose(resolutions).folder);
+        assetFolder = fileResolver.choose(resolutions).folder;
         int w = Gdx.graphics.getWidth(), h = Gdx.graphics.getHeight();
         Logger.info("w: " + w + ", " + h);
 
@@ -178,6 +179,16 @@ public class Resources {
 
         Logger.info("Resources: initializing font");
         BitmapFont font = getSkin().getFont("default-font");
+        System.out.println(font.usesIntegerPositions());
+        System.out.println(font.getData().lineHeight);
+        System.out.println(font.getData().ascent);
+        System.out.println(font.getData().capHeight);
+        System.out.println(font.getData().descent);
+        System.out.println(font.getData().scaleX);
+        System.out.println(font.getData().scaleY);
+        System.out.println(font.getData().spaceWidth);
+        System.out.println(font.getData().xHeight);
+
         font.setUseIntegerPositions(false);
         font.getData().setLineHeight(55);
         font.getData().ascent = 11;
@@ -233,19 +244,19 @@ public class Resources {
 
     public void loadMap(LevelName level) {
 
-        loadAsset("game/levels/" + level.toString() + "/" + level.toString() + ".tmx",
+        loadAsset("game/levels/" + level.toString() + "/" + assetFolder + "/" + level.toString() + ".tmx",
             TiledMap.class);
     }
 
     public TiledMap getMap(LevelName level) {
 
-        return getAsset("game/levels/" + level.toString() + "/" + level.toString() + ".tmx",
+        return getAsset("game/levels/" + level.toString() + "/" + assetFolder + "/" + level.toString() + ".tmx",
             TiledMap.class);
     }
 
     public void unloadMap(LevelName level) {
 
-        unloadAsset("game/levels/" + level.toString() + "/" + level.toString() + ".tmx");
+        unloadAsset("game/levels/" + level.toString() + "/" + assetFolder + "/" + level.toString() + ".tmx");
     }
 
     private void loadSkinSync() {

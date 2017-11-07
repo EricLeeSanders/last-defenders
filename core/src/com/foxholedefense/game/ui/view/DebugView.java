@@ -72,6 +72,7 @@ public class DebugView extends Group implements IDebugView {
         btnResume = new TextButton("RESUME", skin);
         btnResume.getLabel().setFontScale(0.45f);
         btnResume.pack();
+        btnResume.setSize(150, 45);
         btnResume.setPosition(112, 20);
         addActor(btnResume);
         setBtnResumeListener();
@@ -91,6 +92,7 @@ public class DebugView extends Group implements IDebugView {
         TextButton btnCrash = new TextButton("TEST CRASH", skin);
         btnCrash.getLabel().setFontScale(0.45f);
         btnCrash.pack();
+        btnCrash.setSize(150, 45);
         setBtnCrashListener(btnCrash);
 
         mainTable.add(btnShowFPS).left().spaceLeft(15).spaceBottom(10);

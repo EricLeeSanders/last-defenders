@@ -17,7 +17,7 @@ class MapRenderer {
 
     public MapRenderer(TiledMap tiledMap, Camera camera) {
 
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap, Resources.TILED_MAP_SCALE);
+        tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         tiledMapRenderer.setView((OrthographicCamera) camera);
     }
 

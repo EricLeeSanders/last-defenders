@@ -1,0 +1,76 @@
+
+level_select.png
+size: 2048,2048
+format: RGBA8888
+filter: MipMapLinearNearest,Nearest
+repeat: none
+SERPENTINE_RIVER
+  rotate: false
+  xy: 1, 1087
+  size: 640, 360
+  orig: 640, 360
+  offset: 0, 0
+  index: -1
+STARFISH_ISLAND
+  rotate: false
+  xy: 1, 725
+  size: 640, 360
+  orig: 640, 360
+  offset: 0, 0
+  index: -1
+THE_BADLANDS
+  rotate: false
+  xy: 643, 1087
+  size: 640, 360
+  orig: 640, 360
+  offset: 0, 0
+  index: -1
+THE_GOLD_COAST
+  rotate: false
+  xy: 1, 363
+  size: 640, 360
+  orig: 640, 360
+  offset: 0, 0
+  index: -1
+THE_GREENLANDS
+  rotate: false
+  xy: 643, 725
+  size: 640, 360
+  orig: 640, 360
+  offset: 0, 0
+  index: -1
+TUNDRA
+  rotate: false
+  xy: 1285, 1087
+  size: 640, 360
+  orig: 640, 360
+  offset: 0, 0
+  index: -1
+WHISPERING_THICKET
+  rotate: false
+  xy: 1, 1
+  size: 640, 360
+  orig: 640, 360
+  offset: 0, 0
+  index: -1
+background
+  rotate: false
+  xy: 643, 363
+  size: 640, 360
+  orig: 640, 360
+  offset: 0, 0
+  index: -1
+map_icon
+  rotate: false
+  xy: 1285, 1021
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+pointer
+  rotate: false
+  xy: 1927, 1383
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

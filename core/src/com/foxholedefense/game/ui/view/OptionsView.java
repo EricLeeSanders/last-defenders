@@ -73,6 +73,7 @@ public class OptionsView extends Group implements IOptionsView {
         btnClose = new TextButton("CLOSE", skin);
         btnClose.getLabel().setFontScale(0.45f);
         btnClose.pack();
+        btnClose.setSize(150, 45);
         btnClose.setPosition(80, 20);
         addActor(btnClose);
         setBtnCloseListener();
@@ -80,6 +81,7 @@ public class OptionsView extends Group implements IOptionsView {
         btnNewGame = new TextButton("NEW GAME", skin);
         btnNewGame.getLabel().setFontScale(0.45f);
         btnNewGame.pack();
+        btnNewGame.setSize(150, 45);
         btnNewGame.setPosition(btnClose.getX() + btnClose.getWidth() + 15, btnClose.getY());
         addActor(btnNewGame);
         setBtnNewGameListener();
@@ -87,6 +89,7 @@ public class OptionsView extends Group implements IOptionsView {
         btnMainMenu = new TextButton("MAIN MENU", skin);
         btnMainMenu.getLabel().setFontScale(0.45f);
         btnMainMenu.pack();
+        btnMainMenu.setSize(150, 45);
         btnMainMenu.setPosition(btnNewGame.getX() + btnNewGame.getWidth() + 15, btnNewGame.getY());
         addActor(btnMainMenu);
         setBtnMainMenuListener();
@@ -188,14 +191,14 @@ public class OptionsView extends Group implements IOptionsView {
 
         Image speedSliderFull = new Image(
             resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
-        speedSliderFull.setSize(299, 20);
-        speedSliderFull.setPosition(0, 1);
+        speedSliderFull.setSize(299, 18);
+        speedSliderFull.setPosition(0, 2);
         speedSliderFull.setAlign(Align.center);
 
         speedSliderBg = new Image(
             resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
-        speedSliderBg.setSize(299, 20);
-        speedSliderBg.setPosition(0, 1);
+        speedSliderBg.setSize(299, 18);
+        speedSliderBg.setPosition(0, 2);
         speedSliderBg.setAlign(Align.center);
 
         this.speedSliderStartPos = speedSliderBg.getX() + 3;
@@ -228,14 +231,14 @@ public class OptionsView extends Group implements IOptionsView {
 
         Image volSliderFull = new Image(
             resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
-        volSliderFull.setSize(299, 20);
-        volSliderFull.setPosition(0, 1);
+        volSliderFull.setSize(299, 18);
+        volSliderFull.setPosition(0, 2);
         volSliderFull.setAlign(Align.center);
 
         volSliderBg = new Image(
             resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
-        volSliderBg.setSize(299, 20);
-        volSliderBg.setPosition(0, 1);
+        volSliderBg.setSize(299, 18);
+        volSliderBg.setPosition(0, 2);
         volSliderBg.setAlign(Align.center);
 
         this.volSliderStartPos = volSliderBg.getX() + 3;
