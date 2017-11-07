@@ -210,7 +210,7 @@ public class CombatActorFactory {
             TextureRegion bagsRegion = resources.getTexture("tower-turret-bags");
             actor = new TowerTurret(bagsRegion, machineRegion, towerTurretPool,
                 actorGroups.getEnemyGroup(), resources.getTexture("range-turret"),
-                resources.getTexture("range-red-turret"), projectileFactory, audio);
+                resources.getTexture("range-turret-red"), projectileFactory, audio);
         } else if (type.equals(EnemyRifle.class)) {
             TextureRegion[] animatedRegions = resources.getAtlasRegion("enemy-rifle")
                 .toArray(TextureRegion.class);
