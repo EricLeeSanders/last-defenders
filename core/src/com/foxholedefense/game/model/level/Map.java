@@ -49,8 +49,8 @@ public class Map implements Disposable {
             // Need to get absolute value because vertices can be negative. The points are all relative
             // to the first point (pathX and pathY)
             pathCoords
-                .add(UtilPool.getVector2(Math.abs(vertices[i] + pathX) * Resources.TILED_MAP_SCALE
-                    , Math.abs(vertices[i + 1] + pathY) * Resources.TILED_MAP_SCALE));
+                .add(UtilPool.getVector2(Math.abs(vertices[i] + pathX),
+                    Math.abs(vertices[i + 1] + pathY)));
         }
     }
 
@@ -64,11 +64,8 @@ public class Map implements Disposable {
         for (MapObject boundry : boundaries) {
             if (boundry instanceof RectangleMapObject) {
                 Rectangle rect = ((RectangleMapObject) boundry).getRectangle();
-
                 //Required to create new Rectangle
-                Rectangle boundary = new Rectangle(rect.x * Resources.TILED_MAP_SCALE,
-                    rect.y * Resources.TILED_MAP_SCALE, rect.width * Resources.TILED_MAP_SCALE,
-                    rect.height * Resources.TILED_MAP_SCALE);
+                Rectangle boundary = new Rectangle(rect);
                 pathBoundaries.add(boundary);
             }
         }

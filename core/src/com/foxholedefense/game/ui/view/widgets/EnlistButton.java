@@ -55,7 +55,7 @@ public class EnlistButton extends Group {
         float iconHeight, float iconX, float iconY) {
 
         Image fullbar = new Image(skin.getAtlas().findRegion("tower-attr-full"));
-        fullbar.setSize(64, 15);
+        fullbar.setSize(64, 13);
         fullbar.setPosition(36, y);
         addActor(fullbar);
 
@@ -65,6 +65,7 @@ public class EnlistButton extends Group {
         addActor(bg);
 
         Image frame = new Image(skin.getAtlas().findRegion("tower-stat"));
+        frame.setSize(92, 24);
         frame.setPosition(14, y - 1);
         addActor(frame);
 

@@ -1,0 +1,7 @@
+Bars 
+-- Right click linked overlay loading bar
+-- Click Select and Mask
+
+To create frames (loading screen)
+-- Ctrl click the layer image in the layer view 
+-- select frame layer and delete
