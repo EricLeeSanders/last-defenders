@@ -25,7 +25,7 @@ import com.foxholedefense.util.datastructures.Dimension;
 
 public class LevelLoadingScreen extends AbstractScreen {
 
-    private static final Dimension LOADING_BAR_SIZE = new Dimension(515, 45);
+    private static final Dimension LOADING_BAR_SIZE = new Dimension(512, 43);
     private static final float MIN_LOAD_TIME = 3f;
     private Resources resources;
     private ScreenChanger screenChanger;
@@ -72,12 +72,14 @@ public class LevelLoadingScreen extends AbstractScreen {
         loadTime = 0;
 
         Image loadingBar = new Image(atlas.findRegion("level-load-bar"));
-        loadingBar.setFillParent(true);
+        loadingBar.setSize(LOADING_BAR_SIZE.getWidth(), LOADING_BAR_SIZE.getHeight());
+        loadingBar.getDrawable().setMinWidth(LOADING_BAR_SIZE.getWidth());
+        loadingBar.getDrawable().setMinHeight(LOADING_BAR_SIZE.getHeight());
         Image loadingBarBg = new Image(atlas.findRegion("level-load-bar-bg"));
         ProgressBarStyle barStyle = new ProgressBarStyle(loadingBar.getDrawable(), loadingBarBg.getDrawable());
         barStyle.knobAfter = barStyle.knob;
         progressBar = new ProgressBar(0, 1, 0.000000001f, false, barStyle);
-        progressBar.getStyle().knob.setMinHeight( LOADING_BAR_SIZE.getHeight());
+        progressBar.getStyle().knob.setMinHeight(LOADING_BAR_SIZE.getHeight());
         progressBar.setRound(false);
         progressBar.setSize(LOADING_BAR_SIZE.getWidth(), LOADING_BAR_SIZE.getHeight());
         progressBar.setPosition(ActorUtil
@@ -106,6 +108,7 @@ public class LevelLoadingScreen extends AbstractScreen {
         stage.addActor(loadingLabel);
         stage.addActor(screen);
         load();
+
     }
 
     @Override
@@ -129,7 +132,6 @@ public class LevelLoadingScreen extends AbstractScreen {
         if (percent > 1) {
             percent = 1;
         }
-
         progressBar.setValue(percent);
         loadingLabel.setText("LOADING: " + Math.round(percent * 100) + "%");
 

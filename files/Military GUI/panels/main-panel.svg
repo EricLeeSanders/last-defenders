@@ -9,12 +9,12 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="343.86472mm"
-   height="256.19281mm"
-   viewBox="0 0 343.86472 256.19281"
+   width="1920"
+   height="1080"
+   viewBox="0 0 508.00003 285.75"
    version="1.1"
    id="svg3759"
-   inkscape:export-filename="C:\Users\Eric\bitmap.png"
+   inkscape:export-filename="C:\Users\Eric\Documents\GitHub\FoxholeDefense\android\assets\skin\Skin Images\main-panel.png"
    inkscape:export-xdpi="128.491"
    inkscape:export-ydpi="128.491"
    inkscape:version="0.92.0 r15299"
@@ -28,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.175"
-     inkscape:cx="-823.99864"
-     inkscape:cy="67.042237"
+     inkscape:zoom="0.5"
+     inkscape:cx="1151.9375"
+     inkscape:cy="458.37446"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -41,7 +41,8 @@
      inkscape:window-height="1017"
      inkscape:window-x="-8"
      inkscape:window-y="-8"
-     inkscape:window-maximized="1" />
+     inkscape:window-maximized="1"
+     units="px" />
   <metadata
      id="metadata3756">
     <rdf:RDF>
@@ -58,7 +59,8 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="Layer 2"
-     style="display:none">
+     style="display:none"
+     transform="translate(0,29.557193)">
     <rect
        style="fill:#000000;fill-opacity:1;stroke:#1d0f00;stroke-width:1.0836246;stroke-opacity:1"
        id="rect4825"
@@ -71,11 +73,11 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(24.399569,-127.20955)"
+     transform="translate(24.399569,-97.652357)"
      style="display:inline">
     <g
        id="g5303"
-       transform="matrix(0.27097686,0,0,0.27097686,677.10641,207.44822)">
+       transform="matrix(0.40032094,0,0,0.3022397,1011.9529,187.14824)">
       <g
          transform="translate(-6854.0097,-1835.7313)"
          id="g6443">
@@ -775,7 +777,7 @@
     </g>
     <g
        id="g7331"
-       transform="matrix(0.26458333,0,0,0.26458333,-1408.6869,-6.4697162)"
+       transform="matrix(0.39087562,0,0,0.25226967,-2069.0381,-36.949784)"
        inkscape:export-filename="C:\Users\Robert\Desktop\military_ui\pngs\buttons\long_button\long_button.png"
        inkscape:export-xdpi="90"
        inkscape:export-ydpi="90">

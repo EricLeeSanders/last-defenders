@@ -15,6 +15,7 @@ import com.foxholedefense.game.model.level.SpawningEnemy;
 import com.foxholedefense.game.model.level.wave.impl.DynamicWaveLoader;
 import com.foxholedefense.game.service.factory.CombatActorFactory;
 import com.foxholedefense.game.service.factory.CombatActorFactory.SpawningEnemyPool;
+import com.foxholedefense.levelselect.LevelName;
 import com.foxholedefense.util.datastructures.pool.FHDVector2;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,7 +67,7 @@ public class DynamicWaveLoaderTest {
         DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
         dynamicWaveLoader.initDynamicWaveLoader(initSpawningEnemyQueue);
 
-        Queue<SpawningEnemy> spawningEnemies = dynamicWaveLoader.loadWave(3, 5);
+        Queue<SpawningEnemy> spawningEnemies = dynamicWaveLoader.loadWave(LevelName.SERPENTINE_RIVER, 5);
 
         assertTrue(spawningEnemies.size > 4);
 

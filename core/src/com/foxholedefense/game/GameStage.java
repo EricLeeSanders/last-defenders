@@ -72,11 +72,11 @@ public class GameStage extends Stage implements PlayerObserver {
         this.levelName = levelName;
         this.resources = resources;
         TiledMap tiledMap = resources.getMap(levelName);
-        map = new Map(tiledMap);
+        map = new Map(tiledMap, resources.getTiledMapScale());
         createGroups();
         createFactories(audio);
         createPlacementServices(map);
-        mapRenderer = new MapRenderer(tiledMap, getCamera());
+        mapRenderer = new MapRenderer(tiledMap, resources.getTiledMapScale(), getCamera());
         FileWaveLoader fileWaveLoader = new FileWaveLoader(combatActorFactory, map);
         DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
         level = new Level(levelName, getActorGroups(), healthFactory, fileWaveLoader,

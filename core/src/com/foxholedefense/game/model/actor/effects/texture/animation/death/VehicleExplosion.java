@@ -13,6 +13,5 @@ public class VehicleExplosion extends DeathEffect {
         Array<AtlasRegion> atlasRegions) {
 
         super(pool, atlasRegions, TEXTURE_SIZE);
-        setRotation(90);
     }
 }

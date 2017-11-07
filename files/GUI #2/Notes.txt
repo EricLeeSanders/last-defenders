@@ -1,3 +1,0 @@
-Bars 
--- Right click linked overlay loading bar
--- Click Select and Mask
