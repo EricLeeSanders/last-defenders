@@ -56,8 +56,8 @@ public class Resources {
         shapeRenderer = new ShapeRenderer();
 
         Resolution[] resolutions = {new Resolution(1, 1, "lo"),
-            new Resolution(1, 1, "med"),
-            new Resolution(2, 2, "hi")};
+            new Resolution(361, 641, "med"),
+            new Resolution(721, 1281, "hi")};
 
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         ResolutionFileResolver fileResolver = new ResolutionFileResolver(
