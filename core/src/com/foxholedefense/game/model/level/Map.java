@@ -24,10 +24,12 @@ public class Map implements Disposable {
     private Array<FHDVector2> pathCoords = new SnapshotArray<>(true, 16);
     private Array<Rectangle> pathBoundaries = new SnapshotArray<>(true, 32);
     private TiledMap tiledMap;
+    private float tiledMapScale;
 
-    public Map(TiledMap tiledMap) {
+    public Map(TiledMap tiledMap, float tiledMapScale) {
 
         this.tiledMap = tiledMap;
+        this.tiledMapScale = tiledMapScale;
         findPath();
         findBoundaries();
     }
@@ -49,8 +51,8 @@ public class Map implements Disposable {
             // Need to get absolute value because vertices can be negative. The points are all relative
             // to the first point (pathX and pathY)
             pathCoords
-                .add(UtilPool.getVector2(Math.abs(vertices[i] + pathX),
-                    Math.abs(vertices[i + 1] + pathY)));
+                .add(UtilPool.getVector2(Math.abs(vertices[i] + pathX) * tiledMapScale
+                    , Math.abs(vertices[i + 1] + pathY) * tiledMapScale));
         }
     }
 
@@ -64,8 +66,11 @@ public class Map implements Disposable {
         for (MapObject boundry : boundaries) {
             if (boundry instanceof RectangleMapObject) {
                 Rectangle rect = ((RectangleMapObject) boundry).getRectangle();
+
                 //Required to create new Rectangle
-                Rectangle boundary = new Rectangle(rect);
+                Rectangle boundary = new Rectangle(rect.x * tiledMapScale,
+                    rect.y * tiledMapScale, rect.width * tiledMapScale,
+                    rect.height * tiledMapScale);
                 pathBoundaries.add(boundary);
             }
         }

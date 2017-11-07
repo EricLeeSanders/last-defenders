@@ -41,6 +41,7 @@ public class Resources {
     private UserPreferences userPreferences;
     private AssetManager manager = new AssetManager();
     private String assetFolder;
+    private float tiledMapScale;
 
     private Map<String, TextureRegion> loadedTextures = new HashMap<>();
     private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<>();
@@ -55,21 +56,26 @@ public class Resources {
         shapeRenderer = new ShapeRenderer();
 
         Resolution[] resolutions = {new Resolution(1, 1, "lo"),
-            new Resolution(361, 641, "med"),
-            new Resolution(721, 1281, "hi")};
+            new Resolution(1, 1, "med"),
+            new Resolution(2, 2, "hi")};
 
         manager.setLoader(TiledMap.class, new TmxMapLoader(new InternalFileHandleResolver()));
         ResolutionFileResolver fileResolver = new ResolutionFileResolver(
             new InternalFileHandleResolver(), resolutions);
         manager.setLoader(TextureAtlas.class, new TextureAtlasLoader(fileResolver));
-        Logger.info(fileResolver.choose(resolutions).folder);
         assetFolder = fileResolver.choose(resolutions).folder;
-        int w = Gdx.graphics.getWidth(), h = Gdx.graphics.getHeight();
-        Logger.info("w: " + w + ", " + h);
 
-        Logger.info(resolutions[1].portraitHeight + "," + resolutions[1].portraitHeight + ","
-            + resolutions[0].portraitHeight + "," + resolutions[1].portraitWidth
-            + "," + resolutions[1].portraitWidth + "," + resolutions[0].portraitWidth);
+        switch(assetFolder){
+            case "hi":
+                tiledMapScale = 1f/3;
+                break;
+            case "med":
+                tiledMapScale = 2f/3;
+                break;
+            case "lo":
+                tiledMapScale = 1;
+                break;
+        }
 
         Texture.setAssetManager(manager);
     }
@@ -295,6 +301,10 @@ public class Resources {
     public void setGameSpeed(float gameSpeed) {
 
         this.gameSpeed = gameSpeed;
+    }
+
+    public float getTiledMapScale(){
+        return tiledMapScale;
     }
 
     public AssetManager getManager() {

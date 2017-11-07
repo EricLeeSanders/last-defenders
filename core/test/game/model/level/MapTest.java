@@ -106,7 +106,7 @@ public class MapTest {
         pathBoundaries.add(new Rectangle(100.0f, 62.5f, 27.5f, 50.0f));
         pathBoundaries.add(new Rectangle(100.0f, 112.5f, 50.0f, 27.5f));
 
-        Map map = new Map(tiledMap);
+        Map map = new Map(tiledMap, 1f/2);
 
         assertEquals(pathCoords, map.getPath());
         assertEquals(pathBoundaries, map.getPathBoundaries());
