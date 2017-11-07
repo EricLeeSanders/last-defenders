@@ -103,7 +103,7 @@ public class DebugView extends Group implements IDebugView {
 
         mainTable.row();
 
-        mainTable.add(btnCrash).left().spaceLeft(15).spaceBottom(10);
+        mainTable.add(btnCrash).left().spaceLeft(15).spaceBottom(10).size(150,45);
 
         Logger.info("Debug View: controls created");
     }
