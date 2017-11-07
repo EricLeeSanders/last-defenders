@@ -2,7 +2,17 @@
     "wave": [
         {
             "enemy": Humvee,
-            "delay": .25,
+            "delay": 1,
+            "armor": false
+        },
+        {
+            "enemy": MachineGun,
+            "delay": 1,
+            "armor": false
+        },
+        {
+            "enemy": FlameThrower,
+            "delay": 1,
             "armor": false
         }
     ]

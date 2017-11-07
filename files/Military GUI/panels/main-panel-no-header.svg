@@ -9,9 +9,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="367.87012mm"
-   height="284.6709mm"
-   viewBox="0 0 367.87012 284.6709"
+   width="508mm"
+   height="285.75mm"
+   viewBox="0 0 508 285.75"
    version="1.1"
    id="svg19518"
    inkscape:version="0.92.0 r15299"
@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="638.04488"
-     inkscape:cy="335.10361"
+     inkscape:cx="150.90179"
+     inkscape:cy="335.10362"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -44,7 +44,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -52,10 +52,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(201.32199,47.174732)">
+     transform="translate(201.32193,48.253835)">
     <g
        id="g7243"
-       transform="matrix(0.26958213,0,0,0.26958213,1589.1673,119.52003)"
+       transform="matrix(0.37227195,0,0,0.27060404,2271.2045,119.07282)"
        inkscape:export-filename="C:\Users\Robert\Desktop\military_ui\pngs\panels\large_screen_rectanglar_military_panel_1985px_by_1536.png"
        inkscape:export-xdpi="128.49051"
        inkscape:export-ydpi="128.49051">
