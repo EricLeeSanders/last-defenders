@@ -39,7 +39,6 @@ public class Explosion extends GameActor implements Pool.Poolable {
         super(size);
         this.pool = pool;
         this.audio = audio;
-        setRotation(90);
         explosionAnimation = new Animation<TextureRegion>(0.05f, regions);
         explosionAnimation.setPlayMode(PlayMode.LOOP);
     }

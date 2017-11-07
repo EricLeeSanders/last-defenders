@@ -12,6 +12,5 @@ public class BloodSplatter extends DeathEffect {
     public BloodSplatter(DeathEffectPool<BloodSplatter> pool, Array<AtlasRegion> atlasRegions) {
 
         super(pool, atlasRegions, TEXTURE_SIZE);
-        setRotation(90);
     }
 }

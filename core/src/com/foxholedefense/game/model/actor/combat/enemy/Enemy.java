@@ -199,7 +199,8 @@ public abstract class Enemy extends CombatActor {
     private void calcLengthToEnd() {
         // The enemy should only have 1 action and it should
         // be a FHDSequenceAction;
-        if (getActions().size == 1) {
+        System.out.println(this.getClass().getSimpleName() + " action size: " + getActions().size);
+        if (getActions().size != 1) {
             return;
         }
 
@@ -219,7 +220,7 @@ public abstract class Enemy extends CombatActor {
         }
 
         lengthToEnd = totalDistance;
-
+        Logger.info(this.getClass().getSimpleName() + " length to end: " + lengthToEnd);
     }
 
     boolean isAttacking() {

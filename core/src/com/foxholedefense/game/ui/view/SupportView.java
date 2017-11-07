@@ -133,7 +133,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 
         btnPlacingCancel = new ImageButton(skin, "cancel");
         btnPlacingCancel.setSize(50, 50);
-        btnPlacingCancel.getImageCell().size(25, 25);
+        btnPlacingCancel.getImageCell().size(25, 26);
         btnPlacingCancel.getImage().setScaling(Scaling.stretch);
         btnPlacingCancel.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlace.getY() + 60);
         setCancelListener(btnPlacingCancel);

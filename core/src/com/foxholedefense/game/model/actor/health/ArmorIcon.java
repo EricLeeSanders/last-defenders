@@ -2,28 +2,31 @@ package com.foxholedefense.game.model.actor.health;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
+import com.foxholedefense.game.model.actor.GameActor;
 import com.foxholedefense.game.model.actor.combat.CombatActor;
 import com.foxholedefense.util.Logger;
+import com.foxholedefense.util.datastructures.Dimension;
 
 /**
  * Created by Eric on 1/6/2017.
  */
 
-public class ArmorIcon extends Actor implements Pool.Poolable {
+public class ArmorIcon extends GameActor implements Pool.Poolable {
 
     public static final float Y_OFFSET = 16;
     public static final float X_HEALTH_BAR_DISPALYING_OFFSET = -22;
     public static final float X_OFFSET = -6;
+    private static final Dimension TEXTURE_SIZE = new Dimension(12, 13);
     private TextureRegion icon;
     private CombatActor actor = null;
     private Pool<ArmorIcon> pool;
 
     public ArmorIcon(Pool<ArmorIcon> pool, TextureRegion icon) {
-
+        super(TEXTURE_SIZE);
         this.pool = pool;
         this.icon = icon;
+        this.setTextureRegion(icon);
     }
 
     @Override
@@ -39,7 +42,7 @@ public class ArmorIcon extends Actor implements Pool.Poolable {
                 setX(actor.getPositionCenter().x + X_OFFSET);
             }
 
-            batch.draw(icon, getX(), getY());
+            super.draw(batch, alpha);
         }
     }
 
