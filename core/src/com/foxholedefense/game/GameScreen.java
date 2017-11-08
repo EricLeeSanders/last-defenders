@@ -33,6 +33,7 @@ public class GameScreen extends AbstractScreen {
     private GameUIStateManager uiStateManager;
     private Resources resources;
     private SpriteBatch spriteBatch;
+    private ScreenChanger screenChanger;
 
     public GameScreen(LevelName levelName, GameStateManager gameStateManager, ScreenChanger screenChanger,
         Resources resources, FHDAudio audio) {
@@ -40,6 +41,7 @@ public class GameScreen extends AbstractScreen {
         super(gameStateManager);
         Player player = new Player();
         this.resources = resources;
+        this.screenChanger = screenChanger;
         ActorGroups actorGroups = new ActorGroups();
         LevelStateManager levelStateManager = new LevelStateManager();
         uiStateManager = new GameUIStateManager(levelStateManager);
@@ -66,7 +68,11 @@ public class GameScreen extends AbstractScreen {
 
                 if ((keycode == Keys.ESCAPE) || (keycode == Keys.BACK)) {
                     Logger.info("GameScreen: Escape/Back pressed.");
-                    uiStateManager.setState(GameUIState.PAUSE_MENU);
+                    if(uiStateManager.getState().equals(GameUIState.GAME_OVER)){
+                        screenChanger.changeToMenu();
+                    } else {
+                        uiStateManager.setState(GameUIState.PAUSE_MENU);
+                    }
                 }
                 return false;
             }
