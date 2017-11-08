@@ -101,7 +101,7 @@ public class Resources {
 
         loadedTextures.put("range-red", actorAtlas.findRegion("range-red"));
         loadedTextures.put("range", actorAtlas.findRegion("range"));
-        loadedTextures.put("range-red-turret", actorAtlas.findRegion("range-red-turret"));
+        loadedTextures.put("range-turret-red", actorAtlas.findRegion("range-turret-red"));
         loadedTextures.put("range-turret", actorAtlas.findRegion("range-turret"));
         loadedTextures.put("range-black", actorAtlas.findRegion("range-black"));
         loadedTextures.put("airstrike", actorAtlas.findRegion("airstrike"));
