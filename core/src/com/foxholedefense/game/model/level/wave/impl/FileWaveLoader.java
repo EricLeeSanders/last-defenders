@@ -38,7 +38,7 @@ public class FileWaveLoader extends AbstractWaveLoader {
 
             SpawningEnemy spawningEnemy = loadSpawningEnemy(type, armor, spawnDelay);
 
-            spawningEnemies.addFirst(spawningEnemy);
+            spawningEnemies.addLast(spawningEnemy);
 
         }
 
