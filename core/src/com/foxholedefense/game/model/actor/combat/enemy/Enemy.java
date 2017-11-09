@@ -211,7 +211,7 @@ public abstract class Enemy extends CombatActor {
         lengthToEndCalculated = true;
 
         float totalDistance = Vector2
-            .dst(this.getX(), this.getY(), currentWaypoint.getX(), currentWaypoint.getY());
+            .dst(this.getPositionCenter().x, this.getPositionCenter().y, currentWaypoint.getX(), currentWaypoint.getY());
         for (int i = currentIndex; i < waypointActions.size - 1; i++) {
             WaypointAction waypoint = (WaypointAction) waypointActions.get(i);
             WaypointAction nextWaypoint = (WaypointAction) waypointActions.get(i + 1);
