@@ -178,25 +178,30 @@ public class EnemyTest {
         sequenceAction.act(secondWaypoint.getDuration() / 2);
 
         //Enemy should be half way from first point to second
-
-        Vector2 halfway = new Vector2(path.get(1));
+        //Create new vector for halfway mark
+        FHDVector2 halfway = new FHDVector2();
+        halfway.add(path.get(1));
         halfway.add(path.get(2));
+        halfway.sub(halfway.x / 2, halfway.y / 2);
+        Array<FHDVector2> currentPath = new Array<FHDVector2>();
+        currentPath.add(halfway);
+        currentPath.addAll(path, 2, path.size - 2);
 
-        assertEquals(halfway.x / 2, enemy.getPositionCenter().x, TestUtil.DELTA);
-        assertEquals(halfway.y / 2, enemy.getPositionCenter().y, TestUtil.DELTA);
+        float distance = getDistanceOfVectors(currentPath);
 
-        Vector2 currentWaypoint = new Vector2(secondWaypoint.getX(), secondWaypoint.getY());
-        float lengthToEnd = Vector2
-            .dst(enemy.getPositionCenter().x, enemy.getPositionCenter().y, currentWaypoint.x,
-                currentWaypoint.y);
+        assertEquals(distance, enemy.getLengthToEnd(), TestUtil.DELTA);
+    }
 
-        float x1 = enemy.getPositionCenter().x;
-        float y1 = enemy.getPositionCenter().y;
-        float x2 = currentWaypoint.x;
-        float y2 = currentWaypoint.y;
+    private float getDistanceOfVectors(Array<FHDVector2> vectors){
 
-        double distance = Math.sqrt(Math.pow((x1 - x2), 2) + Math.pow((y1 - y2), 2));
-        assertEquals(distance, lengthToEnd, 0.00001f);
+        float distance = 0;
+        for(int i = 0; i < vectors.size - 1; i++){
+            FHDVector2 first = vectors.get(i);
+            FHDVector2 second = vectors.get(i+1);
+            distance += Vector2.dst(first.x, first.y, second.x, second.y);
+        }
+
+        return distance;
     }
 
     @Test
@@ -258,6 +263,8 @@ public class EnemyTest {
         assertEquals(EnemyState.REACHED_END, enemy.getState());
         enemy.act(0.001f);
         assertEquals(EnemyState.STANDBY, enemy.getState());
+
+        assertEquals(0, enemy.getLengthToEnd(), TestUtil.DELTA);
 
     }
 
