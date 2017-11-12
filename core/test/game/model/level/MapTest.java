@@ -17,8 +17,8 @@ import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.foxholedefense.game.model.level.Map;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.game.model.level.Map;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -64,21 +64,21 @@ public class MapTest {
         doReturn(pathX).when(polyline).getX();
         doReturn(pathY).when(polyline).getY();
 
-        Array<FHDVector2> pathCoords = new SnapshotArray<>(true, 14);
-        pathCoords.add(new FHDVector2(216.0f, 0.5f));
-        pathCoords.add(new FHDVector2(216.0f, 105f));
-        pathCoords.add(new FHDVector2(87.5f, 105f));
-        pathCoords.add(new FHDVector2(87.5f, 200.5f));
-        pathCoords.add(new FHDVector2(216.0f, 200.5f));
-        pathCoords.add(new FHDVector2(216.0f, 329.0f));
-        pathCoords.add(new FHDVector2(473.0f, 329.0f));
-        pathCoords.add(new FHDVector2(473.0f, 216.0f));
-        pathCoords.add(new FHDVector2(312.0f, 216.0f));
-        pathCoords.add(new FHDVector2(312.0f, 134.5f));
-        pathCoords.add(new FHDVector2(473.0f, 134.5f));
-        pathCoords.add(new FHDVector2(473.0f, 54.5f));
-        pathCoords.add(new FHDVector2(311.5f, 54.5f));
-        pathCoords.add(new FHDVector2(311.5f, 1.0f));
+        Array<LDVector2> pathCoords = new SnapshotArray<>(true, 14);
+        pathCoords.add(new LDVector2(216.0f, 0.5f));
+        pathCoords.add(new LDVector2(216.0f, 105f));
+        pathCoords.add(new LDVector2(87.5f, 105f));
+        pathCoords.add(new LDVector2(87.5f, 200.5f));
+        pathCoords.add(new LDVector2(216.0f, 200.5f));
+        pathCoords.add(new LDVector2(216.0f, 329.0f));
+        pathCoords.add(new LDVector2(473.0f, 329.0f));
+        pathCoords.add(new LDVector2(473.0f, 216.0f));
+        pathCoords.add(new LDVector2(312.0f, 216.0f));
+        pathCoords.add(new LDVector2(312.0f, 134.5f));
+        pathCoords.add(new LDVector2(473.0f, 134.5f));
+        pathCoords.add(new LDVector2(473.0f, 54.5f));
+        pathCoords.add(new LDVector2(311.5f, 54.5f));
+        pathCoords.add(new LDVector2(311.5f, 1.0f));
 
         // Boundary
 

@@ -1,4 +1,4 @@
-def keystorePropertiesFile = rootProject.file("android/src/com/foxholedefense/config/keystore.properties")
+def keystorePropertiesFile = rootProject.file("android/src/com/lastdefenders/config/keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
@@ -40,7 +40,7 @@ android {
         instrumentTest.setRoot('tests')
     }
     defaultConfig {
-        applicationId "com.foxholedefense.game"
+        applicationId "com.lastdefenders.game"
         multiDexEnabled true
         minSdkVersion 15
         targetSdkVersion 20
@@ -91,7 +91,7 @@ task run(type: Exec) {
     }
 
     def adb = path + "/platform-tools/adb"
-    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.foxholedefense.game/com.foxholedefense.game.AndroidLauncher'
+    commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.lastdefenders.game/com.lastdefenders.game.AndroidLauncher'
 }
 // sets up the Android Eclipse project, using the old Ant based build.
 eclipse {
