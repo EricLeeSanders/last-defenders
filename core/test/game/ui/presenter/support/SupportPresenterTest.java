@@ -4,15 +4,15 @@ import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
-import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
-import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
-import com.foxholedefense.game.ui.presenter.SupportPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.view.MessageDisplayer;
-import com.foxholedefense.game.ui.view.SupportView;
-import com.foxholedefense.util.FHDAudio;
+import com.lastdefenders.game.model.Player;
+import com.lastdefenders.game.service.actorplacement.AirStrikePlacement;
+import com.lastdefenders.game.service.actorplacement.SupplyDropPlacement;
+import com.lastdefenders.game.service.actorplacement.SupportActorPlacement;
+import com.lastdefenders.game.ui.presenter.SupportPresenter;
+import com.lastdefenders.game.ui.state.GameUIStateManager;
+import com.lastdefenders.game.ui.view.MessageDisplayer;
+import com.lastdefenders.game.ui.view.SupportView;
+import com.lastdefenders.util.LDAudio;
 import org.junit.Before;
 
 /**
@@ -21,7 +21,7 @@ import org.junit.Before;
 
 public class SupportPresenterTest {
 
-    //GameUIStateManager uiStateManager, Player player, FHDAudio audio
+    //GameUIStateManager uiStateManager, Player player, LDAudio audio
     //, SupportActorPlacement supportActorPlacement, AirStrikePlacement airStrikePlacement, SupplyDropPlacement supplyDropPlacement
     //, MessageDisplayer messageDisplayer
     GameUIStateManager uiStateManager = mock(GameUIStateManager.class);
@@ -33,7 +33,7 @@ public class SupportPresenterTest {
 
     SupportPresenter createSupportPresenter() {
 
-        FHDAudio audio = mock(FHDAudio.class);
+        LDAudio audio = mock(LDAudio.class);
         MessageDisplayer messageDisplayer = mock(MessageDisplayer.class);
 
         return new SupportPresenter(uiStateManager, player, audio, supportActorPlacement,

@@ -5,10 +5,10 @@ import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager;
-import com.foxholedefense.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
-import com.foxholedefense.game.service.factory.EffectFactory;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager;
+import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
+import com.lastdefenders.game.service.factory.EffectFactory;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;

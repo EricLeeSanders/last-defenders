@@ -8,11 +8,11 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.model.actor.combat.event.EventManagerImpl;
-import com.foxholedefense.game.model.actor.combat.event.interfaces.EventManager.CombatActorEventEnum;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.effects.label.ArmorDestroyedEffect;
-import com.foxholedefense.game.service.factory.EffectFactory;
+import com.lastdefenders.game.model.actor.combat.event.EventManagerImpl;
+import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager.CombatActorEventEnum;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.effects.label.ArmorDestroyedEffect;
+import com.lastdefenders.game.service.factory.EffectFactory;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;

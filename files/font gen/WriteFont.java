@@ -1,4 +1,4 @@
-package com.foxholedefense.util;
+package com.lastdefenders.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;

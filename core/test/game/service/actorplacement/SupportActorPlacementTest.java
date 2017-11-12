@@ -11,12 +11,12 @@ import static org.powermock.api.mockito.PowerMockito.doReturn;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.ActorGroups;
-import com.foxholedefense.game.model.actor.support.Apache;
-import com.foxholedefense.game.model.actor.support.LandMine;
-import com.foxholedefense.game.service.actorplacement.SupportActorPlacement;
-import com.foxholedefense.game.service.factory.SupportActorFactory;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.support.Apache;
+import com.lastdefenders.game.model.actor.support.LandMine;
+import com.lastdefenders.game.service.actorplacement.SupportActorPlacement;
+import com.lastdefenders.game.service.factory.SupportActorFactory;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import game.model.actor.support.ApacheTest;
 import game.model.actor.support.LandMineTest;
 import org.junit.Before;
@@ -60,7 +60,7 @@ public class SupportActorPlacementTest {
         assertFalse(apache.isShowRange());
 
         // Move apache
-        FHDVector2 moveCoords = new FHDVector2(400, 200);
+        LDVector2 moveCoords = new LDVector2(400, 200);
         supportActorPlacement.moveSupportActor(moveCoords);
 
         assertTrue(apache.isVisible());
@@ -98,7 +98,7 @@ public class SupportActorPlacementTest {
         assertFalse(landMine.isShowRange());
 
         // Move landmine
-        FHDVector2 moveCoords = new FHDVector2(400, 200);
+        LDVector2 moveCoords = new LDVector2(400, 200);
         supportActorPlacement.moveSupportActor(moveCoords);
 
         assertTrue(landMine.isVisible());

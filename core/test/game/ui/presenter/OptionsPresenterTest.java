@@ -10,14 +10,14 @@ import static org.mockito.Mockito.verify;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.foxholedefense.game.ui.presenter.OptionsPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.OptionsView;
-import com.foxholedefense.screen.ScreenChanger;
-import com.foxholedefense.util.FHDAudio;
-import com.foxholedefense.util.Resources;
-import com.foxholedefense.util.UserPreferences;
+import com.lastdefenders.game.ui.presenter.OptionsPresenter;
+import com.lastdefenders.game.ui.state.GameUIStateManager;
+import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
+import com.lastdefenders.game.ui.view.OptionsView;
+import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.util.Resources;
+import com.lastdefenders.util.UserPreferences;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -32,7 +32,7 @@ public class OptionsPresenterTest {
     private ScreenChanger screenChanger = mock(ScreenChanger.class);
     private UserPreferences userPreferences = mock(UserPreferences.class);
     private Preferences preferences = mock(Preferences.class);
-    private FHDAudio audio = mock(FHDAudio.class);
+    private LDAudio audio = mock(LDAudio.class);
     private OptionsView view = mock(OptionsView.class);
 
     @Before

@@ -5,10 +5,10 @@ import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.util.ActorUtil;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -65,11 +65,11 @@ public class ActorUtilTest {
         float targetX = 80;
         float targetY = 75;
 
-        FHDVector2 rotatedCoords = ActorUtil.calculateRotatedCoords(targetX, targetY,
+        LDVector2 rotatedCoords = ActorUtil.calculateRotatedCoords(targetX, targetY,
             enemy.getPositionCenter().x, enemy.getPositionCenter().y,
             Math.toRadians(tower.getRotation()));
 
-        FHDVector2 expectedCoords = new FHDVector2(81.09539f, 73.95757f);
+        LDVector2 expectedCoords = new LDVector2(81.09539f, 73.95757f);
 
         assertEquals(expectedCoords, rotatedCoords);
     }
