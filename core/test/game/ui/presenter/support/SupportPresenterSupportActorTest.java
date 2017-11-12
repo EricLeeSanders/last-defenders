@@ -8,11 +8,11 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.foxholedefense.game.model.actor.support.Apache;
-import com.foxholedefense.game.model.actor.support.LandMine;
-import com.foxholedefense.game.ui.presenter.SupportPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.game.model.actor.support.Apache;
+import com.lastdefenders.game.model.actor.support.LandMine;
+import com.lastdefenders.game.ui.presenter.SupportPresenter;
+import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Test;
 
 /**
@@ -89,7 +89,7 @@ public class SupportPresenterSupportActorTest extends SupportPresenterTest {
         doReturn(GameUIState.PLACING_SUPPORT).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5, 10);
+        LDVector2 location = new LDVector2(5, 10);
         supportPresenter.moveSupportActor(location);
 
         verify(supportView, times(1)).showBtnPlace();
@@ -109,11 +109,11 @@ public class SupportPresenterSupportActorTest extends SupportPresenterTest {
         doReturn(GameUIState.PLACING_SUPPORT).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5, 10);
+        LDVector2 location = new LDVector2(5, 10);
         supportPresenter.moveSupportActor(location);
 
         verify(supportView, never()).showBtnPlace();
-        verify(supportActorPlacement, never()).moveSupportActor(any(FHDVector2.class));
+        verify(supportActorPlacement, never()).moveSupportActor(any(LDVector2.class));
         verify(uiStateManager, never()).setState(any(GameUIState.class));
 
     }
@@ -129,11 +129,11 @@ public class SupportPresenterSupportActorTest extends SupportPresenterTest {
         doReturn(GameUIState.OPTIONS).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5, 10);
+        LDVector2 location = new LDVector2(5, 10);
         supportPresenter.moveSupportActor(location);
 
         verify(supportView, never()).showBtnPlace();
-        verify(supportActorPlacement, never()).moveSupportActor(any(FHDVector2.class));
+        verify(supportActorPlacement, never()).moveSupportActor(any(LDVector2.class));
         verify(uiStateManager, never()).setState(any(GameUIState.class));
 
     }

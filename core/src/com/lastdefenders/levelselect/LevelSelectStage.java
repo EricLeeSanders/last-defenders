@@ -1,0 +1,38 @@
+package com.lastdefenders.levelselect;
+
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.lastdefenders.levelselect.ui.LevelSelectPresenter;
+import com.lastdefenders.levelselect.ui.LevelSelectView;
+import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.util.Logger;
+import com.lastdefenders.util.Resources;
+
+/**
+ * Stage for Level Select Menu
+ *
+ * @author Eric
+ */
+class LevelSelectStage extends Stage {
+
+    public LevelSelectStage(ScreenChanger screenChanger, Resources resources, LDAudio audio,
+        Viewport viewport) {
+
+        super(viewport);
+        LevelSelectPresenter presenter = new LevelSelectPresenter(screenChanger);
+        resources.loadAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class);
+        LevelSelectView levelSelectView = new LevelSelectView(presenter, resources, audio);
+        this.addActor(levelSelectView);
+        levelSelectView
+            .setBackground(resources.getAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class));
+    }
+
+    @Override
+    public void dispose() {
+
+        Logger.info("Level Select Stage Dispose");
+    }
+
+}

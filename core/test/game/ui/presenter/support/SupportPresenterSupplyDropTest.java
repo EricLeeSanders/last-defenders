@@ -7,10 +7,10 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
-import com.foxholedefense.game.ui.presenter.SupportPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
+import com.lastdefenders.game.ui.presenter.SupportPresenter;
+import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Test;
 
 /**
@@ -87,7 +87,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
         doReturn(GameUIState.PLACING_SUPPLYDROP).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5, 10);
+        LDVector2 location = new LDVector2(5, 10);
         supportPresenter.moveSupplyDrop(location);
 
         verify(supportView, times(1)).showBtnPlace();
@@ -107,11 +107,11 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
         doReturn(GameUIState.PLACING_SUPPLYDROP).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5, 10);
+        LDVector2 location = new LDVector2(5, 10);
         supportPresenter.moveSupplyDrop(location);
 
         verify(supportView, never()).showBtnPlace();
-        verify(supplyDropPlacement, never()).setLocation(any(FHDVector2.class));
+        verify(supplyDropPlacement, never()).setLocation(any(LDVector2.class));
         verify(uiStateManager, never()).setState(any(GameUIState.class));
 
     }
@@ -127,11 +127,11 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5, 10);
+        LDVector2 location = new LDVector2(5, 10);
         supportPresenter.moveSupplyDrop(location);
 
         verify(supportView, never()).showBtnPlace();
-        verify(supplyDropPlacement, never()).setLocation(any(FHDVector2.class));
+        verify(supplyDropPlacement, never()).setLocation(any(LDVector2.class));
         verify(uiStateManager, never()).setState(any(GameUIState.class));
 
     }

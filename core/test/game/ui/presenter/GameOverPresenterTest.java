@@ -9,14 +9,14 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.ui.presenter.GameOverPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.GameOverView;
-import com.foxholedefense.game.ui.view.interfaces.IGameOverView;
-import com.foxholedefense.screen.ScreenChanger;
-import com.foxholedefense.util.FHDAudio;
+import com.lastdefenders.game.model.Player;
+import com.lastdefenders.game.ui.presenter.GameOverPresenter;
+import com.lastdefenders.game.ui.state.GameUIStateManager;
+import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
+import com.lastdefenders.game.ui.view.GameOverView;
+import com.lastdefenders.game.ui.view.interfaces.IGameOverView;
+import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.util.LDAudio;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -38,7 +38,7 @@ public class GameOverPresenterTest {
 
     private GameOverPresenter createGameOverPresenter() {
 
-        FHDAudio audioMock = mock(FHDAudio.class);
+        LDAudio audioMock = mock(LDAudio.class);
 
         return new GameOverPresenter(gameUIStateManagerMock, screenChangerMock, playerMock,
             audioMock);
