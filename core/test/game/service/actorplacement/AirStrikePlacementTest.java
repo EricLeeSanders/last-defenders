@@ -15,12 +15,12 @@ import static org.powermock.api.mockito.PowerMockito.doReturn;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.ActorGroups;
-import com.foxholedefense.game.model.actor.support.AirStrike;
-import com.foxholedefense.game.model.actor.support.AirStrikeLocation;
-import com.foxholedefense.game.service.actorplacement.AirStrikePlacement;
-import com.foxholedefense.game.service.factory.SupportActorFactory;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.support.AirStrike;
+import com.lastdefenders.game.model.actor.support.AirStrikeLocation;
+import com.lastdefenders.game.service.actorplacement.AirStrikePlacement;
+import com.lastdefenders.game.service.factory.SupportActorFactory;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import game.model.actor.support.AirStrikeTest;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,14 +66,14 @@ public class AirStrikePlacementTest {
         assertEquals(0, airStrike.getY(), TestUtil.DELTA);
 
         // Add locations
-        FHDVector2 location1 = new FHDVector2(100, 100);
-        FHDVector2 location2 = new FHDVector2(200, 100);
-        FHDVector2 location3 = new FHDVector2(400, 100);
+        LDVector2 location1 = new LDVector2(100, 100);
+        LDVector2 location2 = new LDVector2(200, 100);
+        LDVector2 location3 = new LDVector2(400, 100);
 
         AirStrikeLocation airStrikeLocMock = mock(AirStrikeLocation.class);
 
         doReturn(airStrikeLocMock).when(supportActorFactory)
-            .loadAirStrikeLocation(isA(FHDVector2.class), isA(Float.class));
+            .loadAirStrikeLocation(isA(LDVector2.class), isA(Float.class));
 
         airStrikePlacement.addLocation(location1);
 
