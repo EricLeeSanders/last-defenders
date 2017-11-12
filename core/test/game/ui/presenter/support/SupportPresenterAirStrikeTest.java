@@ -7,10 +7,10 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.foxholedefense.game.model.actor.support.AirStrike;
-import com.foxholedefense.game.ui.presenter.SupportPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.game.model.actor.support.AirStrike;
+import com.lastdefenders.game.ui.presenter.SupportPresenter;
+import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Test;
 
 /**
@@ -88,7 +88,7 @@ public class SupportPresenterAirStrikeTest extends SupportPresenterTest {
         doReturn(GameUIState.PLACING_AIRSTRIKE).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5, 10);
+        LDVector2 location = new LDVector2(5, 10);
         supportPresenter.placeAirStrikeLocation(location);
 
         verify(supportView, never()).showBtnPlace();
@@ -108,11 +108,11 @@ public class SupportPresenterAirStrikeTest extends SupportPresenterTest {
         doReturn(GameUIState.PLACING_AIRSTRIKE).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5, 10);
+        LDVector2 location = new LDVector2(5, 10);
         supportPresenter.placeAirStrikeLocation(location);
 
         verify(supportView, never()).showBtnPlace();
-        verify(airStrikePlacement, never()).addLocation(any(FHDVector2.class));
+        verify(airStrikePlacement, never()).addLocation(any(LDVector2.class));
         verify(uiStateManager, never()).setState(any(GameUIState.class));
 
     }
@@ -129,11 +129,11 @@ public class SupportPresenterAirStrikeTest extends SupportPresenterTest {
         doReturn(GameUIState.WAVE_IN_PROGRESS).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        FHDVector2 location = new FHDVector2(5, 10);
+        LDVector2 location = new LDVector2(5, 10);
         supportPresenter.placeAirStrikeLocation(location);
 
         verify(supportView, never()).showBtnPlace();
-        verify(airStrikePlacement, never()).addLocation(any(FHDVector2.class));
+        verify(airStrikePlacement, never()).addLocation(any(LDVector2.class));
         verify(uiStateManager, never()).setState(any(GameUIState.class));
 
 

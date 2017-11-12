@@ -9,17 +9,17 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.level.state.LevelStateManager;
-import com.foxholedefense.game.model.level.state.LevelStateManager.LevelState;
-import com.foxholedefense.game.ui.presenter.HUDPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.HUDView;
-import com.foxholedefense.game.ui.view.interfaces.IHUDView;
-import com.foxholedefense.state.GameStateManager;
-import com.foxholedefense.state.GameStateManager.GameState;
-import com.foxholedefense.util.FHDAudio;
+import com.lastdefenders.game.model.Player;
+import com.lastdefenders.game.model.level.state.LevelStateManager;
+import com.lastdefenders.game.model.level.state.LevelStateManager.LevelState;
+import com.lastdefenders.game.ui.presenter.HUDPresenter;
+import com.lastdefenders.game.ui.state.GameUIStateManager;
+import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
+import com.lastdefenders.game.ui.view.HUDView;
+import com.lastdefenders.game.ui.view.interfaces.IHUDView;
+import com.lastdefenders.state.GameStateManager;
+import com.lastdefenders.state.GameStateManager.GameState;
+import com.lastdefenders.util.LDAudio;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -42,7 +42,7 @@ public class HUDPresenterTest {
 
     private HUDPresenter createHUDPresenter() {
 
-        FHDAudio audioMock = mock(FHDAudio.class);
+        LDAudio audioMock = mock(LDAudio.class);
 
         return new HUDPresenter(gameUIStateManagerMock, levelStateManagerMock, gameStateManagerMock,
             playerMock, audioMock);

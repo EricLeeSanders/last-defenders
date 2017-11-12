@@ -14,16 +14,16 @@ import static org.mockito.Mockito.verify;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.interfaces.Attacker;
-import com.foxholedefense.game.model.actor.projectile.Rocket;
-import com.foxholedefense.game.model.actor.support.AirStrike;
-import com.foxholedefense.game.model.actor.support.AirStrikeLocation;
-import com.foxholedefense.game.service.factory.ProjectileFactory;
-import com.foxholedefense.game.service.factory.SupportActorFactory.SupportActorPool;
-import com.foxholedefense.util.FHDAudio;
-import com.foxholedefense.util.Resources;
-import com.foxholedefense.util.datastructures.Dimension;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.game.model.actor.interfaces.Attacker;
+import com.lastdefenders.game.model.actor.projectile.Rocket;
+import com.lastdefenders.game.model.actor.support.AirStrike;
+import com.lastdefenders.game.model.actor.support.AirStrikeLocation;
+import com.lastdefenders.game.service.factory.ProjectileFactory;
+import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
+import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.util.Resources;
+import com.lastdefenders.util.datastructures.Dimension;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -50,7 +50,7 @@ public class AirStrikeTest {
         doReturn(rocketMock).when(projectileFactoryMock).loadRocket();
 
         Resources resourcesMock = TestUtil.createResourcesMock();
-        FHDAudio audioMock = mock(FHDAudio.class);
+        LDAudio audioMock = mock(LDAudio.class);
 
         return new AirStrike(poolMock, new Group(), projectileFactoryMock,
             resourcesMock.getTexture(""), resourcesMock.getTexture(""), audioMock);
@@ -77,14 +77,14 @@ public class AirStrikeTest {
         airStrike.beginAirStrike();
 
         assertTrue(airStrike.isActive());
-        assertEquals(new FHDVector2(-airStrike.getWidth() / 2, Resources.VIRTUAL_HEIGHT / 2),
+        assertEquals(new LDVector2(-airStrike.getWidth() / 2, Resources.VIRTUAL_HEIGHT / 2),
             airStrike.getPositionCenter());
 
         verify(airStrikeLocation1, times(1)).setShowRange(eq(false));
         verify(airStrikeLocation2, times(1)).setShowRange(eq(false));
         verify(airStrikeLocation3, times(1)).setShowRange(eq(false));
         verify(rocketMock, times(3))
-            .initialize(any(Attacker.class), any(FHDVector2.class), any(Dimension.class),
+            .initialize(any(Attacker.class), any(LDVector2.class), any(Dimension.class),
                 any(Float.class));
 
         airStrike.act(AirStrike.AIRSTRIKE_DURATION / 2);

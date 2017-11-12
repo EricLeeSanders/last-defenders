@@ -7,8 +7,8 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.PlayerObserver;
+import com.lastdefenders.game.model.Player;
+import com.lastdefenders.game.model.PlayerObserver;
 import org.junit.Before;
 import org.junit.Test;
 
