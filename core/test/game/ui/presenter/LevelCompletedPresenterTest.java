@@ -8,12 +8,12 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.ui.presenter.LevelCompletedPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.LevelCompletedView;
-import com.foxholedefense.screen.ScreenChanger;
-import com.foxholedefense.util.FHDAudio;
+import com.lastdefenders.game.ui.presenter.LevelCompletedPresenter;
+import com.lastdefenders.game.ui.state.GameUIStateManager;
+import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
+import com.lastdefenders.game.ui.view.LevelCompletedView;
+import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.util.LDAudio;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,7 +35,7 @@ public class LevelCompletedPresenterTest {
 
     private LevelCompletedPresenter createLevelCompletedPresenter() {
 
-        FHDAudio audio = mock(FHDAudio.class);
+        LDAudio audio = mock(LDAudio.class);
 
         return new LevelCompletedPresenter(uiStateManager, screenChanger, audio);
 

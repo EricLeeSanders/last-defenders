@@ -13,11 +13,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Array;
-import com.foxholedefense.action.FHDSequenceAction;
-import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
-import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.action.LDSequenceAction;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -34,15 +34,15 @@ public class EnemyTest {
         Gdx.app = mock(Application.class);
     }
 
-    private Array<FHDVector2> createWaypoints() {
+    private Array<LDVector2> createWaypoints() {
 
-        Array<FHDVector2> path = new Array<>();
+        Array<LDVector2> path = new Array<>();
 
-        FHDVector2 startPoint = new FHDVector2(50, 50);
-        FHDVector2 waypoint1 = new FHDVector2(100, 100);
-        FHDVector2 waypoint2 = new FHDVector2(150, 150);
-        FHDVector2 waypoint3 = new FHDVector2(200, 200);
-        FHDVector2 waypoint4 = new FHDVector2(250, 250);
+        LDVector2 startPoint = new LDVector2(50, 50);
+        LDVector2 waypoint1 = new LDVector2(100, 100);
+        LDVector2 waypoint2 = new LDVector2(150, 150);
+        LDVector2 waypoint3 = new LDVector2(200, 200);
+        LDVector2 waypoint4 = new LDVector2(250, 250);
 
         path.add(startPoint);
         path.add(waypoint1);
@@ -118,12 +118,12 @@ public class EnemyTest {
 
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
-        Array<FHDVector2> path = createWaypoints();
+        Array<LDVector2> path = createWaypoints();
 
         enemy.setPath(path);
         assertEquals(enemy.getActions().size, 1);
 
-        FHDSequenceAction sequenceAction = (FHDSequenceAction) enemy.getActions().first();
+        LDSequenceAction sequenceAction = (LDSequenceAction) enemy.getActions().first();
         // get first waypoint
         MoveToAction moveToAction = (MoveToAction) sequenceAction.getCurrentAction();
         // complete waypoint
@@ -138,12 +138,12 @@ public class EnemyTest {
 
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
-        Array<FHDVector2> path = createWaypoints();
+        Array<LDVector2> path = createWaypoints();
 
         enemy.setPath(path);
         assertEquals(1, enemy.getActions().size);
 
-        FHDSequenceAction sequenceAction = (FHDSequenceAction) enemy.getActions().first();
+        LDSequenceAction sequenceAction = (LDSequenceAction) enemy.getActions().first();
         // get 3 waypoints and complete;
         for (int i = 0; i < 3; i++) {
             float duration = ((MoveToAction) sequenceAction.getCurrentAction()).getDuration();
@@ -160,12 +160,12 @@ public class EnemyTest {
 
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
-        Array<FHDVector2> path = createWaypoints();
+        Array<LDVector2> path = createWaypoints();
 
         enemy.setPath(path);
         assertEquals(enemy.getActions().size, 1);
 
-        FHDSequenceAction sequenceAction = (FHDSequenceAction) enemy.getActions().first();
+        LDSequenceAction sequenceAction = (LDSequenceAction) enemy.getActions().first();
         // get first waypoint
         MoveToAction firstWaypoint = (MoveToAction) sequenceAction.getCurrentAction();
         // complete waypoint
@@ -179,11 +179,11 @@ public class EnemyTest {
 
         //Enemy should be half way from first point to second
         //Create new vector for halfway mark
-        FHDVector2 halfway = new FHDVector2();
+        LDVector2 halfway = new LDVector2();
         halfway.add(path.get(1));
         halfway.add(path.get(2));
         halfway.sub(halfway.x / 2, halfway.y / 2);
-        Array<FHDVector2> currentPath = new Array<FHDVector2>();
+        Array<LDVector2> currentPath = new Array<LDVector2>();
         currentPath.add(halfway);
         currentPath.addAll(path, 2, path.size - 2);
 
@@ -192,12 +192,12 @@ public class EnemyTest {
         assertEquals(distance, enemy.getLengthToEnd(), TestUtil.DELTA);
     }
 
-    private float getDistanceOfVectors(Array<FHDVector2> vectors){
+    private float getDistanceOfVectors(Array<LDVector2> vectors){
 
         float distance = 0;
         for(int i = 0; i < vectors.size - 1; i++){
-            FHDVector2 first = vectors.get(i);
-            FHDVector2 second = vectors.get(i+1);
+            LDVector2 first = vectors.get(i);
+            LDVector2 second = vectors.get(i+1);
             distance += Vector2.dst(first.x, first.y, second.x, second.y);
         }
 
@@ -212,7 +212,7 @@ public class EnemyTest {
 
         enemy.getTargetGroup().addActor(tower);
 
-        Array<FHDVector2> path = createWaypoints();
+        Array<LDVector2> path = createWaypoints();
         enemy.setPath(path);
 
         assertEquals(EnemyState.RUNNING, enemy.getState());
@@ -226,7 +226,7 @@ public class EnemyTest {
 
         enemy.getTargetGroup().addActor(tower);
 
-        Array<FHDVector2> path = createWaypoints();
+        Array<LDVector2> path = createWaypoints();
         enemy.setPath(path);
 
         assertEquals(EnemyState.RUNNING, enemy.getState());
@@ -247,12 +247,12 @@ public class EnemyTest {
 
         assertEquals(EnemyState.RUNNING, enemy.getState());
 
-        Array<FHDVector2> path = createWaypoints();
+        Array<LDVector2> path = createWaypoints();
 
         enemy.setPath(path);
         assertEquals(1, enemy.getActions().size);
 
-        FHDSequenceAction sequenceAction = (FHDSequenceAction) enemy.getActions().first();
+        LDSequenceAction sequenceAction = (LDSequenceAction) enemy.getActions().first();
         for (int i = 0; i < 4; i++) {
             float duration = ((MoveToAction) sequenceAction.getCurrentAction()).getDuration();
             // complete waypoint

@@ -13,13 +13,13 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.ui.presenter.DebugPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.DebugView;
-import com.foxholedefense.game.ui.view.interfaces.IDebugView;
-import com.foxholedefense.state.GameStateManager;
-import com.foxholedefense.util.DebugOptions;
+import com.lastdefenders.game.ui.presenter.DebugPresenter;
+import com.lastdefenders.game.ui.state.GameUIStateManager;
+import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
+import com.lastdefenders.game.ui.view.DebugView;
+import com.lastdefenders.game.ui.view.interfaces.IDebugView;
+import com.lastdefenders.state.GameStateManager;
+import com.lastdefenders.util.DebugOptions;
 import org.junit.Before;
 import org.junit.Test;
 

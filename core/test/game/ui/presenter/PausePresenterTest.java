@@ -9,14 +9,14 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.ui.presenter.PausePresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.PauseView;
-import com.foxholedefense.screen.ScreenChanger;
-import com.foxholedefense.state.GameStateManager;
-import com.foxholedefense.state.GameStateManager.GameState;
-import com.foxholedefense.util.FHDAudio;
+import com.lastdefenders.game.ui.presenter.PausePresenter;
+import com.lastdefenders.game.ui.state.GameUIStateManager;
+import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
+import com.lastdefenders.game.ui.view.PauseView;
+import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.state.GameStateManager;
+import com.lastdefenders.state.GameStateManager.GameState;
+import com.lastdefenders.util.LDAudio;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,7 +39,7 @@ public class PausePresenterTest {
 
     private PausePresenter createPausePresenter() {
 
-        FHDAudio audioMock = mock(FHDAudio.class);
+        LDAudio audioMock = mock(LDAudio.class);
         return new PausePresenter(uiStateManager, gameStateManager, screenChanger, audioMock);
     }
 

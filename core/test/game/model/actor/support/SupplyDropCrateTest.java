@@ -13,13 +13,13 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.effects.label.TowerHealEffect;
-import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
-import com.foxholedefense.game.service.factory.EffectFactory;
-import com.foxholedefense.game.service.factory.SupportActorFactory.SupplyDropCratePool;
-import com.foxholedefense.util.Resources;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
+import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
+import com.lastdefenders.game.service.factory.EffectFactory;
+import com.lastdefenders.game.service.factory.SupportActorFactory.SupplyDropCratePool;
+import com.lastdefenders.util.Resources;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -54,7 +54,7 @@ public class SupplyDropCrateTest {
     public void supplyDropCrateTest1() {
 
         float dropDelay = .75f;
-        FHDVector2 destination = new FHDVector2(280, 360);
+        LDVector2 destination = new LDVector2(280, 360);
 
         Tower tower1 = TestUtil.createTower("Rifle", true);
         tower1.takeDamage(1);
