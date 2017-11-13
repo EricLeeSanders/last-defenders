@@ -5,12 +5,12 @@ import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
-import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager;
-import com.foxholedefense.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.service.factory.EffectFactory;
+import com.lastdefenders.game.model.Player;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
+import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.service.factory.EffectFactory;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;

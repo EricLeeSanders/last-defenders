@@ -9,13 +9,13 @@ import static org.powermock.api.mockito.PowerMockito.verifyStatic;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.helper.Damage;
-import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.projectile.Explosion;
-import com.foxholedefense.game.service.factory.ProjectileFactory.ExplosionPool;
-import com.foxholedefense.util.FHDAudio;
-import com.foxholedefense.util.Resources;
+import com.lastdefenders.game.helper.Damage;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.projectile.Explosion;
+import com.lastdefenders.game.service.factory.ProjectileFactory.ExplosionPool;
+import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.util.Resources;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,7 +43,7 @@ public class ExplosionTest {
     public Explosion createExplosion() {
 
         Resources resourcesMock = TestUtil.createResourcesMock();
-        FHDAudio audioMock = mock(FHDAudio.class);
+        LDAudio audioMock = mock(LDAudio.class);
 
         return new Explosion(poolMock, resourcesMock.getAtlasRegion(""), audioMock);
 
