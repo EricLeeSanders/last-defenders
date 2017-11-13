@@ -5,7 +5,7 @@ import com.badlogic.gdx.Preferences;
 
 public class UserPreferences {
 
-    private Preferences prefs = Gdx.app.getPreferences("lastdefendersPreferences");
+    private Preferences prefs = Gdx.app.getPreferences("LastDefendersPreferences");
 
     public Preferences getPreferences() {
 
