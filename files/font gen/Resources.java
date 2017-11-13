@@ -1,4 +1,4 @@
-package com.foxholedefense.util;
+package com.lastdefenders.util;
 
 import java.util.HashMap;
 import java.util.HashSet;

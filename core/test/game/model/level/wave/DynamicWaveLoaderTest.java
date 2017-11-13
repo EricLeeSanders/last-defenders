@@ -9,14 +9,14 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Queue;
-import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
-import com.foxholedefense.game.model.level.Map;
-import com.foxholedefense.game.model.level.SpawningEnemy;
-import com.foxholedefense.game.model.level.wave.impl.DynamicWaveLoader;
-import com.foxholedefense.game.service.factory.CombatActorFactory;
-import com.foxholedefense.game.service.factory.CombatActorFactory.SpawningEnemyPool;
-import com.foxholedefense.levelselect.LevelName;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.level.Map;
+import com.lastdefenders.game.model.level.SpawningEnemy;
+import com.lastdefenders.game.model.level.wave.impl.DynamicWaveLoader;
+import com.lastdefenders.game.service.factory.CombatActorFactory;
+import com.lastdefenders.game.service.factory.CombatActorFactory.SpawningEnemyPool;
+import com.lastdefenders.levelselect.LevelName;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -60,7 +60,7 @@ public class DynamicWaveLoaderTest {
         initSpawningEnemyQueue.addFirst(spawningEnemy3);
         initSpawningEnemyQueue.addFirst(spawningEnemy4);
 
-        doReturn(new Array<FHDVector2>()).when(map).getPath();
+        doReturn(new Array<LDVector2>()).when(map).getPath();
         doReturn(TestUtil.createEnemy("Rifle", false)).when(combatActorFactory)
             .loadEnemy(isA(String.class));
 

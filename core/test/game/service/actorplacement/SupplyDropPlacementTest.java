@@ -14,11 +14,11 @@ import static org.mockito.Mockito.verify;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.support.SupplyDrop;
-import com.foxholedefense.game.model.actor.support.SupplyDropCrate;
-import com.foxholedefense.game.service.actorplacement.SupplyDropPlacement;
-import com.foxholedefense.game.service.factory.SupportActorFactory;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.game.model.actor.support.SupplyDrop;
+import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
+import com.lastdefenders.game.service.actorplacement.SupplyDropPlacement;
+import com.lastdefenders.game.service.factory.SupportActorFactory;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import game.model.actor.support.SupplyDropCrateTest;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,7 +55,7 @@ public class SupplyDropPlacementTest {
         assertEquals(0, supplyDropCrate.getY(), TestUtil.DELTA);
 
         // set location
-        FHDVector2 location = new FHDVector2(10, 200);
+        LDVector2 location = new LDVector2(10, 200);
         supplyDropPlacement.setLocation(location);
 
         assertTrue(supplyDropCrate.isVisible());
@@ -65,12 +65,12 @@ public class SupplyDropPlacementTest {
         // finish
         SupplyDrop supplyDropMock = mock(SupplyDrop.class);
         doReturn(supplyDropMock).when(supportActorFactory).loadSupplyDrop();
-        doNothing().when(supplyDropMock).beginSupplyDrop(isA(FHDVector2.class));
+        doNothing().when(supplyDropMock).beginSupplyDrop(isA(LDVector2.class));
 
         supplyDropPlacement.placeSupplyDrop();
 
         assertFalse(supplyDropCrate.isShowRange());
-        verify(supplyDropMock, times(1)).beginSupplyDrop(isA(FHDVector2.class));
+        verify(supplyDropMock, times(1)).beginSupplyDrop(isA(LDVector2.class));
 
         assertNull(supplyDropPlacement.getCurrentSupplyDropCrate());
 
