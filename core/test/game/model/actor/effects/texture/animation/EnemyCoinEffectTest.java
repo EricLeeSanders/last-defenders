@@ -7,10 +7,10 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.model.actor.effects.texture.animation.EnemyCoinEffect;
-import com.foxholedefense.game.service.factory.EffectFactory.AnimationEffectPool;
-import com.foxholedefense.util.Resources;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.game.model.actor.effects.texture.animation.EnemyCoinEffect;
+import com.lastdefenders.game.service.factory.EffectFactory.AnimationEffectPool;
+import com.lastdefenders.util.Resources;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -46,9 +46,9 @@ public class EnemyCoinEffectTest {
     public void enemyCoinEffectTest1() {
 
         EnemyCoinEffect enemyCoinEffect = createEnemyCoinEffect();
-        enemyCoinEffect.initialize(new FHDVector2(20, 20));
+        enemyCoinEffect.initialize(new LDVector2(20, 20));
 
-        assertEquals(new FHDVector2(20, 20), enemyCoinEffect.getPositionCenter());
+        assertEquals(new LDVector2(20, 20), enemyCoinEffect.getPositionCenter());
         assertEquals(1, enemyCoinEffect.getActions().size);
         enemyCoinEffect.act(100f);
 
