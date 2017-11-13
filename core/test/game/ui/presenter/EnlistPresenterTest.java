@@ -10,16 +10,16 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.foxholedefense.game.model.Player;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.service.actorplacement.TowerPlacement;
-import com.foxholedefense.game.ui.presenter.EnlistPresenter;
-import com.foxholedefense.game.ui.state.GameUIStateManager;
-import com.foxholedefense.game.ui.state.GameUIStateManager.GameUIState;
-import com.foxholedefense.game.ui.view.interfaces.IEnlistView;
-import com.foxholedefense.game.ui.view.interfaces.MessageDisplayer;
-import com.foxholedefense.util.FHDAudio;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.game.model.Player;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.service.actorplacement.TowerPlacement;
+import com.lastdefenders.game.ui.presenter.EnlistPresenter;
+import com.lastdefenders.game.ui.state.GameUIStateManager;
+import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
+import com.lastdefenders.game.ui.view.interfaces.IEnlistView;
+import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
+import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
@@ -64,7 +64,7 @@ public class EnlistPresenterTest {
 
     public EnlistPresenter createEnlistPresenter() {
 
-        FHDAudio audioMock = mock(FHDAudio.class);
+        LDAudio audioMock = mock(LDAudio.class);
         MessageDisplayer messageDisplayerMock = mock(MessageDisplayer.class);
 
         return new EnlistPresenter(gameUIStateManagerMock, playerMock, audioMock,
@@ -271,7 +271,7 @@ public class EnlistPresenterTest {
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 
-        FHDVector2 moveCoords = new FHDVector2(100, 100);
+        LDVector2 moveCoords = new LDVector2(100, 100);
         enlistPresenter.moveTower(moveCoords);
 
         verify(towerPlacementMock, times(1)).moveTower(eq(moveCoords));
@@ -296,7 +296,7 @@ public class EnlistPresenterTest {
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 
-        FHDVector2 moveCoords = new FHDVector2(100, 100);
+        LDVector2 moveCoords = new LDVector2(100, 100);
         enlistPresenter.moveTower(moveCoords);
 
         verify(towerPlacementMock, never()).moveTower(eq(moveCoords));
@@ -317,7 +317,7 @@ public class EnlistPresenterTest {
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 
-        FHDVector2 moveCoords = new FHDVector2(100, 100);
+        LDVector2 moveCoords = new LDVector2(100, 100);
         enlistPresenter.moveTower(moveCoords);
 
         verify(towerPlacementMock, times(1)).moveTower(eq(moveCoords));
