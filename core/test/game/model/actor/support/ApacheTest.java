@@ -15,15 +15,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.foxholedefense.game.model.actor.combat.enemy.Enemy;
-import com.foxholedefense.game.model.actor.projectile.Bullet;
-import com.foxholedefense.game.model.actor.support.Apache;
-import com.foxholedefense.game.service.factory.ProjectileFactory;
-import com.foxholedefense.game.service.factory.SupportActorFactory.SupportActorPool;
-import com.foxholedefense.util.ActorUtil;
-import com.foxholedefense.util.FHDAudio;
-import com.foxholedefense.util.Resources;
-import com.foxholedefense.util.datastructures.Dimension;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.projectile.Bullet;
+import com.lastdefenders.game.model.actor.support.Apache;
+import com.lastdefenders.game.service.factory.ProjectileFactory;
+import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
+import com.lastdefenders.util.ActorUtil;
+import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.util.Resources;
+import com.lastdefenders.util.datastructures.Dimension;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -47,7 +47,7 @@ public class ApacheTest {
     public Apache createApache() {
 
         Resources resourcesMock = TestUtil.createResourcesMock();
-        FHDAudio audioMock = mock(FHDAudio.class);
+        LDAudio audioMock = mock(LDAudio.class);
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(bulletMock).when(projectileFactoryMock).loadBullet();
 

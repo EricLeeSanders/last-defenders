@@ -15,16 +15,16 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.foxholedefense.game.helper.CollisionDetection;
-import com.foxholedefense.game.model.actor.ActorGroups;
-import com.foxholedefense.game.model.actor.combat.tower.Tower;
-import com.foxholedefense.game.model.actor.health.ArmorIcon;
-import com.foxholedefense.game.model.actor.health.HealthBar;
-import com.foxholedefense.game.model.level.Map;
-import com.foxholedefense.game.service.actorplacement.TowerPlacement;
-import com.foxholedefense.game.service.factory.CombatActorFactory;
-import com.foxholedefense.game.service.factory.HealthFactory;
-import com.foxholedefense.util.datastructures.pool.FHDVector2;
+import com.lastdefenders.game.helper.CollisionDetection;
+import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.health.ArmorIcon;
+import com.lastdefenders.game.model.actor.health.HealthBar;
+import com.lastdefenders.game.model.level.Map;
+import com.lastdefenders.game.service.actorplacement.TowerPlacement;
+import com.lastdefenders.game.service.factory.CombatActorFactory;
+import com.lastdefenders.game.service.factory.HealthFactory;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -83,7 +83,7 @@ public class TowerPlacementTest {
         when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower)))
             .thenReturn(false);
 
-        FHDVector2 moveCoords = new FHDVector2(200, 100);
+        LDVector2 moveCoords = new LDVector2(200, 100);
         towerPlacement.moveTower(moveCoords);
 
         assertTrue(tower.isVisible());
@@ -135,7 +135,7 @@ public class TowerPlacementTest {
         when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower)))
             .thenReturn(true);
 
-        FHDVector2 moveCoords = new FHDVector2(200, 100);
+        LDVector2 moveCoords = new LDVector2(200, 100);
         towerPlacement.moveTower(moveCoords);
 
         assertTrue(tower.isVisible());

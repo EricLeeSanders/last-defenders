@@ -7,8 +7,8 @@ gwt {
     minHeapSize="1G"
 
     src = files(file("src/")) // Needs to be in front of "modules" below.
-    modules 'com.foxholedefense.GdxDefinition'
-    devModules 'com.foxholedefense.GdxDefinitionSuperdev'
+    modules 'com.lastdefenders.GdxDefinition'
+    devModules 'com.lastdefenders.GdxDefinitionSuperdev'
     project.webAppDirName = 'webapp'
 
     compiler {
