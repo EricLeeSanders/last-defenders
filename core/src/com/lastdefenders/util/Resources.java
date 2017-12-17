@@ -29,18 +29,18 @@ public class Resources {
     public static final String MENU_ATLAS = "menu/menu.atlas";
     public static final String ACTOR_ATLAS = "game/actors/actors.atlas";
     public static final String LEVEL_SELECT_ATLAS = "level_select/level_select.atlas";
-    public static final String SKIN_ATLAS = "skin/uiskin.atlas";
     public static final float VIRTUAL_WIDTH = 640; // 16:9
     public static final float VIRTUAL_HEIGHT = 360;
     public static final float MAX_GAME_SPEED = 2.0f;
 
-    private static final String SKIN_JSON = "skin/uiskin.json";
     private static ShapeRenderer shapeRenderer;
     private float gameSpeed = 1;
     private UserPreferences userPreferences;
     private AssetManager manager = new AssetManager();
     private String assetFolder;
     private float tiledMapScale;
+    private String skinAtlas = "skin/uiskin.atlas";
+    private String skinJson = "skin/uiskin.json";
 
     private Map<String, TextureRegion> loadedTextures = new HashMap<>();
     private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<>();
@@ -63,6 +63,8 @@ public class Resources {
             new InternalFileHandleResolver(), resolutions);
         manager.setLoader(TextureAtlas.class, new TextureAtlasLoader(fileResolver));
         assetFolder = fileResolver.choose(resolutions).folder;
+        skinAtlas = "skin/" + assetFolder + "/uiskin.atlas";
+        skinJson = "skin/" + assetFolder + "/uiskin.json";
 
         switch(assetFolder){
             case "hi":
@@ -184,25 +186,9 @@ public class Resources {
 
         Logger.info("Resources: initializing font");
         BitmapFont font = getSkin().getFont("default-font");
-        System.out.println(font.usesIntegerPositions());
-        System.out.println(font.getData().lineHeight);
-        System.out.println(font.getData().ascent);
-        System.out.println(font.getData().capHeight);
-        System.out.println(font.getData().descent);
-        System.out.println(font.getData().scaleX);
-        System.out.println(font.getData().scaleY);
-        System.out.println(font.getData().spaceWidth);
-        System.out.println(font.getData().xHeight);
 
         font.setUseIntegerPositions(false);
-        font.getData().setLineHeight(55);
-        font.getData().ascent = 11;
-        font.getData().capHeight = 30;
-        font.getData().descent = -14;
-        font.getData().scaleX = 1.0f;
-        font.getData().scaleY = 1.0f;
-        font.getData().spaceWidth = 12.0f;
-        font.getData().xHeight = 30.0f;
+
         Logger.info("Resources: font initialized");
     }
 
@@ -276,7 +262,7 @@ public class Resources {
 
         Logger.info("Resources: loading skin");
         try {
-            manager.load(SKIN_JSON, Skin.class, new SkinLoader.SkinParameter(SKIN_ATLAS));
+            manager.load(skinJson, Skin.class, new SkinLoader.SkinParameter(skinAtlas));
             Logger.info("Resources: skin loaded");
         } catch (GdxRuntimeException e) {
             Logger.error("Resources: load skin error", e);
@@ -285,11 +271,11 @@ public class Resources {
 
     public Skin getSkin() {
 
-        if (!manager.isLoaded(SKIN_JSON)) {
-            Logger.info(SKIN_JSON + " (skin) not loaded. Loading");
+        if (!manager.isLoaded(skinJson)) {
+            Logger.info(skinJson + " (skin) not loaded. Loading");
             loadSkinSync();
         }
-        return manager.get(SKIN_JSON, Skin.class);
+        return manager.get(skinJson, Skin.class);
     }
 
     public float getGameSpeed() {

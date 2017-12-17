@@ -189,14 +189,12 @@ public class OptionsView extends Group implements IOptionsView {
         speedSlider.setSize(300, 22);
         speedSliderListener(speedSlider);
 
-        Image speedSliderFull = new Image(
-            resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
+        Image speedSliderFull = new Image(resources.getSkin().getRegion("slider-full"));
         speedSliderFull.setSize(299, 18);
         speedSliderFull.setPosition(0, 2);
         speedSliderFull.setAlign(Align.center);
 
-        speedSliderBg = new Image(
-            resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
+        speedSliderBg = new Image(resources.getSkin().getRegion("slider-bg"));
         speedSliderBg.setSize(299, 18);
         speedSliderBg.setPosition(0, 2);
         speedSliderBg.setAlign(Align.center);
@@ -229,14 +227,12 @@ public class OptionsView extends Group implements IOptionsView {
         volumeSlider.setSize(300, 22);
         volSliderListener(volumeSlider);
 
-        Image volSliderFull = new Image(
-            resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
+        Image volSliderFull = new Image(resources.getSkin().getRegion("slider-full"));
         volSliderFull.setSize(299, 18);
         volSliderFull.setPosition(0, 2);
         volSliderFull.setAlign(Align.center);
 
-        volSliderBg = new Image(
-            resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
+        volSliderBg = new Image(resources.getSkin().getRegion("slider-bg"));
         volSliderBg.setSize(299, 18);
         volSliderBg.setPosition(0, 2);
         volSliderBg.setAlign(Align.center);
