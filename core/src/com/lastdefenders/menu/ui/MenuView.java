@@ -154,12 +154,10 @@ public class MenuView extends Group implements IMenuView {
         volumeSlider.setValue(presenter.getMasterVolume());
         volSliderListener(volumeSlider);
 
-        Image volSliderFull = new Image(
-            resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-full"));
+        Image volSliderFull = new Image(resources.getSkin().getRegion("slider-full"));
         volSliderFull.setSize(300, 22);
 
-        volSliderBg = new Image(
-            resources.getAsset(Resources.SKIN_ATLAS, TextureAtlas.class).findRegion("slider-bg"));
+        volSliderBg = new Image(resources.getSkin().getRegion("slider-bg"));
         volSliderBg.setSize(300, 22);
 
         this.sliderStartPos = volSliderBg.getX();
