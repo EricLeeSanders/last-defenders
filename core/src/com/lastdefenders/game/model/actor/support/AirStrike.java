@@ -66,11 +66,14 @@ public class AirStrike extends SupportActor implements IRocket {
         moveAction.setAlignment(Align.center);
         addAction(moveAction);
 
+        audio.playSound(LDSound.AIRCRAFT_FLYOVER);
         audio.playSound(LDSound.ROCKET_LAUNCH);
         for (AirStrikeLocation location : airStrikeLocations) {
             dropBomb(location);
             location.setShowRange(false);
         }
+
+
     }
 
     @Override

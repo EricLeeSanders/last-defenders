@@ -281,6 +281,7 @@ public class SupportPresenter implements GameUIStateObserver {
     public void cancel() {
 
         Logger.info("Support Presenter: cancel");
+        audio.playSound(LDSound.SMALL_CLICK);
         uiStateManager.setStateReturn();
         cancelSupport();
     }
