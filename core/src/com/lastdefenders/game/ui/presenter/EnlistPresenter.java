@@ -125,6 +125,7 @@ public class EnlistPresenter implements GameUIStateObserver {
     public void cancel() {
 
         Logger.info("Enlist Presenter: cancel");
+        audio.playSound(LDSound.SMALL_CLICK);
         uiStateManager.setStateReturn();
     }
 
