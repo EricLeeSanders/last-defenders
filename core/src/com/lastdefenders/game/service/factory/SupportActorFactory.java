@@ -111,7 +111,7 @@ public class SupportActorFactory {
     private SupplyDrop createSupplyDropActor() {
 
         TextureRegion supplyDropRegion = resources.getTexture("supply-drop");
-        return new SupplyDrop(supplyDropRegion, supplyDropPool, this);
+        return new SupplyDrop(supplyDropRegion, supplyDropPool, this, audio);
     }
 
     /**

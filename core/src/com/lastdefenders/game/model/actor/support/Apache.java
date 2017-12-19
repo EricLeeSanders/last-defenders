@@ -73,6 +73,8 @@ public class Apache extends SupportActor {
         setRotation(ActorUtil.calculateRotation(destination, getPositionCenter()));
 
         UtilPool.freeObjects(centerPos, destination);
+
+        audio.playSound(LDSound.HELICOPTER_HOVER);
     }
 
     @Override
@@ -140,6 +142,8 @@ public class Apache extends SupportActor {
         setRotation(ActorUtil.calculateRotation(destination, getPositionCenter()));
         destination.free();
         setActive(false);
+
+        audio.playSound(LDSound.HELICOPTER_HOVER);
     }
 
     /**
