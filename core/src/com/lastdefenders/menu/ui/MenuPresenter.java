@@ -1,9 +1,11 @@
 package com.lastdefenders.menu.ui;
 
+import com.lastdefenders.menu.ui.view.interfaces.IMenuOptionsView;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
+import com.lastdefenders.menu.ui.view.interfaces.IMenuView;
 
 /**
  * Presenter class for the Main Menu
@@ -14,6 +16,7 @@ public class MenuPresenter {
 
     private ScreenChanger screenChanger;
     private IMenuView view;
+    private IMenuOptionsView menuOptionsView;
     private LDAudio audio;
 
     public MenuPresenter(ScreenChanger screenChanger, LDAudio audio) {
@@ -22,9 +25,10 @@ public class MenuPresenter {
         this.audio = audio;
     }
 
-    public void setView(IMenuView view) {
+    public void setView(IMenuView view, IMenuOptionsView menuOptionsView) {
 
         this.view = view;
+        this.menuOptionsView = menuOptionsView;
         initView();
     }
 
@@ -33,6 +37,7 @@ public class MenuPresenter {
         Logger.info("Menu Presenter: initializing view");
         view.setBtnMusicOn(audio.isMusicEnabled());
         view.setBtnSoundOn(audio.isSoundEnabled());
+        menuOptionsView.setVisible(false);
     }
 
     public void playGame() {
@@ -57,6 +62,24 @@ public class MenuPresenter {
         audio.playSound(LDSound.SMALL_CLICK);
         audio.changeMusicEnabled();
         view.setBtnMusicOn(audio.isMusicEnabled());
+    }
+
+    public void menuOptions() {
+        Logger.info("Menu Presenter: menu options");
+        audio.playSound(LDSound.SMALL_CLICK);
+        menuOptionsView.setVisible(true);
+    }
+
+    /**
+     * Close options window
+     */
+    public void closeMenuOptions() {
+
+        Logger.info("Options Presenter: close options");
+        audio.playSound(LDSound.SMALL_CLICK);
+        audio.saveMasterVolume();
+        menuOptionsView.setVisible(false);
+
     }
 
     public void volumeChanged(float vol) {
