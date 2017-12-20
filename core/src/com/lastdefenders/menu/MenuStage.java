@@ -4,7 +4,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.menu.ui.MenuPresenter;
-import com.lastdefenders.menu.ui.MenuView;
+import com.lastdefenders.menu.ui.view.MenuOptionsView;
+import com.lastdefenders.menu.ui.view.MenuView;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Logger;
@@ -24,8 +25,10 @@ class MenuStage extends Stage {
         resources.loadAsset(Resources.MENU_ATLAS, TextureAtlas.class);
         MenuPresenter presenter = new MenuPresenter(screenChanger, audio);
         MenuView menuView = new MenuView(presenter, resources);
-        presenter.setView(menuView);
+        MenuOptionsView menuOptionsView = new MenuOptionsView(presenter, resources);
+        presenter.setView(menuView, menuOptionsView);
         this.addActor(menuView);
+        this.addActor(menuOptionsView);
         menuView.setBackground(resources.getAsset(Resources.MENU_ATLAS, TextureAtlas.class));
     }
 
