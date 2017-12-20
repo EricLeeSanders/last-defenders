@@ -1,4 +1,4 @@
-package com.lastdefenders.menu.ui;
+package com.lastdefenders.menu.ui.view.interfaces;
 
 /**
  * Interface for Menu. Used by the Options Presenter to communicate with
@@ -6,7 +6,7 @@ package com.lastdefenders.menu.ui;
  *
  * @author Eric
  */
-interface IMenuView {
+public interface IMenuView {
 
     void setBtnSoundOn(boolean soundOn);
 
