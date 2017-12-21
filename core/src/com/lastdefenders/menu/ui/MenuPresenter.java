@@ -37,6 +37,8 @@ public class MenuPresenter {
         Logger.info("Menu Presenter: initializing view");
         view.setBtnMusicOn(audio.isMusicEnabled());
         view.setBtnSoundOn(audio.isSoundEnabled());
+        menuOptionsView.setBtnMusicOn(audio.isMusicEnabled());
+        menuOptionsView.setBtnSoundOn(audio.isSoundEnabled());
         menuOptionsView.setVisible(false);
     }
 
@@ -54,6 +56,7 @@ public class MenuPresenter {
         audio.playSound(LDSound.SMALL_CLICK);
         audio.changeSoundEnabled();
         view.setBtnSoundOn(audio.isSoundEnabled());
+        menuOptionsView.setBtnSoundOn(audio.isSoundEnabled());
     }
 
     public void musicPressed() {
@@ -62,6 +65,7 @@ public class MenuPresenter {
         audio.playSound(LDSound.SMALL_CLICK);
         audio.changeMusicEnabled();
         view.setBtnMusicOn(audio.isMusicEnabled());
+        menuOptionsView.setBtnMusicOn(audio.isMusicEnabled());
     }
 
     public void menuOptions() {
