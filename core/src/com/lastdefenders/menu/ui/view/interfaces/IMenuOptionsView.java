@@ -5,5 +5,11 @@ package com.lastdefenders.menu.ui.view.interfaces;
  */
 
 public interface IMenuOptionsView {
+
     void setVisible(boolean visible);
+
+    void setBtnSoundOn(boolean soundOn);
+
+    void setBtnMusicOn(boolean musicOn);
+
 }
