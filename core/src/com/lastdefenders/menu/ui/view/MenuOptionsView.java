@@ -206,7 +206,6 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
                 presenter.musicPressed();
             }
         });
-
     }
 
     private void setBtnCloseListener() {
@@ -219,7 +218,19 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
                 presenter.closeMenuOptions();
             }
         });
+    }
 
+
+    @Override
+    public void setBtnSoundOn(boolean soundOn) {
+
+        btnSound.setChecked(soundOn);
+    }
+
+    @Override
+    public void setBtnMusicOn(boolean musicOn) {
+
+        btnMusic.setChecked(musicOn);
     }
 
 }
