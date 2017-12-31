@@ -63,6 +63,7 @@ public class Resources {
             new InternalFileHandleResolver(), resolutions);
         manager.setLoader(TextureAtlas.class, new TextureAtlasLoader(fileResolver));
         assetFolder = fileResolver.choose(resolutions).folder;
+        Logger.info("Using " + assetFolder + " assets");
         skinAtlas = "skin/" + assetFolder + "/uiskin.atlas";
         skinJson = "skin/" + assetFolder + "/uiskin.json";
 
