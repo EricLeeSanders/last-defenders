@@ -38,8 +38,7 @@ public class Map implements Disposable {
      */
     private void findPath() {
 
-        tiledMap.getLayers().get("Path");
-        PolylineMapObject path = (PolylineMapObject) tiledMap.getLayers().get("Path").getObjects()
+        PolylineMapObject path = (PolylineMapObject) tiledMap.getLayers().get("PathLine").getObjects()
             .get("PathLine");
         float[] vertices = path.getPolyline().getVertices();
 
