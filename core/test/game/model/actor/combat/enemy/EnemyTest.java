@@ -183,7 +183,7 @@ public class EnemyTest {
         halfway.add(path.get(1));
         halfway.add(path.get(2));
         halfway.sub(halfway.x / 2, halfway.y / 2);
-        Array<LDVector2> currentPath = new Array<LDVector2>();
+        Array<LDVector2> currentPath = new Array<>();
         currentPath.add(halfway);
         currentPath.addAll(path, 2, path.size - 2);
 
