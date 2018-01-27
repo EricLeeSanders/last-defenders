@@ -43,7 +43,7 @@ public class TowerHealEffectTest {
         LabelStyle style = new LabelStyle(bitmapFontMock, Color.WHITE);
         doReturn(style).when(skinMock).get(LabelStyle.class);
 
-        return new TowerHealEffect(labelEffectPoolMock, skinMock);
+        return new TowerHealEffect(labelEffectPoolMock, skinMock, 1);
     }
 
     /**

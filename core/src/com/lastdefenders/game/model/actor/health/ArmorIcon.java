@@ -18,14 +18,12 @@ public class ArmorIcon extends GameActor implements Pool.Poolable {
     public static final float X_HEALTH_BAR_DISPALYING_OFFSET = -22;
     public static final float X_OFFSET = -6;
     private static final Dimension TEXTURE_SIZE = new Dimension(12, 13);
-    private TextureRegion icon;
     private CombatActor actor = null;
     private Pool<ArmorIcon> pool;
 
     public ArmorIcon(Pool<ArmorIcon> pool, TextureRegion icon) {
         super(TEXTURE_SIZE);
         this.pool = pool;
-        this.icon = icon;
         this.setTextureRegion(icon);
     }
 
@@ -60,7 +58,6 @@ public class ArmorIcon extends GameActor implements Pool.Poolable {
 
         Logger.info("ArmorIcon: setting actor: " + actor.getClass().getSimpleName());
         this.actor = actor;
-        this.setSize(icon.getRegionWidth(), icon.getRegionHeight());
 
     }
 

@@ -21,69 +21,67 @@ import com.lastdefenders.util.Resources;
 public class PauseView extends Group implements IPauseView {
 
     private PausePresenter presenter;
+    private Resources resources;
 
-    public PauseView(PausePresenter presenter, Skin skin) {
+    public PauseView(PausePresenter presenter, Resources resources) {
 
         this.presenter = presenter;
+        this.resources = resources;
         this.setTransform(false);
-        createControls(skin);
+    }
+
+    public void init(){
+
+        createControls();
         standByState();
     }
 
     /**
      * Create controls
      */
-    private void createControls(Skin skin) {
+    private void createControls() {
 
         Logger.info("PauseView: creating controls");
+
+        Skin skin = resources.getSkin();
 
         Table container = new Table();
         container.setTransform(false);
         container.setBackground(skin.getDrawable("pause-panel"));
         container.setSize(190, 307);
-        container.setPosition((Resources.VIRTUAL_WIDTH / 2) - (container.getWidth() / 2),
-            (Resources.VIRTUAL_HEIGHT / 2) - (container.getHeight() / 2));
+        container.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2, Align.center);
         this.addActor(container);
 
         Label lblTitle = new Label("PAUSED", skin);
-        lblTitle
-            .setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2)
-                , container.getY() + container.getHeight() - lblTitle.getHeight() + 5);
         lblTitle.setAlignment(Align.center);
-        lblTitle.setFontScale(0.7f);
-        this.addActor(lblTitle);
+        lblTitle.setFontScale(0.7f * resources.getFontScale());
 
         TextButton btnResume = new TextButton("RESUME", skin);
-        btnResume.getLabel().setFontScale(0.45f);
-        btnResume.pack();
-        btnResume.setSize(150, 45);
-        btnResume.setPosition(245, 229);
-        addActor(btnResume);
+        btnResume.getLabel().setFontScale(0.45f * resources.getFontScale());
         setBtnResumeListener(btnResume);
 
         TextButton btnQuit = new TextButton("QUIT", skin);
-        btnQuit.getLabel().setFontScale(0.45f);
-        btnQuit.pack();
-        btnQuit.setSize(150, 45);
-        btnQuit.setPosition(btnResume.getX(), btnResume.getY() - 57);
-        addActor(btnQuit);
+        btnQuit.getLabel().setFontScale(0.45f * resources.getFontScale());
         setBtnQuitListener(btnQuit);
 
         TextButton btnNewGame = new TextButton("NEW GAME", skin);
-        btnNewGame.getLabel().setFontScale(0.45f);
-        btnNewGame.pack();
-        btnNewGame.setSize(150, 45);
-        btnNewGame.setPosition(btnQuit.getX(), btnQuit.getY() - 57);
-        addActor(btnNewGame);
+        btnNewGame.getLabel().setFontScale(0.45f * resources.getFontScale());
         setBtnNewGameListener(btnNewGame);
 
         TextButton btnMainMenu = new TextButton("MAIN MENU", skin);
-        btnMainMenu.getLabel().setFontScale(0.45f);
-        btnMainMenu.pack();
-        btnMainMenu.setSize(150, 45);
-        btnMainMenu.setPosition(btnNewGame.getX(), btnNewGame.getY() - 56);
-        addActor(btnMainMenu);
+        btnMainMenu.getLabel().setFontScale(0.45f * resources.getFontScale());
         setBtnMainMenuListener(btnMainMenu);
+
+        container.top();
+        container.add(lblTitle).padTop(3);
+        container.row();
+        container.add(btnResume).size(150,45).spaceTop(15);
+        container.row();
+        container.add(btnQuit).size(150,45).spaceTop(11.5f);
+        container.row();
+        container.add(btnNewGame).size(150,45).spaceTop(11.5f);
+        container.row();
+        container.add(btnMainMenu).size(150,45).spaceTop(11.5f);
 
     }
 

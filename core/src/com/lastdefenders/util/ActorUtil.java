@@ -1,6 +1,7 @@
 package com.lastdefenders.util;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.datastructures.pool.UtilPool;
 
@@ -56,6 +57,16 @@ public class ActorUtil {
         float newX = ((((targetX - centerX) * cos) - ((targetY - centerY) * sin)) + centerX);
         float newY = ((((targetX - centerX) * sin) + ((targetY - centerY) * cos)) + centerY);
         return UtilPool.getVector2(newX, newY);
+    }
+
+    public static float getResolutionScaledStageWidthCoordinate(float x, Viewport viewport){
+
+        return x * (viewport.getWorldWidth() / Resources.VIRTUAL_WIDTH);
+    }
+
+    public static float getResolutionScaledStageHeightCoordinate(float y, Viewport viewport){
+
+        return y * (viewport.getWorldHeight() / Resources.VIRTUAL_HEIGHT);
     }
 
 }

@@ -56,6 +56,11 @@ public class AirStrikePlacement {
         }
     }
 
+    public AirStrike getCurrentAirStrike(){
+
+        return currentAirStrike;
+    }
+
     public boolean isCurrentAirStrike() {
 
         return (currentAirStrike != null);

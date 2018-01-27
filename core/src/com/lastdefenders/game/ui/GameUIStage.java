@@ -89,61 +89,72 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 
         HUDPresenter hudPresenter = new HUDPresenter(uiStateManager, levelStateManager,
             gameStateManager, player, audio);
-        HUDView hudView = new HUDView(hudPresenter, skin, resources);
+        HUDView hudView = new HUDView(hudPresenter, resources);
+        this.addActor(hudView);
+        hudView.init();
         hudPresenter.setView(hudView);
 
-        messageDisplayer = new com.lastdefenders.game.ui.view.MessageDisplayer(skin);
+        messageDisplayer = new com.lastdefenders.game.ui.view.MessageDisplayer(resources);
+
 
         EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio,
-            gameStage.getTowerPlacement(), messageDisplayer);
-        EnlistView enlistView = new EnlistView(enlistPresenter, skin);
+            gameStage.getTowerPlacement(), messageDisplayer, gameStage.getViewport());
+        EnlistView enlistView = new EnlistView(enlistPresenter, resources);
+        this.addActor(enlistView);
+        enlistView.init();
         enlistPresenter.setView(enlistView);
 
         SupportPresenter supportPresenter = new SupportPresenter(uiStateManager, player, audio,
             gameStage.getSupportActorPlacement(), gameStage.getAirStrikePlacement(),
-            gameStage.getSupplyDropPlacement(), messageDisplayer);
-        SupportView supportView = new SupportView(supportPresenter, skin);
+            gameStage.getSupplyDropPlacement(), messageDisplayer, gameStage.getViewport());
+        SupportView supportView = new SupportView(supportPresenter, resources);
+        this.addActor(supportView);
+        supportView.init();
         supportPresenter.setView(supportView);
 
         InspectPresenter inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager,
-            player, towerGroup, audio, messageDisplayer);
-        InspectView inspectView = new InspectView(inspectPresenter, skin);
+            player, towerGroup, audio, messageDisplayer, gameStage.getViewport());
+        InspectView inspectView = new InspectView(inspectPresenter, resources);
+        this.addActor(inspectView);
+        inspectView.init();
         inspectPresenter.setView(inspectView);
 
         OptionsPresenter optionsPresenter = new OptionsPresenter(uiStateManager, screenChanger,
             resources, audio);
         OptionsView optionsView = new OptionsView(optionsPresenter, resources);
+        this.addActor(optionsView);
+        optionsView.init();
         optionsPresenter.setView(optionsView);
 
         GameOverPresenter gameOverPresenter = new GameOverPresenter(uiStateManager, screenChanger,
             player, audio);
-        GameOverView gameOverView = new GameOverView(gameOverPresenter, skin);
+        GameOverView gameOverView = new GameOverView(gameOverPresenter, resources);
+        this.addActor(gameOverView);
+        gameOverView.init();
         gameOverPresenter.setView(gameOverView);
 
         LevelCompletedPresenter levelCompletedPresenter = new LevelCompletedPresenter(
             uiStateManager, screenChanger, audio);
         LevelCompletedView levelCompletedView = new LevelCompletedView(levelCompletedPresenter,
-            skin);
+            resources);
+        this.addActor(levelCompletedView);
+        levelCompletedView.init();
         levelCompletedPresenter.setView(levelCompletedView);
 
         DebugPresenter debugPresenter = new DebugPresenter(uiStateManager, gameStateManager);
-        DebugView debugView = new DebugView(debugPresenter, resources.getSkin());
+        DebugView debugView = new DebugView(debugPresenter, resources);
+        this.addActor(debugView);
+        debugView.init();
         debugPresenter.setView(debugView);
+
 
         PausePresenter pausePresenter = new PausePresenter(uiStateManager, gameStateManager,
             screenChanger, audio);
-        PauseView pauseView = new PauseView(pausePresenter, resources.getSkin());
+        PauseView pauseView = new PauseView(pausePresenter, resources);
+        this.addActor(pauseView);
+        pauseView.init();
         pausePresenter.setView(pauseView);
 
-        this.addActor(hudView);
-        this.addActor(enlistView);
-        this.addActor(supportView);
-        this.addActor(inspectView);
-        this.addActor(optionsView);
-        this.addActor(gameOverView);
-        this.addActor(levelCompletedView);
-        this.addActor(debugView);
-        this.addActor(pauseView);
         this.addActor(messageDisplayer);
 
         imp.addProcessor(this);

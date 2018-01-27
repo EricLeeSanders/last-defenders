@@ -7,10 +7,9 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.lastdefenders.game.service.factory.EffectFactory.LabelEffectPool;
-import com.lastdefenders.util.ActorUtil;
-import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
 
 /**
@@ -21,18 +20,20 @@ public class WaveOverCoinEffect extends LabelEffect {
 
     public static final float DURATION = 2;
     public static final float Y_END_OFFSET = 100;
-    public static final float Y_BEGIN_OFFSET = (Resources.VIRTUAL_HEIGHT / 2) + 50;
+    public static final float Y_BEGIN_OFFSET = 50;
     private static final float SCALE = 0.75f;
     private static final Dimension ICON_SIZE = new Dimension(32, 32);
+    private float fontScale;
 
     private Animation<TextureRegion> animation;
 
     public WaveOverCoinEffect(LabelEffectPool<WaveOverCoinEffect> pool, Skin skin,
-        Array<AtlasRegion> regions) {
+        Array<AtlasRegion> regions, float fontScale) {
 
         super(pool, DURATION, skin);
         animation = new Animation<TextureRegion>(0.05f, regions);
         animation.setPlayMode(Animation.PlayMode.LOOP);
+        setFontScale(SCALE * fontScale);
         LabelStyle style = new LabelStyle(skin.get(LabelStyle.class));
         style.fontColor = Color.YELLOW;
         setStyle(style);
@@ -42,16 +43,15 @@ public class WaveOverCoinEffect extends LabelEffect {
 
         clearActions();
         setText(String.valueOf(money).toUpperCase());
-        setFontScale(SCALE);
         pack();
 
-        float x = ActorUtil.calcBotLeftPointFromCenter((Resources.VIRTUAL_WIDTH / 2), getWidth());
-        float y = Y_BEGIN_OFFSET;
+        float x = getStage().getViewport().getWorldWidth() / 2;
+        float y = (getStage().getViewport().getWorldHeight() / 2) + Y_BEGIN_OFFSET;
 
-        setPosition(x, y);
+        setPosition(x, y, Align.center);
 
         addAction(Actions.sequence(
-            Actions.moveTo(x, y + Y_END_OFFSET, DURATION),
+            Actions.moveToAligned(x, y + Y_END_OFFSET, Align.center, DURATION),
             Actions.removeActor()));
     }
 

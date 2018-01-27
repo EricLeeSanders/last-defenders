@@ -17,6 +17,7 @@ import com.lastdefenders.game.model.actor.support.SupplyDrop;
 import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
 import com.lastdefenders.game.service.factory.SupportActorFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupplyDropPool;
+import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,6 +31,7 @@ public class SupplyDropTest {
 
     private SupplyDropPool poolMock = mock(SupplyDropPool.class);
     private SupplyDropCrate supplyDropCrateMock = mock(SupplyDropCrate.class);
+    private LDAudio audioMock = mock(LDAudio.class);
 
     @Before
     public void initSupplyDropTest() {
@@ -45,7 +47,7 @@ public class SupplyDropTest {
             .beginDrop(isA(Float.class), isA(Vector2.class));
         Resources resources = TestUtil.createResourcesMock();
 
-        return new SupplyDrop(resources.getTexture(""), poolMock, supportActorFactoryMock);
+        return new SupplyDrop(resources.getTexture(""), poolMock, supportActorFactoryMock, audioMock);
     }
 
     @Test

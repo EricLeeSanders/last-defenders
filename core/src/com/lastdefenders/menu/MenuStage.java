@@ -22,14 +22,27 @@ class MenuStage extends Stage {
         Viewport viewport) {
 
         super(viewport);
+        load(resources);
+        createPresenterAndViews(screenChanger, resources, audio);
+    }
+
+    private void load(Resources resources){
         resources.loadAsset(Resources.MENU_ATLAS, TextureAtlas.class);
+    }
+
+    private void createPresenterAndViews(ScreenChanger screenChanger, Resources resources, LDAudio audio){
+
         MenuPresenter presenter = new MenuPresenter(screenChanger, audio);
         MenuView menuView = new MenuView(presenter, resources);
+        addActor(menuView);
+        menuView.init();
+
         MenuOptionsView menuOptionsView = new MenuOptionsView(presenter, resources);
+        addActor(menuOptionsView);
+        menuOptionsView.init();
+
         presenter.setView(menuView, menuOptionsView);
-        this.addActor(menuView);
-        this.addActor(menuOptionsView);
-        menuView.setBackground(resources.getAsset(Resources.MENU_ATLAS, TextureAtlas.class));
+
     }
 
     @Override

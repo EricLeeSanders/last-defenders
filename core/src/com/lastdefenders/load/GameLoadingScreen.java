@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.screen.AbstractScreen;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.state.GameStateManager;
@@ -33,9 +34,11 @@ public class GameLoadingScreen extends AbstractScreen {
         this.resources = resources;
         this.screenChanger = screenChanger;
         this.audio = audio;
-        this.stage = new Stage(
-            new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT,
-                new OrthographicCamera()));
+        Viewport viewport = new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH,
+            Resources.VIRTUAL_HEIGHT,
+            new OrthographicCamera());
+        this.stage = new Stage(viewport);
+        super.addViewport(viewport);
         super.addInputProcessor(stage);
         createBackListener();
     }
@@ -57,6 +60,7 @@ public class GameLoadingScreen extends AbstractScreen {
 
         Logger.info("Game loading screen: show");
         super.show();
+
         resources.loadAssetSync(Resources.LOAD_ATLAS, TextureAtlas.class);
         TextureAtlas atlas = resources.getAsset(Resources.LOAD_ATLAS, TextureAtlas.class);
         Image image = new Image(atlas.findRegion("img-loading"));
@@ -65,6 +69,7 @@ public class GameLoadingScreen extends AbstractScreen {
         float y = ActorUtil
             .calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, image.getHeight());
         image.setPosition(x, y);
+
         loadTime = 0;
         stage.addActor(image);
 

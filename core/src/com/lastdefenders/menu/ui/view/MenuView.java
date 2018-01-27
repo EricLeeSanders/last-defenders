@@ -10,9 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.menu.ui.MenuPresenter;
 import com.lastdefenders.menu.ui.view.interfaces.IMenuView;
-import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -25,36 +25,34 @@ public class MenuView extends Group implements IMenuView {
 
     private MenuPresenter presenter;
     private ImageButton btnSound, btnMusic;
+    private Resources resources;
 
     public MenuView(MenuPresenter presenter, Resources resources) {
 
         this.presenter = presenter;
+        this.resources = resources;
         this.setTransform(false);
-        createControls(resources);
     }
 
-    private void createControls(Resources resources) {
+    public void init(){
+        createControls();
+        setBackground();
+    }
+
+    private void createControls() {
 
         Logger.info("Menu view: initializing view");
 
         Skin skin = resources.getSkin();
 
         Label lblTitle = new Label("LAST DEFENDERS", skin);
-        float lblTitleX = ActorUtil
-            .calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, lblTitle.getWidth());
-        float lblTitleY =
-            ActorUtil.calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, lblTitle.getHeight())
-                + 110;
-        lblTitle.setPosition(lblTitleX, lblTitleY);
+        lblTitle.setAlignment(Align.center);
+        lblTitle.setPosition(getStage().getViewport().getWorldWidth() / 2, (getStage().getViewport().getWorldHeight() / 2) + 110, Align.center);
         addActor(lblTitle);
 
         TextButton btnPlay = new TextButton("PLAY", skin, "transparent");
         btnPlay.setSize(126, 56);
-        float btnPlayX = ActorUtil
-            .calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, btnPlay.getWidth());
-        float btnPlayY = ActorUtil
-            .calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, btnPlay.getHeight());
-        btnPlay.setPosition(btnPlayX, btnPlayY);
+        btnPlay.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2, Align.center);
         addActor(btnPlay);
         setBtnPlayListener(btnPlay);
 
@@ -89,11 +87,13 @@ public class MenuView extends Group implements IMenuView {
     }
 
 
-    public void setBackground(TextureAtlas menuAtlas) {
+    private void setBackground() {
 
-        Image background = new Image(menuAtlas.findRegion("main-menu-screen"));
-        background.setFillParent(true);
-        this.getStage().addActor(background);
+        Image background = new Image(resources.getAsset(Resources.MENU_ATLAS, TextureAtlas.class).findRegion("main-menu-screen"));
+        background.setSize(getStage().getViewport().getWorldWidth(), getStage().getViewport().getWorldHeight());
+        background.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2,
+            Align.center);
+        getStage().addActor(background);
         background.setZIndex(0);
     }
 
