@@ -30,7 +30,7 @@ public class ArmorDestroyedEffect extends LabelEffect {
     private Animation<TextureRegion> animation;
 
     public ArmorDestroyedEffect(Array<AtlasRegion> regions,
-        LabelEffectPool<ArmorDestroyedEffect> pool, Skin skin) {
+        LabelEffectPool<ArmorDestroyedEffect> pool, Skin skin, float fontScale) {
 
         super(pool, DURATION, skin);
         animation = new Animation<TextureRegion>(DURATION, regions);
@@ -38,7 +38,7 @@ public class ArmorDestroyedEffect extends LabelEffect {
 
         setText(MESSAGE);
         setAlignment(Align.center);
-        setFontScale(SCALE);
+        setFontScale(SCALE * fontScale);
 
     }
 

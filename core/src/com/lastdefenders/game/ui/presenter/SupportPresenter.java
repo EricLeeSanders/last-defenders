@@ -1,6 +1,7 @@
 package com.lastdefenders.game.ui.presenter;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.support.AirStrike;
 import com.lastdefenders.game.model.actor.support.Apache;
@@ -17,6 +18,7 @@ import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.datastructures.pool.UtilPool;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,10 +39,12 @@ public class SupportPresenter implements GameUIStateObserver {
     private LDAudio audio;
     private MessageDisplayer messageDisplayer;
     private Map<String, Integer> supportCosts = new HashMap<>();
+    private Viewport gameViewport;
 
     public SupportPresenter(GameUIStateManager uiStateManager, Player player, LDAudio audio,
         SupportActorPlacement supportActorPlacement, AirStrikePlacement airStrikePlacement,
-        SupplyDropPlacement supplyDropPlacement, MessageDisplayer messageDisplayer) {
+        SupplyDropPlacement supplyDropPlacement, MessageDisplayer messageDisplayer,
+        Viewport gameViewport) {
 
         this.uiStateManager = uiStateManager;
         uiStateManager.attach(this);
@@ -50,6 +54,7 @@ public class SupportPresenter implements GameUIStateObserver {
         this.supportActorPlacement = supportActorPlacement;
         this.airStrikePlacement = airStrikePlacement;
         this.messageDisplayer = messageDisplayer;
+        this.gameViewport = gameViewport;
         initSupportCostsMap();
     }
 
@@ -294,21 +299,30 @@ public class SupportPresenter implements GameUIStateObserver {
     /**
      * Move the Support Actor
      *
-     * @param coords - Position to move
      */
-    public void screenTouch(Vector2 coords, String touchType) {
+    public void screenTouch(float x, float y, String touchType) {
+
+        LDVector2 coords = (LDVector2) gameViewport.unproject(UtilPool.getVector2(x, y));
 
         if (supportActorPlacement.isCurrentSupportActor() && uiStateManager.getState()
             .equals(GameUIState.PLACING_SUPPORT)) {
+
             moveSupportActor(coords);
+
         } else if (airStrikePlacement.isCurrentAirStrike() && uiStateManager.getState()
             .equals(GameUIState.PLACING_AIRSTRIKE)
             && touchType.equals("TouchDown")) {
+
             placeAirStrikeLocation(coords);
+
         } else if (supplyDropPlacement.isCurrentSupplyDropCrate() && uiStateManager.getState()
             .equals(GameUIState.PLACING_SUPPLYDROP)) {
+
             moveSupplyDrop(coords);
+
         }
+
+        coords.free();
     }
 
     /**

@@ -1,7 +1,9 @@
 package testutil;
 
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.isA;
 import static org.mockito.Mockito.mock;
@@ -10,8 +12,11 @@ import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
@@ -45,6 +50,7 @@ import com.lastdefenders.game.service.factory.EffectFactory;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 
 /**
  * Created by Eric on 4/23/2017.
@@ -213,5 +219,48 @@ public class TestUtil {
         enemy.init();
 
         return enemy;
+    }
+
+    public static Viewport mockViewportUnproject(LDVector2 coords){
+
+        Viewport viewport = mock(Viewport.class);
+        doReturn(coords).when(viewport).unproject(coords);
+
+        return viewport;
+    }
+
+
+    public static void mockViewportWorldWidth(float worldWidth, Actor actor){
+
+        Stage stageMock = mock(Stage.class);
+        Viewport viewportMock = mock(Viewport.class);
+
+
+        doReturn(stageMock).when(actor).getStage();
+        doReturn(viewportMock).when(stageMock).getViewport();
+        doReturn(worldWidth).when(viewportMock).getWorldWidth();
+
+    }
+
+    public static void mockViewportUnproject(LDVector2 coords, Viewport viewport){
+
+        doReturn(coords).when(viewport).unproject(any(LDVector2.class));
+    }
+//
+//    public static void mockScreenToStageCoordinates(LDVector2 coords, Actor actor){
+//
+//        Stage stageMock = mock(Stage.class);
+//        doReturn(stageMock).when(actor).getStage();
+//        doReturn(coords).when(stageMock).screenToStageCoordinates(any(LDVector2.class));
+//    }
+
+    public static LDVector2 nonPooledLDVector2(float x, float y){
+
+        LDVector2 vector2 = new LDVector2(x, y);
+        vector2 = spy(vector2);
+
+        doNothing().when(vector2).free();
+
+        return vector2;
     }
 }

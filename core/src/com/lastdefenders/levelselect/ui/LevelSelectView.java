@@ -27,32 +27,34 @@ import com.lastdefenders.util.Resources;
  */
 public class LevelSelectView extends Group {
 
-    private static final int MAX_LEVELS = 6;
-
     private LevelSelectPresenter presenter;
     private Label lblLevel;
-    private ObjectMap<LevelName, Image> levels = new ObjectMap<>(MAX_LEVELS);
+    private ObjectMap<LevelName, Image> levels = new ObjectMap<>();
     private Group levelGroup;
     private LDAudio audio;
     private LevelName selectedLevel;
+    private TextureAtlas levelSelectAtlas;
+    private Skin skin;
 
     public LevelSelectView(LevelSelectPresenter presenter, Resources resources, LDAudio audio) {
 
         this.presenter = presenter;
         this.audio = audio;
-        TextureAtlas levelSelectAtlas = resources
+        this.levelSelectAtlas = resources
             .getAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class);
-        Skin skin = resources.getSkin();
-        createControls(levelSelectAtlas, skin);
-        levelGroup = new Group();
-        this.addActor(levelGroup);
-        levelGroup.setVisible(false);
-        levelGroup.setTransform(false);
-        this.setTransform(false);
-        createConfirmLevelControls(levelSelectAtlas, skin);
+
+        skin = resources.getSkin();
+        setTransform(false);
     }
 
-    private void createControls(TextureAtlas levelSelectAtlas, Skin skin) {
+    public void init(){
+
+        createControls();
+        createConfirmLevelControls();
+        setBackground();
+    }
+
+    private void createControls() {
 
         Logger.info("Level select view: creating controls");
 
@@ -116,7 +118,7 @@ public class LevelSelectView extends Group {
         Logger.info("Level select view: controls created");
     }
 
-    public void setBackground(TextureAtlas levelSelectAtlas) {
+    private void setBackground() {
 
         Image background = new Image(levelSelectAtlas.findRegion("background"));
         background.setFillParent(true);
@@ -124,12 +126,17 @@ public class LevelSelectView extends Group {
         background.setZIndex(0);
     }
 
-    private void createConfirmLevelControls(TextureAtlas levelSelectAtlas, Skin skin) {
+    private void createConfirmLevelControls() {
 
         Logger.info("Level select view: creating confirm level controls");
 
+        levelGroup = new Group();
+        addActor(levelGroup);
+        levelGroup.setVisible(false);
+        levelGroup.setTransform(false);
+
         for(LevelName levelName : LevelName.values()){
-            createLevelImage(levelName, levelSelectAtlas);
+            createLevelImage(levelName);
         }
 
         ImageButton btnMap = new ImageButton(
@@ -143,23 +150,22 @@ public class LevelSelectView extends Group {
         btnPlay.setSize(64, 64);
         btnPlay.getImageCell().size(40, 27);
         btnPlay.getImage().setScaling(Scaling.stretch);
-        btnPlay.setPosition(Resources.VIRTUAL_WIDTH - btnPlay.getWidth() - 15, 15);
+        btnPlay.setPosition(getStage().getViewport().getWorldWidth() - btnPlay.getWidth() - 15, 15);
         levelGroup.addActor(btnPlay);
         setBtnPlayListener(btnPlay);
 
-        lblLevel = new Label("LEVEL X", skin);
-        lblLevel.setPosition((Resources.VIRTUAL_WIDTH / 2),
-            Resources.VIRTUAL_HEIGHT - lblLevel.getHeight() - 25, Align.center);
+        lblLevel = new Label("", skin);
+        lblLevel.setPosition(getStage().getViewport().getWorldWidth() / 2, (getStage().getViewport().getWorldHeight() / 2) + 110, Align.center);
         lblLevel.setAlignment(Align.center);
         levelGroup.addActor(lblLevel);
 
         Logger.info("Level select view: confirm level controls created");
     }
 
-    private void createLevelImage(LevelName levelName, TextureAtlas levelSelectAtlas){
+    private void createLevelImage(LevelName levelName){
 
         Image level = new Image(levelSelectAtlas.findRegion(levelName.toString()));
-        level.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+        level.setSize(getStage().getViewport().getWorldWidth(), getStage().getViewport().getWorldHeight());
         level.setVisible(false);
         levelGroup.addActor(level);
         levels.put(levelName, level);

@@ -19,8 +19,6 @@ import com.lastdefenders.game.ui.view.widgets.DischargeButton;
 import com.lastdefenders.game.ui.view.widgets.UpgradeButton;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
-import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.lastdefenders.util.datastructures.pool.UtilPool;
 
 /**
  * View for inspecting a tower
@@ -33,24 +31,31 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
     private DischargeButton btnDischarge;
     private UpgradeButton btnArmor, btnSpeed, btnRange, btnAttack;
     private Label lblTargetPriority, lblTitle, lblMoney, lblKills;
+    private Resources resources;
 
-    public InspectView(InspectPresenter presenter, Skin skin) {
+    public InspectView(InspectPresenter presenter, Resources resources) {
 
         this.presenter = presenter;
         this.setTransform(false);
-        createControls(skin);
+        this.resources = resources;
+    }
+
+    public void init(){
+        createControls();
     }
 
     /**
      * Create the controls
      */
-    private void createControls(Skin skin) {
+    private void createControls() {
 
         Logger.info("Inspect View: creating controls");
 
+        Skin skin = resources.getSkin();
+
         Table container = new Table();
         container.setTransform(false);
-        container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+        container.setSize(getStage().getViewport().getWorldWidth(), getStage().getViewport().getWorldHeight());
         addActor(container);
         container.setBackground(skin.getDrawable("main-panel"));
 
@@ -63,10 +68,11 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         container.add(inspectTable).expand().fill();
 
         lblTitle = new Label("Tower", skin);
-        lblTitle.setPosition((container.getWidth() / 2) - (lblTitle.getWidth() / 2),
-            container.getY() + container.getHeight() - lblTitle.getHeight());
+        lblTitle.setFontScale(0.7f * resources.getFontScale());
         lblTitle.setAlignment(Align.center);
-        lblTitle.setFontScale(0.7f);
+        float lblTitleX = container.getX(Align.center);
+        float lblTitleY = container.getY(Align.top) - (lblTitle.getHeight()/2);
+        lblTitle.setPosition(lblTitleX, lblTitleY, Align.center);
         addActor(lblTitle);
 
         LabelStyle lblMoneyStyle = new LabelStyle(skin.get("money_label", LabelStyle.class));
@@ -76,7 +82,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         lblMoney.setSize(200, 52);
         lblMoney.setPosition(75, 5);
         lblMoney.setAlignment(Align.left);
-        lblMoney.setFontScale(0.6f);
+        lblMoney.setFontScale(0.6f * resources.getFontScale());
         addActor(lblMoney);
 
         LabelStyle lblKillsStyle = new LabelStyle(skin.get("kills_label", LabelStyle.class));
@@ -86,7 +92,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         lblKills.setSize(200, 52);
         lblKills.setPosition(365, 5);
         lblKills.setAlignment(Align.right);
-        lblKills.setFontScale(0.6f);
+        lblKills.setFontScale(0.6f * resources.getFontScale());
         addActor(lblKills);
 
         ImageButton btnCancel = new ImageButton(skin, "cancel");
@@ -94,22 +100,22 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         btnCancel.setSize(64, 64);
         btnCancel.getImageCell().size(35, 36);
         btnCancel.getImage().setScaling(Scaling.stretch);
-        btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
+        btnCancel.setPosition(getStage().getViewport().getWorldWidth() - 75, getStage().getViewport().getWorldHeight() - 75);
         addActor(btnCancel);
 
-        btnArmor = new UpgradeButton(skin, "Armor", "shield", 27, 30);
+        btnArmor = new UpgradeButton(skin, "Armor", "shield", 27, 30, resources.getFontScale());
         inspectTable.add(btnArmor).size(110, 115);//.spaceBottom(10).spaceRight(10);
         setArmorListener();
 
-        btnRange = new UpgradeButton(skin, "Increase Range", "range_icon", 28, 30);
+        btnRange = new UpgradeButton(skin, "Increase Range", "range_icon", 28, 30, resources.getFontScale());
         inspectTable.add(btnRange).size(110, 115);//.spaceBottom(10).spaceRight(10);
         setIncreaseRangeListener();
 
-        btnSpeed = new UpgradeButton(skin, "Increase Speed", "speed_icon", 30, 30);
+        btnSpeed = new UpgradeButton(skin, "Increase Speed", "speed_icon", 30, 30, resources.getFontScale());
         inspectTable.add(btnSpeed).size(110, 115);//.spaceBottom(5).spaceRight(10);
         setIncreaseSpeedListener();
 
-        btnAttack = new UpgradeButton(skin, "Increase Attack", "attack_icon", 26, 25);
+        btnAttack = new UpgradeButton(skin, "Increase Attack", "attack_icon", 26, 25, resources.getFontScale());
         inspectTable.add(btnAttack).size(110, 115);//.spaceBottom(5).spaceRight(10);
         setIncreaseAttackListener();
 
@@ -122,12 +128,12 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         lblTargetPriority = new Label("First", lblTargetPriorityStyle);
         lblTargetPriority.setAlignment(Align.center);
         lblTargetPriority.setSize(140, 41);
-        lblTargetPriority.setFontScale(0.45f);
+        lblTargetPriority.setFontScale(0.45f * resources.getFontScale());
         grpTargetPriority.addActor(lblTargetPriority);
 
         Label lblTarget = new Label("PRIORITY", skin);
         lblTarget.setPosition(lblTargetPriority.getX() + 20, lblTargetPriority.getY() + 25);
-        lblTarget.setFontScale(0.45f);
+        lblTarget.setFontScale(0.45f * resources.getFontScale());
         grpTargetPriority.addActor(lblTarget);
 
         Button btnChangeTarget = new Button(skin, "arrow-right");
@@ -141,7 +147,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 
         inspectTable.add(grpTargetPriority).colspan(2).height(45).width(150).padTop(15).center();
 
-        btnDischarge = new DischargeButton(skin);
+        btnDischarge = new DischargeButton(skin, resources.getFontScale());
         inspectTable.add(btnDischarge).colspan(2).size(133, 83).padTop(15).center();
         setDischargeListener();
 
@@ -299,10 +305,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-        LDVector2 coords = (LDVector2) this.getStage()
-            .screenToStageCoordinates(UtilPool.getVector2(screenX, screenY));
-        presenter.inspectTower(coords);
-        coords.free();
+        presenter.inspectTower(screenX, screenY);
         return false;
     }
 

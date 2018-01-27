@@ -47,7 +47,7 @@ public class WaveOverCoinEffectTest {
         doReturn(style).when(skinMock).get(LabelStyle.class);
 
         WaveOverCoinEffect waveOverCoinEffect = new WaveOverCoinEffect(labelEffectPoolMock,
-            skinMock, resourcesMock.getAtlasRegion(""));
+            skinMock, resourcesMock.getAtlasRegion(""), 1);
         waveOverCoinEffect = spy(waveOverCoinEffect);
         doNothing().when(waveOverCoinEffect).pack();
 
@@ -62,6 +62,7 @@ public class WaveOverCoinEffectTest {
     public void waveOverCoinEffectTest1() {
 
         WaveOverCoinEffect waveOverCoinEffect = createWaveOverCoinEffect();
+        TestUtil.mockViewportWorldWidth(500, waveOverCoinEffect);
         waveOverCoinEffect.initialize(500);
 
         assertEquals(WaveOverCoinEffect.Y_BEGIN_OFFSET, waveOverCoinEffect.getY(), TestUtil.DELTA);
