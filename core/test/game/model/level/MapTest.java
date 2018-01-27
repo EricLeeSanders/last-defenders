@@ -54,7 +54,7 @@ public class MapTest {
         doReturn(mapLayers).when(tiledMap).getLayers();
 
         // Path
-        doReturn(pathLayer).when(mapLayers).get(eq("Path"));
+        doReturn(pathLayer).when(mapLayers).get(eq("PathLine"));
         doReturn(mapObjectsMock).when(pathLayer).getObjects();
         doReturn(pathLine).when(mapObjectsMock).get(eq("PathLine"));
         doReturn(polyline).when(pathLine).getPolyline();

@@ -1,0 +1,1241 @@
+
+tiles.png
+size: 512,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+1/desert
+  rotate: false
+  xy: 2, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+1/grass
+  rotate: false
+  xy: 22, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+1/grass-sand
+  rotate: false
+  xy: 42, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+1/grass-sand
+  rotate: false
+  xy: 62, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+1/grass-sand
+  rotate: false
+  xy: 82, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+1/grass-sand
+  rotate: false
+  xy: 102, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+1/grass-sand
+  rotate: false
+  xy: 122, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 6
+1/grass-sand
+  rotate: false
+  xy: 142, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 7
+1/grass-sand
+  rotate: false
+  xy: 162, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 8
+1/grass-sand
+  rotate: false
+  xy: 182, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 9
+1/grass-sand
+  rotate: false
+  xy: 202, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 10
+1/grass-sand
+  rotate: false
+  xy: 222, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 11
+1/grass-sand
+  rotate: false
+  xy: 242, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 12
+1/grass-sand
+  rotate: false
+  xy: 262, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 13
+1/path
+  rotate: false
+  xy: 282, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+1/path
+  rotate: false
+  xy: 302, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+1/path
+  rotate: false
+  xy: 322, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+1/path
+  rotate: false
+  xy: 342, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+1/path
+  rotate: false
+  xy: 362, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 5
+1/path
+  rotate: false
+  xy: 382, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 6
+1/path
+  rotate: false
+  xy: 402, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 7
+1/path
+  rotate: false
+  xy: 422, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 8
+1/path
+  rotate: false
+  xy: 442, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 9
+1/path
+  rotate: false
+  xy: 462, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 10
+1/path
+  rotate: false
+  xy: 482, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 11
+1/path
+  rotate: false
+  xy: 2, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 12
+1/path
+  rotate: false
+  xy: 22, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 13
+1/sand
+  rotate: false
+  xy: 42, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+1/snow
+  rotate: false
+  xy: 62, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+1/water
+  rotate: false
+  xy: 82, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+1/water
+  rotate: false
+  xy: 102, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+1/water
+  rotate: false
+  xy: 122, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+1/water
+  rotate: false
+  xy: 142, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+1/water
+  rotate: false
+  xy: 162, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 5
+1/water
+  rotate: false
+  xy: 182, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 6
+1/water
+  rotate: false
+  xy: 202, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 7
+1/water
+  rotate: false
+  xy: 222, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 8
+1/water
+  rotate: false
+  xy: 242, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 9
+1/water
+  rotate: false
+  xy: 262, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 10
+1/water
+  rotate: false
+  xy: 282, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 11
+1/water
+  rotate: false
+  xy: 302, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 12
+1/water
+  rotate: false
+  xy: 322, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 13
+
+tiles2.png
+size: 256,32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+2/bridge-0-0
+  rotate: false
+  xy: 2, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+2/bridge-0-1
+  rotate: false
+  xy: 22, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+2/bridge-0-2
+  rotate: false
+  xy: 42, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+2/bridge-1-0
+  rotate: false
+  xy: 62, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+2/bridge-1-1
+  rotate: false
+  xy: 82, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+2/bridge-1-2
+  rotate: false
+  xy: 102, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+2/bridge-horz-0-0
+  rotate: false
+  xy: 122, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+2/bridge-horz-0-1
+  rotate: false
+  xy: 142, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+2/bridge-horz-1-0
+  rotate: false
+  xy: 162, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+2/bridge-horz-1-1
+  rotate: false
+  xy: 182, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+2/bridge-horz-2-0
+  rotate: false
+  xy: 202, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+2/bridge-horz-2-1
+  rotate: false
+  xy: 222, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+
+tiles3.png
+size: 512,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+3/rock-1
+  rotate: false
+  xy: 382, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+3/rock-1
+  rotate: false
+  xy: 402, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+3/rock-1
+  rotate: false
+  xy: 422, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+3/rock-1
+  rotate: false
+  xy: 442, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+3/rock-10
+  rotate: false
+  xy: 122, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+3/rock-11
+  rotate: false
+  xy: 142, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+3/rock-11
+  rotate: false
+  xy: 162, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+3/rock-11
+  rotate: false
+  xy: 182, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+3/rock-11
+  rotate: false
+  xy: 202, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+3/rock-12
+  rotate: false
+  xy: 222, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+3/rock-12
+  rotate: false
+  xy: 242, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+3/rock-12
+  rotate: false
+  xy: 262, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+3/rock-12
+  rotate: false
+  xy: 282, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+3/rock-13
+  rotate: false
+  xy: 302, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+3/rock-13
+  rotate: false
+  xy: 322, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+3/rock-13
+  rotate: false
+  xy: 342, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+3/rock-13
+  rotate: false
+  xy: 362, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+3/rock-2
+  rotate: false
+  xy: 2, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+3/rock-3
+  rotate: false
+  xy: 22, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+3/rock-4
+  rotate: false
+  xy: 42, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+3/rock-5
+  rotate: false
+  xy: 462, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+3/rock-5
+  rotate: false
+  xy: 482, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+3/rock-5
+  rotate: false
+  xy: 2, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+3/rock-5
+  rotate: false
+  xy: 22, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+3/rock-6
+  rotate: false
+  xy: 42, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+3/rock-6
+  rotate: false
+  xy: 62, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+3/rock-6
+  rotate: false
+  xy: 82, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+3/rock-6
+  rotate: false
+  xy: 102, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+3/rock-7
+  rotate: false
+  xy: 62, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+3/rock-8
+  rotate: false
+  xy: 82, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+3/rock-9
+  rotate: false
+  xy: 102, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+
+tiles4.png
+size: 512,128
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+4/tree-1-lg
+  rotate: false
+  xy: 2, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-1-lg
+  rotate: false
+  xy: 22, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-1-lg
+  rotate: false
+  xy: 42, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-1-lg
+  rotate: false
+  xy: 62, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-1-sm
+  rotate: false
+  xy: 82, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+4/tree-10-lg
+  rotate: false
+  xy: 102, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-10-lg
+  rotate: false
+  xy: 122, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-10-lg
+  rotate: false
+  xy: 142, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-10-lg
+  rotate: false
+  xy: 162, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-10-sm
+  rotate: false
+  xy: 182, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+4/tree-11-lg
+  rotate: false
+  xy: 202, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-11-lg
+  rotate: false
+  xy: 222, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-11-lg
+  rotate: false
+  xy: 242, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-11-lg
+  rotate: false
+  xy: 262, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-11-sm
+  rotate: false
+  xy: 282, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+4/tree-12-lg
+  rotate: false
+  xy: 302, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-12-lg
+  rotate: false
+  xy: 322, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-12-lg
+  rotate: false
+  xy: 342, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-12-lg
+  rotate: false
+  xy: 362, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-12-sm
+  rotate: false
+  xy: 382, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+4/tree-13-lg
+  rotate: false
+  xy: 402, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-13-lg
+  rotate: false
+  xy: 422, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-13-lg
+  rotate: false
+  xy: 442, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-13-lg
+  rotate: false
+  xy: 462, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-13-sm
+  rotate: false
+  xy: 482, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+4/tree-14-lg
+  rotate: false
+  xy: 2, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-14-lg
+  rotate: false
+  xy: 22, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-14-lg
+  rotate: false
+  xy: 42, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-14-lg
+  rotate: false
+  xy: 62, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-14-sm
+  rotate: false
+  xy: 82, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+4/tree-15-lg
+  rotate: false
+  xy: 102, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-15-lg
+  rotate: false
+  xy: 122, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-15-lg
+  rotate: false
+  xy: 142, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-15-lg
+  rotate: false
+  xy: 162, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-15-sm
+  rotate: false
+  xy: 182, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+4/tree-2-lg
+  rotate: false
+  xy: 202, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-2-lg
+  rotate: false
+  xy: 222, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-2-lg
+  rotate: false
+  xy: 242, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-2-lg
+  rotate: false
+  xy: 262, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-2-sm
+  rotate: false
+  xy: 282, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+4/tree-3-lg
+  rotate: false
+  xy: 302, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-3-lg
+  rotate: false
+  xy: 322, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-3-lg
+  rotate: false
+  xy: 342, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-3-lg
+  rotate: false
+  xy: 362, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-3-sm
+  rotate: false
+  xy: 382, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+4/tree-4-lg
+  rotate: false
+  xy: 402, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-4-lg
+  rotate: false
+  xy: 422, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-4-lg
+  rotate: false
+  xy: 442, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-4-lg
+  rotate: false
+  xy: 462, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-4-sm
+  rotate: false
+  xy: 482, 22
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+4/tree-5-sm
+  rotate: false
+  xy: 2, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+4/tree-6-lg
+  rotate: false
+  xy: 22, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-6-lg
+  rotate: false
+  xy: 42, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-6-lg
+  rotate: false
+  xy: 62, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-6-lg
+  rotate: false
+  xy: 82, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-6-sm
+  rotate: false
+  xy: 102, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+4/tree-7-lg
+  rotate: false
+  xy: 122, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-7-lg
+  rotate: false
+  xy: 142, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-7-lg
+  rotate: false
+  xy: 162, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-7-lg
+  rotate: false
+  xy: 182, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-7-sm
+  rotate: false
+  xy: 202, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+4/tree-8-lg
+  rotate: false
+  xy: 222, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-8-lg
+  rotate: false
+  xy: 242, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-8-lg
+  rotate: false
+  xy: 262, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-8-lg
+  rotate: false
+  xy: 282, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-8-sm
+  rotate: false
+  xy: 302, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+4/tree-9-grp-1
+  rotate: false
+  xy: 322, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-9-grp-1
+  rotate: false
+  xy: 342, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-9-grp-1
+  rotate: false
+  xy: 362, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-9-grp-1
+  rotate: false
+  xy: 382, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-9-grp-1
+  rotate: false
+  xy: 402, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 5
+4/tree-9-grp-1
+  rotate: false
+  xy: 422, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 6
+4/tree-9-grp-1
+  rotate: false
+  xy: 442, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 7
+4/tree-9-grp-1
+  rotate: false
+  xy: 462, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 8
+4/tree-9-grp-1
+  rotate: false
+  xy: 482, 42
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 9
+4/tree-9-grp-1
+  rotate: false
+  xy: 2, 62
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 10
+4/tree-9-grp-1
+  rotate: false
+  xy: 22, 62
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 11
+4/tree-9-grp-1
+  rotate: false
+  xy: 42, 62
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 12
+4/tree-9-grp-1
+  rotate: false
+  xy: 62, 62
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 13
+4/tree-9-grp-1
+  rotate: false
+  xy: 82, 62
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 14
+4/tree-9-grp-1
+  rotate: false
+  xy: 102, 62
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 15
+4/tree-9-grp-1
+  rotate: false
+  xy: 122, 62
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 16
+4/tree-9-lg
+  rotate: false
+  xy: 142, 62
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 1
+4/tree-9-lg
+  rotate: false
+  xy: 162, 62
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 2
+4/tree-9-lg
+  rotate: false
+  xy: 182, 62
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 3
+4/tree-9-lg
+  rotate: false
+  xy: 202, 62
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: 4
+4/tree-9-sm
+  rotate: false
+  xy: 222, 62
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+
+tiles5.png
+size: 32,32
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+5/skull
+  rotate: false
+  xy: 2, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
