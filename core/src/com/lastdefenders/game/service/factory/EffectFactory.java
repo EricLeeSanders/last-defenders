@@ -126,13 +126,13 @@ public class EffectFactory {
         if (type.equals(ArmorDestroyedEffect.class)) {
             Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("shield-destroyed");
             return new ArmorDestroyedEffect(atlasRegions, armorDestroyedEffectPool,
-                resources.getSkin());
+                resources.getSkin(), resources.getFontScale());
         } else if (type.equals(TowerHealEffect.class)) {
-            return new TowerHealEffect(towerHealEffectPool, resources.getSkin());
+            return new TowerHealEffect(towerHealEffectPool, resources.getSkin(), resources.getFontScale());
         } else if (type.equals(WaveOverCoinEffect.class)) {
             Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("coin");
             return new WaveOverCoinEffect(waveOverCoinEffectPool, resources.getSkin(),
-                atlasRegions);
+                atlasRegions, resources.getFontScale());
         } else {
             throw new NullPointerException(
                 "Effect Factory couldn't create: " + type.getSimpleName());

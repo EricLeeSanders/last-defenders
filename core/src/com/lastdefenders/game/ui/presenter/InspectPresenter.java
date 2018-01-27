@@ -1,8 +1,8 @@
 package com.lastdefenders.game.ui.presenter;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.helper.CollisionDetection;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.ai.TowerAIType;
@@ -18,6 +18,8 @@ import com.lastdefenders.game.ui.view.interfaces.Updatable;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
+import com.lastdefenders.util.datastructures.pool.UtilPool;
 
 /**
  * Presenter for Inspect
@@ -34,9 +36,11 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
     private IInspectView view;
     private LDAudio audio;
     private MessageDisplayer messageDisplayer;
+    private Viewport gameViewport;
 
     public InspectPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager,
-        Player player, Group towerGroup, LDAudio audio, MessageDisplayer messageDisplayer) {
+        Player player, Group towerGroup, LDAudio audio, MessageDisplayer messageDisplayer,
+        Viewport gameViewport) {
 
         this.uiStateManager = uiStateManager;
         this.levelStateManager = levelStateManager;
@@ -45,6 +49,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
         this.towerGroup = towerGroup;
         this.audio = audio;
         this.messageDisplayer = messageDisplayer;
+        this.gameViewport = gameViewport;
     }
 
     /**
@@ -194,10 +199,13 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
     /**
      * Open the inspection window for a tower that is clicked.
      */
-    public void inspectTower(Vector2 coords) {
+    public void inspectTower(float x, float y) {
 
         if (canInspectTowers()) {
+
+            LDVector2 coords = (LDVector2) gameViewport.unproject(UtilPool.getVector2(x, y));
             Actor hitActor = CollisionDetection.towerHit(towerGroup.getChildren(), coords);
+            coords.free();
             if (hitActor != null) {
                 if (canInspectTower((Tower) hitActor)) {
                     Logger.info("Inspect Presenter: inspecting tower");

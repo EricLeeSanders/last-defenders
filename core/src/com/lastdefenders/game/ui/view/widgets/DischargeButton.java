@@ -16,7 +16,7 @@ public class DischargeButton extends Group {
     public ImageButton button;
     private Label lblCost;
 
-    public DischargeButton(Skin skin) {
+    public DischargeButton(Skin skin, float fontScale) {
 
         this.setTransform(false);
         this.button = new ImageButton(skin, "discharge");
@@ -24,7 +24,7 @@ public class DischargeButton extends Group {
         addActor(button);
 
         lblCost = new Label("", skin);
-        lblCost.setFontScale(0.45f);
+        lblCost.setFontScale(0.45f * fontScale);
         lblCost.setAlignment(Align.center);
         lblCost.pack();
         float lblCostX = ActorUtil
@@ -33,7 +33,7 @@ public class DischargeButton extends Group {
         addActor(lblCost);
 
         Label lblTitle = new Label("DISCHARGE", skin);
-        lblTitle.setFontScale(0.4f);
+        lblTitle.setFontScale(0.4f * fontScale);
         lblTitle.setAlignment(Align.center);
         lblTitle.pack();
         float lblTitleX = ActorUtil

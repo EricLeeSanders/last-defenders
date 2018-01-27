@@ -18,6 +18,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.helper.CollisionDetection;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.ai.TowerAIType;
@@ -51,6 +52,7 @@ public class InspectPresenterTest {
     private LevelStateManager levelStateManagerMock = mock(LevelStateManager.class);
     private Player playerMock = mock(Player.class);
     private InspectView inspectView = mock(InspectView.class);
+    private Viewport gameViewportMock = mock(Viewport.class);
 
     @Before
     public void initInspectPresenterTest() {
@@ -66,7 +68,7 @@ public class InspectPresenterTest {
         MessageDisplayer messageDisplayer = mock(MessageDisplayer.class);
 
         return new InspectPresenter(gameUIStateManagerMock, levelStateManagerMock, playerMock,
-            towerGroup, audio, messageDisplayer);
+            towerGroup, audio, messageDisplayer, gameViewportMock);
     }
 
 
@@ -101,8 +103,13 @@ public class InspectPresenterTest {
             .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
             .thenReturn(tower);
 
+        float moveX = 20;
+        float moveY = 20;
+        LDVector2 coords = TestUtil.nonPooledLDVector2(moveX, moveY);
+        TestUtil.mockViewportUnproject(coords, gameViewportMock);
+
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        inspectPresenter.inspectTower(moveX,moveY);
 
         verify(gameUIStateManagerMock, times(1)).setState(eq(GameUIState.INSPECTING));
         inspectPresenter.stateChange(GameUIState.INSPECTING);
@@ -123,7 +130,7 @@ public class InspectPresenterTest {
             .thenReturn(tower);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        inspectPresenter.inspectTower(20,20);
 
         verify(gameUIStateManagerMock, never()).setState(eq(GameUIState.INSPECTING));
     }
@@ -141,7 +148,7 @@ public class InspectPresenterTest {
             .thenReturn(null);
 
         inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        inspectPresenter.inspectTower(20,20);
 
         verify(gameUIStateManagerMock, never()).setState(eq(GameUIState.INSPECTING));
     }
@@ -152,14 +159,8 @@ public class InspectPresenterTest {
 
         //TODO improve this test? Bit of code smell
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("Rifle", true);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(10, 10));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -177,14 +178,8 @@ public class InspectPresenterTest {
     public void increaseAttackTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("Rifle", false);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -205,14 +200,8 @@ public class InspectPresenterTest {
     public void increaseAttackTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("Rifle", false);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -233,14 +222,8 @@ public class InspectPresenterTest {
     public void increaseAttackTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("Rifle", false);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.ENLISTING).when(gameUIStateManagerMock).getState();
@@ -260,15 +243,9 @@ public class InspectPresenterTest {
     public void increaseAttackTest4() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("Rifle", true);
         doReturn(true).when(tower).hasIncreasedAttack();
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -288,14 +265,8 @@ public class InspectPresenterTest {
     public void giveArmorTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("Tank", false);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -316,14 +287,8 @@ public class InspectPresenterTest {
     public void giveArmorTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("Turret", false);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -344,14 +309,8 @@ public class InspectPresenterTest {
     public void giveArmorTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("Rifle", false);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.ENLISTING).when(gameUIStateManagerMock).getState();
@@ -371,15 +330,9 @@ public class InspectPresenterTest {
     public void giveArmorTest4() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("FlameThrower", true);
         doReturn(true).when(tower).hasArmor();
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -399,14 +352,8 @@ public class InspectPresenterTest {
     public void increaseRangeTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("Tank", false);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -427,14 +374,8 @@ public class InspectPresenterTest {
     public void increaseRangeTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("Turret", false);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -455,14 +396,8 @@ public class InspectPresenterTest {
     public void increaseRangeTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("Rifle", false);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.ENLISTING).when(gameUIStateManagerMock).getState();
@@ -482,15 +417,9 @@ public class InspectPresenterTest {
     public void increaseRangeTest4() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("FlameThrower", true);
         doReturn(true).when(tower).hasIncreasedRange();
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -510,14 +439,8 @@ public class InspectPresenterTest {
     public void increaseSpeedTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("Tank", false);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -538,14 +461,8 @@ public class InspectPresenterTest {
     public void increaseSpeedTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("Turret", false);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -566,14 +483,8 @@ public class InspectPresenterTest {
     public void increaseSpeedTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("Rifle", false);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.ENLISTING).when(gameUIStateManagerMock).getState();
@@ -593,15 +504,9 @@ public class InspectPresenterTest {
     public void increaseSpeedTest4() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("FlameThrower", true);
         doReturn(true).when(tower).hasIncreasedSpeed();
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -621,14 +526,8 @@ public class InspectPresenterTest {
     public void dischargeTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("FlameThrower", true);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -647,14 +546,8 @@ public class InspectPresenterTest {
     public void dischargeTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("FlameThrower", true);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -673,14 +566,8 @@ public class InspectPresenterTest {
     public void dischargeTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower("FlameThrower", true);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(new LDVector2(20, 20));
+        initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
         doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
@@ -691,5 +578,21 @@ public class InspectPresenterTest {
 
         verify(gameUIStateManagerMock, never()).setStateReturn();
         verify(tower, never()).sellTower();
+    }
+
+    private void initInspectPresenter(InspectPresenter inspectPresenter, Tower tower) {
+
+        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
+        when(CollisionDetection
+            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
+            .thenReturn(tower);
+
+        float moveX = 20;
+        float moveY = 20;
+        LDVector2 coords = TestUtil.nonPooledLDVector2(moveX, moveY);
+        TestUtil.mockViewportUnproject(coords, gameViewportMock);
+
+        inspectPresenter.setView(inspectView);
+        inspectPresenter.inspectTower(moveX,moveY);
     }
 }

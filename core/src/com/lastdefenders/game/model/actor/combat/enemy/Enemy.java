@@ -193,13 +193,10 @@ public abstract class Enemy extends CombatActor {
 
     /**
      * Determines the length till the end of the entire path.
-     *
-     * @return boolean - Total Distance till the end
      */
     private void calcLengthToEnd() {
         // The enemy should only have 1 action and it should
         // be a LDSequenceAction;
-        System.out.println(this.getClass().getSimpleName() + " action size: " + getActions().size);
         if (getActions().size != 1) {
             return;
         }

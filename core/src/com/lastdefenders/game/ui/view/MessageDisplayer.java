@@ -5,7 +5,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import java.util.HashMap;
@@ -23,12 +23,12 @@ public class MessageDisplayer extends Group implements
     private static final Color DEFAULT_FONT_COLOR = Color.RED;
     private Map<Color, LabelStyle> labelStyleMap = new HashMap<>();
     private Label messageLabel;
-    private Skin skin;
+    private Resources resources;
 
-    public MessageDisplayer(Skin skin) {
+    public MessageDisplayer(Resources resources) {
 
-        this.skin = skin;
-        messageLabel = new Label("", skin);
+        this.resources = resources;
+        messageLabel = new Label("", resources.getSkin());
     }
 
     @Override
@@ -57,10 +57,9 @@ public class MessageDisplayer extends Group implements
         messageLabel.setStyle(style);
         messageLabel.clearActions();
         messageLabel.setText(message.toUpperCase());
-        messageLabel.setFontScale(fontScale);
+        messageLabel.setFontScale(fontScale * resources.getFontScale());
         messageLabel.pack();
-        messageLabel.setPosition((Resources.VIRTUAL_WIDTH / 2) - (messageLabel.getWidth() / 2),
-            (Resources.VIRTUAL_HEIGHT / 2) + 50);
+        messageLabel.setPosition(getStage().getViewport().getWorldWidth() / 2, (getStage().getViewport().getWorldHeight() / 2) + 50, Align.center );
         messageLabel.addAction(
             Actions.moveTo(messageLabel.getX(), messageLabel.getY() + 50, MESSAGE_DURATION));
 
@@ -75,7 +74,7 @@ public class MessageDisplayer extends Group implements
 
         LabelStyle style = labelStyleMap.get(color);
         if (style == null) {
-            style = new Label.LabelStyle(skin.get(LabelStyle.class));
+            style = new Label.LabelStyle(resources.getSkin().get(LabelStyle.class));
             style.fontColor = color;
             labelStyleMap.put(color, style);
         }

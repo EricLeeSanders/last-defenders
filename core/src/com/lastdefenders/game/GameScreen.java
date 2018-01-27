@@ -3,7 +3,12 @@ package com.lastdefenders.game;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.Camera;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.ActorGroups;
 import com.lastdefenders.game.model.level.state.LevelStateManager;
@@ -34,24 +39,20 @@ public class GameScreen extends AbstractScreen {
     private Resources resources;
     private SpriteBatch spriteBatch;
     private ScreenChanger screenChanger;
+    private Viewport gameViewport;
+    private Viewport uiViewport;
 
     public GameScreen(LevelName levelName, GameStateManager gameStateManager, ScreenChanger screenChanger,
         Resources resources, LDAudio audio) {
 
         super(gameStateManager);
-        Player player = new Player();
         this.resources = resources;
         this.screenChanger = screenChanger;
-        ActorGroups actorGroups = new ActorGroups();
-        LevelStateManager levelStateManager = new LevelStateManager();
-        uiStateManager = new GameUIStateManager(levelStateManager);
         this.gameStateManager = gameStateManager;
         spriteBatch = new SpriteBatch();
-        gameStage = new GameStage(levelName, player, actorGroups, audio, levelStateManager,
-            uiStateManager, getViewport(), resources, spriteBatch);
-        gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager,
-            levelStateManager, gameStateManager, screenChanger, super.getInputMultiplexer(),
-            getViewport(), resources, audio, gameStage, spriteBatch);
+
+        createCameraAndViewports();
+        createStages(levelName, audio);
 
         super.show();
         audio.turnOffMusic();
@@ -60,6 +61,31 @@ public class GameScreen extends AbstractScreen {
         gameStateManager.setState(GameState.PLAY);
     }
 
+    private void createCameraAndViewports(){
+
+        OrthographicCamera gameCamera = new OrthographicCamera();
+        gameViewport = new ExtendViewport(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, gameCamera);
+        addViewport(gameViewport);
+
+
+        Camera uiCamera = new OrthographicCamera();
+        uiViewport = new StretchViewport(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, uiCamera);
+        addViewport(uiViewport);
+    }
+
+    private void createStages(LevelName levelName, LDAudio audio ) {
+
+        Player player = new Player();
+        ActorGroups actorGroups = new ActorGroups();
+        LevelStateManager levelStateManager = new LevelStateManager();
+        uiStateManager = new GameUIStateManager(levelStateManager);
+
+        gameStage = new GameStage(levelName, player, actorGroups, audio, levelStateManager,
+            uiStateManager, gameViewport, resources, spriteBatch);
+        gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager,
+            levelStateManager, gameStateManager, screenChanger, super.getInputMultiplexer(),
+            uiViewport, resources, audio, gameStage, spriteBatch);
+    }
     private void createBackListener() {
 
         InputProcessor backProcessor = new InputAdapter() {
@@ -83,7 +109,6 @@ public class GameScreen extends AbstractScreen {
 
     @Override
     public void resize(int width, int height) {
-
         gameStage.getViewport().setScreenSize(width, height); // update the size of ViewPort
         gameUIStage.getViewport().setScreenSize(width, height); // update the size of ViewPort
         super.resize(width, height);
@@ -100,8 +125,10 @@ public class GameScreen extends AbstractScreen {
                 gameStage.act(delta * resources.getGameSpeed());
             }
         }
+        gameViewport.apply();
         gameStage.draw();
 
+        uiViewport.apply();
         gameUIStage.act(delta);
         gameUIStage.draw();
 
