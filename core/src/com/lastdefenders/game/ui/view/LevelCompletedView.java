@@ -17,28 +17,34 @@ import com.lastdefenders.util.Resources;
 public class LevelCompletedView extends Group implements ILevelCompletedView {
 
     private LevelCompletedPresenter presenter;
+    private Resources resources;
 
-    public LevelCompletedView(LevelCompletedPresenter presenter, Skin skin) {
+    public LevelCompletedView(LevelCompletedPresenter presenter, Resources resources) {
 
         this.presenter = presenter;
+        this.resources = resources;
         this.setTransform(false);
-        createControls(skin);
     }
 
-    private void createControls(Skin skin) {
+    public void init(){
+        createControls();
+    }
+
+    private void createControls() {
 
         Logger.info("Level Completed View: creating controls");
+
+        Skin skin = resources.getSkin();
 
         Table table = new Table();
         table.setTransform(false);
         table.setBackground(skin.getDrawable("main-panel"));
         table.setSize(500, 260);
-        table.setPosition((Resources.VIRTUAL_WIDTH / 2) - (table.getWidth() / 2),
-            (Resources.VIRTUAL_HEIGHT / 2) - (table.getHeight() / 2));
+        table.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2, Align.center);
         this.addActor(table);
 
         Label lblTitle = new Label("LEVEL COMPLETED", skin);
-        lblTitle.setFontScale(0.40f);
+        lblTitle.setFontScale(0.40f * resources.getFontScale());
         lblTitle.setAlignment(Align.center);
         lblTitle.setPosition(table.getX() + (table.getWidth() / 2) - (lblTitle.getWidth() / 2),
             table.getY() + table.getHeight() - lblTitle.getHeight() + 7);
@@ -47,23 +53,23 @@ public class LevelCompletedView extends Group implements ILevelCompletedView {
         Label lblContinue = new Label(
             "Do you want to\ncontinue playing this\nlevel and compete\nfor a high score?"
                 .toUpperCase(), skin, "hollow");
-        lblContinue.setFontScale(0.45f);
+        lblContinue.setFontScale(0.45f * resources.getFontScale());
         lblContinue.setAlignment(Align.center);
         table.add(lblContinue).colspan(3).width(380).height(120).padTop(30).spaceBottom(15);
 
         table.row();
         TextButton btnContinueLevel = new TextButton("CONTINUE", skin);
-        btnContinueLevel.getLabel().setFontScale(0.45f);
+        btnContinueLevel.getLabel().setFontScale(0.45f * resources.getFontScale());
         table.add(btnContinueLevel).width(130).height(45);
         setBtnContinueLevel(btnContinueLevel);
 
         TextButton btnNewGame = new TextButton("NEW GAME", skin);
-        btnNewGame.getLabel().setFontScale(0.45f);
+        btnNewGame.getLabel().setFontScale(0.45f * resources.getFontScale());
         table.add(btnNewGame).width(130).height(45).spaceLeft(15).spaceRight(15);
         setbtnNewGameListener(btnNewGame);
 
         TextButton btnMainMenu = new TextButton("MAIN MENU", skin);
-        btnMainMenu.getLabel().setFontScale(0.45f);
+        btnMainMenu.getLabel().setFontScale(0.45f * resources.getFontScale());
         table.add(btnMainMenu).width(130).height(45);
         setbtnMainMenuListener(btnMainMenu);
 

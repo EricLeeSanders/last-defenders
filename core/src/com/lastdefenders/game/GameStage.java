@@ -76,7 +76,7 @@ public class GameStage extends Stage implements PlayerObserver {
         createGroups();
         createFactories(audio);
         createPlacementServices(map);
-        mapRenderer = new MapRenderer(tiledMap, resources.getTiledMapScale(), getCamera());
+        mapRenderer = new MapRenderer(tiledMap, resources.getTiledMapScale(), getCamera(), getBatch());
         FileWaveLoader fileWaveLoader = new FileWaveLoader(combatActorFactory, map);
         DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
         level = new Level(levelName, getActorGroups(), healthFactory, fileWaveLoader,
@@ -153,7 +153,7 @@ public class GameStage extends Stage implements PlayerObserver {
 
     @Override
     public void draw() {
-
+        getBatch().setProjectionMatrix(getCamera().combined);
         mapRenderer.update();
         super.draw();
     }

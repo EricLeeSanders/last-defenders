@@ -4,36 +4,29 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.profiling.GLProfiler;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.state.GameStateManager.GameState;
 import com.lastdefenders.util.Logger;
-import com.lastdefenders.util.Resources;
 
 /**
- * An abstract screen class that handles resizing/viewport/updates
+ * An abstract screen class
  *
  * @author Eric
  */
 public abstract class AbstractScreen implements Screen {
 
-    private OrthographicCamera camera;
     private InputMultiplexer imp;
     private GameStateManager gameStateManager;
-    private Viewport viewport;
+    private Array<Viewport> viewports = new Array<>();
 
     protected AbstractScreen(GameStateManager gameStateManager) {
 
         this.gameStateManager = gameStateManager;
-        camera = new OrthographicCamera();
         imp = new InputMultiplexer();
-        viewport = new FitViewport(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, getCamera());
-        GLProfiler.enable();
+        //GLProfiler.enable();
     }
 
     protected abstract void renderElements(float delta);
@@ -44,7 +37,6 @@ public abstract class AbstractScreen implements Screen {
         // clear the screen with the given RGB color (black)
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        camera.update();
         renderElements(delta);
         //profile();
     }
@@ -52,14 +44,14 @@ public abstract class AbstractScreen implements Screen {
 
     private void profile() {
 
-        System.out.println(
-            "  Drawcalls: " + GLProfiler.drawCalls +
-                ", Calls: " + GLProfiler.calls +
-                ", TextureBindings: " + GLProfiler.textureBindings +
-                ", ShaderSwitches:  " + GLProfiler.shaderSwitches +
-                ", vertexCount: " + GLProfiler.vertexCount.value
-        );
-        GLProfiler.reset();
+//        System.out.println(
+//            "  Drawcalls: " + GLProfiler.drawCalls +
+//                ", Calls: " + GLProfiler.calls +
+//                ", TextureBindings: " + GLProfiler.textureBindings +
+//                ", ShaderSwitches:  " + GLProfiler.shaderSwitches +
+//                ", vertexCount: " + GLProfiler.vertexCount.value
+//        );
+//        GLProfiler.reset();
     }
 
     @Override
@@ -85,8 +77,12 @@ public abstract class AbstractScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        System.out.println(width + ", " + height);
-        viewport.update(width, height, true);
+        for(Viewport viewport : viewports){
+            viewport.update(width, height, true);
+            System.out.println(viewport.getScreenX() + ", " + viewport.getScreenY() + ", " + viewport.getScreenWidth()
+                + ", " + viewport.getScreenHeight() + ", " + viewport.getRightGutterX() + ", " + viewport.getTopGutterY()
+                + ", " + viewport.getWorldWidth() + ", " + viewport.getWorldHeight());
+        }
     }
 
     @Override
@@ -100,18 +96,13 @@ public abstract class AbstractScreen implements Screen {
     public void dispose() {
 
         Logger.info("Abstract Screen: Disposing");
-        GLProfiler.disable();
+        //GLProfiler.disable();
 
     }
 
-    private Camera getCamera() {
+    protected void addViewport(Viewport viewport){
 
-        return camera;
-    }
-
-    protected Viewport getViewport() {
-
-        return viewport;
+        viewports.add(viewport);
     }
 
     protected InputMultiplexer getInputMultiplexer() {

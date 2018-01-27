@@ -22,7 +22,7 @@ public class TowerHealEffect extends LabelEffect {
 
     private Tower tower = null;
 
-    public TowerHealEffect(LabelEffectPool<TowerHealEffect> pool, Skin skin) {
+    public TowerHealEffect(LabelEffectPool<TowerHealEffect> pool, Skin skin, float fontScale) {
 
         super(pool, DURATION, skin);
 
@@ -31,7 +31,7 @@ public class TowerHealEffect extends LabelEffect {
         LabelStyle style = new LabelStyle(getStyle());
         style.fontColor = Color.GREEN;
         setStyle(style);
-        setFontScale(SCALE);
+        setFontScale(SCALE * fontScale);
     }
 
 
