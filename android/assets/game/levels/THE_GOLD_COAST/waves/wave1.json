@@ -2,7 +2,7 @@
 "wave": [
     {
         "enemy": "Rifle",
-        "delay": .05,
+        "delay": ".05",
         "armor": false
     }
 ]
