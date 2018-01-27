@@ -13,20 +13,20 @@ import java.util.Map;
  */
 public class LDAudio {
 
-    public static final String MENU_MUSIC = "audio/big_action_trailer.ogg";
-    public static final String ROCKET_EXPLOSION_SOUND = "audio/rocket_explosion.ogg";
-    public static final String ROCKET_LAUNCH_SOUND = "audio/rocket_launch.ogg";
-    public static final String FLAME_SOUND = "audio/flame_burst.ogg";
-    public static final String RIFLE_SHOT_SOUND = "audio/rifle_shot.ogg";
-    public static final String MACHINE_GUN_SHOT_SOUND = "audio/machine_gun_shot.ogg";
-    public static final String SNIPER_SHOT_SOUND = "audio/sniper_shot.ogg";
-    public static final String ACTOR_PLACE_SOUND = "audio/actor_place.ogg";
-    public static final String SELL_SOUND = "audio/sell.ogg";
-    public static final String SMALL_CLICK = "audio/button_small_click.ogg";
-    public static final String LARGE_CLICK = "audio/button_large_click.ogg";
-    public static final String VEHICLE_EXPLOSION_SOUND = "audio/vehicle_explosion.ogg";
-    public static final String HELICOPTER_HOVER = "audio/helicopter_hover.ogg";
-    public static final String AIRCRAFT_FLYOVER = "audio/aircraft_flyover.ogg";
+    private static final String MENU_MUSIC = "audio/big_action_trailer.ogg";
+    private static final String ROCKET_EXPLOSION_SOUND = "audio/rocket_explosion.ogg";
+    private static final String ROCKET_LAUNCH_SOUND = "audio/rocket_launch.ogg";
+    private static final String FLAME_SOUND = "audio/flame_burst.ogg";
+    private static final String RIFLE_SHOT_SOUND = "audio/rifle_shot.ogg";
+    private static final String MACHINE_GUN_SHOT_SOUND = "audio/machine_gun_shot.ogg";
+    private static final String SNIPER_SHOT_SOUND = "audio/sniper_shot.ogg";
+    private static final String ACTOR_PLACE_SOUND = "audio/actor_place.ogg";
+    private static final String SELL_SOUND = "audio/sell.ogg";
+    private static final String SMALL_CLICK = "audio/button_small_click.ogg";
+    private static final String LARGE_CLICK = "audio/button_large_click.ogg";
+    private static final String VEHICLE_EXPLOSION_SOUND = "audio/vehicle_explosion.ogg";
+    private static final String HELICOPTER_HOVER = "audio/helicopter_hover.ogg";
+    private static final String AIRCRAFT_FLYOVER = "audio/aircraft_flyover.ogg";
 
     private Music music;
     private Map<LDSound, Sound> sounds = new HashMap<>();
