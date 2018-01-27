@@ -31,112 +31,106 @@ public class OptionsView extends Group implements IOptionsView {
     private CheckBox btnShowRanges, btnSound, btnMusic;
     private Image volSliderBg, speedSliderBg;
     private float volSliderEndPos, volSliderStartPos, speedSliderEndPos, speedSliderStartPos;
+    private Resources resources;
 
     public OptionsView(OptionsPresenter presenter, Resources resources) {
 
         this.presenter = presenter;
+        this.resources = resources;
         this.setTransform(false);
-        createControls(resources);
+    }
 
+    public void init(){
+        createControls();
     }
 
     /**
      * Create controls
      */
-    private void createControls(Resources resources) {
+    private void createControls() {
 
         Logger.info("Options View: creating controls");
 
         Skin skin = resources.getSkin();
+
         Table container = new Table();
         container.setTransform(false);
         container.setBackground(skin.getDrawable("main-panel"));
         container.setSize(500, 360);
-        container.setPosition((Resources.VIRTUAL_WIDTH / 2) - (container.getWidth() / 2),
-            (Resources.VIRTUAL_HEIGHT / 2) - (container.getHeight() / 2));
+        container.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2, Align.center );
+        container.padBottom(10);
         addActor(container);
 
         Table mainTable = new Table();
         mainTable.setTransform(false);
         mainTable.setBackground(skin.getDrawable("hollow"));
-        container.add(mainTable);
+        container.add(mainTable).colspan(3).size(350, 226);
 
         Label lblTitle = new Label("OPTIONS", skin);
-        lblTitle
-            .setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2),
-                container.getY() + container.getHeight() - lblTitle.getHeight());
         lblTitle.setAlignment(Align.center);
-        lblTitle.setFontScale(0.7f);
+        lblTitle.setFontScale(0.7f * resources.getFontScale());
+        float lblTitleX = container.getX(Align.center);
+        float lblTitleY = container.getY(Align.top) - (lblTitle.getHeight()/2);
+        lblTitle.setPosition(lblTitleX, lblTitleY, Align.center);
         addActor(lblTitle);
 
-        btnClose = new TextButton("CLOSE", skin);
-        btnClose.getLabel().setFontScale(0.45f);
-        btnClose.pack();
-        btnClose.setSize(150, 45);
-        btnClose.setPosition(80, 20);
-        addActor(btnClose);
-        setBtnCloseListener();
 
         btnNewGame = new TextButton("NEW GAME", skin);
-        btnNewGame.getLabel().setFontScale(0.45f);
-        btnNewGame.pack();
-        btnNewGame.setSize(150, 45);
-        btnNewGame.setPosition(btnClose.getX() + btnClose.getWidth() + 15, btnClose.getY());
-        addActor(btnNewGame);
+        btnNewGame.getLabel().setFontScale(0.45f * resources.getFontScale());
         setBtnNewGameListener();
 
+        btnClose = new TextButton("CLOSE", skin);
+        btnClose.getLabel().setFontScale(0.45f * resources.getFontScale());
+        setBtnCloseListener();
+
         btnMainMenu = new TextButton("MAIN MENU", skin);
-        btnMainMenu.getLabel().setFontScale(0.45f);
-        btnMainMenu.pack();
-        btnMainMenu.setSize(150, 45);
-        btnMainMenu.setPosition(btnNewGame.getX() + btnNewGame.getWidth() + 15, btnNewGame.getY());
-        addActor(btnMainMenu);
+        btnMainMenu.getLabel().setFontScale(0.45f * resources.getFontScale());
         setBtnMainMenuListener();
 
         TextButton btnDebug = new TextButton("DEBUG", skin);
-        btnDebug.getLabel().setFontScale(0.45f);
+        btnDebug.getLabel().setFontScale(0.45f * resources.getFontScale());
         btnDebug.setSize(75, 35);
-        btnDebug.setPosition(475, 300);
+        btnDebug.setPosition((getStage().getViewport().getWorldWidth() / 2) + 155, lblTitleY - 30);
         addActor(btnDebug);
         setBtnDebugListener(btnDebug);
 
         btnSound = new CheckBox(" SOUND ON", skin);
-        btnSound.getLabel().setFontScale(0.45f);
+        btnSound.getLabel().setFontScale(0.45f * resources.getFontScale());
         btnSound.getImageCell().width(32).height(32);
         btnSound.getImage().setScaling(Scaling.stretch);
         setBtnSoundListener(btnSound);
 
         btnMusic = new CheckBox(" MUSIC ON", skin);
-        btnMusic.getLabel().setFontScale(0.45f);
+        btnMusic.getLabel().setFontScale(0.45f * resources.getFontScale());
         btnMusic.getImageCell().width(32).height(32);
         btnMusic.getImage().setScaling(Scaling.stretch);
         setBtnMusicListener(btnMusic);
 
         btnShowRanges = new CheckBox(" SHOW RANGES", skin);
-        btnShowRanges.getLabel().setFontScale(0.45f);
+        btnShowRanges.getLabel().setFontScale(0.45f * resources.getFontScale());
         btnShowRanges.getImageCell().width(32).height(32);
         btnShowRanges.getImage().setScaling(Scaling.stretch);
         setBtnShowRangesListener(btnShowRanges);
 
         Label lblVolZero = new Label("0", skin);
-        lblVolZero.setFontScale(0.35f);
+        lblVolZero.setFontScale(0.35f * resources.getFontScale());
 
         Label lblVolHundred = new Label("100", skin);
-        lblVolHundred.setFontScale(0.35f);
+        lblVolHundred.setFontScale(0.35f * resources.getFontScale());
 
         Label lblVol = new Label("VOLUME", skin);
-        lblVol.setFontScale(0.5f);
+        lblVol.setFontScale(0.5f * resources.getFontScale());
 
         WidgetGroup volSlider = createVolSlider(skin, resources);
 
         Label lblSpeedZero = new Label("0", skin);
-        lblSpeedZero.setFontScale(0.35f);
+        lblSpeedZero.setFontScale(0.35f * resources.getFontScale());
 
         Label lblSpeedTwo = new Label("2X ", skin);
-        lblSpeedTwo.setFontScale(0.35f);
+        lblSpeedTwo.setFontScale(0.35f * resources.getFontScale());
 
         Label lblSpeed = new Label("SPEED", skin);
-        lblSpeed.setFontScale(0.5f);
+        lblSpeed.setFontScale(0.5f * resources.getFontScale());
 
         WidgetGroup speedSlider = createSpeedSlider(skin, resources);
 
@@ -169,6 +163,13 @@ public class OptionsView extends Group implements IOptionsView {
         mainTable.row();
 
         mainTable.add(speedSlider).colspan(3).width(300).height(18).spaceTop(2);
+
+
+
+        container.row();
+        container.add(btnClose).size(150,45).spaceTop(10);
+        container.add(btnNewGame).size(150,45).spaceTop(10).spaceLeft(5).spaceRight(5);
+        container.add(btnMainMenu).size(150,45).spaceTop(10);
 
         Logger.info("Options View: controls created");
     }

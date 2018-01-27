@@ -27,8 +27,6 @@ import com.lastdefenders.game.ui.view.interfaces.IEnlistView;
 import com.lastdefenders.game.ui.view.widgets.EnlistButton;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
-import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.lastdefenders.util.datastructures.pool.UtilPool;
 
 /**
  * View class for Enlisting. Shows Enlisting window as well as the options to
@@ -46,44 +44,51 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
     private Group choosingGroup;
     private Label lblMoney;
     private ScrollPane scroll;
+    private Resources resources;
 
-    public EnlistView(EnlistPresenter presenter, Skin skin) {
+    public EnlistView(EnlistPresenter presenter, Resources resources) {
 
         this.presenter = presenter;
-        choosingGroup = new Group();
-        choosingGroup.setTransform(false);
+        this.resources = resources;
         this.setTransform(false);
-        addActor(choosingGroup);
-        createControls(skin);
+    }
+
+    public void init(){
+        createControls();
     }
 
     /**
      * Creates the controls
      */
-    private void createControls(Skin skin) {
+    private void createControls() {
 
         Logger.info("Enlist View: creating controls");
+
+        Skin skin = resources.getSkin();
+
+        choosingGroup = new Group();
+        choosingGroup.setTransform(false);
+        addActor(choosingGroup);
+
         Table container = new Table();
         container.setTransform(false);
-        container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+        container.setSize(getStage().getViewport().getWorldWidth(), getStage().getViewport().getWorldHeight());
         choosingGroup.addActor(container);
         Table enlistTable = new Table();
         enlistTable.setTransform(false);
-        // table.debug();
 
         scroll = new ScrollPane(enlistTable, skin);
-        //enlistTable.padTop(10);
         enlistTable.defaults().expand().fill();
 
         container.add(scroll).expand().fill();
         container.setBackground(skin.getDrawable("main-panel"));
 
         Label lblTitle = new Label("ENLIST", skin);
-        lblTitle
-            .setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2),
-                container.getY() + container.getHeight() - lblTitle.getHeight() + 1);
+        float lblTitleX = container.getX(Align.center);
+        float lblTitleY = container.getY(Align.top) - (lblTitle.getHeight()/2);
+        lblTitle.setPosition(lblTitleX, lblTitleY, Align.center);
         lblTitle.setAlignment(Align.center);
-        lblTitle.setFontScale(.9f);
+        lblTitle.setFontScale(.9f * resources.getFontScale());
         choosingGroup.addActor(lblTitle);
 
         LabelStyle lblMoneyStyle = new LabelStyle(skin.get("money_label", LabelStyle.class));
@@ -93,9 +98,11 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
         lblMoney.setSize(200, 52);
         lblMoney.setPosition(100, 10);
         lblMoney.setAlignment(Align.left);
-        lblMoney.setFontScale(0.6f);
+        lblMoney.setFontScale(0.6f * resources.getFontScale());
         choosingGroup.addActor(lblMoney);
 
+        // The actual values for health, attack, range, and speed are not used for the UI display.
+        // TODO attribute scale should be stored somewhere.
         createTowerButton(enlistTable, skin, "Rifle", TowerRifle.COST, 4, 4, 5, 3);
         createTowerButton(enlistTable, skin, "Machine Gun", TowerMachineGun.COST, 1, 4, 4, 8);
         createTowerButton(enlistTable, skin, "Sniper", TowerSniper.COST, 7, 8, 10, 1);
@@ -111,7 +118,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
         btnCancel.setSize(64, 64);
         btnCancel.getImageCell().size(35, 36);
         btnCancel.getImage().setScaling(Scaling.stretch);
-        btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
+        btnCancel.setPosition(getStage().getViewport().getWorldWidth() - 75, getStage().getViewport().getWorldHeight() - 75);
         choosingGroup.addActor(btnCancel);
         setCancelListener(btnCancel);
 
@@ -119,7 +126,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
         btnScrollUp.setSize(64, 64);
         btnScrollUp.getImageCell().size(35, 30);
         btnScrollUp.getImage().setScaling(Scaling.stretch);
-        btnScrollUp.setPosition(Resources.VIRTUAL_WIDTH - 75, (Resources.VIRTUAL_HEIGHT / 2) + 20);
+        btnScrollUp.setPosition(getStage().getViewport().getWorldWidth() - 75, (getStage().getViewport().getWorldHeight() / 2) + 20);
         choosingGroup.addActor(btnScrollUp);
 
         btnScrollDown = new ImageButton(skin, "arrow-small-down");
@@ -127,14 +134,14 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
         btnScrollDown.getImageCell().size(35, 30);
         btnScrollDown.getImage().setScaling(Scaling.stretch);
         btnScrollDown
-            .setPosition(Resources.VIRTUAL_WIDTH - 75, (Resources.VIRTUAL_HEIGHT / 2) - 84);
+            .setPosition(getStage().getViewport().getWorldWidth() - 75, (getStage().getViewport().getWorldHeight() / 2) - 84);
         choosingGroup.addActor(btnScrollDown);
 
         btnPlace = new ImageButton(skin, "select");
         btnPlace.setSize(50, 50);
         btnPlace.getImageCell().size(30, 23);
         btnPlace.getImage().setScaling(Scaling.stretch);
-        btnPlace.setPosition(Resources.VIRTUAL_WIDTH - 60, 10);
+        btnPlace.setPosition(getStage().getViewport().getWorldWidth() - 60, 10);
         setPlaceListener();
         addActor(btnPlace);
 
@@ -142,7 +149,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
         btnPlacingCancel.setSize(50, 50);
         btnPlacingCancel.getImageCell().size(25, 26);
         btnPlacingCancel.getImage().setScaling(Scaling.stretch);
-        btnPlacingCancel.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlace.getY() + 60);
+        btnPlacingCancel.setPosition(getStage().getViewport().getWorldWidth() - 60, btnPlace.getY() + 60);
         setCancelListener(btnPlacingCancel);
         addActor(btnPlacingCancel);
 
@@ -150,7 +157,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
         btnRotate.setSize(50, 50);
         btnRotate.getImageCell().size(34, 32);
         btnRotate.getImage().setScaling(Scaling.stretch);
-        btnRotate.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlacingCancel.getY() + 60);
+        btnRotate.setPosition(getStage().getViewport().getWorldWidth() - 60, btnPlacingCancel.getY() + 60);
         setRotateListener();
         addActor(btnRotate);
         Logger.info("Enlist View: controls created");
@@ -163,7 +170,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
         Integer towerCost, int attack, int health, int range, int speed) {
 
         EnlistButton towerButton = new EnlistButton(skin, attack, health, range, speed, towerName,
-            towerCost);
+            towerCost, resources.getFontScale());
         enlistTable.add(towerButton).size(120, 195).spaceBottom(5);
         String filteredTowerName = towerName.replaceAll(" ", "");
         setTowerListener(towerButton, filteredTowerName);
@@ -252,10 +259,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 
     private void moveTower(float x, float y) {
 
-        LDVector2 coords = (LDVector2) this.getStage()
-            .screenToStageCoordinates(UtilPool.getVector2(x, y));
-        presenter.moveTower(coords);
-        coords.free();
+        presenter.moveTower(x,y);
     }
 
     @Override

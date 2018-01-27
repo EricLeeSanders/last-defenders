@@ -3,6 +3,10 @@ package com.lastdefenders.menu;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.screen.AbstractScreen;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.state.GameStateManager;
@@ -20,16 +24,25 @@ public class MenuScreen extends AbstractScreen {
 
     private MenuStage stage;
     private GameStateManager gameStateManager;
+    private Viewport viewport;
 
     public MenuScreen(ScreenChanger screenChanger, GameStateManager gameStateManager,
         Resources resources, LDAudio audio) {
 
         super(gameStateManager);
         this.gameStateManager = gameStateManager;
-        this.stage = new MenuStage(screenChanger, resources, audio, getViewport());
-        super.addInputProcessor(stage);
+        createStageAndViewport(screenChanger, resources, audio);
         audio.playMusic();
         createBackListener();
+    }
+
+    private void createStageAndViewport(ScreenChanger screenChanger, Resources resources, LDAudio audio){
+
+        viewport = new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT,
+            new OrthographicCamera());
+        addViewport(viewport);
+        stage = new MenuStage(screenChanger, resources, audio, viewport);
+        addInputProcessor(stage);
     }
 
     private void createBackListener() {
@@ -57,16 +70,10 @@ public class MenuScreen extends AbstractScreen {
     }
 
     @Override
-    public void resize(int width, int height) {
-
-        stage.getViewport().setScreenSize(width, height); // update the size of Viewport
-        super.resize(width, height);
-    }
-
-    @Override
     public void renderElements(float delta) {
 
         stage.act(delta);
+        viewport.apply();
         stage.draw();
 
     }

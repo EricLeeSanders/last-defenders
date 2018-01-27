@@ -16,7 +16,7 @@ public class SupportButton extends Group {
     public ImageButton button;
     public int cost;
 
-    public SupportButton(Skin skin, String name, int cost) {
+    public SupportButton(Skin skin, String name, int cost, float fontScale) {
 
         this.setTransform(false);
         this.button = new ImageButton(skin, "support");
@@ -25,7 +25,7 @@ public class SupportButton extends Group {
         addActor(button);
 
         Label lblTitle = new Label(name.toUpperCase().replaceAll(" ", "\n"), skin);
-        lblTitle.setFontScale(0.40f);
+        lblTitle.setFontScale(0.40f * fontScale);
         lblTitle.setAlignment(Align.center);
         lblTitle.pack();
         float lblTitleX = ActorUtil
@@ -36,7 +36,7 @@ public class SupportButton extends Group {
         addActor(lblTitle);
 
         Label lblCost = new Label(String.valueOf(cost), skin);
-        lblCost.setFontScale(0.45f);
+        lblCost.setFontScale(0.45f * fontScale);
         lblCost.setAlignment(Align.center);
         lblCost.pack();
         float lblCostX = ActorUtil

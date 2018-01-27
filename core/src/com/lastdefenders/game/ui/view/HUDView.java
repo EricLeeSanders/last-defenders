@@ -30,18 +30,24 @@ public class HUDView extends Group implements IHUDView {
     private HUDPresenter presenter;
     private Resources resources;
 
-    public HUDView(HUDPresenter presenter, Skin skin, Resources resources) {
+    public HUDView(HUDPresenter presenter, Resources resources) {
 
         this.presenter = presenter;
         this.setTransform(false);
         this.resources = resources;
-        createControls(skin);
-        createMessageDisplayLabel(skin);
     }
 
-    private void createMessageDisplayLabel(Skin skin) {
+    public void init() {
 
-        LabelStyle messageDisplayLabelStyle = new Label.LabelStyle(skin.get(LabelStyle.class));
+        createControls();
+        createMessageDisplayLabel();
+
+        setSize(getStage().getViewport().getWorldWidth(), getStage().getViewport().getWorldHeight());
+    }
+
+    private void createMessageDisplayLabel() {
+
+        LabelStyle messageDisplayLabelStyle = new Label.LabelStyle(resources.getSkin().get(LabelStyle.class));
         messageDisplayLabelStyle.fontColor = Color.RED;
 
         Label messageLabel = new Label("", resources.getSkin());
@@ -51,9 +57,11 @@ public class HUDView extends Group implements IHUDView {
     /**
      * Create the controls
      */
-    private void createControls(Skin skin) {
+    private void createControls() {
 
         Logger.info("HUD View: creating controls");
+
+        Skin skin = resources.getSkin();
 
         btnWave = new ImageButton(skin, "wave");
         btnWave.setSize(64, 64);
@@ -83,7 +91,7 @@ public class HUDView extends Group implements IHUDView {
         btnEnlist.setSize(50, 50);
         btnEnlist.getImageCell().size(32, 35);
         btnEnlist.getImage().setScaling(Scaling.stretch);
-        btnEnlist.setPosition(Resources.VIRTUAL_WIDTH - 60, 10);
+        btnEnlist.setPosition(getStage().getViewport().getWorldWidth() - 60, 10);
         setBtnEnlistListener();
         addActor(btnEnlist);
 
@@ -91,7 +99,7 @@ public class HUDView extends Group implements IHUDView {
         btnSupport.setSize(50, 50);
         btnSupport.getImageCell().size(22, 35);
         btnSupport.getImage().setScaling(Scaling.stretch);
-        btnSupport.setPosition(Resources.VIRTUAL_WIDTH - 60, btnEnlist.getY() + 60);
+        btnSupport.setPosition(getStage().getViewport().getWorldWidth() - 60, btnEnlist.getY() + 60);
         setBtnSupportListener();
         addActor(btnSupport);
 
@@ -99,9 +107,28 @@ public class HUDView extends Group implements IHUDView {
         btnOptions.setSize(50, 50);
         btnOptions.getImageCell().size(25, 26);
         btnOptions.getImage().setScaling(Scaling.stretch);
-        btnOptions.setPosition(Resources.VIRTUAL_WIDTH - 60, Resources.VIRTUAL_HEIGHT - 60);
+        btnOptions.setPosition(getStage().getViewport().getWorldWidth() - 60, getStage().getViewport().getWorldHeight() - 60);
         setBtnOptionsListener();
         addActor(btnOptions);
+
+        lblPaused = new Label("PAUSED", skin);
+        LabelStyle lblPausedStyle = new LabelStyle(lblPaused.getStyle());
+        lblPausedStyle.fontColor = Color.RED;
+        lblPaused.setStyle(lblPausedStyle);
+        lblPaused.setAlignment(Align.center);
+        lblPaused.setPosition((getStage().getViewport().getWorldWidth()/ 2) + 1, (getStage().getViewport().getWorldHeight() / 2) + 126,
+            Align.center);
+        lblPaused.setVisible(false);
+        lblPaused.setZIndex(1000);
+        addActor(lblPaused);
+
+
+        createStatsTable(skin);
+
+        Logger.info("HUD View: controls created");
+    }
+
+    private void createStatsTable(Skin skin){
 
         Table statsTable = new Table();
         statsTable.setTransform(false);
@@ -112,7 +139,7 @@ public class HUDView extends Group implements IHUDView {
         statsTable.add(imgLife).size(32, 31).padRight(3);
         lblLives = new Label("0", skin);
         lblLives.setAlignment(Align.left);
-        lblLives.setFontScale(0.5f);
+        lblLives.setFontScale(0.5f * resources.getFontScale());
         statsTable.add(lblLives).size(30, 19).spaceRight(10);
 
         Image imgMoney = new Image(skin.getAtlas().findRegion("money"));
@@ -120,29 +147,16 @@ public class HUDView extends Group implements IHUDView {
 
         lblMoney = new Label("0", skin);
         lblMoney.setAlignment(Align.left);
-        lblMoney.setFontScale(0.5f);
+        lblMoney.setFontScale(0.5f * resources.getFontScale());
         statsTable.add(lblMoney).size(72, 19);
 
         statsTable.row();
 
         lblWaveCount = new Label("0", skin);
         lblWaveCount.setAlignment(Align.left);
-        lblWaveCount.setFontScale(0.5f);
+        lblWaveCount.setFontScale(0.5f * resources.getFontScale());
         statsTable.add(lblWaveCount).size(145, 19).colspan(4).padTop(5);
         statsTable.top().left();
-        this.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
-
-        lblPaused = new Label("PAUSED", skin);
-        LabelStyle lblPausedStyle = new LabelStyle(lblPaused.getStyle());
-        lblPausedStyle.fontColor = Color.RED;
-        lblPaused.setStyle(lblPausedStyle);
-        lblPaused.setAlignment(Align.center);
-        lblPaused.setPosition(Resources.VIRTUAL_WIDTH / 2 + 1, Resources.VIRTUAL_HEIGHT / 2 + 126,
-            Align.center);
-        lblPaused.setVisible(false);
-        addActor(lblPaused);
-
-        Logger.info("HUD View: controls created");
     }
 
     private void setBtnResumeListener() {

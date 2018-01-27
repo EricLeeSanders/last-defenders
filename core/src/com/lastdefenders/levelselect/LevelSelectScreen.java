@@ -3,6 +3,10 @@ package com.lastdefenders.levelselect;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.utils.Scaling;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.screen.AbstractScreen;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.state.GameStateManager;
@@ -25,7 +29,9 @@ public class LevelSelectScreen extends AbstractScreen {
 
         super(gameStateManager);
         this.screenChanger = screenChanger;
-        this.stage = new LevelSelectStage(screenChanger, resources, audio, getViewport());
+        Viewport viewport = new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT,
+            new OrthographicCamera());
+        this.stage = new LevelSelectStage(screenChanger, resources, audio, viewport);
         super.addInputProcessor(stage);
         createBackListener();
     }

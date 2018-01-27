@@ -30,16 +30,21 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
     private ImageButton btnClose;
     private Image volSliderBg;
     private float volSliderEndPos, volSliderStartPos;
+    private Resources resources;
 
 
     public MenuOptionsView(MenuPresenter presenter, Resources resources){
 
         this.presenter = presenter;
+        this.resources = resources;
         this.setTransform(false);
-        createControls(resources);
     }
 
-    private void createControls(Resources resources){
+    public void init(){
+        createControls();
+    }
+
+    private void createControls(){
 
         Logger.info("Options View: creating controls");
 
@@ -48,8 +53,7 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
         container.setTransform(false);
         container.setBackground(skin.getDrawable("main-panel"));
         container.setSize(500, 360);
-        container.setPosition((Resources.VIRTUAL_WIDTH / 2) - (container.getWidth() / 2),
-            (Resources.VIRTUAL_HEIGHT / 2) - (container.getHeight() / 2));
+        container.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2, Align.center );
         addActor(container);
 
         Table mainTable = new Table();
@@ -57,12 +61,14 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
         mainTable.setBackground(skin.getDrawable("hollow"));
         container.add(mainTable);
 
+
         Label lblTitle = new Label("OPTIONS", skin);
-        lblTitle
-            .setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2),
-                container.getY() + container.getHeight() - lblTitle.getHeight());
+        lblTitle.setFontScale(0.7f * resources.getFontScale());
         lblTitle.setAlignment(Align.center);
-        lblTitle.setFontScale(0.7f);
+        lblTitle.setHeight(60);
+        float x = container.getX(Align.center);
+        float y = container.getY(Align.top) - (lblTitle.getHeight()/2);
+        lblTitle.setPosition(x, y, Align.center);
         addActor(lblTitle);
 
         btnClose = new ImageButton(skin, "cancel");
@@ -74,25 +80,29 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
         setBtnCloseListener();
 
         btnSound = new CheckBox(" SOUND ON", skin);
-        btnSound.getLabel().setFontScale(0.45f);
+        btnSound.getLabel().setFontScale(0.45f * resources.getFontScale());
+        btnSound.getLabel().setAlignment(Align.center);
         btnSound.getImageCell().width(32).height(32);
         btnSound.getImage().setScaling(Scaling.stretch);
         setBtnSoundListener(btnSound);
 
         btnMusic = new CheckBox(" MUSIC ON", skin);
-        btnMusic.getLabel().setFontScale(0.45f);
+        btnMusic.getLabel().setFontScale(0.45f * resources.getFontScale());
         btnMusic.getImageCell().width(32).height(32);
         btnMusic.getImage().setScaling(Scaling.stretch);
         setBtnMusicListener(btnMusic);
 
         Label lblVolZero = new Label("0", skin);
-        lblVolZero.setFontScale(0.35f);
+        lblVolZero.setAlignment(Align.center);
+        lblVolZero.setFontScale(0.35f * resources.getFontScale());
 
         Label lblVolHundred = new Label("100", skin);
-        lblVolHundred.setFontScale(0.35f);
+        lblVolHundred.setAlignment(Align.center);
+        lblVolHundred.setFontScale(0.35f * resources.getFontScale());
 
         Label lblVol = new Label("VOLUME", skin);
-        lblVol.setFontScale(0.5f);
+        lblVol.setAlignment(Align.center);
+        lblVol.setFontScale(0.5f * resources.getFontScale());
 
         WidgetGroup volSlider = createVolSlider(skin, resources);
 
@@ -102,17 +112,17 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
 
         mainTable.row();
 
-        mainTable.add(btnSound).colspan(2).left().spaceLeft(15);
+        mainTable.add(btnSound).colspan(2).left().spaceLeft(15).spaceBottom(15);
 
         mainTable.row();
 
-        mainTable.add(lblVolZero).left();
+        mainTable.add(lblVolZero).left().bottom();
         mainTable.add(lblVol);
-        mainTable.add(lblVolHundred).right();
+        mainTable.add(lblVolHundred).right().bottom();
 
         mainTable.row();
 
-        mainTable.add(volSlider).colspan(3).width(300).height(18);
+        mainTable.add(volSlider).colspan(3).spaceTop(7).width(300).height(18);
 
         Logger.info("Options View: controls created");
     }
@@ -134,12 +144,12 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
         Image volSliderFull = new Image(resources.getSkin().getRegion("slider-full"));
         volSliderFull.setSize(299, 18);
         volSliderFull.setPosition(0, 2);
-        volSliderFull.setAlign(Align.center);
+        volSliderFull.setAlign(Align.left);
 
         volSliderBg = new Image(resources.getSkin().getRegion("slider-bg"));
         volSliderBg.setSize(299, 18);
         volSliderBg.setPosition(0, 2);
-        volSliderBg.setAlign(Align.center);
+        volSliderBg.setAlign(Align.left);
 
         this.volSliderStartPos = volSliderBg.getX() + 3;
         this.volSliderEndPos = volSliderBg.getX() + volSliderBg.getWidth() - 6;
