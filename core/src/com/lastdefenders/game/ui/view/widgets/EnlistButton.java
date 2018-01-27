@@ -18,7 +18,7 @@ public class EnlistButton extends Group {
     public int cost;
 
     public EnlistButton(Skin skin, float attack, float health, float range, float speed,
-        String name, int cost) {
+        String name, int cost, float fontScale) {
 
         this.setTransform(false);
         this.button = new ImageButton(skin, "enlist");
@@ -28,7 +28,7 @@ public class EnlistButton extends Group {
 
         Label lblCost = new Label(String.valueOf(cost), skin);
         //lblCost.setAlignment(Align.center);
-        lblCost.setFontScale(0.45f);
+        lblCost.setFontScale(0.45f * fontScale);
         lblCost.pack();
         float lblCostX = ActorUtil
             .calcBotLeftPointFromCenter(button.getWidth() / 2, lblCost.getWidth());
@@ -36,7 +36,7 @@ public class EnlistButton extends Group {
         addActor(lblCost);
 
         Label lblTitle = new Label(name.toUpperCase().replaceAll(" ", "\n"), skin);
-        lblTitle.setFontScale(0.40f);
+        lblTitle.setFontScale(0.40f * fontScale);
         lblTitle.setAlignment(Align.center);
         lblTitle.pack();
         float lblTitleX = ActorUtil

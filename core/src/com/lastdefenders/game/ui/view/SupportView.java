@@ -42,27 +42,36 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
     private SupportPresenter presenter;
     private Group choosingGroup;
     private Label lblMoney;
+    private Resources resources;
 
-    public SupportView(SupportPresenter presenter, Skin skin) {
+    public SupportView(SupportPresenter presenter, Resources resources) {
 
         this.presenter = presenter;
+        this.resources = resources;
+        this.setTransform(false);
+    }
+
+    public void init()
+    {
+
         choosingGroup = new Group();
         choosingGroup.setTransform(false);
-        this.setTransform(false);
         addActor(choosingGroup);
-        createControls(skin);
+        createControls();
     }
 
     /**
      * Creates the controls
      */
-    private void createControls(Skin skin) {
+    private void createControls() {
 
         Logger.info("Support View: creating controls");
 
+        Skin skin = resources.getSkin();
+
         Table container = new Table();
         container.setTransform(false);
-        container.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
+        container.setSize(getStage().getViewport().getWorldWidth(), getStage().getViewport().getWorldHeight());
         choosingGroup.addActor(container);
         Table supportTable = new Table();
         supportTable.setTransform(false);
@@ -75,11 +84,11 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
         container.setBackground(skin.getDrawable("main-panel"));
 
         Label lblTitle = new Label("SUPPORT", skin);
-        lblTitle
-            .setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2),
-                container.getY() + container.getHeight() - lblTitle.getHeight() + 1);
         lblTitle.setAlignment(Align.center);
-        lblTitle.setFontScale(.9f);
+        lblTitle.setFontScale(.9f * resources.getFontScale());
+        float lblTitleX = container.getX(Align.center);
+        float lblTitleY = container.getY(Align.top) - (lblTitle.getHeight()/2);
+        lblTitle.setPosition(lblTitleX, lblTitleY, Align.center);
         choosingGroup.addActor(lblTitle);
 
         LabelStyle lblMoneyStyle = new LabelStyle(skin.get("money_label", LabelStyle.class));
@@ -89,28 +98,28 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
         lblMoney.setSize(200, 52);
         lblMoney.setPosition(100, 10);
         lblMoney.setAlignment(Align.left);
-        lblMoney.setFontScale(0.6f);
+        lblMoney.setFontScale(0.6f * resources.getFontScale());
         choosingGroup.addActor(lblMoney);
 
-        SupportButton landmineButton = new SupportButton(skin, "Landmine", LandMine.COST);
+        SupportButton landmineButton = new SupportButton(skin, "Landmine", LandMine.COST, resources.getFontScale());
         supportButtons.add(landmineButton);
         supportTable.add(landmineButton).size(133, 100).spaceBottom(5);
         setLandmineListener(landmineButton);
 
         SupportButton supplydropButton = new SupportButton(skin, "Supply Drop",
-            SupplyDropCrate.COST);
+            SupplyDropCrate.COST, resources.getFontScale());
         supportButtons.add(supplydropButton);
         supportTable.add(supplydropButton).size(133, 100).spaceBottom(5);
         setSupplyDropListener(supplydropButton);
 
-        SupportButton airstrikeButton = new SupportButton(skin, "Airstrike", AirStrike.COST);
+        SupportButton airstrikeButton = new SupportButton(skin, "Airstrike", AirStrike.COST, resources.getFontScale());
         supportButtons.add(airstrikeButton);
         supportTable.add(airstrikeButton).size(133, 100).spaceBottom(5);
         setAirStrikeListener(airstrikeButton);
 
         supportTable.row();
 
-        SupportButton apacheButton = new SupportButton(skin, "Apache", Apache.COST);
+        SupportButton apacheButton = new SupportButton(skin, "Apache", Apache.COST, resources.getFontScale());
         supportButtons.add(apacheButton);
         supportTable.add(apacheButton).size(133, 100).spaceBottom(5);
         setApacheListener(apacheButton);
@@ -120,14 +129,14 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
         btnCancel.setSize(64, 64);
         btnCancel.getImageCell().size(35, 36);
         btnCancel.getImage().setScaling(Scaling.stretch);
-        btnCancel.setPosition(Resources.VIRTUAL_WIDTH - 75, Resources.VIRTUAL_HEIGHT - 75);
+        btnCancel.setPosition(getStage().getViewport().getWorldWidth() - 75, getStage().getViewport().getWorldHeight() - 75);
         choosingGroup.addActor(btnCancel);
 
         btnPlace = new ImageButton(skin, "select");
         btnPlace.setSize(50, 50);
         btnPlace.getImageCell().size(30, 23);
         btnPlace.getImage().setScaling(Scaling.stretch);
-        btnPlace.setPosition(Resources.VIRTUAL_WIDTH - 60, 10);
+        btnPlace.setPosition(getStage().getViewport().getWorldWidth() - 60, 10);
         setPlaceListener();
         addActor(btnPlace);
 
@@ -135,7 +144,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
         btnPlacingCancel.setSize(50, 50);
         btnPlacingCancel.getImageCell().size(25, 26);
         btnPlacingCancel.getImage().setScaling(Scaling.stretch);
-        btnPlacingCancel.setPosition(Resources.VIRTUAL_WIDTH - 60, btnPlace.getY() + 60);
+        btnPlacingCancel.setPosition(getStage().getViewport().getWorldWidth() - 60, btnPlace.getY() + 60);
         setCancelListener(btnPlacingCancel);
         addActor(btnPlacingCancel);
 
@@ -251,7 +260,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 
         LDVector2 coords = (LDVector2) this.getStage()
             .screenToStageCoordinates(UtilPool.getVector2(screenX, screenY));
-        presenter.screenTouch(coords, "TouchDown");
+        presenter.screenTouch(screenX, screenY, "TouchDown");
         coords.free();
         return false;
     }
@@ -267,7 +276,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
 
         LDVector2 coords = (LDVector2) this.getStage()
             .screenToStageCoordinates(UtilPool.getVector2(screenX, screenY));
-        presenter.screenTouch(coords, "Dragged");
+        presenter.screenTouch(screenX, screenY, "Dragged");
         coords.free();
         return false;
 

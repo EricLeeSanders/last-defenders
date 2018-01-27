@@ -27,27 +27,34 @@ public class DebugView extends Group implements IDebugView {
     private Label framesLabel;
     private CheckBox btnShowTextureBoundaries, btnShowFPS;
     private TextButton btnResume;
+    private Resources resources;
 
-    public DebugView(DebugPresenter presenter, Skin skin) {
+    public DebugView(DebugPresenter presenter, Resources resources) {
 
         this.presenter = presenter;
         this.setTransform(false);
-        createControls(skin);
+        this.resources = resources;
+
+    }
+
+    public void init(){
+        createControls();
     }
 
     /**
      * Create controls
      */
-    private void createControls(Skin skin) {
+    private void createControls() {
 
         Logger.info("Debug View: creating controls");
+
+        Skin skin = resources.getSkin();
 
         Table container = new Table();
         container.setTransform(false);
         container.setBackground(skin.getDrawable("main-panel"));
         container.setSize(500, 360);
-        container.setPosition((Resources.VIRTUAL_WIDTH / 2) - (container.getWidth() / 2),
-            (Resources.VIRTUAL_HEIGHT / 2) - (container.getHeight() / 2));
+        container.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2, Align.center);
         //table.debug();
         this.addActor(container);
 
@@ -57,40 +64,41 @@ public class DebugView extends Group implements IDebugView {
         container.add(mainTable);
 
         Label lblTitle = new Label("DEBUG", skin);
-        lblTitle
-            .setPosition(container.getX() + (container.getWidth() / 2) - (lblTitle.getWidth() / 2),
-                container.getY() + container.getHeight() - lblTitle.getHeight());
+        lblTitle.setFontScale(0.7f * resources.getFontScale());
         lblTitle.setAlignment(Align.center);
-        lblTitle.setFontScale(0.7f);
+        lblTitle.setHeight(60);
+        float x = container.getX(Align.center);
+        float y = container.getY(Align.top) - (lblTitle.getHeight()/2);
+        lblTitle.setPosition(x, y, Align.center);
         this.addActor(lblTitle);
 
         framesLabel = new Label("x", skin);
-        framesLabel.setFontScale(0.35f);
+        framesLabel.setFontScale(0.35f * resources.getFontScale());
         framesLabel.setColor(1f, 1f, 1f, 0.30f);
         framesLabel.setPosition(200, 320);
 
         btnResume = new TextButton("RESUME", skin);
-        btnResume.getLabel().setFontScale(0.45f);
-        btnResume.pack();
+        btnResume.getLabel().setFontScale(0.45f * resources.getFontScale());
+        btnResume.getLabel().setAlignment(Align.center);
         btnResume.setSize(150, 45);
-        btnResume.setPosition(112, 20);
+        btnResume.setPosition((getStage().getViewport().getWorldWidth() / 2) - btnResume.getWidth() - 50, 20);
         addActor(btnResume);
         setBtnResumeListener();
 
         btnShowFPS = new CheckBox(" SHOW FPS", skin);
-        btnShowFPS.getLabel().setFontScale(0.45f);
+        btnShowFPS.getLabel().setFontScale(0.45f * resources.getFontScale());
         btnShowFPS.getImageCell().width(32).height(32);
         btnShowFPS.getImage().setScaling(Scaling.stretch);
         setBtnShowFPSListener(btnShowFPS);
 
         btnShowTextureBoundaries = new CheckBox(" SHOW BOUNDARIES", skin);
-        btnShowTextureBoundaries.getLabel().setFontScale(0.45f);
+        btnShowTextureBoundaries.getLabel().setFontScale(0.45f * resources.getFontScale());
         btnShowTextureBoundaries.getImageCell().width(32).height(32);
         btnShowTextureBoundaries.getImage().setScaling(Scaling.stretch);
         setBtnShowTextureBoundariesListener(btnShowTextureBoundaries);
 
         TextButton btnCrash = new TextButton("TEST CRASH", skin);
-        btnCrash.getLabel().setFontScale(0.45f);
+        btnCrash.getLabel().setFontScale(0.45f * resources.getFontScale());
         btnCrash.pack();
         btnCrash.setSize(150, 45);
         setBtnCrashListener(btnCrash);

@@ -4,6 +4,7 @@ import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.service.actorplacement.AirStrikePlacement;
 import com.lastdefenders.game.service.actorplacement.SupplyDropPlacement;
@@ -21,15 +22,13 @@ import org.junit.Before;
 
 public class SupportPresenterTest {
 
-    //GameUIStateManager uiStateManager, Player player, LDAudio audio
-    //, SupportActorPlacement supportActorPlacement, AirStrikePlacement airStrikePlacement, SupplyDropPlacement supplyDropPlacement
-    //, MessageDisplayer messageDisplayer
     GameUIStateManager uiStateManager = mock(GameUIStateManager.class);
     Player player = mock(Player.class);
     SupportActorPlacement supportActorPlacement = mock(SupportActorPlacement.class);
     AirStrikePlacement airStrikePlacement = mock(AirStrikePlacement.class);
     SupplyDropPlacement supplyDropPlacement = mock(SupplyDropPlacement.class);
     SupportView supportView = mock(SupportView.class);
+    Viewport gameViewportMock = mock(Viewport.class);
 
     SupportPresenter createSupportPresenter() {
 
@@ -37,7 +36,7 @@ public class SupportPresenterTest {
         MessageDisplayer messageDisplayer = mock(MessageDisplayer.class);
 
         return new SupportPresenter(uiStateManager, player, audio, supportActorPlacement,
-            airStrikePlacement, supplyDropPlacement, messageDisplayer);
+            airStrikePlacement, supplyDropPlacement, messageDisplayer, gameViewportMock);
     }
 
     @Before

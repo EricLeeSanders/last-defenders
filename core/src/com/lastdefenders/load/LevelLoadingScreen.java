@@ -18,7 +18,6 @@ import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.screen.AbstractScreen;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.state.GameStateManager;
-import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
@@ -46,6 +45,8 @@ public class LevelLoadingScreen extends AbstractScreen {
             new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT,
                 new OrthographicCamera()));
         super.addInputProcessor(stage);
+
+        createControls();
         createBackListener();
     }
 
@@ -61,11 +62,9 @@ public class LevelLoadingScreen extends AbstractScreen {
         super.addInputProcessor(backProcessor);
     }
 
-    @Override
-    public void show() {
+    private void createControls(){
 
-        Logger.info("Level loading screen: show");
-        super.show();
+        Logger.info("Level Loading Screen: createControls");
 
         resources.loadAssetSync(Resources.LOAD_ATLAS, TextureAtlas.class);
         TextureAtlas atlas = resources.getAsset(Resources.LOAD_ATLAS, TextureAtlas.class);
@@ -82,27 +81,17 @@ public class LevelLoadingScreen extends AbstractScreen {
         progressBar.getStyle().knob.setMinHeight(LOADING_BAR_SIZE.getHeight());
         progressBar.setRound(false);
         progressBar.setSize(LOADING_BAR_SIZE.getWidth(), LOADING_BAR_SIZE.getHeight());
-        progressBar.setPosition(ActorUtil
-            .calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, LOADING_BAR_SIZE.getWidth()), ActorUtil
-            .calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingBar.getHeight()));
+        progressBar.setPosition(stage.getViewport().getWorldWidth() / 2, stage.getViewport().getWorldHeight() / 2, Align.center);
 
         loadingLabel = new Label("LOADING: 0%", resources.getSkin());
-        loadingLabel.setFontScale(0.75f);
+        loadingLabel.setFontScale(0.75f * resources.getFontScale());
         loadingLabel.setAlignment(Align.left);
         loadingLabel.setColor(1f, 1f, 1f, 1f);
-        float lblX = ActorUtil
-            .calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, loadingLabel.getWidth()) + 30;
-        float lblY = ActorUtil
-            .calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, loadingLabel.getHeight());
-        loadingLabel.setPosition(lblX, lblY);
+        loadingLabel.setPosition((stage.getViewport().getWorldWidth() / 2) + 30, (stage.getViewport().getWorldHeight() / 2) + 2, Align.center);
 
         Image screen = new Image(atlas.findRegion("level-load-screen"));
-        screen.setSize(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT);
-        float screenX = ActorUtil
-            .calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, screen.getWidth());
-        float screenY = ActorUtil
-            .calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, screen.getHeight());
-        screen.setPosition(screenX, screenY);
+        screen.setSize(stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
+        screen.setPosition(stage.getViewport().getWorldWidth() / 2, stage.getViewport().getWorldHeight() / 2, Align.center);
 
         stage.addActor(progressBar);
         stage.addActor(loadingLabel);

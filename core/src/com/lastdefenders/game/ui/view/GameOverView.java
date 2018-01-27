@@ -24,57 +24,64 @@ public class GameOverView extends Group implements IGameOverView {
 
     private GameOverPresenter presenter;
     private Label lblWavesCompleted;
+    private Resources resources;
 
-    public GameOverView(GameOverPresenter presenter, Skin skin) {
+    public GameOverView(GameOverPresenter presenter, Resources resources) {
 
         this.presenter = presenter;
         this.setTransform(false);
-        createControls(skin);
+        this.resources = resources;
+    }
+
+    public void init(){
+        createControls();
     }
 
     /**
      * Create controls
      */
-    private void createControls(Skin skin) {
+    private void createControls() {
 
         Logger.info("Game Over View: creating controls");
+
+        Skin skin = resources.getSkin();
 
         Table table = new Table();
         table.setTransform(false);
         table.setBackground(skin.getDrawable("main-panel"));
         table.setSize(325, 300);
-        table.setPosition((Resources.VIRTUAL_WIDTH / 2) - (table.getWidth() / 2),
-            (Resources.VIRTUAL_HEIGHT / 2) - (table.getHeight() / 2));
+        table.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2, Align.center );
         this.addActor(table);
 
         Label lblTitle = new Label("GAME OVER", skin);
-        lblTitle.setFontScale(0.45f);
+        float lblTitleX = table.getX(Align.center);
+        float lblTitleY = table.getY(Align.top) - (lblTitle.getHeight()/2) + 4;
+        lblTitle.setPosition(lblTitleX, lblTitleY, Align.center);
+        lblTitle.setFontScale(0.45f * resources.getFontScale());
         lblTitle.setAlignment(Align.center);
-        lblTitle.setPosition(table.getX() + (table.getWidth() / 2) - (lblTitle.getWidth() / 2),
-            table.getY() + table.getHeight() - lblTitle.getHeight() + 4);
         this.addActor(lblTitle);
 
         table.row();
         lblWavesCompleted = new Label("0", skin);
-        lblWavesCompleted.setFontScale(0.45f);
+        lblWavesCompleted.setFontScale(0.45f * resources.getFontScale());
         lblWavesCompleted.setAlignment(Align.center);
         table.add(lblWavesCompleted).width(275).height(40);
 
         table.row();
         TextButton btnNewGame = new TextButton("NEW GAME", skin);
-        btnNewGame.getLabel().setFontScale(0.45f);
+        btnNewGame.getLabel().setFontScale(0.45f * resources.getFontScale());
         table.add(btnNewGame).width(150).height(45).spaceTop(10);
         setBtnNewGameListener(btnNewGame);
 
         table.row();
         TextButton btnHighScores = new TextButton("HIGH SCORES", skin);
-        btnHighScores.getLabel().setFontScale(0.45f);
+        btnHighScores.getLabel().setFontScale(0.45f * resources.getFontScale());
         table.add(btnHighScores).width(150).height(45).spaceTop(10);
         setBtnHighScoresListener(btnHighScores);
 
         table.row();
         TextButton btnMainMenu = new TextButton("MAIN MENU", skin);
-        btnMainMenu.getLabel().setFontScale(0.45f);
+        btnMainMenu.getLabel().setFontScale(0.45f * resources.getFontScale());
         table.add(btnMainMenu).width(150).height(45).spaceTop(10);
         setBtnMainMenuListener(btnMainMenu);
 

@@ -21,12 +21,14 @@ class LevelSelectStage extends Stage {
         Viewport viewport) {
 
         super(viewport);
+
         LevelSelectPresenter presenter = new LevelSelectPresenter(screenChanger);
         resources.loadAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class);
         LevelSelectView levelSelectView = new LevelSelectView(presenter, resources, audio);
-        this.addActor(levelSelectView);
-        levelSelectView
-            .setBackground(resources.getAsset(Resources.LEVEL_SELECT_ATLAS, TextureAtlas.class));
+        addActor(levelSelectView);
+
+        levelSelectView.init();
+
     }
 
     @Override

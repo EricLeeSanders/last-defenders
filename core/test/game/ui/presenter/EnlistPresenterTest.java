@@ -10,6 +10,7 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.service.actorplacement.TowerPlacement;
@@ -38,6 +39,7 @@ public class EnlistPresenterTest {
     private Player playerMock = mock(Player.class);
     private TowerPlacement towerPlacementMock = mock(TowerPlacement.class);
     private GameUIStateManager gameUIStateManagerMock = mock(GameUIStateManager.class);
+    private Viewport gameViewportMock = mock(Viewport.class);
 
     @DataProvider
     public static Object[][] filteredGameUIStateEnums() {
@@ -68,7 +70,7 @@ public class EnlistPresenterTest {
         MessageDisplayer messageDisplayerMock = mock(MessageDisplayer.class);
 
         return new EnlistPresenter(gameUIStateManagerMock, playerMock, audioMock,
-            towerPlacementMock, messageDisplayerMock);
+            towerPlacementMock, messageDisplayerMock, gameViewportMock);
     }
 
     /**
@@ -267,14 +269,18 @@ public class EnlistPresenterTest {
         doReturn(GameUIState.PLACING_TOWER).when(gameUIStateManagerMock).getState();
         enlistPresenter.setView(enlistView);
 
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Tower tower = TestUtil.createTower("Rifle", true);
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 
-        LDVector2 moveCoords = new LDVector2(100, 100);
-        enlistPresenter.moveTower(moveCoords);
+        float moveX = 100;
+        float moveY = 100;
+        LDVector2 coords = TestUtil.nonPooledLDVector2(moveX, moveY);
+        TestUtil.mockViewportUnproject(coords, gameViewportMock);
 
-        verify(towerPlacementMock, times(1)).moveTower(eq(moveCoords));
+        enlistPresenter.moveTower(moveX, moveY);
+
+        verify(towerPlacementMock, times(1)).moveTower(coords);
         verify(enlistView, times(1)).showBtnPlace();
         verify(enlistView, never()).showBtnRotate();
 
@@ -296,10 +302,11 @@ public class EnlistPresenterTest {
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 
-        LDVector2 moveCoords = new LDVector2(100, 100);
-        enlistPresenter.moveTower(moveCoords);
+        float moveX = 100;
+        float moveY = 100;
+        enlistPresenter.moveTower(moveX, moveY);
 
-        verify(towerPlacementMock, never()).moveTower(eq(moveCoords));
+        verify(towerPlacementMock, never()).moveTower(eq(new LDVector2(moveX, moveY)));
         verify(enlistView, never()).showBtnPlace();
         verify(enlistView, never()).showBtnRotate();
 
@@ -313,14 +320,18 @@ public class EnlistPresenterTest {
         doReturn(GameUIState.PLACING_TOWER).when(gameUIStateManagerMock).getState();
         enlistPresenter.setView(enlistView);
 
-        Tower tower = TestUtil.createTower("Turret", false);
+        Tower tower = TestUtil.createTower("Turret", true);
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 
-        LDVector2 moveCoords = new LDVector2(100, 100);
-        enlistPresenter.moveTower(moveCoords);
+        float moveX = 100;
+        float moveY = 100;
+        LDVector2 coords = TestUtil.nonPooledLDVector2(moveX, moveY);
+        TestUtil.mockViewportUnproject(coords, gameViewportMock);
 
-        verify(towerPlacementMock, times(1)).moveTower(eq(moveCoords));
+        enlistPresenter.moveTower(moveX, moveY);
+
+        verify(towerPlacementMock, times(1)).moveTower(coords);
         verify(enlistView, times(1)).showBtnPlace();
         verify(enlistView, times(1)).showBtnRotate();
 

@@ -45,7 +45,7 @@ public class ArmorDestroyedEffectTest {
         doReturn(style).when(skinMock).get(LabelStyle.class);
 
         return new ArmorDestroyedEffect(resourcesMock.getAtlasRegion(""), labelEffectPoolMock,
-            skinMock);
+            skinMock, 1);
 
     }
 

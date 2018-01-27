@@ -39,8 +39,9 @@ public class Resources {
     private AssetManager manager = new AssetManager();
     private String assetFolder;
     private float tiledMapScale;
-    private String skinAtlas = "skin/uiskin.atlas";
-    private String skinJson = "skin/uiskin.json";
+    private float fontScale;
+    private String skinAtlas;
+    private String skinJson;
 
     private Map<String, TextureRegion> loadedTextures = new HashMap<>();
     private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<>();
@@ -62,19 +63,23 @@ public class Resources {
         ResolutionFileResolver fileResolver = new ResolutionFileResolver(
             new InternalFileHandleResolver(), resolutions);
         manager.setLoader(TextureAtlas.class, new TextureAtlasLoader(fileResolver));
-        assetFolder = fileResolver.choose(resolutions).folder;
+        assetFolder = ResolutionFileResolver.choose(resolutions).folder;
+        Logger.info("Using " + assetFolder + " assets");
         skinAtlas = "skin/" + assetFolder + "/uiskin.atlas";
         skinJson = "skin/" + assetFolder + "/uiskin.json";
 
         switch(assetFolder){
             case "hi":
                 tiledMapScale = 1f/3;
+                fontScale = 1f/3;
                 break;
             case "med":
-                tiledMapScale = 2f/3;
+                tiledMapScale = 1f/2;
+                fontScale = 1f/2;
                 break;
             case "lo":
                 tiledMapScale = 1;
+                fontScale = 1;
                 break;
         }
 
@@ -185,9 +190,18 @@ public class Resources {
     public void initFont() {
 
         Logger.info("Resources: initializing font");
-        BitmapFont font = getSkin().getFont("default-font");
 
+        BitmapFont font = getSkin().getFont("default-font");
         font.setUseIntegerPositions(false);
+
+        font.getData().setScale(getFontScale());
+        font.getData().lineHeight = 55;
+        font.getData().ascent = 12;
+        font.getData().capHeight = 28;
+        font.getData().descent = -16;
+        font.getData().spaceWidth = 20;
+        font.getData().xHeight = 30;
+
 
         Logger.info("Resources: font initialized");
     }
@@ -198,8 +212,6 @@ public class Resources {
         if (!manager.isLoaded(file)) {
             try {
                 manager.load(file, type);
-                System.out.println(manager.getLoader(type, file).getClass().getCanonicalName());
-
                 Logger.info("Resources: asset loaded: " + file);
             } catch (GdxRuntimeException e) {
                 Logger.error("Resources: asset load error", e);
@@ -289,7 +301,13 @@ public class Resources {
     }
 
     public float getTiledMapScale(){
+
         return tiledMapScale;
+    }
+
+    public float getFontScale() {
+
+        return fontScale;
     }
 
     public AssetManager getManager() {

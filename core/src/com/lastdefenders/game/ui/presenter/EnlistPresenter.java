@@ -1,6 +1,6 @@
 package com.lastdefenders.game.ui.presenter;
 
-import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerMachineGun;
@@ -19,6 +19,8 @@ import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
+import com.lastdefenders.util.datastructures.pool.UtilPool;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,9 +38,11 @@ public class EnlistPresenter implements GameUIStateObserver {
     private LDAudio audio;
     private MessageDisplayer messageDisplayer;
     private Map<String, Integer> towerCosts = new HashMap<>();
+    private Viewport gameViewport;
 
     public EnlistPresenter(GameUIStateManager uiStateManager, Player player,
-        LDAudio audio, TowerPlacement towerPlacement, MessageDisplayer messageDisplayer) {
+        LDAudio audio, TowerPlacement towerPlacement, MessageDisplayer messageDisplayer,
+        Viewport gameViewport) {
 
         this.uiStateManager = uiStateManager;
         uiStateManager.attach(this);
@@ -46,6 +50,7 @@ public class EnlistPresenter implements GameUIStateObserver {
         this.audio = audio;
         this.towerPlacement = towerPlacement;
         this.messageDisplayer = messageDisplayer;
+        this.gameViewport = gameViewport;
         initTowerCostsMap();
     }
 
@@ -132,12 +137,15 @@ public class EnlistPresenter implements GameUIStateObserver {
     /**
      * Move the tower
      *
-     * @param coords - Position to move
+     * @param x
+     * @param y
      */
-    public void moveTower(Vector2 coords) {
+    public void moveTower(float x, float y) {
 
         if (canMoveTower()) {
+            LDVector2 coords = (LDVector2) gameViewport.unproject(UtilPool.getVector2(x, y));
             towerPlacement.moveTower(coords);
+            coords.free();
             view.showBtnPlace();
             if (isTowerRotatable()) {
                 view.showBtnRotate();

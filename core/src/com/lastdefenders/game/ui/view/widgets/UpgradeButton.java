@@ -17,15 +17,20 @@ public class UpgradeButton extends Group {
     public ImageButton button;
     private Label lblCost;
 
-    public UpgradeButton(Skin skin, String name, String iconName, int iconWidth, int iconHeight) {
+    public UpgradeButton(Skin skin, String name, String iconName, int iconWidth, int iconHeight, float fontScale) {
 
         this.setTransform(false);
+        createControls(skin, name, iconName, iconWidth, iconHeight, fontScale);
+    }
+
+    private void createControls(Skin skin, String name, String iconName, int iconWidth, int iconHeight, float fontScale){
+
         this.button = new ImageButton(skin, "upgrade");
         button.setSize(110, 115);
         addActor(button);
 
         lblCost = new Label(String.valueOf(0), skin);
-        lblCost.setFontScale(0.45f);
+        lblCost.setFontScale(0.45f * fontScale);
         lblCost.setAlignment(Align.center);
         lblCost.pack();
         float lblCostX = ActorUtil
@@ -34,7 +39,7 @@ public class UpgradeButton extends Group {
         addActor(lblCost);
 
         Label lblTitle = new Label(name.toUpperCase().replaceAll(" ", "\n"), skin);
-        lblTitle.setFontScale(0.4f);
+        lblTitle.setFontScale(0.4f * fontScale);
         lblTitle.setAlignment(Align.center);
         lblTitle.pack();
         float lblTitleX = ActorUtil
