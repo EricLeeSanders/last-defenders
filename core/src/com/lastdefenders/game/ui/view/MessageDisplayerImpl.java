@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by Eric on 3/31/2017.
  */
 
-public class MessageDisplayer extends Group implements
+public class MessageDisplayerImpl extends Group implements
     com.lastdefenders.game.ui.view.interfaces.MessageDisplayer {
 
     private static final float MESSAGE_DURATION = 2;
@@ -25,7 +25,7 @@ public class MessageDisplayer extends Group implements
     private Label messageLabel;
     private Resources resources;
 
-    public MessageDisplayer(Resources resources) {
+    public MessageDisplayerImpl(Resources resources) {
 
         this.resources = resources;
         messageLabel = new Label("", resources.getSkin());
