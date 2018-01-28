@@ -11,7 +11,7 @@ import com.lastdefenders.game.service.actorplacement.SupplyDropPlacement;
 import com.lastdefenders.game.service.actorplacement.SupportActorPlacement;
 import com.lastdefenders.game.ui.presenter.SupportPresenter;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
-import com.lastdefenders.game.ui.view.MessageDisplayer;
+import com.lastdefenders.game.ui.view.MessageDisplayerImpl;
 import com.lastdefenders.game.ui.view.SupportView;
 import com.lastdefenders.util.LDAudio;
 import org.junit.Before;
@@ -33,7 +33,7 @@ public class SupportPresenterTest {
     SupportPresenter createSupportPresenter() {
 
         LDAudio audio = mock(LDAudio.class);
-        MessageDisplayer messageDisplayer = mock(MessageDisplayer.class);
+        MessageDisplayerImpl messageDisplayer = mock(MessageDisplayerImpl.class);
 
         return new SupportPresenter(uiStateManager, player, audio, supportActorPlacement,
             airStrikePlacement, supplyDropPlacement, messageDisplayer, gameViewportMock);

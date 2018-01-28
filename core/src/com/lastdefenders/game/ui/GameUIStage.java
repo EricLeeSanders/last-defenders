@@ -30,6 +30,7 @@ import com.lastdefenders.game.ui.view.GameOverView;
 import com.lastdefenders.game.ui.view.HUDView;
 import com.lastdefenders.game.ui.view.InspectView;
 import com.lastdefenders.game.ui.view.LevelCompletedView;
+import com.lastdefenders.game.ui.view.MessageDisplayerImpl;
 import com.lastdefenders.game.ui.view.OptionsView;
 import com.lastdefenders.game.ui.view.PauseView;
 import com.lastdefenders.game.ui.view.SupportView;
@@ -56,7 +57,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
     private Group towerGroup;
     private InputMultiplexer imp;
     private Resources resources;
-    private com.lastdefenders.game.ui.view.MessageDisplayer messageDisplayer;
+    private MessageDisplayerImpl messageDisplayer;
     private Array<Updatable> updatablePresenters = new Array<>();
 
     public GameUIStage(Player player, Group towerGroup, GameUIStateManager uiStateManager,
@@ -94,7 +95,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         hudView.init();
         hudPresenter.setView(hudView);
 
-        messageDisplayer = new com.lastdefenders.game.ui.view.MessageDisplayer(resources);
+        messageDisplayer = new MessageDisplayerImpl(resources);
 
 
         EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio,
