@@ -1,0 +1,3 @@
+call java -cp gdx.jar;gdx-tools.jar com.badlogic.gdx.tools.texturepacker.TexturePacker "C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\load\lo" "C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\load\lo" uiskin
+call java -cp gdx.jar;gdx-tools.jar com.badlogic.gdx.tools.texturepacker.TexturePacker "C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\load\med" "C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\load\med" uiskin
+call java -cp gdx.jar;gdx-tools.jar com.badlogic.gdx.tools.texturepacker.TexturePacker "C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\load\hi" "C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\load\hi" uiskin
