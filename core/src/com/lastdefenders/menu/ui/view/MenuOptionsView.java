@@ -1,5 +1,7 @@
 package com.lastdefenders.menu.ui.view;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -11,11 +13,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.lastdefenders.menu.ui.MenuPresenter;
 import com.lastdefenders.menu.ui.view.interfaces.IMenuOptionsView;
+import com.lastdefenders.ui.widget.LDSlider;
+import com.lastdefenders.ui.widget.progressbar.LDProgressBar;
+import com.lastdefenders.ui.widget.progressbar.LDProgressBar.LDProgressBarPadding;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -104,7 +110,9 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
         lblVol.setAlignment(Align.center);
         lblVol.setFontScale(0.5f * resources.getFontScale());
 
-        WidgetGroup volSlider = createVolSlider(skin, resources);
+        LDSlider volSlider = createVolSlider(skin);
+        volSlider.setValue(presenter.getMasterVolume());
+        volSliderListener(volSlider.getSlider());
 
         mainTable.row();
 
@@ -122,75 +130,35 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
 
         mainTable.row();
 
-        mainTable.add(volSlider).colspan(3).spaceTop(7).width(300).height(18);
+        mainTable.add(volSlider).colspan(3).spaceTop(7).width(300).height(22);
+        volSlider.setSize(300,22);
 
         Logger.info("Options View: controls created");
     }
 
-    private WidgetGroup createVolSlider(Skin skin, Resources resources) {
+    private LDSlider createVolSlider(Skin skin) {
 
-        WidgetGroup group = new WidgetGroup();
-        group.setTransform(false);
 
-        Slider volumeSlider = new Slider(0, 1f, 0.01f, false, skin);
-        volumeSlider.getStyle().knob.setMinWidth(33);
-        volumeSlider.getStyle().knob.setMinHeight(24);
-        volumeSlider.getStyle().background.setMinHeight(22);
-        volumeSlider.getStyle().background.setMinWidth(300);
-        volumeSlider.setValue(presenter.getMasterVolume());
-        volumeSlider.setSize(300, 22);
-        volSliderListener(volumeSlider);
+        LDProgressBarPadding progressBarPadding = new LDProgressBarPadding(2,2,2,2);
+        LDProgressBar progressBar = new LDProgressBar(0,1, 0.000001f, progressBarPadding, skin);
+        LDSlider slider = new LDSlider(progressBar, skin, new Vector2(33, 24) );
+        addActor(slider);
 
-        Image volSliderFull = new Image(resources.getSkin().getRegion("slider-full"));
-        volSliderFull.setSize(299, 18);
-        volSliderFull.setPosition(0, 2);
-        volSliderFull.setAlign(Align.left);
-
-        volSliderBg = new Image(resources.getSkin().getRegion("slider-bg"));
-        volSliderBg.setSize(299, 18);
-        volSliderBg.setPosition(0, 2);
-        volSliderBg.setAlign(Align.left);
-
-        this.volSliderStartPos = volSliderBg.getX() + 3;
-        this.volSliderEndPos = volSliderBg.getX() + volSliderBg.getWidth() - 6;
-
-        group.addActor(volSliderFull);
-        group.addActor(volSliderBg);
-        group.addActor(volumeSlider);
-
-        float volValue = (volSliderEndPos - volSliderEndPos * presenter.getMasterVolume());
-        float volStartX = volSliderStartPos + volSliderEndPos * presenter.getMasterVolume();
-        volSliderBg.setX(volStartX);
-        volSliderBg.setWidth(volValue);
-
-        return group;
+        return slider;
     }
 
     private void volSliderListener(final Slider slider) {
 
-        slider.addListener(new ClickListener() {
-            @Override
-            public void touchDragged(InputEvent event, float x, float y, int pointer) {
-
-                super.touchDragged(event, x, y, pointer);
-                moveSlider();
-            }
+        slider.addListener(new ChangeListener()
+        {
 
             @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
-                super.touchDown(event, x, y, pointer, button);
-                moveSlider();
-                return true;
-            }
-
-            private void moveSlider() {
-
-                float startX = volSliderStartPos + volSliderEndPos * slider.getValue();
+            public void changed(ChangeEvent event, Actor actor)
+            {
+                Slider slider = (Slider) actor;
                 presenter.volumeChanged(slider.getValue());
-                volSliderBg.setX(startX);
-                volSliderBg.setWidth(volSliderEndPos - volSliderEndPos * slider.getValue());
             }
+
         });
     }
 
