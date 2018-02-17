@@ -1,67 +1,49 @@
 package com.lastdefenders.ui.widget.progressbar;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar.ProgressBarStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * Progress Bar that supports a frame drawable. Currently only supports horizontal.
  */
 
-public class LDProgressBar extends ProgressBar {
+public class LDProgressBar extends WidgetGroup {
 
-    public Image loadingBarFilled;
-    public UnfilledLoadingBar loadingBarUnfilled;
-    private LDProgressBarStyle style;
+    private FilledLoadingBar loadingBarFilled;
+    private UnfilledLoadingBar loadingBarUnfilled;
     private LDProgressBarPadding padding;
+    private ProgressBar progressBar;
 
     public LDProgressBar (float min, float max, float stepSize, LDProgressBarPadding padding, Skin skin) {
-        this(min, max, stepSize, padding, skin.get("default", LDProgressBarStyle.class), skin);
+        this(min, max, stepSize, padding, new LDProgressBarStyle(skin.get("default", LDProgressBarStyle.class)));
     }
 
-    public LDProgressBar (float min, float max, float stepSize, LDProgressBarPadding padding, Skin skin, String styleName) {
-        this(min, max, stepSize, padding, skin.get(styleName, LDProgressBarStyle.class), skin);
-    }
-
-    public LDProgressBar (float min, float max, float stepSize, LDProgressBarPadding padding, LDProgressBarStyle style, Skin skin) {
-        super(min, max, stepSize, false, style);
-        this.style = style;
+    public LDProgressBar (float min, float max, float stepSize, LDProgressBarPadding padding, LDProgressBarStyle style) {
+        setTransform(false);
         style.background = style.frame;
-        setStyle(style);
+        progressBar = new ProgressBar(min, max, stepSize, false, style);
         this.padding = padding;
         createProgressBarGroup();
     }
 
     public void createProgressBarGroup(){
-        loadingBarFilled = new Image(style.filled);
-        loadingBarUnfilled = new UnfilledLoadingBar(style.unfilled, this);
+        LDProgressBarStyle style = getStyle();
+        loadingBarFilled = new FilledLoadingBar(((TextureRegionDrawable) style.filled).getRegion());
+        loadingBarUnfilled = new UnfilledLoadingBar(((TextureRegionDrawable) style.unfilled).getRegion(), progressBar);
+
         // Add padding
-        loadingBarFilled.setPosition(padding.filledPadWidth,padding.filledPadHeight);
-        loadingBarUnfilled.setPosition(padding.unfilledPadWidth,padding.unfilledPadHeight);
+        loadingBarFilled.setPosition(padding.leftPad, padding.bottomPad);
+        loadingBarUnfilled.setPosition(padding.leftPad, padding.bottomPad);
 
-        debug();
-    }
+        addActor(loadingBarFilled);
+        addActor(loadingBarUnfilled);
+        addActor(progressBar);
 
-    @Override
-    public void draw(Batch batch, float parentAlpha ) {
-
-        loadingBarFilled.draw(batch, parentAlpha);
-        loadingBarUnfilled.draw(batch, parentAlpha);
-
-        super.draw(batch, parentAlpha);
-    }
-
-    @Override
-    public void setPosition(float x, float y){
-        super.setPosition(x, y);
-        loadingBarFilled.setPosition(x + padding.filledPadWidth, y + padding.filledPadHeight);
-        loadingBarUnfilled.setPosition(x + padding.unfilledPadWidth, y + padding.unfilledPadHeight);
     }
 
     @Override
@@ -69,17 +51,37 @@ public class LDProgressBar extends ProgressBar {
         // Add padding
         // Multiply by two to offset the x/y movement
         if(loadingBarFilled != null && loadingBarUnfilled != null) {
-            loadingBarFilled.setSize(width - (padding.filledPadWidth * 2),
-                height - (padding.filledPadHeight * 2));
-            loadingBarUnfilled.setSize(width - (padding.unfilledPadWidth * 2),
-                height - (padding.unfilledPadHeight * 2));
+            float w = width - (padding.rightPad + padding.leftPad);
+            float h = height - (padding.topPad + padding.bottomPad);
+            loadingBarFilled.setSize(w, h);
+            loadingBarUnfilled.setSize(w, h);
         }
+        if(getStyle().background != null) {
+            getStyle().background.setMinWidth(width);
+            getStyle().background.setMinHeight(height);
+        }
+        progressBar.setSize(width, height);
         super.setSize(width, height);
     }
 
-    @Override
+    public void setValue(float value){
+        progressBar.setValue(value);
+    }
+
+    public ProgressBar getProgressBar(){
+        return progressBar;
+    }
+
     public LDProgressBarStyle getStyle () {
-        return style;
+        return (LDProgressBarStyle) progressBar.getStyle();
+    }
+
+    public void setFilledTextureRegion(TextureRegion textureRegion){
+        loadingBarFilled.setTextureRegion(textureRegion);
+    }
+
+    public void setUnfilledTextureRegion(TextureRegion textureRegion){
+        loadingBarUnfilled.setTextureRegion(textureRegion);
     }
 
     static public class LDProgressBarStyle extends ProgressBarStyle {
@@ -107,18 +109,26 @@ public class LDProgressBar extends ProgressBar {
 
     static public class LDProgressBarPadding {
 
-        private float filledPadWidth;
-        private float filledPadHeight;
-        private float unfilledPadWidth;
-        private float unfilledPadHeight;
+        private float leftPad;
+        private float rightPad;
+        private float topPad;
+        private float bottomPad;
 
-        public LDProgressBarPadding(float filledPadWidth, float filledPadHeight,
-            float unfilledPadWidth, float unfilledPadHeight) {
+        public LDProgressBarPadding(float leftPad, float rightPad,
+            float topPad, float bottomPad) {
 
-            this.filledPadWidth = filledPadWidth;
-            this.filledPadHeight = filledPadHeight;
-            this.unfilledPadWidth = unfilledPadWidth;
-            this.unfilledPadHeight = unfilledPadHeight;
+            this.leftPad = leftPad;
+            this.rightPad = rightPad;
+            this.topPad = topPad;
+            this.bottomPad = bottomPad;
+        }
+
+        public LDProgressBarPadding(float pad){
+            this(pad, pad, pad, pad);
+        }
+
+        public LDProgressBarPadding(float widthPadding, float heightPadding){
+            this(widthPadding, widthPadding, heightPadding, heightPadding);
         }
     }
 

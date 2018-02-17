@@ -12,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
@@ -111,8 +110,6 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
         lblVol.setFontScale(0.5f * resources.getFontScale());
 
         LDSlider volSlider = createVolSlider(skin);
-        volSlider.setValue(presenter.getMasterVolume());
-        volSliderListener(volSlider.getSlider());
 
         mainTable.row();
 
@@ -143,6 +140,8 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
         LDProgressBar progressBar = new LDProgressBar(0,1, 0.000001f, progressBarPadding, skin);
         LDSlider slider = new LDSlider(progressBar, skin, new Vector2(33, 24) );
         addActor(slider);
+        slider.setValue(presenter.getMasterVolume());
+        volSliderListener(slider.getSlider());
 
         return slider;
     }

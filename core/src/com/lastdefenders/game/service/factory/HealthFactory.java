@@ -1,5 +1,6 @@
 package com.lastdefenders.game.service.factory;
 
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.ActorGroups;
 import com.lastdefenders.game.model.actor.health.ArmorIcon;
@@ -49,8 +50,12 @@ public class HealthFactory {
     private HealthBar createHealthBarActor() {
 
         Logger.info("Actor Factory: creating healthbar");
-        return new HealthBar(healthPool, resources.getTexture("healthbar-bg"),
-            resources.getTexture("healthbar-life"), resources.getTexture("healthbar-armor"));
+        return new HealthBar(healthPool,
+            new TextureRegionDrawable(resources.getTexture("healthbar-green")),
+            new TextureRegionDrawable(resources.getTexture("healthbar-orange")),
+            new TextureRegionDrawable(resources.getTexture("healthbar-red")),
+            new TextureRegionDrawable(resources.getTexture("healthbar-gray")),
+            new TextureRegionDrawable(resources.getTexture("healthbar-unfilled")));
 
     }
 
