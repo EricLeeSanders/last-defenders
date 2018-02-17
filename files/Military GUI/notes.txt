@@ -1,0 +1,1 @@
+This folder is deprectated. Any original assets should be placed in the "assets originals" folder.

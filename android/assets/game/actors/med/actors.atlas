@@ -473,25 +473,39 @@ flame
   orig: 300, 300
   offset: 0, 0
   index: 21
-healthbar-armor
+healthbar-gray
   rotate: false
-  xy: 4, 30
-  size: 60, 8
-  orig: 60, 8
+  xy: 4, 28
+  size: 50, 10
+  orig: 50, 10
   offset: 0, 0
   index: -1
-healthbar-bg
+healthbar-green
   rotate: false
-  xy: 644, 456
-  size: 60, 8
-  orig: 60, 8
+  xy: 4, 14
+  size: 50, 10
+  orig: 50, 10
   offset: 0, 0
   index: -1
-healthbar-life
+healthbar-orange
   rotate: false
-  xy: 1208, 44
-  size: 60, 8
-  orig: 60, 8
+  xy: 644, 454
+  size: 50, 10
+  orig: 50, 10
+  offset: 0, 0
+  index: -1
+healthbar-red
+  rotate: false
+  xy: 1208, 42
+  size: 50, 10
+  orig: 50, 10
+  offset: 0, 0
+  index: -1
+healthbar-unfilled
+  rotate: false
+  xy: 1062, 64
+  size: 50, 10
+  orig: 50, 10
   offset: 0, 0
   index: -1
 landmine
