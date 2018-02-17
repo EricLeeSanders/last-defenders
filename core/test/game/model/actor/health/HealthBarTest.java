@@ -1,8 +1,10 @@
 package game.model.actor.health;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.spy;
@@ -11,8 +13,10 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.health.HealthBar;
 import com.lastdefenders.game.service.factory.HealthFactory.HealthPool;
@@ -26,9 +30,11 @@ import testutil.TestUtil;
 public class HealthBarTest {
 
     private Batch batchMock = mock(Batch.class);
-    private TextureRegion backgroundBarMock = mock(TextureRegion.class);
-    private TextureRegion healthBarMock = mock(TextureRegion.class);
-    private TextureRegion armorBarMock = mock(TextureRegion.class);
+    private TextureRegionDrawable greenMock = mock(TextureRegionDrawable.class);
+    private TextureRegionDrawable orangeMock = mock(TextureRegionDrawable.class);
+    private TextureRegionDrawable redMock = mock(TextureRegionDrawable.class);
+    private TextureRegionDrawable grayMock = mock(TextureRegionDrawable.class);
+    private TextureRegionDrawable unfilledMock = mock(TextureRegionDrawable.class);
     private HealthPool poolMock = mock(HealthPool.class);
 
     @Before
@@ -39,91 +45,268 @@ public class HealthBarTest {
 
     private HealthBar createHealthBar() {
 
-        return new HealthBar(poolMock, backgroundBarMock, healthBarMock, armorBarMock);
+        setupBarMock(greenMock);
+        setupBarMock(orangeMock);
+        setupBarMock(redMock);
+        setupBarMock(grayMock);
+        setupBarMock(unfilledMock);
+
+        return new HealthBar(poolMock, greenMock, orangeMock, redMock, grayMock, unfilledMock);
     }
 
+    private void setupBarMock(TextureRegionDrawable bar){
+        TextureRegion textureRegionMock = mock(TextureRegion.class);
+        Texture textureMock = mock(Texture.class);
+
+        doReturn(textureRegionMock).when(bar).getRegion();
+        doReturn(textureMock).when(textureRegionMock).getTexture();
+
+        textureRegionMock.setRegionWidth(10);
+        textureRegionMock.setRegionHeight(10);
+        textureRegionMock.setRegionX(1);
+        textureRegionMock.setRegionY(1);
+    }
+
+
     /**
-     * Healthbar is displayed with the correct size when the tower takes damage
-     * and the Healthbar is freed when the tower is killed. The tower does not have armor
+     * Healthbar with green bar is displayed
      */
     @Test
     public void healthBarNoArmorTest1() {
 
         HealthBar healthBar = createHealthBar();
         healthBar = spy(healthBar);
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Tower tower = TestUtil.createTower("Rifle", true);
         tower.setPositionCenter(20, 20);
 
         healthBar.setActor(tower);
-        healthBar.draw(batchMock, 1);
+        assertFalse(healthBar.isVisible());
 
-        verify(healthBar, never()).draw(eq(batchMock), eq(1));
+        doReturn(.9f).when(tower).getHealthPercent();
+        healthBar.act(1f);
+        healthBar.draw(batchMock, 1f);
 
-        tower.takeDamage(1);
-        healthBar.draw(batchMock, 1);
-
-        assertEquals(tower.getPositionCenter().x + HealthBar.X_OFFSET, healthBar.getX(),
-            TestUtil.DELTA);
-        assertEquals(tower.getPositionCenter().y + HealthBar.Y_OFFSET, healthBar.getY(),
-            TestUtil.DELTA);
-
-        //Check the healthBar texture size
-        float x = healthBar.getX();
-        float y = healthBar.getY();
-        float healthBarSize = HealthBar.MAX_BAR_WIDTH * tower.getHealthPercent();
+        assertTrue(healthBar.isVisible());
         verify(batchMock, times(1))
-            .draw(eq(healthBarMock), eq(x), eq(y), eq(healthBarSize), eq(HealthBar.BAR_HEIGHT));
+            .draw(eq(greenMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
+
+        verify(batchMock, times(1))
+            .draw(eq(unfilledMock.getRegion().getTexture()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Integer.class), isA(Integer.class),
+                isA(Integer.class), isA(Integer.class), isA(Boolean.class),
+                isA(Boolean.class));
+
+        verify(batchMock, never())
+            .draw(eq(orangeMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
+
+        verify(batchMock, never())
+            .draw(eq(redMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
+
+        verify(batchMock, never())
+            .draw(eq(grayMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
 
         // kill tower
         tower.takeDamage(1000);
         healthBar.act(1f);
 
         verify(poolMock, times(1)).free(healthBar);
-        verify(batchMock, never())
-            .draw(eq(armorBarMock), isA(Float.class), isA(Float.class), isA(Float.class),
-                isA(Float.class));
 
     }
 
+    /**
+     * Healthbar with orange bar is displayed
+     */
+    @Test
+    public void healthBarNoArmorTest2() {
+
+        HealthBar healthBar = createHealthBar();
+        healthBar = spy(healthBar);
+        Tower tower = TestUtil.createTower("Rifle", true);
+        tower.setPositionCenter(20, 20);
+
+        healthBar.setActor(tower);
+        assertFalse(healthBar.isVisible());
+
+        doReturn(.6f).when(tower).getHealthPercent();
+        healthBar.act(1f);
+        healthBar.draw(batchMock, 1f);
+
+        assertTrue(healthBar.isVisible());
+
+        verify(batchMock, times(1))
+            .draw(eq(orangeMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
+
+        verify(batchMock, times(1))
+            .draw(eq(unfilledMock.getRegion().getTexture()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Integer.class), isA(Integer.class),
+                isA(Integer.class), isA(Integer.class), isA(Boolean.class),
+                isA(Boolean.class));
+
+        verify(batchMock, never())
+            .draw(eq(greenMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
+
+        verify(batchMock, never())
+            .draw(eq(redMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
+
+        verify(batchMock, never())
+            .draw(eq(grayMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
+
+        // kill tower
+        tower.takeDamage(1000);
+        healthBar.act(1f);
+
+        verify(poolMock, times(1)).free(healthBar);
+
+    }
 
     /**
-     * Healthbar.ArmorBar is displayed with the correct size when the tower takes damage
-     * The tower has armor
+     * Healthbar with red bar is displayed
+     */
+    @Test
+    public void healthBarNoArmorTest3() {
+
+        HealthBar healthBar = createHealthBar();
+        healthBar = spy(healthBar);
+        Tower tower = TestUtil.createTower("Rifle", true);
+        tower.setPositionCenter(20, 20);
+
+        healthBar.setActor(tower);
+        assertFalse(healthBar.isVisible());
+
+        doReturn(.3f).when(tower).getHealthPercent();
+        healthBar.act(1f);
+        healthBar.draw(batchMock, 1f);
+
+        assertTrue(healthBar.isVisible());
+
+        verify(batchMock, times(1))
+            .draw(eq(redMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
+
+        verify(batchMock, times(1))
+            .draw(eq(unfilledMock.getRegion().getTexture()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Integer.class), isA(Integer.class),
+                isA(Integer.class), isA(Integer.class), isA(Boolean.class),
+                isA(Boolean.class));
+
+        verify(batchMock, never())
+            .draw(eq(greenMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
+
+        verify(batchMock, never())
+            .draw(eq(orangeMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
+
+        verify(batchMock, never())
+            .draw(eq(grayMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
+
+        // kill tower
+        tower.takeDamage(1000);
+        healthBar.act(1f);
+
+        verify(poolMock, times(1)).free(healthBar);
+
+    }
+
+    /**
+     * Healthbar with gray bar is displayed
      */
     @Test
     public void healthBarWithArmorTest1() {
 
         HealthBar healthBar = createHealthBar();
         healthBar = spy(healthBar);
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Tower tower = TestUtil.createTower("Rifle", true);
         tower.setHasArmor(true);
         tower.setPositionCenter(20, 20);
 
         healthBar.setActor(tower);
-        healthBar.draw(batchMock, 1);
+        assertFalse(healthBar.isVisible());
 
-        verify(healthBar, never()).draw(eq(batchMock), eq(1));
+        doReturn(.3f).when(tower).getArmorPercent();
+        doReturn(.3f).when(tower).getHealthPercent();
+        healthBar.act(1f);
+        healthBar.draw(batchMock, 1f);
 
-        tower.takeDamage(1);
-        healthBar.draw(batchMock, 1);
+        assertTrue(healthBar.isVisible());
 
-        //Check the armor texture size
-        float x = healthBar.getX();
-        float y = healthBar.getY();
-        float armorBarSize = HealthBar.MAX_BAR_WIDTH * tower.getArmorPercent();
         verify(batchMock, times(1))
-            .draw(eq(armorBarMock), eq(x), eq(y), eq(armorBarSize), eq(HealthBar.BAR_HEIGHT));
-        //Make sure health bar is full size
-        verify(batchMock, times(1))
-            .draw(eq(healthBarMock), eq(x), eq(y), eq(HealthBar.MAX_BAR_WIDTH),
-                eq(HealthBar.BAR_HEIGHT));
-
-        // remove armor and verify that the bars are not drawn again
-        tower.setHasArmor(false);
-        healthBar.draw(batchMock, 1);
-        verify(batchMock, times(3))
-            .draw(isA(TextureRegion.class), isA(Float.class), isA(Float.class), isA(Float.class),
+            .draw(eq(grayMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
                 isA(Float.class));
 
+        verify(batchMock, times(1))
+            .draw(eq(unfilledMock.getRegion().getTexture()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Integer.class), isA(Integer.class),
+                isA(Integer.class), isA(Integer.class), isA(Boolean.class),
+                isA(Boolean.class));
+
+        verify(batchMock, never())
+            .draw(eq(greenMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
+
+        verify(batchMock, never())
+            .draw(eq(orangeMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
+
+        verify(batchMock, never())
+            .draw(eq(redMock.getRegion()), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class), isA(Float.class), isA(Float.class),
+                isA(Float.class));
+
+        // kill tower
+        tower.takeDamage(1000);
+        healthBar.act(1f);
+
+        verify(poolMock, times(1)).free(healthBar);
+
     }
+
 }

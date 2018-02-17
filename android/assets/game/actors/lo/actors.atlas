@@ -146,7 +146,7 @@ blood-splatter
   index: 15
 bullet
   rotate: false
-  xy: 670, 116
+  xy: 288, 49
   size: 5, 5
   orig: 5, 5
   offset: 0, 0
@@ -599,25 +599,39 @@ flame
   orig: 150, 150
   offset: 0, 0
   index: 29
-healthbar-armor
+healthbar-gray
   rotate: false
-  xy: 824, 584
-  size: 30, 4
-  orig: 30, 4
+  xy: 612, 732
+  size: 25, 5
+  orig: 25, 5
   offset: 0, 0
   index: -1
-healthbar-bg
+healthbar-green
   rotate: false
-  xy: 858, 584
-  size: 30, 4
-  orig: 30, 4
+  xy: 670, 116
+  size: 25, 5
+  orig: 25, 5
   offset: 0, 0
   index: -1
-healthbar-life
+healthbar-orange
   rotate: false
-  xy: 612, 733
-  size: 30, 4
-  orig: 30, 4
+  xy: 208, 226
+  size: 25, 5
+  orig: 25, 5
+  offset: 0, 0
+  index: -1
+healthbar-red
+  rotate: false
+  xy: 332, 253
+  size: 25, 5
+  orig: 25, 5
+  offset: 0, 0
+  index: -1
+healthbar-unfilled
+  rotate: false
+  xy: 164, 22
+  size: 25, 5
+  orig: 25, 5
   offset: 0, 0
   index: -1
 landmine
