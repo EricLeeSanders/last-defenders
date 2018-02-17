@@ -1,34 +1,41 @@
 
 load.png
-size: 2048,1024
+size: 2048,2048
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 img-loading
   rotate: false
-  xy: 1283, 755
+  xy: 1027, 120
   size: 259, 57
   orig: 259, 57
   offset: 0, 0
   index: -1
-level-load-bar
-  rotate: false
-  xy: 1, 4
-  size: 1024, 86
-  orig: 1024, 86
-  offset: 0, 0
-  index: -1
-level-load-bar-bg
-  rotate: false
-  xy: 1, 1
-  size: 1, 1
-  orig: 1, 1
-  offset: 0, 0
-  index: -1
 level-load-screen
   rotate: false
-  xy: 1, 92
-  size: 1280, 720
-  orig: 1280, 720
+  xy: 1, 179
+  size: 1920, 1080
+  orig: 1920, 1080
+  offset: 0, 0
+  index: -1
+progress-bar-filled
+  rotate: false
+  xy: 1, 51
+  size: 994, 48
+  orig: 994, 48
+  offset: 0, 0
+  index: -1
+progress-bar-frame
+  rotate: false
+  xy: 1, 101
+  size: 1024, 76
+  orig: 1024, 76
+  offset: 0, 0
+  index: -1
+progress-bar-unfilled
+  rotate: false
+  xy: 1, 1
+  size: 994, 48
+  orig: 994, 48
   offset: 0, 0
   index: -1
