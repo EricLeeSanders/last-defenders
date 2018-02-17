@@ -1,0 +1,3 @@
+call java -cp gdx.jar;gdx-tools.jar com.badlogic.gdx.tools.texturepacker.TexturePacker "C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\game\actor\lo" "C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\game\actors\lo" actors 
+call java -cp gdx.jar;gdx-tools.jar com.badlogic.gdx.tools.texturepacker.TexturePacker "C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\game\actor\med" "C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\game\actors\med" actors 
+call java -cp gdx.jar;gdx-tools.jar com.badlogic.gdx.tools.texturepacker.TexturePacker "C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\game\actor\hi" "C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\game\actors\hi" actors

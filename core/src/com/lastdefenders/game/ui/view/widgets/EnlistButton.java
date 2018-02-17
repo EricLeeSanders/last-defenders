@@ -5,7 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.lastdefenders.ui.widget.progressbar.LDProgressBar;
+import com.lastdefenders.ui.widget.progressbar.LDProgressBar.LDProgressBarPadding;
+import com.lastdefenders.ui.widget.progressbar.LDProgressBar.LDProgressBarStyle;
 import com.lastdefenders.util.ActorUtil;
 
 /**
@@ -27,7 +31,6 @@ public class EnlistButton extends Group {
         addActor(button);
 
         Label lblCost = new Label(String.valueOf(cost), skin);
-        //lblCost.setAlignment(Align.center);
         lblCost.setFontScale(0.45f * fontScale);
         lblCost.pack();
         float lblCostX = ActorUtil
@@ -54,31 +57,19 @@ public class EnlistButton extends Group {
     private void createBar(Skin skin, float attrValue, float y, String iconName, float iconWidth,
         float iconHeight, float iconX, float iconY) {
 
-        Image fullbar = new Image(skin.getAtlas().findRegion("tower-attr-full"));
-        fullbar.setSize(64, 13);
-        fullbar.setPosition(36, y);
-        addActor(fullbar);
-
-        Image bg = new Image(skin.getAtlas().findRegion("slider-bg"));
-        bg.setY(y);
-        setBgPosition(bg, attrValue / 10, 37, 64);
-        addActor(bg);
-
-        Image frame = new Image(skin.getAtlas().findRegion("tower-stat"));
-        frame.setSize(92, 24);
-        frame.setPosition(14, y - 1);
-        addActor(frame);
+        LDProgressBarPadding progressBarPadding = new LDProgressBarPadding(24,3f,8,1.5f);
+        LDProgressBarStyle style = new LDProgressBarStyle(skin.get("default", LDProgressBarStyle.class));
+        style.frame = new TextureRegionDrawable(skin.getAtlas().findRegion("tower-stat"));
+        LDProgressBar progressBar = new LDProgressBar(0,10, 0.000001f, progressBarPadding, style);
+        progressBar.setValue(attrValue);
+        progressBar.setSize(92, 24);
+        progressBar.setPosition(14,y);
+        addActor(progressBar);
 
         Image icon = new Image(skin.getAtlas().findRegion(iconName));
         icon.setSize(iconWidth, iconHeight);
-        icon.setPosition(iconX + frame.getX(), iconY + frame.getY());
+        icon.setPosition(iconX + progressBar.getX(), iconY + progressBar.getY());
         addActor(icon);
-    }
 
-    private void setBgPosition(Image bg, float value, float start, float end) {
-
-        float x = start + end * value;
-        bg.setX(x);
-        bg.setSize(end - (end * value), 15);
     }
 }
