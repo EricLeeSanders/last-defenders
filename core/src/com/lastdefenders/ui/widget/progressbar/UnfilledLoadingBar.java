@@ -1,40 +1,36 @@
 package com.lastdefenders.ui.widget.progressbar;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 /**
  * Created by Eric on 2/8/2018.
  */
 
-public class UnfilledLoadingBar extends Image {
+public class UnfilledLoadingBar extends Actor {
 
     private ProgressBar progressBar;
-    private TextureRegion texture;
+    private TextureRegion textureRegion;
 
-    public UnfilledLoadingBar(Drawable image, ProgressBar progressBar) {
-        super(image);
+    public UnfilledLoadingBar(TextureRegion textureRegion, ProgressBar progressBar) {
         this.progressBar = progressBar;
-        texture = ((TextureRegionDrawable) getDrawable()).getRegion();
+        this.textureRegion = textureRegion;
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha ) {
 
-        float width = getWidth() - (getWidth() * progressBar.getValue());
-        float textureRegionWidth = texture.getRegionWidth() - (texture.getRegionWidth() * progressBar.getValue());
-        float textureX = texture.getRegionX() + (texture.getRegionWidth() * progressBar.getValue());
-        float x = getX() + (getWidth() * progressBar.getValue());
-
+        float width = getWidth() - (getWidth() * (progressBar.getValue()/progressBar.getMaxValue()));
+        float textureRegionWidth = textureRegion.getRegionWidth() -
+            (textureRegion.getRegionWidth() * (progressBar.getValue()/progressBar.getMaxValue()));
+        float textureX = textureRegion.getRegionX() +
+            (textureRegion.getRegionWidth() * (progressBar.getValue()/progressBar.getMaxValue()));
+        float x = getX() + (getWidth() * (progressBar.getValue()/progressBar.getMaxValue()));
 
         batch.draw(
-            texture.getTexture(),
+            textureRegion.getTexture(),
             x,
             getY(),
             getWidth() / 2,
@@ -45,10 +41,15 @@ public class UnfilledLoadingBar extends Image {
             getScaleY(),
             getRotation(),
             (int)textureX,
-            texture.getRegionY(),
+            textureRegion.getRegionY(),
             (int)textureRegionWidth,
-            texture.getRegionHeight(),
+            textureRegion.getRegionHeight(),
             false,
             false);
     }
+
+    protected void setTextureRegion(TextureRegion textureRegion){
+        this.textureRegion = textureRegion;
+    }
+
 }

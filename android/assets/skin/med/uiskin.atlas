@@ -329,8 +329,8 @@ text_button_press
 tower-attr-full
   rotate: false
   xy: 603, 270
-  size: 128, 24
-  orig: 128, 24
+  size: 126, 24
+  orig: 126, 24
   offset: 0, 0
   index: -1
 tower-stat

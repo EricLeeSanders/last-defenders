@@ -1,7 +1,6 @@
 package com.lastdefenders.menu.ui.view;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -9,15 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.menu.ui.MenuPresenter;
 import com.lastdefenders.menu.ui.view.interfaces.IMenuView;
-import com.lastdefenders.ui.widget.LDSlider;
-import com.lastdefenders.ui.widget.progressbar.LDProgressBar;
-import com.lastdefenders.ui.widget.progressbar.LDProgressBar.LDProgressBarPadding;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
