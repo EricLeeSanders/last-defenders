@@ -113,9 +113,12 @@ public class Resources {
         loadedTextures.put("airstrike", actorAtlas.findRegion("airstrike"));
         loadedTextures.put("bullet", actorAtlas.findRegion("bullet"));
         loadedTextures.put("rocket", actorAtlas.findRegion("rocket"));
-        loadedTextures.put("healthbar-armor", actorAtlas.findRegion("healthbar-armor"));
-        loadedTextures.put("healthbar-bg", actorAtlas.findRegion("healthbar-bg"));
-        loadedTextures.put("healthbar-life", actorAtlas.findRegion("healthbar-life"));
+        loadedTextures.put("healthbar-frame", actorAtlas.findRegion("healthbar-frame"));
+        loadedTextures.put("healthbar-gray", actorAtlas.findRegion("healthbar-gray"));
+        loadedTextures.put("healthbar-green", actorAtlas.findRegion("healthbar-green"));
+        loadedTextures.put("healthbar-orange", actorAtlas.findRegion("healthbar-orange"));
+        loadedTextures.put("healthbar-red", actorAtlas.findRegion("healthbar-red"));
+        loadedTextures.put("healthbar-unfilled", actorAtlas.findRegion("healthbar-unfilled"));
         loadedTextures.put("humvee", actorAtlas.findRegion("humvee"));
         loadedTextures.put("landmine", actorAtlas.findRegion("landmine"));
         loadedTextures.put("tower-rifle", actorAtlas.findRegion("tower-rifle"));

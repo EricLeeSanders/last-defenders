@@ -3,7 +3,6 @@ package com.lastdefenders.ui.widget;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.lastdefenders.ui.widget.progressbar.LDProgressBar;
 
@@ -18,8 +17,8 @@ public class LDSlider extends WidgetGroup {
 
     public LDSlider(LDProgressBar progressBar, Skin skin, Vector2 knobSize){
         this.progressBar = progressBar;
-        this.slider = new Slider(progressBar.getMinValue(), progressBar.getMaxValue(),
-            progressBar.getStepSize(), false, skin);
+        this.slider = new Slider(progressBar.getProgressBar().getMinValue(), progressBar.getProgressBar().getMaxValue(),
+            progressBar.getProgressBar().getStepSize(), false, skin);
         slider.getStyle().knob.setMinWidth(knobSize.x);
         slider.getStyle().knob.setMinHeight(knobSize.y);
         progressBar.getStyle().background = null;
