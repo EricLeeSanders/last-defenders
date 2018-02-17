@@ -217,7 +217,6 @@ public abstract class Enemy extends CombatActor {
         }
 
         lengthToEnd = totalDistance;
-        Logger.info(this.getClass().getSimpleName() + " length to end: " + lengthToEnd);
     }
 
     boolean isAttacking() {
