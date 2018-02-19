@@ -20,16 +20,16 @@ level-load-screen
   index: -1
 progress-bar-filled
   rotate: false
-  xy: 1, 53
-  size: 512, 38
-  orig: 512, 38
-  offset: 0, 0
-  index: -1
-progress-bar-filled-1
-  rotate: false
   xy: 1, 27
   size: 497, 24
   orig: 497, 24
+  offset: 0, 0
+  index: -1
+progress-bar-frame
+  rotate: false
+  xy: 1, 53
+  size: 512, 38
+  orig: 512, 38
   offset: 0, 0
   index: -1
 progress-bar-unfilled
