@@ -6,71 +6,71 @@ filter: MipMapLinearNearest,Nearest
 repeat: none
 SERPENTINE_RIVER
   rotate: false
-  xy: 1, 1087
+  xy: 4, 1096
   size: 640, 360
   orig: 640, 360
   offset: 0, 0
   index: -1
 STARFISH_ISLAND
   rotate: false
-  xy: 1, 725
+  xy: 4, 732
   size: 640, 360
   orig: 640, 360
   offset: 0, 0
   index: -1
 THE_BADLANDS
   rotate: false
-  xy: 643, 1087
+  xy: 648, 1096
   size: 640, 360
   orig: 640, 360
   offset: 0, 0
   index: -1
 THE_GOLD_COAST
   rotate: false
-  xy: 1, 363
+  xy: 4, 368
   size: 640, 360
   orig: 640, 360
   offset: 0, 0
   index: -1
 THE_GREENLANDS
   rotate: false
-  xy: 643, 725
+  xy: 648, 732
   size: 640, 360
   orig: 640, 360
   offset: 0, 0
   index: -1
 TUNDRA
   rotate: false
-  xy: 1285, 1087
+  xy: 1292, 1096
   size: 640, 360
   orig: 640, 360
   offset: 0, 0
   index: -1
 WHISPERING_THICKET
   rotate: false
-  xy: 1, 1
+  xy: 4, 4
   size: 640, 360
   orig: 640, 360
   offset: 0, 0
   index: -1
 background
   rotate: false
-  xy: 643, 363
+  xy: 648, 368
   size: 640, 360
   orig: 640, 360
   offset: 0, 0
   index: -1
 map_icon
   rotate: false
-  xy: 1285, 1021
+  xy: 1936, 1392
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
-pointer
+map_select
   rotate: false
-  xy: 1927, 1383
-  size: 64, 64
-  orig: 64, 64
+  xy: 1292, 740
+  size: 345, 352
+  orig: 345, 352
   offset: 0, 0
   index: -1
