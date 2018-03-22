@@ -6,37 +6,30 @@ filter: MipMapLinearNearest,Nearest
 repeat: none
 SERPENTINE_RIVER
   rotate: false
-  xy: 1, 853
+  xy: 4, 860
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 STARFISH_ISLAND
   rotate: false
-  xy: 1, 131
+  xy: 4, 136
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
-background
-  rotate: false
-  xy: 1283, 1213
-  size: 640, 360
-  orig: 640, 360
-  offset: 0, 0
-  index: -1
 map_icon
   rotate: false
-  xy: 1, 1
+  xy: 4, 4
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
-pointer
+map_select
   rotate: false
-  xy: 1283, 1083
-  size: 128, 128
-  orig: 128, 128
+  xy: 1288, 1228
+  size: 345, 352
+  orig: 345, 352
   offset: 0, 0
   index: -1
 
@@ -47,14 +40,14 @@ filter: MipMapLinearNearest,Nearest
 repeat: none
 THE_BADLANDS
   rotate: false
-  xy: 1, 723
+  xy: 4, 728
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 THE_GOLD_COAST
   rotate: false
-  xy: 1, 1
+  xy: 4, 4
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
@@ -67,27 +60,34 @@ filter: MipMapLinearNearest,Nearest
 repeat: none
 THE_GREENLANDS
   rotate: false
-  xy: 1, 723
+  xy: 4, 728
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 TUNDRA
   rotate: false
-  xy: 1, 1
+  xy: 4, 4
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 
 level_select4.png
-size: 2048,1024
+size: 2048,2048
 format: RGBA8888
 filter: MipMapLinearNearest,Nearest
 repeat: none
 WHISPERING_THICKET
   rotate: false
-  xy: 1, 1
+  xy: 4, 728
+  size: 1280, 720
+  orig: 1280, 720
+  offset: 0, 0
+  index: -1
+background
+  rotate: false
+  xy: 4, 4
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
