@@ -58,57 +58,57 @@ public class LevelSelectView extends Group {
 
         Logger.info("Level select view: creating controls");
 
-        ImageButton btnLevel1 = new ImageButton(
-            new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
-        btnLevel1.setSize(64, 64);
-        btnLevel1.setPosition(240 - (btnLevel1.getWidth() / 2), 40);
-        this.addActor(btnLevel1);
-        setBtnLevelListener(btnLevel1, LevelName.THE_GREENLANDS);
+        ImageButton btnTheGreenlands = new ImageButton(
+            new TextureRegionDrawable(levelSelectAtlas.findRegion("map_select")));
+        btnTheGreenlands.setSize(52, 52);
+        btnTheGreenlands.setPosition(240 - (btnTheGreenlands.getWidth() / 2), 220);
+        this.addActor(btnTheGreenlands);
+        setBtnLevelListener(btnTheGreenlands, LevelName.THE_GREENLANDS);
 
-        ImageButton btnLevel2 = new ImageButton(
-            new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
-        btnLevel2.setSize(64, 64);
-        btnLevel2.setPosition(280 - (btnLevel2.getWidth() / 2), 100);
-        this.addActor(btnLevel2);
-        setBtnLevelListener(btnLevel2, LevelName.SERPENTINE_RIVER);
+        ImageButton btnSerpentineRiver = new ImageButton(
+            new TextureRegionDrawable(levelSelectAtlas.findRegion("map_select")));
+        btnSerpentineRiver.setSize(52, 52);
+        btnSerpentineRiver.setPosition(150 - (btnSerpentineRiver.getWidth() / 2), 140);
+        this.addActor(btnSerpentineRiver);
+        setBtnLevelListener(btnSerpentineRiver, LevelName.SERPENTINE_RIVER);
 
-        ImageButton btnLevel3 = new ImageButton(
-            new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
-        btnLevel3.setSize(64, 64);
-        btnLevel3.setPosition(400 - (btnLevel3.getWidth() / 2), 70);
-        this.addActor(btnLevel3);
-        setBtnLevelListener(btnLevel3, LevelName.THE_GOLD_COAST);
+        ImageButton btnTheGoldCoast = new ImageButton(
+            new TextureRegionDrawable(levelSelectAtlas.findRegion("map_select")));
+        btnTheGoldCoast.setSize(52, 52);
+        btnTheGoldCoast.setPosition(295 - (btnTheGoldCoast.getWidth() / 2), 145);
+        this.addActor(btnTheGoldCoast);
+        setBtnLevelListener(btnTheGoldCoast, LevelName.THE_GOLD_COAST);
 
-        ImageButton btnLevel4 = new ImageButton(
-            new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
-        btnLevel4.setSize(64, 64);
-        btnLevel4.setPosition(528 - (btnLevel4.getWidth() / 2), 85);
-        this.addActor(btnLevel4);
-        setBtnLevelListener(btnLevel4, LevelName.STARFISH_ISLAND);
+        ImageButton btnStarfishIsland = new ImageButton(
+            new TextureRegionDrawable(levelSelectAtlas.findRegion("map_select")));
+        btnStarfishIsland.setSize(52, 52);
+        btnStarfishIsland.setPosition(430 - (btnStarfishIsland.getWidth() / 2), 75);
+        this.addActor(btnStarfishIsland);
+        setBtnLevelListener(btnStarfishIsland, LevelName.STARFISH_ISLAND);
 
-        ImageButton btnLevel5 = new ImageButton(
-            new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
-        btnLevel5.setSize(64, 64);
-        btnLevel5.setPosition(467 - (btnLevel5.getWidth() / 2), 228);
-        this.addActor(btnLevel5);
-        setBtnLevelListener(btnLevel5, LevelName.TUNDRA);
+        ImageButton btnTundra = new ImageButton(
+            new TextureRegionDrawable(levelSelectAtlas.findRegion("map_select")));
+        btnTundra.setSize(52, 52);
+        btnTundra.setPosition(65 - (btnTundra.getWidth() / 2), 250);
+        this.addActor(btnTundra);
+        setBtnLevelListener(btnTundra, LevelName.TUNDRA);
 
-        ImageButton btnLevel6 = new ImageButton(
-            new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
-        btnLevel6.setSize(64, 64);
-        btnLevel6.setPosition(380 - (btnLevel6.getWidth() / 2), 300);
-        this.addActor(btnLevel6);
-        setBtnLevelListener(btnLevel6, LevelName.THE_BADLANDS);
+        ImageButton btnTheBadlands = new ImageButton(
+            new TextureRegionDrawable(levelSelectAtlas.findRegion("map_select")));
+        btnTheBadlands.setSize(52, 52);
+        btnTheBadlands.setPosition(565 - (btnTheBadlands.getWidth() / 2), 260);
+        this.addActor(btnTheBadlands);
+        setBtnLevelListener(btnTheBadlands, LevelName.THE_BADLANDS);
 
-        ImageButton btnLevel7 = new ImageButton(
-            new TextureRegionDrawable(levelSelectAtlas.findRegion("pointer")));
-        btnLevel7.setSize(64, 64);
-        btnLevel7.setPosition(150 - (btnLevel7.getWidth() / 2), 250);
-        this.addActor(btnLevel7);
-        setBtnLevelListener(btnLevel7, LevelName.WHISPERING_THICKET);
+        ImageButton btnWhisperingThicket = new ImageButton(
+            new TextureRegionDrawable(levelSelectAtlas.findRegion("map_select")));
+        btnWhisperingThicket.setSize(52, 52);
+        btnWhisperingThicket.setPosition(385 - (btnWhisperingThicket.getWidth() / 2), 240);
+        this.addActor(btnWhisperingThicket);
+        setBtnLevelListener(btnWhisperingThicket, LevelName.WHISPERING_THICKET);
 
         ImageButton btnMenu = new ImageButton(skin, "arrow-left");
-        btnMenu.setSize(64, 64);
+        btnMenu.setSize(52, 52);
         btnMenu.getImageCell().size(40, 27);
         btnMenu.getImage().setScaling(Scaling.stretch);
         btnMenu.setPosition(15, 15);
