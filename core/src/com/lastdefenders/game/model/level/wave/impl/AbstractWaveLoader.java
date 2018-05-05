@@ -25,7 +25,7 @@ abstract class AbstractWaveLoader implements WaveLoader {
 
         Enemy enemy = combatActorFactory.loadEnemy(type);
 
-        enemy.setPath(map.getPath());
+        map.createWaypointActionSet(enemy, enemy.getSpeed());
         enemy.setHasArmor(hasArmor);
 
         return combatActorFactory.loadSpawningEnemy(enemy, spawnDelay);
