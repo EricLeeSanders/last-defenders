@@ -56,7 +56,7 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
     public void resume() {
 
         Logger.info("LDGame: resuming");
-        resources.activityResume();
+        resources.reload();
         super.resume();
     }
 

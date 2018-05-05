@@ -25,8 +25,7 @@ public class GameActor extends Actor {
 
     protected GameActor(Dimension textureSize) {
 
-        this.setSize(textureSize.getWidth(), textureSize.getHeight());
-        this.setOrigin(textureSize.getWidth() / 2, textureSize.getHeight() / 2);
+        setSize(textureSize);
     }
 
     @Override
