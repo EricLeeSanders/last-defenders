@@ -17,6 +17,7 @@ import com.lastdefenders.action.LDSequenceAction;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
@@ -120,7 +121,9 @@ public class EnemyTest {
 
         Array<LDVector2> path = createWaypoints();
 
-        enemy.setPath(path);
+        Map map = TestUtil.createMap(path);
+        map.createWaypointActionSet(enemy, enemy.getSpeed());
+
         assertEquals(enemy.getActions().size, 1);
 
         LDSequenceAction sequenceAction = (LDSequenceAction) enemy.getActions().first();
@@ -140,7 +143,9 @@ public class EnemyTest {
 
         Array<LDVector2> path = createWaypoints();
 
-        enemy.setPath(path);
+        Map map = TestUtil.createMap(path);
+        map.createWaypointActionSet(enemy, enemy.getSpeed());
+
         assertEquals(1, enemy.getActions().size);
 
         LDSequenceAction sequenceAction = (LDSequenceAction) enemy.getActions().first();
@@ -162,7 +167,9 @@ public class EnemyTest {
 
         Array<LDVector2> path = createWaypoints();
 
-        enemy.setPath(path);
+        Map map = TestUtil.createMap(path);
+        map.createWaypointActionSet(enemy, enemy.getSpeed());
+
         assertEquals(enemy.getActions().size, 1);
 
         LDSequenceAction sequenceAction = (LDSequenceAction) enemy.getActions().first();
@@ -213,7 +220,9 @@ public class EnemyTest {
         enemy.getTargetGroup().addActor(tower);
 
         Array<LDVector2> path = createWaypoints();
-        enemy.setPath(path);
+
+        Map map = TestUtil.createMap(path);
+        map.createWaypointActionSet(enemy, enemy.getSpeed());
 
         assertEquals(EnemyState.RUNNING, enemy.getState());
     }
@@ -225,9 +234,8 @@ public class EnemyTest {
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
         enemy.getTargetGroup().addActor(tower);
-
-        Array<LDVector2> path = createWaypoints();
-        enemy.setPath(path);
+        Map map = TestUtil.createMap(createWaypoints());
+        map.createWaypointActionSet(enemy, enemy.getSpeed());
 
         assertEquals(EnemyState.RUNNING, enemy.getState());
 
@@ -249,7 +257,9 @@ public class EnemyTest {
 
         Array<LDVector2> path = createWaypoints();
 
-        enemy.setPath(path);
+        Map map = TestUtil.createMap(path);
+        map.createWaypointActionSet(enemy, enemy.getSpeed());
+
         assertEquals(1, enemy.getActions().size);
 
         LDSequenceAction sequenceAction = (LDSequenceAction) enemy.getActions().first();
