@@ -32,6 +32,7 @@ import com.lastdefenders.game.ui.view.InspectView;
 import com.lastdefenders.game.ui.view.LevelCompletedView;
 import com.lastdefenders.game.ui.view.MessageDisplayerImpl;
 import com.lastdefenders.game.ui.view.OptionsView;
+import com.lastdefenders.game.ui.view.PathDisplayer;
 import com.lastdefenders.game.ui.view.PauseView;
 import com.lastdefenders.game.ui.view.SupportView;
 import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
@@ -157,6 +158,9 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         pausePresenter.setView(pauseView);
 
         this.addActor(messageDisplayer);
+
+        PathDisplayer pathDisplayer = new PathDisplayer(resources, gameStage.getMap());
+        this.addActor(pathDisplayer);
 
         imp.addProcessor(this);
         imp.addProcessor(enlistView);
