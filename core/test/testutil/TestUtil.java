@@ -12,12 +12,14 @@ import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
+import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
@@ -45,6 +47,7 @@ import com.lastdefenders.game.model.actor.effects.texture.animation.death.BloodS
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
+import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.lastdefenders.game.service.factory.EffectFactory;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
@@ -102,6 +105,15 @@ public class TestUtil {
             .loadAnimationEffect(EnemyCoinEffect.class);
 
         return effectFactoryMock;
+    }
+
+    public static Map createMap(Array<LDVector2> path){
+
+        TiledMap tiledMapMock = mock(TiledMap.class);
+        Map map = new Map(tiledMapMock,1f);
+        map = spy(map);
+        doReturn(path).when(map).getPath();
+        return map;
     }
 
     public static Tower createTower(String name, boolean spy) {
