@@ -71,61 +71,6 @@ public abstract class Enemy extends CombatActor {
     }
 
     /**
-     * Sets the path for the enemy. Starts off screen.
-     */
-    public void setPath(Array<LDVector2> path) {
-
-        if (path == null || path.size <= 1) {
-            return;
-        }
-
-        //Place the enemy at the start and off screen
-        LDVector2 newWaypoint = path.get(0); // start
-        setPositionCenter(newWaypoint);
-
-        // face the next waypoint
-        setRotation(Math.round(ActorUtil.calculateRotation(path.get(1), getPositionCenter())));
-
-        // The enemy always faces its target (tower or way point) and the top/front of the enemy needs to be off screen.
-        // That ensures that the entire body of the enemy is off the screen when spawning.
-        // rotatedCoords are the coords of the top/front of the enemy.
-        Vector2 centerPos = getPositionCenter();
-        LDVector2 rotatedCoords = ActorUtil
-            .calculateRotatedCoords(this.getX() + getWidth(), centerPos.y, centerPos.x, centerPos.y,
-                Math.toRadians(getRotation()));
-
-        // Reposition the enemy so that it is off the screen
-        float newX = this.getPositionCenter().x + (this.getPositionCenter().x - rotatedCoords.x);
-        float newY = this.getPositionCenter().y + (this.getPositionCenter().y - rotatedCoords.y);
-
-        rotatedCoords.free();
-
-        this.setPositionCenter(newX, newY); // Start off screen
-
-        //create actions
-        LDSequenceAction sequenceAction = UtilPool.getSequenceAction();
-        for (int i = 1; i < path.size; i++) {
-            Vector2 prevWaypoint = newWaypoint;
-            newWaypoint = path.get(i);
-            float distance = newWaypoint.dst(prevWaypoint);
-            float duration = (distance / speed);
-            float rotation = ActorUtil
-                .calculateRotation(newWaypoint.x, newWaypoint.y, prevWaypoint.x, prevWaypoint.y);
-            WaypointAction waypointAction = createWaypointAction(newWaypoint.x, newWaypoint.y,
-                duration, rotation);
-            sequenceAction.addAction(waypointAction);
-        }
-
-        addAction(sequenceAction);
-
-    }
-
-    private WaypointAction createWaypointAction(float x, float y, float duration, float rotation) {
-
-        return UtilPool.getWaypointAction(x, y, duration, rotation, Interpolation.linear);
-    }
-
-    /**
      * Pauses enemy when attacking. Creates new MoveTo Actions to set the next
      * way point for the Enemy. Calls to change textures. Calls to find target
      * when delay expires.
@@ -240,6 +185,11 @@ public abstract class Enemy extends CombatActor {
     public EnemyState getState() {
 
         return stateManager.getCurrentStateName();
+    }
+
+    public float getSpeed(){
+
+        return speed;
     }
 
 }
