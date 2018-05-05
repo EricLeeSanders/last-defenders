@@ -73,6 +73,7 @@ public class GameStage extends Stage implements PlayerObserver {
         this.resources = resources;
         TiledMap tiledMap = resources.getMap(levelName);
         map = new Map(tiledMap, resources.getTiledMapScale());
+        map.init();
         createGroups();
         createFactories(audio);
         createPlacementServices(map);
@@ -264,4 +265,8 @@ public class GameStage extends Stage implements PlayerObserver {
         return supplyDropPlacement;
     }
 
+    public Map getMap(){
+
+        return map;
+    }
 }

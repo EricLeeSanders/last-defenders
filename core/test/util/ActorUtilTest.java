@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector2;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.util.ActorUtil;
@@ -73,4 +74,5 @@ public class ActorUtilTest {
 
         assertEquals(expectedCoords, rotatedCoords);
     }
+
 }
