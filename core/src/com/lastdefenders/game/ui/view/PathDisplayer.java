@@ -58,6 +58,10 @@ public class PathDisplayer extends Group {
                 spawnDelayCount = 0;
             }
         }
+
+        if(getChildren().size <= 0){
+            remove();
+        }
     }
 
     private static class Point extends GameActor{
