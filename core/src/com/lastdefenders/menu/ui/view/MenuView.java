@@ -51,10 +51,16 @@ public class MenuView extends Group implements IMenuView {
         addActor(lblTitle);
 
         TextButton btnPlay = new TextButton("PLAY", skin, "transparent");
-        btnPlay.setSize(126, 56);
-        btnPlay.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2, Align.center);
+        //btnPlay.setSize(126, 56);
+        btnPlay.setPosition(getStage().getViewport().getWorldWidth() / 2, (getStage().getViewport().getWorldHeight() / 2) + 25, Align.center);
         addActor(btnPlay);
         setBtnPlayListener(btnPlay);
+
+        TextButton btnTutorial = new TextButton("TUTORIAL", skin, "transparent");
+        //btnTutorial.setSize(126, 56);
+        btnTutorial.setPosition(getStage().getViewport().getWorldWidth() / 2, (getStage().getViewport().getWorldHeight() / 2) - 25, Align.center);
+        addActor(btnTutorial);
+        setBtnTutorialListener(btnTutorial);
 
         btnSound = new ImageButton(skin, "sound");
         btnSound.setSize(64, 64);
@@ -108,6 +114,18 @@ public class MenuView extends Group implements IMenuView {
             }
         });
 
+    }
+
+    private void setBtnTutorialListener(Button btnTutorial){
+
+        btnTutorial.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+                super.touchUp(event, x, y, pointer, button);
+                presenter.tutorial();
+            }
+        });
     }
 
     private void setBtnPlayListener(Button btnPlay) {

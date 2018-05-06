@@ -1,0 +1,34 @@
+{
+"wave": [
+    {
+        "enemy": "Rifle",
+        "delay": ".50",
+        "armor": false
+    },
+    {
+        "enemy": "Rifle",
+        "delay": ".50",
+        "armor": false
+    },
+    {
+        "enemy": "Rifle",
+        "delay": ".50",
+        "armor": false
+    },
+    {
+        "enemy": "Rifle",
+        "delay": ".50",
+        "armor": false
+    },
+    {
+        "enemy": "Rifle",
+        "delay": ".50",
+        "armor": false
+    },
+    {
+        "enemy": "Rifle",
+        "delay": ".50",
+        "armor": false
+    }
+]
+}

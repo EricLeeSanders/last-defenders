@@ -179,7 +179,7 @@ public class LevelSelectView extends Group {
             levels.get(levelName).setVisible(false);
         }
 
-        lblLevel.setText(selectedLevel.getName());
+        lblLevel.setText(selectedLevel.getTitle());
         levels.get(selectedLevel).setVisible(true);
     }
 

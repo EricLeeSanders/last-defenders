@@ -59,6 +59,7 @@ public class GameStage extends Stage implements PlayerObserver {
     private HealthFactory healthFactory;
     private SupportActorFactory supportActorFactory;
     private EffectFactory effectFactory;
+    private LDAudio audio;
 
     public GameStage(LevelName levelName, Player player, ActorGroups actorGroups, LDAudio audio,
         LevelStateManager levelStateManager, GameUIStateManager uiStateManager,
@@ -71,6 +72,12 @@ public class GameStage extends Stage implements PlayerObserver {
         this.uiStateManager = uiStateManager;
         this.levelName = levelName;
         this.resources = resources;
+        this.audio = audio;
+
+    }
+
+    public void init(){
+
         TiledMap tiledMap = resources.getMap(levelName);
         map = new Map(tiledMap, resources.getTiledMapScale());
         map.init();
@@ -83,7 +90,7 @@ public class GameStage extends Stage implements PlayerObserver {
         level = new Level(levelName, getActorGroups(), healthFactory, fileWaveLoader,
             dynamicWaveLoader);
         player.attachObserver(this);
-
+        loadFirstWave();
     }
 
     private void createFactories(LDAudio audio) {
@@ -107,13 +114,7 @@ public class GameStage extends Stage implements PlayerObserver {
         Logger.info("Game Stage: placement services created");
     }
 
-    /**
-     * Loads the first wave of the level.
-     * This is done outside of the constructor
-     * so that the GameScreen and GameStageUI are
-     * fully constructed before loading the wave.
-     */
-    public void loadFirstWave() {
+    private void loadFirstWave() {
 
         Logger.info("Game Stage: loading first wave");
         level.loadNextWave();

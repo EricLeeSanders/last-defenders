@@ -15,4 +15,5 @@ public interface ScreenChanger {
     void changeToLevel(LevelName level);
 
     void changeToLevelLoad(LevelName level);
+
 }

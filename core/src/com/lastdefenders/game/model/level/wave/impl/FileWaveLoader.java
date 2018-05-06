@@ -27,7 +27,7 @@ public class FileWaveLoader extends AbstractWaveLoader {
         Queue<SpawningEnemy> spawningEnemies = new Queue<>();
 
         JsonValue json = new JsonReader().parse(
-            Gdx.files.internal("game/levels/" + levelName.toString() + "/waves/wave" + wave + ".json"));
+            Gdx.files.internal("game/levels/" + levelName.getFileName() + "/waves/wave" + wave + ".json"));
         JsonValue enemiesJson = json.get("wave");
 
         for (JsonValue enemyJson : enemiesJson.iterator()) {

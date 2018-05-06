@@ -1,0 +1,39 @@
+
+first_game_tip.png
+size: 2048,2048
+format: RGBA8888
+filter: MipMapLinearNearest,Nearest
+repeat: none
+enlist-button
+  rotate: false
+  xy: 4, 4
+  size: 1920, 1080
+  orig: 1920, 1080
+  offset: 0, 0
+  index: -1
+
+first_game_tip2.png
+size: 2048,2048
+format: RGBA8888
+filter: MipMapLinearNearest,Nearest
+repeat: none
+support-button
+  rotate: false
+  xy: 4, 4
+  size: 1920, 1080
+  orig: 1920, 1080
+  offset: 0, 0
+  index: -1
+
+first_game_tip3.png
+size: 2048,2048
+format: RGBA8888
+filter: MipMapLinearNearest,Nearest
+repeat: none
+wave-button
+  rotate: false
+  xy: 4, 4
+  size: 1920, 1080
+  orig: 1920, 1080
+  offset: 0, 0
+  index: -1

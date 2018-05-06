@@ -2,10 +2,10 @@ package com.lastdefenders.game.ui;
 
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.GameStage;
@@ -21,7 +21,7 @@ import com.lastdefenders.game.ui.presenter.LevelCompletedPresenter;
 import com.lastdefenders.game.ui.presenter.OptionsPresenter;
 import com.lastdefenders.game.ui.presenter.PausePresenter;
 import com.lastdefenders.game.ui.presenter.SupportPresenter;
-import com.lastdefenders.game.ui.presenter.TutorialPresenter;
+import com.lastdefenders.game.ui.presenter.FirstGameTipPresenter;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.state.GameUIStateObserver;
@@ -36,7 +36,7 @@ import com.lastdefenders.game.ui.view.OptionsView;
 import com.lastdefenders.game.ui.view.PathDisplayer;
 import com.lastdefenders.game.ui.view.PauseView;
 import com.lastdefenders.game.ui.view.SupportView;
-import com.lastdefenders.game.ui.view.TutorialView;
+import com.lastdefenders.game.ui.view.FirstGameTipView;
 import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
 import com.lastdefenders.game.ui.view.interfaces.Updatable;
 import com.lastdefenders.screen.ScreenChanger;
@@ -166,13 +166,13 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         PathDisplayer pathDisplayer = new PathDisplayer(resources, gameStage.getMap());
         addActor(pathDisplayer);
 
-        if(resources.getUserPreferences().getShowTutorialTips()) {
-            TutorialPresenter tutorialPresenter = new TutorialPresenter(hudPresenter, resources, pathDisplayer);
-            TutorialView tutorialView = new TutorialView(resources, tutorialPresenter);
-            addActor(tutorialView);
-            tutorialPresenter.setView(tutorialView);
-            tutorialPresenter.showNextTip();
-            imp.addProcessor(tutorialView);
+        if(resources.getUserPreferences().getShowFirstGameTips()) {
+            FirstGameTipPresenter firstGameTipPresenter = new FirstGameTipPresenter(hudPresenter, resources, pathDisplayer);
+            FirstGameTipView firstGameTipView = new FirstGameTipView(firstGameTipPresenter, resources.getAsset(Resources.FIRST_GAME_TIP_ATLAS, TextureAtlas.class));
+            addActor(firstGameTipView);
+            firstGameTipPresenter.setView(firstGameTipView);
+            firstGameTipPresenter.showNextTip();
+            imp.addProcessor(firstGameTipView);
         } else {
             pathDisplayer.init();
         }

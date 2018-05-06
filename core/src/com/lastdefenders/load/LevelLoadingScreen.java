@@ -144,7 +144,7 @@ public class LevelLoadingScreen extends AbstractScreen {
     private void load() {
 
         resources.loadAsset(Resources.ACTOR_ATLAS, TextureAtlas.class);
-        resources.loadAsset(Resources.TUTORIAL_ATLAS, TextureAtlas.class);
+        resources.loadAsset(Resources.FIRST_GAME_TIP_ATLAS, TextureAtlas.class);
         resources.loadActorAtlasRegions();
         resources.loadMap(levelName);
 

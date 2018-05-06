@@ -64,7 +64,7 @@ public class EnemyAITest {
         tower.setDead(dead);
         tower.setActive(active);
 
-        //Tower Impls overrides getName
+        //Tower Impls overrides getTitle
         doReturn(name).when(tower).getName();
 
         return tower;

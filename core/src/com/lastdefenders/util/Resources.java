@@ -29,6 +29,7 @@ public class Resources {
     public static final String MENU_ATLAS = "menu/menu.atlas";
     public static final String ACTOR_ATLAS = "game/actors/actors.atlas";
     public static final String LEVEL_SELECT_ATLAS = "level_select/level_select.atlas";
+    public static final String FIRST_GAME_TIP_ATLAS = "first_game_tip/first_game_tip.atlas";
     public static final String TUTORIAL_ATLAS = "tutorial/tutorial.atlas";
     public static final float VIRTUAL_WIDTH = 640; // 16:9
     public static final float VIRTUAL_HEIGHT = 360;
@@ -253,19 +254,19 @@ public class Resources {
 
     public void loadMap(LevelName level) {
 
-        loadAsset("game/levels/" + level.toString() + "/" + assetFolder + "/" + level.toString() + ".tmx",
+        loadAsset("game/levels/" + level.getFileName() + "/" + assetFolder + "/" + level.getFileName() + ".tmx",
             TiledMap.class);
     }
 
     public TiledMap getMap(LevelName level) {
 
-        return getAsset("game/levels/" + level.toString() + "/" + assetFolder + "/" + level.toString() + ".tmx",
+        return getAsset("game/levels/" + level.getFileName() + "/" + assetFolder + "/" + level.getFileName() + ".tmx",
             TiledMap.class);
     }
 
     public void unloadMap(LevelName level) {
 
-        unloadAsset("game/levels/" + level.toString() + "/" + assetFolder + "/" + level.toString() + ".tmx");
+        unloadAsset("game/levels/" + level.getFileName() + "/" + assetFolder + "/" + level.getFileName() + ".tmx");
     }
 
     private void loadSkinSync() {

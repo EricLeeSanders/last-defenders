@@ -1,5 +1,6 @@
 package com.lastdefenders.menu.ui;
 
+import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.menu.ui.view.interfaces.IMenuOptionsView;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.util.LDAudio;
@@ -47,6 +48,14 @@ public class MenuPresenter {
         Logger.info("Menu Presenter: play game");
         audio.playSound(LDSound.LARGE_CLICK);
         screenChanger.changeToLevelSelect();
+
+    }
+
+    public void tutorial(){
+
+        Logger.info("Menu Presenter: tutorial");
+        audio.playSound(LDSound.LARGE_CLICK);
+        screenChanger.changeToLevelLoad(LevelName.TUTORIAL);
 
     }
 

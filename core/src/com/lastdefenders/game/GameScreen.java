@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.ActorGroups;
 import com.lastdefenders.game.model.level.state.LevelStateManager;
+import com.lastdefenders.game.tutorial.TutorialStage;
 import com.lastdefenders.game.ui.GameUIStage;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
@@ -56,7 +57,6 @@ public class GameScreen extends AbstractScreen {
 
         super.show();
         audio.turnOffMusic();
-        gameStage.loadFirstWave();
         createBackListener();
         gameStateManager.setState(GameState.PLAY);
     }
@@ -80,8 +80,15 @@ public class GameScreen extends AbstractScreen {
         LevelStateManager levelStateManager = new LevelStateManager();
         uiStateManager = new GameUIStateManager(levelStateManager);
 
-        gameStage = new GameStage(levelName, player, actorGroups, audio, levelStateManager,
-            uiStateManager, gameViewport, resources, spriteBatch);
+        // If we are running the tutorial, create the TutorialStage
+        if(levelName.equals(LevelName.TUTORIAL)){
+            gameStage = new TutorialStage(levelName, player, actorGroups, audio, levelStateManager,
+                uiStateManager, gameViewport, resources, spriteBatch);
+        } else {
+            gameStage = new GameStage(levelName, player, actorGroups, audio, levelStateManager,
+                uiStateManager, gameViewport, resources, spriteBatch);
+        }
+        gameStage.init();
         gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager,
             levelStateManager, gameStateManager, screenChanger, super.getInputMultiplexer(),
             uiViewport, resources, audio, gameStage, spriteBatch);
