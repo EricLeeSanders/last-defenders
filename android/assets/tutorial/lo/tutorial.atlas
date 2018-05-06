@@ -1,0 +1,27 @@
+
+tutorial.png
+size: 2048,512
+format: RGBA8888
+filter: MipMapLinearNearest,Nearest
+repeat: none
+enlist-button
+  rotate: false
+  xy: 4, 4
+  size: 640, 360
+  orig: 640, 360
+  offset: 0, 0
+  index: -1
+support-button
+  rotate: false
+  xy: 648, 4
+  size: 640, 360
+  orig: 640, 360
+  offset: 0, 0
+  index: -1
+wave-button
+  rotate: false
+  xy: 1292, 4
+  size: 640, 360
+  orig: 640, 360
+  offset: 0, 0
+  index: -1

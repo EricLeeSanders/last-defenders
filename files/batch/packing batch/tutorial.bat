@@ -1,0 +1,3 @@
+call java -cp gdx.jar;gdx-tools.jar com.badlogic.gdx.tools.texturepacker.TexturePacker "C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\tutorial\lo" "C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\tutorial\lo" tutorial
+call java -cp gdx.jar;gdx-tools.jar com.badlogic.gdx.tools.texturepacker.TexturePacker "C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\tutorial\med" "C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\tutorial\med" tutorial
+call java -cp gdx.jar;gdx-tools.jar com.badlogic.gdx.tools.texturepacker.TexturePacker "C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\tutorial\hi" "C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\tutorial\hi" tutorial

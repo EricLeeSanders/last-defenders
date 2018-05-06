@@ -62,15 +62,15 @@ background
   index: -1
 map_icon
   rotate: false
-  xy: 1936, 1392
+  xy: 1292, 1028
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 map_select
   rotate: false
-  xy: 1292, 740
-  size: 345, 352
-  orig: 345, 352
+  xy: 1936, 1404
+  size: 52, 52
+  orig: 52, 52
   offset: 0, 0
   index: -1
