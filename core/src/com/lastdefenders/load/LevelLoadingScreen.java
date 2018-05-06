@@ -80,17 +80,17 @@ public class LevelLoadingScreen extends AbstractScreen {
         progressBarStyle.unfilled = new TextureRegionDrawable(atlas.findRegion("progress-bar-unfilled"));
         progressBar = new LDProgressBar(0,1, 0.000001f, progressBarPadding, progressBarStyle);
         progressBar.setSize(LOADING_BAR_SIZE.getWidth(), LOADING_BAR_SIZE.getHeight());
-        progressBar.setPosition(stage.getViewport().getWorldWidth() / 2, stage.getViewport().getWorldHeight() / 2, Align.center);
+        progressBar.setPosition(stage.getViewport().getScreenWidth() / 2, stage.getViewport().getScreenHeight() / 2, Align.center);
 
         loadingLabel = new Label("LOADING: 0%", resources.getSkin());
         loadingLabel.setFontScale(0.5f * resources.getFontScale());
         loadingLabel.setAlignment(Align.left);
         loadingLabel.setColor(1f, 1f, 1f, 1f);
-        loadingLabel.setPosition((stage.getViewport().getWorldWidth() / 2) + 70, (stage.getViewport().getWorldHeight() / 2) + 2, Align.center);
+        loadingLabel.setPosition((stage.getViewport().getScreenWidth() / 2) + 70, (stage.getViewport().getScreenHeight() / 2) + 2, Align.center);
 
         Image screen = new Image(atlas.findRegion("level-load-screen"));
-        screen.setSize(stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
-        screen.setPosition(stage.getViewport().getWorldWidth() / 2, stage.getViewport().getWorldHeight() / 2, Align.center);
+        screen.setSize(stage.getViewport().getScreenWidth(), stage.getViewport().getScreenHeight());
+        screen.setPosition(stage.getViewport().getScreenWidth() / 2, stage.getViewport().getScreenHeight() / 2, Align.center);
 
         stage.addActor(screen);
         stage.addActor(progressBar);
@@ -135,6 +135,7 @@ public class LevelLoadingScreen extends AbstractScreen {
         Logger.info("Level Loading Screen Dispose");
         super.dispose();
         resources.unloadAsset(Resources.LEVEL_SELECT_ATLAS);
+        resources.unloadAsset(Resources.ACTOR_ATLAS);
         resources.unloadAsset(Resources.MENU_ATLAS);
         resources.unloadAsset(Resources.LOAD_ATLAS);
         stage.dispose();
@@ -143,6 +144,7 @@ public class LevelLoadingScreen extends AbstractScreen {
     private void load() {
 
         resources.loadAsset(Resources.ACTOR_ATLAS, TextureAtlas.class);
+        resources.loadAsset(Resources.TUTORIAL_ATLAS, TextureAtlas.class);
         resources.loadActorAtlasRegions();
         resources.loadMap(levelName);
 
