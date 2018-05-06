@@ -20,13 +20,18 @@ public class PathDisplayer extends Group {
     private Map map;
     private float spawnDelayCount = 0f;
     private Array<Point> pointsToSpawn;
+    private boolean begin;
 
     public PathDisplayer(Resources resources, Map map) {
         this.resources = resources;
         this.map = map;
         this.setTransform(false);
 
+    }
+
+    public void init(){
         createPointsToSpawn();
+        begin = true;
     }
 
     private void createPointsToSpawn() {
@@ -51,6 +56,10 @@ public class PathDisplayer extends Group {
     @Override
     public void act(float delta) {
         super.act(delta);
+
+        if(!begin){
+            return;
+        }
         if(pointsToSpawn.size > 0){
             spawnDelayCount += delta;
             if(spawnDelayCount > SPAWN_SPEED){
@@ -59,7 +68,7 @@ public class PathDisplayer extends Group {
             }
         }
 
-        if(getChildren().size <= 0){
+        if(pointsToSpawn.size <= 0 && getChildren().size <= 0){
             remove();
         }
     }
