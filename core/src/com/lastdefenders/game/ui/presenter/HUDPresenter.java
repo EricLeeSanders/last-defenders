@@ -1,5 +1,7 @@
 package com.lastdefenders.game.ui.presenter;
 
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.PlayerObserver;
 import com.lastdefenders.game.model.level.Level;
@@ -236,5 +238,51 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
         } else {
             view.setWaveCount(String.valueOf(waveCount + "/" + Level.MAX_WAVES));
         }
+    }
+
+
+    public ImageButton getBtnWave() {
+
+        return view.getBtnWave();
+    }
+
+    public ImageButton getBtnEnlist() {
+
+        return view.getBtnEnlist();
+    }
+
+    public ImageButton getBtnSupport() {
+
+        return view.getBtnSupport();
+    }
+
+    public ImageButton getBtnOptions() {
+
+        return view.getBtnOptions();
+    }
+
+    public ImageButton getBtnPause() {
+
+        return view.getBtnPause();
+    }
+
+    public ImageButton getBtnResume() {
+
+        return view.getBtnResume();
+    }
+
+    public Label getLblMoney() {
+
+        return view.getLblMoney();
+    }
+
+    public Label getLblLives() {
+
+        return view.getLblLives();
+    }
+
+    public Label getLblWaveCount() {
+
+        return view.getLblWaveCount();
     }
 }
