@@ -25,8 +25,16 @@ import com.lastdefenders.util.Resources;
  */
 public class HUDView extends Group implements IHUDView {
 
-    private ImageButton btnWave, btnEnlist, btnSupport, btnOptions, btnPause, btnResume;
-    private Label lblMoney, lblLives, lblWaveCount, lblPaused;
+    private ImageButton btnWave;
+    private ImageButton btnEnlist;
+    private ImageButton btnSupport;
+    private ImageButton btnOptions;
+    private ImageButton btnPause;
+    private ImageButton btnResume;
+    private Label lblMoney;
+    private Label lblLives;
+    private Label lblWaveCount;
+    private Label lblPaused;
     private HUDPresenter presenter;
     private Resources resources;
 
@@ -349,5 +357,50 @@ public class HUDView extends Group implements IHUDView {
         btnPause.setVisible(!presenter.isGamePaused());
         btnResume.setVisible(presenter.isGamePaused());
 
+    }
+
+    public ImageButton getBtnWave() {
+
+        return btnWave;
+    }
+
+    public ImageButton getBtnEnlist() {
+
+        return btnEnlist;
+    }
+
+    public ImageButton getBtnSupport() {
+
+        return btnSupport;
+    }
+
+    public ImageButton getBtnOptions() {
+
+        return btnOptions;
+    }
+
+    public ImageButton getBtnPause() {
+
+        return btnPause;
+    }
+
+    public ImageButton getBtnResume() {
+
+        return btnResume;
+    }
+
+    public Label getLblMoney() {
+
+        return lblMoney;
+    }
+
+    public Label getLblLives() {
+
+        return lblLives;
+    }
+
+    public Label getLblWaveCount() {
+
+        return lblWaveCount;
     }
 }
