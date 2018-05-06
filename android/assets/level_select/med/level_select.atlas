@@ -6,30 +6,30 @@ filter: MipMapLinearNearest,Nearest
 repeat: none
 SERPENTINE_RIVER
   rotate: false
-  xy: 4, 860
+  xy: 4, 836
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 STARFISH_ISLAND
   rotate: false
-  xy: 4, 136
+  xy: 4, 112
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 map_icon
   rotate: false
-  xy: 4, 4
+  xy: 1288, 1428
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 map_select
   rotate: false
-  xy: 1288, 1228
-  size: 345, 352
-  orig: 345, 352
+  xy: 4, 4
+  size: 104, 104
+  orig: 104, 104
   offset: 0, 0
   index: -1
 
