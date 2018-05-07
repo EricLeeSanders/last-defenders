@@ -314,6 +314,7 @@ public class DebugView extends Group implements IDebugView {
             table.setTransform(false);
 
             Array<String> assetNames = resources.getManager().getAssetNames();
+            assetNames.sort();
             for(String name : assetNames){
                 Label label = new Label(name.toUpperCase(), resources.getSkin());
                 label.setFontScale(0.35f * resources.getFontScale());
