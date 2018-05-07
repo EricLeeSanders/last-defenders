@@ -1,6 +1,5 @@
 package com.lastdefenders.game.ui.presenter;
 
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.lastdefenders.game.ui.view.PathDisplayer;
 import com.lastdefenders.game.ui.view.interfaces.ITutorialView;
 import com.lastdefenders.util.Logger;
@@ -52,6 +51,7 @@ public class TutorialPresenter {
 
     private void endTutorialTips(){
         resources.getUserPreferences().setShowTutorialTips(false);
+        resources.unloadAsset(Resources.TUTORIAL_ATLAS);
         pathDisplayer.init();
     }
 
