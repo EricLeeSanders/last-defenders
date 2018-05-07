@@ -1,16 +1,21 @@
 package com.lastdefenders.game.ui.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.lastdefenders.game.ui.presenter.DebugPresenter;
 import com.lastdefenders.game.ui.view.interfaces.IDebugView;
@@ -28,17 +33,21 @@ public class DebugView extends Group implements IDebugView {
     private CheckBox btnShowTextureBoundaries, btnShowFPS;
     private TextButton btnResume;
     private Resources resources;
+    private AssetDisplay assetDisplay;
 
     public DebugView(DebugPresenter presenter, Resources resources) {
 
         this.presenter = presenter;
-        this.setTransform(false);
         this.resources = resources;
-
+        setTransform(false);
     }
 
     public void init(){
         createControls();
+        assetDisplay = new AssetDisplay(resources);
+        addActor(assetDisplay);
+        assetDisplay.init();
+        assetDisplay.setVisible(false);
     }
 
     /**
@@ -56,7 +65,7 @@ public class DebugView extends Group implements IDebugView {
         container.setSize(500, 360);
         container.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2, Align.center);
         //table.debug();
-        this.addActor(container);
+        addActor(container);
 
         Table mainTable = new Table();
         mainTable.setTransform(false);
@@ -70,7 +79,7 @@ public class DebugView extends Group implements IDebugView {
         float x = container.getX(Align.center);
         float y = container.getY(Align.top) - (lblTitle.getHeight()/2);
         lblTitle.setPosition(x, y, Align.center);
-        this.addActor(lblTitle);
+        addActor(lblTitle);
 
         framesLabel = new Label("x", skin);
         framesLabel.setFontScale(0.35f * resources.getFontScale());
@@ -99,26 +108,32 @@ public class DebugView extends Group implements IDebugView {
 
         TextButton btnCrash = new TextButton("TEST CRASH", skin);
         btnCrash.getLabel().setFontScale(0.45f * resources.getFontScale());
-        btnCrash.pack();
         btnCrash.setSize(150, 45);
         setBtnCrashListener(btnCrash);
 
-        mainTable.add(btnShowFPS).left().spaceLeft(15).spaceBottom(10);
+        TextButton btnAssets = new TextButton("ASSETS", skin);
+        btnAssets.getLabel().setFontScale(0.45f * resources.getFontScale());
+        btnAssets.setSize(150, 45);
+        setBtnAssetsListener(btnAssets);
+
+        mainTable.add(btnShowFPS).left().spaceLeft(15).spaceBottom(10).colspan(2);
 
         mainTable.row();
 
-        mainTable.add(btnShowTextureBoundaries).left().spaceLeft(15).spaceBottom(10);
+        mainTable.add(btnShowTextureBoundaries).left().spaceLeft(15).spaceBottom(10).colspan(2);
 
         mainTable.row();
 
         mainTable.add(btnCrash).left().spaceLeft(15).spaceBottom(10).size(150,45);
+        
+        mainTable.add(btnAssets).left().spaceLeft(15).spaceBottom(10).size(150,45);
 
         Logger.info("Debug View: controls created");
     }
 
     @Override
     public void act(float delta) {
-
+        super.act(delta);
         framesLabel
             .setText("FPS: " + Integer.valueOf(Gdx.graphics.getFramesPerSecond()).toString());
     }
@@ -131,6 +146,19 @@ public class DebugView extends Group implements IDebugView {
 
                 super.touchUp(event, x, y, pointer, button);
                 presenter.crash();
+            }
+        });
+
+    }
+
+    private void setBtnAssetsListener(Button button) {
+
+        button.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+                super.touchUp(event, x, y, pointer, button);
+                assetDisplayVisible(true);
             }
         });
 
@@ -205,5 +233,83 @@ public class DebugView extends Group implements IDebugView {
     public void standByState() {
 
         this.setVisible(false);
+    }
+
+    private void assetDisplayVisible(boolean visible){
+        assetDisplay.setVisible(visible);
+    }
+
+    private class AssetDisplay extends Group {
+
+        private Resources resources;
+
+        public AssetDisplay(Resources resources){
+            this.resources = resources;
+        }
+
+        public void init(){
+            createControls();
+        }
+
+        public void createControls(){
+
+            Table container = new Table();
+            container.setTransform(false);
+            container.setBackground(resources.getSkin().getDrawable("main-panel"));
+            container.setSize(500, 360);
+            container.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2, Align.center);
+            addActor(container);
+
+            Label lblTitle = new Label("ASSETS", resources.getSkin());
+            lblTitle.setFontScale(0.7f * resources.getFontScale());
+            lblTitle.setAlignment(Align.center);
+            lblTitle.setHeight(60);
+            float x = container.getX(Align.center);
+            float y = container.getY(Align.top) - (lblTitle.getHeight()/2);
+            lblTitle.setPosition(x, y, Align.center);
+            addActor(lblTitle);
+
+            ScrollPane assetScrollPane = createAssetScrollPane();
+            container.add(assetScrollPane).expand().fill();
+
+            ImageButton btnCancel = new ImageButton(resources.getSkin(), "cancel");
+            btnCancel.setSize(64, 64);
+            btnCancel.getImageCell().size(35, 36);
+            btnCancel.getImage().setScaling(Scaling.stretch);
+            btnCancel.setPosition(getStage().getViewport().getWorldWidth() - 145, getStage().getViewport().getWorldHeight() - 75);
+            addActor(btnCancel);
+            setCancelListener(btnCancel);
+
+        }
+
+        private ScrollPane createAssetScrollPane(){
+
+            Table table = new Table();
+            table.setTransform(false);
+
+            Array<String> assetNames = resources.getManager().getAssetNames();
+            for(String name : assetNames){
+                Label label = new Label(name.toUpperCase(), resources.getSkin());
+                label.setFontScale(0.35f * resources.getFontScale());
+                table.row();
+                table.add(label).left();
+            }
+            ScrollPane scrollPane = new ScrollPane(table, resources.getSkin(), "no-round");
+
+            return scrollPane;
+        }
+
+        private void setCancelListener(Button button) {
+
+            button.addListener(new ClickListener() {
+                @Override
+                public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+                    super.touchUp(event, x, y, pointer, button);
+                    assetDisplayVisible(false);
+
+                }
+            });
+        }
     }
 }
