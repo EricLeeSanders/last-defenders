@@ -144,6 +144,13 @@ hollow
   orig: 550, 300
   offset: 0, 0
   index: -1
+hollow-no-round
+  rotate: false
+  xy: 312, 93
+  size: 1, 1
+  orig: 1, 1
+  offset: 0, 0
+  index: -1
 hollow_label
   rotate: false
   xy: 821, 336
@@ -338,6 +345,13 @@ tower-stat
   xy: 193, 70
   size: 92, 24
   orig: 92, 24
+  offset: 0, 0
+  index: -1
+transparent
+  rotate: false
+  xy: 312, 90
+  size: 1, 1
+  orig: 1, 1
   offset: 0, 0
   index: -1
 upgrade
