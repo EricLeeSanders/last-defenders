@@ -135,7 +135,6 @@ public class LevelLoadingScreen extends AbstractScreen {
         Logger.info("Level Loading Screen Dispose");
         super.dispose();
         resources.unloadAsset(Resources.LEVEL_SELECT_ATLAS);
-        resources.unloadAsset(Resources.ACTOR_ATLAS);
         resources.unloadAsset(Resources.MENU_ATLAS);
         resources.unloadAsset(Resources.LOAD_ATLAS);
         stage.dispose();
@@ -144,7 +143,10 @@ public class LevelLoadingScreen extends AbstractScreen {
     private void load() {
 
         resources.loadAsset(Resources.ACTOR_ATLAS, TextureAtlas.class);
-        resources.loadAsset(Resources.TUTORIAL_ATLAS, TextureAtlas.class);
+        // If we are going to show the Tutorial for the first game, load the atlas
+        if(resources.getUserPreferences().getShowTutorialTips()) {
+            resources.loadAsset(Resources.TUTORIAL_ATLAS, TextureAtlas.class);
+        }
         resources.loadActorAtlasRegions();
         resources.loadMap(levelName);
 
