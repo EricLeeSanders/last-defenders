@@ -7,6 +7,7 @@ import com.lastdefenders.game.ui.view.interfaces.IDebugView;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.util.DebugOptions;
 import com.lastdefenders.util.Logger;
+import com.lastdefenders.util.Resources;
 
 /**
  * Created by Eric on 3/12/2017.
@@ -17,11 +18,13 @@ public class DebugPresenter implements GameUIStateObserver {
     private IDebugView view;
     private GameUIStateManager uiStateManager;
     private GameStateManager gameStateManager;
+    private Resources resources;
 
-    public DebugPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager) {
+    public DebugPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager, Resources resources) {
 
         this.uiStateManager = uiStateManager;
         this.gameStateManager = gameStateManager;
+        this.resources = resources;
         uiStateManager.attach(this);
     }
 
@@ -36,8 +39,6 @@ public class DebugPresenter implements GameUIStateObserver {
 
         Logger.info("Debug Presenter: initializing view");
         stateChange(uiStateManager.getState());
-        view.setFPSChecked(DebugOptions.showFPS);
-        view.setTextureBoundariesChecked(DebugOptions.showTextureBoundaries);
     }
 
 
@@ -53,6 +54,10 @@ public class DebugPresenter implements GameUIStateObserver {
         DebugOptions.showTextureBoundaries = !DebugOptions.showTextureBoundaries;
     }
 
+    public void showTutorialPressed() {
+        resources.getUserPreferences().setShowTutorialTips(!resources.getUserPreferences().getShowTutorialTips());
+    }
+
     public void showFPSPressed() {
 
         DebugOptions.showFPS = !DebugOptions.showFPS;
@@ -66,12 +71,19 @@ public class DebugPresenter implements GameUIStateObserver {
         o.toString();
     }
 
+    private void debugState(){
+        view.debugState();
+        view.setFPSChecked(DebugOptions.showFPS);
+        view.setTextureBoundariesChecked(DebugOptions.showTextureBoundaries);
+        view.setTutorialChecked(resources.getUserPreferences().getShowTutorialTips());
+    }
+
     @Override
     public void stateChange(GameUIState state) {
 
         switch (state) {
             case DEBUG:
-                view.debugState();
+                debugState();
                 break;
             default:
                 view.standByState();

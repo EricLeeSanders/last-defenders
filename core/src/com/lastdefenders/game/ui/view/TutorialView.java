@@ -28,7 +28,7 @@ public class TutorialView extends Group implements ITutorialView, InputProcessor
     public void showTutorialScreen(ImageButton button, String tutorialScreenName){
 
         Image screen = new Image(tutorialAtlas.findRegion(tutorialScreenName));
-        screen.setSize(getStage().getViewport().getScreenWidth(), getStage().getViewport().getScreenHeight());
+        screen.setSize(getStage().getViewport().getWorldWidth(), getStage().getViewport().getWorldHeight());
         screen.setPosition(0,0);
         addActor(screen);
 
