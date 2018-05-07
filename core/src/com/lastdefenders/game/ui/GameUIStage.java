@@ -149,7 +149,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         levelCompletedView.init();
         levelCompletedPresenter.setView(levelCompletedView);
 
-        DebugPresenter debugPresenter = new DebugPresenter(uiStateManager, gameStateManager);
+        DebugPresenter debugPresenter = new DebugPresenter(uiStateManager, gameStateManager, resources);
         DebugView debugView = new DebugView(debugPresenter, resources);
         addActor(debugView);
         debugView.init();
