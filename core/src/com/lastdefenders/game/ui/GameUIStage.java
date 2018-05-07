@@ -2,10 +2,10 @@ package com.lastdefenders.game.ui;
 
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.GameStage;
@@ -97,8 +97,10 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         hudView.init();
         hudPresenter.setView(hudView);
 
-        messageDisplayer = new MessageDisplayerImpl(resources);
+        PathDisplayer pathDisplayer = new PathDisplayer(resources, gameStage.getMap());
+        addActor(pathDisplayer);
 
+        messageDisplayer = new MessageDisplayerImpl(resources);
 
         EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio,
             gameStage.getTowerPlacement(), messageDisplayer, gameStage.getViewport());
@@ -163,17 +165,20 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 
         addActor(messageDisplayer);
 
-        PathDisplayer pathDisplayer = new PathDisplayer(resources, gameStage.getMap());
-        addActor(pathDisplayer);
-
+        /*
+         If we're going to show the tutorial for the first game, create the presenter and the view.
+         Let the TutorialPresenter display the pathDisplayer when it is done.
+         */
         if(resources.getUserPreferences().getShowTutorialTips()) {
             TutorialPresenter tutorialPresenter = new TutorialPresenter(hudPresenter, resources, pathDisplayer);
-            TutorialView tutorialView = new TutorialView(resources, tutorialPresenter);
+            TutorialView tutorialView = new TutorialView(tutorialPresenter,
+                resources.getAsset(Resources.TUTORIAL_ATLAS, TextureAtlas.class));
             addActor(tutorialView);
             tutorialPresenter.setView(tutorialView);
             tutorialPresenter.showNextTip();
             imp.addProcessor(tutorialView);
         } else {
+            // Init the pathDisplayer immediately if there is no tutorial.
             pathDisplayer.init();
         }
 
