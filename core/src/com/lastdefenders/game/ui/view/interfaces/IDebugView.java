@@ -15,4 +15,6 @@ public interface IDebugView {
     void setFPSChecked(boolean isChecked);
 
     void setTextureBoundariesChecked(boolean isChecked);
+
+    void setTutorialChecked(boolean isChecked);
 }
