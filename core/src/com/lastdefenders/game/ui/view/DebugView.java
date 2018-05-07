@@ -1,14 +1,12 @@
 package com.lastdefenders.game.ui.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -125,7 +123,7 @@ public class DebugView extends Group implements IDebugView {
         mainTable.row();
 
         mainTable.add(btnCrash).left().spaceLeft(15).spaceBottom(10).size(150,45);
-        
+
         mainTable.add(btnAssets).left().spaceLeft(15).spaceBottom(10).size(150,45);
 
         Logger.info("Debug View: controls created");
