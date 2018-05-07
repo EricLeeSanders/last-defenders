@@ -165,6 +165,10 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 
         addActor(messageDisplayer);
 
+        /*
+         If we're going to show the tutorial for the first game, create the presenter and the view.
+         Let the TutorialPresenter display the pathDisplayer when it is done.
+         */
         if(resources.getUserPreferences().getShowTutorialTips()) {
             TutorialPresenter tutorialPresenter = new TutorialPresenter(hudPresenter, resources, pathDisplayer);
             TutorialView tutorialView = new TutorialView(tutorialPresenter,
@@ -174,6 +178,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
             tutorialPresenter.showNextTip();
             imp.addProcessor(tutorialView);
         } else {
+            // Init the pathDisplayer immediately if there is no tutorial.
             pathDisplayer.init();
         }
 
