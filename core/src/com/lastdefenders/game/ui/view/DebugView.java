@@ -28,7 +28,7 @@ public class DebugView extends Group implements IDebugView {
 
     private DebugPresenter presenter;
     private Label framesLabel;
-    private CheckBox btnShowTextureBoundaries, btnShowFPS;
+    private CheckBox btnShowTextureBoundaries, btnShowFPS, btnShowTutorial;
     private TextButton btnResume;
     private Resources resources;
     private AssetDisplay assetDisplay;
@@ -104,6 +104,12 @@ public class DebugView extends Group implements IDebugView {
         btnShowTextureBoundaries.getImage().setScaling(Scaling.stretch);
         setBtnShowTextureBoundariesListener(btnShowTextureBoundaries);
 
+        btnShowTutorial = new CheckBox(" SHOW TUTORIAL", skin);
+        btnShowTutorial.getLabel().setFontScale(0.45f * resources.getFontScale());
+        btnShowTutorial.getImageCell().width(32).height(32);
+        btnShowTutorial.getImage().setScaling(Scaling.stretch);
+        setBtnShowTutorialListener(btnShowTutorial);
+
         TextButton btnCrash = new TextButton("TEST CRASH", skin);
         btnCrash.getLabel().setFontScale(0.45f * resources.getFontScale());
         btnCrash.setSize(150, 45);
@@ -119,6 +125,10 @@ public class DebugView extends Group implements IDebugView {
         mainTable.row();
 
         mainTable.add(btnShowTextureBoundaries).left().spaceLeft(15).spaceBottom(10).colspan(2);
+
+        mainTable.row();
+
+        mainTable.add(btnShowTutorial).left().spaceLeft(15).spaceBottom(10).colspan(2);
 
         mainTable.row();
 
@@ -186,6 +196,18 @@ public class DebugView extends Group implements IDebugView {
         });
     }
 
+    private void setBtnShowTutorialListener(Button button){
+
+        button.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+                super.touchUp(event, x, y, pointer, button);
+                presenter.showTutorialPressed();
+            }
+        });
+    }
+
     private void setBtnResumeListener() {
 
         btnResume.addListener(new ClickListener() {
@@ -219,6 +241,12 @@ public class DebugView extends Group implements IDebugView {
     public void setTextureBoundariesChecked(boolean isChecked) {
 
         btnShowTextureBoundaries.setChecked(isChecked);
+    }
+
+    @Override
+    public void setTutorialChecked(boolean isChecked) {
+
+        btnShowTutorial.setChecked(isChecked);
     }
 
     @Override
