@@ -40,10 +40,11 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: { down: text_button_press, up: text_button_normal, over: text_button_over, disabled: text_button_disabled, font: default-font, fontColor: white },
 	toggle: { down: text_button_press, up: text_button_normal, checked: text_button_normal, font: default-font, fontColor: white, downFontColor: red },
-	transparent: {down: null, font: default-font, fontColor: white}
+	transparent: {down: transparent, font: default-font, fontColor: white}
 },
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 	default: { background: hollow },
+	no-round: { background: hollow-no-round },
 	no-background: {}
 },
 com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable: {
