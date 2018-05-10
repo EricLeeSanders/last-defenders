@@ -305,16 +305,9 @@ landmine
   orig: 90, 90
   offset: 0, 0
   index: -1
-path-display-arrow
-  rotate: false
-  xy: 1987, 1524
-  size: 53, 60
-  orig: 53, 60
-  offset: 0, 0
-  index: -1
 path-display-circle
   rotate: false
-  xy: 1987, 1404
+  xy: 1987, 1468
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
@@ -356,14 +349,14 @@ rocket
   index: -1
 shield
   rotate: false
-  xy: 1987, 1481
+  xy: 1987, 1545
   size: 36, 39
   orig: 36, 39
   offset: 0, 0
   index: -1
 shield-destroyed
   rotate: false
-  xy: 1987, 1438
+  xy: 1987, 1502
   size: 36, 39
   orig: 36, 39
   offset: 0, 0
