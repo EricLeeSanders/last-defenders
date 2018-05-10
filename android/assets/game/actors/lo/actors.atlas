@@ -641,13 +641,6 @@ landmine
   orig: 30, 30
   offset: 0, 0
   index: -1
-path-display-arrow
-  rotate: false
-  xy: 1566, 351
-  size: 18, 20
-  orig: 18, 20
-  offset: 0, 0
-  index: -1
 path-display-circle
   rotate: false
   xy: 208, 212
