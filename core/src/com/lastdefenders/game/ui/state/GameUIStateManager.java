@@ -32,6 +32,12 @@ public class GameUIStateManager extends
             case WAVE_IN_PROGRESS:
                 setState(GameUIState.WAVE_IN_PROGRESS);
                 break;
+            case GAME_OVER:
+                setState(GameUIState.GAME_OVER);
+                break;
+            case LEVEL_COMPLETED:
+                setState(GameUIState.LEVEL_COMPLETED);
+                break;
             case STANDBY:
             default:
                 setState(GameUIState.STANDBY);
