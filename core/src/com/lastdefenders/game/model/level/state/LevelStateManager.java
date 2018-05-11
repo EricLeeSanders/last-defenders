@@ -25,6 +25,7 @@ public class LevelStateManager extends ObservableStateManager<LevelState, LevelS
     public enum LevelState {
         WAVE_IN_PROGRESS,
         STANDBY,
-        GAME_OVER
+        GAME_OVER,
+        LEVEL_COMPLETED;
     }
 }
