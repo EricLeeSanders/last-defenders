@@ -212,6 +212,7 @@ public class GameStage extends Stage implements PlayerObserver {
     private void levelComleted() {
 
         uiStateManager.setState(GameUIState.LEVEL_COMPLETED);
+        levelStateManager.setState(LevelState.LEVEL_COMPLETED);
     }
 
     private void healTowers() {
