@@ -83,60 +83,6 @@ public class Map implements Disposable {
         }
     }
 
-    /**
-     * Creates {@link WaypointAction}s for a given {@link GameActor}.
-     * Places the actor at the first waypoint offscreen.
-     *
-     * @param actor
-     * @param speed
-     */
-    public void createWaypointActionSet(GameActor actor, float speed){
-
-        Array<LDVector2> path = getPath();
-
-        //Place the actor at the start and off screen
-        LDVector2 newWaypoint = path.get(0); // start
-        actor.setPositionCenter(newWaypoint);
-
-        // face the next waypoint
-        actor.setRotation(Math.round(ActorUtil.calculateRotation(path.get(1), actor.getPositionCenter())));
-
-        // Start the actor at the first waypoint, but offscreen.
-        // rotatedCoords are the coords of the top/front of the actor.
-        Vector2 centerPos = actor.getPositionCenter();
-        LDVector2 rotatedCoords = ActorUtil
-            .calculateRotatedCoords(actor.getX() + actor.getWidth(), centerPos.y, centerPos.x, centerPos.y,
-                Math.toRadians(actor.getRotation()));
-
-        // Reposition the actor so that it is off the screen
-        float newX = actor.getPositionCenter().x + (actor.getPositionCenter().x - rotatedCoords.x);
-        float newY = actor.getPositionCenter().y + (actor.getPositionCenter().y - rotatedCoords.y);
-
-        rotatedCoords.free();
-
-        actor.setPositionCenter(newX, newY); // Start off screen
-
-        //create actions
-        LDSequenceAction sequenceAction = UtilPool.getSequenceAction();
-        for (int i = 1; i < path.size; i++) {
-            Vector2 prevWaypoint = newWaypoint;
-            newWaypoint = path.get(i);
-            float distance = newWaypoint.dst(prevWaypoint);
-            float duration = (distance / speed);
-            float rotation = ActorUtil
-                .calculateRotation(newWaypoint.x, newWaypoint.y, prevWaypoint.x, prevWaypoint.y);
-            WaypointAction waypointAction = createWaypointAction(newWaypoint.x, newWaypoint.y,
-                duration, rotation);
-            sequenceAction.addAction(waypointAction);
-        }
-
-        actor.addAction(sequenceAction);
-    }
-    private WaypointAction createWaypointAction(float x, float y, float duration, float rotation) {
-
-        return UtilPool.getWaypointAction(x, y, duration, rotation, Interpolation.linear);
-    }
-
     public Array<Rectangle> getPathBoundaries() {
 
         return pathBoundaries;
