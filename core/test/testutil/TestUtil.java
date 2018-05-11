@@ -10,16 +10,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
-import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
@@ -47,12 +46,12 @@ import com.lastdefenders.game.model.actor.effects.texture.animation.death.BloodS
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
-import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.lastdefenders.game.service.factory.EffectFactory;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
+import com.lastdefenders.util.UserPreferences;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 
 /**
@@ -73,10 +72,23 @@ public class TestUtil {
         atlasRegion.add(null);
 
         Resources resources = mock(Resources.class);
+        UserPreferences userPreferences = createUserPreferencesMock();
         when(resources.getAtlasRegion(anyString())).thenReturn(atlasRegion);
         when(resources.getTexture(anyString())).thenReturn(null);
+        when(resources.getUserPreferences()).thenReturn(userPreferences);
 
         return resources;
+    }
+
+    public static UserPreferences createUserPreferencesMock(){
+
+        UserPreferences userPreferences = mock(UserPreferences.class);
+        Preferences preferences = mock(Preferences.class);
+
+        doReturn(preferences).when(userPreferences).getPreferences();
+        doReturn(false).when(userPreferences).getShowTutorialTips();
+
+        return userPreferences;
     }
 
     private static ProjectileFactory createProjectileFactoryMock() {
@@ -105,15 +117,6 @@ public class TestUtil {
             .loadAnimationEffect(EnemyCoinEffect.class);
 
         return effectFactoryMock;
-    }
-
-    public static Map createMap(Array<LDVector2> path){
-
-        TiledMap tiledMapMock = mock(TiledMap.class);
-        Map map = new Map(tiledMapMock,1f);
-        map = spy(map);
-        doReturn(path).when(map).getPath();
-        return map;
     }
 
     public static Tower createTower(String name, boolean spy) {
