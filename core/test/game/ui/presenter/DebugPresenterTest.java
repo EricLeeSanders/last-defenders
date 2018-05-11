@@ -20,8 +20,10 @@ import com.lastdefenders.game.ui.view.DebugView;
 import com.lastdefenders.game.ui.view.interfaces.IDebugView;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.util.DebugOptions;
+import com.lastdefenders.util.Resources;
 import org.junit.Before;
 import org.junit.Test;
+import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/29/2017.
@@ -31,6 +33,7 @@ public class DebugPresenterTest {
     private GameUIStateManager gameUIStateManagerMock = mock(GameUIStateManager.class);
     private GameStateManager gameStateManager = mock(GameStateManager.class);
     private IDebugView debugViewMock = mock(DebugView.class);
+    private Resources resourcesMock = TestUtil.createResourcesMock();
 
     @Before
     public void initDebugPresenterTest() {
@@ -40,7 +43,7 @@ public class DebugPresenterTest {
 
     private DebugPresenter createDebugPresenter() {
 
-        return new DebugPresenter(gameUIStateManagerMock, gameStateManager);
+        return new DebugPresenter(gameUIStateManagerMock, gameStateManager, resourcesMock);
     }
 
     @Test
@@ -48,7 +51,7 @@ public class DebugPresenterTest {
 
         DebugPresenter debugPresenter = createDebugPresenter();
 
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
+        doReturn(GameUIState.DEBUG).when(gameUIStateManagerMock).getState();
         DebugOptions.showTextureBoundaries = true;
         DebugOptions.showFPS = false;
 

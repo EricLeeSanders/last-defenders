@@ -120,9 +120,7 @@ public class EnemyTest {
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
         Array<LDVector2> path = createWaypoints();
-
-        Map map = TestUtil.createMap(path);
-        map.createWaypointActionSet(enemy, enemy.getSpeed());
+        enemy.setPath(path);
 
         assertEquals(enemy.getActions().size, 1);
 
@@ -142,9 +140,7 @@ public class EnemyTest {
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
         Array<LDVector2> path = createWaypoints();
-
-        Map map = TestUtil.createMap(path);
-        map.createWaypointActionSet(enemy, enemy.getSpeed());
+        enemy.setPath(path);
 
         assertEquals(1, enemy.getActions().size);
 
@@ -166,9 +162,7 @@ public class EnemyTest {
         Enemy enemy = TestUtil.createEnemy("Rifle", false);
 
         Array<LDVector2> path = createWaypoints();
-
-        Map map = TestUtil.createMap(path);
-        map.createWaypointActionSet(enemy, enemy.getSpeed());
+        enemy.setPath(path);
 
         assertEquals(enemy.getActions().size, 1);
 
@@ -220,9 +214,7 @@ public class EnemyTest {
         enemy.getTargetGroup().addActor(tower);
 
         Array<LDVector2> path = createWaypoints();
-
-        Map map = TestUtil.createMap(path);
-        map.createWaypointActionSet(enemy, enemy.getSpeed());
+        enemy.setPath(path);
 
         assertEquals(EnemyState.RUNNING, enemy.getState());
     }
@@ -234,8 +226,9 @@ public class EnemyTest {
         Enemy enemy = TestUtil.createEnemy("Rifle", true);
 
         enemy.getTargetGroup().addActor(tower);
-        Map map = TestUtil.createMap(createWaypoints());
-        map.createWaypointActionSet(enemy, enemy.getSpeed());
+
+        Array<LDVector2> path = createWaypoints();
+        enemy.setPath(path);
 
         assertEquals(EnemyState.RUNNING, enemy.getState());
 
@@ -256,9 +249,7 @@ public class EnemyTest {
         assertEquals(EnemyState.RUNNING, enemy.getState());
 
         Array<LDVector2> path = createWaypoints();
-
-        Map map = TestUtil.createMap(path);
-        map.createWaypointActionSet(enemy, enemy.getSpeed());
+        enemy.setPath(path);
 
         assertEquals(1, enemy.getActions().size);
 
