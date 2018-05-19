@@ -67,7 +67,6 @@ public class DebugView extends Group implements IDebugView {
 
         Table mainTable = new Table();
         mainTable.setTransform(false);
-        mainTable.setBackground(skin.getDrawable("hollow"));
         container.add(mainTable);
 
         Label lblTitle = new Label("DEBUG", skin);
@@ -321,7 +320,7 @@ public class DebugView extends Group implements IDebugView {
                 table.row();
                 table.add(label).left();
             }
-            ScrollPane scrollPane = new ScrollPane(table, resources.getSkin(), "no-round");
+            ScrollPane scrollPane = new ScrollPane(table, resources.getSkin());
 
             return scrollPane;
         }

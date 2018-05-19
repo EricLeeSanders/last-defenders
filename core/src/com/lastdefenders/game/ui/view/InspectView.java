@@ -61,7 +61,6 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 
         Table inspectTable = new Table();
         inspectTable.setTransform(false);
-        inspectTable.setBackground(skin.getDrawable("hollow"));
 
         inspectTable.defaults().expandX();
 
