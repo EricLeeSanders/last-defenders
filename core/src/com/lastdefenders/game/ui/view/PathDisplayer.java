@@ -8,13 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pools;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.lastdefenders.util.datastructures.pool.UtilPool;
+import com.lastdefenders.util.UtilPool;
 
 /**
  * Created by Eric on 4/21/2018.
@@ -52,6 +51,7 @@ public class PathDisplayer extends Group {
             sequenceAction.addAction(Actions.fadeIn(0));
             sequenceAction.addAction(Actions.delay(DISPLAY_WAIT_TIME));
             sequenceAction.addAction(Actions.fadeOut(FADE_OUT_SPEED));
+            sequenceAction.addAction(Actions.removeActor());
             point.addAction(sequenceAction);
         }
 
@@ -116,11 +116,6 @@ public class PathDisplayer extends Group {
             setPositionCenter(position);
             Color color = getColor();
             setColor(color.r, color.b, color.g, 0);
-        }
-
-        @Override
-        public void act(float delta){
-            super.act(delta);
         }
 
         @Override

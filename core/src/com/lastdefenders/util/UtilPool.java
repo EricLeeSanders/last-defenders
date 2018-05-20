@@ -1,4 +1,4 @@
-package com.lastdefenders.util.datastructures.pool;
+package com.lastdefenders.util;
 
 
 import com.badlogic.gdx.math.Interpolation;
@@ -6,8 +6,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
-import com.lastdefenders.action.LDSequenceAction;
-import com.lastdefenders.action.WaypointAction;
+import com.lastdefenders.util.action.LDSequenceAction;
+import com.lastdefenders.util.action.WaypointAction;
+import com.lastdefenders.util.datastructures.pool.LDPoolable;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 
 /**
  * Created by Eric on 3/11/2017.
