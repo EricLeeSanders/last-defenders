@@ -7,7 +7,7 @@
   <extend-configuration-property name="gdx.reflect.include"
     value="com.lastdefenders.util.datastructures.pool.LDVector2" />
   <extend-configuration-property name="gdx.reflect.include"
-    value="com.lastdefenders.action.LDSequenceAction" />
+    value="com.lastdefenders.util.action.LDSequenceAction" />
   <extend-configuration-property name="gdx.reflect.include"
-    value="com.lastdefenders.action.WaypointAction" />
+    value="com.lastdefenders.util.action.WaypointAction" />
 </module>
