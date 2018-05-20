@@ -18,7 +18,7 @@ import com.lastdefenders.util.DebugOptions;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
-import com.lastdefenders.util.datastructures.pool.UtilPool;
+import com.lastdefenders.util.UtilPool;
 
 public class LandMine extends SupportActor implements IRocket {
 

@@ -13,7 +13,7 @@ import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.lastdefenders.util.datastructures.pool.UtilPool;
+import com.lastdefenders.util.UtilPool;
 
 public class SupportActor extends GameActor implements Pool.Poolable, Attacker {
 

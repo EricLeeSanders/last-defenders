@@ -8,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.lastdefenders.action.LDSequenceAction;
-import com.lastdefenders.action.WaypointAction;
+import com.lastdefenders.util.action.LDSequenceAction;
+import com.lastdefenders.util.action.WaypointAction;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
@@ -20,7 +20,7 @@ import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.lastdefenders.util.datastructures.pool.UtilPool;
+import com.lastdefenders.util.UtilPool;
 
 /**
  * An abstract class that represents an Enemy. Enemies are created from the

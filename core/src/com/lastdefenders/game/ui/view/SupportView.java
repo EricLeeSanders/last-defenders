@@ -26,7 +26,7 @@ import com.lastdefenders.game.ui.view.widgets.SupportButton;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.lastdefenders.util.datastructures.pool.UtilPool;
+import com.lastdefenders.util.UtilPool;
 
 /**
  * View class for Support. Shows Support window as well as the options to

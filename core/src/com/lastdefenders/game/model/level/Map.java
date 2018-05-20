@@ -5,19 +5,13 @@ import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.lastdefenders.action.LDSequenceAction;
-import com.lastdefenders.action.WaypointAction;
-import com.lastdefenders.game.model.actor.GameActor;
-import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.lastdefenders.util.datastructures.pool.UtilPool;
+import com.lastdefenders.util.UtilPool;
 
 /**
  * Represents a TiledMap
