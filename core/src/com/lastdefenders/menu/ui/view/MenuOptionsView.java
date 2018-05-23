@@ -63,7 +63,6 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
 
         Table mainTable = new Table();
         mainTable.setTransform(false);
-        mainTable.setBackground(skin.getDrawable("hollow"));
         container.add(mainTable);
 
 
