@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.lastdefenders.game.model.actor.effects.label.WaveOverCoinEffect;
-import com.lastdefenders.game.service.factory.EffectFactory.LabelEffectPool;
+import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import com.lastdefenders.util.Resources;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +29,7 @@ import testutil.TestUtil;
 public class WaveOverCoinEffectTest {
 
     @SuppressWarnings("unchecked")
-    private LabelEffectPool<WaveOverCoinEffect> labelEffectPoolMock = mock(LabelEffectPool.class);
+    private EffectPool<WaveOverCoinEffect> labelEffectPoolMock = mock(EffectPool.class);
 
     @Before
     public void initWaveOverCoinEffectTest() {

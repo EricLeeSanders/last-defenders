@@ -1,57 +1,49 @@
 package com.lastdefenders.game.model.actor.effects.texture;
 
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.GameActor;
+import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import com.lastdefenders.util.datastructures.Dimension;
 
 /**
- * Created by Eric on 4/3/2017.
+ * Created by Eric on 5/21/2018.
  */
 
-public abstract class TextureEffect extends GameActor implements Pool.Poolable {
+public abstract class TextureEffect extends GameActor implements Pool.Poolable  {
 
-    protected float stateTime;
-    private float duration;
-    private Pool<TextureEffect> pool;
+    private EffectPool<? extends Actor> pool;
 
-    protected TextureEffect(Pool<TextureEffect> pool, Dimension textureSize, float duration) {
-
-        this(pool, duration);
-        setSize(textureSize);
-
-    }
-
-    private TextureEffect(Pool<TextureEffect> pool, float duration) {
-
+    public TextureEffect(EffectPool<? extends Actor> pool){
         this.pool = pool;
-        this.duration = duration;
     }
 
-    @Override
-    public void act(float delta) {
-
-        super.act(delta);
-        stateTime += delta;
-        if (stateTime >= duration) {
-            free();
-        }
+    public TextureEffect(EffectPool<? extends Actor> pool, Dimension textureSize){
+        super(textureSize);
+        this.pool = pool;
     }
 
-    /**
-     * This method should not be called more than once.
-     * Otherwise, the object is placed in the pool twice.
-     */
-    protected void free() {
+    public void setPool(EffectPool<? extends Actor> pool){
+        this.pool = pool;
+    }
 
+    public EffectPool<? extends Actor> getPool(){
+        return pool;
+    }
+
+    public void initialize(Vector2 pos) {
+
+        setPositionCenter(pos);
+    }
+
+    protected void free(){
         pool.free(this);
     }
 
-
     @Override
     public void reset() {
-
         clear();
         remove();
-        stateTime = 0;
     }
 }

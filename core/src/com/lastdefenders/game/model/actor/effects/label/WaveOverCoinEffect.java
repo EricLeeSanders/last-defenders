@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.lastdefenders.game.service.factory.EffectFactory.LabelEffectPool;
+import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import com.lastdefenders.util.datastructures.Dimension;
 
 /**
@@ -27,8 +27,7 @@ public class WaveOverCoinEffect extends LabelEffect {
 
     private Animation<TextureRegion> animation;
 
-    public WaveOverCoinEffect(LabelEffectPool<WaveOverCoinEffect> pool, Skin skin,
-        Array<AtlasRegion> regions, float fontScale) {
+    public WaveOverCoinEffect(EffectPool<WaveOverCoinEffect> pool, Skin skin, Array<AtlasRegion> regions, float fontScale) {
 
         super(pool, DURATION, skin);
         animation = new Animation<TextureRegion>(0.05f, regions);

@@ -2,6 +2,7 @@ package testutil;
 
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -41,10 +42,10 @@ import com.lastdefenders.game.model.actor.combat.tower.TowerTank;
 import com.lastdefenders.game.model.actor.combat.tower.TowerTurret;
 import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager;
 import com.lastdefenders.game.model.actor.effects.label.ArmorDestroyedEffect;
+import com.lastdefenders.game.model.actor.effects.texture.TextureEffect;
 import com.lastdefenders.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.BloodSplatter;
-import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect;
-import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
+import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.lastdefenders.game.service.factory.EffectFactory;
@@ -107,14 +108,15 @@ public class TestUtil {
 
         ArmorDestroyedEffect armorDestroyedEffect = mock(ArmorDestroyedEffect.class);
         doReturn(armorDestroyedEffect).when(effectFactoryMock)
-            .loadLabelEffect(ArmorDestroyedEffect.class);
+            .loadEffect(eq(ArmorDestroyedEffect.class), isA(Boolean.class));
 
-        DeathEffect deathEffect = mock(BloodSplatter.class);
-        doReturn(deathEffect).when(effectFactoryMock).loadDeathEffect(isA(DeathEffectType.class));
+        TextureEffect deathEffect = mock(BloodSplatter.class);
+        doReturn(deathEffect).when(effectFactoryMock).loadDeathEffect(isA(DeathEffectType.class),
+            isA(Boolean.class));
 
         EnemyCoinEffect enemyCoinEffect = mock(EnemyCoinEffect.class);
         doReturn(enemyCoinEffect).when(effectFactoryMock)
-            .loadAnimationEffect(EnemyCoinEffect.class);
+            .loadEffect(eq(EnemyCoinEffect.class), isA(Boolean.class));
 
         return effectFactoryMock;
     }

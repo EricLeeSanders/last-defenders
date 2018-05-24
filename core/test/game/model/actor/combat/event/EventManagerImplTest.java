@@ -1,6 +1,7 @@
 package game.model.actor.combat.event;
 
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -37,7 +38,7 @@ public class EventManagerImplTest {
 
         ArmorDestroyedEffect armorDestroyedEffectMock = mock(ArmorDestroyedEffect.class);
         doReturn(armorDestroyedEffectMock).when(effectFactoryMock)
-            .loadLabelEffect(eq(ArmorDestroyedEffect.class));
+            .loadEffect(eq(ArmorDestroyedEffect.class), isA(Boolean.class));
 
         EventManagerImpl eventManager = new EventManagerImpl(tower, effectFactoryMock);
         eventManager.sendEvent(CombatActorEventEnum.ARMOR_DESTROYED);

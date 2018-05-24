@@ -190,8 +190,7 @@ public class GameStage extends Stage implements PlayerObserver {
         if (isLevelCompleted()) {
             levelComleted();
         }
-        WaveOverCoinEffect waveOverCoinEffect = effectFactory
-            .loadLabelEffect(WaveOverCoinEffect.class);
+        WaveOverCoinEffect waveOverCoinEffect = effectFactory.loadEffect(WaveOverCoinEffect.class, true);
         waveOverCoinEffect.initialize(money);
         level.loadNextWave(); //load the next wave
         healTowers();
@@ -221,7 +220,7 @@ public class GameStage extends Stage implements PlayerObserver {
         for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
             if (tower instanceof Tower) {
                 if (((Tower) tower).isActive() && ((Tower) tower).getHealthPercent() < 1) {
-                    TowerHealEffect effect = effectFactory.loadLabelEffect(TowerHealEffect.class);
+                    TowerHealEffect effect = effectFactory.loadEffect(TowerHealEffect.class, true);
                     effect.initialize((Tower) tower);
 
                     ((Tower) tower).heal();
