@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.service.factory.EffectFactory.LabelEffectPool;
+import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import com.lastdefenders.util.ActorUtil;
 
 /**
@@ -22,7 +22,7 @@ public class TowerHealEffect extends LabelEffect {
 
     private Tower tower = null;
 
-    public TowerHealEffect(LabelEffectPool<TowerHealEffect> pool, Skin skin, float fontScale) {
+    public TowerHealEffect(EffectPool<TowerHealEffect> pool, Skin skin, float fontScale) {
 
         super(pool, DURATION, skin);
 

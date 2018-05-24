@@ -105,7 +105,7 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable {
                 if (CollisionDetection.shapesIntersect(tower.getBody(), getRangeShape())) {
                     tower.heal();
                     tower.resetArmor();
-                    TowerHealEffect effect = effectFactory.loadLabelEffect(TowerHealEffect.class);
+                    TowerHealEffect effect = effectFactory.loadEffect(TowerHealEffect.class, true);
                     effect.initialize(tower);
 
                 }
