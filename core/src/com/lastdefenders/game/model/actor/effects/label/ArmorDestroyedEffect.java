@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
-import com.lastdefenders.game.service.factory.EffectFactory.LabelEffectPool;
+import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.datastructures.Dimension;
 
@@ -29,8 +29,7 @@ public class ArmorDestroyedEffect extends LabelEffect {
     private CombatActor actor = null;
     private Animation<TextureRegion> animation;
 
-    public ArmorDestroyedEffect(Array<AtlasRegion> regions,
-        LabelEffectPool<ArmorDestroyedEffect> pool, Skin skin, float fontScale) {
+    public ArmorDestroyedEffect(Array<AtlasRegion> regions, EffectPool<ArmorDestroyedEffect> pool, Skin skin, float fontScale) {
 
         super(pool, DURATION, skin);
         animation = new Animation<TextureRegion>(DURATION, regions);
