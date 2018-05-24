@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
+import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.interfaces.IRocket;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;

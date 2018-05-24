@@ -8,7 +8,7 @@ import static org.mockito.Mockito.verify;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.actor.effects.texture.animation.EnemyCoinEffect;
-import com.lastdefenders.game.service.factory.EffectFactory.AnimationEffectPool;
+import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
@@ -22,8 +22,8 @@ import testutil.TestUtil;
 public class EnemyCoinEffectTest {
 
     @SuppressWarnings("unchecked")
-    private AnimationEffectPool<EnemyCoinEffect> animationEffectPool = mock(
-        AnimationEffectPool.class);
+    private EffectPool<EnemyCoinEffect> animationEffectPool = mock(
+        EffectPool.class);
 
     @Before
     public void initEnemyCoinEffectTest() {
@@ -51,7 +51,8 @@ public class EnemyCoinEffectTest {
         assertEquals(new LDVector2(20, 20), enemyCoinEffect.getPositionCenter());
         assertEquals(1, enemyCoinEffect.getActions().size);
         enemyCoinEffect.act(100f);
-
+        // Call act twice so that the freeActor action is performed
+        enemyCoinEffect.act(0.001f);
         verify(animationEffectPool, times(1)).free(enemyCoinEffect);
     }
 }
