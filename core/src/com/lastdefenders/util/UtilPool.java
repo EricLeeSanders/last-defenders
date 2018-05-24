@@ -3,9 +3,11 @@ package com.lastdefenders.util;
 
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
+import com.lastdefenders.util.action.FreeActorAction;
 import com.lastdefenders.util.action.LDSequenceAction;
 import com.lastdefenders.util.action.WaypointAction;
 import com.lastdefenders.util.datastructures.pool.LDPoolable;
@@ -34,6 +36,15 @@ public class UtilPool {
         waypointAction.setInterpolation(interpolation);
         waypointAction.setPool(pool);
         return waypointAction;
+    }
+
+    public static FreeActorAction getFreeActorAction(Pool<Actor> actorPool){
+
+        Pool<FreeActorAction> freeActorActionPool = Pools.get(FreeActorAction.class);
+        FreeActorAction freeActorAction = freeActorActionPool.obtain();
+        freeActorAction.setActorPool(actorPool);
+
+        return freeActorAction;
     }
 
     public static LDVector2 getVector2(float x, float y) {

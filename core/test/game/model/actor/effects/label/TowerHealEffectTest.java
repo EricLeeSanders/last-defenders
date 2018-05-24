@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
-import com.lastdefenders.game.service.factory.EffectFactory.LabelEffectPool;
+import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -27,7 +27,7 @@ import testutil.TestUtil;
 public class TowerHealEffectTest {
 
     @SuppressWarnings("unchecked")
-    private LabelEffectPool<TowerHealEffect> labelEffectPoolMock = mock(LabelEffectPool.class);
+    private EffectPool<TowerHealEffect> labelEffectPoolMock = mock(EffectPool.class);
 
     @Before
     public void initTowerHealEffectTest() {

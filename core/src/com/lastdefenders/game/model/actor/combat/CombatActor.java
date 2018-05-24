@@ -14,7 +14,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager;
 import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager.CombatActorEventEnum;
-import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
+import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.model.actor.interfaces.Collidable;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
