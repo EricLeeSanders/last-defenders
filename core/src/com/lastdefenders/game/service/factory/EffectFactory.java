@@ -1,19 +1,19 @@
 package com.lastdefenders.game.service.factory;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.ActorGroups;
 import com.lastdefenders.game.model.actor.effects.label.ArmorDestroyedEffect;
-import com.lastdefenders.game.model.actor.effects.label.LabelEffect;
 import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
 import com.lastdefenders.game.model.actor.effects.label.WaveOverCoinEffect;
 import com.lastdefenders.game.model.actor.effects.texture.TextureEffect;
-import com.lastdefenders.game.model.actor.effects.texture.animation.AnimationEffect;
 import com.lastdefenders.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.BloodSplatter;
-import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect;
-import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
+import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.VehicleExplosion;
 import com.lastdefenders.util.Resources;
 
@@ -23,180 +23,182 @@ import com.lastdefenders.util.Resources;
 
 public class EffectFactory {
 
-    private DeathEffectPool<VehicleExplosion> vehicleExplosionPool = new DeathEffectPool<>(
-        VehicleExplosion.class);
-    private DeathEffectPool<BloodSplatter> bloodPool = new DeathEffectPool<>(BloodSplatter.class);
-    private LabelEffectPool<ArmorDestroyedEffect> armorDestroyedEffectPool = new LabelEffectPool<>(
-        ArmorDestroyedEffect.class);
-    private LabelEffectPool<TowerHealEffect> towerHealEffectPool = new LabelEffectPool<>(
-        TowerHealEffect.class);
-    private LabelEffectPool<WaveOverCoinEffect> waveOverCoinEffectPool = new LabelEffectPool<>(
-        WaveOverCoinEffect.class);
-    private AnimationEffectPool<EnemyCoinEffect> enemyCoinEffectPool = new AnimationEffectPool<>(
-        EnemyCoinEffect.class);
+    private EffectPool<VehicleExplosion> vehicleExplosionPool;
+    private EffectPool<BloodSplatter> bloodPool;
+    private EffectPool<ArmorDestroyedEffect> armorDestroyedEffectPool;
+    private EffectPool<TowerHealEffect> towerHealEffectPool;
+    private EffectPool<WaveOverCoinEffect> waveOverCoinEffectPool;
+    private EffectPool<EnemyCoinEffect> enemyCoinEffectPool;
 
-    private ActorGroups actorGroups;
     private Resources resources;
 
     public EffectFactory(ActorGroups actorGroups, Resources resources) {
 
-        this.actorGroups = actorGroups;
         this.resources = resources;
+        init(actorGroups);
     }
 
-    /**
-     * Obtains a Death Effect from the pool
-     */
-    @SuppressWarnings("unchecked")
-    public <T extends DeathEffect> T loadDeathEffect(DeathEffectType type) {
+    private void init(ActorGroups actorGroups){
 
-        T deathEffect = null;
-        switch (type) {
+        vehicleExplosionPool = new EffectPool<>(VehicleExplosion.class, actorGroups.getDeathEffectGroup());
+        bloodPool = new EffectPool<>(BloodSplatter.class, actorGroups.getDeathEffectGroup());
+        armorDestroyedEffectPool = new EffectPool<>(ArmorDestroyedEffect.class, actorGroups.getEffectGroup());
+        towerHealEffectPool = new EffectPool<>(TowerHealEffect.class, actorGroups.getEffectGroup());
+        waveOverCoinEffectPool = new EffectPool<>(WaveOverCoinEffect.class, actorGroups.getEffectGroup());
+        enemyCoinEffectPool = new EffectPool<>(EnemyCoinEffect.class, actorGroups.getEffectGroup());
+    }
+
+    public <T extends TextureEffect> T loadDeathEffect(DeathEffectType type, boolean addToGroup){
+
+        EffectPool<? extends Actor> effectPool = null;
+        switch(type){
             case BLOOD:
-                deathEffect = (T) bloodPool.obtain();
+                effectPool = bloodPool;
                 break;
             case VEHCILE_EXPLOSION:
-                deathEffect = (T) vehicleExplosionPool.obtain();
+                effectPool = vehicleExplosionPool;
                 break;
+            default:
+                throw new NullPointerException("Effect Factory couldn't load " + type);
         }
 
-        actorGroups.getDeathEffectGroup().addActor(deathEffect);
-        return deathEffect;
+        @SuppressWarnings("unchecked")
+        T effect = (T) effectPool.obtain();
+
+        if(addToGroup){
+            effectPool.getGroup().addActor(effect);
+        }
+        return effect;
     }
 
     /**
-     * Obtains a Label Effect from the pool
-     */
-    @SuppressWarnings("unchecked")
-    public <T extends LabelEffect> T loadLabelEffect(Class<T> type) {
-
-        T labelEffect;
-        if (type.equals(ArmorDestroyedEffect.class)) {
-            labelEffect = (T) armorDestroyedEffectPool.obtain();
-        } else if (type.equals(TowerHealEffect.class)) {
-            labelEffect = (T) towerHealEffectPool.obtain();
-        } else if (type.equals(WaveOverCoinEffect.class)) {
-            labelEffect = (T) waveOverCoinEffectPool.obtain();
-        } else {
-            throw new IllegalArgumentException("No type: " + type.getSimpleName() + " exists");
-        }
-        actorGroups.getEffectGroup().addActor(labelEffect);
-        return labelEffect;
-    }
-
-    /**
-     * Obtains an Animation Effect from the pool
-     */
-    @SuppressWarnings("unchecked")
-    public <T extends AnimationEffect> T loadAnimationEffect(Class<T> type) {
-
-        T animationEffect;
-        if (type.equals(EnemyCoinEffect.class)) {
-            animationEffect = (T) enemyCoinEffectPool.obtain();
-        } else {
-            throw new IllegalArgumentException("No type: " + type.getSimpleName() + " exists");
-        }
-
-        actorGroups.getEffectGroup().addActor(animationEffect);
-        return animationEffect;
-    }
-
-    /**
-     * Create a Death Effect
+     * Obtains an effect from the respective pool with the option to add to the respective group.
      *
-     * @return DeathEffect
+     * @param type
+     * @param addToGroup
+     * @param <T>
+     *
+     * @return effect
      */
-    private DeathEffect createDeathEffect(Class<? extends TextureEffect> type) {
+    public <T extends Actor> T loadEffect(Class<T> type, boolean addToGroup) {
 
-        if (type.equals(BloodSplatter.class)) {
-            Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("blood-splatter");
-            return new BloodSplatter(bloodPool, atlasRegions);
-        } else if (type.equals(VehicleExplosion.class)) {
-            Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("smoke-ring");
-            return new VehicleExplosion(vehicleExplosionPool, atlasRegions);
-        } else {
-            throw new NullPointerException(
-                "Effect Factory couldn't create: " + type.getSimpleName());
+        String className = type.getSimpleName();
+        EffectPool<? extends Actor> effectPool = null;
+        switch(className){
+            case "EnemyCoinEffect":
+                effectPool = enemyCoinEffectPool;
+                break;
+            case "ArmorDestroyedEffect":
+                effectPool = armorDestroyedEffectPool;
+                break;
+            case "TowerHealEffect":
+                effectPool = towerHealEffectPool;
+                break;
+            case "WaveOverCoinEffect":
+                effectPool = waveOverCoinEffectPool;
+                break;
+            default:
+                throw new NullPointerException("Effect Factory couldn't load " + className);
         }
 
-    }
+        @SuppressWarnings("unchecked")
+        T effect = (T) effectPool.obtain();
 
-    private LabelEffect createLabelEffect(Class<? extends LabelEffect> type) {
-
-        if (type.equals(ArmorDestroyedEffect.class)) {
-            Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("shield-destroyed");
-            return new ArmorDestroyedEffect(atlasRegions, armorDestroyedEffectPool,
-                resources.getSkin(), resources.getFontScale());
-        } else if (type.equals(TowerHealEffect.class)) {
-            return new TowerHealEffect(towerHealEffectPool, resources.getSkin(), resources.getFontScale());
-        } else if (type.equals(WaveOverCoinEffect.class)) {
-            Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("coin");
-            return new WaveOverCoinEffect(waveOverCoinEffectPool, resources.getSkin(),
-                atlasRegions, resources.getFontScale());
-        } else {
-            throw new NullPointerException(
-                "Effect Factory couldn't create: " + type.getSimpleName());
+        if(addToGroup){
+            effectPool.getGroup().addActor(effect);
         }
-    }
-
-    private AnimationEffect createAnimationEffect(Class<? extends AnimationEffect> type) {
-
-        if (type.equals(EnemyCoinEffect.class)) {
-            Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("coin");
-            return new EnemyCoinEffect(enemyCoinEffectPool, atlasRegions);
-        } else {
-            throw new NullPointerException(
-                "Effect Factory couldn't create: " + type.getSimpleName());
-        }
+        return effect;
     }
 
 
-    public class DeathEffectPool<T extends DeathEffect> extends Pool<TextureEffect> {
 
-        private final Class<? extends DeathEffect> type;
+    @SuppressWarnings("unchecked")
+    private <T extends Actor> T createEffect(Class<T> type) {
 
-        public DeathEffectPool(Class<? extends DeathEffect> type) {
+        String className = type.getSimpleName();
+        T effect = null;
+        switch(className){
+            case "EnemyCoinEffect":
+                effect = (T) createEnemyCoinEffect();
+                break;
+            case "ArmorDestroyedEffect":
+                effect = (T) createArmorDestroyedEffect();
+                break;
+            case "TowerHealEffect":
+                effect = (T) createTowerHealEffect();
+                break;
+            case "WaveOverCoinEffect":
+                effect = (T) createWaveOverCoinEffect();
+                break;
+            case "BloodSplatter":
+                effect = (T) createBloodSplatter();
+                break;
+            case "VehicleExplosion":
+                effect = (T) createVehicleExplosion();
+                break;
+            default:
+                throw new NullPointerException("Effect Factory couldn't create " + className);
+        }
+        return effect;
+    }
+
+    private VehicleExplosion createVehicleExplosion(){
+
+        Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("smoke-ring");
+        return new VehicleExplosion(vehicleExplosionPool, atlasRegions);
+    }
+
+    private BloodSplatter createBloodSplatter(){
+
+        TextureRegion textureRegion = resources.getTexture("blood");
+        return new BloodSplatter(bloodPool, textureRegion);
+    }
+
+    private WaveOverCoinEffect createWaveOverCoinEffect(){
+
+        Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("coin");
+        return new WaveOverCoinEffect(waveOverCoinEffectPool, resources.getSkin(),
+            atlasRegions, resources.getFontScale());
+    }
+
+    private TowerHealEffect createTowerHealEffect(){
+
+        return new TowerHealEffect(towerHealEffectPool, resources.getSkin(), resources.getFontScale());
+    }
+
+    private ArmorDestroyedEffect createArmorDestroyedEffect(){
+
+        Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("shield-destroyed");
+        return new ArmorDestroyedEffect(atlasRegions, armorDestroyedEffectPool,
+            resources.getSkin(), resources.getFontScale());
+    }
+
+    private EnemyCoinEffect createEnemyCoinEffect(){
+
+        Array<AtlasRegion> atlasRegions = resources.getAtlasRegion("coin");
+        return new EnemyCoinEffect(enemyCoinEffectPool, atlasRegions);
+    }
+
+    public class EffectPool<T extends Actor> extends Pool<Actor> {
+
+        private final Class<T> type;
+        private final Group group;
+
+        public EffectPool(Class<T> type, Group group) {
 
             this.type = type;
+            this.group = group;
         }
 
         @Override
-        protected DeathEffect newObject() {
+        protected T newObject() {
 
-            return createDeathEffect(type);
+            return createEffect(type);
         }
 
-    }
+        private Group getGroup(){
 
-    public class LabelEffectPool<T extends LabelEffect> extends Pool<LabelEffect> {
-
-        private final Class<? extends LabelEffect> type;
-
-        public LabelEffectPool(Class<? extends LabelEffect> type) {
-
-            this.type = type;
-        }
-
-        @Override
-        protected LabelEffect newObject() {
-
-            return createLabelEffect(type);
-        }
-    }
-
-    public class AnimationEffectPool<T extends AnimationEffect> extends Pool<TextureEffect> {
-
-        private final Class<? extends AnimationEffect> type;
-
-        public AnimationEffectPool(Class<? extends AnimationEffect> type) {
-
-            this.type = type;
-        }
-
-        @Override
-        protected AnimationEffect newObject() {
-
-            return createAnimationEffect(type);
+            return group;
         }
     }
 }

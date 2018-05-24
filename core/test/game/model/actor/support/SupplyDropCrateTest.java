@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -44,7 +45,7 @@ public class SupplyDropCrateTest {
         Resources resourcesMock = mock(Resources.class);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
         doReturn(towerHealEffectMock).when(effectFactoryMock)
-            .loadLabelEffect(eq(TowerHealEffect.class));
+            .loadEffect(eq(TowerHealEffect.class), isA(Boolean.class));
 
         return new SupplyDropCrate(resourcesMock.getTexture(""), resourcesMock.getTexture(""),
             supplyDropCratePoolMock, towerGroup, effectFactoryMock);
