@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
+import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.DebugOptions;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
@@ -36,7 +37,7 @@ public class Flame extends GameActor implements Pool.Poolable {
     private float tickTime = TICK_ATTACK_SPEED;
     private CombatActor attacker;
     private Dimension flameSize;
-    private Pool<Flame> pool;
+    private ProjectilePool<Flame> pool;
     private float[] bodyPoints = new float[8];
     private Polygon flameBody = new Polygon();
     private Group targetGroup;
@@ -44,7 +45,7 @@ public class Flame extends GameActor implements Pool.Poolable {
     /**
      * Constructs a flame
      */
-    public Flame(Pool<Flame> pool, Array<AtlasRegion> regions) {
+    public Flame(ProjectilePool<Flame> pool, Array<AtlasRegion> regions) {
 
         this.pool = pool;
         flameAnimation = new Animation<TextureRegion>(FRAME_DURATION, regions);

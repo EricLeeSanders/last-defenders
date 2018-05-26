@@ -13,6 +13,8 @@ import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
+import com.lastdefenders.game.service.factory.ProjectileFactory;
+import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.datastructures.Dimension;
 
 /**
@@ -25,10 +27,9 @@ public class Bullet extends GameActor implements Pool.Poolable {
     private static final float SPEED = 350f;
     private Targetable target;
     private Attacker attacker;
-    private Pool<Bullet> pool;
-    private boolean targetRemoved;
+    private ProjectilePool<Bullet> pool;
 
-    public Bullet(Pool<Bullet> pool, TextureRegion bulletTexture) {
+    public Bullet(ProjectilePool<Bullet> pool, TextureRegion bulletTexture) {
 
         this.pool = pool;
         setTextureRegion(bulletTexture);
@@ -70,11 +71,9 @@ public class Bullet extends GameActor implements Pool.Poolable {
     public void act(float delta) {
 
         super.act(delta);
-        if (!target.isActive() || target.isDead()) {
-            targetRemoved = true;
-        }
+
         if (this.getActions().size == 0) {
-            if (!targetRemoved) {
+            if (target.isActive() && !target.isDead()) {
                 Damage.dealBulletDamage(attacker, target);
             }
             pool.free(this);
@@ -87,7 +86,6 @@ public class Bullet extends GameActor implements Pool.Poolable {
         this.clear();
         target = null;
         attacker = null;
-        targetRemoved = false;
         this.remove();
     }
 }

@@ -101,8 +101,8 @@ public class GameStage extends Stage implements PlayerObserver {
 
         Logger.info("Game Stage: creating placement services");
         towerPlacement = new TowerPlacement(map, actorGroups, combatActorFactory, healthFactory);
-        supportActorPlacement = new SupportActorPlacement(actorGroups, supportActorFactory);
-        airStrikePlacement = new AirStrikePlacement(actorGroups, supportActorFactory);
+        supportActorPlacement = new SupportActorPlacement(supportActorFactory);
+        airStrikePlacement = new AirStrikePlacement(supportActorFactory);
         supplyDropPlacement = new SupplyDropPlacement(supportActorFactory);
         Logger.info("Game Stage: placement services created");
     }

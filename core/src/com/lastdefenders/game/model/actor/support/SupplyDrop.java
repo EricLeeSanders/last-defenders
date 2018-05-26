@@ -9,7 +9,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.service.factory.SupportActorFactory;
-import com.lastdefenders.game.service.factory.SupportActorFactory.SupplyDropPool;
+import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
@@ -24,11 +24,11 @@ public class SupplyDrop extends GameActor implements Pool.Poolable {
     private static final Dimension TEXTURE_SIZE = new Dimension(178, 120);
 
     private boolean active;
-    private SupplyDropPool pool;
+    private SupportActorPool<SupplyDrop> pool;
     private SupportActorFactory supportActorFactory;
     private LDAudio audio;
 
-    public SupplyDrop(TextureRegion textureRegion, SupplyDropPool pool,
+    public SupplyDrop(TextureRegion textureRegion, SupportActorPool<SupplyDrop> pool,
         SupportActorFactory supportActorFactory, LDAudio audio) {
 
         super(TEXTURE_SIZE);
@@ -60,7 +60,7 @@ public class SupplyDrop extends GameActor implements Pool.Poolable {
 
         Logger.info("DropDelay: " + dropDelay);
 
-        supportActorFactory.loadSupplyDropCrate().beginDrop(dropDelay, destination).toBack();
+        supportActorFactory.loadSupportActor(SupplyDropCrate.class, true).beginDrop(dropDelay, destination).toBack();
 
         audio.playSound(LDSound.AIRCRAFT_FLYOVER);
     }

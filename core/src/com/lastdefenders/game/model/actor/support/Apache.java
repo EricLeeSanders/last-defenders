@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.ai.TowerAI;
 import com.lastdefenders.game.model.actor.ai.towerai.FirstEnemyAI;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
+import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.ActorUtil;
@@ -22,7 +23,7 @@ import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.UtilPool;
 
-public class Apache extends SupportActor {
+public class Apache extends CombatSupportActor {
 
     public static final int COST = 2000;
     public static final float TIME_ACTIVE_LIMIT = 10f;
@@ -131,7 +132,7 @@ public class Apache extends SupportActor {
 
         Logger.info("Apache: exiting stage");
         exitingStage = true;
-        LDVector2 destination = UtilPool.getVector2(getWidth(), Resources.VIRTUAL_HEIGHT / 2);
+        LDVector2 destination = UtilPool.getVector2(-getWidth(), Resources.VIRTUAL_HEIGHT / 2);
 
         float duration = destination.dst(getPositionCenter()) / MOVE_SPEED;
         MoveToAction moveToAction = Actions
@@ -158,7 +159,7 @@ public class Apache extends SupportActor {
 
         if (target != null && !target.isDead()) {
             audio.playSound(LDSound.MACHINE_GUN);
-            projectileFactory.loadBullet().initialize(this, target, BULLET_SIZE);
+            projectileFactory.loadProjectile(Bullet.class).initialize(this, target, BULLET_SIZE);
         }
 
     }

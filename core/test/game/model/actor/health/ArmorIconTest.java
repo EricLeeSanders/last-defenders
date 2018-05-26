@@ -12,7 +12,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.health.ArmorIcon;
-import com.lastdefenders.game.service.factory.HealthFactory.ArmorIconPool;
+import com.lastdefenders.game.service.factory.HealthFactory.HealthPool;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -24,8 +24,8 @@ import testutil.TestUtil;
 public class ArmorIconTest {
 
     private Batch batchMock = mock(Batch.class);
-    @SuppressWarnings("rawtypes")
-    private ArmorIconPool poolMock = mock(ArmorIconPool.class);
+    @SuppressWarnings("unchecked")
+    private HealthPool<ArmorIcon> poolMock = mock(HealthPool.class);
 
     @Before
     public void initArmorIconTest() {
