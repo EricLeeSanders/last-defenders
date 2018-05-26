@@ -18,7 +18,7 @@ import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
 import com.lastdefenders.game.service.factory.EffectFactory;
-import com.lastdefenders.game.service.factory.SupportActorFactory.SupplyDropCratePool;
+import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.Dimension;
@@ -32,13 +32,13 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable {
 
     private Circle rangeCircle = new Circle();
     private boolean active, showRange;
-    private SupplyDropCratePool pool;
+    private SupportActorPool<SupplyDropCrate> pool;
     private EffectFactory effectFactory;
     private Group towerGroup;
     private TextureRegion rangeTexture;
 
     public SupplyDropCrate(TextureRegion textureRegion, TextureRegion rangeTexture,
-        SupplyDropCratePool pool, Group towerGroup, EffectFactory effectFactory) {
+        SupportActorPool<SupplyDropCrate> pool, Group towerGroup, EffectFactory effectFactory) {
 
         super(TEXTURE_SIZE);
         this.pool = pool;

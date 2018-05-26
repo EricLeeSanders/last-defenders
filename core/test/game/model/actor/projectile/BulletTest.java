@@ -19,7 +19,7 @@ import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
-import com.lastdefenders.game.service.factory.ProjectileFactory.BulletPool;
+import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.datastructures.Dimension;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +37,7 @@ import testutil.TestUtil;
 public class BulletTest {
 
     @SuppressWarnings("unchecked")
-    private BulletPool poolMock = mock(BulletPool.class);
+    private ProjectilePool<Bullet> poolMock = mock(ProjectilePool.class);
 
     @Before
     public void initBulletTest() {

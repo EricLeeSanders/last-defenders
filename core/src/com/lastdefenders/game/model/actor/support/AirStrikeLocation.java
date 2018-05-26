@@ -3,7 +3,7 @@ package com.lastdefenders.game.model.actor.support;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.lastdefenders.game.service.factory.SupportActorFactory.AirStrikeLocationPool;
+import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 
@@ -13,9 +13,9 @@ public class AirStrikeLocation extends Actor {
     private float radius;
     private boolean showRange = true;
     private TextureRegion rangeTexture;
-    private AirStrikeLocationPool pool;
+    private SupportActorPool<AirStrikeLocation> pool;
 
-    public AirStrikeLocation(AirStrikeLocationPool pool, TextureRegion rangeTexture) {
+    public AirStrikeLocation(SupportActorPool<AirStrikeLocation> pool, TextureRegion rangeTexture) {
 
         this.pool = pool;
         this.rangeTexture = rangeTexture;

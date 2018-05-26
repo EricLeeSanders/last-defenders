@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
+import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.datastructures.Dimension;
 
@@ -26,11 +27,11 @@ public class Rocket extends GameActor implements Pool.Poolable {
 
     private Attacker attacker;
     private Vector2 destination = new Vector2(0, 0);
-    private Pool<Rocket> pool;
+    private ProjectilePool<Rocket> pool;
     private float radius;
     private ProjectileFactory projectileFactory;
 
-    public Rocket(Pool<Rocket> pool, ProjectileFactory projectileFactory,
+    public Rocket(ProjectilePool<Rocket> pool, ProjectileFactory projectileFactory,
         TextureRegion rocketTexture) {
 
         this.pool = pool;
@@ -75,7 +76,7 @@ public class Rocket extends GameActor implements Pool.Poolable {
 
         super.act(delta);
         if (this.getActions().size == 0) {
-            projectileFactory.loadExplosion().initialize(attacker, radius, destination);
+            projectileFactory.loadProjectile(Explosion.class).initialize(attacker, radius, destination);
             pool.free(this);
         }
     }

@@ -1,34 +1,28 @@
 package com.lastdefenders.game.service.actorplacement;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.lastdefenders.game.model.actor.ActorGroups;
 import com.lastdefenders.game.model.actor.support.Apache;
-import com.lastdefenders.game.model.actor.support.SupportActor;
+import com.lastdefenders.game.model.actor.support.CombatSupportActor;
 import com.lastdefenders.game.service.factory.SupportActorFactory;
 import com.lastdefenders.util.Logger;
 
 public class SupportActorPlacement {
 
-    private SupportActor currentSupportActor;
-    private ActorGroups actorGroups;
+    private CombatSupportActor currentSupportActor;
     private SupportActorFactory supportActorFactory;
 
-    public SupportActorPlacement(ActorGroups actorGroups, SupportActorFactory supportActorFactory) {
+    public SupportActorPlacement(SupportActorFactory supportActorFactory) {
 
-        this.actorGroups = actorGroups;
         this.supportActorFactory = supportActorFactory;
     }
 
-    public void createSupportActor(String type) {
+    public <T extends Actor> void createSupportActor(Class<T> type) {
 
-        Logger.info("SupportActorPlacement: creating supply actor: " + type);
-        currentSupportActor = supportActorFactory.loadSupportActor(type);
+        Logger.info("SupportActorPlacement: creating supply actor: " + type.getSimpleName());
+        currentSupportActor = (CombatSupportActor) supportActorFactory.loadSupportActor(type, true);
         currentSupportActor.setPosition(0, 0);
-        if (type.equals("LandMine")) {
-            actorGroups.getLandmineGroup().addActor(currentSupportActor);
-        } else {
-            actorGroups.getSupportGroup().addActor(currentSupportActor);
-        }
         currentSupportActor.setActive(false);
         currentSupportActor.setVisible(false);
 
@@ -73,7 +67,7 @@ public class SupportActorPlacement {
         return (currentSupportActor != null);
     }
 
-    public SupportActor getCurrentSupportActor() {
+    public CombatSupportActor getCurrentSupportActor() {
 
         return currentSupportActor;
     }

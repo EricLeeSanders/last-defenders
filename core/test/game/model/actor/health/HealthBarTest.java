@@ -35,7 +35,8 @@ public class HealthBarTest {
     private TextureRegionDrawable redMock = mock(TextureRegionDrawable.class);
     private TextureRegionDrawable grayMock = mock(TextureRegionDrawable.class);
     private TextureRegionDrawable unfilledMock = mock(TextureRegionDrawable.class);
-    private HealthPool poolMock = mock(HealthPool.class);
+    @SuppressWarnings("unchecked")
+    private HealthPool<HealthBar> poolMock = mock(HealthPool.class);
 
     @Before
     public void initHealthBarTest() {

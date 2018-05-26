@@ -98,7 +98,7 @@ public class EffectFactory {
                 effectPool = waveOverCoinEffectPool;
                 break;
             default:
-                throw new NullPointerException("Effect Factory couldn't load " + className);
+                throw new IllegalArgumentException(className + " is not a valid Effect class");
         }
 
         @SuppressWarnings("unchecked")
@@ -137,7 +137,7 @@ public class EffectFactory {
                 effect = (T) createVehicleExplosion();
                 break;
             default:
-                throw new NullPointerException("Effect Factory couldn't create " + className);
+                throw new IllegalArgumentException(className + " is not a valid Effect class");
         }
         return effect;
     }
@@ -184,7 +184,7 @@ public class EffectFactory {
         private final Class<T> type;
         private final Group group;
 
-        public EffectPool(Class<T> type, Group group) {
+        EffectPool(Class<T> type, Group group) {
 
             this.type = type;
             this.group = group;
