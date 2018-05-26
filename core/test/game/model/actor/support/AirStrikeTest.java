@@ -47,7 +47,7 @@ public class AirStrikeTest {
     public AirStrike createAirStrike() {
 
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
-        doReturn(rocketMock).when(projectileFactoryMock).loadRocket();
+        doReturn(rocketMock).when(projectileFactoryMock).loadProjectile(Rocket.class);
 
         Resources resourcesMock = TestUtil.createResourcesMock();
         LDAudio audioMock = mock(LDAudio.class);

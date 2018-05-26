@@ -68,8 +68,7 @@ public class CombatActorFactory {
     private Player player;
 
     public CombatActorFactory(ActorGroups actorGroups, LDAudio audio, Resources resources,
-        EffectFactory effectFactory,
-        ProjectileFactory projectileFactory, Player player) {
+        EffectFactory effectFactory, ProjectileFactory projectileFactory, Player player) {
 
         this.actorGroups = actorGroups;
         this.audio = audio;
@@ -112,6 +111,8 @@ public class CombatActorFactory {
             case "FlameThrower":
                 tower = (Tower) towerFlameThrowerPool.obtain();
                 break;
+            default:
+                throw new IllegalArgumentException(type + " is not a valid Tower");
         }
 
         return tower;
@@ -150,6 +151,8 @@ public class CombatActorFactory {
             case "Humvee":
                 enemy = (Enemy) enemyHumveePool.obtain();
                 break;
+            default:
+                throw new IllegalArgumentException(type + " is not a valid Enemy");
         }
 
         return enemy;
@@ -164,96 +167,197 @@ public class CombatActorFactory {
         return spawningEnemy;
     }
 
+    private TowerSniper createTowerSniper(){
+        TextureRegion sniperRegion = resources.getTexture("tower-sniper");
+        TowerSniper towerSniper = new TowerSniper(sniperRegion, towerSniperPool, actorGroups.getEnemyGroup(),
+            resources.getTexture("range"), resources.getTexture("range-red"), projectileFactory,
+            audio);
+
+        return  towerSniper;
+    }
+
+    private TowerFlameThrower createTowerFlameThrower(){
+        TextureRegion flameThrowerRegion = resources.getTexture("tower-flame-thrower");
+        TowerFlameThrower towerFlameThrower = new TowerFlameThrower(flameThrowerRegion, towerFlameThrowerPool,
+            actorGroups.getEnemyGroup(), resources.getTexture("range"),
+            resources.getTexture("range-red"), projectileFactory, audio);
+
+        return towerFlameThrower;
+    }
+
+    private TowerRifle createTowerRifle(){
+        TextureRegion rifleRegion = resources.getTexture("tower-rifle");
+        TowerRifle towerRifle = new TowerRifle(rifleRegion, towerRiflePool, actorGroups.getEnemyGroup(),
+            resources.getTexture("range"), resources.getTexture("range-red"), projectileFactory,
+            audio);
+
+        return towerRifle;
+    }
+
+    private TowerMachineGun createTowerMachineGun(){
+        TextureRegion machineRegion = resources.getTexture("tower-machine-gun");
+        TowerMachineGun towerMachineGun = new TowerMachineGun(machineRegion, towerMachinePool,
+            actorGroups.getEnemyGroup(), resources.getTexture("range"),
+            resources.getTexture("range-red"), projectileFactory, audio);
+
+        return towerMachineGun;
+
+    }
+
+    private TowerRocketLauncher createTowerRocketLauncher(){
+        TextureRegion rocketLauncherRegion = resources.getTexture("tower-rocket-launcher");
+        TowerRocketLauncher towerRocketLauncher = new TowerRocketLauncher(rocketLauncherRegion, towerRocketLauncherPool,
+            actorGroups.getEnemyGroup(), resources.getTexture("range"),
+            resources.getTexture("range-red"), projectileFactory, audio);
+
+        return towerRocketLauncher;
+    }
+
+    private TowerTank createTowerTank(){
+        TextureRegion tankRegion = resources.getTexture("tower-tank-body");
+        TextureRegion turretRegion = resources.getTexture("tower-tank-turret");
+        TowerTank towerTank = new TowerTank(tankRegion, turretRegion, towerTankPool,
+            actorGroups.getEnemyGroup(), resources.getTexture("range"),
+            resources.getTexture("range-red"), projectileFactory, audio);
+
+        return towerTank;
+    }
+
+    private TowerTurret createTowerTurret(){
+        TextureRegion machineRegion = resources.getTexture("tower-turret-turret");
+        TextureRegion bagsRegion = resources.getTexture("tower-turret-bags");
+        TowerTurret towerTurret = new TowerTurret(bagsRegion, machineRegion, towerTurretPool,
+            actorGroups.getEnemyGroup(), resources.getTexture("range-turret"),
+            resources.getTexture("range-turret-red"), projectileFactory, audio);
+
+        return towerTurret;
+    }
+
+    private EnemyRifle createEnemyRifle(){
+        TextureRegion[] animatedRegions = resources.getAtlasRegion("enemy-rifle")
+            .toArray(TextureRegion.class);
+        TextureRegion stationaryRegion = resources.getTexture("enemy-rifle-stationary");
+        EnemyRifle enemyRifle = new EnemyRifle(stationaryRegion, animatedRegions, enemyRiflePool,
+            actorGroups.getTowerGroup(), projectileFactory, audio);
+
+        return enemyRifle;
+    }
+
+    private EnemyFlameThrower createEnemyFlameThrower(){
+        TextureRegion[] animatedRegions = resources.getAtlasRegion("enemy-flame-thrower")
+            .toArray(TextureRegion.class);
+        TextureRegion stationaryRegion = resources.getTexture("enemy-flame-thrower-stationary");
+        EnemyFlameThrower enemyFlameThrower = new EnemyFlameThrower(stationaryRegion, animatedRegions, enemyFlameThrowerPool,
+            actorGroups.getTowerGroup(), projectileFactory, audio);
+
+        return enemyFlameThrower;
+    }
+
+    private EnemyHumvee createEnemyHumvee(){
+        TextureRegion humveeRegion = resources.getTexture("enemy-humvee");
+        EnemyHumvee enemyHumvee = new EnemyHumvee(humveeRegion, new TextureRegion[]{humveeRegion},
+            enemyHumveePool);
+
+        return enemyHumvee;
+    }
+
+    private EnemyMachineGun createEnemyMachineGun(){
+        TextureRegion[] animatedRegions = resources.getAtlasRegion("enemy-machine-gun")
+            .toArray(TextureRegion.class);
+        TextureRegion stationaryRegion = resources.getTexture("enemy-machine-gun-stationary");
+        EnemyMachineGun enemyMachineGun = new EnemyMachineGun(stationaryRegion, animatedRegions, enemyMachinePool,
+            actorGroups.getTowerGroup(), projectileFactory, audio);
+
+        return  enemyMachineGun;
+    }
+
+    private EnemyRocketLauncher createEnemyRocketLauncher(){
+
+        TextureRegion[] animatedRegions = resources.getAtlasRegion("enemy-rocket-launcher")
+            .toArray(TextureRegion.class);
+        TextureRegion stationaryRegion = resources
+            .getTexture("enemy-rocket-launcher-stationary");
+        EnemyRocketLauncher enemyRocketLauncher = new EnemyRocketLauncher(stationaryRegion, animatedRegions,
+            enemyRocketLauncherPool, actorGroups.getTowerGroup(), projectileFactory, audio);
+
+        return enemyRocketLauncher;
+    }
+
+    private EnemySniper createEnemySniper(){
+        TextureRegion[] animatedRegions = resources.getAtlasRegion("enemy-sniper")
+            .toArray(TextureRegion.class);
+        TextureRegion stationaryRegion = resources.getTexture("enemy-sniper-stationary");
+        EnemySniper enemySniper = new EnemySniper(stationaryRegion, animatedRegions, enemySniperPool,
+            actorGroups.getTowerGroup(), projectileFactory, audio);
+
+        return enemySniper;
+    }
+
+    private EnemyTank createEnemyTank(){
+        TextureRegion tankRegion = resources.getTexture("enemy-tank-body");
+        TextureRegion turretRegion = resources.getTexture("enemy-tank-turret");
+        EnemyTank enemyTank = new EnemyTank(tankRegion, turretRegion, new TextureRegion[]{turretRegion},
+            enemyTankPool, actorGroups.getTowerGroup(), projectileFactory, audio);
+
+        return enemyTank;
+    }
+
     /**
-     * Create a Game Actor
+     * Create an {@link CombatActor}
      *
      * @param type - Type of Game Actor
      * @return CombatActor
      */
     private CombatActor createCombatActor(Class<? extends CombatActor> type) {
 
-        Logger.info("Combat Actor Factory: creating combat actor: " + type.getSimpleName());
+        String className = type.getSimpleName();
+        Logger.info("Combat Actor Factory: creating combat actor: " + className);
         CombatActor actor;
-        if (type.equals(TowerRifle.class)) {
-            TextureRegion rifleRegion = resources.getTexture("tower-rifle");
-            actor = new TowerRifle(rifleRegion, towerRiflePool, actorGroups.getEnemyGroup(),
-                resources.getTexture("range"), resources.getTexture("range-red"), projectileFactory,
-                audio);
-        } else if (type.equals(TowerFlameThrower.class)) {
-            TextureRegion flameThrowerRegion = resources.getTexture("tower-flame-thrower");
-            actor = new TowerFlameThrower(flameThrowerRegion, towerFlameThrowerPool,
-                actorGroups.getEnemyGroup(), resources.getTexture("range"),
-                resources.getTexture("range-red"), projectileFactory, audio);
-        } else if (type.equals(TowerSniper.class)) {
-            TextureRegion sniperRegion = resources.getTexture("tower-sniper");
-            actor = new TowerSniper(sniperRegion, towerSniperPool, actorGroups.getEnemyGroup(),
-                resources.getTexture("range"), resources.getTexture("range-red"), projectileFactory,
-                audio);
-        } else if (type.equals(TowerMachineGun.class)) {
-            TextureRegion machineRegion = resources.getTexture("tower-machine-gun");
-            actor = new TowerMachineGun(machineRegion, towerMachinePool,
-                actorGroups.getEnemyGroup(), resources.getTexture("range"),
-                resources.getTexture("range-red"), projectileFactory, audio);
-        } else if (type.equals(TowerRocketLauncher.class)) {
-            TextureRegion rocketLauncherRegion = resources.getTexture("tower-rocket-launcher");
-            actor = new TowerRocketLauncher(rocketLauncherRegion, towerRocketLauncherPool,
-                actorGroups.getEnemyGroup(), resources.getTexture("range"),
-                resources.getTexture("range-red"), projectileFactory, audio);
-        } else if (type.equals(TowerTank.class)) {
-            TextureRegion tankRegion = resources.getTexture("tower-tank-body");
-            TextureRegion turretRegion = resources.getTexture("tower-tank-turret");
-            actor = new TowerTank(tankRegion, turretRegion, towerTankPool,
-                actorGroups.getEnemyGroup(), resources.getTexture("range"),
-                resources.getTexture("range-red"), projectileFactory, audio);
-        } else if (type.equals(TowerTurret.class)) {
-            TextureRegion machineRegion = resources.getTexture("tower-turret-turret");
-            TextureRegion bagsRegion = resources.getTexture("tower-turret-bags");
-            actor = new TowerTurret(bagsRegion, machineRegion, towerTurretPool,
-                actorGroups.getEnemyGroup(), resources.getTexture("range-turret"),
-                resources.getTexture("range-turret-red"), projectileFactory, audio);
-        } else if (type.equals(EnemyRifle.class)) {
-            TextureRegion[] animatedRegions = resources.getAtlasRegion("enemy-rifle")
-                .toArray(TextureRegion.class);
-            TextureRegion stationaryRegion = resources.getTexture("enemy-rifle-stationary");
-            actor = new EnemyRifle(stationaryRegion, animatedRegions, enemyRiflePool,
-                actorGroups.getTowerGroup(), projectileFactory, audio);
-        } else if (type.equals(EnemyFlameThrower.class)) {
-            TextureRegion[] animatedRegions = resources.getAtlasRegion("enemy-flame-thrower")
-                .toArray(TextureRegion.class);
-            TextureRegion stationaryRegion = resources.getTexture("enemy-flame-thrower-stationary");
-            actor = new EnemyFlameThrower(stationaryRegion, animatedRegions, enemyFlameThrowerPool,
-                actorGroups.getTowerGroup(), projectileFactory, audio);
-        } else if (type.equals(EnemyHumvee.class)) {
-            TextureRegion humveeRegion = resources.getTexture("enemy-humvee");
-            actor = new EnemyHumvee(humveeRegion, new TextureRegion[]{humveeRegion},
-                enemyHumveePool);
-        } else if (type.equals(EnemyMachineGun.class)) {
-            TextureRegion[] animatedRegions = resources.getAtlasRegion("enemy-machine-gun")
-                .toArray(TextureRegion.class);
-            TextureRegion stationaryRegion = resources.getTexture("enemy-machine-gun-stationary");
-            actor = new EnemyMachineGun(stationaryRegion, animatedRegions, enemyMachinePool,
-                actorGroups.getTowerGroup(), projectileFactory, audio);
-        } else if (type.equals(EnemyRocketLauncher.class)) {
-            TextureRegion[] animatedRegions = resources.getAtlasRegion("enemy-rocket-launcher")
-                .toArray(TextureRegion.class);
-            TextureRegion stationaryRegion = resources
-                .getTexture("enemy-rocket-launcher-stationary");
-            actor = new EnemyRocketLauncher(stationaryRegion, animatedRegions,
-                enemyRocketLauncherPool, actorGroups.getTowerGroup(), projectileFactory, audio);
-        } else if (type.equals(EnemySniper.class)) {
-            TextureRegion[] animatedRegions = resources.getAtlasRegion("enemy-sniper")
-                .toArray(TextureRegion.class);
-            TextureRegion stationaryRegion = resources.getTexture("enemy-sniper-stationary");
-            actor = new EnemySniper(stationaryRegion, animatedRegions, enemySniperPool,
-                actorGroups.getTowerGroup(), projectileFactory, audio);
-        } else if (type.equals(EnemyTank.class)) {
-            TextureRegion tankRegion = resources.getTexture("enemy-tank-body");
-            TextureRegion turretRegion = resources.getTexture("enemy-tank-turret");
-            actor = new EnemyTank(tankRegion, turretRegion, new TextureRegion[]{turretRegion},
-                enemyTankPool, actorGroups.getTowerGroup(), projectileFactory, audio);
-        } else {
-            throw new NullPointerException(
-                "Combat Actor Factory couldn't create: " + type.getSimpleName());
+        switch(className){
+            case "TowerRifle":
+                actor = createTowerRifle();
+                break;
+            case "TowerFlameThrower":
+                actor = createTowerFlameThrower();
+                break;
+            case "TowerSniper":
+                actor = createTowerSniper();
+                break;
+            case "TowerMachineGun":
+                actor = createTowerMachineGun();
+                break;
+            case "TowerRocketLauncher":
+                actor = createTowerRocketLauncher();
+                break;
+            case "TowerTank":
+                actor = createTowerTank();
+                break;
+            case "TowerTurret":
+                actor = createTowerTurret();
+                break;
+            case "EnemyRifle":
+                actor = createEnemyRifle();
+                break;
+            case "EnemyFlameThrower":
+                actor = createEnemyFlameThrower();
+                break;
+            case "EnemyHumvee":
+                actor = createEnemyHumvee();
+                break;
+            case "EnemyMachineGun":
+                actor = createEnemyMachineGun();
+                break;
+            case "EnemyRocketLauncher":
+                actor = createEnemyRocketLauncher();
+                break;
+            case "EnemySniper":
+                actor = createEnemySniper();
+                break;
+            case "EnemyTank":
+                actor = createEnemyTank();
+                break;
+            default:
+                throw new IllegalArgumentException(className + " is not a valid CombatActor");
         }
         if (actor instanceof Tower) {
             TowerStateManager towerStateManager = new TowerStateManager((Tower) actor,
@@ -280,9 +384,9 @@ public class CombatActorFactory {
 
     public class CombatActorPool<T extends CombatActor> extends Pool<CombatActor> {
 
-        private final Class<? extends CombatActor> type;
+        private final Class<T> type;
 
-        public CombatActorPool(Class<? extends CombatActor> type) {
+        public CombatActorPool(Class<T> type) {
 
             this.type = type;
         }

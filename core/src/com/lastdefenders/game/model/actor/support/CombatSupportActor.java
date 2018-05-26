@@ -5,19 +5,21 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
+import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.UtilPool;
 
-public class SupportActor extends GameActor implements Pool.Poolable, Attacker {
+public class CombatSupportActor extends GameActor implements Pool.Poolable, Attacker {
 
-    private Pool<SupportActor> pool;
+    private SupportActorPool<? extends Actor> pool;
     private float range, attack;
     private Vector2 gunPos;
     private Vector2 rotatedGunPos = UtilPool.getVector2();
@@ -28,7 +30,7 @@ public class SupportActor extends GameActor implements Pool.Poolable, Attacker {
     private TextureRegion rangeTexture;
     private Circle rangeShape;
 
-    SupportActor(Pool<SupportActor> pool, Group targetGroup, TextureRegion textureRegion,
+    CombatSupportActor(SupportActorPool<? extends Actor> pool, Group targetGroup, TextureRegion textureRegion,
         Dimension textureSize, TextureRegion rangeTexture, float range, float attack,
         Vector2 gunPos, int cost) {
 

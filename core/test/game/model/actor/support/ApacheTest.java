@@ -49,7 +49,7 @@ public class ApacheTest {
         Resources resourcesMock = TestUtil.createResourcesMock();
         LDAudio audioMock = mock(LDAudio.class);
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
-        doReturn(bulletMock).when(projectileFactoryMock).loadBullet();
+        doReturn(bulletMock).when(projectileFactoryMock).loadProjectile(Bullet.class);
 
         return new Apache(poolMock, new Group(), projectileFactoryMock,
             resourcesMock.getTexture(""), new TextureRegion[]{resourcesMock.getTexture("")},
