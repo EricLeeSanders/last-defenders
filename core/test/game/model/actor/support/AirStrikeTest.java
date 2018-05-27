@@ -47,7 +47,7 @@ public class AirStrikeTest {
     public AirStrike createAirStrike() {
 
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
-        doReturn(rocketMock).when(projectileFactoryMock).loadRocket();
+        doReturn(rocketMock).when(projectileFactoryMock).loadProjectile(Rocket.class);
 
         Resources resourcesMock = TestUtil.createResourcesMock();
         LDAudio audioMock = mock(LDAudio.class);
@@ -90,6 +90,8 @@ public class AirStrikeTest {
         airStrike.act(AirStrike.AIRSTRIKE_DURATION / 2);
         verify(poolMock, never()).free(airStrike);
         airStrike.act(AirStrike.AIRSTRIKE_DURATION / 2);
+        // Act a second time so that the FreeActorAction is called
+        airStrike.act(0.0001f);
         verify(poolMock, times(1)).free(airStrike);
 
     }

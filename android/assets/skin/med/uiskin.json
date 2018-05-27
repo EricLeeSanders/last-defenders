@@ -43,9 +43,7 @@ com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	transparent: {down: transparent, font: default-font, fontColor: white}
 },
 com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
-	default: { background: hollow },
-	no-round: { background: hollow-no-round },
-	no-background: {}
+	default: { }
 },
 com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable: {
 	main-panel: { region: main-panel, leftWidth: 75, rightWidth: 75, topHeight: 67, bottomHeight: 67 }
@@ -56,7 +54,6 @@ com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: { font: default-font, fontColor: white },
 	hollow_label: {background: hollow_label, font: default-font, fontColor: white},
-	hollow: {background: hollow, font: default-font, fontColor: white},
 	label_normal: {background: hollow_label, font: default-font, fontColor: white},
 	money_label: {background: money_label, font: default-font, fontColor: white},
 	kills_label: {background: kills_label, font: default-font, fontColor: white},

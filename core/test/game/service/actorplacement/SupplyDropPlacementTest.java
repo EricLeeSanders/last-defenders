@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
@@ -44,7 +45,8 @@ public class SupplyDropPlacementTest {
         SupplyDropPlacement supplyDropPlacement = new SupplyDropPlacement(supportActorFactory);
         SupplyDropCrate supplyDropCrate = supplyDropCrateTest.createSupplyDropCrate(new Group());
 
-        doReturn(supplyDropCrate).when(supportActorFactory).loadSupplyDropCrate();
+        doReturn(supplyDropCrate).when(supportActorFactory).loadSupportActor(
+            eq(SupplyDropCrate.class), eq(true));
 
         supplyDropPlacement.createSupplyDrop();
 
@@ -64,7 +66,8 @@ public class SupplyDropPlacementTest {
 
         // finish
         SupplyDrop supplyDropMock = mock(SupplyDrop.class);
-        doReturn(supplyDropMock).when(supportActorFactory).loadSupplyDrop();
+        doReturn(supplyDropMock).when(supportActorFactory).loadSupportActor(
+            eq(SupplyDrop.class), eq(true));
         doNothing().when(supplyDropMock).beginSupplyDrop(isA(LDVector2.class));
 
         supplyDropPlacement.placeSupplyDrop();

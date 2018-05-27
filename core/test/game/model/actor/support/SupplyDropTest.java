@@ -16,7 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.lastdefenders.game.model.actor.support.SupplyDrop;
 import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
 import com.lastdefenders.game.service.factory.SupportActorFactory;
-import com.lastdefenders.game.service.factory.SupportActorFactory.SupplyDropPool;
+import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import org.junit.Before;
@@ -29,7 +29,8 @@ import testutil.TestUtil;
 
 public class SupplyDropTest {
 
-    private SupplyDropPool poolMock = mock(SupplyDropPool.class);
+    @SuppressWarnings("unchecked")
+    private SupportActorPool<SupplyDrop> poolMock = mock(SupportActorPool.class);
     private SupplyDropCrate supplyDropCrateMock = mock(SupplyDropCrate.class);
     private LDAudio audioMock = mock(LDAudio.class);
 
@@ -42,7 +43,8 @@ public class SupplyDropTest {
     private SupplyDrop createSupplyDrop() {
 
         SupportActorFactory supportActorFactoryMock = mock(SupportActorFactory.class);
-        doReturn(supplyDropCrateMock).when(supportActorFactoryMock).loadSupplyDropCrate();
+        doReturn(supplyDropCrateMock).when(supportActorFactoryMock).loadSupportActor(
+            eq(SupplyDropCrate.class), eq(true));
         doReturn(supplyDropCrateMock).when(supplyDropCrateMock)
             .beginDrop(isA(Float.class), isA(Vector2.class));
         Resources resources = TestUtil.createResourcesMock();
@@ -67,6 +69,8 @@ public class SupplyDropTest {
         verify(supplyDropCrateMock, times(1)).beginDrop(isA(Float.class), eq(destination));
 
         supplyDrop.act(10f);
+        // act again so that the FreeActorAction is called
+        supplyDrop.act(0.0001f);
 
         assertEquals(0, supplyDrop.getActions().size);
         verify(poolMock, times(1)).free(supplyDrop);

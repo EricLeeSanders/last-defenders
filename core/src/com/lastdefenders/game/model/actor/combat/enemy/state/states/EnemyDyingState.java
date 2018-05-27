@@ -36,7 +36,7 @@ public class EnemyDyingState extends CombatActorDyingState<EnemyState> {
     @Override
     public void preState() {
         // Has to be put in preState because Update is never called (Enemy is removed from stage)
-        effectFactory.loadAnimationEffect(EnemyCoinEffect.class)
+        effectFactory.loadEffect(EnemyCoinEffect.class, true)
             .initialize(enemy.getPositionCenter());
         player.giveMoney(enemy.getKillReward());
         super.preState();

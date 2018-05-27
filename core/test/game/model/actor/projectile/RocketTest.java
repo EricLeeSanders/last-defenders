@@ -8,13 +8,14 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Interpolation.Exp;
 import com.badlogic.gdx.math.Vector2;
 import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.projectile.Explosion;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
-import com.lastdefenders.game.service.factory.ProjectileFactory.RocketPool;
+import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
@@ -33,8 +34,8 @@ import testutil.TestUtil;
 @PrepareForTest({Damage.class})
 public class RocketTest {
 
-
-    private RocketPool poolMock = mock(RocketPool.class);
+    @SuppressWarnings("unchecked")
+    private ProjectilePool<Rocket> poolMock = mock(ProjectilePool.class);
     private Explosion explosionMock = mock(Explosion.class);
 
     @Before
@@ -47,7 +48,7 @@ public class RocketTest {
     public Rocket createRocket() {
 
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
-        doReturn(explosionMock).when(projectileFactoryMock).loadExplosion();
+        doReturn(explosionMock).when(projectileFactoryMock).loadProjectile(Explosion.class);
         Resources resourcesMock = TestUtil.createResourcesMock();
 
         return new Rocket(poolMock, projectileFactoryMock, resourcesMock.getTexture(""));
@@ -78,6 +79,10 @@ public class RocketTest {
         assertEquals(1, rocket.getActions().size);
 
         rocket.act(100f);
+        // Call a second time so that the explosion action is called
+        rocket.act(0.0001f);
+        // Call a third time so that the FreeActorAction is called
+        rocket.act(0.0001f);
 
         assertEquals(0, rocket.getActions().size);
         verify(poolMock).free(rocket);
