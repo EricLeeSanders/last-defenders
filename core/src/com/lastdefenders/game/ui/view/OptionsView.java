@@ -65,7 +65,6 @@ public class OptionsView extends Group implements IOptionsView {
 
         Table mainTable = new Table();
         mainTable.setTransform(false);
-        mainTable.setBackground(skin.getDrawable("hollow"));
         container.add(mainTable).colspan(3).size(350, 226);
 
         Label lblTitle = new Label("OPTIONS", skin);

@@ -41,7 +41,7 @@ public class LandMineTest {
 
         Resources resourcesMock = TestUtil.createResourcesMock();
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
-        doReturn(explosionMock).when(projectileFactoryMock).loadExplosion();
+        doReturn(explosionMock).when(projectileFactoryMock).loadProjectile(Explosion.class);
 
         return new LandMine(poolMock, new Group(), projectileFactoryMock,
             resourcesMock.getTexture(""), resourcesMock.getTexture(""));

@@ -1,6 +1,7 @@
 package com.lastdefenders.game.service.actorplacement;
 
 import com.badlogic.gdx.math.Vector2;
+import com.lastdefenders.game.model.actor.support.SupplyDrop;
 import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
 import com.lastdefenders.game.service.factory.SupportActorFactory;
 import com.lastdefenders.util.Logger;
@@ -18,7 +19,7 @@ public class SupplyDropPlacement {
     public void createSupplyDrop() {
 
         Logger.info("SupplyDropPlacement: creating supply drop");
-        currentSupplyDropCrate = supportActorFactory.loadSupplyDropCrate();
+        currentSupplyDropCrate = supportActorFactory.loadSupportActor(SupplyDropCrate.class, true);
         currentSupplyDropCrate.setPosition(0, 0);
         currentSupplyDropCrate.setActive(false);
         currentSupplyDropCrate.setVisible(false);
@@ -36,7 +37,7 @@ public class SupplyDropPlacement {
 
         if (isCurrentSupplyDropCrate()) {
             Logger.info("SupplyDropPlacement: finishing placement");
-            supportActorFactory.loadSupplyDrop()
+            supportActorFactory.loadSupportActor(SupplyDrop.class, true)
                 .beginSupplyDrop(currentSupplyDropCrate.getPositionCenter());
             currentSupplyDropCrate.setShowRange(false);
             currentSupplyDropCrate.freeActor();

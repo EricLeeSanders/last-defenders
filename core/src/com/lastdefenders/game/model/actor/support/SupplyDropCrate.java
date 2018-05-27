@@ -10,7 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.ScaleToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.actions.VisibleAction;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.helper.CollisionDetection;
@@ -18,10 +20,14 @@ import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
 import com.lastdefenders.game.service.factory.EffectFactory;
-import com.lastdefenders.game.service.factory.SupportActorFactory.SupplyDropCratePool;
+import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
+import com.lastdefenders.util.UtilPool;
+import com.lastdefenders.util.action.FreeActorAction;
+import com.lastdefenders.util.action.LDOneTimeAction;
 import com.lastdefenders.util.datastructures.Dimension;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 
 public class SupplyDropCrate extends GameActor implements Pool.Poolable {
 
@@ -32,13 +38,13 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable {
 
     private Circle rangeCircle = new Circle();
     private boolean active, showRange;
-    private SupplyDropCratePool pool;
+    private SupportActorPool<SupplyDropCrate> pool;
     private EffectFactory effectFactory;
     private Group towerGroup;
     private TextureRegion rangeTexture;
 
     public SupplyDropCrate(TextureRegion textureRegion, TextureRegion rangeTexture,
-        SupplyDropCratePool pool, Group towerGroup, EffectFactory effectFactory) {
+        SupportActorPool<SupplyDropCrate> pool, Group towerGroup, EffectFactory effectFactory) {
 
         super(TEXTURE_SIZE);
         this.pool = pool;
@@ -52,33 +58,46 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable {
     public SupplyDropCrate beginDrop(float dropDelay, Vector2 destination) {
 
         Logger.info("SupplyDropCrate: Beginning Crate drop");
-
+        createInitialActions(dropDelay);
         setVisible(false);
         setActive(true);
         setPositionCenter(destination);
 
-        ScaleToAction scaleToAction = Actions
-            .scaleTo(0.5f, 0.5f, SUPPLYDROP_DURATION, Interpolation.linear);
-        DelayAction scaleDelayAction = Actions.delay(dropDelay, scaleToAction);
-        addAction(scaleDelayAction);
-
-        VisibleAction visibleAction = Actions.visible(true);
-        DelayAction visibleDelayAction = Actions.delay(dropDelay, visibleAction);
-        addAction(visibleDelayAction);
-
         return this;
     }
 
-    @Override
-    public void act(float delta) {
 
-        super.act(delta);
-        if (isActive()) {
-            if (this.getActions().size <= 0) {
-                healActors();
-                pool.free(this);
-            }
-        }
+    /**
+     * Creates the initial actions.
+     * <br>
+     * The initial actions are in the following {@link SequenceAction}:
+     * <ol>
+     *  <li>{@link DelayAction}</li>
+     *  <li>{@link ScaleToAction}</li>
+     *  <li>{@link VisibleAction}</li>
+     *  <li>{@link LDOneTimeAction} - heal actors</li>
+     *  <li>{@link FreeActorAction}</li>
+     * </ol>
+     *
+     * @param dropDelay
+     */
+    private void createInitialActions(float dropDelay){
+
+        addAction(
+            Actions.sequence(
+                Actions.delay(dropDelay),
+                Actions.scaleTo(0.5f, 0.5f, SUPPLYDROP_DURATION, Interpolation.linear),
+                Actions.visible(true),
+                new LDOneTimeAction() {
+                    @Override
+                    public void action() {
+                        healActors();
+                    }
+                },
+                UtilPool.getFreeActorAction(pool)
+            )
+        );
+
     }
 
 
@@ -105,7 +124,7 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable {
                 if (CollisionDetection.shapesIntersect(tower.getBody(), getRangeShape())) {
                     tower.heal();
                     tower.resetArmor();
-                    TowerHealEffect effect = effectFactory.loadLabelEffect(TowerHealEffect.class);
+                    TowerHealEffect effect = effectFactory.loadEffect(TowerHealEffect.class, true);
                     effect.initialize(tower);
 
                 }

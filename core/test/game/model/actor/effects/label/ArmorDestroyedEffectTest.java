@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.label.ArmorDestroyedEffect;
-import com.lastdefenders.game.service.factory.EffectFactory.LabelEffectPool;
+import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import com.lastdefenders.util.Resources;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +27,7 @@ import testutil.TestUtil;
 public class ArmorDestroyedEffectTest {
 
     @SuppressWarnings("unchecked")
-    private LabelEffectPool<ArmorDestroyedEffect> labelEffectPoolMock = mock(LabelEffectPool.class);
+    private EffectPool<ArmorDestroyedEffect> labelEffectPoolMock = mock(EffectPool.class);
 
     @Before
     public void initArmorDestroyedEffectTest() {
@@ -74,6 +74,8 @@ public class ArmorDestroyedEffectTest {
 
         // Finish it
         armorDestroyedEffect.act(50f);
+        // Call a second time so that the FreeActorAction is called
+        armorDestroyedEffect.act(0.0001f);
 
         verify(labelEffectPoolMock, times(1)).free(armorDestroyedEffect);
 

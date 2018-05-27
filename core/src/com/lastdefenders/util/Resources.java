@@ -151,10 +151,10 @@ public class Resources {
         loadedTextures.put("apache-stationary", actorAtlas.findRegion("apache", 1));
         loadedTextures.put("shield", actorAtlas.findRegion("shield"));
         loadedTextures.put("pathDisplayCircle", actorAtlas.findRegion("path-display-circle"));
+        loadedTextures.put("blood", actorAtlas.findRegion("blood"));
 
         loadedAtlasRegions.put("explosion", actorAtlas.findRegions("explosion"));
         loadedAtlasRegions.put("flame", actorAtlas.findRegions("flame"));
-        loadedAtlasRegions.put("blood-splatter", actorAtlas.findRegions("blood-splatter"));
         loadedAtlasRegions.put("smoke-ring", actorAtlas.findRegions("smoke-ring"));
         loadedAtlasRegions.put("enemy-rifle", actorAtlas.findRegions("enemy-rifle"));
         loadedAtlasRegions

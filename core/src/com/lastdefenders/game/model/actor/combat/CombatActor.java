@@ -9,22 +9,24 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager;
 import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager.CombatActorEventEnum;
-import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
+import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.model.actor.interfaces.Collidable;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
+import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.DebugOptions;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.lastdefenders.util.datastructures.pool.UtilPool;
+import com.lastdefenders.util.UtilPool;
 
 /**
  * Represents both a Tower and Enemy.
@@ -40,13 +42,13 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
     private Vector2 rotatedGunPos = UtilPool.getVector2();
     private Circle rangeCircle = new Circle();
     private boolean hasArmor, dead, active;
-    private Pool<CombatActor> pool;
+    private CombatActorPool<? extends CombatActor> pool;
     private DeathEffectType deathEffectType;
     private Group targetGroup;
     private EventManager eventManager;
 
     protected CombatActor(TextureRegion textureRegion, Dimension textureSize,
-        Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos, float health, float armor,
+        CombatActorPool<? extends CombatActor> pool, Group targetGroup, Vector2 gunPos, float health, float armor,
         float attack, float attackSpeed, float range, DeathEffectType deathEffectType) {
 
         super(textureSize);
@@ -298,9 +300,13 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
         this.active = active;
     }
 
-    public void setPool(Pool<CombatActor> pool) {
+    public void setPool(CombatActorPool<? extends CombatActor> pool) {
 
         this.pool = pool;
+    }
+
+    public CombatActorPool<? extends Actor> getPool(){
+        return pool;
     }
 
 }

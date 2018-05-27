@@ -6,399 +6,252 @@ filter: MipMapLinearNearest,Nearest
 repeat: none
 airstrike
   rotate: false
-  xy: 1146, 27
+  xy: 1370, 161
   size: 618, 375
   orig: 618, 375
   offset: 0, 0
   index: -1
 supply-drop
   rotate: false
-  xy: 1146, 27
+  xy: 1370, 161
   size: 618, 375
   orig: 618, 375
   offset: 0, 0
   index: -1
 apache
   rotate: false
-  xy: 4, 16
+  xy: 4, 17
   size: 300, 219
   orig: 300, 219
   offset: 0, 0
   index: 1
 apache
   rotate: false
-  xy: 308, 16
+  xy: 308, 17
   size: 300, 219
   orig: 300, 219
   offset: 0, 0
   index: 2
 apache
   rotate: false
-  xy: 612, 16
+  xy: 612, 17
   size: 300, 219
   orig: 300, 219
   offset: 0, 0
   index: 3
-blood-splatter
-  rotate: false
-  xy: 916, 131
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 0
-blood-splatter
-  rotate: false
-  xy: 916, 131
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 4
-blood-splatter
-  rotate: false
-  xy: 916, 131
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 6
-blood-splatter
-  rotate: false
-  xy: 916, 131
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 2
-blood-splatter
-  rotate: false
-  xy: 916, 131
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 3
-blood-splatter
-  rotate: false
-  xy: 916, 131
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 1
-blood-splatter
-  rotate: false
-  xy: 916, 131
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 7
-blood-splatter
-  rotate: false
-  xy: 916, 131
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 5
-blood-splatter
-  rotate: false
-  xy: 1512, 995
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 8
-blood-splatter
-  rotate: false
-  xy: 1512, 847
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 9
-blood-splatter
-  rotate: false
-  xy: 1512, 699
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 10
-blood-splatter
-  rotate: false
-  xy: 1868, 264
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 11
-blood-splatter
-  rotate: false
-  xy: 1868, 116
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 12
 bullet
   rotate: false
-  xy: 2017, 1720
+  xy: 1988, 108
   size: 15, 15
   orig: 15, 15
   offset: 0, 0
   index: -1
-coin
-  rotate: false
-  xy: 1768, 318
-  size: 96, 96
-  orig: 96, 96
-  offset: 0, 0
-  index: 1
-coin
-  rotate: false
-  xy: 1768, 218
-  size: 96, 96
-  orig: 96, 96
-  offset: 0, 0
-  index: 2
-coin
-  rotate: false
-  xy: 1768, 118
-  size: 96, 96
-  orig: 96, 96
-  offset: 0, 0
-  index: 3
-coin
-  rotate: false
-  xy: 1768, 18
-  size: 96, 96
-  orig: 96, 96
-  offset: 0, 0
-  index: 4
 enemy-flame-thrower
   rotate: false
-  xy: 1868, 4
+  xy: 1812, 1597
   size: 168, 108
   orig: 168, 108
   offset: 0, 0
   index: 1
-enemy-flame-thrower-stationary
+enemy-flame-thrower
   rotate: false
-  xy: 916, 19
+  xy: 1812, 1485
   size: 168, 108
   orig: 168, 108
-  offset: 0, 0
-  index: -1
-enemy-humvee
-  rotate: false
-  xy: 908, 406
-  size: 300, 129
-  orig: 300, 129
-  offset: 0, 0
-  index: -1
-enemy-machine-gun
-  rotate: false
-  xy: 1688, 979
-  size: 120, 78
-  orig: 120, 78
-  offset: 0, 0
-  index: 1
-enemy-machine-gun
-  rotate: false
-  xy: 1512, 617
-  size: 120, 78
-  orig: 120, 78
   offset: 0, 0
   index: 2
-enemy-machine-gun-stationary
+enemy-flame-thrower-stationary
   rotate: false
-  xy: 1688, 1061
-  size: 120, 78
-  orig: 120, 78
+  xy: 1812, 1709
+  size: 168, 108
+  orig: 168, 108
+  offset: 0, 0
+  index: -1
+enemy-rifle
+  rotate: false
+  xy: 1812, 1182
+  size: 159, 99
+  orig: 159, 99
+  offset: 0, 0
+  index: 1
+enemy-rifle-stationary
+  rotate: false
+  xy: 1812, 1285
+  size: 159, 99
+  orig: 159, 99
   offset: 0, 0
   index: -1
 enemy-rocket-launcher
   rotate: false
-  xy: 1812, 1292
+  xy: 1687, 542
   size: 171, 144
   orig: 171, 144
   offset: 0, 0
   index: 1
 enemy-rocket-launcher
   rotate: false
-  xy: 1812, 1144
+  xy: 1862, 542
   size: 171, 144
   orig: 171, 144
   offset: 0, 0
   index: 2
 enemy-rocket-launcher-stationary
   rotate: false
-  xy: 1812, 1440
+  xy: 1512, 542
   size: 171, 144
   orig: 171, 144
   offset: 0, 0
   index: -1
-enemy-sniper
-  rotate: false
-  xy: 1212, 412
-  size: 234, 123
-  orig: 234, 123
-  offset: 0, 0
-  index: 1
-enemy-sniper
-  rotate: false
-  xy: 1450, 412
-  size: 234, 123
-  orig: 234, 123
-  offset: 0, 0
-  index: 2
-enemy-sniper-stationary
-  rotate: false
-  xy: 908, 279
-  size: 234, 123
-  orig: 234, 123
-  offset: 0, 0
-  index: -1
 enemy-tank-body
   rotate: false
-  xy: 1812, 1893
+  xy: 1370, 7
   size: 228, 150
   orig: 228, 150
   offset: 0, 0
   index: -1
-explosion
+flame
   rotate: false
-  xy: 1660, 591
-  size: 384, 384
-  orig: 384, 384
+  xy: 916, 86
+  size: 450, 450
+  orig: 450, 450
   offset: 0, 0
   index: 1
+flame
+  rotate: false
+  xy: 1512, 690
+  size: 450, 450
+  orig: 450, 450
+  offset: 0, 0
+  index: 2
 healthbar-gray
   rotate: false
-  xy: 1966, 1125
+  xy: 1251, 24
   size: 75, 15
   orig: 75, 15
   offset: 0, 0
   index: -1
 healthbar-green
   rotate: false
-  xy: 1966, 1106
+  xy: 1291, 67
   size: 75, 15
   orig: 75, 15
   offset: 0, 0
   index: -1
 healthbar-orange
   rotate: false
-  xy: 1966, 1087
+  xy: 1291, 48
   size: 75, 15
   orig: 75, 15
   offset: 0, 0
   index: -1
 healthbar-red
   rotate: false
-  xy: 1966, 1068
+  xy: 1251, 5
   size: 75, 15
   orig: 75, 15
   offset: 0, 0
   index: -1
 healthbar-unfilled
   rotate: false
-  xy: 1966, 1049
+  xy: 1812, 1163
   size: 75, 15
   orig: 75, 15
   offset: 0, 0
   index: -1
-landmine
-  rotate: false
-  xy: 1926, 497
-  size: 90, 90
-  orig: 90, 90
-  offset: 0, 0
-  index: -1
 path-display-circle
   rotate: false
-  xy: 1987, 1468
+  xy: 1988, 127
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
   index: -1
 range
   rotate: false
-  xy: 4, 1143
+  xy: 4, 1144
   size: 900, 900
   orig: 900, 900
   offset: 0, 0
   index: -1
 range-black
   rotate: false
-  xy: 4, 239
+  xy: 4, 240
   size: 900, 900
   orig: 900, 900
   offset: 0, 0
   index: -1
 range-red
   rotate: false
-  xy: 908, 1143
+  xy: 908, 1144
   size: 900, 900
   orig: 900, 900
   offset: 0, 0
   index: -1
 range-turret
   rotate: false
-  xy: 908, 539
+  xy: 908, 540
   size: 600, 600
   orig: 600, 600
   offset: 0, 0
   index: -1
-rocket
-  rotate: false
-  xy: 1512, 549
-  size: 138, 38
-  orig: 138, 38
-  offset: 0, 0
-  index: -1
 shield
   rotate: false
-  xy: 1987, 1545
+  xy: 1251, 43
   size: 36, 39
   orig: 36, 39
   offset: 0, 0
   index: -1
 shield-destroyed
   rotate: false
-  xy: 1987, 1502
+  xy: 1330, 5
   size: 36, 39
   orig: 36, 39
   offset: 0, 0
   index: 1
 supply-drop-crate
   rotate: false
-  xy: 1812, 990
+  xy: 1834, 7
   size: 150, 150
   orig: 150, 150
   offset: 0, 0
   index: -1
-tower-machine-gun
+tower-flame-thrower
   rotate: false
-  xy: 1905, 412
-  size: 120, 78
-  orig: 120, 78
+  xy: 916, 4
+  size: 168, 78
+  orig: 168, 78
   offset: 0, 0
   index: -1
-tower-sniper
+tower-rifle
   rotate: false
-  xy: 1688, 494
-  size: 234, 93
-  orig: 234, 93
+  xy: 1088, 4
+  size: 159, 78
+  orig: 159, 78
+  offset: 0, 0
+  index: -1
+tower-rocket-launcher
+  rotate: false
+  xy: 1812, 1388
+  size: 168, 93
+  orig: 168, 93
   offset: 0, 0
   index: -1
 tower-tank-body
   rotate: false
-  xy: 1812, 1739
+  xy: 1602, 7
   size: 228, 150
   orig: 228, 150
   offset: 0, 0
   index: -1
 tower-turret-bags
   rotate: false
-  xy: 1812, 1588
+  xy: 1812, 1821
   size: 201, 147
   orig: 201, 147
   offset: 0, 0
   index: -1
 tower-turret-turret
   rotate: false
-  xy: 1688, 418
+  xy: 1812, 1972
   size: 213, 72
   orig: 213, 72
   offset: 0, 0
@@ -409,261 +262,261 @@ size: 2048,2048
 format: RGBA8888
 filter: MipMapLinearNearest,Nearest
 repeat: none
-blood-splatter
+blood
   rotate: false
-  xy: 176, 1826
+  xy: 1820, 1442
   size: 144, 144
   orig: 144, 144
   offset: 0, 0
-  index: 13
-blood-splatter
-  rotate: false
-  xy: 324, 1826
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 14
-blood-splatter
-  rotate: false
-  xy: 472, 1826
-  size: 144, 144
-  orig: 144, 144
-  offset: 0, 0
-  index: 15
+  index: -1
 coin
   rotate: false
-  xy: 1239, 1947
+  xy: 1820, 1075
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: 1
+coin
+  rotate: false
+  xy: 1820, 975
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: 2
+coin
+  rotate: false
+  xy: 1820, 875
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: 3
+coin
+  rotate: false
+  xy: 1820, 775
+  size: 96, 96
+  orig: 96, 96
+  offset: 0, 0
+  index: 4
+coin
+  rotate: false
+  xy: 1820, 675
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: 5
 coin
   rotate: false
-  xy: 1339, 1947
+  xy: 1820, 575
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: 6
-enemy-flame-thrower
+enemy-humvee
   rotate: false
-  xy: 4, 1862
-  size: 168, 108
-  orig: 168, 108
+  xy: 608, 1457
+  size: 300, 129
+  orig: 300, 129
   offset: 0, 0
-  index: 2
-enemy-rifle
+  index: -1
+enemy-machine-gun
   rotate: false
-  xy: 1602, 1944
-  size: 159, 99
-  orig: 159, 99
+  xy: 1820, 1257
+  size: 120, 78
+  orig: 120, 78
   offset: 0, 0
   index: 1
+enemy-machine-gun
+  rotate: false
+  xy: 1512, 19
+  size: 120, 78
+  orig: 120, 78
+  offset: 0, 0
+  index: 2
+enemy-machine-gun-stationary
+  rotate: false
+  xy: 1150, 73
+  size: 120, 78
+  orig: 120, 78
+  offset: 0, 0
+  index: -1
 enemy-rifle
   rotate: false
-  xy: 1765, 1944
+  xy: 1820, 1339
   size: 159, 99
   orig: 159, 99
   offset: 0, 0
   index: 2
-enemy-rifle-stationary
+enemy-sniper
   rotate: false
-  xy: 1439, 1944
-  size: 159, 99
-  orig: 159, 99
+  xy: 1276, 101
+  size: 234, 123
+  orig: 234, 123
+  offset: 0, 0
+  index: 1
+enemy-sniper
+  rotate: false
+  xy: 1514, 101
+  size: 234, 123
+  orig: 234, 123
+  offset: 0, 0
+  index: 2
+enemy-sniper-stationary
+  rotate: false
+  xy: 912, 28
+  size: 234, 123
+  orig: 234, 123
   offset: 0, 0
   index: -1
 enemy-tank-turret
   rotate: false
-  xy: 4, 1974
+  xy: 4, 5
   size: 360, 69
   orig: 360, 69
   offset: 0, 0
   index: -1
-explosion
+flame
   rotate: false
-  xy: 620, 1577
-  size: 384, 384
-  orig: 384, 384
-  offset: 0, 0
-  index: 2
-explosion
-  rotate: false
-  xy: 1008, 1559
-  size: 384, 384
-  orig: 384, 384
+  xy: 4, 986
+  size: 450, 450
+  orig: 450, 450
   offset: 0, 0
   index: 3
-explosion
+flame
   rotate: false
-  xy: 1396, 1556
-  size: 384, 384
-  orig: 384, 384
+  xy: 608, 1590
+  size: 450, 450
+  orig: 450, 450
   offset: 0, 0
   index: 4
-explosion
+flame
   rotate: false
-  xy: 4, 1438
-  size: 384, 384
-  orig: 384, 384
+  xy: 4, 532
+  size: 450, 450
+  orig: 450, 450
   offset: 0, 0
   index: 5
-explosion
+flame
   rotate: false
-  xy: 392, 1189
-  size: 384, 384
-  orig: 384, 384
+  xy: 1062, 1590
+  size: 450, 450
+  orig: 450, 450
   offset: 0, 0
   index: 6
-explosion
+flame
   rotate: false
-  xy: 780, 1171
-  size: 384, 384
-  orig: 384, 384
+  xy: 4, 78
+  size: 450, 450
+  orig: 450, 450
   offset: 0, 0
   index: 7
-explosion
+flame
   rotate: false
-  xy: 1168, 1168
-  size: 384, 384
-  orig: 384, 384
+  xy: 1516, 1590
+  size: 450, 450
+  orig: 450, 450
   offset: 0, 0
   index: 8
-explosion
+flame
   rotate: false
-  xy: 1556, 1168
-  size: 384, 384
-  orig: 384, 384
+  xy: 458, 986
+  size: 450, 450
+  orig: 450, 450
   offset: 0, 0
   index: 9
-explosion
+flame
   rotate: false
-  xy: 4, 1050
-  size: 384, 384
-  orig: 384, 384
+  xy: 458, 532
+  size: 450, 450
+  orig: 450, 450
   offset: 0, 0
   index: 10
-explosion
+flame
   rotate: false
-  xy: 392, 801
-  size: 384, 384
-  orig: 384, 384
+  xy: 458, 78
+  size: 450, 450
+  orig: 450, 450
   offset: 0, 0
   index: 11
-smoke-ring
+flame
   rotate: false
-  xy: 780, 783
-  size: 384, 384
-  orig: 384, 384
-  offset: 0, 0
-  index: 1
-smoke-ring
-  rotate: false
-  xy: 1168, 780
-  size: 384, 384
-  orig: 384, 384
-  offset: 0, 0
-  index: 2
-smoke-ring
-  rotate: false
-  xy: 1556, 780
-  size: 384, 384
-  orig: 384, 384
-  offset: 0, 0
-  index: 3
-smoke-ring
-  rotate: false
-  xy: 4, 662
-  size: 384, 384
-  orig: 384, 384
-  offset: 0, 0
-  index: 4
-smoke-ring
-  rotate: false
-  xy: 392, 413
-  size: 384, 384
-  orig: 384, 384
-  offset: 0, 0
-  index: 5
-smoke-ring
-  rotate: false
-  xy: 780, 395
-  size: 384, 384
-  orig: 384, 384
-  offset: 0, 0
-  index: 6
-smoke-ring
-  rotate: false
-  xy: 1168, 392
-  size: 384, 384
-  orig: 384, 384
-  offset: 0, 0
-  index: 7
-smoke-ring
-  rotate: false
-  xy: 1556, 392
-  size: 384, 384
-  orig: 384, 384
-  offset: 0, 0
-  index: 8
-smoke-ring
-  rotate: false
-  xy: 4, 274
-  size: 384, 384
-  orig: 384, 384
-  offset: 0, 0
-  index: 9
-smoke-ring
-  rotate: false
-  xy: 392, 25
-  size: 384, 384
-  orig: 384, 384
-  offset: 0, 0
-  index: 10
-smoke-ring
-  rotate: false
-  xy: 780, 7
-  size: 384, 384
-  orig: 384, 384
-  offset: 0, 0
-  index: 11
-smoke-ring
-  rotate: false
-  xy: 1168, 4
-  size: 384, 384
-  orig: 384, 384
+  xy: 912, 1136
+  size: 450, 450
+  orig: 450, 450
   offset: 0, 0
   index: 12
-smoke-ring
+flame
   rotate: false
-  xy: 1556, 4
-  size: 384, 384
-  orig: 384, 384
+  xy: 912, 682
+  size: 450, 450
+  orig: 450, 450
   offset: 0, 0
   index: 13
-tower-flame-thrower
+flame
   rotate: false
-  xy: 732, 1965
-  size: 168, 78
-  orig: 168, 78
+  xy: 1366, 1136
+  size: 450, 450
+  orig: 450, 450
+  offset: 0, 0
+  index: 14
+flame
+  rotate: false
+  xy: 912, 228
+  size: 450, 450
+  orig: 450, 450
+  offset: 0, 0
+  index: 15
+flame
+  rotate: false
+  xy: 1366, 682
+  size: 450, 450
+  orig: 450, 450
+  offset: 0, 0
+  index: 16
+flame
+  rotate: false
+  xy: 1366, 228
+  size: 450, 450
+  orig: 450, 450
+  offset: 0, 0
+  index: 17
+landmine
+  rotate: false
+  xy: 1820, 481
+  size: 90, 90
+  orig: 90, 90
   offset: 0, 0
   index: -1
-tower-rifle
+range-turret-red
   rotate: false
-  xy: 904, 1965
-  size: 159, 78
-  orig: 159, 78
+  xy: 4, 1440
+  size: 600, 600
+  orig: 600, 600
   offset: 0, 0
   index: -1
-tower-rocket-launcher
+rocket
   rotate: false
-  xy: 1067, 1950
-  size: 168, 93
-  orig: 168, 93
+  xy: 368, 36
+  size: 138, 38
+  orig: 138, 38
+  offset: 0, 0
+  index: -1
+tower-machine-gun
+  rotate: false
+  xy: 1820, 1175
+  size: 120, 78
+  orig: 120, 78
+  offset: 0, 0
+  index: -1
+tower-sniper
+  rotate: false
+  xy: 1274, 4
+  size: 234, 93
+  orig: 234, 93
   offset: 0, 0
   index: -1
 tower-tank-turret
   rotate: false
-  xy: 368, 1974
+  xy: 912, 155
   size: 360, 69
   orig: 360, 69
   offset: 0, 0
@@ -674,118 +527,181 @@ size: 2048,2048
 format: RGBA8888
 filter: MipMapLinearNearest,Nearest
 repeat: none
-flame
+explosion
   rotate: false
-  xy: 4, 912
-  size: 450, 450
-  orig: 450, 450
+  xy: 4, 1556
+  size: 384, 384
+  orig: 384, 384
   offset: 0, 0
   index: 1
-flame
+explosion
   rotate: false
-  xy: 608, 1516
-  size: 450, 450
-  orig: 450, 450
+  xy: 392, 1556
+  size: 384, 384
+  orig: 384, 384
   offset: 0, 0
   index: 2
-flame
+explosion
   rotate: false
-  xy: 4, 458
-  size: 450, 450
-  orig: 450, 450
+  xy: 780, 1556
+  size: 384, 384
+  orig: 384, 384
   offset: 0, 0
   index: 3
-flame
+explosion
   rotate: false
-  xy: 1062, 1516
-  size: 450, 450
-  orig: 450, 450
+  xy: 1168, 1556
+  size: 384, 384
+  orig: 384, 384
   offset: 0, 0
   index: 4
-flame
+explosion
   rotate: false
-  xy: 4, 4
-  size: 450, 450
-  orig: 450, 450
+  xy: 1556, 1556
+  size: 384, 384
+  orig: 384, 384
   offset: 0, 0
   index: 5
-flame
+explosion
   rotate: false
-  xy: 1516, 1516
-  size: 450, 450
-  orig: 450, 450
+  xy: 4, 1168
+  size: 384, 384
+  orig: 384, 384
   offset: 0, 0
   index: 6
-flame
+explosion
   rotate: false
-  xy: 458, 912
-  size: 450, 450
-  orig: 450, 450
+  xy: 392, 1168
+  size: 384, 384
+  orig: 384, 384
   offset: 0, 0
   index: 7
-flame
+explosion
   rotate: false
-  xy: 458, 458
-  size: 450, 450
-  orig: 450, 450
+  xy: 780, 1168
+  size: 384, 384
+  orig: 384, 384
   offset: 0, 0
   index: 8
-flame
+explosion
   rotate: false
-  xy: 458, 4
-  size: 450, 450
-  orig: 450, 450
+  xy: 1168, 1168
+  size: 384, 384
+  orig: 384, 384
   offset: 0, 0
   index: 9
-flame
+explosion
   rotate: false
-  xy: 912, 1062
-  size: 450, 450
-  orig: 450, 450
+  xy: 1556, 1168
+  size: 384, 384
+  orig: 384, 384
   offset: 0, 0
   index: 10
-flame
+explosion
   rotate: false
-  xy: 912, 608
-  size: 450, 450
-  orig: 450, 450
+  xy: 4, 780
+  size: 384, 384
+  orig: 384, 384
   offset: 0, 0
   index: 11
-flame
+smoke-ring
   rotate: false
-  xy: 1366, 1062
-  size: 450, 450
-  orig: 450, 450
+  xy: 392, 780
+  size: 384, 384
+  orig: 384, 384
+  offset: 0, 0
+  index: 1
+smoke-ring
+  rotate: false
+  xy: 780, 780
+  size: 384, 384
+  orig: 384, 384
+  offset: 0, 0
+  index: 2
+smoke-ring
+  rotate: false
+  xy: 1168, 780
+  size: 384, 384
+  orig: 384, 384
+  offset: 0, 0
+  index: 3
+smoke-ring
+  rotate: false
+  xy: 1556, 780
+  size: 384, 384
+  orig: 384, 384
+  offset: 0, 0
+  index: 4
+smoke-ring
+  rotate: false
+  xy: 4, 392
+  size: 384, 384
+  orig: 384, 384
+  offset: 0, 0
+  index: 5
+smoke-ring
+  rotate: false
+  xy: 392, 392
+  size: 384, 384
+  orig: 384, 384
+  offset: 0, 0
+  index: 6
+smoke-ring
+  rotate: false
+  xy: 780, 392
+  size: 384, 384
+  orig: 384, 384
+  offset: 0, 0
+  index: 7
+smoke-ring
+  rotate: false
+  xy: 1168, 392
+  size: 384, 384
+  orig: 384, 384
+  offset: 0, 0
+  index: 8
+smoke-ring
+  rotate: false
+  xy: 1556, 392
+  size: 384, 384
+  orig: 384, 384
+  offset: 0, 0
+  index: 9
+smoke-ring
+  rotate: false
+  xy: 4, 4
+  size: 384, 384
+  orig: 384, 384
+  offset: 0, 0
+  index: 10
+smoke-ring
+  rotate: false
+  xy: 392, 4
+  size: 384, 384
+  orig: 384, 384
+  offset: 0, 0
+  index: 11
+smoke-ring
+  rotate: false
+  xy: 780, 4
+  size: 384, 384
+  orig: 384, 384
   offset: 0, 0
   index: 12
-flame
+smoke-ring
   rotate: false
-  xy: 912, 154
-  size: 450, 450
-  orig: 450, 450
+  xy: 1168, 4
+  size: 384, 384
+  orig: 384, 384
   offset: 0, 0
   index: 13
-flame
+smoke-ring
   rotate: false
-  xy: 1366, 608
-  size: 450, 450
-  orig: 450, 450
+  xy: 1556, 4
+  size: 384, 384
+  orig: 384, 384
   offset: 0, 0
   index: 14
-flame
-  rotate: false
-  xy: 1366, 154
-  size: 450, 450
-  orig: 450, 450
-  offset: 0, 0
-  index: 15
-range-turret-red
-  rotate: false
-  xy: 4, 1366
-  size: 600, 600
-  orig: 600, 600
-  offset: 0, 0
-  index: -1
 
 actors4.png
 size: 2048,2048
@@ -798,102 +714,81 @@ flame
   size: 450, 450
   orig: 450, 450
   offset: 0, 0
-  index: 16
+  index: 18
 flame
   rotate: false
   xy: 4, 912
   size: 450, 450
   orig: 450, 450
   offset: 0, 0
-  index: 17
+  index: 19
 flame
   rotate: false
   xy: 458, 1366
   size: 450, 450
   orig: 450, 450
   offset: 0, 0
-  index: 18
+  index: 20
 flame
   rotate: false
   xy: 4, 458
   size: 450, 450
   orig: 450, 450
   offset: 0, 0
-  index: 19
+  index: 21
 flame
   rotate: false
   xy: 458, 912
   size: 450, 450
   orig: 450, 450
   offset: 0, 0
-  index: 20
+  index: 22
 flame
   rotate: false
   xy: 912, 1366
   size: 450, 450
   orig: 450, 450
   offset: 0, 0
-  index: 21
+  index: 23
 flame
   rotate: false
   xy: 4, 4
   size: 450, 450
   orig: 450, 450
   offset: 0, 0
-  index: 22
+  index: 24
 flame
   rotate: false
   xy: 458, 458
   size: 450, 450
   orig: 450, 450
   offset: 0, 0
-  index: 23
+  index: 25
 flame
   rotate: false
   xy: 912, 912
   size: 450, 450
   orig: 450, 450
   offset: 0, 0
-  index: 24
+  index: 26
 flame
   rotate: false
   xy: 1366, 1366
   size: 450, 450
   orig: 450, 450
   offset: 0, 0
-  index: 25
+  index: 27
 flame
   rotate: false
   xy: 458, 4
   size: 450, 450
   orig: 450, 450
   offset: 0, 0
-  index: 26
+  index: 28
 flame
   rotate: false
   xy: 912, 458
   size: 450, 450
   orig: 450, 450
   offset: 0, 0
-  index: 27
-flame
-  rotate: false
-  xy: 1366, 912
-  size: 450, 450
-  orig: 450, 450
-  offset: 0, 0
-  index: 28
-flame
-  rotate: false
-  xy: 912, 4
-  size: 450, 450
-  orig: 450, 450
-  offset: 0, 0
   index: 29
-smoke-ring
-  rotate: false
-  xy: 1366, 524
-  size: 384, 384
-  orig: 384, 384
-  offset: 0, 0
-  index: 14

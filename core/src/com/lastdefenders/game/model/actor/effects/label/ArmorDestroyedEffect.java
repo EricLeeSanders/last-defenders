@@ -10,8 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
-import com.lastdefenders.game.service.factory.EffectFactory.LabelEffectPool;
+import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import com.lastdefenders.util.ActorUtil;
+import com.lastdefenders.util.UtilPool;
 import com.lastdefenders.util.datastructures.Dimension;
 
 /**
@@ -29,10 +30,9 @@ public class ArmorDestroyedEffect extends LabelEffect {
     private CombatActor actor = null;
     private Animation<TextureRegion> animation;
 
-    public ArmorDestroyedEffect(Array<AtlasRegion> regions,
-        LabelEffectPool<ArmorDestroyedEffect> pool, Skin skin, float fontScale) {
+    public ArmorDestroyedEffect(Array<AtlasRegion> regions, EffectPool<ArmorDestroyedEffect> pool, Skin skin, float fontScale) {
 
-        super(pool, DURATION, skin);
+        super(pool, skin);
         animation = new Animation<TextureRegion>(DURATION, regions);
         animation.setPlayMode(Animation.PlayMode.NORMAL);
 
@@ -49,9 +49,11 @@ public class ArmorDestroyedEffect extends LabelEffect {
         setY(ActorUtil.calcBotLeftPointFromCenter(actor.getPositionCenter().y, getHeight()));
 
         addAction(
-            Actions.parallel(
-                Actions.moveTo(getX(), getY() + Y_END_OFFSET, DURATION),
-                Actions.fadeOut(DURATION)));
+            Actions.sequence(
+                Actions.parallel(
+                    Actions.moveTo(getX(), getY() + Y_END_OFFSET, DURATION),
+                    Actions.fadeOut(DURATION)),
+                UtilPool.getFreeActorAction(getPool())));
 
         return this;
     }
@@ -60,7 +62,7 @@ public class ArmorDestroyedEffect extends LabelEffect {
     public void draw(Batch batch, float alpha) {
 
         super.draw(batch, alpha);
-        TextureRegion region = animation.getKeyFrame(stateTime, false);
+        TextureRegion region = animation.getKeyFrame(stateTime);
 
         if (actor != null) {
             float x = actor.getPositionCenter().x;

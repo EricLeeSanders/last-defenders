@@ -10,21 +10,18 @@ import com.lastdefenders.util.datastructures.pool.LDVector2;
 public class AirStrikePlacement {
 
     private AirStrike currentAirStrike;
-    private ActorGroups actorGroups;
     private SupportActorFactory supportActorFactory;
 
-    public AirStrikePlacement(ActorGroups actorGroups, SupportActorFactory supportActorFactory) {
+    public AirStrikePlacement(SupportActorFactory supportActorFactory) {
 
-        this.actorGroups = actorGroups;
         this.supportActorFactory = supportActorFactory;
     }
 
     public void createAirStrike() {
 
         Logger.info("AirStrikePlacement: creating air strike");
-        currentAirStrike = (AirStrike) supportActorFactory.loadSupportActor("AirStrike");
+        currentAirStrike = (AirStrike) supportActorFactory.loadSupportActor(AirStrike.class, true);
         currentAirStrike.setPosition(0, 0);
-        actorGroups.getSupportGroup().addActor(currentAirStrike);
         currentAirStrike.setActive(false);
         currentAirStrike.setVisible(false);
     }
@@ -32,8 +29,8 @@ public class AirStrikePlacement {
     public void addLocation(LDVector2 location) {
 
         Logger.info("AirStrikePlacement: addLocation");
-        AirStrikeLocation airStrikeLocation = supportActorFactory
-            .loadAirStrikeLocation(location, AirStrike.AIRSTRIKE_RADIUS);
+        AirStrikeLocation airStrikeLocation = supportActorFactory.loadSupportActor(AirStrikeLocation.class, true);
+        airStrikeLocation.initialize(location, AirStrike.AIRSTRIKE_RADIUS);
         currentAirStrike.addLocation(airStrikeLocation);
     }
 

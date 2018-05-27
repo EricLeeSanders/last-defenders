@@ -1,5 +1,7 @@
 package game.model.actor.combat.enemy.state.states;
 
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -13,8 +15,8 @@ import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.lastdefenders.game.model.actor.combat.enemy.state.states.EnemyDyingState;
+import com.lastdefenders.game.model.actor.effects.texture.TextureEffect;
 import com.lastdefenders.game.model.actor.effects.texture.animation.EnemyCoinEffect;
-import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect;
 import com.lastdefenders.game.service.factory.EffectFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,20 +48,20 @@ public class EnemyDyingStateTest {
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
         Player playerMock = mock(Player.class);
 
-        DeathEffect deathEffectMock = mock(DeathEffect.class);
-        doReturn(deathEffectMock).when(effectFactoryMock)
-            .loadDeathEffect(enemy.getDeathEffectType());
+        TextureEffect textureEffectMock = mock(TextureEffect.class);
+        doReturn(textureEffectMock).when(effectFactoryMock)
+            .loadDeathEffect(eq(enemy.getDeathEffectType()), isA(Boolean.class));
 
         EnemyCoinEffect enemyCoinEffectMock = mock(EnemyCoinEffect.class);
         doReturn(enemyCoinEffectMock).when(effectFactoryMock)
-            .loadAnimationEffect(EnemyCoinEffect.class);
+            .loadEffect(eq(EnemyCoinEffect.class), isA(Boolean.class));
 
         EnemyDyingState dyingState = new EnemyDyingState(enemy, stateManagerMock, effectFactoryMock,
             playerMock);
 
         dyingState.preState();
 
-        verify(effectFactoryMock, times(1)).loadAnimationEffect(EnemyCoinEffect.class);
+        verify(effectFactoryMock, times(1)).loadEffect(eq(EnemyCoinEffect.class), isA(Boolean.class));
         verify(enemyCoinEffectMock, times(1)).initialize(enemy.getPositionCenter());
         verify(playerMock, times(1)).giveMoney(enemy.getKillReward());
         verify(stateManagerMock, times(1)).transition(EnemyState.STANDBY);

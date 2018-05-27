@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
+import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
 import com.lastdefenders.util.datastructures.Dimension;
@@ -28,13 +29,13 @@ public class Explosion extends GameActor implements Pool.Poolable {
 
     private Animation<TextureRegion> explosionAnimation;
     private float stateTime; // counter for animation
-    private Pool<Explosion> pool;
+    private ProjectilePool<Explosion> pool;
     private LDAudio audio;
 
     /**
      * Constructs an Explosion.
      */
-    public Explosion(Pool<Explosion> pool, Array<AtlasRegion> regions, LDAudio audio) {
+    public Explosion(ProjectilePool<Explosion> pool, Array<AtlasRegion> regions, LDAudio audio) {
 
         super(size);
         this.pool = pool;

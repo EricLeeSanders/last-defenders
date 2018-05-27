@@ -52,7 +52,7 @@ public class LevelCompletedView extends Group implements ILevelCompletedView {
 
         Label lblContinue = new Label(
             "Do you want to\ncontinue playing this\nlevel and compete\nfor a high score?"
-                .toUpperCase(), skin, "hollow");
+                .toUpperCase(), skin);
         lblContinue.setFontScale(0.45f * resources.getFontScale());
         lblContinue.setAlignment(Align.center);
         table.add(lblContinue).colspan(3).width(380).height(120).padTop(30).spaceBottom(15);
