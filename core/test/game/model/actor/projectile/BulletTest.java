@@ -69,6 +69,10 @@ public class BulletTest {
         assertEquals(1, bullet.getActions().size);
 
         bullet.act(100f);
+        // Call a second time so that the damage action is called
+        bullet.act(0.0001f);
+        // Call a third time so that the FreeActorAction is called
+        bullet.act(0.0001f);
 
         assertEquals(target.getPositionCenter(), bullet.getPositionCenter());
         assertEquals(0, bullet.getActions().size);
@@ -97,6 +101,10 @@ public class BulletTest {
         doReturn(true).when(target).isDead();
 
         bullet.act(100f);
+        // Call a second time so that the damage action is called
+        bullet.act(0.0001f);
+        // Call a third time so that the FreeActorAction is called
+        bullet.act(0.0001f);
 
         assertEquals(target.getPositionCenter(), bullet.getPositionCenter());
         assertEquals(0, bullet.getActions().size);

@@ -75,6 +75,8 @@ public class WaveOverCoinEffectTest {
 
         // Finish it
         waveOverCoinEffect.act(50f);
+        // Call a second time so that the FreeActorAction is called
+        waveOverCoinEffect.act(0.0001f);
 
         verify(labelEffectPoolMock, times(1)).free(waveOverCoinEffect);
     }

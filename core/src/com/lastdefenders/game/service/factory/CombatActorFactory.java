@@ -1,6 +1,7 @@
 package com.lastdefenders.game.service.factory;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.ActorGroups;
@@ -382,7 +383,7 @@ public class CombatActorFactory {
         return new SpawningEnemy(spawningEnemyPool);
     }
 
-    public class CombatActorPool<T extends CombatActor> extends Pool<CombatActor> {
+    public class CombatActorPool<T extends CombatActor> extends Pool<Actor> {
 
         private final Class<T> type;
 

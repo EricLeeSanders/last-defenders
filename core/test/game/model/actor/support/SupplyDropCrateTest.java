@@ -84,17 +84,24 @@ public class SupplyDropCrateTest {
 
         assertTrue(supplyDropCrate.isActive());
         assertFalse(supplyDropCrate.isVisible());
-        assertEquals(2, supplyDropCrate.getActions().size);
         assertEquals(destination, supplyDropCrate.getPositionCenter());
 
+        // Delay Action
         supplyDropCrate.act(dropDelay);
         assertEquals(1, supplyDropCrate.getActions().size);
         assertTrue(tower1.getHealthPercent() < 1);
         assertTrue(tower2.getHealthPercent() < 1);
         assertTrue(tower3.getArmorPercent() < 1);
 
+        // Scale action
         supplyDropCrate.act(10f);
-        assertEquals(0, supplyDropCrate.getActions().size);
+        // Visible action
+        supplyDropCrate.act(0.0001f);
+        // Heal actors action
+        supplyDropCrate.act(0.0001f);
+        // Free action
+        supplyDropCrate.act(0.0001f);
+
 
         assertTrue(tower1.getHealthPercent() == 1);
         assertTrue(tower2.getHealthPercent() == 1);

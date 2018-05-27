@@ -125,6 +125,10 @@ public class CombatSupportActor extends GameActor implements Pool.Poolable, Atta
         return attack;
     }
 
+    public SupportActorPool<? extends Actor> getPool(){
+        return pool;
+    }
+
     @Override
     public void reset() {
 

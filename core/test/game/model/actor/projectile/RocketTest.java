@@ -79,6 +79,10 @@ public class RocketTest {
         assertEquals(1, rocket.getActions().size);
 
         rocket.act(100f);
+        // Call a second time so that the explosion action is called
+        rocket.act(0.0001f);
+        // Call a third time so that the FreeActorAction is called
+        rocket.act(0.0001f);
 
         assertEquals(0, rocket.getActions().size);
         verify(poolMock).free(rocket);

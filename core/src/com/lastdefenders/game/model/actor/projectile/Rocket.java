@@ -4,16 +4,19 @@ package com.lastdefenders.game.model.actor.projectile;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pools;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.ActorUtil;
+import com.lastdefenders.util.UtilPool;
 import com.lastdefenders.util.datastructures.Dimension;
 
 /**
@@ -55,11 +58,17 @@ public class Rocket extends GameActor implements Pool.Poolable {
         Vector2 startPos = attacker.getGunPos();
         setPositionCenter(startPos);
 
+        ExplosionAction explosionAction = Pools.get(ExplosionAction.class).obtain();
+        explosionAction.initialize(projectileFactory, attacker, radius, destination);
+
         float duration = destination.dst(startPos) / SPEED;
-        MoveToAction moveAction = Actions
-            .moveTo(destination.x, destination.y, duration, Interpolation.linear);
-        moveAction.setAlignment(Align.center);
-        addAction(moveAction);
+
+        addAction(Actions.sequence(
+            Actions
+                .moveToAligned(destination.x, destination.y, Align.center, duration, Interpolation.linear),
+            explosionAction,
+            UtilPool.getFreeActorAction(pool)
+        ));
 
         return this;
     }
@@ -71,15 +80,6 @@ public class Rocket extends GameActor implements Pool.Poolable {
      * <p>
      * When the Rocket reaches its destination, create an explosion
      */
-    @Override
-    public void act(float delta) {
-
-        super.act(delta);
-        if (this.getActions().size == 0) {
-            projectileFactory.loadProjectile(Explosion.class).initialize(attacker, radius, destination);
-            pool.free(this);
-        }
-    }
 
     @Override
     public void reset() {
@@ -88,5 +88,36 @@ public class Rocket extends GameActor implements Pool.Poolable {
         attacker = null;
         radius = 0;
         this.remove();
+    }
+
+    public static class ExplosionAction extends Action {
+
+        private ProjectileFactory projectileFactory;
+        private Attacker attacker;
+        private float radius;
+        private Vector2 destination;
+
+        public void initialize(ProjectileFactory projectileFactory, Attacker attacker,
+            float radius, Vector2 destination){
+            this.projectileFactory = projectileFactory;
+            this.attacker = attacker;
+            this.radius = radius;
+            this.destination = destination;
+        }
+
+        @Override
+        public boolean act(float delta) {
+            projectileFactory.loadProjectile(Explosion.class).initialize(attacker, radius, destination);
+            Pools.free(this);
+            return true;
+        }
+
+        @Override
+        public void reset(){
+            System.out.println("rocket reset");
+            attacker = null;
+            radius = 0;
+            destination = null;
+        }
     }
 }
