@@ -7,9 +7,9 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.lastdefenders.game.model.actor.effects.texture.TextureEffect;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.BloodSplatter;
-import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect;
-import com.lastdefenders.game.service.factory.EffectFactory.DeathEffectPool;
+import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
@@ -23,7 +23,7 @@ import testutil.TestUtil;
 public class DeathEffectTest {
 
     @SuppressWarnings("unchecked")
-    private DeathEffectPool<BloodSplatter> deathEffectPoolMock = mock(DeathEffectPool.class);
+    private EffectPool<BloodSplatter> deathEffectPoolMock = mock(EffectPool.class);
 
     @Before
     public void initDeathEffectTest() {
@@ -31,11 +31,11 @@ public class DeathEffectTest {
         Gdx.app = mock(Application.class);
     }
 
-    private DeathEffect createDeathEffect() {
+    private TextureEffect createDeathEffect() {
 
         Resources resourcesMock = TestUtil.createResourcesMock();
 
-        return new BloodSplatter(deathEffectPoolMock, resourcesMock.getAtlasRegion(""));
+        return new BloodSplatter(deathEffectPoolMock, resourcesMock.getTexture(""));
 
     }
 
@@ -45,13 +45,14 @@ public class DeathEffectTest {
     @Test
     public void deathEffectTest1() {
 
-        DeathEffect deathEffect = createDeathEffect();
+        TextureEffect deathEffect = createDeathEffect();
         deathEffect.initialize(new LDVector2(20, 20));
 
         assertEquals(new LDVector2(20, 20), deathEffect.getPositionCenter());
 
         deathEffect.act(100f);
-
+        // Call act twice so that the freeActor action is performed
+        deathEffect.act(0.001f);
         verify(deathEffectPoolMock, times(1)).free(deathEffect);
     }
 }

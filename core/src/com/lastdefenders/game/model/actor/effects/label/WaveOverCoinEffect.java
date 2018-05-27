@@ -9,7 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-import com.lastdefenders.game.service.factory.EffectFactory.LabelEffectPool;
+import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
+import com.lastdefenders.util.UtilPool;
 import com.lastdefenders.util.datastructures.Dimension;
 
 /**
@@ -23,14 +24,12 @@ public class WaveOverCoinEffect extends LabelEffect {
     public static final float Y_BEGIN_OFFSET = 50;
     private static final float SCALE = 0.75f;
     private static final Dimension ICON_SIZE = new Dimension(32, 32);
-    private float fontScale;
 
     private Animation<TextureRegion> animation;
 
-    public WaveOverCoinEffect(LabelEffectPool<WaveOverCoinEffect> pool, Skin skin,
-        Array<AtlasRegion> regions, float fontScale) {
+    public WaveOverCoinEffect(EffectPool<WaveOverCoinEffect> pool, Skin skin, Array<AtlasRegion> regions, float fontScale) {
 
-        super(pool, DURATION, skin);
+        super(pool, skin);
         animation = new Animation<TextureRegion>(0.05f, regions);
         animation.setPlayMode(Animation.PlayMode.LOOP);
         setFontScale(SCALE * fontScale);
@@ -52,7 +51,7 @@ public class WaveOverCoinEffect extends LabelEffect {
 
         addAction(Actions.sequence(
             Actions.moveToAligned(x, y + Y_END_OFFSET, Align.center, DURATION),
-            Actions.removeActor()));
+            UtilPool.getFreeActorAction(getPool())));
     }
 
     @Override
@@ -60,7 +59,7 @@ public class WaveOverCoinEffect extends LabelEffect {
 
         super.draw(batch, alpha);
 
-        TextureRegion region = animation.getKeyFrame(stateTime, false);
+        TextureRegion region = animation.getKeyFrame(stateTime);
         // Draw the icon
         float x = getX() - ICON_SIZE.getWidth() - 10;
         float y = getY() + 6;

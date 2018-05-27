@@ -6,11 +6,14 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.DelayAction;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.ai.TowerAI;
 import com.lastdefenders.game.model.actor.ai.towerai.FirstEnemyAI;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
+import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.ActorUtil;
@@ -18,11 +21,12 @@ import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
+import com.lastdefenders.util.action.LDOneTimeAction;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.lastdefenders.util.datastructures.pool.UtilPool;
+import com.lastdefenders.util.UtilPool;
 
-public class Apache extends SupportActor {
+public class Apache extends CombatSupportActor {
 
     public static final int COST = 2000;
     public static final float TIME_ACTIVE_LIMIT = 10f;
@@ -65,16 +69,54 @@ public class Apache extends SupportActor {
         setPositionCenter(centerPos);
 
         LDVector2 destination = UtilPool.getVector2(placePosition);
-        float duration = destination.dst(getPositionCenter()) / MOVE_SPEED;
-        MoveToAction moveToAction = Actions
-            .moveTo(destination.x, destination.y, duration, Interpolation.linear);
-        moveToAction.setAlignment(Align.center);
-        addAction(moveToAction);
         setRotation(ActorUtil.calculateRotation(destination, getPositionCenter()));
+
+        createInitialActions(destination);
 
         UtilPool.freeObjects(centerPos, destination);
 
         audio.playSound(LDSound.HELICOPTER_HOVER);
+    }
+
+    /**
+     * Creates the initial actions.
+     * <br>
+     * The initial actions are in the following {@link SequenceAction}:
+     * <ol>
+     *  <li>{@link MoveToAction} - Move to the destination</li>
+     *  <li>{@link LDOneTimeAction} - set ready to attack</li>
+     *  <li>{@link DelayAction} - Delay for {@value TIME_ACTIVE_LIMIT} seconds</li>
+     *  <li>{@link LDOneTimeAction} - exit stage</li>
+     * </ol>
+     *
+     * @param destination - the destination to move to
+     */
+    private void createInitialActions(LDVector2 destination){
+
+        SequenceAction sequenceAction = Actions.sequence();
+
+        float duration = destination.dst(getPositionCenter()) / MOVE_SPEED;
+        MoveToAction moveToAction = Actions
+            .moveTo(destination.x, destination.y, duration, Interpolation.linear);
+        moveToAction.setAlignment(Align.center);
+
+        sequenceAction.addAction(moveToAction);
+        sequenceAction.addAction(new LDOneTimeAction(){
+            @Override
+            public void action() {
+                setReadyToAttack(true);
+            }
+        });
+        sequenceAction.addAction(Actions.delay(TIME_ACTIVE_LIMIT));
+        sequenceAction.addAction(new LDOneTimeAction() {
+            @Override
+            public void action() {
+                setReadyToAttack(false);
+                exitStage();
+            }
+        });
+
+        addAction(sequenceAction);
     }
 
     @Override
@@ -94,16 +136,9 @@ public class Apache extends SupportActor {
         super.act(delta);
         movementAnimationStateTime += delta;
         setTextureRegion(movementAnimation.getKeyFrame(movementAnimationStateTime, true));
-        //If the Apache has been placed (active) and is done moving to the location
-        //then it is ready to attack
-        if (isActive() && !isReadyToAttack() && getActions().size == 0) {
-            setReadyToAttack(true);
-        }
+
         if (isReadyToAttack()) {
             attackHandler(delta);
-        }
-        if (isExitingStage() && getActions().size <= 0) {
-            freeActor();
         }
     }
 
@@ -119,25 +154,24 @@ public class Apache extends SupportActor {
                 attackTarget(target);
             }
         }
-
-        timeActive += delta;
-        if (timeActive >= TIME_ACTIVE_LIMIT) {
-            setReadyToAttack(false);
-            exitStage();
-        }
     }
 
     private void exitStage() {
 
         Logger.info("Apache: exiting stage");
         exitingStage = true;
-        LDVector2 destination = UtilPool.getVector2(getWidth(), Resources.VIRTUAL_HEIGHT / 2);
+        LDVector2 destination = UtilPool.getVector2(-getWidth(), Resources.VIRTUAL_HEIGHT / 2);
 
         float duration = destination.dst(getPositionCenter()) / MOVE_SPEED;
         MoveToAction moveToAction = Actions
             .moveTo(destination.x, destination.y, duration, Interpolation.linear);
         moveToAction.setAlignment(Align.center);
-        addAction(moveToAction);
+
+        addAction(
+            Actions.sequence(
+                moveToAction,
+                UtilPool.getFreeActorAction(getPool())
+            ));
 
         setRotation(ActorUtil.calculateRotation(destination, getPositionCenter()));
         destination.free();
@@ -158,7 +192,7 @@ public class Apache extends SupportActor {
 
         if (target != null && !target.isDead()) {
             audio.playSound(LDSound.MACHINE_GUN);
-            projectileFactory.loadBullet().initialize(this, target, BULLET_SIZE);
+            projectileFactory.loadProjectile(Bullet.class).initialize(this, target, BULLET_SIZE);
         }
 
     }
@@ -172,10 +206,4 @@ public class Apache extends SupportActor {
 
         this.readyToAttack = readyToAttack;
     }
-
-    public boolean isExitingStage() {
-
-        return exitingStage;
-    }
-
 }

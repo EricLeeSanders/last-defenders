@@ -26,7 +26,7 @@ import com.lastdefenders.game.ui.view.widgets.SupportButton;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.lastdefenders.util.datastructures.pool.UtilPool;
+import com.lastdefenders.util.UtilPool;
 
 /**
  * View class for Support. Shows Support window as well as the options to
@@ -171,7 +171,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                presenter.createSupportActor("LandMine");
+                presenter.createSupportActor(LandMine.class);
             }
         });
 
@@ -208,7 +208,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                presenter.createSupportActor("Apache");
+                presenter.createSupportActor(Apache.class);
             }
         });
     }

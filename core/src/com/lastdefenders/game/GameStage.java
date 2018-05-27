@@ -101,8 +101,8 @@ public class GameStage extends Stage implements PlayerObserver {
 
         Logger.info("Game Stage: creating placement services");
         towerPlacement = new TowerPlacement(map, actorGroups, combatActorFactory, healthFactory);
-        supportActorPlacement = new SupportActorPlacement(actorGroups, supportActorFactory);
-        airStrikePlacement = new AirStrikePlacement(actorGroups, supportActorFactory);
+        supportActorPlacement = new SupportActorPlacement(supportActorFactory);
+        airStrikePlacement = new AirStrikePlacement(supportActorFactory);
         supplyDropPlacement = new SupplyDropPlacement(supportActorFactory);
         Logger.info("Game Stage: placement services created");
     }
@@ -190,8 +190,7 @@ public class GameStage extends Stage implements PlayerObserver {
         if (isLevelCompleted()) {
             levelComleted();
         }
-        WaveOverCoinEffect waveOverCoinEffect = effectFactory
-            .loadLabelEffect(WaveOverCoinEffect.class);
+        WaveOverCoinEffect waveOverCoinEffect = effectFactory.loadEffect(WaveOverCoinEffect.class, true);
         waveOverCoinEffect.initialize(money);
         level.loadNextWave(); //load the next wave
         healTowers();
@@ -221,7 +220,7 @@ public class GameStage extends Stage implements PlayerObserver {
         for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
             if (tower instanceof Tower) {
                 if (((Tower) tower).isActive() && ((Tower) tower).getHealthPercent() < 1) {
-                    TowerHealEffect effect = effectFactory.loadLabelEffect(TowerHealEffect.class);
+                    TowerHealEffect effect = effectFactory.loadEffect(TowerHealEffect.class, true);
                     effect.initialize((Tower) tower);
 
                     ((Tower) tower).heal();

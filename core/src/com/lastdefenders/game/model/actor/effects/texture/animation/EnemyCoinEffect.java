@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
-import com.lastdefenders.game.model.actor.effects.texture.TextureEffect;
+import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
+import com.lastdefenders.util.UtilPool;
 import com.lastdefenders.util.datastructures.Dimension;
 
 /**
@@ -16,12 +16,12 @@ import com.lastdefenders.util.datastructures.Dimension;
 public class EnemyCoinEffect extends AnimationEffect {
 
     private static final Dimension TEXTURE_SIZE = new Dimension(12, 12);
-    private static final float DURATION = 2f;
     private static final float FRAME_DURATION = 0.05f;
+    private static final float DURATION = 2f;
 
-    public EnemyCoinEffect(Pool<TextureEffect> pool, Array<AtlasRegion> regions) {
+    public EnemyCoinEffect(EffectPool<EnemyCoinEffect> pool, Array<AtlasRegion> regions) {
 
-        super(pool, regions, TEXTURE_SIZE, PlayMode.LOOP, DURATION, FRAME_DURATION);
+        super(pool, regions, TEXTURE_SIZE, PlayMode.LOOP, FRAME_DURATION);
     }
 
     public void initialize(Vector2 pos) {
@@ -30,6 +30,6 @@ public class EnemyCoinEffect extends AnimationEffect {
 
         addAction(Actions.sequence(
             Actions.moveTo(getX(), getY() + 25, DURATION),
-            Actions.removeActor()));
+            UtilPool.getFreeActorAction(getPool())));
     }
 }

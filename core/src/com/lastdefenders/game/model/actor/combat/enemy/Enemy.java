@@ -8,19 +8,20 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.lastdefenders.action.LDSequenceAction;
-import com.lastdefenders.action.WaypointAction;
+import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.util.action.LDSequenceAction;
+import com.lastdefenders.util.action.WaypointAction;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
 import com.lastdefenders.game.model.actor.combat.state.StateManager;
-import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
+import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.lastdefenders.util.datastructures.pool.UtilPool;
+import com.lastdefenders.util.UtilPool;
 
 /**
  * An abstract class that represents an Enemy. Enemies are created from the
@@ -45,7 +46,7 @@ public abstract class Enemy extends CombatActor {
     private StateManager<EnemyState, CombatActorState> stateManager;
 
     public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions,
-        Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
+        Dimension textureSize, CombatActorPool<? extends CombatActor> pool, Group targetGroup, Vector2 gunPos,
         float speed, float health, float armor, float attack, float attackSpeed, float range,
         int killReward, DeathEffectType deathEffectType) {
 

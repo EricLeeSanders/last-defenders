@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
+import com.lastdefenders.game.service.factory.HealthFactory.HealthPool;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.Dimension;
 
@@ -19,9 +20,9 @@ public class ArmorIcon extends GameActor implements Pool.Poolable {
     public static final float X_OFFSET = -6;
     private static final Dimension TEXTURE_SIZE = new Dimension(12, 13);
     private CombatActor actor = null;
-    private Pool<ArmorIcon> pool;
+    private HealthPool<ArmorIcon> pool;
 
-    public ArmorIcon(Pool<ArmorIcon> pool, TextureRegion icon) {
+    public ArmorIcon(HealthPool<ArmorIcon> pool, TextureRegion icon) {
         super(TEXTURE_SIZE);
         this.pool = pool;
         this.setTextureRegion(icon);

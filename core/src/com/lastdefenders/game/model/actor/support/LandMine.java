@@ -12,15 +12,16 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.helper.CollisionDetection;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.interfaces.IRocket;
+import com.lastdefenders.game.model.actor.projectile.Explosion;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.DebugOptions;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
-import com.lastdefenders.util.datastructures.pool.UtilPool;
+import com.lastdefenders.util.UtilPool;
 
-public class LandMine extends SupportActor implements IRocket {
+public class LandMine extends CombatSupportActor implements IRocket {
 
     public static final int COST = 300;
     private static final float ATTACK = 15f;
@@ -83,7 +84,7 @@ public class LandMine extends SupportActor implements IRocket {
     private void explode() {
 
         Logger.info("Landmine: exploding");
-        projectileFactory.loadExplosion().initialize(this, RANGE, getPositionCenter());
+        projectileFactory.loadProjectile(Explosion.class).initialize(this, RANGE, getPositionCenter());
         freeActor();
     }
 

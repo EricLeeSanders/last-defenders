@@ -45,8 +45,7 @@ public class AirStrikePlacementTest {
     @Test
     public void airStrikePlacementTest1() {
 
-        AirStrikePlacement airStrikePlacement = new AirStrikePlacement(actorGroups,
-            supportActorFactory);
+        AirStrikePlacement airStrikePlacement = new AirStrikePlacement(supportActorFactory);
 
         Group supportGroup = new Group();
         doReturn(supportGroup).when(actorGroups).getSupportGroup();
@@ -56,7 +55,7 @@ public class AirStrikePlacementTest {
         doNothing().when(airStrike).beginAirStrike();
 
         // Create AirStrike
-        doReturn(airStrike).when(supportActorFactory).loadSupportActor(eq("AirStrike"));
+        doReturn(airStrike).when(supportActorFactory).loadSupportActor(eq(AirStrike.class), eq(true));
 
         airStrikePlacement.createAirStrike();
 
@@ -72,8 +71,7 @@ public class AirStrikePlacementTest {
 
         AirStrikeLocation airStrikeLocMock = mock(AirStrikeLocation.class);
 
-        doReturn(airStrikeLocMock).when(supportActorFactory)
-            .loadAirStrikeLocation(isA(LDVector2.class), isA(Float.class));
+        doReturn(airStrikeLocMock).when(supportActorFactory).loadSupportActor(AirStrikeLocation.class, true);
 
         airStrikePlacement.addLocation(location1);
 

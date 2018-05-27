@@ -8,12 +8,13 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffect.DeathEffectType;
+import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.health.interfaces.PlatedArmor;
 import com.lastdefenders.game.model.actor.interfaces.IRocket;
 import com.lastdefenders.game.model.actor.interfaces.IRotatable;
 import com.lastdefenders.game.model.actor.interfaces.IVehicle;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
+import com.lastdefenders.game.model.actor.projectile.Rocket;
 import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.ActorUtil;
@@ -22,7 +23,7 @@ import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
-import com.lastdefenders.util.datastructures.pool.UtilPool;
+import com.lastdefenders.util.UtilPool;
 
 /**
  * Represents a Tower Tank
@@ -147,7 +148,7 @@ public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatabl
 
         if (target != null) {
             audio.playSound(LDSound.ROCKET_LAUNCH);
-            projectileFactory.loadRocket()
+            projectileFactory.loadProjectile(Rocket.class)
                 .initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
         }
     }

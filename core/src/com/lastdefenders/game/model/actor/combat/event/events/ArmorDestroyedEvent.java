@@ -23,6 +23,6 @@ public class ArmorDestroyedEvent implements CombatActorEvent {
     @Override
     public void beginEvent() {
 
-        effectFactory.loadLabelEffect(ArmorDestroyedEffect.class).initialize(combatActor);
+        effectFactory.loadEffect(ArmorDestroyedEffect.class, true).initialize(combatActor);
     }
 }
