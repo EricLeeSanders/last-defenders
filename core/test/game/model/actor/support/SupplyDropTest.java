@@ -69,6 +69,8 @@ public class SupplyDropTest {
         verify(supplyDropCrateMock, times(1)).beginDrop(isA(Float.class), eq(destination));
 
         supplyDrop.act(10f);
+        // act again so that the FreeActorAction is called
+        supplyDrop.act(0.0001f);
 
         assertEquals(0, supplyDrop.getActions().size);
         verify(poolMock, times(1)).free(supplyDrop);

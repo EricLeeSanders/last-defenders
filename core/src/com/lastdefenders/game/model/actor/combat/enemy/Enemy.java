@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.lastdefenders.util.action.LDSequenceAction;
 import com.lastdefenders.util.action.WaypointAction;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
@@ -45,7 +46,7 @@ public abstract class Enemy extends CombatActor {
     private StateManager<EnemyState, CombatActorState> stateManager;
 
     public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions,
-        Dimension textureSize, Pool<CombatActor> pool, Group targetGroup, Vector2 gunPos,
+        Dimension textureSize, CombatActorPool<? extends CombatActor> pool, Group targetGroup, Vector2 gunPos,
         float speed, float health, float armor, float attack, float attackSpeed, float range,
         int killReward, DeathEffectType deathEffectType) {
 

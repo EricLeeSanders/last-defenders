@@ -11,9 +11,9 @@ import com.badlogic.gdx.utils.Pool;
 public class FreeActorAction extends Action {
     
     private boolean freed;
-    private Pool<Actor> pool;
+    private Pool<? super Actor> pool;
 
-    public FreeActorAction setActorPool(Pool<Actor> pool){
+    public FreeActorAction setActorPool(Pool<? super Actor> pool){
         this.pool = pool;
         
         return this;
