@@ -53,7 +53,13 @@ public class SupplyDrop extends GameActor implements Pool.Poolable {
         MoveToAction moveToAction = Actions
             .moveTo(moveToX, moveToY, SUPPLYDROP_DURATION, Interpolation.linear);
         moveToAction.setAlignment(Align.center);
-        addAction(moveToAction);
+
+        addAction(
+            Actions.sequence(
+                moveToAction,
+                UtilPool.getFreeActorAction(pool)
+            )
+        );
 
         float dropDelay =
             SUPPLYDROP_DURATION * ((destination.x - (getWidth() / 4)) / Resources.VIRTUAL_WIDTH);
@@ -63,17 +69,6 @@ public class SupplyDrop extends GameActor implements Pool.Poolable {
         supportActorFactory.loadSupportActor(SupplyDropCrate.class, true).beginDrop(dropDelay, destination).toBack();
 
         audio.playSound(LDSound.AIRCRAFT_FLYOVER);
-    }
-
-    @Override
-    public void act(float delta) {
-
-        super.act(delta);
-        if (isActive()) {
-            if (this.getActions().size <= 0) {
-                pool.free(this);
-            }
-        }
     }
 
     public boolean isActive() {

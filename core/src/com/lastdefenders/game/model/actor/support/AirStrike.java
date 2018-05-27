@@ -65,7 +65,11 @@ public class AirStrike extends CombatSupportActor implements IRocket {
             .moveTo(Resources.VIRTUAL_WIDTH + getWidth(), (Resources.VIRTUAL_HEIGHT / 2),
                 AIRSTRIKE_DURATION, Interpolation.linear);
         moveAction.setAlignment(Align.center);
-        addAction(moveAction);
+
+        addAction(
+            Actions.sequence(
+                moveAction,
+                UtilPool.getFreeActorAction(getPool())));
 
         audio.playSound(LDSound.AIRCRAFT_FLYOVER);
         audio.playSound(LDSound.ROCKET_LAUNCH);
@@ -75,17 +79,6 @@ public class AirStrike extends CombatSupportActor implements IRocket {
         }
 
 
-    }
-
-    @Override
-    public void act(float delta) {
-
-        super.act(delta);
-        if (isActive()) {
-            if (getActions().size <= 0) {
-                freeActor();
-            }
-        }
     }
 
     private void dropBomb(AirStrikeLocation location) {

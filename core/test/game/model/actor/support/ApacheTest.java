@@ -89,18 +89,18 @@ public class ApacheTest {
 
         assertFalse(apache.isActive());
         assertFalse(apache.isReadyToAttack());
-        assertFalse(apache.isExitingStage());
 
         apache.initialize(destination);
 
         assertEquals(1, apache.getActions().size);
         assertFalse(apache.isReadyToAttack());
-        assertFalse(apache.isExitingStage());
         apache.setActive(true);
         assertTrue(apache.isActive());
 
         // get to position
         apache.act(Apache.TIME_ACTIVE_LIMIT / 2);
+        // act again to call next action in sequence (the action that readies to attack)
+        apache.act(0.0001f);
 
         assertTrue(apache.isReadyToAttack());
         verify(bulletMock, times(1)).initialize(eq(apache), eq(enemy2), isA(Dimension.class));
@@ -108,13 +108,16 @@ public class ApacheTest {
             ActorUtil.calculateRotation(enemy2.getPositionCenter(), apache.getPositionCenter()),
             apache.getRotation(), TestUtil.DELTA);
 
-        apache.act(Apache.TIME_ACTIVE_LIMIT / 2);
+        apache.act(Apache.TIME_ACTIVE_LIMIT);
+        // act again to call next action in sequence (the action that sets readyToAttack to false)
+        apache.act(0.0001f);
 
-        assertTrue(apache.isExitingStage());
         assertFalse(apache.isReadyToAttack());
         assertFalse(apache.isActive());
 
         apache.act(100f);
+        // act again to call next action in sequence (FreeActorAction)
+        apache.act(0.0001f);
 
         verify(poolMock, times(1)).free(apache);
 

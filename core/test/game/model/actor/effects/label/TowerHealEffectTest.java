@@ -71,6 +71,8 @@ public class TowerHealEffectTest {
 
         // Finish it
         towerHealEffect.act(50f);
+        // Call a second time so that the FreeActorAction is called
+        towerHealEffect.act(0.0001f);
 
         verify(labelEffectPoolMock, times(1)).free(towerHealEffect);
     }

@@ -218,7 +218,6 @@ public class SupportPresenter implements GameUIStateObserver {
      */
     public void moveSupportActor(Vector2 location) {
 
-        Logger.info("Support Presenter: move support actor");
         if (canMoveSupportActor()) {
             supportActorPlacement.moveSupportActor(location);
             view.showBtnPlace();
