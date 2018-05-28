@@ -93,9 +93,9 @@ public class LDAudio {
         helicopterHover.play(0);
         aircraftFlyover.play(0);
 
-        setMasterVolume(userPreferences.getPreferences().getFloat("masterVolume", 1));
-        setSoundEnabled(userPreferences.getPreferences().getBoolean("soundEnabled", true));
-        setMusicEnabled(userPreferences.getPreferences().getBoolean("musicEnabled", true));
+        setMasterVolume(userPreferences.getMasterVolume());
+        setSoundEnabled(userPreferences.getSoundEnabled());
+        setMusicEnabled(userPreferences.getMusicEnabled());
         Logger.info("LDAudio: loaded");
     }
 
@@ -115,8 +115,7 @@ public class LDAudio {
     public void saveMasterVolume() {
 
         Logger.info("Saving master volume");
-        userPreferences.getPreferences().putFloat("masterVolume", volume);
-        userPreferences.getPreferences().flush();
+        userPreferences.setMasterVolume(volume);
     }
 
     public void playMusic() {
@@ -186,8 +185,7 @@ public class LDAudio {
 
         Logger.info("Setting sound to " + enabled);
         soundEnabled = enabled;
-        userPreferences.getPreferences().putBoolean("soundEnabled", enabled);
-        userPreferences.getPreferences().flush();
+        userPreferences.setSoundEnabled(enabled);
     }
 
     public boolean isMusicEnabled() {
@@ -201,8 +199,7 @@ public class LDAudio {
         musicEnabled = enabled;
         music.setVolume(enabled ? volume : 0);
 
-        userPreferences.getPreferences().putBoolean("musicEnabled", enabled);
-        userPreferences.getPreferences().flush();
+        userPreferences.setMusicEnabled(enabled);
     }
 
     public enum LDSound {
