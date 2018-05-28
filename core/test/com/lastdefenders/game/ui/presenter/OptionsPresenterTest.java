@@ -20,6 +20,10 @@ import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import testutil.TestUtil;
 
 /**
@@ -28,39 +32,30 @@ import testutil.TestUtil;
 
 public class OptionsPresenterTest {
 
-    private GameUIStateManager uiStateManager = mock(GameUIStateManager.class);
-    private ScreenChanger screenChanger = mock(ScreenChanger.class);
-    private UserPreferences userPreferences = mock(UserPreferences.class);
-    private Preferences preferences = mock(Preferences.class);
-    private LDAudio audio = mock(LDAudio.class);
-    private OptionsView view = mock(OptionsView.class);
+    @Mock private GameUIStateManager uiStateManager;
+    @Mock private ScreenChanger screenChanger;
+    @Mock private UserPreferences userPreferences;
+    @Mock private LDAudio audio;
+    @Mock private OptionsView view;
+    @Spy private Resources resources = TestUtil.createResourcesMock();
+
+    @InjectMocks private OptionsPresenter optionsPresenter;
 
     @Before
     public void initOptionsPresenterTest() {
 
         Gdx.app = mock(Application.class);
-    }
-
-    private OptionsPresenter createOptionsPresenter() {
-
-        Resources resources = TestUtil.createResourcesMock();
-
-        doReturn(userPreferences).when(resources).getUserPreferences();
-        doReturn(preferences).when(userPreferences).getPreferences();
-
-        return new OptionsPresenter(uiStateManager, screenChanger, resources, audio);
-
+        MockitoAnnotations.initMocks(this);
     }
 
     @Test
     public void initViewTest1() {
 
-        OptionsPresenter optionsPresenter = createOptionsPresenter();
-
         doReturn(GameUIState.STANDBY).when(uiStateManager).getState();
         doReturn(true).when(audio).isMusicEnabled();
         doReturn(false).when(audio).isSoundEnabled();
-        doReturn(true).when(preferences).getBoolean(eq("showRanges"), eq(false));
+        doReturn(userPreferences).when(resources).getUserPreferences();
+        doReturn(true).when(userPreferences).getShowTowerRanges();
         optionsPresenter.setView(view);
 
         verify(view, times(1)).setBtnMusicOn(eq(true));
@@ -72,9 +67,8 @@ public class OptionsPresenterTest {
     @Test
     public void closeTest1() {
 
-        OptionsPresenter optionsPresenter = createOptionsPresenter();
-
         doReturn(GameUIState.OPTIONS).when(uiStateManager).getState();
+        doReturn(userPreferences).when(resources).getUserPreferences();
         optionsPresenter.setView(view);
 
         optionsPresenter.closeOptions();
@@ -88,9 +82,8 @@ public class OptionsPresenterTest {
     @Test
     public void mainMenuTest1() {
 
-        OptionsPresenter optionsPresenter = createOptionsPresenter();
-
         doReturn(GameUIState.OPTIONS).when(uiStateManager).getState();
+        doReturn(userPreferences).when(resources).getUserPreferences();
         optionsPresenter.setView(view);
 
         optionsPresenter.mainMenu();
@@ -104,9 +97,8 @@ public class OptionsPresenterTest {
     @Test
     public void mainMenuTest2() {
 
-        OptionsPresenter optionsPresenter = createOptionsPresenter();
-
         doReturn(GameUIState.STANDBY).when(uiStateManager).getState();
+        doReturn(userPreferences).when(resources).getUserPreferences();
         optionsPresenter.setView(view);
 
         optionsPresenter.mainMenu();
@@ -120,9 +112,8 @@ public class OptionsPresenterTest {
     @Test
     public void newGameTest1() {
 
-        OptionsPresenter optionsPresenter = createOptionsPresenter();
-
         doReturn(GameUIState.OPTIONS).when(uiStateManager).getState();
+        doReturn(userPreferences).when(resources).getUserPreferences();
         optionsPresenter.setView(view);
 
         optionsPresenter.newGame();
@@ -136,9 +127,8 @@ public class OptionsPresenterTest {
     @Test
     public void newGameTest2() {
 
-        OptionsPresenter optionsPresenter = createOptionsPresenter();
-
         doReturn(GameUIState.DEBUG).when(uiStateManager).getState();
+        doReturn(userPreferences).when(resources).getUserPreferences();
         optionsPresenter.setView(view);
 
         optionsPresenter.newGame();
