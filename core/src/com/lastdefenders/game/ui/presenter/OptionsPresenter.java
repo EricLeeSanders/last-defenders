@@ -101,18 +101,15 @@ public class OptionsPresenter implements GameUIStateObserver {
 
     private boolean isShowRangesEnabled() {
 
-        Preferences prefs = resources.getUserPreferences().getPreferences();
-        return prefs.getBoolean("showRanges", false);
+        return resources.getUserPreferences().getShowTowerRanges();
     }
 
     public void showRangesPressed() {
 
         Logger.info("Options Presenter: show ranges pressed");
         audio.playSound(LDSound.SMALL_CLICK);
-        Preferences prefs = resources.getUserPreferences().getPreferences();
         boolean isShowRangesEnabled = isShowRangesEnabled();
-        prefs.putBoolean("showRanges", !isShowRangesEnabled);
-        prefs.flush();
+        resources.getUserPreferences().setShowTowerRanges(!isShowRangesEnabled);
         view.setBtnShowRangesOn(!isShowRangesEnabled);
     }
 
