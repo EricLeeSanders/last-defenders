@@ -74,6 +74,8 @@ public class ArmorDestroyedEffectTest {
 
         // Finish it
         armorDestroyedEffect.act(50f);
+        // Call a second time so that the FreeActorAction is called
+        armorDestroyedEffect.act(0.0001f);
 
         verify(labelEffectPoolMock, times(1)).free(armorDestroyedEffect);
 

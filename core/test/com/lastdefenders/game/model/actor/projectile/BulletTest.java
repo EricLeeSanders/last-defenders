@@ -19,7 +19,7 @@ import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
-import com.lastdefenders.game.service.factory.ProjectileFactory.BulletPool;
+import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.datastructures.Dimension;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +37,7 @@ import testutil.TestUtil;
 public class BulletTest {
 
     @SuppressWarnings("unchecked")
-    private BulletPool poolMock = mock(BulletPool.class);
+    private ProjectilePool<Bullet> poolMock = mock(ProjectilePool.class);
 
     @Before
     public void initBulletTest() {
@@ -69,6 +69,10 @@ public class BulletTest {
         assertEquals(1, bullet.getActions().size);
 
         bullet.act(100f);
+        // Call a second time so that the damage action is called
+        bullet.act(0.0001f);
+        // Call a third time so that the FreeActorAction is called
+        bullet.act(0.0001f);
 
         assertEquals(target.getPositionCenter(), bullet.getPositionCenter());
         assertEquals(0, bullet.getActions().size);
@@ -97,6 +101,10 @@ public class BulletTest {
         doReturn(true).when(target).isDead();
 
         bullet.act(100f);
+        // Call a second time so that the damage action is called
+        bullet.act(0.0001f);
+        // Call a third time so that the FreeActorAction is called
+        bullet.act(0.0001f);
 
         assertEquals(target.getPositionCenter(), bullet.getPositionCenter());
         assertEquals(0, bullet.getActions().size);
