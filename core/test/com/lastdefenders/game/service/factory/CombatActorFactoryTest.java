@@ -1,4 +1,4 @@
-package game.service.factory;
+package com.lastdefenders.game.service.factory;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
