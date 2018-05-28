@@ -87,7 +87,6 @@ public class TestUtil {
         Preferences preferences = mock(Preferences.class);
 
         doReturn(preferences).when(userPreferences).getPreferences();
-        doReturn(false).when(userPreferences).getShowTutorialTips();
 
         return userPreferences;
     }
