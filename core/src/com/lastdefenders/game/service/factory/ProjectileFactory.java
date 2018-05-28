@@ -1,6 +1,7 @@
 package com.lastdefenders.game.service.factory;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.ActorGroups;
@@ -17,10 +18,10 @@ import com.lastdefenders.util.Resources;
 
 public class ProjectileFactory {
 
-    private BulletPool bulletPool = new BulletPool();
-    private RocketPool rocketPool = new RocketPool();
-    private ExplosionPool explosionPool = new ExplosionPool();
-    private FlamePool flamePool = new FlamePool();
+    private ProjectilePool<Bullet> bulletPool = new ProjectilePool<>(Bullet.class);
+    private ProjectilePool<Rocket> rocketPool = new ProjectilePool<>(Rocket.class);
+    private ProjectilePool<Explosion> explosionPool = new ProjectilePool<>(Explosion.class);
+    private ProjectilePool<Flame> flamePool = new ProjectilePool<>(Flame.class);
 
 
     private ActorGroups actorGroups;
@@ -35,51 +36,36 @@ public class ProjectileFactory {
     }
 
     /**
-     * Obtains a bullet from the pool
+     * Obtains a Projectile from the respective Pool.
      *
-     * @return Bullet
+     * @return Projectile
      */
-    public Bullet loadBullet() {
+    @SuppressWarnings("unchecked")
+    public <T extends Actor> T loadProjectile(Class<T> type) {
 
-        Bullet bullet = bulletPool.obtain();
-        actorGroups.getProjectileGroup().addActor(bullet);
-        return bullet;
-    }
+        String className = type.getSimpleName();
+        T projectile = null;
 
-    /**
-     * Obtains an Rocket from the pool
-     *
-     * @return Rocket
-     */
-    public Rocket loadRocket() {
+        switch(className){
+            case "Bullet":
+                projectile = (T) bulletPool.obtain();
+                break;
+            case "Explosion":
+                projectile = (T) explosionPool.obtain();
+                break;
+            case "Flame":
+                projectile = (T) flamePool.obtain();
+                break;
+            case "Rocket":
+                projectile = (T) rocketPool.obtain();
+                break;
+            default:
+                throw new IllegalArgumentException(className + " is not a valid Projectile");
 
-        Rocket rocket = rocketPool.obtain();
-        actorGroups.getProjectileGroup().addActor(rocket);
-        return rocket;
-    }
+        }
 
-    /**
-     * Obtains an Explosion from the pool
-     *
-     * @return Explosion
-     */
-    public Explosion loadExplosion() {
-
-        Explosion explosion = explosionPool.obtain();
-        actorGroups.getProjectileGroup().addActor(explosion);
-        return explosion;
-    }
-
-    /**
-     * Obtains a flame from the pool
-     *
-     * @return Flame
-     */
-    public Flame loadFlame() {
-
-        Flame flame = flamePool.obtain();
-        actorGroups.getProjectileGroup().addActor(flame);
-        return flame;
+        actorGroups.getProjectileGroup().addActor(projectile);
+        return projectile;
     }
 
     /**
@@ -87,7 +73,7 @@ public class ProjectileFactory {
      *
      * @return Bullet
      */
-    private Bullet createBulletActor() {
+    private Bullet createBullet() {
 
         return new Bullet(bulletPool, resources.getTexture("bullet"));
 
@@ -109,7 +95,7 @@ public class ProjectileFactory {
      *
      * @return Explosion
      */
-    private Explosion createExplosionActor() {
+    private Explosion createExplosion() {
 
         Array<TextureAtlas.AtlasRegion> atlasRegions = resources.getAtlasRegion("explosion");
         return new Explosion(explosionPool, atlasRegions, audio);
@@ -121,46 +107,51 @@ public class ProjectileFactory {
      *
      * @return Flame
      */
-    private Flame createFlameActor() {
+    private Flame createFlame() {
 
         Array<TextureAtlas.AtlasRegion> atlasRegions = resources.getAtlasRegion("flame");
         return new Flame(flamePool, atlasRegions);
 
     }
+    @SuppressWarnings("unchecked")
+    private <T extends Actor> T createProjectile(Class<T> type){
 
-    public class ExplosionPool extends Pool<Explosion> {
+        String className = type.getSimpleName();
+        T projectile = null;
 
-        @Override
-        protected Explosion newObject() {
-
-            return createExplosionActor();
+        switch(className){
+            case "Bullet":
+                projectile = (T) createBullet();
+                break;
+            case "Explosion":
+                projectile = (T) createExplosion();
+                break;
+            case "Flame":
+                projectile = (T) createFlame();
+                break;
+            case "Rocket":
+                projectile = (T) createRocket();
+                break;
+            default:
+                throw new IllegalArgumentException(className + " is not a valid Projectile");
         }
+
+        return projectile;
+
     }
 
-    public class BulletPool extends Pool<Bullet> {
+    public class ProjectilePool<T extends Actor> extends Pool<Actor> {
 
-        @Override
-        protected Bullet newObject() {
+        private final Class<T> type;
 
-            return createBulletActor();
+        ProjectilePool(Class<T> type){
+            this.type = type;
         }
-    }
-
-    public class RocketPool extends Pool<Rocket> {
 
         @Override
-        protected Rocket newObject() {
+        protected T newObject() {
 
-            return createRocket();
-        }
-    }
-
-    public class FlamePool extends Pool<Flame> {
-
-        @Override
-        protected Flame newObject() {
-
-            return createFlameActor();
+            return createProjectile(type);
         }
     }
 }

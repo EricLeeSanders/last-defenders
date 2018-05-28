@@ -13,6 +13,7 @@ import com.lastdefenders.game.model.actor.health.interfaces.PlatedArmor;
 import com.lastdefenders.game.model.actor.interfaces.IRocket;
 import com.lastdefenders.game.model.actor.interfaces.IVehicle;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
+import com.lastdefenders.game.model.actor.projectile.Rocket;
 import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.ActorUtil;
@@ -134,7 +135,7 @@ public class EnemyTank extends Enemy implements PlatedArmor, IVehicle, IRocket {
 
         if (target != null) {
             audio.playSound(LDSound.ROCKET_LAUNCH);
-            projectileFactory.loadRocket()
+            projectileFactory.loadProjectile(Rocket.class)
                 .initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
         }
     }
