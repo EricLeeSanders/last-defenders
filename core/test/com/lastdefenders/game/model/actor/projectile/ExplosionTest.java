@@ -13,7 +13,7 @@ import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.projectile.Explosion;
-import com.lastdefenders.game.service.factory.ProjectileFactory.ExplosionPool;
+import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import org.junit.Before;
@@ -30,8 +30,8 @@ import testutil.TestUtil;
 @RunWith(PowerMockRunner.class)
 @PrepareForTest({Damage.class})
 public class ExplosionTest {
-
-    private ExplosionPool poolMock = mock(ExplosionPool.class);
+    @SuppressWarnings("unchecked")
+    private ProjectilePool<Explosion> poolMock = mock(ProjectilePool.class);
 
     @Before
     public void initExplosionTest() {

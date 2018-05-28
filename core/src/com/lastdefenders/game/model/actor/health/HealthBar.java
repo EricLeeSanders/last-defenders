@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
+import com.lastdefenders.game.service.factory.HealthFactory.HealthPool;
 import com.lastdefenders.ui.widget.progressbar.LDProgressBar;
 import com.lastdefenders.ui.widget.progressbar.LDProgressBar.LDProgressBarPadding;
 import com.lastdefenders.ui.widget.progressbar.LDProgressBar.LDProgressBarStyle;
@@ -22,11 +23,11 @@ public class HealthBar extends Group implements Pool.Poolable {
     public static final float BAR_WIDTH = 25;
     public static final float BAR_HEIGHT = 5;
     private CombatActor actor = null;
-    private Pool<HealthBar> pool;
+    private HealthPool<HealthBar> pool;
     private TextureRegionDrawable greenBar, orangeBar, redBar, grayBar, unfilledBar;
     private LDProgressBar progressBar;
 
-    public HealthBar(Pool<HealthBar> pool, TextureRegionDrawable green, TextureRegionDrawable orange,
+    public HealthBar(HealthPool<HealthBar> pool, TextureRegionDrawable green, TextureRegionDrawable orange,
         TextureRegionDrawable red, TextureRegionDrawable gray, TextureRegionDrawable unfilled) {
 
         setTransform(false);

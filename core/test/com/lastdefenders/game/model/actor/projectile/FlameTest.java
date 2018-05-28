@@ -19,7 +19,7 @@ import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.projectile.Flame;
-import com.lastdefenders.game.service.factory.ProjectileFactory.FlamePool;
+import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
 import org.junit.Before;
@@ -37,7 +37,8 @@ import testutil.TestUtil;
 @PrepareForTest({Damage.class})
 public class FlameTest {
 
-    private FlamePool poolMock = mock(FlamePool.class);
+    @SuppressWarnings("unchecked")
+    private ProjectilePool<Flame> poolMock = mock(ProjectilePool.class);
 
     @Before
     public void initFlameTest() {

@@ -32,10 +32,10 @@ public class SupportPresenterSupportActorTest extends SupportPresenterTest {
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        supportPresenter.createSupportActor("Apache");
+        supportPresenter.createSupportActor(Apache.class);
 
         verify(supportView, times(1)).supportState();
-        verify(supportActorPlacement, times(1)).createSupportActor(eq("Apache"));
+        verify(supportActorPlacement, times(1)).createSupportActor(eq(Apache.class));
         verify(uiStateManager, times(1)).setState(eq(GameUIState.PLACING_SUPPORT));
 
     }
@@ -51,10 +51,10 @@ public class SupportPresenterSupportActorTest extends SupportPresenterTest {
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        supportPresenter.createSupportActor("Apache");
+        supportPresenter.createSupportActor(Apache.class);
 
         verify(supportView, times(1)).supportState();
-        verify(supportActorPlacement, never()).createSupportActor(any(String.class));
+        verify(supportActorPlacement, never()).createSupportActor(eq(Apache.class));
         verify(uiStateManager, never()).setState(any(GameUIState.class));
 
     }
@@ -70,10 +70,10 @@ public class SupportPresenterSupportActorTest extends SupportPresenterTest {
         doReturn(GameUIState.LEVEL_COMPLETED).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
-        supportPresenter.createSupportActor("LandMine");
+        supportPresenter.createSupportActor(LandMine.class);
 
         verify(supportView, times(1)).standByState();
-        verify(supportActorPlacement, never()).createSupportActor(any(String.class));
+        verify(supportActorPlacement, never()).createSupportActor(eq(LandMine.class));
         verify(uiStateManager, never()).setState(any(GameUIState.class));
 
     }

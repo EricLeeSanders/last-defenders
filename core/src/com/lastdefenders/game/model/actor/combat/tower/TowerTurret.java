@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.interfaces.IRotatable;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
+import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.ActorUtil;
@@ -205,7 +206,7 @@ public class TowerTurret extends Tower implements IRotatable {
 
         if (target != null) {
             audio.playSound(LDSound.MACHINE_GUN);
-            projectileFactory.loadBullet().initialize(this, target, BULLET_SIZE);
+            projectileFactory.loadProjectile(Bullet.class).initialize(this, target, BULLET_SIZE);
         }
     }
 

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.lastdefenders.game.model.actor.interfaces.IRocket;
+import com.lastdefenders.game.model.actor.projectile.Rocket;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.LDAudio;
@@ -19,7 +20,7 @@ import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.UtilPool;
 
-public class AirStrike extends SupportActor implements IRocket {
+public class AirStrike extends CombatSupportActor implements IRocket {
 
     public static final float AIRSTRIKE_DURATION = 2.5f;
     public static final int COST = 1000;
@@ -64,7 +65,11 @@ public class AirStrike extends SupportActor implements IRocket {
             .moveTo(Resources.VIRTUAL_WIDTH + getWidth(), (Resources.VIRTUAL_HEIGHT / 2),
                 AIRSTRIKE_DURATION, Interpolation.linear);
         moveAction.setAlignment(Align.center);
-        addAction(moveAction);
+
+        addAction(
+            Actions.sequence(
+                moveAction,
+                UtilPool.getFreeActorAction(getPool())));
 
         audio.playSound(LDSound.AIRCRAFT_FLYOVER);
         audio.playSound(LDSound.ROCKET_LAUNCH);
@@ -76,20 +81,9 @@ public class AirStrike extends SupportActor implements IRocket {
 
     }
 
-    @Override
-    public void act(float delta) {
-
-        super.act(delta);
-        if (isActive()) {
-            if (getActions().size <= 0) {
-                freeActor();
-            }
-        }
-    }
-
     private void dropBomb(AirStrikeLocation location) {
 
-        projectileFactory.loadRocket()
+        projectileFactory.loadProjectile(Rocket.class)
             .initialize(this, location.getLocation(), ROCKET_SIZE, AIRSTRIKE_RADIUS);
 
 
