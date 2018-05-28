@@ -224,8 +224,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
                 showTowerRanges(true);
                 break;
             default:
-                showTowerRanges(resources.getUserPreferences().getPreferences()
-                    .getBoolean("showRanges", false));
+                showTowerRanges(resources.getUserPreferences().getShowTowerRanges());
                 break;
         }
 
