@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import com.lastdefenders.util.ActorUtil;
+import com.lastdefenders.util.UtilPool;
 
 /**
  * Created by Eric on 1/6/2017.
@@ -24,7 +25,7 @@ public class TowerHealEffect extends LabelEffect {
 
     public TowerHealEffect(EffectPool<TowerHealEffect> pool, Skin skin, float fontScale) {
 
-        super(pool, DURATION, skin);
+        super(pool, skin);
 
         setText(MESSAGE);
         setAlignment(Align.center);
@@ -45,9 +46,11 @@ public class TowerHealEffect extends LabelEffect {
         setPosition(x, y);
 
         addAction(
-            Actions.parallel(
-                Actions.moveTo(getX(), getY() + Y_END_OFFSET, DURATION),
-                Actions.fadeOut(DURATION)));
+            Actions.sequence(
+                Actions.parallel(
+                    Actions.moveTo(getX(), getY() + Y_END_OFFSET, DURATION),
+                    Actions.fadeOut(DURATION)),
+                UtilPool.getFreeActorAction(getPool())));
 
         return this;
     }

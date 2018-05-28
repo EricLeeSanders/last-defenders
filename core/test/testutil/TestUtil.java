@@ -96,7 +96,7 @@ public class TestUtil {
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
 
         Bullet bullet = mock(Bullet.class);
-        doReturn(bullet).when(projectileFactoryMock).loadBullet();
+        doReturn(bullet).when(projectileFactoryMock).loadProjectile(Bullet.class);
 
         return projectileFactoryMock;
     }

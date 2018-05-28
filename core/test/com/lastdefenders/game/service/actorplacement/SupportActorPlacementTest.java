@@ -39,8 +39,7 @@ public class SupportActorPlacementTest {
     @Test
     public void apachePlacementTest1() {
 
-        SupportActorPlacement supportActorPlacement = new SupportActorPlacement(actorGroups,
-            supportActorFactory);
+        SupportActorPlacement supportActorPlacement = new SupportActorPlacement(supportActorFactory);
 
         Group supportGroup = new Group();
         doReturn(supportGroup).when(actorGroups).getSupportGroup();
@@ -48,9 +47,9 @@ public class SupportActorPlacementTest {
         ApacheTest apacheTest = new ApacheTest();
         Apache apache = apacheTest.createApache();
 
-        doReturn(apache).when(supportActorFactory).loadSupportActor(eq("Apache"));
+        doReturn(apache).when(supportActorFactory).loadSupportActor(eq(Apache.class), eq(true));
 
-        supportActorPlacement.createSupportActor("Apache");
+        supportActorPlacement.createSupportActor(Apache.class);
 
         assertEquals(0, apache.getX(), TestUtil.DELTA);
         assertEquals(0, apache.getY(), TestUtil.DELTA);
@@ -77,8 +76,7 @@ public class SupportActorPlacementTest {
     @Test
     public void landMinePlacementTest() {
 
-        SupportActorPlacement supportActorPlacement = new SupportActorPlacement(actorGroups,
-            supportActorFactory);
+        SupportActorPlacement supportActorPlacement = new SupportActorPlacement(supportActorFactory);
 
         Group landmineGroup = new Group();
         doReturn(landmineGroup).when(actorGroups).getLandmineGroup();
@@ -86,9 +84,9 @@ public class SupportActorPlacementTest {
         LandMineTest landMineTest = new LandMineTest();
         LandMine landMine = landMineTest.createLandMine();
 
-        doReturn(landMine).when(supportActorFactory).loadSupportActor(eq("LandMine"));
+        doReturn(landMine).when(supportActorFactory).loadSupportActor(eq(LandMine.class), eq(true));
 
-        supportActorPlacement.createSupportActor("LandMine");
+        supportActorPlacement.createSupportActor(LandMine.class);
 
         assertEquals(0, landMine.getX(), TestUtil.DELTA);
         assertEquals(0, landMine.getY(), TestUtil.DELTA);

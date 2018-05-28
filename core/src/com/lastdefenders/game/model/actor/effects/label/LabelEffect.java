@@ -14,13 +14,11 @@ public abstract class LabelEffect extends Label implements Pool.Poolable {
 
     float stateTime;
     private EffectPool<? extends Actor> pool;
-    private float duration;
 
-    LabelEffect(EffectPool<? extends Actor> pool, float duration, Skin skin) {
+    LabelEffect(EffectPool<? extends Actor> pool, Skin skin) {
 
         super("", skin);
         this.pool = pool;
-        this.duration = duration;
     }
 
     @Override
@@ -28,9 +26,6 @@ public abstract class LabelEffect extends Label implements Pool.Poolable {
 
         super.act(delta);
         stateTime += delta;
-        if (stateTime >= duration) {
-            free();
-        }
     }
 
     /**
@@ -40,6 +35,10 @@ public abstract class LabelEffect extends Label implements Pool.Poolable {
     void free() {
 
         pool.free(this);
+    }
+
+    public EffectPool<? extends Actor> getPool(){
+        return pool;
     }
 
     @Override

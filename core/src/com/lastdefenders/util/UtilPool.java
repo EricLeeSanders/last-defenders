@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Pool;
 import com.badlogic.gdx.utils.Pools;
 import com.lastdefenders.util.action.FreeActorAction;
+import com.lastdefenders.util.action.LDOneTimeAction;
 import com.lastdefenders.util.action.LDSequenceAction;
 import com.lastdefenders.util.action.WaypointAction;
 import com.lastdefenders.util.datastructures.pool.LDPoolable;
@@ -38,7 +39,7 @@ public class UtilPool {
         return waypointAction;
     }
 
-    public static FreeActorAction getFreeActorAction(Pool<Actor> actorPool){
+    public static FreeActorAction getFreeActorAction(Pool<? super Actor> actorPool){
 
         Pool<FreeActorAction> freeActorActionPool = Pools.get(FreeActorAction.class);
         FreeActorAction freeActorAction = freeActorActionPool.obtain();
@@ -46,6 +47,7 @@ public class UtilPool {
 
         return freeActorAction;
     }
+
 
     public static LDVector2 getVector2(float x, float y) {
 
