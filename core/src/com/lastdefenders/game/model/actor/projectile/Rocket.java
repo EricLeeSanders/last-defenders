@@ -114,7 +114,6 @@ public class Rocket extends GameActor implements Pool.Poolable {
 
         @Override
         public void reset(){
-            System.out.println("rocket reset");
             attacker = null;
             radius = 0;
             destination = null;
