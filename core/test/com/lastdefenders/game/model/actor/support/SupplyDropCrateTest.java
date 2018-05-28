@@ -18,7 +18,7 @@ import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
 import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
 import com.lastdefenders.game.service.factory.EffectFactory;
-import com.lastdefenders.game.service.factory.SupportActorFactory.SupplyDropCratePool;
+import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
@@ -31,7 +31,8 @@ import testutil.TestUtil;
 
 public class SupplyDropCrateTest {
 
-    private SupplyDropCratePool supplyDropCratePoolMock = mock(SupplyDropCratePool.class);
+    @SuppressWarnings("unchecked")
+    private SupportActorPool<SupplyDropCrate> supplyDropCratePoolMock = mock(SupportActorPool.class);
     private TowerHealEffect towerHealEffectMock = mock(TowerHealEffect.class);
 
     @Before
@@ -83,17 +84,24 @@ public class SupplyDropCrateTest {
 
         assertTrue(supplyDropCrate.isActive());
         assertFalse(supplyDropCrate.isVisible());
-        assertEquals(2, supplyDropCrate.getActions().size);
         assertEquals(destination, supplyDropCrate.getPositionCenter());
 
+        // Delay Action
         supplyDropCrate.act(dropDelay);
         assertEquals(1, supplyDropCrate.getActions().size);
         assertTrue(tower1.getHealthPercent() < 1);
         assertTrue(tower2.getHealthPercent() < 1);
         assertTrue(tower3.getArmorPercent() < 1);
 
+        // Scale action
         supplyDropCrate.act(10f);
-        assertEquals(0, supplyDropCrate.getActions().size);
+        // Visible action
+        supplyDropCrate.act(0.0001f);
+        // Heal actors action
+        supplyDropCrate.act(0.0001f);
+        // Free action
+        supplyDropCrate.act(0.0001f);
+
 
         assertTrue(tower1.getHealthPercent() == 1);
         assertTrue(tower2.getHealthPercent() == 1);

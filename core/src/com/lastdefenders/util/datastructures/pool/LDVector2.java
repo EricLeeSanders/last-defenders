@@ -11,18 +11,14 @@ public class LDVector2 extends Vector2 implements LDPoolable {
 
     private Pool<LDVector2> pool;
 
-    public LDVector2() {
-
-    }
+    public LDVector2() {}
 
     public LDVector2(float x, float y) {
-
         super(x, y);
     }
 
     @Override
     public void reset() {
-
         set(0, 0);
     }
 

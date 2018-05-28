@@ -12,6 +12,7 @@ import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
 import com.lastdefenders.game.model.actor.combat.state.StateManager;
 import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
+import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.Dimension;
@@ -36,7 +37,7 @@ public abstract class Tower extends CombatActor {
     private boolean towerColliding;
     private StateManager<TowerState, CombatActorState> stateManager;
 
-    public Tower(TextureRegion textureRegion, Dimension textureSize, Pool<CombatActor> pool,
+    public Tower(TextureRegion textureRegion, Dimension textureSize, CombatActorPool<? extends CombatActor> pool,
         Group targetGroup, Vector2 gunPos, TextureRegion rangeRegion,
         TextureRegion collidingRangeRegion, float health, float armor, float attack,
         float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost,

@@ -1,6 +1,7 @@
 package com.lastdefenders.game.ui.presenter;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.support.AirStrike;
@@ -38,7 +39,7 @@ public class SupportPresenter implements GameUIStateObserver {
     private ISupportView view;
     private LDAudio audio;
     private MessageDisplayer messageDisplayer;
-    private Map<String, Integer> supportCosts = new HashMap<>();
+    private Map<Class<?>, Integer> supportCosts = new HashMap<>();
     private Viewport gameViewport;
 
     public SupportPresenter(GameUIStateManager uiStateManager, Player player, LDAudio audio,
@@ -60,8 +61,8 @@ public class SupportPresenter implements GameUIStateObserver {
 
     private void initSupportCostsMap() {
 
-        supportCosts.put("Apache", Apache.COST);
-        supportCosts.put("LandMine", LandMine.COST);
+        supportCosts.put(Apache.class, Apache.COST);
+        supportCosts.put(LandMine.class, LandMine.COST);
     }
 
     /**
@@ -196,7 +197,7 @@ public class SupportPresenter implements GameUIStateObserver {
     /**
      * Create a Support Actor
      */
-    public void createSupportActor(String type) {
+    public <T extends Actor> void createSupportActor(Class<T> type ) {
 
         Logger.info("Support Presenter: creating support actor");
         int cost = supportCosts.get(type);
@@ -217,7 +218,6 @@ public class SupportPresenter implements GameUIStateObserver {
      */
     public void moveSupportActor(Vector2 location) {
 
-        Logger.info("Support Presenter: move support actor");
         if (canMoveSupportActor()) {
             supportActorPlacement.moveSupportActor(location);
             view.showBtnPlace();

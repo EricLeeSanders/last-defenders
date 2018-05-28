@@ -1,5 +1,6 @@
 package com.lastdefenders.game.service.factory;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.ActorGroups;
@@ -14,8 +15,8 @@ import com.lastdefenders.util.Resources;
 
 public class HealthFactory {
 
-    private ArmorIconPool armorIconPool = new ArmorIconPool();
-    private HealthPool healthPool = new HealthPool();
+    private HealthPool<ArmorIcon> armorIconPool = new HealthPool<>(ArmorIcon.class);
+    private HealthPool<HealthBar> healthPool = new HealthPool<>(HealthBar.class);
 
     private ActorGroups actorGroups;
     private Resources resources;
@@ -29,7 +30,7 @@ public class HealthFactory {
     public HealthBar loadHealthBar() {
 
         Logger.info("Actor Factory: loading healthbar");
-        HealthBar healthBar = healthPool.obtain();
+        HealthBar healthBar = (HealthBar) healthPool.obtain();
         actorGroups.getHealthGroup().addActor(healthBar);
         return healthBar;
     }
@@ -37,9 +38,30 @@ public class HealthFactory {
     public ArmorIcon loadArmorIcon() {
 
         Logger.info("Actor Factory: loading ArmorIcon");
-        ArmorIcon armorIcon = armorIconPool.obtain();
+        ArmorIcon armorIcon = (ArmorIcon) armorIconPool.obtain();
         actorGroups.getHealthGroup().addActor(armorIcon);
         return armorIcon;
+    }
+
+    @SuppressWarnings("unchecked")
+    private <T extends Actor> T createHealthActor(Class<T> type){
+
+        String className = type.getSimpleName();
+        T healthActor = null;
+
+        switch(className){
+            case "ArmorIcon":
+                healthActor = (T) createArmorIcon();
+                break;
+            case "HealthBar":
+                healthActor = (T) createHealthBar();
+                break;
+            default:
+                throw new IllegalArgumentException(className + " is not a valid Health class");
+        }
+
+        return healthActor;
+
     }
 
     /**
@@ -47,7 +69,7 @@ public class HealthFactory {
      *
      * @return HealthBar
      */
-    private HealthBar createHealthBarActor() {
+    private HealthBar createHealthBar() {
 
         Logger.info("Actor Factory: creating healthbar");
         return new HealthBar(healthPool,
@@ -65,21 +87,19 @@ public class HealthFactory {
         return new ArmorIcon(armorIconPool, resources.getTexture("shield"));
     }
 
-    public class HealthPool extends Pool<HealthBar> {
 
-        @Override
-        protected HealthBar newObject() {
+    public class HealthPool<T extends Actor> extends Pool<Actor> {
 
-            return createHealthBarActor();
+        private final Class<T> type;
+
+        HealthPool(Class<T> type){
+            this.type = type;
         }
-    }
-
-    public class ArmorIconPool extends Pool<ArmorIcon> {
 
         @Override
-        protected ArmorIcon newObject() {
+        protected T newObject() {
 
-            return createArmorIcon();
+            return createHealthActor(type);
         }
     }
 }
