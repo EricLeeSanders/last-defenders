@@ -64,7 +64,7 @@ public class GameScreen extends AbstractScreen {
     private void createCameraAndViewports(){
 
         OrthographicCamera gameCamera = new OrthographicCamera();
-        gameViewport = new ExtendViewport(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, gameCamera);
+        gameViewport = new StretchViewport(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, gameCamera);
         addViewport(gameViewport);
 
 
