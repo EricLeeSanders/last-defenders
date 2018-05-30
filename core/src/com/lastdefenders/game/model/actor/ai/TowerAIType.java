@@ -6,6 +6,8 @@ import com.lastdefenders.game.model.actor.ai.towerai.FirstEnemyAI;
 import com.lastdefenders.game.model.actor.ai.towerai.LastEnemyAI;
 import com.lastdefenders.game.model.actor.ai.towerai.LeastHPEnemyAI;
 import com.lastdefenders.game.model.actor.ai.towerai.MostHPEnemyAI;
+import com.lastdefenders.game.model.actor.ai.towerai.StrongestEnemyAI;
+import com.lastdefenders.game.model.actor.ai.towerai.WeakestEnemyAI;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 
@@ -18,7 +20,9 @@ public enum TowerAIType implements TowerAI {
     FIRST(new FirstEnemyAI(), 0),
     LAST(new LastEnemyAI(), 1),
     LEAST_HP(new LeastHPEnemyAI(), 2),
-    MOST_HP(new MostHPEnemyAI(), 3);
+    MOST_HP(new MostHPEnemyAI(), 3),
+    STRONGEST(new StrongestEnemyAI(), 4),
+    WEAKEST(new WeakestEnemyAI(), 5);
 
     private TowerAI ai;
     private int position;

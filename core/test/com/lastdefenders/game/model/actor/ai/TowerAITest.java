@@ -13,6 +13,8 @@ import com.lastdefenders.game.model.actor.ai.towerai.FirstEnemyAI;
 import com.lastdefenders.game.model.actor.ai.towerai.LastEnemyAI;
 import com.lastdefenders.game.model.actor.ai.towerai.LeastHPEnemyAI;
 import com.lastdefenders.game.model.actor.ai.towerai.MostHPEnemyAI;
+import com.lastdefenders.game.model.actor.ai.towerai.StrongestEnemyAI;
+import com.lastdefenders.game.model.actor.ai.towerai.WeakestEnemyAI;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import org.junit.Before;
@@ -410,5 +412,56 @@ public class TowerAITest {
         Enemy enemy = new MostHPEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
 
         assertNull(enemy);
+    }
+
+    /**
+     * Test the {@link StrongestEnemyAI}
+     */
+    @Test
+    public void testStrongestEnemy(){
+        Tower tower = TestUtil.createTower("Rifle", false);
+        Group towerTargetGroup = tower.getTargetGroup();
+
+        Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy2 = TestUtil.createEnemy("Sniper", false);
+        Enemy enemy3 = TestUtil.createEnemy("RocketLauncher", false);
+        Enemy enemy4 = TestUtil.createEnemy("FlameThrower", false);
+
+        towerTargetGroup.addActor(enemy1);
+        towerTargetGroup.addActor(enemy2);
+        towerTargetGroup.addActor(enemy3);
+        towerTargetGroup.addActor(enemy4);
+
+
+        Enemy enemy = new StrongestEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
+
+        assertEquals(enemy3, enemy);
+
+    }
+
+    /**
+     * Test the {@link WeakestEnemyAI}
+     */
+    @Test
+    public void testWeakestEnemy(){
+        Tower tower = TestUtil.createTower("Rifle", false);
+        Group towerTargetGroup = tower.getTargetGroup();
+
+        Enemy enemy1 = TestUtil.createEnemy("MachineGun", false);
+        Enemy enemy2 = TestUtil.createEnemy("Sniper", false);
+        Enemy enemy3 = TestUtil.createEnemy("RocketLauncher", false);
+        Enemy enemy4 = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy5 = TestUtil.createEnemy("FlameThrower", false);
+
+        towerTargetGroup.addActor(enemy1);
+        towerTargetGroup.addActor(enemy2);
+        towerTargetGroup.addActor(enemy3);
+        towerTargetGroup.addActor(enemy4);
+        towerTargetGroup.addActor(enemy5);
+
+        Enemy enemy = new WeakestEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
+
+        assertEquals(enemy4, enemy);
+
     }
 }
