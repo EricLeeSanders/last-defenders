@@ -2,8 +2,8 @@ package com.lastdefenders.game.model.actor.ai;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.lastdefenders.game.model.actor.ai.towerai.FirstEnemyAI;
-import com.lastdefenders.game.model.actor.ai.towerai.LastEnemyAI;
+import com.lastdefenders.game.model.actor.ai.towerai.ClosestEnemyAI;
+import com.lastdefenders.game.model.actor.ai.towerai.FarthestEnemyAI;
 import com.lastdefenders.game.model.actor.ai.towerai.LeastHPEnemyAI;
 import com.lastdefenders.game.model.actor.ai.towerai.MostHPEnemyAI;
 import com.lastdefenders.game.model.actor.ai.towerai.StrongestEnemyAI;
@@ -17,20 +17,20 @@ import com.lastdefenders.game.model.actor.interfaces.Attacker;
 
 public enum TowerAIType implements TowerAI {
 
-    FIRST(new FirstEnemyAI(), 0),
-    LAST(new LastEnemyAI(), 1),
-    LEAST_HP(new LeastHPEnemyAI(), 2),
-    MOST_HP(new MostHPEnemyAI(), 3),
-    STRONGEST(new StrongestEnemyAI(), 4),
-    WEAKEST(new WeakestEnemyAI(), 5);
+    CLOSEST(new ClosestEnemyAI(), "CLOSEST"),
+    FARTHEST(new FarthestEnemyAI(), "FARTHEST"),
+    LEAST_HP(new LeastHPEnemyAI(), "LEAST HP"),
+    MOST_HP(new MostHPEnemyAI(), "MOST HP"),
+    STRONGEST(new StrongestEnemyAI(), "STRONGEST"),
+    WEAKEST(new WeakestEnemyAI(), "WEAKEST");
 
-    private TowerAI ai;
-    private int position;
+    private final TowerAI ai;
+    private final String title;
 
-    TowerAIType(TowerAI ai, int position) {
+    TowerAIType(TowerAI ai, String title) {
 
         this.ai = ai;
-        this.position = position;
+        this.title = title;
     }
 
     @Override
@@ -39,14 +39,7 @@ public enum TowerAIType implements TowerAI {
         return ai.findTarget(attacker, enemies);
     }
 
-    public TowerAIType getNextTowerAIType() {
-
-        int n = TowerAIType.values().length;
-        return TowerAIType.values()[(getPosition() + 1) % n];
-    }
-
-    private int getPosition() {
-
-        return position;
+    public String getTitle(){
+        return title;
     }
 }

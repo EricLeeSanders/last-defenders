@@ -45,7 +45,7 @@ public class MenuView extends Group implements IMenuView {
 
         Skin skin = resources.getSkin();
 
-        Label lblTitle = new Label("LAST DEFENDERS", skin);
+        Label lblTitle = new Label("FARTHEST DEFENDERS", skin);
         lblTitle.setAlignment(Align.center);
         lblTitle.setPosition(getStage().getViewport().getWorldWidth() / 2, (getStage().getViewport().getWorldHeight() / 2) + 110, Align.center);
         addActor(lblTitle);
