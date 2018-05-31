@@ -102,15 +102,18 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
     /**
      * Change the target priority of the tower
      */
-    public void changeTargetPriority() {
+    public void changeTargetPriority(TowerAIType towerAIType) {
 
         Logger.info("Inspect Presenter: changing target priority");
-        audio.playSound(LDSound.SMALL_CLICK);
         if (canChangeTargetPriority()) {
-            TowerAIType ai = selectedTower.getAI().getNextTowerAIType();
-            selectedTower.setAI(ai);
+            selectedTower.setAI(towerAIType);
             view.update(selectedTower);
         }
+    }
+
+    public TowerAIType getTowerAIType(){
+
+        return selectedTower.getAI();
     }
 
     /**
