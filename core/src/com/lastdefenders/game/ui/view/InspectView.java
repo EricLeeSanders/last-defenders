@@ -32,7 +32,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
     private UpgradeButton btnArmor, btnSpeed, btnRange, btnAttack;
     private Label lblTargetPriority, lblTitle, lblMoney, lblKills;
     private Resources resources;
-
+    private TargetPriorityView targetPriorityView;
     public InspectView(InspectPresenter presenter, Resources resources) {
 
         this.presenter = presenter;
@@ -42,6 +42,10 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
 
     public void init(){
         createControls();
+        targetPriorityView = new TargetPriorityView(presenter, resources);
+        addActor(targetPriorityView);
+        targetPriorityView.init();
+        targetPriorityView.setVisible(false);
     }
 
     /**
@@ -118,6 +122,20 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         inspectTable.add(btnAttack).size(110, 115);//.spaceBottom(5).spaceRight(10);
         setIncreaseAttackListener();
 
+        inspectTable.row();
+
+        Group grpTargetPriority = createTargetPriorityGroup(skin);
+
+        inspectTable.add(grpTargetPriority).colspan(2).height(45).width(150).padTop(15).center();
+
+        btnDischarge = new DischargeButton(skin, resources.getFontScale());
+        inspectTable.add(btnDischarge).colspan(2).size(133, 83).padTop(15).center();
+        setDischargeListener();
+
+        Logger.info("Inspect View: controls created");
+    }
+
+    private Group createTargetPriorityGroup(Skin skin){
         Group grpTargetPriority = new Group();
         grpTargetPriority.setTransform(false);
 
@@ -131,26 +149,20 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         grpTargetPriority.addActor(lblTargetPriority);
 
         Label lblTarget = new Label("PRIORITY", skin);
-        lblTarget.setPosition(lblTargetPriority.getX() + 20, lblTargetPriority.getY() + 25);
+        lblTarget.setPosition(lblTargetPriority.getX() + 24, lblTargetPriority.getY() + 42);
         lblTarget.setFontScale(0.45f * resources.getFontScale());
+        lblTarget.pack();
         grpTargetPriority.addActor(lblTarget);
 
-        Button btnChangeTarget = new Button(skin, "arrow-right");
-        btnChangeTarget.setSize(32, 22);
-        btnChangeTarget.setPosition(lblTargetPriority.getX() + lblTargetPriority.getWidth(),
-            lblTargetPriority.getY() + 7);
-        grpTargetPriority.addActor(btnChangeTarget);
+        Label lblText = new Label("CLICK TO CHANGE", skin);
+        lblText.setPosition(lblTargetPriority.getX() + 6,lblTargetPriority.getY() - 25);
+        lblText.setFontScale(0.35f * resources.getFontScale());
+        lblText.pack();
+        grpTargetPriority.addActor(lblText);
+
         setTargetPriorityListener(grpTargetPriority);
 
-        inspectTable.row();
-
-        inspectTable.add(grpTargetPriority).colspan(2).height(45).width(150).padTop(15).center();
-
-        btnDischarge = new DischargeButton(skin, resources.getFontScale());
-        inspectTable.add(btnDischarge).colspan(2).size(133, 83).padTop(15).center();
-        setDischargeListener();
-
-        Logger.info("Inspect View: controls created");
+        return grpTargetPriority;
     }
 
 
@@ -177,7 +189,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         btnDischarge.updateCost(selectedTower.getSellCost());
         btnDischarge.button.setDisabled(presenter.isDischargeDisabled());
         lblTitle.setText(selectedTower.getName().toUpperCase());
-        lblTargetPriority.setText(selectedTower.getAI().name().replace('_', ' '));
+        lblTargetPriority.setText(selectedTower.getAI().getTitle());
         updateUpgradeControl(btnArmor, selectedTower.hasArmor(), selectedTower.getArmorCost());
         updateUpgradeControl(btnSpeed, selectedTower.hasIncreasedSpeed(),
             selectedTower.getSpeedIncreaseCost());
@@ -218,7 +230,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                presenter.changeTargetPriority();
+                targetPriorityView.show();
             }
         });
     }
@@ -304,13 +316,13 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
 
-        presenter.inspectTower(screenX, screenY);
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
 
+        presenter.inspectTower(screenX, screenY);
         return false;
     }
 

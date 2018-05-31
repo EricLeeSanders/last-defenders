@@ -137,6 +137,13 @@ heart
   orig: 64, 61
   offset: 0, 0
   index: -1
+help
+  rotate: false
+  xy: 3186, 735
+  size: 30, 49
+  orig: 30, 49
+  offset: 0, 0
+  index: -1
 hollow-no-round
   rotate: false
   xy: 1685, 371

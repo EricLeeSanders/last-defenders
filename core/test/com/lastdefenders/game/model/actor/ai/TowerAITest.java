@@ -9,10 +9,12 @@ import static org.mockito.Mockito.spy;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.lastdefenders.game.model.actor.ai.towerai.FirstEnemyAI;
-import com.lastdefenders.game.model.actor.ai.towerai.LastEnemyAI;
+import com.lastdefenders.game.model.actor.ai.towerai.ClosestEnemyAI;
+import com.lastdefenders.game.model.actor.ai.towerai.FarthestEnemyAI;
 import com.lastdefenders.game.model.actor.ai.towerai.LeastHPEnemyAI;
 import com.lastdefenders.game.model.actor.ai.towerai.MostHPEnemyAI;
+import com.lastdefenders.game.model.actor.ai.towerai.StrongestEnemyAI;
+import com.lastdefenders.game.model.actor.ai.towerai.WeakestEnemyAI;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import org.junit.Before;
@@ -109,32 +111,32 @@ public class TowerAITest {
     }
 
     /**
-     * Finds the First Enemy
+     * Finds the Closest Enemy
      */
     @Test
-    public void testTowerFindFirst() {
+    public void testTowerFindClosest() {
 
         Tower tower = TestUtil.createTower("Rifle", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroup(towerTargetGroup);
 
-        Enemy enemy = new FirstEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
+        Enemy enemy = new ClosestEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
         Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy10");
 
         assertEquals(expectedEnemy, enemy);
     }
 
     /**
-     * Finds the Last Enemy
+     * Finds the Farthest Enemy
      */
     @Test
-    public void testTowerFindLast() {
+    public void testTowerFindFarthest() {
 
         Tower tower = TestUtil.createTower("FlameThrower", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroup(towerTargetGroup);
 
-        Enemy enemy = new LastEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
+        Enemy enemy = new FarthestEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
         Enemy expectedEnemy = towerTargetGroup.findActor("enemy1");
 
         assertEquals(expectedEnemy, enemy);
@@ -173,32 +175,32 @@ public class TowerAITest {
     }
 
     /**
-     * Finds the First Enemy and skips the Tank
+     * Finds the Closest Enemy and skips the Tank
      */
     @Test
-    public void testTowerFindFirstSkipTank() {
+    public void testTowerFindClosestSkipTank() {
 
         Tower tower = TestUtil.createTower("Rifle", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithTank(towerTargetGroup);
 
-        Enemy enemy = new FirstEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
+        Enemy enemy = new ClosestEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
         Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy4");
 
         assertEquals(expectedEnemy, enemy);
     }
 
     /**
-     * Finds the Last Enemy and skips the Tank
+     * Finds the Farthest Enemy and skips the Tank
      */
     @Test
-    public void testTowerFindLastSkipTank() {
+    public void testTowerFindFarthestSkipTank() {
 
         Tower tower = TestUtil.createTower("FlameThrower", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithTank(towerTargetGroup);
 
-        Enemy enemy = new LastEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
+        Enemy enemy = new FarthestEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
         Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy7");
 
         assertEquals(expectedEnemy, enemy);
@@ -237,32 +239,32 @@ public class TowerAITest {
     }
 
     /**
-     * Finds the First Enemy and attacks the Tank
+     * Finds the Closest Enemy and attacks the Tank
      */
     @Test
-    public void testTowerFindFirstAttackTank() {
+    public void testTowerFindClosestAttackTank() {
 
         Tower tower = TestUtil.createTower("RocketLauncher", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithTank(towerTargetGroup);
 
-        Enemy enemy = new FirstEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
+        Enemy enemy = new ClosestEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
         Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy3");
 
         assertEquals(expectedEnemy, enemy);
     }
 
     /**
-     * Finds the Last Enemy and attacks the Tank
+     * Finds the Farthest Enemy and attacks the Tank
      */
     @Test
-    public void testTowerFindLastAttackTank() {
+    public void testTowerFindFarthestAttackTank() {
 
         Tower tower = TestUtil.createTower("Tank", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithTank(towerTargetGroup);
 
-        Enemy enemy = new LastEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
+        Enemy enemy = new FarthestEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
         Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy1");
 
         assertEquals(expectedEnemy, enemy);
@@ -301,32 +303,32 @@ public class TowerAITest {
     }
 
     /**
-     * Finds the First Enemy. All enemies are out of range except for tank.
+     * Finds the Closest Enemy. All enemies are out of range except for tank.
      */
     @Test
-    public void testTowerFindFirstOnlyTankInRange() {
+    public void testTowerFindClosestOnlyTankInRange() {
 
         Tower tower = TestUtil.createTower("Rifle", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithOnlyTankInRange(towerTargetGroup);
 
-        Enemy enemy = new FirstEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
+        Enemy enemy = new ClosestEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
         Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy1");
 
         assertEquals(expectedEnemy, enemy);
     }
 
     /**
-     * Finds the Last Enemy. All enemies are out of range except for tank.
+     * Finds the Farthest Enemy. All enemies are out of range except for tank.
      */
     @Test
-    public void testTowerFindLastOnlyTankInRange() {
+    public void testTowerFindFarthestOnlyTankInRange() {
 
         Tower tower = TestUtil.createTower("MachineGun", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithOnlyTankInRange(towerTargetGroup);
 
-        Enemy enemy = new LastEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
+        Enemy enemy = new FarthestEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
         Enemy expectedEnemy = tower.getTargetGroup().findActor("enemy1");
 
         assertEquals(expectedEnemy, enemy);
@@ -410,5 +412,56 @@ public class TowerAITest {
         Enemy enemy = new MostHPEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
 
         assertNull(enemy);
+    }
+
+    /**
+     * Test the {@link StrongestEnemyAI}
+     */
+    @Test
+    public void testStrongestEnemy(){
+        Tower tower = TestUtil.createTower("Rifle", false);
+        Group towerTargetGroup = tower.getTargetGroup();
+
+        Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy2 = TestUtil.createEnemy("Sniper", false);
+        Enemy enemy3 = TestUtil.createEnemy("RocketLauncher", false);
+        Enemy enemy4 = TestUtil.createEnemy("FlameThrower", false);
+
+        towerTargetGroup.addActor(enemy1);
+        towerTargetGroup.addActor(enemy2);
+        towerTargetGroup.addActor(enemy3);
+        towerTargetGroup.addActor(enemy4);
+
+
+        Enemy enemy = new StrongestEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
+
+        assertEquals(enemy3, enemy);
+
+    }
+
+    /**
+     * Test the {@link WeakestEnemyAI}
+     */
+    @Test
+    public void testWeakestEnemy(){
+        Tower tower = TestUtil.createTower("Rifle", false);
+        Group towerTargetGroup = tower.getTargetGroup();
+
+        Enemy enemy1 = TestUtil.createEnemy("MachineGun", false);
+        Enemy enemy2 = TestUtil.createEnemy("Sniper", false);
+        Enemy enemy3 = TestUtil.createEnemy("RocketLauncher", false);
+        Enemy enemy4 = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy5 = TestUtil.createEnemy("FlameThrower", false);
+
+        towerTargetGroup.addActor(enemy1);
+        towerTargetGroup.addActor(enemy2);
+        towerTargetGroup.addActor(enemy3);
+        towerTargetGroup.addActor(enemy4);
+        towerTargetGroup.addActor(enemy5);
+
+        Enemy enemy = new WeakestEnemyAI().findTarget(tower, towerTargetGroup.getChildren());
+
+        assertEquals(enemy4, enemy);
+
     }
 }

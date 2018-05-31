@@ -11,7 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.ai.TowerAI;
-import com.lastdefenders.game.model.actor.ai.towerai.FirstEnemyAI;
+import com.lastdefenders.game.model.actor.ai.towerai.ClosestEnemyAI;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
@@ -43,7 +43,7 @@ public class Apache extends CombatSupportActor {
     private float attackCounter, timeActive;
     private ProjectileFactory projectileFactory;
     private LDAudio audio;
-    private TowerAI ai = new FirstEnemyAI();
+    private TowerAI ai = new ClosestEnemyAI();
     private Animation<TextureRegion> movementAnimation;
     private float movementAnimationStateTime;
 
