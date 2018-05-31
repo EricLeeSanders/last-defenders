@@ -25,7 +25,6 @@ import com.lastdefenders.game.model.actor.ai.TowerAIType;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.level.state.LevelStateManager;
 import com.lastdefenders.game.model.level.state.LevelStateManager.LevelState;
-import com.lastdefenders.game.ui.presenter.InspectPresenter;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.InspectView;
@@ -152,24 +151,6 @@ public class InspectPresenterTest {
 
         verify(gameUIStateManagerMock, never()).setState(eq(GameUIState.INSPECTING));
     }
-
-
-    @Test
-    public void changeTargetPriorityTest1() {
-
-        //TODO improve this test? Bit of code smell
-        InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower("Rifle", true);
-        initInspectPresenter(inspectPresenter, tower);
-
-        reset(gameUIStateManagerMock);
-        doReturn(GameUIState.INSPECTING).when(gameUIStateManagerMock).getState();
-
-        assertEquals(tower.getAI(), TowerAIType.FIRST);
-        inspectPresenter.changeTargetPriority();
-        assertEquals(tower.getAI(), TowerAIType.LAST);
-    }
-
 
     /**
      * Sucessfully increase attack
