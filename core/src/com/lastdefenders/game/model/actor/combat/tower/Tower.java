@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.ai.TowerAIType;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
@@ -30,7 +29,7 @@ public abstract class Tower extends CombatActor {
     private static final float TOWER_SELL_RATE = 0.75f;
     private int cost, armorCost, speedIncreaseCost, rangeIncreaseCost, attackIncreaseCost;
     private boolean rangeIncreaseEnabled, speedIncreaseEnabled, attackIncreaseEnabled;
-    private TowerAIType ai = TowerAIType.FIRST;
+    private TowerAIType ai = TowerAIType.CLOSEST;
     private boolean showRange;
     private TextureRegion rangeRegion, collidingRangeRegion;
     private int kills;
