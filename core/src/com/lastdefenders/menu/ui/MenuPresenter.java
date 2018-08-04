@@ -2,6 +2,7 @@ package com.lastdefenders.menu.ui;
 
 import com.lastdefenders.menu.ui.view.interfaces.IMenuOptionsView;
 import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.ui.presenter.GooglePlayServicesPresenter;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
@@ -18,11 +19,19 @@ public class MenuPresenter {
     private IMenuView view;
     private IMenuOptionsView menuOptionsView;
     private LDAudio audio;
+    // Optional
+    private GooglePlayServicesPresenter gpsPresenter;
+    private boolean optionsActive;
 
     public MenuPresenter(ScreenChanger screenChanger, LDAudio audio) {
 
         this.screenChanger = screenChanger;
         this.audio = audio;
+    }
+
+    public MenuPresenter(ScreenChanger screenChanger, LDAudio audio, GooglePlayServicesPresenter gpsPresenter) {
+        this(screenChanger, audio);
+        this.gpsPresenter = gpsPresenter;
     }
 
     public void setView(IMenuView view, IMenuOptionsView menuOptionsView) {
@@ -68,10 +77,24 @@ public class MenuPresenter {
         menuOptionsView.setBtnMusicOn(audio.isMusicEnabled());
     }
 
+    public void playServicesPressed() {
+        Logger.info("Menu Presenter: play services pressed");
+        if(gpsPresenter == null){
+            return;
+        }
+        audio.playSound(LDSound.SMALL_CLICK);
+        gpsPresenter.showGPSView();
+    }
+
     public void menuOptions() {
         Logger.info("Menu Presenter: menu options");
         audio.playSound(LDSound.SMALL_CLICK);
         menuOptionsView.setVisible(true);
+        optionsActive = true;
+    }
+
+    public boolean isGooglePlayServicesAvailable(){
+        return gpsPresenter != null;
     }
 
     /**
@@ -83,6 +106,7 @@ public class MenuPresenter {
         audio.playSound(LDSound.SMALL_CLICK);
         audio.saveMasterVolume();
         menuOptionsView.setVisible(false);
+        optionsActive = false;
 
     }
 
@@ -94,6 +118,27 @@ public class MenuPresenter {
     public float getMasterVolume() {
 
         return audio.getMasterVolume();
+    }
+
+    public boolean isOptionsActive(){
+        return optionsActive;
+    }
+
+    /**
+     * Handles a back/escape request. Returns true if the event was handled.
+     * @return - boolean
+     */
+    public boolean handleBack(){
+
+        boolean handled = false;
+        if(isOptionsActive()){
+            closeMenuOptions();
+            handled = true;
+        } else if(gpsPresenter.isActive()){
+            gpsPresenter.close();
+            handled = true;
+        }
+        return handled;
     }
 
 }
