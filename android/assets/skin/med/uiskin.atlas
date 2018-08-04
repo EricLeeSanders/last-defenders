@@ -4,44 +4,51 @@ size: 4096,1024
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
+achievements
+  rotate: false
+  xy: 403, 140
+  size: 100, 108
+  orig: 100, 108
+  offset: 0, 0
+  index: -1
 arrow-left
   rotate: false
-  xy: 1187, 240
+  xy: 303, 87
   size: 80, 54
   orig: 80, 54
   offset: 0, 0
   index: -1
 arrow-right
   rotate: false
-  xy: 2983, 692
+  xy: 505, 194
   size: 80, 54
   orig: 80, 54
   offset: 0, 0
   index: -1
 arrow-small-down
   rotate: false
-  xy: 2983, 630
+  xy: 3760, 827
   size: 70, 60
   orig: 70, 60
   offset: 0, 0
   index: -1
 arrow-small-up
   rotate: false
-  xy: 3589, 827
+  xy: 3832, 827
   size: 70, 60
   orig: 70, 60
   offset: 0, 0
   index: -1
 attack_icon
   rotate: false
-  xy: 4039, 889
+  xy: 1753, 319
   size: 54, 53
   orig: 54, 53
   offset: 0, 0
   index: -1
 bomb
   rotate: false
-  xy: 4024, 817
+  xy: 1657, 287
   size: 45, 70
   orig: 45, 70
   offset: 0, 0
@@ -83,21 +90,21 @@ button_red
   index: -1
 cancel
   rotate: false
-  xy: 303, 69
+  xy: 1585, 285
   size: 70, 72
   orig: 70, 72
   offset: 0, 0
   index: -1
 check-off
   rotate: false
-  xy: 3661, 823
+  xy: 3904, 823
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 check-on
   rotate: false
-  xy: 3727, 823
+  xy: 3970, 823
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -125,28 +132,28 @@ enlist_disabled
   index: -1
 games
   rotate: false
-  xy: 1585, 292
+  xy: 1187, 229
   size: 72, 65
   orig: 72, 65
   offset: 0, 0
   index: -1
 heart
   rotate: false
-  xy: 3793, 826
+  xy: 2983, 613
   size: 64, 61
   orig: 64, 61
   offset: 0, 0
   index: -1
 help
   rotate: false
-  xy: 3186, 735
+  xy: 1920, 323
   size: 30, 49
   orig: 30, 49
   offset: 0, 0
   index: -1
 hollow-no-round
   rotate: false
-  xy: 1685, 371
+  xy: 4036, 886
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
@@ -165,6 +172,13 @@ kills_label
   orig: 400, 105
   offset: 0, 0
   index: -1
+leaderboard
+  rotate: false
+  xy: 3519, 795
+  size: 100, 92
+  orig: 100, 92
+  offset: 0, 0
+  index: -1
 main-panel
   rotate: false
   xy: 1, 296
@@ -174,7 +188,7 @@ main-panel
   index: -1
 money
   rotate: false
-  xy: 3975, 822
+  xy: 1704, 307
   size: 47, 65
   orig: 47, 65
   offset: 0, 0
@@ -195,7 +209,7 @@ music
   index: -1
 options
   rotate: false
-  xy: 403, 178
+  xy: 2983, 676
   size: 67, 70
   orig: 67, 70
   offset: 0, 0
@@ -237,35 +251,35 @@ progress-bar-unfilled
   index: -1
 range_icon
   rotate: false
-  xy: 3859, 824
+  xy: 4036, 817
   size: 57, 63
   orig: 57, 63
   offset: 0, 0
   index: -1
 resume
   rotate: false
-  xy: 3137, 724
+  xy: 1871, 312
   size: 47, 60
   orig: 47, 60
   offset: 0, 0
   index: -1
 rotate
   rotate: false
-  xy: 472, 184
+  xy: 3691, 823
   size: 67, 64
   orig: 67, 64
   offset: 0, 0
   index: -1
 select
   rotate: false
-  xy: 3075, 738
+  xy: 1809, 326
   size: 60, 46
   orig: 60, 46
   offset: 0, 0
   index: -1
 shield
   rotate: false
-  xy: 3918, 827
+  xy: 4039, 882
   size: 55, 60
   orig: 55, 60
   offset: 0, 0
@@ -279,14 +293,14 @@ slider-knob
   index: -1
 sound
   rotate: false
-  xy: 3519, 823
+  xy: 3621, 823
   size: 68, 64
   orig: 68, 64
   offset: 0, 0
   index: -1
 speed_icon
   rotate: false
-  xy: 541, 187
+  xy: 505, 131
   size: 60, 61
   orig: 60, 61
   offset: 0, 0
@@ -349,7 +363,7 @@ tower-stat
   index: -1
 transparent
   rotate: false
-  xy: 905, 209
+  xy: 4036, 883
   size: 1, 1
   orig: 1, 1
   offset: 0, 0

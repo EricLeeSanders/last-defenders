@@ -28,6 +28,9 @@ import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
+import com.lastdefenders.googleplay.GooglePlayAchievement;
+import com.lastdefenders.googleplay.GooglePlayLeaderboard;
+import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Logger;
@@ -46,7 +49,6 @@ public class GameStage extends Stage implements PlayerObserver {
     private GameUIStateManager uiStateManager;
     private Level level;
     private Player player;
-    private LevelName levelName;
     private ActorGroups actorGroups;
     private Map map;
     private MapRenderer mapRenderer;
@@ -59,18 +61,25 @@ public class GameStage extends Stage implements PlayerObserver {
     private HealthFactory healthFactory;
     private SupportActorFactory supportActorFactory;
     private EffectFactory effectFactory;
+    private GooglePlayServices playServices;
 
     public GameStage(LevelName levelName, Player player, ActorGroups actorGroups, LDAudio audio,
         LevelStateManager levelStateManager, GameUIStateManager uiStateManager,
-        Viewport viewport, Resources resources, SpriteBatch spriteBatch) {
+        Viewport viewport, Resources resources, SpriteBatch spriteBatch,
+        GooglePlayServices playServices) {
 
         super(viewport, spriteBatch);
         this.player = player;
         this.actorGroups = actorGroups;
         this.levelStateManager = levelStateManager;
         this.uiStateManager = uiStateManager;
-        this.levelName = levelName;
         this.resources = resources;
+        this.playServices = playServices;
+
+        initialize(levelName, audio);
+    }
+
+    private void initialize(LevelName levelName, LDAudio audio){
         TiledMap tiledMap = resources.getMap(levelName);
         map = new Map(tiledMap, resources.getTiledMapScale());
         map.init();
@@ -83,7 +92,6 @@ public class GameStage extends Stage implements PlayerObserver {
         level = new Level(levelName, getActorGroups(), healthFactory, fileWaveLoader,
             dynamicWaveLoader);
         player.attachObserver(this);
-
     }
 
     private void createFactories(LDAudio audio) {
@@ -164,7 +172,7 @@ public class GameStage extends Stage implements PlayerObserver {
 
         Logger.info("Game Stage Dispose");
         map.dispose();
-        resources.unloadMap(levelName);
+        resources.unloadMap(level.getActiveLevel());
         super.dispose();
     }
 
@@ -187,31 +195,29 @@ public class GameStage extends Stage implements PlayerObserver {
         player.giveMoney(money);
         levelStateManager.setState(LevelState.STANDBY);
         player.setWaveCount(player.getWaveCount() + 1);
-        if (isLevelCompleted()) {
-            levelComleted();
+        if (isLevelComplete()) {
+            levelComplete();
         }
         WaveOverCoinEffect waveOverCoinEffect = effectFactory.loadEffect(WaveOverCoinEffect.class, true);
         waveOverCoinEffect.initialize(money);
-        level.loadNextWave(); //load the next wave
         healTowers();
+        playServices.submitScore(GooglePlayLeaderboard.findByLevelName(level.getActiveLevel()), level.getCurrentWave());
+        level.loadNextWave(); //load the next wave
     }
 
     /**
-     * Determine if the level is completed
+     * Determine if the level is complete
      */
-    private boolean isLevelCompleted() {
+    private boolean isLevelComplete() {
 
-        if (player.getWavesCompleted() == Level.MAX_WAVES) {
-            Logger.info("Game Stage: Level Over");
-            return true;
-        }
-        return false;
+        return (player.getWavesCompleted() == Level.MAX_WAVES);
     }
 
-    private void levelComleted() {
-
+    private void levelComplete() {
+        Logger.info("Game Stage: Level Over");
         uiStateManager.setState(GameUIState.LEVEL_COMPLETED);
         levelStateManager.setState(LevelState.LEVEL_COMPLETED);
+        playServices.unlockAchievement(GooglePlayAchievement.findByLevelName(level.getActiveLevel()));
     }
 
     private void healTowers() {
