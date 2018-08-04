@@ -5,9 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.service.factory.HealthFactory.HealthPool;
-import com.lastdefenders.ui.widget.progressbar.LDProgressBar;
-import com.lastdefenders.ui.widget.progressbar.LDProgressBar.LDProgressBarPadding;
-import com.lastdefenders.ui.widget.progressbar.LDProgressBar.LDProgressBarStyle;
+import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar;
+import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarPadding;
+import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarStyle;
 import com.lastdefenders.util.Logger;
 
 /**

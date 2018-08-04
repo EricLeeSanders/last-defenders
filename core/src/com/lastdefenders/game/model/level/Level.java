@@ -19,16 +19,16 @@ public class Level {
     private float enemyDelay = 0f;
     private int currentWave = 0;
     private Queue<SpawningEnemy> spawningEnemyQueue;
-    private LevelName levelName;
+    private LevelName activeLevel;
     private WaveLoader waveLoader;
     private DynamicWaveLoader dynamicWaveLoader;
     private ActorGroups actorGroups;
     private HealthFactory healthFactory;
 
-    public Level(LevelName levelName, ActorGroups actorGroups, HealthFactory healthFactory,
+    public Level(LevelName activeLevel, ActorGroups actorGroups, HealthFactory healthFactory,
         FileWaveLoader fileWaveLoader, DynamicWaveLoader dynamicWaveLoader) {
 
-        this.levelName = levelName;
+        this.activeLevel = activeLevel;
         this.actorGroups = actorGroups;
         this.healthFactory = healthFactory;
         this.waveLoader = fileWaveLoader;
@@ -68,7 +68,6 @@ public class Level {
 
         spawningEnemy.free();
 
-
     }
 
     /**
@@ -82,7 +81,7 @@ public class Level {
         if (currentWave == MAX_WAVES + 1) {
             waveLoader = dynamicWaveLoader;
         }
-        spawningEnemyQueue = waveLoader.loadWave(levelName, currentWave);
+        spawningEnemyQueue = waveLoader.loadWave(activeLevel, currentWave);
         delayCount = 0;
         enemyDelay = 0;
 
@@ -100,6 +99,10 @@ public class Level {
     public int getCurrentWave() {
 
         return currentWave;
+    }
+
+    public LevelName getActiveLevel(){
+        return activeLevel;
     }
 
 }

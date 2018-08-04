@@ -6,7 +6,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -18,9 +17,9 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.lastdefenders.menu.ui.MenuPresenter;
 import com.lastdefenders.menu.ui.view.interfaces.IMenuOptionsView;
-import com.lastdefenders.ui.widget.LDSlider;
-import com.lastdefenders.ui.widget.progressbar.LDProgressBar;
-import com.lastdefenders.ui.widget.progressbar.LDProgressBar.LDProgressBarPadding;
+import com.lastdefenders.ui.view.widget.LDSlider;
+import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar;
+import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarPadding;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -33,8 +32,6 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
     private MenuPresenter presenter;
     private CheckBox btnSound, btnMusic;
     private ImageButton btnClose;
-    private Image volSliderBg;
-    private float volSliderEndPos, volSliderStartPos;
     private Resources resources;
 
 
@@ -112,7 +109,7 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
 
         mainTable.row();
 
-        mainTable.add(btnMusic).colspan(2).left().spaceLeft(15).spaceBottom(10);
+        mainTable.add(btnMusic).colspan(1).left().spaceLeft(15).spaceBottom(10);
 
         mainTable.row();
 

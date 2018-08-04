@@ -17,9 +17,9 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.lastdefenders.game.ui.presenter.OptionsPresenter;
 import com.lastdefenders.game.ui.view.interfaces.IOptionsView;
-import com.lastdefenders.ui.widget.LDSlider;
-import com.lastdefenders.ui.widget.progressbar.LDProgressBar;
-import com.lastdefenders.ui.widget.progressbar.LDProgressBar.LDProgressBarPadding;
+import com.lastdefenders.ui.view.widget.LDSlider;
+import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar;
+import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarPadding;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
