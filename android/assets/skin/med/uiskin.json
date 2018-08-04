@@ -36,7 +36,9 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	upgrade: {down: upgrade, up: upgrade, checked: upgrade_purchased, disabled: upgrade_disabled},
 	resume: {imageUp: resume, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
 	pause: {imageUp: pause, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
-	games: {imageUp: games, over: button_over, down: button_press, up: button_normal, disabled: button_disabled}
+	games: {imageUp: games, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
+	achievements: {imageUp: achievements, over: button_over, down: button_press, up: button_normal, disabled: button_disabled},
+	leaderboard: {imageUp: leaderboard, over: button_over, down: button_press, up: button_normal, disabled: button_disabled}
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: { down: text_button_press, up: text_button_normal, over: text_button_over, disabled: text_button_disabled, font: default-font, fontColor: white },
@@ -63,7 +65,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
 	default: { checkboxOn: check-on, checkboxOff: check-off, font: default-font, fontColor: white }
 }
-com.lastdefenders.ui.widget.progressbar.LDProgressBar$LDProgressBarStyle: {
+com.lastdefenders.ui.view.widget.progressbar.LDProgressBar$LDProgressBarStyle: {
 	default: { frame: progress-bar-frame, filled: progress-bar-filled, unfilled: progress-bar-unfilled }
 }
 }
