@@ -1,5 +1,7 @@
 package com.lastdefenders.levelselect.ui;
 
+import com.lastdefenders.googleplay.GooglePlayLeaderboard;
+import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.util.Logger;
@@ -12,10 +14,12 @@ import com.lastdefenders.util.Logger;
 public class LevelSelectPresenter {
 
     private ScreenChanger screenChanger;
+    private GooglePlayServices playServices;
 
-    public LevelSelectPresenter(ScreenChanger screenChanger) {
+    public LevelSelectPresenter(ScreenChanger screenChanger, GooglePlayServices playServices) {
 
         this.screenChanger = screenChanger;
+        this.playServices = playServices;
     }
 
     public void mainMenu() {
@@ -31,5 +35,24 @@ public class LevelSelectPresenter {
 
         Logger.info("Level select presenter: load level");
         screenChanger.changeToLevelLoad(level);
+    }
+
+    public void showAchievements(){
+        playServices.showAchievements();
+    }
+
+    public void showLeaderboardForLevel(LevelName levelName){
+
+        GooglePlayLeaderboard leaderboard = GooglePlayLeaderboard.findByLevelName(levelName);
+        playServices.showLeaderboard(leaderboard);
+    }
+
+    public void showAllLeaderboards(){
+
+        playServices.showLeaderboards();
+    }
+
+    public boolean isGooglePlayServicesAvailable(){
+        return playServices.isGooglePlayServicesAvailable();
     }
 }

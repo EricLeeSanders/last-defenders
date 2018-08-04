@@ -7,9 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.lastdefenders.ui.widget.progressbar.LDProgressBar;
-import com.lastdefenders.ui.widget.progressbar.LDProgressBar.LDProgressBarPadding;
-import com.lastdefenders.ui.widget.progressbar.LDProgressBar.LDProgressBarStyle;
+import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar;
+import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarPadding;
+import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarStyle;
 import com.lastdefenders.util.ActorUtil;
 
 /**

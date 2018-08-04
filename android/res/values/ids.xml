@@ -4,7 +4,7 @@ Google Play game services IDs.
 Save this file as res/values/games-ids.xml in your project.
 -->
 <resources>
-    <string name="app_id">915768538925</string>
+    <string name="app_id">400830991161</string>
     <string name="package_name">com.lastdefenders.android</string>
-    <string name="leaderboard_most_waves_survived">CgkIre67wNMaEAIQAA</string>
+    <string name="loading_view">loading.gif</string>
 </resources>
