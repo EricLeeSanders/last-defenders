@@ -4,7 +4,13 @@ keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     signingConfigs {
-        config {
+        debug {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+        release {
             keyAlias keystoreProperties['keyAlias']
             keyPassword keystoreProperties['keyPassword']
             storeFile file(keystoreProperties['storeFile'])
@@ -17,10 +23,10 @@ android {
         release {
             lintOptions {
             }
-            signingConfig signingConfigs.config
+            signingConfig signingConfigs.release
         }
         debug {
-            signingConfig signingConfigs.config
+            signingConfig signingConfigs.debug
         }
     }
     dexOptions {

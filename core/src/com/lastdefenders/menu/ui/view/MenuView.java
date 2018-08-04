@@ -3,6 +3,7 @@ package com.lastdefenders.menu.ui.view;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -45,7 +46,7 @@ public class MenuView extends Group implements IMenuView {
 
         Skin skin = resources.getSkin();
 
-        Label lblTitle = new Label("FARTHEST DEFENDERS", skin);
+        Label lblTitle = new Label("LAST DEFENDERS", skin);
         lblTitle.setAlignment(Align.center);
         lblTitle.setPosition(getStage().getViewport().getWorldWidth() / 2, (getStage().getViewport().getWorldHeight() / 2) + 110, Align.center);
         addActor(lblTitle);
@@ -82,6 +83,11 @@ public class MenuView extends Group implements IMenuView {
         btnPlayServices.getImageCell().size(36, 33);
         btnPlayServices.setPosition(400, 22);
         addActor(btnPlayServices);
+        setBtnPlayServicesListener(btnPlayServices);
+        if(!presenter.isGooglePlayServicesAvailable()){
+            btnPlayServices.setDisabled(true);
+            btnPlayServices.setTouchable(Touchable.disabled);
+        }
 
         Logger.info("Menu view: view initialized");
     }
@@ -95,6 +101,19 @@ public class MenuView extends Group implements IMenuView {
             Align.center);
         getStage().addActor(background);
         background.setZIndex(0);
+    }
+
+    private void setBtnPlayServicesListener(Button btnOptions) {
+
+        btnOptions.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+                super.touchUp(event, x, y, pointer, button);
+                presenter.playServicesPressed();
+            }
+        });
+
     }
 
     private void setBtnOptionsListener(Button btnOptions) {

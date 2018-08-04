@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.screen.AbstractScreen;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.state.GameStateManager;
@@ -27,21 +28,22 @@ public class MenuScreen extends AbstractScreen {
     private Viewport viewport;
 
     public MenuScreen(ScreenChanger screenChanger, GameStateManager gameStateManager,
-        Resources resources, LDAudio audio) {
+        Resources resources, LDAudio audio, GooglePlayServices playServices) {
 
         super(gameStateManager);
         this.gameStateManager = gameStateManager;
-        createStageAndViewport(screenChanger, resources, audio);
+        createStageAndViewport(screenChanger, resources, audio, playServices);
         audio.playMusic();
         createBackListener();
     }
 
-    private void createStageAndViewport(ScreenChanger screenChanger, Resources resources, LDAudio audio){
+    private void createStageAndViewport(ScreenChanger screenChanger, Resources resources,
+        LDAudio audio, GooglePlayServices playServices){
 
         viewport = new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT,
             new OrthographicCamera());
         addViewport(viewport);
-        stage = new MenuStage(screenChanger, resources, audio, viewport);
+        stage = new MenuStage(screenChanger, resources, audio, viewport, playServices);
         addInputProcessor(stage);
     }
 
@@ -51,11 +53,15 @@ public class MenuScreen extends AbstractScreen {
             @Override
             public boolean keyDown(int keycode) {
 
+                boolean handled = false;
                 if ((keycode == Keys.ESCAPE) || (keycode == Keys.BACK)) {
                     Logger.info("MenuScreen: Escape/Back pressed.");
-                    gameStateManager.setState(GameState.QUIT);
+                    handled = stage.handleBack();
+                    if(!handled){
+                        gameStateManager.setState(GameState.QUIT);
+                    }
                 }
-                return false;
+                return handled;
             }
         };
         super.addInputProcessor(backProcessor);
