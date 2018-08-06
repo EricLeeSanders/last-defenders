@@ -58,9 +58,6 @@ project(":android") {
     dependencies {
         compile project(":core")
         compile 'ch.acra:acra:4.9.0'
-        compile 'com.google.android.gms:play-services-auth:15.0.1'
-        compile 'com.google.android.gms:play-services-games:15.0.1'
-        compile 'com.google.android.gms:play-services-identity:15.0.1'
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
@@ -73,7 +70,15 @@ project(":android") {
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-x86_64"
+
+        // Google Play Services
+        compile 'com.google.android.gms:play-services-auth:15.0.1'
+        compile 'com.google.android.gms:play-services-games:15.0.1'
+        compile 'com.google.android.gms:play-services-identity:15.0.1'
         compile 'com.github.bumptech.glide:glide:3.4.0' // Used for loading gif
+
+        // Google Ads
+        compile 'com.google.android.gms:play-services-ads:15.0.1'
     }
 }
 
