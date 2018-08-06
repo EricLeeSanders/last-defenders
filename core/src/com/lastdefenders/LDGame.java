@@ -3,6 +3,8 @@ package com.lastdefenders;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.lastdefenders.ads.AdController;
+import com.lastdefenders.ads.AdControllerHelper;
 import com.lastdefenders.game.GameScreen;
 import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.levelselect.LevelName;
@@ -25,6 +27,7 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
     private Resources resources;
     private LDAudio audio;
     private GooglePlayServices playServices;
+    private AdControllerHelper adControllerHelper;
 
     // Needed for launcher without play services
     // TODO remove this
@@ -32,10 +35,10 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
 
     }
 
-    public LDGame(GooglePlayServices playServices) {
+    public LDGame(GooglePlayServices playServices, AdController adController){
 
         this.playServices = playServices;
-        //playServices.signIn();
+        this.adControllerHelper = new AdControllerHelper(adController);
     }
 
     @Override
@@ -102,7 +105,8 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
 
         Logger.info("LDGame: Changing to level: " + level.toString());
         this.getScreen().dispose(); // dispose current screen
-        this.setScreen(new GameScreen(level, gameStateManager, this, resources, audio, playServices));
+        this.setScreen(new GameScreen(level, gameStateManager, this, resources,
+            audio, playServices, adControllerHelper));
     }
 
     @Override
