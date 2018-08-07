@@ -24,9 +24,13 @@ android {
             lintOptions {
             }
             signingConfig signingConfigs.release
+            buildConfigField "String", "ADMOB_APP_ID", '"ca-app-pub-1714781219535894~5512636589"'
+            buildConfigField "String", "ADMOB_AD_UNIT_ID", '"ca-app-pub-1714781219535894/6702429321"'
         }
         debug {
             signingConfig signingConfigs.debug
+            buildConfigField "String", "ADMOB_APP_ID", '"ca-app-pub-3940256099942544~3347511713"'
+            buildConfigField "String", "ADMOB_AD_UNIT_ID", '"ca-app-pub-3940256099942544/1033173712"'
         }
     }
     dexOptions {
