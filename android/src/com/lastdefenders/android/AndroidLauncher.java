@@ -13,9 +13,11 @@ import com.lastdefenders.LDGame;
 public class AndroidLauncher extends AndroidApplication {
 
 	private GooglePlayServicesHelper googlePlayServicesHelper;
+	private GoogleAdsControllerImpl adController;
 
 	public AndroidLauncher(){
 		this.googlePlayServicesHelper = new GooglePlayServicesHelper();
+		this.adController = new GoogleAdsControllerImpl();
 	}
 
 	@Override
@@ -25,9 +27,11 @@ public class AndroidLauncher extends AndroidApplication {
 
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useWakelock = true;
-		View gameView = initializeForView(new LDGame(googlePlayServicesHelper), config);
+
+		View gameView = initializeForView(new LDGame(googlePlayServicesHelper, adController), config);
 		RelativeLayout layout = createLayout(gameView);
 		googlePlayServicesHelper.initialize(this, layout, gameView);
+		adController.initialize(this);
 	}
 
 	private RelativeLayout createLayout(View gameView) {

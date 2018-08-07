@@ -5,6 +5,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.lastdefenders.ads.AdController;
+import com.lastdefenders.ads.AdControllerHelper;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.PlayerObserver;
 import com.lastdefenders.game.model.actor.ActorGroups;
@@ -62,11 +64,12 @@ public class GameStage extends Stage implements PlayerObserver {
     private SupportActorFactory supportActorFactory;
     private EffectFactory effectFactory;
     private GooglePlayServices playServices;
+    private AdControllerHelper adControllerHelper;
 
     public GameStage(LevelName levelName, Player player, ActorGroups actorGroups, LDAudio audio,
         LevelStateManager levelStateManager, GameUIStateManager uiStateManager,
         Viewport viewport, Resources resources, SpriteBatch spriteBatch,
-        GooglePlayServices playServices) {
+        GooglePlayServices playServices, AdControllerHelper adControllerHelper) {
 
         super(viewport, spriteBatch);
         this.player = player;
@@ -75,6 +78,7 @@ public class GameStage extends Stage implements PlayerObserver {
         this.uiStateManager = uiStateManager;
         this.resources = resources;
         this.playServices = playServices;
+        this.adControllerHelper = adControllerHelper;
 
         initialize(levelName, audio);
     }
@@ -191,6 +195,7 @@ public class GameStage extends Stage implements PlayerObserver {
     private void waveOver() {
 
         Logger.info("Game Stage: Wave over");
+        adControllerHelper.incrementEventTriggered();
         int money = (int) (WAVE_OVER_MONEY_MULTIPLIER * (float) level.getCurrentWave());
         player.giveMoney(money);
         levelStateManager.setState(LevelState.STANDBY);

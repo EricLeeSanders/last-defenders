@@ -15,6 +15,6 @@ public class DesktopLauncher {
         config.height = 360;
 		config.vSyncEnabled = false;
 		config.foregroundFPS = 0;
-		new LwjglApplication(new LDGame(new GooglePlayServicesHelper()), config);
+		new LwjglApplication(new LDGame(new GooglePlayServicesHelper(), new AdControllerImpl()), config);
 	}
 }
