@@ -204,7 +204,7 @@ public class Resources {
         font.getData().ascent = 12;
         font.getData().capHeight = 28;
         font.getData().descent = -16;
-        font.getData().spaceWidth = 20;
+        font.getData().spaceXadvance = 20;
         font.getData().xHeight = 30;
 
 
