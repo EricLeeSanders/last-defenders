@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "400830991161",
+    "firebase_url": "https://last-defenders-56481039.firebaseio.com",
+    "project_id": "last-defenders-56481039",
+    "storage_bucket": "last-defenders-56481039.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:400830991161:android:0e41e04e08f58c2a",
+        "android_client_info": {
+          "package_name": "com.lastdefenders.game"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "400830991161-glni77lnt8hv6u4i62gtej9klhfi0qe3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lastdefenders.game",
+            "certificate_hash": "7e87e16cf5e1e06574b1ce3ecf10a5dba2d9bba9"
+          }
+        },
+        {
+          "client_id": "400830991161-dg7dq8303ad6kdrp7oaqeg508ungbobo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEx5BNUY-uXIiAuaCrNFhLty8u1Wf4ovk"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "400830991161-dg7dq8303ad6kdrp7oaqeg508ungbobo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      },
+      "admob_app_id": "ca-app-pub-1714781219535894~5512636589"
+    }
+  ],
+  "configuration_version": "1"
+}
