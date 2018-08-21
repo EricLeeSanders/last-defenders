@@ -159,7 +159,3 @@ idea {
         }
     }
 }
-dependencies {
-    implementation 'com.android.support:multidex:1.0.0'
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.3' // Crashlytics
-}

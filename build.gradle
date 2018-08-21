@@ -4,18 +4,16 @@ buildscript {
         mavenCentral()
         maven { url "https://plugins.gradle.org/m2/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url 'https://maven.fabric.io/public' } // Crashlytics
         google()
         jcenter()
     }
     dependencies {
         classpath 'org.wisepersist:gwt-gradle-plugin:1.0.6'
-        classpath 'com.android.tools.build:gradle:3.1.3'
+        classpath 'com.android.tools.build:gradle:3.1.2'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.3'
 
         // Google Firebase
         classpath 'com.google.gms:google-services:4.0.0'
-        classpath 'io.fabric.tools:gradle:1.25.4' // Crashlytics
         classpath 'com.google.firebase:firebase-plugins:1.1.5'
     }
 }
@@ -39,6 +37,7 @@ allprojects {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url 'https://maven.fabric.io/public' }
         maven {
             url 'https://maven.google.com/'
             name 'Google'
@@ -61,7 +60,6 @@ project(":desktop") {
 project(":android") {
     apply plugin: "android"
     apply plugin: 'com.google.gms.google-services'
-    apply plugin: 'io.fabric' // Crashlytics
     apply plugin: 'com.google.firebase.firebase-perf'
 
     configurations { natives }
@@ -93,7 +91,6 @@ project(":android") {
 
         // Google Firebase
         implementation 'com.google.firebase:firebase-core:16.0.1'
-        implementation 'com.crashlytics.sdk.android:crashlytics:2.9.4' // Crashlytics
         implementation 'com.google.firebase:firebase-perf:16.0.0' // Performance
 
     }
