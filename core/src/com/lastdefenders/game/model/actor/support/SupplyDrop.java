@@ -48,7 +48,7 @@ public class SupplyDrop extends GameActor implements Pool.Poolable {
         setPositionCenter(centerPos);
         centerPos.free();
 
-        float moveToX = Resources.VIRTUAL_WIDTH + getWidth();
+        float moveToX = Resources.VIRTUAL_WIDTH + (getWidth() / 2);
         float moveToY = destination.y;
         MoveToAction moveToAction = Actions
             .moveTo(moveToX, moveToY, SUPPLYDROP_DURATION, Interpolation.linear);
@@ -61,8 +61,7 @@ public class SupplyDrop extends GameActor implements Pool.Poolable {
             )
         );
 
-        float dropDelay =
-            SUPPLYDROP_DURATION * ((destination.x - (getWidth() / 4)) / Resources.VIRTUAL_WIDTH);
+        float dropDelay = SUPPLYDROP_DURATION * ( (destination.x + getWidth()) / (moveToX + getWidth())) ;
 
         Logger.info("DropDelay: " + dropDelay);
 

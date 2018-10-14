@@ -86,8 +86,8 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable {
         addAction(
             Actions.sequence(
                 Actions.delay(dropDelay),
-                Actions.scaleTo(0.5f, 0.5f, SUPPLYDROP_DURATION, Interpolation.linear),
                 Actions.visible(true),
+                Actions.scaleTo(0.5f, 0.5f, SUPPLYDROP_DURATION, Interpolation.linear),
                 new LDOneTimeAction() {
                     @Override
                     public void action() {
