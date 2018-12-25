@@ -19,6 +19,7 @@ import com.lastdefenders.game.model.actor.combat.event.EventManagerImpl;
 import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
 import com.lastdefenders.game.model.actor.combat.tower.TowerMachineGun;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
@@ -41,7 +42,7 @@ public class CombatActorFactory {
     private CombatActorPool<TowerTank> towerTankPool = new CombatActorPool<>(TowerTank.class);
     private CombatActorPool<TowerFlameThrower> towerFlameThrowerPool = new CombatActorPool<>(
         TowerFlameThrower.class);
-    private CombatActorPool<TowerTurret> towerTurretPool = new CombatActorPool<>(TowerTurret.class);
+    private CombatActorPool<TowerHumvee> towerHumveePool = new CombatActorPool<>(TowerHumvee.class);
     private CombatActorPool<TowerSniper> towerSniperPool = new CombatActorPool<>(TowerSniper.class);
     private CombatActorPool<TowerMachineGun> towerMachinePool = new CombatActorPool<>(
         TowerMachineGun.class);
@@ -97,8 +98,8 @@ public class CombatActorFactory {
             case "Tank":
                 tower = (Tower) towerTankPool.obtain();
                 break;
-            case "Turret":
-                tower = (Tower) towerTurretPool.obtain();
+            case "Humvee":
+                tower = (Tower) towerHumveePool.obtain();
                 break;
             case "Sniper":
                 tower = (Tower) towerSniperPool.obtain();
@@ -224,14 +225,14 @@ public class CombatActorFactory {
         return towerTank;
     }
 
-    private TowerTurret createTowerTurret(){
-        TextureRegion machineRegion = resources.getTexture("tower-turret-turret");
-        TextureRegion bagsRegion = resources.getTexture("tower-turret-bags");
-        TowerTurret towerTurret = new TowerTurret(bagsRegion, machineRegion, towerTurretPool,
-            actorGroups.getEnemyGroup(), resources.getTexture("range-turret"),
-            resources.getTexture("range-turret-red"), projectileFactory, audio);
+    private TowerHumvee createTowerHumvee(){
+        TextureRegion turretRegion = resources.getTexture("tower-humvee-turret");
+        TextureRegion bodyRegion = resources.getTexture("tower-humvee");
+        TowerHumvee towerHumvee = new TowerHumvee(bodyRegion, turretRegion, towerHumveePool,
+            actorGroups.getEnemyGroup(), resources.getTexture("range"),
+            resources.getTexture("range-red"), projectileFactory, audio);
 
-        return towerTurret;
+        return towerHumvee;
     }
 
     private EnemyRifle createEnemyRifle(){
@@ -255,9 +256,10 @@ public class CombatActorFactory {
     }
 
     private EnemyHumvee createEnemyHumvee(){
-        TextureRegion humveeRegion = resources.getTexture("enemy-humvee");
-        EnemyHumvee enemyHumvee = new EnemyHumvee(humveeRegion, new TextureRegion[]{humveeRegion},
-            enemyHumveePool);
+        TextureRegion bodyRegion = resources.getTexture("enemy-humvee");
+        TextureRegion turretRegion = resources.getTexture("enemy-humvee-turret");
+        EnemyHumvee enemyHumvee = new EnemyHumvee(bodyRegion, turretRegion, new TextureRegion[]{turretRegion},
+            enemyHumveePool, actorGroups.getTowerGroup(), projectileFactory, audio);
 
         return enemyHumvee;
     }
@@ -333,8 +335,8 @@ public class CombatActorFactory {
             case "TowerTank":
                 actor = createTowerTank();
                 break;
-            case "TowerTurret":
-                actor = createTowerTurret();
+            case "TowerHumvee":
+                actor = createTowerHumvee();
                 break;
             case "EnemyRifle":
                 actor = createEnemyRifle();

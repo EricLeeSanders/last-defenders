@@ -108,8 +108,6 @@ public class Resources {
 
         loadedTextures.put("range-red", actorAtlas.findRegion("range-red"));
         loadedTextures.put("range", actorAtlas.findRegion("range"));
-        loadedTextures.put("range-turret-red", actorAtlas.findRegion("range-turret-red"));
-        loadedTextures.put("range-turret", actorAtlas.findRegion("range-turret"));
         loadedTextures.put("range-black", actorAtlas.findRegion("range-black"));
         loadedTextures.put("airstrike", actorAtlas.findRegion("airstrike"));
         loadedTextures.put("bullet", actorAtlas.findRegion("bullet"));
@@ -127,8 +125,8 @@ public class Resources {
         loadedTextures.put("tower-sniper", actorAtlas.findRegion("tower-sniper"));
         loadedTextures.put("tower-flame-thrower", actorAtlas.findRegion("tower-flame-thrower"));
         loadedTextures.put("tower-rocket-launcher", actorAtlas.findRegion("tower-rocket-launcher"));
-        loadedTextures.put("tower-turret-turret", actorAtlas.findRegion("tower-turret-turret"));
-        loadedTextures.put("tower-turret-bags", actorAtlas.findRegion("tower-turret-bags"));
+        loadedTextures.put("tower-humvee-turret", actorAtlas.findRegion("tower-humvee-turret"));
+        loadedTextures.put("tower-humvee", actorAtlas.findRegion("tower-humvee"));
         loadedTextures.put("tower-tank-body", actorAtlas.findRegion("tower-tank-body"));
         loadedTextures.put("tower-tank-turret", actorAtlas.findRegion("tower-tank-turret"));
         loadedTextures
@@ -146,6 +144,7 @@ public class Resources {
         loadedTextures.put("enemy-tank-body", actorAtlas.findRegion("enemy-tank-body"));
         loadedTextures.put("enemy-tank-turret", actorAtlas.findRegion("enemy-tank-turret"));
         loadedTextures.put("enemy-humvee", actorAtlas.findRegion("enemy-humvee"));
+        loadedTextures.put("enemy-humvee-turret", actorAtlas.findRegion("enemy-humvee-turret"));
         loadedTextures.put("supply-drop", actorAtlas.findRegion("supply-drop"));
         loadedTextures.put("supply-drop-crate", actorAtlas.findRegion("supply-drop-crate"));
         loadedTextures.put("apache-stationary", actorAtlas.findRegion("apache", 1));

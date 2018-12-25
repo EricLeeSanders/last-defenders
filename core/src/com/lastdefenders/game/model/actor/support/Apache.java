@@ -30,14 +30,14 @@ public class Apache extends CombatSupportActor {
 
     public static final int COST = 2000;
     public static final float TIME_ACTIVE_LIMIT = 10f;
-    private static final float FRAME_DURATION = 0.25f;
+    private static final float FRAME_DURATION = 0.05f;
     private static final float ATTACK_SPEED = 0.2f;
     private static final float RANGE = 75f;
     private static final float ATTACK = 5f;
     private static final float MOVE_SPEED = 200f;
     private static final Dimension BULLET_SIZE = new Dimension(5, 5);
     private static final Vector2 GUN_POS = UtilPool.getVector2(0, 0);
-    private static final Dimension TEXTURE_SIZE = new Dimension(100, 73);
+    private static final Dimension TEXTURE_SIZE = new Dimension(150, 116);
 
     private boolean readyToAttack, exitingStage;
     private float attackCounter, timeActive;

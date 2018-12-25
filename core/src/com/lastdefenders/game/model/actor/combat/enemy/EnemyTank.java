@@ -29,7 +29,7 @@ import com.lastdefenders.util.UtilPool;
  *
  * @author Eric
  */
-public class EnemyTank extends Enemy implements PlatedArmor, IVehicle, IRocket {
+public class EnemyTank extends EnemyTurret implements PlatedArmor, IVehicle, IRocket {
 
     private static final float HEALTH = 20;
     private static final float ARMOR = 10;
@@ -42,14 +42,11 @@ public class EnemyTank extends Enemy implements PlatedArmor, IVehicle, IRocket {
 
     private static final Dimension ROCKET_SIZE = new Dimension(23, 6);
     private static final Vector2 GUN_POS = UtilPool.getVector2(57, 0);
-    private static final Dimension TEXTURE_SIZE_BODY = new Dimension(76, 50);
-    private static final Dimension TEXTURE_SIZE_TURRET = new Dimension(120, 33);
+    private static final Dimension TEXTURE_SIZE_BODY = new Dimension(75, 57);
+    private static final Dimension TEXTURE_SIZE_TURRET = new Dimension(138, 36);
     private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.VEHCILE_EXPLOSION;
-    private static final float[] BODY_POINTS = {0, 0, 0, 50, 75, 50, 75, 0};
+    private static final float[] BODY_POINTS = {0, 0, 0, 56, 75, 56, 75, 0};
 
-    private TextureRegion bodyRegion;
-    private float bodyRotation;
-    private Polygon body;
     private ProjectileFactory projectileFactory;
     private LDAudio audio;
 
@@ -58,76 +55,10 @@ public class EnemyTank extends Enemy implements PlatedArmor, IVehicle, IRocket {
         ProjectileFactory projectileFactory, LDAudio audio) {
 
         super(turretRegion, animatedRegions, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, SPEED,
-            HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
-        this.bodyRegion = bodyRegion;
+            HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE, TEXTURE_SIZE_BODY,
+            bodyRegion, BODY_POINTS);
         this.projectileFactory = projectileFactory;
         this.audio = audio;
-        body = new Polygon(BODY_POINTS);
-    }
-
-    /**
-     * Draws the tank. Handles when to rotate the body of the tank instead of
-     * just the turret.
-     */
-    @Override
-    public void draw(Batch batch, float alpha) {
-
-        // If the tank is not attacking, then rotate the body as well
-        if (!isAttacking()) {
-            bodyRotation = getRotation();
-        }
-        float x = ActorUtil
-            .calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
-        float y = ActorUtil
-            .calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
-        // draw body
-        batch.draw(bodyRegion, x, y, TEXTURE_SIZE_BODY.getWidth() / 2,
-            TEXTURE_SIZE_BODY.getHeight() / 2, TEXTURE_SIZE_BODY.getWidth(),
-            TEXTURE_SIZE_BODY.getHeight(), 1, 1, bodyRotation);
-        super.draw(batch, alpha);
-
-        if (DebugOptions.showTextureBoundaries) {
-            drawDebugBody(batch);
-        }
-    }
-
-    private void drawDebugBody(Batch batch) {
-
-        ShapeRenderer bodyOutline = Resources.getShapeRenderer();
-        batch.end();
-        bodyOutline.setProjectionMatrix(this.getParent().getStage().getCamera().combined);
-        bodyOutline.begin(ShapeType.Line);
-        bodyOutline.setColor(Color.YELLOW);
-        bodyOutline.polygon(getBody().getTransformedVertices());
-        bodyOutline.end();
-
-        batch.begin();
-    }
-
-    /**
-     * Body of the Tank. CombatActor/Enemy holds the Body of the turret Which we
-     * don't care about for collision detection.
-     */
-    @Override
-    public Polygon getBody() {
-
-        body.setOrigin(TEXTURE_SIZE_BODY.getWidth() / 2, TEXTURE_SIZE_BODY.getHeight() / 2);
-        body.setRotation(bodyRotation);
-
-        float x = ActorUtil
-            .calcBotLeftPointFromCenter(getPositionCenter().x, TEXTURE_SIZE_BODY.getWidth());
-        float y = ActorUtil
-            .calcBotLeftPointFromCenter(getPositionCenter().y, TEXTURE_SIZE_BODY.getHeight());
-        body.setPosition(x, y);
-
-        return body;
-    }
-
-    @Override
-    public void reset() {
-
-        super.reset();
-        bodyRotation = 0;
     }
 
     @Override

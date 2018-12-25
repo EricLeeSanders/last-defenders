@@ -45,12 +45,6 @@ public class MenuView extends Group implements IMenuView {
         Logger.info("Menu view: initializing view");
 
         Skin skin = resources.getSkin();
-
-        Label lblTitle = new Label("LAST DEFENDERS", skin);
-        lblTitle.setAlignment(Align.center);
-        lblTitle.setPosition(getStage().getViewport().getWorldWidth() / 2, (getStage().getViewport().getWorldHeight() / 2) + 110, Align.center);
-        addActor(lblTitle);
-
         TextButton btnPlay = new TextButton("PLAY", skin, "transparent");
         btnPlay.setSize(126, 56);
         btnPlay.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2, Align.center);

@@ -21,7 +21,7 @@ import com.lastdefenders.util.UtilPool;
 public class SupplyDrop extends GameActor implements Pool.Poolable {
 
     private static final float SUPPLYDROP_DURATION = 2f;
-    private static final Dimension TEXTURE_SIZE = new Dimension(178, 120);
+    private static final Dimension TEXTURE_SIZE = new Dimension(206, 131);
 
     private boolean active;
     private SupportActorPool<SupplyDrop> pool;

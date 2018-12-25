@@ -228,7 +228,7 @@ public class TowerAITest {
     @Test
     public void testTowerFindMostHPSkipTank() {
 
-        Tower tower = TestUtil.createTower("Turret", false);
+        Tower tower = TestUtil.createTower("Humvee", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithTank(towerTargetGroup);
 
@@ -340,7 +340,7 @@ public class TowerAITest {
     @Test
     public void testTowerFindLeastHPOnlyTankInRange() {
 
-        Tower tower = TestUtil.createTower("Turret", false);
+        Tower tower = TestUtil.createTower("Humvee", false);
         Group towerTargetGroup = tower.getTargetGroup();
         createEnemyGroupWithOnlyTankInRange(towerTargetGroup);
 

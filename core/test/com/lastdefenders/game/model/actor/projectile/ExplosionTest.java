@@ -54,7 +54,7 @@ public class ExplosionTest {
 
         Enemy attacker = TestUtil.createEnemy("Tank", false);
         attacker.setPositionCenter(50, 50);
-        Tower target = TestUtil.createTower("Turret", false);
+        Tower target = TestUtil.createTower("Humvee", false);
         target.setPositionCenter(200, 200);
 
         Explosion explosion = createExplosion();
@@ -75,7 +75,7 @@ public class ExplosionTest {
 
         Enemy attacker = TestUtil.createEnemy("Tank", false);
         attacker.setPositionCenter(50, 50);
-        Tower target = TestUtil.createTower("Turret", false);
+        Tower target = TestUtil.createTower("Humvee", false);
         target.setPositionCenter(200, 200);
 
         Explosion explosion = createExplosion();

@@ -1,6 +1,11 @@
 {
 "wave": [
     {
+        "enemy": "Humvee",
+        "delay": ".05",
+        "armor": false
+    },
+    {
         "enemy": "Tank",
         "delay": ".05",
         "armor": false

@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
 import com.lastdefenders.game.model.actor.combat.tower.TowerMachineGun;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
@@ -110,7 +111,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
         createTowerButton(enlistTable, skin, "Flame Thrower", TowerFlameThrower.COST, 7, 4, 6, 2);
         createTowerButton(enlistTable, skin, "Rocket Launcher", TowerRocketLauncher.COST, 10, 4, 6,
             1);
-        createTowerButton(enlistTable, skin, "Turret", TowerTurret.COST, 3, 7, 7, 8);
+        createTowerButton(enlistTable, skin, "Humvee", TowerHumvee.COST, 3, 7, 7, 8);
         enlistTable.row();
         createTowerButton(enlistTable, skin, "Tank", TowerTank.COST, 10, 10, 8, 10);
 

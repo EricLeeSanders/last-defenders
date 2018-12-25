@@ -268,7 +268,7 @@ public class InspectPresenterTest {
     public void giveArmorTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower("Turret", false);
+        Tower tower = TestUtil.createTower("Humvee", false);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -355,7 +355,7 @@ public class InspectPresenterTest {
     public void increaseRangeTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower("Turret", false);
+        Tower tower = TestUtil.createTower("Humvee", false);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -442,7 +442,7 @@ public class InspectPresenterTest {
     public void increaseSpeedTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower("Turret", false);
+        Tower tower = TestUtil.createTower("Humvee", false);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);

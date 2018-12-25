@@ -112,7 +112,7 @@ public class CollisionDetectionTest {
 
         Tower tower1 = TestUtil.createTower("MachineGun", false);
         Tower tower2 = TestUtil.createTower("Rifle", false);
-        Tower tower3 = TestUtil.createTower("Turret", false);
+        Tower tower3 = TestUtil.createTower("Humvee", false);
 
         tower1.setPositionCenter(75, 56);
         tower2.setPositionCenter(56, 75);
@@ -159,7 +159,7 @@ public class CollisionDetectionTest {
 
         Tower tower1 = TestUtil.createTower("MachineGun", false);
         Tower tower2 = TestUtil.createTower("Rifle", false);
-        Tower tower3 = TestUtil.createTower("Turret", false);
+        Tower tower3 = TestUtil.createTower("Humvee", false);
 
         tower1.setPositionCenter(75, 56);
         tower2.setPositionCenter(56, 75);
@@ -183,7 +183,7 @@ public class CollisionDetectionTest {
 
         Tower tower1 = TestUtil.createTower("MachineGun", false);
         Tower tower2 = TestUtil.createTower("Rifle", false);
-        Tower tower3 = TestUtil.createTower("Turret", false);
+        Tower tower3 = TestUtil.createTower("Humvee", false);
 
         tower1.setPositionCenter(250, 56);
         tower2.setPositionCenter(56, 250);

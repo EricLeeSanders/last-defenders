@@ -320,7 +320,7 @@ public class EnlistPresenterTest {
         doReturn(GameUIState.PLACING_TOWER).when(gameUIStateManagerMock).getState();
         enlistPresenter.setView(enlistView);
 
-        Tower tower = TestUtil.createTower("Turret", true);
+        Tower tower = TestUtil.createTower("Humvee", true);
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 

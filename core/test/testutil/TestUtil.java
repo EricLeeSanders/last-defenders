@@ -34,6 +34,7 @@ import com.lastdefenders.game.model.actor.combat.event.EventManagerImpl;
 import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
 import com.lastdefenders.game.model.actor.combat.tower.TowerMachineGun;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
@@ -149,8 +150,8 @@ public class TestUtil {
                 tower = new TowerTank(null, null, null, new Group(), null, null,
                     projectileFactoryMock, audioMock);
                 break;
-            case "Turret":
-                tower = new TowerTurret(null, null, null, new Group(), null, null,
+            case "Humvee":
+                tower = new TowerHumvee(null, null, null, new Group(), null, null,
                     projectileFactoryMock, audioMock);
                 break;
             default:
@@ -203,7 +204,8 @@ public class TestUtil {
                     projectileFactoryMock, audioMock);
                 break;
             case "Humvee":
-                enemy = new EnemyHumvee(null, animatedRegions, null);
+                enemy = new EnemyHumvee(null, null, animatedRegions, null, new Group(),
+                    projectileFactoryMock, audioMock);
                 break;
             case "RocketLauncher":
                 enemy = new EnemyRocketLauncher(null, animatedRegions, null, new Group(),

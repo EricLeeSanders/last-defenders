@@ -30,7 +30,7 @@ public class AirStrike extends CombatSupportActor implements IRocket {
 
     private static final Vector2 GUN_POS = UtilPool.getVector2();
     private static final Dimension ROCKET_SIZE = new Dimension(46, 13);
-    private static final Dimension TEXTURE_SIZE = new Dimension(206, 125);
+    private static final Dimension TEXTURE_SIZE = new Dimension(206, 131);
 
     private Array<AirStrikeLocation> airStrikeLocations = new Array<>();
     private ProjectileFactory projectileFactory;
