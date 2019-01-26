@@ -4,9 +4,44 @@ size: 2048,2048
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-main-menu-screen
+button_disabled
+  rotate: false
+  xy: 1, 389
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+button_normal
+  rotate: false
+  xy: 1, 195
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+button_over
+  rotate: false
+  xy: 195, 389
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+button_press
   rotate: false
   xy: 1, 1
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+button_red
+  rotate: false
+  xy: 195, 195
+  size: 192, 192
+  orig: 192, 192
+  offset: 0, 0
+  index: -1
+main-menu-screen
+  rotate: false
+  xy: 1, 583
   size: 1920, 1080
   orig: 1920, 1080
   offset: 0, 0

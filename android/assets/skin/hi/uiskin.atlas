@@ -6,9 +6,9 @@ filter: Linear,Linear
 repeat: none
 achievements
   rotate: false
-  xy: 3952, 1908
-  size: 100, 108
-  orig: 100, 108
+  xy: 2947, 1102
+  size: 110, 112
+  orig: 110, 112
   offset: 0, 0
   index: -1
 arrow-left
@@ -174,9 +174,9 @@ kills_label
   index: -1
 leaderboard
   rotate: false
-  xy: 3952, 1716
-  size: 100, 92
-  orig: 100, 92
+  xy: 3952, 1913
+  size: 119, 103
+  orig: 119, 103
   offset: 0, 0
   index: -1
 main-panel
@@ -188,7 +188,7 @@ main-panel
   index: -1
 money
   rotate: false
-  xy: 992, 248
+  xy: 904, 96
   size: 70, 98
   orig: 70, 98
   offset: 0, 0
@@ -202,7 +202,7 @@ money_label
   index: -1
 music
   rotate: false
-  xy: 4003, 1606
+  xy: 4003, 1607
   size: 84, 108
   orig: 84, 108
   offset: 0, 0
@@ -216,7 +216,7 @@ options
   index: -1
 pause
   rotate: false
-  xy: 3547, 1191
+  xy: 1064, 277
   size: 50, 69
   orig: 50, 69
   offset: 0, 0
@@ -258,14 +258,14 @@ range_icon
   index: -1
 resume
   rotate: false
-  xy: 1064, 256
+  xy: 992, 256
   size: 70, 90
   orig: 70, 90
   offset: 0, 0
   index: -1
 rotate
   rotate: false
-  xy: 3952, 1810
+  xy: 3952, 1717
   size: 100, 96
   orig: 100, 96
   offset: 0, 0
@@ -279,7 +279,7 @@ select
   index: -1
 shield
   rotate: false
-  xy: 904, 104
+  xy: 2952, 1010
   size: 82, 90
   orig: 82, 90
   offset: 0, 0
@@ -293,7 +293,7 @@ slider-knob
   index: -1
 sound
   rotate: false
-  xy: 2947, 1118
+  xy: 3952, 1815
   size: 102, 96
   orig: 102, 96
   offset: 0, 0
