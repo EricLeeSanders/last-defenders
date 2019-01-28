@@ -199,12 +199,12 @@ public class Resources {
         font.setUseIntegerPositions(false);
 
         font.getData().setScale(getFontScale());
-        font.getData().lineHeight = 55;
-        font.getData().ascent = 12;
-        font.getData().capHeight = 28;
-        font.getData().descent = -16;
-        font.getData().spaceXadvance = 20;
-        font.getData().xHeight = 30;
+//        font.getData().lineHeight = 55;
+//        font.getData().ascent = 12;
+//        font.getData().capHeight = 28;
+//        font.getData().descent = -16;
+//        font.getData().spaceXadvance = 20;
+//        font.getData().xHeight = 30;
 
 
         Logger.info("Resources: font initialized");

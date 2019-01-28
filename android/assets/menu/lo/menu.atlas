@@ -4,44 +4,9 @@ size: 1024,512
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-button_disabled
-  rotate: false
-  xy: 1, 67
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-button_normal
-  rotate: false
-  xy: 643, 429
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-button_over
-  rotate: false
-  xy: 1, 1
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-button_press
-  rotate: false
-  xy: 67, 67
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-button_red
-  rotate: false
-  xy: 643, 363
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
 main-menu-screen
   rotate: false
-  xy: 1, 133
+  xy: 1, 1
   size: 640, 360
   orig: 640, 360
   offset: 0, 0

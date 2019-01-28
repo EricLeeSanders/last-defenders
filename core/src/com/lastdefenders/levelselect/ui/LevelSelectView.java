@@ -107,7 +107,7 @@ public class LevelSelectView extends Group {
         this.addActor(btnWhisperingThicket);
         setBtnLevelListener(btnWhisperingThicket, LevelName.WHISPERING_THICKET);
 
-        ImageButton btnMenu = new ImageButton(skin, "arrow-left");
+        ImageButton btnMenu = new ImageButton(skin, "arrow-left_round");
         btnMenu.setSize(64, 64);
         btnMenu.getImageCell().size(40, 27);
         btnMenu.getImage().setScaling(Scaling.stretch);
@@ -123,7 +123,7 @@ public class LevelSelectView extends Group {
     private void createGooglePlayServicesControls(){
 
 
-        ImageButton btnAchievments = new ImageButton(skin, "achievements");
+        ImageButton btnAchievments = new ImageButton(skin, "achievements_round");
         btnAchievments.setSize(42,42);
         btnAchievments.getImageCell().size(24, 25);
         btnAchievments.setPosition(getStage().getViewport().getWorldWidth() - btnAchievments.getWidth() - 15, 9);
@@ -131,7 +131,7 @@ public class LevelSelectView extends Group {
         addActor(btnAchievments);
         btnAchievments.setVisible(presenter.isGooglePlayServicesAvailable());
 
-        ImageButton btnLeaderboards = new ImageButton(skin, "leaderboard");
+        ImageButton btnLeaderboards = new ImageButton(skin, "leaderboard_round");
         btnLeaderboards.setSize(42, 42);
         btnLeaderboards.setPosition(btnAchievments.getX(), btnAchievments.getY(Align.top) + 9);
         btnLeaderboards.getImageCell().size(26, 22);
@@ -170,7 +170,7 @@ public class LevelSelectView extends Group {
         levelConfirmationGroup.addActor(btnMap);
         setBtnMapListener(btnMap);
 
-        ImageButton btnPlay = new ImageButton(skin, "arrow-right");
+        ImageButton btnPlay = new ImageButton(skin, "arrow-right_round");
         btnPlay.setSize(64, 64);
         btnPlay.getImageCell().size(40, 27);
         btnPlay.getImage().setScaling(Scaling.stretch);
@@ -183,7 +183,7 @@ public class LevelSelectView extends Group {
         lblLevel.setAlignment(Align.center);
         levelConfirmationGroup.addActor(lblLevel);
 
-        ImageButton btnLeaderboard = new ImageButton(skin, "leaderboard");
+        ImageButton btnLeaderboard = new ImageButton(skin, "leaderboard_round");
         btnLeaderboard.setSize(64, 64);
         btnLeaderboard.getImageCell().size(40, 34);
         btnLeaderboard.setPosition(btnPlay.getX(), 94);

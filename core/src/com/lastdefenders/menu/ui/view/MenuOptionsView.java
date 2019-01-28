@@ -63,7 +63,7 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
         container.add(mainTable);
 
 
-        Label lblTitle = new Label("OPTIONS", skin);
+        Label lblTitle = new Label("Options", skin);
         lblTitle.setFontScale(0.7f * resources.getFontScale());
         lblTitle.setAlignment(Align.center);
         lblTitle.setHeight(60);
@@ -80,14 +80,14 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
         addActor(btnClose);
         setBtnCloseListener();
 
-        btnSound = new CheckBox(" SOUND ON", skin);
+        btnSound = new CheckBox(" Sound On", skin);
         btnSound.getLabel().setFontScale(0.45f * resources.getFontScale());
         btnSound.getLabel().setAlignment(Align.center);
         btnSound.getImageCell().width(32).height(32);
         btnSound.getImage().setScaling(Scaling.stretch);
         setBtnSoundListener(btnSound);
 
-        btnMusic = new CheckBox(" MUSIC ON", skin);
+        btnMusic = new CheckBox(" Music On", skin);
         btnMusic.getLabel().setFontScale(0.45f * resources.getFontScale());
         btnMusic.getImageCell().width(32).height(32);
         btnMusic.getImage().setScaling(Scaling.stretch);
@@ -101,15 +101,12 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
         lblVolHundred.setAlignment(Align.center);
         lblVolHundred.setFontScale(0.35f * resources.getFontScale());
 
-        Label lblVol = new Label("VOLUME", skin);
-        lblVol.setAlignment(Align.center);
+        Label lblVol = new Label("Volume", skin);
         lblVol.setFontScale(0.5f * resources.getFontScale());
 
         LDSlider volSlider = createVolSlider(skin);
 
-        mainTable.row();
-
-        mainTable.add(btnMusic).colspan(1).left().spaceLeft(15).spaceBottom(10);
+        mainTable.add(btnMusic).colspan(2).left().spaceLeft(15).spaceBottom(10);
 
         mainTable.row();
 
