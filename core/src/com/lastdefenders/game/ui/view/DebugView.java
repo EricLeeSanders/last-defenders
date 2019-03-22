@@ -69,7 +69,7 @@ public class DebugView extends Group implements IDebugView {
         mainTable.setTransform(false);
         container.add(mainTable);
 
-        Label lblTitle = new Label("DEBUG", skin);
+        Label lblTitle = new Label("Debug", skin);
         lblTitle.setFontScale(0.7f * resources.getFontScale());
         lblTitle.setAlignment(Align.center);
         lblTitle.setHeight(60);
@@ -83,39 +83,39 @@ public class DebugView extends Group implements IDebugView {
         framesLabel.setColor(1f, 1f, 1f, 0.30f);
         framesLabel.setPosition(200, 320);
 
-        btnResume = new TextButton("RESUME", skin);
-        btnResume.getLabel().setFontScale(0.45f * resources.getFontScale());
+        btnResume = new TextButton("Resume", skin);
+        btnResume.getLabel().setFontScale(0.5f * resources.getFontScale());
         btnResume.getLabel().setAlignment(Align.center);
         btnResume.setSize(150, 45);
         btnResume.setPosition((getStage().getViewport().getWorldWidth() / 2) - btnResume.getWidth() - 50, 20);
         addActor(btnResume);
         setBtnResumeListener();
 
-        btnShowFPS = new CheckBox(" SHOW FPS", skin);
-        btnShowFPS.getLabel().setFontScale(0.45f * resources.getFontScale());
+        btnShowFPS = new CheckBox(" Show FPS", skin);
+        btnShowFPS.getLabel().setFontScale(0.5f * resources.getFontScale());
         btnShowFPS.getImageCell().width(32).height(32);
         btnShowFPS.getImage().setScaling(Scaling.stretch);
         setBtnShowFPSListener(btnShowFPS);
 
-        btnShowTextureBoundaries = new CheckBox(" SHOW BOUNDARIES", skin);
-        btnShowTextureBoundaries.getLabel().setFontScale(0.45f * resources.getFontScale());
+        btnShowTextureBoundaries = new CheckBox(" Show Boundaries", skin);
+        btnShowTextureBoundaries.getLabel().setFontScale(0.5f * resources.getFontScale());
         btnShowTextureBoundaries.getImageCell().width(32).height(32);
         btnShowTextureBoundaries.getImage().setScaling(Scaling.stretch);
         setBtnShowTextureBoundariesListener(btnShowTextureBoundaries);
 
-        btnShowTutorial = new CheckBox(" SHOW TUTORIAL", skin);
-        btnShowTutorial.getLabel().setFontScale(0.45f * resources.getFontScale());
+        btnShowTutorial = new CheckBox(" Show Tutorial", skin);
+        btnShowTutorial.getLabel().setFontScale(0.5f * resources.getFontScale());
         btnShowTutorial.getImageCell().width(32).height(32);
         btnShowTutorial.getImage().setScaling(Scaling.stretch);
         setBtnShowTutorialListener(btnShowTutorial);
 
-        TextButton btnCrash = new TextButton("TEST CRASH", skin);
-        btnCrash.getLabel().setFontScale(0.45f * resources.getFontScale());
+        TextButton btnCrash = new TextButton("Test Crash", skin);
+        btnCrash.getLabel().setFontScale(0.5f * resources.getFontScale());
         btnCrash.setSize(150, 45);
         setBtnCrashListener(btnCrash);
 
-        TextButton btnAssets = new TextButton("ASSETS", skin);
-        btnAssets.getLabel().setFontScale(0.45f * resources.getFontScale());
+        TextButton btnAssets = new TextButton("Assets", skin);
+        btnAssets.getLabel().setFontScale(0.5f * resources.getFontScale());
         btnAssets.setSize(150, 45);
         setBtnAssetsListener(btnAssets);
 
@@ -285,7 +285,7 @@ public class DebugView extends Group implements IDebugView {
             container.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2, Align.center);
             addActor(container);
 
-            Label lblTitle = new Label("ASSETS", resources.getSkin());
+            Label lblTitle = new Label("Assets", resources.getSkin());
             lblTitle.setFontScale(0.7f * resources.getFontScale());
             lblTitle.setAlignment(Align.center);
             lblTitle.setHeight(60);
@@ -315,7 +315,7 @@ public class DebugView extends Group implements IDebugView {
             Array<String> assetNames = resources.getManager().getAssetNames();
             assetNames.sort();
             for(String name : assetNames){
-                Label label = new Label(name.toUpperCase(), resources.getSkin());
+                Label label = new Label(name, resources.getSkin());
                 label.setFontScale(0.35f * resources.getFontScale());
                 table.row();
                 table.add(label).left();

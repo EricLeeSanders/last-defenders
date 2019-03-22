@@ -38,7 +38,7 @@ public class UpgradeButton extends Group {
         lblCost.setPosition(lblCostX, 5);
         addActor(lblCost);
 
-        Label lblTitle = new Label(name.toUpperCase().replaceAll(" ", "\n"), skin);
+        Label lblTitle = new Label(name.replaceAll(" ", "\n"), skin);
         lblTitle.setFontScale(0.4f * fontScale);
         lblTitle.setAlignment(Align.center);
         lblTitle.pack();

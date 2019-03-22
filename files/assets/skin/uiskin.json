@@ -1,5 +1,7 @@
 {
-com.badlogic.gdx.graphics.g2d.BitmapFont: { default-font: { file: default-font.fnt } },
+com.badlogic.gdx.graphics.g2d.BitmapFont: { 
+	default-font: { file: default-font.fnt }
+},
 com.badlogic.gdx.graphics.Color: {
 	green: { a: 1, b: 0, g: 1, r: 0 },
 	white: { a: 1, b: 1, g: 1, r: 1 },
@@ -65,8 +67,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	hollow_label: {background: hollow_label, font: default-font, fontColor: white},
 	label_normal: {background: hollow_label, font: default-font, fontColor: white},
 	money_label: {background: money_label, font: default-font, fontColor: white},
-	kills_label: {background: kills_label, font: default-font, fontColor: white},
-	test_label: { }
+	kills_label: {background: kills_label, font: default-font, fontColor: white}
 },
 com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
 	default: { checkboxOn: check-on, checkboxOff: check-off, font: default-font, fontColor: white }

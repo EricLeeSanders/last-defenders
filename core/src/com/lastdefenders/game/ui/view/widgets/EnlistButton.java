@@ -38,8 +38,8 @@ public class EnlistButton extends Group {
         lblCost.setPosition(lblCostX, 10);
         addActor(lblCost);
 
-        Label lblTitle = new Label(name.toUpperCase().replaceAll(" ", "\n"), skin);
-        lblTitle.setFontScale(0.40f * fontScale);
+        Label lblTitle = new Label(name.replaceAll(" ", "\n"), skin);
+        lblTitle.setFontScale(0.45f * fontScale);
         lblTitle.setAlignment(Align.center);
         lblTitle.pack();
         float lblTitleX = ActorUtil

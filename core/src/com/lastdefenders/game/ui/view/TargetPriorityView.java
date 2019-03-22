@@ -60,7 +60,7 @@ public class TargetPriorityView extends Group {
         lblTitle.setAlignment(Align.center);
         lblTitle.setHeight(60);
         float x = container.getX(Align.center);
-        float y = container.getY(Align.top) - (lblTitle.getHeight()/2);
+        float y = container.getY(Align.top) - 30;
         lblTitle.setPosition(x, y, Align.center);
         addActor(lblTitle);
 

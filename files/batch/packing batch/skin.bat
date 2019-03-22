@@ -8,6 +8,6 @@ xcopy /s /i /y C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\skin\u
 xcopy /s /i /y C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\skin\uiskin.json C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\skin\hi\uiskin.json
 
 REM Copy font files from files to android assets
-xcopy /s /i /y C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\skin\lo\default-font.fnt C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\skin\lo\default-font.fnt
-xcopy /s /i /y C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\skin\med\default-font.fnt C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\skin\med\default-font.fnt
-xcopy /s /i /y C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\skin\hi\default-font.fnt C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\skin\hi\default-font.fnt
+xcopy /s /i /y C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\skin\lo\*.fnt C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\skin\lo\
+xcopy /s /i /y C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\skin\med\*.fnt C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\skin\med\
+xcopy /s /i /y C:\Users\Eric\Documents\GitHub\last-defenders\files\assets\skin\hi\*.fnt C:\Users\Eric\Documents\GitHub\last-defenders\android\assets\skin\hi\

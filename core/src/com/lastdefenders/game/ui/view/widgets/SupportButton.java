@@ -24,8 +24,8 @@ public class SupportButton extends Group {
         this.cost = cost;
         addActor(button);
 
-        Label lblTitle = new Label(name.toUpperCase().replaceAll(" ", "\n"), skin);
-        lblTitle.setFontScale(0.40f * fontScale);
+        Label lblTitle = new Label(name.replaceAll(" ", "\n"), skin);
+        lblTitle.setFontScale(0.5f * fontScale);
         lblTitle.setAlignment(Align.center);
         lblTitle.pack();
         float lblTitleX = ActorUtil

@@ -83,11 +83,11 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
         container.add(scroll).expand().fill().colspan(1);
         container.setBackground(skin.getDrawable("main-panel"));
 
-        Label lblTitle = new Label("SUPPORT", skin);
+        Label lblTitle = new Label("Support", skin);
         lblTitle.setAlignment(Align.center);
         lblTitle.setFontScale(.9f * resources.getFontScale());
         float lblTitleX = container.getX(Align.center);
-        float lblTitleY = container.getY(Align.top) - (lblTitle.getHeight()/2);
+        float lblTitleY = container.getY(Align.top) - 30;
         lblTitle.setPosition(lblTitleX, lblTitleY, Align.center);
         choosingGroup.addActor(lblTitle);
 

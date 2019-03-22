@@ -119,7 +119,7 @@ public class HUDView extends Group implements IHUDView {
         setBtnOptionsListener();
         addActor(btnOptions);
 
-        lblPaused = new Label("PAUSED", skin);
+        lblPaused = new Label("Paused", skin);
         LabelStyle lblPausedStyle = new LabelStyle(lblPaused.getStyle());
         lblPausedStyle.fontColor = Color.RED;
         lblPaused.setStyle(lblPausedStyle);
@@ -276,7 +276,7 @@ public class HUDView extends Group implements IHUDView {
     @Override
     public void setWaveCount(String waveCount) {
 
-        lblWaveCount.setText("WAVE: " + waveCount);
+        lblWaveCount.setText("Wave: " + waveCount);
     }
 
     @Override

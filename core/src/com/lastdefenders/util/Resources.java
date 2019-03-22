@@ -1,20 +1,29 @@
 package com.lastdefenders.util;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.TextureAtlasLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver.Resolution;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.tools.bmfont.BitmapFontWriter;
+import com.badlogic.gdx.tools.bmfont.BitmapFontWriter.FontInfo;
+import com.badlogic.gdx.tools.bmfont.BitmapFontWriter.Padding;
+import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.lastdefenders.levelselect.LevelName;
@@ -69,6 +78,8 @@ public class Resources {
         skinAtlas = "skin/" + assetFolder + "/uiskin.atlas";
         skinJson = "skin/" + assetFolder + "/uiskin.json";
 
+        //generateFonts();
+
         switch(assetFolder){
             case "hi":
                 tiledMapScale = 1f/3;
@@ -80,11 +91,40 @@ public class Resources {
                 break;
             case "lo":
                 tiledMapScale = 1;
-                fontScale = 1;
+                fontScale = 1f;
                 break;
         }
 
         Texture.setAssetManager(manager);
+    }
+
+    private void packSkin(){
+        TexturePacker p;
+    }
+
+    private void generateFonts(){
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("riffic.ttf"));
+        FreeTypeFontParameter parameters = new FreeTypeFontParameter ();
+        parameters.size = 18;
+        parameters.borderColor = Color.BLACK;
+        parameters.borderWidth = 1f;
+        parameters.genMipMaps = true;
+        parameters.minFilter = Texture.TextureFilter.MipMapLinearNearest;
+        parameters.magFilter = Texture.TextureFilter.Nearest;
+        //parameters.kerning = true;
+        parameters.characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!?:.,/$%+=#";
+
+        BitmapFont font = generator.generateFont(parameters);
+
+        FontInfo info = new FontInfo();
+        info.padding = new Padding(1, 1, 1, 1);
+
+        Pixmap pixmap = font.getRegion().getTexture().getTextureData().consumePixmap();
+        BitmapFontWriter.writeFont(font.getData(), new Pixmap[]{pixmap}, Gdx.files.local("default-font-_5.fnt"), info);
+        BitmapFontWriter.writePixmaps(new Pixmap[]{pixmap}, Gdx.files.local(""), "default-font-_5");
+
+        generator.dispose();
+
     }
 
     public static ShapeRenderer getShapeRenderer() {
@@ -199,9 +239,10 @@ public class Resources {
         font.setUseIntegerPositions(false);
 
         font.getData().setScale(getFontScale());
-//        font.getData().lineHeight = 55;
-//        font.getData().ascent = 12;
-//        font.getData().capHeight = 28;
+        System.out.println(font.getData().ascent);
+        //font.getData().lineHeight = 55;
+        //font.getData().ascent = 6;
+        //font.getData().capHeight = 28;
 //        font.getData().descent = -16;
 //        font.getData().spaceXadvance = 20;
 //        font.getData().xHeight = 30;

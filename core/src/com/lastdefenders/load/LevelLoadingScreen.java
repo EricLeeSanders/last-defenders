@@ -82,11 +82,12 @@ public class LevelLoadingScreen extends AbstractScreen {
         progressBar.setSize(LOADING_BAR_SIZE.getWidth(), LOADING_BAR_SIZE.getHeight());
         progressBar.setPosition(stage.getViewport().getWorldWidth() / 2, stage.getViewport().getWorldHeight() / 2, Align.center);
 
-        loadingLabel = new Label("LOADING: 0%", resources.getSkin());
+        loadingLabel = new Label("Loading: 0%", resources.getSkin());
         loadingLabel.setFontScale(0.5f * resources.getFontScale());
         loadingLabel.setAlignment(Align.left);
         loadingLabel.setColor(1f, 1f, 1f, 1f);
         loadingLabel.setPosition((stage.getViewport().getWorldWidth() / 2) + 70, (stage.getViewport().getWorldHeight() / 2) + 2, Align.center);
+        loadingLabel.debug();
 
         Image screen = new Image(atlas.findRegion("level-load-screen"));
         screen.setSize(stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
@@ -121,7 +122,7 @@ public class LevelLoadingScreen extends AbstractScreen {
             percent = 1;
         }
         progressBar.setValue(percent);
-        loadingLabel.setText("LOADING: " + Math.round(percent * 100) + "%");
+        loadingLabel.setText("Loading: " + Math.round(percent * 100) + "%");
 
         super.render(delta);
         if (resources.getManager().update() && loadTime >= MIN_LOAD_TIME) {
