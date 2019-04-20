@@ -17,12 +17,12 @@ import com.lastdefenders.game.model.actor.interfaces.Attacker;
 
 public enum TowerAIType implements TowerAI {
 
-    CLOSEST(new ClosestEnemyAI(), "CLOSEST"),
-    FARTHEST(new FarthestEnemyAI(), "FARTHEST"),
-    LEAST_HP(new LeastHPEnemyAI(), "LEAST HP"),
-    MOST_HP(new MostHPEnemyAI(), "MOST HP"),
-    STRONGEST(new StrongestEnemyAI(), "STRONGEST"),
-    WEAKEST(new WeakestEnemyAI(), "WEAKEST");
+    CLOSEST(new ClosestEnemyAI(), "Closest"),
+    FARTHEST(new FarthestEnemyAI(), "Farthest"),
+    LEAST_HP(new LeastHPEnemyAI(), "Least HP"),
+    MOST_HP(new MostHPEnemyAI(), "Most HP"),
+    STRONGEST(new StrongestEnemyAI(), "Strongest"),
+    WEAKEST(new WeakestEnemyAI(), "Weakest");
 
     private final TowerAI ai;
     private final String title;

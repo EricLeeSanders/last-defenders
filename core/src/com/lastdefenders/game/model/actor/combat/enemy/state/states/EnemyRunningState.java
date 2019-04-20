@@ -7,7 +7,6 @@ import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
 import com.lastdefenders.game.model.actor.combat.state.StateTransitioner;
-import com.lastdefenders.game.model.actor.interfaces.IPassiveEnemy;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import java.util.HashMap;
 import java.util.Map;
@@ -51,7 +50,7 @@ public class EnemyRunningState implements CombatActorState {
             return;
         }
 
-        if (!(enemy instanceof IPassiveEnemy) && isReadyToFindTarget()) {
+        if ( isReadyToFindTarget()) {
             Targetable target = findTarget();
             if (target != null) {
                 attackTransitionParameters.put("target", target);

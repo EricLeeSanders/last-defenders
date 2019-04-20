@@ -14,6 +14,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
 import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
@@ -21,6 +22,7 @@ import com.lastdefenders.game.service.factory.EffectFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
+import javax.sound.midi.Sequence;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -93,15 +95,14 @@ public class SupplyDropCrateTest {
         assertTrue(tower2.getHealthPercent() < 1);
         assertTrue(tower3.getArmorPercent() < 1);
 
-        // Scale action
-        supplyDropCrate.act(10f);
         // Visible action
         supplyDropCrate.act(0.0001f);
+        // Scale action
+        supplyDropCrate.act(10f);
         // Heal actors action
         supplyDropCrate.act(0.0001f);
         // Free action
         supplyDropCrate.act(0.0001f);
-
 
         assertTrue(tower1.getHealthPercent() == 1);
         assertTrue(tower2.getHealthPercent() == 1);

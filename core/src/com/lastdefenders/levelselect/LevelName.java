@@ -5,13 +5,13 @@ package com.lastdefenders.levelselect;
  */
 
 public enum LevelName {
-    THE_GREENLANDS("THE GREENLANDS"),
-    THE_GOLD_COAST("THE GOLD COAST"),
-    STARFISH_ISLAND("STARFISH ISLAND"),
-    SERPENTINE_RIVER("SERPENTINE RIVER"),
-    THE_BADLANDS("THE BADLANDS"),
-    TUNDRA("TUNDRA"),
-    WHISPERING_THICKET("WHISPERING THICKET");
+    THE_GREENLANDS("The Greenlands"),
+    THE_GOLD_COAST("The Gold Coast"),
+    STARFISH_ISLAND("Starfish Island"),
+    SERPENTINE_RIVER("Serpentine River"),
+    THE_BADLANDS("The Badlands"),
+    TUNDRA("Tundra"),
+    WHISPERING_THICKET("Whispering Thicket");
 
     private String name;
 

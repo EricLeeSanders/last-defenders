@@ -52,36 +52,36 @@ public class PauseView extends Group implements IPauseView {
         container.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2, Align.center);
         this.addActor(container);
 
-        Label lblTitle = new Label("PAUSED", skin);
+        Label lblTitle = new Label("Paused", skin);
         lblTitle.setAlignment(Align.center);
         lblTitle.setFontScale(0.7f * resources.getFontScale());
 
-        TextButton btnResume = new TextButton("RESUME", skin);
-        btnResume.getLabel().setFontScale(0.45f * resources.getFontScale());
+        TextButton btnResume = new TextButton("Resume", skin);
+        btnResume.getLabel().setFontScale(0.5f * resources.getFontScale());
         setBtnResumeListener(btnResume);
 
-        TextButton btnQuit = new TextButton("QUIT", skin);
-        btnQuit.getLabel().setFontScale(0.45f * resources.getFontScale());
+        TextButton btnQuit = new TextButton("Quit", skin);
+        btnQuit.getLabel().setFontScale(0.5f * resources.getFontScale());
         setBtnQuitListener(btnQuit);
 
-        TextButton btnNewGame = new TextButton("NEW GAME", skin);
-        btnNewGame.getLabel().setFontScale(0.45f * resources.getFontScale());
+        TextButton btnNewGame = new TextButton("New Game", skin);
+        btnNewGame.getLabel().setFontScale(0.5f * resources.getFontScale());
         setBtnNewGameListener(btnNewGame);
 
-        TextButton btnMainMenu = new TextButton("MAIN MENU", skin);
-        btnMainMenu.getLabel().setFontScale(0.45f * resources.getFontScale());
+        TextButton btnMainMenu = new TextButton("Main Menu", skin);
+        btnMainMenu.getLabel().setFontScale(0.5f * resources.getFontScale());
         setBtnMainMenuListener(btnMainMenu);
 
         container.top();
-        container.add(lblTitle).padTop(3);
+        container.add(lblTitle).size(150,47).padTop(4);
         container.row();
-        container.add(btnResume).size(150,45).spaceTop(15);
+        container.add(btnResume).size(150,47).spaceTop(7);
         container.row();
-        container.add(btnQuit).size(150,45).spaceTop(11.5f);
+        container.add(btnQuit).size(150,47).spaceTop(10);
         container.row();
-        container.add(btnNewGame).size(150,45).spaceTop(11.5f);
+        container.add(btnNewGame).size(150,47).spaceTop(10);
         container.row();
-        container.add(btnMainMenu).size(150,45).spaceTop(11.5f);
+        container.add(btnMainMenu).size(150,47).spaceTop(10);
 
     }
 

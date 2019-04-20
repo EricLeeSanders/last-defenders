@@ -43,35 +43,38 @@ public class LevelCompletedView extends Group implements ILevelCompletedView {
         table.setPosition(getStage().getViewport().getWorldWidth() / 2, getStage().getViewport().getWorldHeight() / 2, Align.center);
         this.addActor(table);
 
-        Label lblTitle = new Label("LEVEL COMPLETED", skin);
-        lblTitle.setFontScale(0.40f * resources.getFontScale());
+        Label lblTitle = new Label("Level Completed", skin);
+        lblTitle.setHeight(42);
+        lblTitle.setFontScale(0.70f * resources.getFontScale());
         lblTitle.setAlignment(Align.center);
         lblTitle.setPosition(table.getX() + (table.getWidth() / 2) - (lblTitle.getWidth() / 2),
-            table.getY() + table.getHeight() - lblTitle.getHeight() + 7);
+            table.getY() + table.getHeight() - lblTitle.getHeight());
         this.addActor(lblTitle);
+        lblTitle.debug();
 
         Label lblContinue = new Label(
-            "Do you want to\ncontinue playing this\nlevel and compete\nfor a high score?"
-                .toUpperCase(), skin);
-        lblContinue.setFontScale(0.45f * resources.getFontScale());
+            "Do you want to continue playing this\nlevel and compete for a high score?", skin);
+        lblContinue.setFontScale(0.55f * resources.getFontScale());
         lblContinue.setAlignment(Align.center);
-        table.add(lblContinue).colspan(3).width(380).height(120).padTop(30).spaceBottom(15);
+        table.add(lblContinue).colspan(3).width(380).height(90);
 
         table.row();
-        TextButton btnContinueLevel = new TextButton("CONTINUE", skin);
+        TextButton btnContinueLevel = new TextButton("Continue", skin);
         btnContinueLevel.getLabel().setFontScale(0.45f * resources.getFontScale());
         table.add(btnContinueLevel).width(130).height(45);
         setBtnContinueLevel(btnContinueLevel);
 
-        TextButton btnNewGame = new TextButton("NEW GAME", skin);
+        TextButton btnNewGame = new TextButton("New Game", skin);
         btnNewGame.getLabel().setFontScale(0.45f * resources.getFontScale());
-        table.add(btnNewGame).width(130).height(45).spaceLeft(15).spaceRight(15);
+        table.add(btnNewGame).width(130).height(45).spaceLeft(10).spaceRight(10);
         setbtnNewGameListener(btnNewGame);
 
-        TextButton btnMainMenu = new TextButton("MAIN MENU", skin);
+        TextButton btnMainMenu = new TextButton("Main Menu", skin);
         btnMainMenu.getLabel().setFontScale(0.45f * resources.getFontScale());
         table.add(btnMainMenu).width(130).height(45);
         setbtnMainMenuListener(btnMainMenu);
+
+        table.debug();
 
         Logger.info("Level Completed View: controls created");
     }

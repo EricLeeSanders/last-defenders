@@ -55,12 +55,12 @@ public class TargetPriorityView extends Group {
         mainTable.setTransform(false);
         container.add(mainTable).width(420).height(260);
 
-        Label lblTitle = new Label("TARGET PRIORITY", skin);
-        lblTitle.setFontScale(0.6f * resources.getFontScale());
+        Label lblTitle = new Label("Target Priority", skin);
+        lblTitle.setFontScale(0.9f * resources.getFontScale());
         lblTitle.setAlignment(Align.center);
         lblTitle.setHeight(60);
         float x = container.getX(Align.center);
-        float y = container.getY(Align.top) - (lblTitle.getHeight()/2);
+        float y = container.getY(Align.top) - 30;
         lblTitle.setPosition(x, y, Align.center);
         addActor(lblTitle);
 
@@ -80,12 +80,12 @@ public class TargetPriorityView extends Group {
         TargetPriorityCheckBox btnStrongest = createCheckBox(TowerAIType.STRONGEST, skin);
         TargetPriorityCheckBox btnWeakest = createCheckBox(TowerAIType.WEAKEST, skin);
 
-        Label closestDescription = createCheckBoxDescription("ENEMY CLOSEST TO END", skin);
-        Label farthestDescription = createCheckBoxDescription("ENEMY FARTHEST FROM END", skin);
-        Label leastHPDescription = createCheckBoxDescription("ENEMY WITH LEAST HP", skin);
-        Label mostHPDescription = createCheckBoxDescription("ENEMY WITH MOST HP", skin);
-        Label strongestDescription = createCheckBoxDescription("ENEMY THAT DOES THE MOST DAMAGE", skin);
-        Label weakestDescription = createCheckBoxDescription("ENEMY THAT DOES THE LEAST DAMAGE", skin);
+        Label closestDescription = createCheckBoxDescription("Enemy closest to the end", skin);
+        Label farthestDescription = createCheckBoxDescription("Enemy farthest from the end", skin);
+        Label leastHPDescription = createCheckBoxDescription("Enemy with the least HP", skin);
+        Label mostHPDescription = createCheckBoxDescription("Enemy with the most HP", skin);
+        Label strongestDescription = createCheckBoxDescription("Enemy that does the most damage", skin);
+        Label weakestDescription = createCheckBoxDescription("Enemy that does the least damage", skin);
 
         btnGroup = new ButtonGroup<>();
         btnGroup.add(btnClosest);
@@ -118,7 +118,7 @@ public class TargetPriorityView extends Group {
 
     private TargetPriorityCheckBox createCheckBox(TowerAIType towerAIType, Skin skin){
         TargetPriorityCheckBox chkBox = new TargetPriorityCheckBox(towerAIType, skin);
-        chkBox.getLabel().setFontScale(0.45f * resources.getFontScale());
+        chkBox.getLabel().setFontScale(0.5f * resources.getFontScale());
         chkBox.getImageCell().width(32).height(32);
         chkBox.getImage().setScaling(Scaling.stretch);
 
@@ -127,7 +127,7 @@ public class TargetPriorityView extends Group {
 
     private Label createCheckBoxDescription(String text, Skin skin){
         Label label = new Label(text, skin);
-        label.setFontScale(0.35f * resources.getFontScale());
+        label.setFontScale(0.45f * resources.getFontScale());
         label.pack();
         return label;
     }

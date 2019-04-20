@@ -6,35 +6,35 @@ filter: Linear,Linear
 repeat: none
 img-loading
   rotate: false
-  xy: 1027, 120
-  size: 259, 57
-  orig: 259, 57
+  xy: 1, 1
+  size: 460, 132
+  orig: 460, 132
   offset: 0, 0
   index: -1
 level-load-screen
   rotate: false
-  xy: 1, 179
+  xy: 1, 313
   size: 1920, 1080
   orig: 1920, 1080
   offset: 0, 0
   index: -1
 progress-bar-filled
   rotate: false
-  xy: 1, 51
+  xy: 1, 185
   size: 994, 48
   orig: 994, 48
   offset: 0, 0
   index: -1
 progress-bar-frame
   rotate: false
-  xy: 1, 101
+  xy: 1, 235
   size: 1024, 76
   orig: 1024, 76
   offset: 0, 0
   index: -1
 progress-bar-unfilled
   rotate: false
-  xy: 1, 1
+  xy: 1, 135
   size: 994, 48
   orig: 994, 48
   offset: 0, 0

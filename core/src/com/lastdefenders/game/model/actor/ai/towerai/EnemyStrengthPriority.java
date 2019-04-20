@@ -1,6 +1,5 @@
 package com.lastdefenders.game.model.actor.ai.towerai;
 
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;

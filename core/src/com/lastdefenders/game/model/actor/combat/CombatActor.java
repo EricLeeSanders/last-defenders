@@ -158,7 +158,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
     }
 
     @Override
-    public Shape2D getRangeShape() {
+    public Circle getRangeShape() {
 
         rangeCircle.set(getPositionCenter().x, getPositionCenter().y, range);
         return rangeCircle;

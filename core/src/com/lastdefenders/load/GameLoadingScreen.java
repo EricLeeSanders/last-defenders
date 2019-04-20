@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -64,11 +65,8 @@ public class GameLoadingScreen extends AbstractScreen {
         resources.loadAssetSync(Resources.LOAD_ATLAS, TextureAtlas.class);
         TextureAtlas atlas = resources.getAsset(Resources.LOAD_ATLAS, TextureAtlas.class);
         Image image = new Image(atlas.findRegion("img-loading"));
-        float x = ActorUtil
-            .calcBotLeftPointFromCenter(Resources.VIRTUAL_WIDTH / 2, image.getWidth());
-        float y = ActorUtil
-            .calcBotLeftPointFromCenter(Resources.VIRTUAL_HEIGHT / 2, image.getHeight());
-        image.setPosition(x, y);
+        image.setSize(230,66);
+        image.setPosition(Resources.VIRTUAL_WIDTH / 2, Resources.VIRTUAL_HEIGHT / 2, Align.center);
 
         loadTime = 0;
         stage.addActor(image);

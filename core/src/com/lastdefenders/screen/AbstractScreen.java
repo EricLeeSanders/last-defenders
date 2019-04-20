@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.profiling.GLProfiler;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.state.GameStateManager;
@@ -21,12 +22,14 @@ public abstract class AbstractScreen implements Screen {
     private InputMultiplexer imp;
     private GameStateManager gameStateManager;
     private Array<Viewport> viewports = new Array<>();
+    private GLProfiler profiler;
 
     protected AbstractScreen(GameStateManager gameStateManager) {
 
         this.gameStateManager = gameStateManager;
         imp = new InputMultiplexer();
-        //GLProfiler.enable();
+        profiler = new GLProfiler(Gdx.graphics);
+        profiler.enable();
     }
 
     protected abstract void renderElements(float delta);
@@ -45,14 +48,14 @@ public abstract class AbstractScreen implements Screen {
 
     private void profile() {
 
-//        System.out.println(
-//            "  Drawcalls: " + GLProfiler.drawCalls +
-//                ", Calls: " + GLProfiler.calls +
-//                ", TextureBindings: " + GLProfiler.textureBindings +
-//                ", ShaderSwitches:  " + GLProfiler.shaderSwitches +
-//                ", vertexCount: " + GLProfiler.vertexCount.value
-//        );
-//        GLProfiler.reset();
+        System.out.println(
+            "  Drawcalls: " + profiler.getDrawCalls() +
+                ", Calls: " + profiler.getCalls() +
+                ", TextureBindings: " + profiler.getTextureBindings() +
+                ", ShaderSwitches:  " + profiler.getShaderSwitches() +
+                ", vertexCount: " + profiler.getVertexCount().count
+        );
+        profiler.reset();
     }
 
     @Override

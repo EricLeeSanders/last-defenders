@@ -41,7 +41,7 @@ public class ActorUtilTest {
     @Test
     public void calculateRotationTest() {
 
-        Tower tower = TestUtil.createTower("Turret", false);
+        Tower tower = TestUtil.createTower("Humvee", false);
         tower.setPositionCenter(100, 100);
 
         Enemy enemy = TestUtil.createEnemy("Tank", false);

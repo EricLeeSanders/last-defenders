@@ -67,48 +67,48 @@ public class OptionsView extends Group implements IOptionsView {
         mainTable.setTransform(false);
         container.add(mainTable).colspan(3).size(350, 226);
 
-        Label lblTitle = new Label("OPTIONS", skin);
+        Label lblTitle = new Label("Options", skin);
         lblTitle.setAlignment(Align.center);
         lblTitle.setFontScale(0.7f * resources.getFontScale());
         float lblTitleX = container.getX(Align.center);
-        float lblTitleY = container.getY(Align.top) - (lblTitle.getHeight()/2);
+        float lblTitleY = container.getY(Align.top) - 30;
         lblTitle.setPosition(lblTitleX, lblTitleY, Align.center);
         addActor(lblTitle);
 
 
-        btnNewGame = new TextButton("NEW GAME", skin);
-        btnNewGame.getLabel().setFontScale(0.45f * resources.getFontScale());
+        btnNewGame = new TextButton("New Game", skin);
+        btnNewGame.getLabel().setFontScale(0.5f * resources.getFontScale());
         setBtnNewGameListener();
 
-        btnClose = new TextButton("CLOSE", skin);
-        btnClose.getLabel().setFontScale(0.45f * resources.getFontScale());
+        btnClose = new TextButton("Close", skin);
+        btnClose.getLabel().setFontScale(0.5f * resources.getFontScale());
         setBtnCloseListener();
 
-        btnMainMenu = new TextButton("MAIN MENU", skin);
-        btnMainMenu.getLabel().setFontScale(0.45f * resources.getFontScale());
+        btnMainMenu = new TextButton("Main Menu", skin);
+        btnMainMenu.getLabel().setFontScale(0.5f * resources.getFontScale());
         setBtnMainMenuListener();
 
-        TextButton btnDebug = new TextButton("DEBUG", skin);
-        btnDebug.getLabel().setFontScale(0.45f * resources.getFontScale());
+        TextButton btnDebug = new TextButton("Debug", skin);
         btnDebug.setSize(75, 35);
         btnDebug.setPosition((getStage().getViewport().getWorldWidth() / 2) + 155, lblTitleY - 30);
+        btnDebug.getLabel().setFontScale(0.5f * resources.getFontScale());
         addActor(btnDebug);
         setBtnDebugListener(btnDebug);
 
-        btnSound = new CheckBox(" SOUND ON", skin);
-        btnSound.getLabel().setFontScale(0.45f * resources.getFontScale());
+        btnSound = new CheckBox(" Sound On", skin);
+        btnSound.getLabel().setFontScale(0.5f * resources.getFontScale());
         btnSound.getImageCell().width(32).height(32);
         btnSound.getImage().setScaling(Scaling.stretch);
         setBtnSoundListener(btnSound);
 
-        btnMusic = new CheckBox(" MUSIC ON", skin);
-        btnMusic.getLabel().setFontScale(0.45f * resources.getFontScale());
+        btnMusic = new CheckBox(" Music On", skin);
+        btnMusic.getLabel().setFontScale(0.5f * resources.getFontScale());
         btnMusic.getImageCell().width(32).height(32);
         btnMusic.getImage().setScaling(Scaling.stretch);
         setBtnMusicListener(btnMusic);
 
-        btnShowRanges = new CheckBox(" SHOW RANGES", skin);
-        btnShowRanges.getLabel().setFontScale(0.45f * resources.getFontScale());
+        btnShowRanges = new CheckBox(" Show Ranges", skin);
+        btnShowRanges.getLabel().setFontScale(0.5f * resources.getFontScale());
         btnShowRanges.getImageCell().width(32).height(32);
         btnShowRanges.getImage().setScaling(Scaling.stretch);
         setBtnShowRangesListener(btnShowRanges);
@@ -119,7 +119,7 @@ public class OptionsView extends Group implements IOptionsView {
         Label lblVolHundred = new Label("100", skin);
         lblVolHundred.setFontScale(0.35f * resources.getFontScale());
 
-        Label lblVol = new Label("VOLUME", skin);
+        Label lblVol = new Label("Volume", skin);
         lblVol.setFontScale(0.5f * resources.getFontScale());
 
         LDSlider volSlider = createVolSlider(skin);
@@ -127,10 +127,10 @@ public class OptionsView extends Group implements IOptionsView {
         Label lblSpeedZero = new Label("0", skin);
         lblSpeedZero.setFontScale(0.35f * resources.getFontScale());
 
-        Label lblSpeedTwo = new Label("2X ", skin);
+        Label lblSpeedTwo = new Label("2x ", skin);
         lblSpeedTwo.setFontScale(0.35f * resources.getFontScale());
 
-        Label lblSpeed = new Label("SPEED", skin);
+        Label lblSpeed = new Label("Speed", skin);
         lblSpeed.setFontScale(0.5f * resources.getFontScale());
 
         LDSlider speedSlider = createSpeedSlider(skin);

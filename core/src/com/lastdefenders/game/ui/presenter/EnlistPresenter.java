@@ -3,6 +3,7 @@ package com.lastdefenders.game.ui.presenter;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
 import com.lastdefenders.game.model.actor.combat.tower.TowerMachineGun;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
@@ -62,7 +63,7 @@ public class EnlistPresenter implements GameUIStateObserver {
         towerCosts.put("FlameThrower", TowerFlameThrower.COST);
         towerCosts.put("RocketLauncher", TowerRocketLauncher.COST);
         towerCosts.put("Tank", TowerTank.COST);
-        towerCosts.put("Turret", TowerTurret.COST);
+        towerCosts.put("Humvee", TowerHumvee.COST);
 
     }
 

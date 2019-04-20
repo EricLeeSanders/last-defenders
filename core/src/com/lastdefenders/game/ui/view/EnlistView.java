@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Scaling;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
 import com.lastdefenders.game.model.actor.combat.tower.TowerMachineGun;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
@@ -83,12 +84,11 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
         container.add(scroll).expand().fill();
         container.setBackground(skin.getDrawable("main-panel"));
 
-        Label lblTitle = new Label("ENLIST", skin);
+        Label lblTitle = new Label("Enlist", skin);
         float lblTitleX = container.getX(Align.center);
-        float lblTitleY = container.getY(Align.top) - (lblTitle.getHeight()/2);
-        lblTitle.setPosition(lblTitleX, lblTitleY, Align.center);
-        lblTitle.setAlignment(Align.center);
+        float lblTitleY = container.getY(Align.top) - 30;
         lblTitle.setFontScale(.9f * resources.getFontScale());
+        lblTitle.setPosition(lblTitleX, lblTitleY, Align.center);
         choosingGroup.addActor(lblTitle);
 
         LabelStyle lblMoneyStyle = new LabelStyle(skin.get("money_label", LabelStyle.class));
@@ -110,7 +110,7 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
         createTowerButton(enlistTable, skin, "Flame Thrower", TowerFlameThrower.COST, 7, 4, 6, 2);
         createTowerButton(enlistTable, skin, "Rocket Launcher", TowerRocketLauncher.COST, 10, 4, 6,
             1);
-        createTowerButton(enlistTable, skin, "Turret", TowerTurret.COST, 3, 7, 7, 8);
+        createTowerButton(enlistTable, skin, "Humvee", TowerHumvee.COST, 3, 7, 7, 8);
         enlistTable.row();
         createTowerButton(enlistTable, skin, "Tank", TowerTank.COST, 10, 10, 8, 10);
 
@@ -201,10 +201,10 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
             presenter.rotateTower(delta);
         }
         if (btnScrollUp.isPressed()) {
-            scroll.setScrollY(scroll.getScrollY() - (scroll.getHeight() * delta));
+            scroll.setScrollY(scroll.getScrollY() - (scroll.getHeight() * 2 * delta));
         }
         if (btnScrollDown.isPressed()) {
-            scroll.setScrollY(scroll.getScrollY() + (scroll.getHeight() * delta));
+            scroll.setScrollY(scroll.getScrollY() + (scroll.getHeight() * 2 * delta));
         }
     }
 

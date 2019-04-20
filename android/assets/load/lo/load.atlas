@@ -6,9 +6,9 @@ filter: Linear,Linear
 repeat: none
 img-loading
   rotate: false
-  xy: 643, 396
-  size: 259, 57
-  orig: 259, 57
+  xy: 643, 387
+  size: 230, 66
+  orig: 230, 66
   offset: 0, 0
   index: -1
 level-load-screen

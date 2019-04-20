@@ -71,6 +71,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         container.add(inspectTable).expand().fill();
 
         lblTitle = new Label("Tower", skin);
+        lblTitle.setHeight(60);
         lblTitle.setFontScale(0.7f * resources.getFontScale());
         lblTitle.setAlignment(Align.center);
         float lblTitleX = container.getX(Align.center);
@@ -148,16 +149,16 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         lblTargetPriority.setFontScale(0.45f * resources.getFontScale());
         grpTargetPriority.addActor(lblTargetPriority);
 
-        Label lblTarget = new Label("PRIORITY", skin);
-        lblTarget.setPosition(lblTargetPriority.getX() + 24, lblTargetPriority.getY() + 42);
+        Label lblTarget = new Label("Priority", skin);
+        lblTarget.setAlignment(Align.center);
         lblTarget.setFontScale(0.45f * resources.getFontScale());
-        lblTarget.pack();
+        lblTarget.setPosition(lblTargetPriority.getX(Align.center), lblTargetPriority.getY() + 60, Align.center);
         grpTargetPriority.addActor(lblTarget);
 
-        Label lblText = new Label("CLICK TO CHANGE", skin);
-        lblText.setPosition(lblTargetPriority.getX() + 6,lblTargetPriority.getY() - 25);
+        Label lblText = new Label("Click to change", skin);
+        lblText.setAlignment(Align.center);
+        lblText.setPosition(lblTargetPriority.getX(Align.center),lblTargetPriority.getY() - 12, Align.center);
         lblText.setFontScale(0.35f * resources.getFontScale());
-        lblText.pack();
         grpTargetPriority.addActor(lblText);
 
         setTargetPriorityListener(grpTargetPriority);
@@ -188,7 +189,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         lblKills.setText(String.valueOf(selectedTower.getNumOfKills()));
         btnDischarge.updateCost(selectedTower.getSellCost());
         btnDischarge.button.setDisabled(presenter.isDischargeDisabled());
-        lblTitle.setText(selectedTower.getName().toUpperCase());
+        lblTitle.setText(selectedTower.getName());
         lblTargetPriority.setText(selectedTower.getAI().getTitle());
         updateUpgradeControl(btnArmor, selectedTower.hasArmor(), selectedTower.getArmorCost());
         updateUpgradeControl(btnSpeed, selectedTower.hasIncreasedSpeed(),
