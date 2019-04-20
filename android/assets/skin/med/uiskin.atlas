@@ -41,7 +41,7 @@ arrow-small-up
   index: -1
 attack_icon
   rotate: false
-  xy: 779, 155
+  xy: 841, 155
   size: 54, 53
   orig: 54, 53
   offset: 0, 0
@@ -132,14 +132,14 @@ cancel
   index: -1
 check-off
   rotate: false
-  xy: 1815, 407
+  xy: 2956, 425
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 check-on
   rotate: false
-  xy: 2956, 425
+  xy: 2956, 359
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -174,7 +174,7 @@ games
   index: -1
 heart
   rotate: false
-  xy: 1815, 344
+  xy: 3294, 657
   size: 64, 61
   orig: 64, 61
   offset: 0, 0
@@ -188,7 +188,7 @@ help
   index: -1
 hollow-no-round
   rotate: false
-  xy: 1883, 508
+  xy: 2890, 986
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
@@ -223,7 +223,7 @@ main-panel
   index: -1
 money
   rotate: false
-  xy: 897, 143
+  xy: 959, 143
   size: 47, 65
   orig: 47, 65
   offset: 0, 0
@@ -251,7 +251,7 @@ options
   index: -1
 pause
   rotate: false
-  xy: 995, 162
+  xy: 1008, 162
   size: 33, 46
   orig: 33, 46
   offset: 0, 0
@@ -286,16 +286,16 @@ progress-bar-unfilled
   index: -1
 range_icon
   rotate: false
-  xy: 663, 145
+  xy: 725, 145
   size: 57, 63
   orig: 57, 63
   offset: 0, 0
   index: -1
 resume
   rotate: false
-  xy: 946, 148
-  size: 47, 60
-  orig: 47, 60
+  xy: 1815, 396
+  size: 66, 75
+  orig: 66, 75
   offset: 0, 0
   index: -1
 rotate
@@ -307,21 +307,21 @@ rotate
   index: -1
 select
   rotate: false
-  xy: 835, 162
+  xy: 897, 162
   size: 60, 46
   orig: 60, 46
   offset: 0, 0
   index: -1
 shield
   rotate: false
-  xy: 722, 148
+  xy: 784, 148
   size: 55, 60
   orig: 55, 60
   offset: 0, 0
   index: -1
 slider-knob
   rotate: false
-  xy: 3294, 670
+  xy: 1815, 346
   size: 66, 48
   orig: 66, 48
   offset: 0, 0
@@ -335,7 +335,7 @@ sound
   index: -1
 speed_icon
   rotate: false
-  xy: 2956, 362
+  xy: 663, 147
   size: 60, 61
   orig: 60, 61
   offset: 0, 0
@@ -398,7 +398,7 @@ tower-stat
   index: -1
 transparent
   rotate: false
-  xy: 3440, 807
+  xy: 2893, 986
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
@@ -426,8 +426,8 @@ upgrade_purchased
   index: -1
 wave
   rotate: false
-  xy: 2890, 990
-  size: 100, 32
-  orig: 100, 32
+  xy: 2890, 989
+  size: 100, 33
+  orig: 100, 33
   offset: 0, 0
   index: -1

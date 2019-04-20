@@ -56,7 +56,7 @@ public class MessageDisplayerImpl extends Group implements
         LabelStyle style = getLabelStyleByColor(color);
         messageLabel.setStyle(style);
         messageLabel.clearActions();
-        messageLabel.setText(message.toUpperCase());
+        messageLabel.setText(message);
         messageLabel.setFontScale(fontScale * resources.getFontScale());
         messageLabel.pack();
         messageLabel.setPosition(getStage().getViewport().getWorldWidth() / 2, (getStage().getViewport().getWorldHeight() / 2) + 50, Align.center );

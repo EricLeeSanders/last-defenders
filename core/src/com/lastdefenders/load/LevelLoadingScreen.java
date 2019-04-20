@@ -87,7 +87,6 @@ public class LevelLoadingScreen extends AbstractScreen {
         loadingLabel.setAlignment(Align.left);
         loadingLabel.setColor(1f, 1f, 1f, 1f);
         loadingLabel.setPosition((stage.getViewport().getWorldWidth() / 2) + 70, (stage.getViewport().getWorldHeight() / 2) + 2, Align.center);
-        loadingLabel.debug();
 
         Image screen = new Image(atlas.findRegion("level-load-screen"));
         screen.setSize(stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());

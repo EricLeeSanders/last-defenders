@@ -52,6 +52,7 @@ public class MenuView extends Group implements IMenuView {
 
         ImageButton btnPlay = new ImageButton(skin, "play_round");
         btnPlay.setSize(64, 64);
+        btnPlay.getImageCell().size(33, 38);
         btnPlay.setPosition(getStage().getViewport().getWorldWidth() / 2, (getStage().getViewport().getWorldHeight() / 2) -25, Align.center);
         addActor(btnPlay);
         setBtnPlayListener(btnPlay);

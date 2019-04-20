@@ -71,6 +71,7 @@ public class InspectView extends Group implements InputProcessor, IInspectView {
         container.add(inspectTable).expand().fill();
 
         lblTitle = new Label("Tower", skin);
+        lblTitle.setHeight(60);
         lblTitle.setFontScale(0.7f * resources.getFontScale());
         lblTitle.setAlignment(Align.center);
         float lblTitleX = container.getX(Align.center);
