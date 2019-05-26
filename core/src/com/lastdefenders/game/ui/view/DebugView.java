@@ -66,6 +66,7 @@ public class DebugView extends Group implements IDebugView {
         addActor(container);
 
         Table mainTable = new Table();
+        mainTable.setBackground(skin.getDrawable("hollow"));
         mainTable.setTransform(false);
         container.add(mainTable);
 

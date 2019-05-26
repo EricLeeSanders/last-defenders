@@ -1,432 +1,446 @@
 
 uiskin.png
-size: 4096,2048
+size: 4096,4096
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
 achievements
   rotate: false
-  xy: 453, 24
+  xy: 2689, 2941
   size: 110, 112
   orig: 110, 112
   offset: 0, 0
   index: -1
 arrow-left
   rotate: false
-  xy: 2896, 944
+  xy: 2345, 1977
   size: 120, 81
   orig: 120, 81
   offset: 0, 0
   index: -1
 arrow-right
   rotate: false
-  xy: 3018, 944
+  xy: 1816, 1615
   size: 120, 81
   orig: 120, 81
   offset: 0, 0
   index: -1
 arrow-small-down
   rotate: false
-  xy: 1181, 329
+  xy: 195, 196
   size: 105, 90
   orig: 105, 90
   offset: 0, 0
   index: -1
 arrow-small-up
   rotate: false
-  xy: 797, 90
+  xy: 195, 104
   size: 105, 90
   orig: 105, 90
   offset: 0, 0
   index: -1
 attack_icon
   rotate: false
-  xy: 1076, 266
+  xy: 4004, 3884
   size: 81, 79
   orig: 81, 79
   offset: 0, 0
   index: -1
 bomb
   rotate: false
-  xy: 2827, 965
+  xy: 333, 627
   size: 67, 105
   orig: 67, 105
   offset: 0, 0
   index: -1
 button_disabled
   rotate: false
-  xy: 603, 105
+  xy: 2495, 2669
   size: 192, 190
   orig: 192, 190
   offset: 0, 0
   index: -1
 button_disabled_round
   rotate: false
-  xy: 1687, 581
+  xy: 3540, 3721
   size: 192, 192
   orig: 192, 192
   offset: 0, 0
   index: -1
 button_normal
   rotate: false
-  xy: 3883, 1631
+  xy: 1, 1
   size: 192, 190
   orig: 192, 190
   offset: 0, 0
   index: -1
 button_normal_round
   rotate: false
-  xy: 3219, 1420
+  xy: 2495, 2861
   size: 192, 192
   orig: 192, 192
   offset: 0, 0
   index: -1
 button_over
   rotate: false
-  xy: 3413, 1422
+  xy: 2285, 2252
   size: 192, 190
   orig: 192, 190
   offset: 0, 0
   index: -1
 button_over_round
   rotate: false
-  xy: 3883, 1823
+  xy: 2827, 3208
   size: 192, 192
   orig: 192, 192
   offset: 0, 0
   index: -1
 button_press
   rotate: false
-  xy: 3422, 1230
+  xy: 2285, 2060
   size: 192, 190
   orig: 192, 190
   offset: 0, 0
   index: -1
 button_press_round
   rotate: false
-  xy: 3228, 1226
+  xy: 1, 193
   size: 192, 192
   orig: 192, 192
   offset: 0, 0
   index: -1
 button_red
   rotate: false
-  xy: 3422, 1038
+  xy: 3810, 3883
   size: 192, 190
   orig: 192, 190
   offset: 0, 0
   index: -1
 button_red_round
   rotate: false
-  xy: 3228, 1032
+  xy: 2285, 2444
   size: 192, 192
   orig: 192, 192
   offset: 0, 0
   index: -1
 cancel
   rotate: false
-  xy: 1288, 325
+  xy: 3097, 3451
   size: 105, 108
   orig: 105, 108
   offset: 0, 0
   index: -1
 check-off
   rotate: false
-  xy: 3140, 929
+  xy: 2689, 2745
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 check-on
   rotate: false
-  xy: 3348, 934
+  xy: 195, 6
   size: 96, 96
   orig: 96, 96
   offset: 0, 0
   index: -1
 default-font
   rotate: false
-  xy: 1, 421
+  xy: 1923, 3561
   size: 1283, 512
   orig: 1283, 512
   offset: 0, 0
   index: -1
 enlist
   rotate: false
-  xy: 2495, 1374
+  xy: 1053, 1324
   size: 360, 585
   orig: 360, 585
   offset: 0, 0
   index: -1
 enlist_disabled
   rotate: false
-  xy: 2857, 1374
+  xy: 1923, 2051
   size: 360, 585
   orig: 360, 585
   offset: 0, 0
   index: -1
 games
   rotate: false
-  xy: 3238, 933
+  xy: 195, 288
   size: 108, 97
   orig: 108, 97
   offset: 0, 0
   index: -1
 heart
   rotate: false
-  xy: 1583, 379
+  xy: 402, 668
   size: 96, 92
   orig: 96, 92
   offset: 0, 0
   index: -1
 help
   rotate: false
-  xy: 992, 109
+  xy: 2948, 3133
   size: 45, 73
   orig: 45, 73
   offset: 0, 0
   index: -1
+hollow
+  rotate: false
+  xy: 1, 1216
+  size: 1050, 693
+  orig: 1050, 693
+  offset: 0, 0
+  index: -1
 hollow-no-round
   rotate: false
-  xy: 900, 350
+  xy: 900, 1145
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 hollow_label
   rotate: false
-  xy: 2375, 810
+  xy: 1923, 1926
   size: 420, 123
   orig: 420, 123
   offset: 0, 0
   index: -1
 kills_label
   rotate: false
-  xy: 1286, 775
+  xy: 3208, 3915
   size: 600, 158
   orig: 600, 158
   offset: 0, 0
   index: -1
 leaderboard
   rotate: false
-  xy: 1687, 476
+  xy: 2827, 3103
   size: 119, 103
   orig: 119, 103
   offset: 0, 0
   index: -1
 main-panel
   rotate: false
-  xy: 1, 935
+  xy: 1, 2993
+  size: 1920, 1080
+  orig: 1920, 1080
+  offset: 0, 0
+  index: -1
+main-panel-hollow
+  rotate: false
+  xy: 1, 1911
   size: 1920, 1080
   orig: 1920, 1080
   offset: 0, 0
   index: -1
 money
   rotate: false
-  xy: 3550, 938
+  xy: 3021, 3302
   size: 70, 98
   orig: 70, 98
   offset: 0, 0
   index: -1
 money_label
   rotate: false
-  xy: 1, 138
+  xy: 2495, 3402
   size: 600, 157
   orig: 600, 157
   offset: 0, 0
   index: -1
 music
   rotate: false
-  xy: 1395, 325
+  xy: 4004, 3965
   size: 84, 108
   orig: 84, 108
   offset: 0, 0
   index: -1
 options
   rotate: false
-  xy: 1808, 474
+  xy: 3540, 3576
   size: 100, 105
   orig: 100, 105
   offset: 0, 0
   index: -1
 pause
   rotate: false
-  xy: 991, 184
+  xy: 3734, 3844
   size: 50, 69
   orig: 50, 69
   offset: 0, 0
   index: -1
 pause-panel
   rotate: false
-  xy: 1923, 1094
+  xy: 1923, 2638
   size: 570, 921
   orig: 570, 921
   offset: 0, 0
   index: -1
 progress-bar-filled
   rotate: false
-  xy: 2495, 1961
+  xy: 1, 1092
   size: 897, 54
   orig: 897, 54
   offset: 0, 0
   index: -1
 progress-bar-frame
   rotate: false
-  xy: 1, 353
+  xy: 1, 1148
   size: 900, 66
   orig: 900, 66
   offset: 0, 0
   index: -1
 progress-bar-unfilled
   rotate: false
-  xy: 1, 297
+  xy: 1, 1036
   size: 897, 54
   orig: 897, 54
   offset: 0, 0
   index: -1
 range_icon
   rotate: false
-  xy: 904, 87
+  xy: 3642, 3587
   size: 86, 94
   orig: 86, 94
   offset: 0, 0
   index: -1
 resume
   rotate: false
-  xy: 797, 182
+  xy: 1816, 1796
   size: 100, 113
   orig: 100, 113
   offset: 0, 0
   index: -1
 rotate
   rotate: false
-  xy: 1481, 375
+  xy: 1816, 1698
   size: 100, 96
   orig: 100, 96
   offset: 0, 0
   index: -1
 select
   rotate: false
-  xy: 900, 276
+  xy: 2689, 2674
   size: 90, 69
   orig: 90, 69
   offset: 0, 0
   index: -1
 shield
   rotate: false
-  xy: 992, 255
+  xy: 592, 670
   size: 82, 90
   orig: 82, 90
   offset: 0, 0
   index: -1
 slider-knob
   rotate: false
-  xy: 1481, 301
+  xy: 676, 688
   size: 99, 72
   orig: 99, 72
   offset: 0, 0
   index: -1
 sound
   rotate: false
-  xy: 3446, 940
+  xy: 2689, 2843
   size: 102, 96
   orig: 102, 96
   offset: 0, 0
   index: -1
 speed_icon
   rotate: false
-  xy: 899, 183
+  xy: 500, 669
   size: 90, 91
   orig: 90, 91
   offset: 0, 0
   index: -1
 support
   rotate: false
-  xy: 1286, 473
+  xy: 1, 734
   size: 399, 300
   orig: 399, 300
   offset: 0, 0
   index: -1
 support_disabled
   rotate: false
-  xy: 2495, 1072
+  xy: 1415, 1609
   size: 399, 300
   orig: 399, 300
   offset: 0, 0
   index: -1
 text_button_disabled
   rotate: false
-  xy: 1, 1
+  xy: 402, 899
   size: 450, 135
   orig: 450, 135
   offset: 0, 0
   index: -1
 text_button_normal
   rotate: false
-  xy: 1923, 957
+  xy: 402, 762
   size: 450, 135
   orig: 450, 135
   offset: 0, 0
   index: -1
 text_button_over
   rotate: false
-  xy: 1923, 820
+  xy: 1415, 1472
   size: 450, 135
   orig: 450, 135
   offset: 0, 0
   index: -1
 text_button_press
   rotate: false
-  xy: 2375, 935
+  xy: 1415, 1335
   size: 450, 135
   orig: 450, 135
   offset: 0, 0
   index: -1
 tower-attr-full
   rotate: false
-  xy: 1286, 435
+  xy: 3540, 3683
   size: 189, 36
   orig: 189, 36
   offset: 0, 0
   index: -1
 tower-stat
   rotate: false
-  xy: 903, 347
+  xy: 1053, 1250
   size: 276, 72
   orig: 276, 72
   offset: 0, 0
   index: -1
 transparent
   rotate: false
-  xy: 900, 347
+  xy: 3208, 3565
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 upgrade
   rotate: false
-  xy: 2896, 1027
+  xy: 3208, 3568
   size: 330, 345
   orig: 330, 345
   offset: 0, 0
   index: -1
 upgrade_disabled
   rotate: false
-  xy: 3219, 1614
+  xy: 2495, 3055
   size: 330, 345
   orig: 330, 345
   offset: 0, 0
   index: -1
 upgrade_purchased
   rotate: false
-  xy: 3551, 1670
+  xy: 1, 387
   size: 330, 345
   orig: 330, 345
   offset: 0, 0
   index: -1
 wave
   rotate: false
-  xy: 3394, 1966
+  xy: 903, 1165
   size: 150, 49
   orig: 150, 49
   offset: 0, 0

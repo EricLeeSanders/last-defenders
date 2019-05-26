@@ -6,427 +6,441 @@ filter: Linear,Linear
 repeat: none
 achievements
   rotate: false
-  xy: 1207, 226
+  xy: 1341, 227
   size: 73, 74
   orig: 73, 74
   offset: 0, 0
   index: -1
 arrow-left
   rotate: false
-  xy: 3722, 942
+  xy: 1669, 18
   size: 80, 54
   orig: 80, 54
   offset: 0, 0
   index: -1
 arrow-right
   rotate: false
-  xy: 187, 1
+  xy: 1751, 18
   size: 80, 54
   orig: 80, 54
   offset: 0, 0
   index: -1
 arrow-small-down
   rotate: false
-  xy: 3363, 730
+  xy: 1509, 175
   size: 70, 60
   orig: 70, 60
   offset: 0, 0
   index: -1
 arrow-small-up
   rotate: false
-  xy: 533, 128
+  xy: 1541, 113
   size: 70, 60
   orig: 70, 60
   offset: 0, 0
   index: -1
 attack_icon
   rotate: false
-  xy: 841, 155
+  xy: 1751, 248
   size: 54, 53
   orig: 54, 53
   offset: 0, 0
   index: -1
 bomb
   rotate: false
-  xy: 3804, 926
+  xy: 1807, 231
   size: 45, 70
   orig: 45, 70
   offset: 0, 0
   index: -1
 button_disabled
   rotate: false
-  xy: 1685, 344
+  xy: 1833, 1
   size: 128, 127
   orig: 128, 127
   offset: 0, 0
   index: -1
 button_disabled_round
   rotate: false
-  xy: 2774, 624
+  xy: 1854, 173
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 button_normal
   rotate: false
-  xy: 403, 127
+  xy: 2223, 44
   size: 128, 127
   orig: 128, 127
   offset: 0, 0
   index: -1
 button_normal_round
   rotate: false
-  xy: 3440, 810
+  xy: 1963, 43
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 button_over
   rotate: false
-  xy: 2826, 365
+  xy: 2244, 174
   size: 128, 127
   orig: 128, 127
   offset: 0, 0
   index: -1
 button_over_round
   rotate: false
-  xy: 3570, 810
+  xy: 1984, 173
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 button_press
   rotate: false
-  xy: 3034, 663
+  xy: 2353, 45
   size: 128, 127
   orig: 128, 127
   offset: 0, 0
   index: -1
 button_press_round
   rotate: false
-  xy: 2904, 624
+  xy: 2093, 43
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 button_red
   rotate: false
-  xy: 3164, 663
+  xy: 2374, 174
   size: 128, 127
   orig: 128, 127
   offset: 0, 0
   index: -1
 button_red_round
   rotate: false
-  xy: 2826, 494
+  xy: 2114, 173
   size: 128, 128
   orig: 128, 128
   offset: 0, 0
   index: -1
 cancel
   rotate: false
-  xy: 303, 75
+  xy: 1416, 229
   size: 70, 72
   orig: 70, 72
   offset: 0, 0
   index: -1
 check-off
   rotate: false
-  xy: 2956, 425
+  xy: 1557, 237
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 check-on
   rotate: false
-  xy: 2956, 359
+  xy: 1623, 237
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 default-font
   rotate: false
-  xy: 1283, 511
+  xy: 2948, 48
   size: 623, 511
   orig: 623, 511
   offset: 0, 0
   index: -1
 enlist
   rotate: false
-  xy: 2290, 594
+  xy: 3267, 633
   size: 240, 390
   orig: 240, 390
   offset: 0, 0
   index: -1
 enlist_disabled
   rotate: false
-  xy: 2532, 594
+  xy: 3509, 633
   size: 240, 390
   orig: 240, 390
   offset: 0, 0
   index: -1
 games
   rotate: false
-  xy: 2956, 557
+  xy: 1525, 7
   size: 72, 65
   orig: 72, 65
   offset: 0, 0
   index: -1
 heart
   rotate: false
-  xy: 3294, 657
+  xy: 1613, 112
   size: 64, 61
   orig: 64, 61
   offset: 0, 0
   index: -1
 help
   rotate: false
-  xy: 269, 6
+  xy: 1768, 197
   size: 30, 49
   orig: 30, 49
   offset: 0, 0
   index: -1
+hollow
+  rotate: false
+  xy: 2565, 561
+  size: 700, 462
+  orig: 700, 462
+  offset: 0, 0
+  index: -1
 hollow-no-round
   rotate: false
-  xy: 2890, 986
+  xy: 1, 6
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 hollow_label
   rotate: false
-  xy: 3440, 940
+  xy: 907, 28
   size: 280, 82
   orig: 280, 82
   offset: 0, 0
   index: -1
 kills_label
   rotate: false
-  xy: 1, 149
+  xy: 537, 196
   size: 400, 105
   orig: 400, 105
   offset: 0, 0
   index: -1
 leaderboard
   rotate: false
-  xy: 1585, 296
+  xy: 1375, 4
   size: 79, 68
   orig: 79, 68
   offset: 0, 0
   index: -1
 main-panel
   rotate: false
-  xy: 1, 302
+  xy: 1, 303
+  size: 1280, 720
+  orig: 1280, 720
+  offset: 0, 0
+  index: -1
+main-panel-hollow
+  rotate: false
+  xy: 1283, 303
   size: 1280, 720
   orig: 1280, 720
   offset: 0, 0
   index: -1
 money
   rotate: false
-  xy: 959, 143
+  xy: 1796, 130
   size: 47, 65
   orig: 47, 65
   offset: 0, 0
   index: -1
 money_label
   rotate: false
-  xy: 1283, 366
+  xy: 939, 196
   size: 400, 105
   orig: 400, 105
   offset: 0, 0
   index: -1
 music
   rotate: false
-  xy: 605, 136
+  xy: 1679, 113
   size: 56, 72
   orig: 56, 72
   offset: 0, 0
   index: -1
 options
   rotate: false
-  xy: 3294, 720
+  xy: 1456, 2
   size: 67, 70
   orig: 67, 70
   offset: 0, 0
   index: -1
 pause
   rotate: false
-  xy: 1008, 162
+  xy: 1789, 79
   size: 33, 46
   orig: 33, 46
   offset: 0, 0
   index: -1
 pause-panel
   rotate: false
-  xy: 1908, 408
+  xy: 3573, 17
   size: 380, 614
   orig: 380, 614
   offset: 0, 0
   index: -1
 progress-bar-filled
   rotate: false
-  xy: 1283, 473
+  xy: 839, 112
   size: 598, 36
   orig: 598, 36
   offset: 0, 0
   index: -1
 progress-bar-frame
   rotate: false
-  xy: 1, 256
+  xy: 839, 150
   size: 600, 44
   orig: 600, 44
   offset: 0, 0
   index: -1
 progress-bar-unfilled
   rotate: false
-  xy: 2290, 986
+  xy: 1189, 74
   size: 598, 36
   orig: 598, 36
   offset: 0, 0
   index: -1
 range_icon
   rotate: false
-  xy: 725, 145
+  xy: 1737, 127
   size: 57, 63
   orig: 57, 63
   offset: 0, 0
   index: -1
 resume
   rotate: false
-  xy: 1815, 396
+  xy: 1441, 152
   size: 66, 75
   orig: 66, 75
   offset: 0, 0
   index: -1
 rotate
   rotate: false
-  xy: 2956, 491
+  xy: 1488, 237
   size: 67, 64
   orig: 67, 64
   offset: 0, 0
   index: -1
 select
   rotate: false
-  xy: 897, 162
+  xy: 1706, 192
   size: 60, 46
   orig: 60, 46
   offset: 0, 0
   index: -1
 shield
   rotate: false
-  xy: 784, 148
+  xy: 1581, 175
   size: 55, 60
   orig: 55, 60
   offset: 0, 0
   index: -1
 slider-knob
   rotate: false
-  xy: 1815, 346
+  xy: 1638, 187
   size: 66, 48
   orig: 66, 48
   offset: 0, 0
   index: -1
 sound
   rotate: false
-  xy: 533, 190
+  xy: 1599, 8
   size: 68, 64
   orig: 68, 64
   offset: 0, 0
   index: -1
 speed_icon
   rotate: false
-  xy: 663, 147
+  xy: 1689, 240
   size: 60, 61
   orig: 60, 61
   offset: 0, 0
   index: -1
 support
   rotate: false
-  xy: 2290, 392
+  xy: 1, 101
   size: 266, 200
   orig: 266, 200
   offset: 0, 0
   index: -1
 support_disabled
   rotate: false
-  xy: 2558, 392
+  xy: 269, 101
   size: 266, 200
   orig: 266, 200
   offset: 0, 0
   index: -1
 text_button_disabled
   rotate: false
-  xy: 1, 57
+  xy: 1, 9
   size: 300, 90
   orig: 300, 90
   offset: 0, 0
   index: -1
 text_button_normal
   rotate: false
-  xy: 1283, 274
+  xy: 303, 9
   size: 300, 90
   orig: 300, 90
   offset: 0, 0
   index: -1
 text_button_over
   rotate: false
-  xy: 603, 210
+  xy: 537, 104
   size: 300, 90
   orig: 300, 90
   offset: 0, 0
   index: -1
 text_button_press
   rotate: false
-  xy: 905, 210
+  xy: 605, 12
   size: 300, 90
   orig: 300, 90
   offset: 0, 0
   index: -1
 tower-attr-full
   rotate: false
-  xy: 3722, 998
+  xy: 907, 2
   size: 126, 24
   orig: 126, 24
   offset: 0, 0
   index: -1
 tower-stat
   rotate: false
-  xy: 1, 7
+  xy: 1189, 24
   size: 184, 48
   orig: 184, 48
   offset: 0, 0
   index: -1
 transparent
   rotate: false
-  xy: 2893, 986
+  xy: 1, 3
   size: 1, 1
   orig: 1, 1
   offset: 0, 0
   index: -1
 upgrade
   rotate: false
-  xy: 2774, 754
+  xy: 2504, 71
   size: 220, 230
   orig: 220, 230
   offset: 0, 0
   index: -1
 upgrade_disabled
   rotate: false
-  xy: 2996, 792
+  xy: 2565, 329
   size: 220, 230
   orig: 220, 230
   offset: 0, 0
   index: -1
 upgrade_purchased
   rotate: false
-  xy: 3218, 792
+  xy: 2726, 97
   size: 220, 230
   orig: 220, 230
   offset: 0, 0
   index: -1
 wave
   rotate: false
-  xy: 2890, 989
+  xy: 1439, 115
   size: 100, 33
   orig: 100, 33
   offset: 0, 0
