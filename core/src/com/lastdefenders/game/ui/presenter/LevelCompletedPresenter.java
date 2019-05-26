@@ -1,5 +1,7 @@
 package com.lastdefenders.game.ui.presenter;
 
+import com.lastdefenders.game.model.level.state.LevelStateManager;
+import com.lastdefenders.game.model.level.state.LevelStateManager.LevelState;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.state.GameUIStateObserver;
@@ -14,13 +16,15 @@ public class LevelCompletedPresenter implements GameUIStateObserver {
     private ILevelCompletedView view;
     private ScreenChanger screenChanger;
     private GameUIStateManager uiStateManager;
+    private LevelStateManager levelStateManager;
     private LDAudio audio;
 
-    public LevelCompletedPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger,
-        LDAudio audio) {
+    public LevelCompletedPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager,
+        ScreenChanger screenChanger, LDAudio audio) {
 
         this.screenChanger = screenChanger;
         this.uiStateManager = uiStateManager;
+        this.levelStateManager = levelStateManager;
         this.audio = audio;
 
         uiStateManager.attach(this);
@@ -68,6 +72,7 @@ public class LevelCompletedPresenter implements GameUIStateObserver {
             Logger.info("Level Completed Presenter: continue level");
             audio.playSound(LDSound.SMALL_CLICK);
             uiStateManager.setState(GameUIState.STANDBY);
+            levelStateManager.setState(LevelState.STANDBY);
         }
     }
 

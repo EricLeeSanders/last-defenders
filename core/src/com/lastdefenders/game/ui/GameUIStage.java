@@ -142,7 +142,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         gameOverPresenter.setView(gameOverView);
 
         LevelCompletedPresenter levelCompletedPresenter = new LevelCompletedPresenter(
-            uiStateManager, screenChanger, audio);
+            uiStateManager, levelStateManager, screenChanger, audio);
         LevelCompletedView levelCompletedView = new LevelCompletedView(levelCompletedPresenter,
             resources);
         addActor(levelCompletedView);
