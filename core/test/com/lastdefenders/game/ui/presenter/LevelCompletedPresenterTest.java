@@ -8,6 +8,8 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.lastdefenders.game.model.level.state.LevelStateManager;
+import com.lastdefenders.game.model.level.state.LevelStateManager.LevelState;
 import com.lastdefenders.game.ui.presenter.LevelCompletedPresenter;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
@@ -24,6 +26,7 @@ import org.junit.Test;
 public class LevelCompletedPresenterTest {
 
     private GameUIStateManager uiStateManager = mock(GameUIStateManager.class);
+    private LevelStateManager levelStateManager = mock(LevelStateManager.class);
     private ScreenChanger screenChanger = mock(ScreenChanger.class);
     private LevelCompletedView view = mock(LevelCompletedView.class);
 
@@ -37,7 +40,7 @@ public class LevelCompletedPresenterTest {
 
         LDAudio audio = mock(LDAudio.class);
 
-        return new LevelCompletedPresenter(uiStateManager, screenChanger, audio);
+        return new LevelCompletedPresenter(uiStateManager, levelStateManager, screenChanger, audio);
 
     }
 
@@ -125,6 +128,7 @@ public class LevelCompletedPresenterTest {
         presenter.continueLevel();
 
         verify(uiStateManager, times(1)).setState(GameUIState.STANDBY);
+        verify(levelStateManager, times(1)).setState(LevelState.STANDBY);
 
     }
 
