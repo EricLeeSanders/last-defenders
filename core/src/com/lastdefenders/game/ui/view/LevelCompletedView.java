@@ -50,7 +50,6 @@ public class LevelCompletedView extends Group implements ILevelCompletedView {
         lblTitle.setPosition(table.getX() + (table.getWidth() / 2) - (lblTitle.getWidth() / 2),
             table.getY() + table.getHeight() - lblTitle.getHeight());
         this.addActor(lblTitle);
-        lblTitle.debug();
 
         Label lblContinue = new Label(
             "Do you want to continue playing this\nlevel and compete for a high score?", skin);
@@ -73,8 +72,6 @@ public class LevelCompletedView extends Group implements ILevelCompletedView {
         btnMainMenu.getLabel().setFontScale(0.45f * resources.getFontScale());
         table.add(btnMainMenu).width(130).height(45);
         setbtnMainMenuListener(btnMainMenu);
-
-        table.debug();
 
         Logger.info("Level Completed View: controls created");
     }
