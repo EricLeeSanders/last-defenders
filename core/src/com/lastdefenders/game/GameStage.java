@@ -228,13 +228,21 @@ public class GameStage extends Stage implements PlayerObserver {
     private void healTowers() {
 
         Logger.info("Game Stage: healing towers");
-        for (Actor tower : actorGroups.getTowerGroup().getChildren()) {
-            if (tower instanceof Tower) {
-                if (((Tower) tower).isActive() && ((Tower) tower).getHealthPercent() < 1) {
-                    TowerHealEffect effect = effectFactory.loadEffect(TowerHealEffect.class, true);
-                    effect.initialize((Tower) tower);
+        for (Actor actor : actorGroups.getTowerGroup().getChildren()) {
+            if (actor instanceof Tower) {
+                Tower tower = (Tower) actor;
+                if (tower.isActive()){
+                    if ( tower.getHealthPercent() < 1){
+                        TowerHealEffect effect = effectFactory
+                            .loadEffect(TowerHealEffect.class, true);
+                        effect.initialize(tower);
 
-                    ((Tower) tower).heal();
+                        tower.heal();
+                    }
+
+                    if(tower.hasArmor()){
+                        tower.resetArmor();
+                    }
                 }
             }
         }
