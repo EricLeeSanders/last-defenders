@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -46,8 +47,10 @@ public class GooglePlayServicesViewImpl extends Group implements GooglePlayServi
             boolean isSignedIn = presenter.isSignedIn();
             btnSignIn.setDisabled(isSignedIn);
             btnSignIn.setTouchable(isSignedIn ? Touchable.disabled : Touchable.enabled);
+            btnSignIn.setVisible(!isSignedIn);
             btnSignOut.setDisabled(!isSignedIn);
             btnSignOut.setTouchable(isSignedIn ? Touchable.enabled : Touchable.disabled);
+            btnSignOut.setVisible(isSignedIn);
             btnAchievements.setDisabled(!isSignedIn);
             btnAchievements.setTouchable(isSignedIn ? Touchable.enabled : Touchable.disabled);
             btnLeaderboards.setDisabled(!isSignedIn);
@@ -71,9 +74,10 @@ public class GooglePlayServicesViewImpl extends Group implements GooglePlayServi
         container.add(mainTable);
 
 
-        Label lblTitle = new Label("GOOGLE PLAY GAMES", skin);
-        lblTitle.setFontScale(0.5f * resources.getFontScale());
+        Label lblTitle = new Label("Google Play Games", skin);
+        lblTitle.setFontScale(0.6f * resources.getFontScale());
         lblTitle.setAlignment(Align.center);
+        lblTitle.setHeight(60);
         float lblTitleX = container.getX(Align.center);
         float lblTitleY = container.getY(Align.top) - (lblTitle.getHeight()/2);
         lblTitle.setPosition(lblTitleX, lblTitleY, Align.center);
@@ -87,27 +91,29 @@ public class GooglePlayServicesViewImpl extends Group implements GooglePlayServi
         addActor(btnClose);
         setBtnCloseListener(btnClose);
 
-        btnSignIn = new TextButton("SIGN IN", skin);
+        btnSignIn = new TextButton("Sign In", skin);
         btnSignIn.getLabel().setFontScale(0.45f * resources.getFontScale());
         setBtnSignInListener(btnSignIn);
 
-        btnSignOut = new TextButton("SIGN OUT", skin);
+        btnSignOut = new TextButton("Sign Out", skin);
         btnSignOut.getLabel().setFontScale(0.45f * resources.getFontScale());
         setBtnSignOutListener(btnSignOut);
 
-        btnAchievements = new TextButton("ACHIEVEMENTS", skin);
+        Stack signInOutStack = new Stack();
+        signInOutStack.addActor(btnSignIn);
+        signInOutStack.addActor(btnSignOut);
+
+        btnAchievements = new TextButton("Achievements", skin);
         btnAchievements.getLabel().setFontScale(0.45f * resources.getFontScale());
         setBtnAchievementsListener(btnAchievements);
 
-        btnLeaderboards = new TextButton("LEADERBOARDS", skin);
+        btnLeaderboards = new TextButton("Leaderboards", skin);
         btnLeaderboards.getLabel().setFontScale(0.45f * resources.getFontScale());
         setBtnLeaderboardsListener(btnLeaderboards);
-
-        mainTable.add(btnSignIn).size(170,45);
+        
+        mainTable.add(signInOutStack).size(170, 45).spaceBottom(10);
         mainTable.row();
-        mainTable.add(btnSignOut).size(170,45).spaceTop(10);
-        mainTable.row();
-        mainTable.add(btnAchievements).size(170,45).spaceTop(10);
+        mainTable.add(btnAchievements).size(170,45).spaceBottom(10);
         mainTable.row();
         mainTable.add(btnLeaderboards).size(170,45).spaceTop(10);
 

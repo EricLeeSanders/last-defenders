@@ -39,6 +39,7 @@ import com.lastdefenders.game.ui.view.SupportView;
 import com.lastdefenders.game.ui.view.TutorialView;
 import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
 import com.lastdefenders.game.ui.view.interfaces.Updatable;
+import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.util.LDAudio;
@@ -65,8 +66,8 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 
     public GameUIStage(Player player, Group towerGroup, GameUIStateManager uiStateManager,
         LevelStateManager levelStateManager, GameStateManager gameStateManager,
-        ScreenChanger screenChanger, InputMultiplexer imp, Viewport viewport, Resources resources,
-        LDAudio audio, GameStage gameStage, SpriteBatch spriteBatch) {
+        GooglePlayServices playServices, ScreenChanger screenChanger, InputMultiplexer imp,
+        Viewport viewport, Resources resources, LDAudio audio, GameStage gameStage, SpriteBatch spriteBatch) {
 
         super(viewport, spriteBatch);
         this.imp = imp;
@@ -79,14 +80,14 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         this.screenChanger = screenChanger;
         uiStateManager.attach(this);
         imp.addProcessor(this);
-        createUI(resources, audio, gameStage);
+        createUI(resources, audio, gameStage, playServices);
     }
 
 
     /**
      * Create and initialize the views and presenters of the Game UI
      */
-    private void createUI(Resources resources, LDAudio audio, GameStage gameStage) {
+    private void createUI(Resources resources, LDAudio audio, GameStage gameStage, GooglePlayServices playServices) {
 
         Logger.info("GameUIStage: creating ui");
 
@@ -135,7 +136,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         optionsPresenter.setView(optionsView);
 
         GameOverPresenter gameOverPresenter = new GameOverPresenter(uiStateManager, screenChanger,
-            player, audio);
+            playServices, player, gameStage.getLevel().getActiveLevel(), audio);
         GameOverView gameOverView = new GameOverView(gameOverPresenter, resources);
         addActor(gameOverView);
         gameOverView.init();

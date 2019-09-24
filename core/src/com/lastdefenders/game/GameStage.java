@@ -288,4 +288,8 @@ public class GameStage extends Stage implements PlayerObserver {
 
         return map;
     }
+
+    public Level getLevel(){
+        return level;
+    }
 }

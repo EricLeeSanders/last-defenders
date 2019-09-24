@@ -115,7 +115,9 @@ public class LevelSelectView extends Group {
         this.addActor(btnMenu);
         setBtnMenuListener(btnMenu);
 
-        createGooglePlayServicesControls();
+        if(presenter.isSignedInToGPS()) {
+            createGooglePlayServicesControls();
+        }
 
         Logger.info("Level select view: controls created");
     }
@@ -129,7 +131,7 @@ public class LevelSelectView extends Group {
         btnAchievments.setPosition(getStage().getViewport().getWorldWidth() - btnAchievments.getWidth() - 15, 9);
         setBtnAchievementsListener(btnAchievments);
         addActor(btnAchievments);
-        btnAchievments.setVisible(presenter.isGooglePlayServicesAvailable());
+
 
         ImageButton btnLeaderboards = new ImageButton(skin, "leaderboard_round");
         btnLeaderboards.setSize(42, 42);
@@ -137,7 +139,6 @@ public class LevelSelectView extends Group {
         btnLeaderboards.getImageCell().size(26, 22);
         setBtnAllLeaderboardsListener(btnLeaderboards);
         addActor(btnLeaderboards);
-        btnLeaderboards.setVisible(presenter.isGooglePlayServicesAvailable());
 
 
     }
@@ -183,13 +184,15 @@ public class LevelSelectView extends Group {
         lblLevel.setAlignment(Align.center);
         levelConfirmationGroup.addActor(lblLevel);
 
-        ImageButton btnLeaderboard = new ImageButton(skin, "leaderboard_round");
-        btnLeaderboard.setSize(64, 64);
-        btnLeaderboard.getImageCell().size(40, 34);
-        btnLeaderboard.setPosition(btnPlay.getX(), 94);
-        levelConfirmationGroup.addActor(btnLeaderboard);
-        setBtnLeaderboardListener(btnLeaderboard);
-        btnLeaderboard.setVisible(presenter.isGooglePlayServicesAvailable());
+        if(presenter.isSignedInToGPS()) {
+            ImageButton btnLeaderboard = new ImageButton(skin, "leaderboard_round");
+            btnLeaderboard.setSize(64, 64);
+            btnLeaderboard.getImageCell().size(40, 34);
+            btnLeaderboard.setPosition(btnPlay.getX(), 94);
+            levelConfirmationGroup.addActor(btnLeaderboard);
+            setBtnLeaderboardListener(btnLeaderboard);
+        }
+
 
         Logger.info("Level select view: confirm level controls created");
     }

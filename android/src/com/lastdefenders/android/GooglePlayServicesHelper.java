@@ -56,9 +56,7 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
         this.loadingView = new LoadingView(layout, androidLauncher);
 
         if(isGooglePlayGamesAppInstalled() && isGooglePlayServicesAvailable()){
-            signInClient = GoogleSignIn.getClient(androidLauncher,
-                GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN);
-            signInSilently();
+            initializeSignInClient();
         } else {
             int googlePlayServicesAvailability = googlePlayServicesAvailability();
             if(!isGooglePlayGamesAppInstalled()){
@@ -70,6 +68,12 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
             }
         }
         Logger.info("GooglePlayServicesHelper: Initialized");
+    }
+
+    void initializeSignInClient(){
+        signInClient = GoogleSignIn.getClient(androidLauncher,
+            GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN);
+        signInSilently();
     }
 
 
@@ -196,7 +200,13 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
     }
 
     private void showSignedInDialog(){
-        String message = "Sucessfully signed into Google Play Games";
+        String message = "Successfully signed into Google Play Games";
+        new AlertDialog.Builder(androidLauncher).setMessage(message)
+            .setNeutralButton(android.R.string.ok, null).show();
+    }
+
+    private void showSignedOutDialog(){
+        String message = "Successfully signed out of Google Play Games";
         new AlertDialog.Builder(androidLauncher).setMessage(message)
             .setNeutralButton(android.R.string.ok, null).show();
     }
@@ -264,6 +274,8 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
                         if (isSignedIn()) {
                             Logger.info("Is Signed In");
                             return;
+                        } else if(!isReadyForGooglePlayGamesServices()){
+                            initializeSignInClient();
                         }
 
                         // Check for errors
@@ -271,10 +283,13 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
                             .isGooglePlayServicesAvailable(androidLauncher);
                         if(!isGooglePlayGamesAppInstalled()){
                             showGooglePlayGamesNotInstalledDialog();
+                            return;
                         } else if(googlePlayServicesAvailability == ConnectionResult.SERVICE_VERSION_UPDATE_REQUIRED){
                             showServicesUpdateRequiredDialog();
+                            return;
                         } else if(googlePlayServicesAvailability != ConnectionResult.SUCCESS) {
                             showDefaultErrorDialog("Error signing in. Result Code: " + googlePlayServicesAvailability);
+                            return;
                         }
 
                         // Start sign in intent
@@ -300,6 +315,7 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         // at this point, the user is signed out.
+                        showSignedOutDialog();
                         Logger.info("User is signed out.");
                         signedInAccount = null;
                     }

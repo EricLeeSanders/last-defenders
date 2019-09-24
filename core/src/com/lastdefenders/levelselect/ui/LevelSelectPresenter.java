@@ -52,7 +52,10 @@ public class LevelSelectPresenter {
         playServices.showLeaderboards();
     }
 
-    public boolean isGooglePlayServicesAvailable(){
-        return playServices.isGooglePlayServicesAvailable();
+    /**
+     * Is signed in to Google Play Services
+     */
+    public boolean isSignedInToGPS(){
+        return playServices.isSignedIn();
     }
 }
