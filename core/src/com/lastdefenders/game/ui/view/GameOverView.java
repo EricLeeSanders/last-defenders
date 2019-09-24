@@ -74,11 +74,13 @@ public class GameOverView extends Group implements IGameOverView {
         table.add(btnNewGame).width(150).height(45).spaceTop(10);
         setBtnNewGameListener(btnNewGame);
 
-        table.row();
-        TextButton btnHighScores = new TextButton("High Scores", skin);
-        btnHighScores.getLabel().setFontScale(0.45f * resources.getFontScale());
-        table.add(btnHighScores).width(150).height(45).spaceTop(10);
-        setBtnHighScoresListener(btnHighScores);
+        if(presenter.isSignedInToGPS()) {
+            table.row();
+            TextButton btnLeaderboard = new TextButton("Leaderboard", skin);
+            btnLeaderboard.getLabel().setFontScale(0.45f * resources.getFontScale());
+            table.add(btnLeaderboard).width(150).height(45).spaceTop(10);
+            setBtnLeaderboardListener(btnLeaderboard);
+        }
 
         table.row();
         TextButton btnMainMenu = new TextButton("Main Menu", skin);
@@ -120,14 +122,14 @@ public class GameOverView extends Group implements IGameOverView {
 
     }
 
-    private void setBtnHighScoresListener(Button button) {
+    private void setBtnLeaderboardListener(Button button) {
 
         button.addListener(new ClickListener() {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                presenter.highScores();
+                presenter.leaderboard();
             }
         });
 

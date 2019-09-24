@@ -5,6 +5,9 @@ import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.state.GameUIStateObserver;
 import com.lastdefenders.game.ui.view.interfaces.IGameOverView;
+import com.lastdefenders.googleplay.GooglePlayLeaderboard;
+import com.lastdefenders.googleplay.GooglePlayServices;
+import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
@@ -22,14 +25,18 @@ public class GameOverPresenter implements GameUIStateObserver {
     private GameUIStateManager uiStateManager;
     private IGameOverView view;
     private LDAudio audio;
+    private GooglePlayServices playServices;
+    private LevelName currentLevel;
 
     public GameOverPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger,
-        Player player, LDAudio audio) {
+        GooglePlayServices playServices, Player player, LevelName currentLevel, LDAudio audio) {
 
         this.player = player;
         this.screenChanger = screenChanger;
         this.uiStateManager = uiStateManager;
         this.audio = audio;
+        this.playServices = playServices;
+        this.currentLevel = currentLevel;
         uiStateManager.attach(this);
     }
 
@@ -75,12 +82,23 @@ public class GameOverPresenter implements GameUIStateObserver {
     }
 
     /**
-     * Change to high scores
+     * Is signed in to Google Play Services
      */
-    public void highScores() {
+    public boolean isSignedInToGPS(){
+        return playServices.isSignedIn();
+    }
 
-        Logger.info("Game Over Presenter: high scores");
+    /**
+     * Show leaderboard for current level
+     */
+    public void leaderboard() {
+
         audio.playSound(LDSound.SMALL_CLICK);
+        if(canViewLeaderboard()){
+            Logger.info("Game Over Presenter: Show leaderboard");
+            GooglePlayLeaderboard leaderboard = GooglePlayLeaderboard.findByLevelName(currentLevel);
+            playServices.showLeaderboard(leaderboard);
+        }
     }
 
     /**
@@ -97,6 +115,11 @@ public class GameOverPresenter implements GameUIStateObserver {
     private boolean canSwitchToMainMenu() {
 
         return uiStateManager.getState().equals(GameUIState.GAME_OVER);
+    }
+
+    private boolean canViewLeaderboard(){
+
+        return isSignedInToGPS() && uiStateManager.getState().equals(GameUIState.GAME_OVER);
     }
 
     @Override
