@@ -15,6 +15,8 @@ import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.GameOverView;
 import com.lastdefenders.game.ui.view.interfaces.IGameOverView;
+import com.lastdefenders.googleplay.GooglePlayServices;
+import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.util.LDAudio;
 import org.junit.Before;
@@ -27,6 +29,7 @@ public class GameOverPresenterTest {
 
     private GameUIStateManager gameUIStateManagerMock = mock(GameUIStateManager.class);
     private ScreenChanger screenChangerMock = mock(ScreenChanger.class);
+    private GooglePlayServices googlePlayServicesMock = mock(GooglePlayServices.class);
     private Player playerMock = mock(Player.class);
     private IGameOverView gameOverView = mock(GameOverView.class);
 
@@ -40,8 +43,8 @@ public class GameOverPresenterTest {
 
         LDAudio audioMock = mock(LDAudio.class);
 
-        return new GameOverPresenter(gameUIStateManagerMock, screenChangerMock, playerMock,
-            audioMock);
+        return new GameOverPresenter(gameUIStateManagerMock, screenChangerMock, googlePlayServicesMock,
+            playerMock, LevelName.SERPENTINE_RIVER, audioMock);
     }
 
     /**
