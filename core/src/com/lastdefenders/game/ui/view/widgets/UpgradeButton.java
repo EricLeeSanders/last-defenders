@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.util.ActorUtil;
+import com.lastdefenders.util.Resources;
 
 /**
  * Created by Eric on 11/12/2016.
@@ -53,7 +54,7 @@ public class UpgradeButton extends Group {
         icon.setSize(iconWidth, iconHeight);
         float iconX = ActorUtil.calcBotLeftPointFromCenter(25, icon.getWidth());
         float iconY = ActorUtil.calcBotLeftPointFromCenter(90, icon.getHeight());
-        icon.setPosition(iconX, iconY);
+        icon.setPosition(this.button.getWidth() / 2, 90, Align.center);
         addActor(icon);
     }
 
