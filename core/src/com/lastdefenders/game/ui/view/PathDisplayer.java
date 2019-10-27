@@ -26,6 +26,7 @@ public class PathDisplayer extends Group {
     private static final float FADE_OUT_SPEED = 0.5f;
     private Resources resources;
     private Map map;
+    private boolean drawReady; // Signals that draw is ready.
 
 
     public PathDisplayer(Resources resources, Map map) {
@@ -102,6 +103,21 @@ public class PathDisplayer extends Group {
             boolean isLeft = (point.x > end.x);
             point.add(amount * (isLeft ? -1: 1), 0);
         }
+    }
+
+
+    @Override
+    public void act(float delta) {
+        // Only "act" when draw is ready. This prevents the points from moving before they are drawn.
+        if(drawReady) {
+            super.act(delta);
+        }
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        drawReady = true;
+        super.draw(batch, parentAlpha);
     }
 
     private static class Point extends GameActor{
