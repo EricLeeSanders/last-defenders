@@ -3,6 +3,7 @@ package com.lastdefenders.game.model.actor.combat.enemy;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -33,8 +34,10 @@ import com.lastdefenders.util.UtilPool;
 public abstract class Enemy extends CombatActor {
 
     public static final float MOVEMENT_DELAY = 1f; // The delay to wait after a target begins attacking
-    public static final float FIND_TARGET_DELAY = 2f;
     private static final float FRAME_DURATION = 0.3f;
+    private static final float MIN_FIND_TARGET_DELAY = 1.0f;
+    private static final float MAX_FIND_TARGET_DELAY = 5.0f;
+    private float findTargetDelay;
     private float speed;
     private int killReward;
     private float lengthToEnd;
@@ -69,6 +72,8 @@ public abstract class Enemy extends CombatActor {
         stateManager.transition(EnemyState.RUNNING);
         setActive(true);
         setDead(false);
+        findTargetDelay = MathUtils.random(MIN_FIND_TARGET_DELAY, MAX_FIND_TARGET_DELAY);
+        System.out.println("findTargetDelay: " + findTargetDelay);
     }
 
     /**
@@ -246,6 +251,10 @@ public abstract class Enemy extends CombatActor {
     public float getSpeed(){
 
         return speed;
+    }
+
+    public float getFindTargetDelay(){
+        return findTargetDelay;
     }
 
 }
