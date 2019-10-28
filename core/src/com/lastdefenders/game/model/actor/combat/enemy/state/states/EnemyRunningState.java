@@ -19,7 +19,8 @@ public class EnemyRunningState implements CombatActorState {
 
     private final Enemy enemy;
     private final StateTransitioner<EnemyState> stateTransitioner;
-    private float movementAnimationStateTime, findTargetDelayCounter;
+    private float movementAnimationStateTime;
+    private float findTargetDelayCounter;
     private Map<String, Object> attackTransitionParameters = new HashMap<>();
 
     public EnemyRunningState(Enemy enemy, StateTransitioner<EnemyState> stateTransitioner) {
@@ -63,7 +64,7 @@ public class EnemyRunningState implements CombatActorState {
 
     private boolean isReadyToFindTarget() {
 
-        return findTargetDelayCounter >= Enemy.FIND_TARGET_DELAY;
+        return findTargetDelayCounter >= enemy.getFindTargetDelay();
     }
 
 
