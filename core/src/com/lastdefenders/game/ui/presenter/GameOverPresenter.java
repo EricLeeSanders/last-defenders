@@ -81,6 +81,12 @@ public class GameOverPresenter implements GameUIStateObserver {
         }
     }
 
+    private void gameOverState(){
+        view.gameOverState();
+        setWavesCompleted();
+        audio.playGameEndingMusic();
+    }
+
     /**
      * Is signed in to Google Play Services
      */
@@ -127,8 +133,7 @@ public class GameOverPresenter implements GameUIStateObserver {
 
         switch (state) {
             case GAME_OVER:
-                view.gameOverState();
-                setWavesCompleted();
+                gameOverState();
                 break;
             default:
                 view.standByState();

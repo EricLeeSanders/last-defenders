@@ -34,6 +34,7 @@ public class LevelSelectScreen extends AbstractScreen {
             new OrthographicCamera());
         this.stage = new LevelSelectStage(screenChanger, resources, audio, viewport, playServices);
         super.addInputProcessor(stage);
+        audio.playMenuMusic(); // Play menu music in case the user comes directly to this screen.
         createBackListener();
     }
 

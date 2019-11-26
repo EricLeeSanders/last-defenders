@@ -33,7 +33,8 @@ public class MenuScreen extends AbstractScreen {
         super(gameStateManager);
         this.gameStateManager = gameStateManager;
         createStageAndViewport(screenChanger, resources, audio, playServices);
-        audio.playMusic();
+        audio.playMenuMusic();
+
         createBackListener();
     }
 

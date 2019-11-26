@@ -73,6 +73,9 @@ public class MenuPresenter {
         Logger.info("Menu Presenter: music pressed");
         audio.playSound(LDSound.SMALL_CLICK);
         audio.changeMusicEnabled();
+        if(audio.isMusicEnabled()){
+            audio.playMenuMusic();
+        }
         view.setBtnMusicOn(audio.isMusicEnabled());
         menuOptionsView.setBtnMusicOn(audio.isMusicEnabled());
     }

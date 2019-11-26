@@ -57,7 +57,7 @@ public class GameScreen extends AbstractScreen {
         createStages(levelName, audio, playServices, adControllerHelper);
 
         super.show();
-        audio.turnOffMusic();
+        audio.fadeOutMusic();
         gameStage.loadFirstWave();
         createBackListener();
         gameStateManager.setState(GameState.PLAY);
