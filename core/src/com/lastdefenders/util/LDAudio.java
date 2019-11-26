@@ -3,8 +3,13 @@ package com.lastdefenders.util;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.backends.lwjgl.audio.Ogg;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Util class for playing sounds and music
@@ -13,7 +18,9 @@ import java.util.Map;
  */
 public class LDAudio {
 
-    private static final String MENU_MUSIC = "audio/big_action_trailer.ogg";
+    private static final String MENU_MUSIC = "audio/insurgence.ogg";
+    private static final String GAME_ENDING_MUSIC = "audio/fighting_forces.ogg";
+
     private static final String ROCKET_EXPLOSION_SOUND = "audio/rocket_explosion.ogg";
     private static final String ROCKET_LAUNCH_SOUND = "audio/rocket_launch.ogg";
     private static final String FLAME_SOUND = "audio/flame_burst.ogg";
@@ -28,11 +35,14 @@ public class LDAudio {
     private static final String HELICOPTER_HOVER = "audio/helicopter_hover.ogg";
     private static final String AIRCRAFT_FLYOVER = "audio/aircraft_flyover.ogg";
 
-    private Music music;
     private Map<LDSound, Sound> sounds = new HashMap<>();
     private boolean musicEnabled, soundEnabled;
     private UserPreferences userPreferences;
     private float volume;
+
+    private Music currentMusic;
+    private String currentMusicFile = "";
+    private Set<String> musicQueue = new HashSet<>();
 
     public LDAudio(UserPreferences userPreferences) {
 
@@ -45,8 +55,6 @@ public class LDAudio {
     public void load() {
 
         Logger.info("LDAudio: loading");
-        music = Gdx.audio.newMusic(Gdx.files.internal(MENU_MUSIC));
-        music.setLooping(true);
 
         Sound rocketExplosion = Gdx.audio
             .newSound(Gdx.files.internal(ROCKET_EXPLOSION_SOUND));
@@ -107,9 +115,11 @@ public class LDAudio {
     public void setMasterVolume(float volume) {
 
         this.volume = volume;
-        if (musicEnabled) {
-            music.setVolume(volume);
+
+        if(currentMusic != null){
+            currentMusic.setVolume(volume);
         }
+
     }
 
     public void saveMasterVolume() {
@@ -118,24 +128,47 @@ public class LDAudio {
         userPreferences.setMasterVolume(volume);
     }
 
-    public void playMusic() {
+    private void playMusic(final String m, final boolean loop, final boolean queue) {
 
-        Logger.info("Playing Music");
-        if (!music.isPlaying()) {
-            music.play();
+        if (!musicEnabled || currentMusicFile.equals(m) || musicQueue.contains(m)) {
+            return;
         }
+
+        if(currentMusic != null && queue) {
+            System.out.println("Queueing music: " + m);
+            musicQueue.add(m);
+            currentMusic.setOnCompletionListener(new Music.OnCompletionListener() {
+
+                @Override
+                public void onCompletion(Music music) {
+
+                    playMusic(MENU_MUSIC, loop, false);
+
+                }
+            });
+
+            return;
+        }
+
+        disposeMusic();
+        Logger.info("Playing Music: " + m);
+        Music music = Gdx.audio.newMusic(Gdx.files.internal(m));
+        music.setLooping(loop);
+        music.setVolume(volume);
+        currentMusic = music;
+        currentMusicFile = m;
+        currentMusic.play();
     }
 
-    public void turnOffMusic() {
+    private void disposeMusic(){
 
-        Logger.info("Turning off Music");
-        music.stop();
-    }
+        if(currentMusic != null){
+            Logger.info("Disposing Music");
+            currentMusic.dispose();
+        }
 
-    private void disposeMusic() {
-
-        Logger.info("Disposing Music");
-        music.dispose();
+        currentMusic = null;
+        currentMusicFile = "";
     }
 
     private void disposeSound() {
@@ -149,16 +182,16 @@ public class LDAudio {
 
     public void dispose() {
 
-        disposeMusic();
         disposeSound();
     }
 
     public void playSound(LDSound sound) {
 
-        Logger.info("LDAudio: playing sound: " + sound.name());
         if (!soundEnabled) {
             return;
         }
+
+        Logger.info("LDAudio: playing sound: " + sound.name());
 
         Sound playSound = sounds.get(sound);
         if (playSound != null) {
@@ -195,11 +228,59 @@ public class LDAudio {
 
     private void setMusicEnabled(boolean enabled) {
 
-        Logger.info("Setting music to " + enabled);
+        Logger.info("Setting music enabled to " + enabled);
         musicEnabled = enabled;
-        music.setVolume(enabled ? volume : 0);
+
+        if(!enabled){
+            // When we disable, clear the queue
+            musicQueue.clear();
+        }
+
+        disposeMusic();
 
         userPreferences.setMusicEnabled(enabled);
+    }
+
+    public void playGameEndingMusic(){
+
+        playMusic(GAME_ENDING_MUSIC, false, false);
+    }
+
+    public void playMenuMusic(){
+
+        playMusic(MENU_MUSIC, true, true);
+    }
+
+    public void fadeOutMusic(){
+
+        // When we fade out, we want to clear the queue
+        musicQueue.clear();
+
+        Timer.Task fadeOut = new Timer.Task() {
+            private final float currentMusicVolumne = currentMusic != null ? currentMusic.getVolume() : 0;
+            @Override
+            public void run() {
+                System.out.println("fadeout run");
+                if(currentMusic != null){
+
+                    float newVolume = currentMusic.getVolume() - (currentMusicVolumne / 10);
+                    currentMusic.setVolume(newVolume >= 0 ? newVolume : 0);
+
+                    if(newVolume <= 0) {
+                        this.cancel();
+                        disposeMusic();
+                    }
+                } else {
+                    disposeMusic();
+                }
+            }
+
+
+        };
+
+        if(currentMusic != null){
+            Timer.schedule(fadeOut, 0f, 0.1f);
+        }
     }
 
     public enum LDSound {

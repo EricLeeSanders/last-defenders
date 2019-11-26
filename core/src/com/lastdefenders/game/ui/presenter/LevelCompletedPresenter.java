@@ -76,6 +76,11 @@ public class LevelCompletedPresenter implements GameUIStateObserver {
         }
     }
 
+    private void levelCompletedState(){
+        audio.playGameEndingMusic();
+        view.levelCompletedState();
+    }
+
     private boolean canChangeToLevelSelect() {
 
         return uiStateManager.getState().equals(GameUIState.LEVEL_COMPLETED);
@@ -96,7 +101,7 @@ public class LevelCompletedPresenter implements GameUIStateObserver {
 
         switch (state) {
             case LEVEL_COMPLETED:
-                view.levelCompletedState();
+                levelCompletedState();
                 break;
             default:
                 view.standByState();
