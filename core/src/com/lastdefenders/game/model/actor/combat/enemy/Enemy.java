@@ -235,7 +235,7 @@ public abstract class Enemy extends CombatActor {
         if (!lengthToEndCalculated) {
             calcLengthToEnd();
         }
-        System.out.println(lengthToEnd);
+
         return lengthToEnd;
     }
 
