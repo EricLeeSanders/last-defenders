@@ -33,11 +33,11 @@ public class EnemyTank extends EnemyTurret implements PlatedArmor, IVehicle, IRo
 
     private static final float HEALTH = 20;
     private static final float ARMOR = 10;
-    private static final float ATTACK = 4;
-    private static final float ATTACK_SPEED = 0.9f;
-    private static final float RANGE = 80;
+    private static final float ATTACK = 6;
+    private static final float ATTACK_SPEED = 3f;
+    private static final float RANGE = 60;
     private static final float SPEED = 45;
-    private static final float AOE_RADIUS = 75f;
+    private static final float AOE_RADIUS = 40f;
     private static final int KILL_REWARD = 15;
 
     private static final Dimension ROCKET_SIZE = new Dimension(23, 6);

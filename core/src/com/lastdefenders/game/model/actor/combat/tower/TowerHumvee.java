@@ -33,9 +33,9 @@ public class TowerHumvee extends TowerTurret implements IRotatable {
     public static final int COST = 1300;
     private static final float HEALTH = 14;
     private static final float ARMOR = 8;
-    private static final float ATTACK = 3;
-    private static final float ATTACK_SPEED = .2f;
-    private static final float RANGE = 70;
+    private static final float ATTACK = 2;
+    private static final float ATTACK_SPEED = .3f;
+    private static final float RANGE = 60;
     private static final int ARMOR_COST = 900;
     private static final int RANGE_INCREASE_COST = 500;
     private static final int SPEED_INCREASE_COST = 500;

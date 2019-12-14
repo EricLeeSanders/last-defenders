@@ -2,27 +2,37 @@
 "wave": [
     {
         "enemy": "Rifle",
+        "delay": ".25",
+        "armor": false
+    },
+    {
+        "enemy": "FlameThrower",
+        "delay": ".50",
+        "armor": true
+    },
+    {
+        "enemy": "Sniper",
         "delay": ".50",
         "armor": false
     },
     {
-        "enemy": "Rifle",
+        "enemy": "Humvee",
+        "delay": ".50",
+        "armor": true
+    },
+    {
+        "enemy": "Sniper",
+        "delay": ".50",
+        "armor": true
+    },
+    {
+        "enemy": "Sniper",
         "delay": ".50",
         "armor": false
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
+        "enemy": "MachineGun",
+        "delay": ".25",
         "armor": false
     },
     {

@@ -23,8 +23,8 @@ import com.lastdefenders.util.UtilPool;
 public class TowerFlameThrower extends Tower implements IFlame {
 
     public static final int COST = 600;
-    private static final float HEALTH = 800;
-    private static final float ARMOR = 4;
+    private static final float HEALTH = 10;
+    private static final float ARMOR = 5;
     private static final float ATTACK = 0.7f;
     private static final float ATTACK_SPEED = 1.20f;
     private static final float RANGE = 70;

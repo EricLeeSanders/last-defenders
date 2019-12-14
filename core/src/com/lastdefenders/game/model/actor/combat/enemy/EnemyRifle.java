@@ -23,9 +23,9 @@ public class EnemyRifle extends Enemy {
 
     private static final float HEALTH = 8;
     private static final float ARMOR = 4;
-    private static final float ATTACK = 1;
-    private static final float ATTACK_SPEED = 0.8f;
-    private static final float RANGE = 50;
+    private static final float ATTACK = 2;
+    private static final float ATTACK_SPEED = 1.2f;
+    private static final float RANGE = 40;
     private static final float SPEED = 70f;
     private static final int KILL_REWARD = 15;
 

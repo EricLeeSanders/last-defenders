@@ -33,7 +33,7 @@ public class TowerRifle extends Tower {
     private static float HEALTH = 8;
     private static float ARMOR = 4;
     private static float ATTACK = 4;
-    private static float ATTACK_SPEED = 0.8f;
+    private static float ATTACK_SPEED = 1.2f;
     private static float RANGE = 50;
     private Circle body;
     private LDAudio audio;

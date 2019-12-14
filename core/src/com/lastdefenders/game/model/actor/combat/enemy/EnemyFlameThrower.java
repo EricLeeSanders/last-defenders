@@ -22,9 +22,9 @@ import com.lastdefenders.util.UtilPool;
  */
 public class EnemyFlameThrower extends Enemy implements IFlame {
 
-    private static final float HEALTH = 8;
-    private static final float ARMOR = 3;
-    private static final float ATTACK = 1.75f;
+    private static final float HEALTH = 10;
+    private static final float ARMOR = 5;
+    private static final float ATTACK = .35f;
     private static final float ATTACK_SPEED = 1.2f;
     private static final float RANGE = 70;
     private static final float SPEED = 70f;

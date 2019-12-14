@@ -62,7 +62,7 @@ public class EnemyRunningStateTest {
 
         SnapshotArray<Actor> targetGroupArray = enemy.getTargetGroup().getChildren();
         when(EnemyAI.findNearestTower(enemy, targetGroupArray)).thenReturn(tower);
-        runningState.update(Enemy.FIND_TARGET_DELAY);
+        runningState.update(10f);
         runningState.update(1f);
 
         verify(stateManagerMock, times(1)).transition(eq(EnemyState.ATTACKING), isA(Map.class));

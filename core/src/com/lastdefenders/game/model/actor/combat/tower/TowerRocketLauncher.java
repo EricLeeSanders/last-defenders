@@ -23,12 +23,12 @@ import com.lastdefenders.util.UtilPool;
 public class TowerRocketLauncher extends Tower implements IRocket {
 
     public static final int COST = 800;
-    private static final float HEALTH = 8;
-    private static final float ARMOR = 4;
-    private static final float ATTACK = 10;
-    private static final float ATTACK_SPEED = 1f;
-    private static final float RANGE = 60;
-    private static final float AOE_RADIUS = 50f;
+    private static final float HEALTH = 10;
+    private static final float ARMOR = 5;
+    private static final float ATTACK = 12;
+    private static final float ATTACK_SPEED = 3f;
+    private static final float RANGE = 50;
+    private static final float AOE_RADIUS = 20f;
     private static final int ARMOR_COST = 500;
     private static final int RANGE_INCREASE_COST = 450;
     private static final int SPEED_INCREASE_COST = 450;

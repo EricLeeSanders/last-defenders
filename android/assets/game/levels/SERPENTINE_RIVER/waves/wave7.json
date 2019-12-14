@@ -1,34 +1,79 @@
 {
-"wave": [
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    }
-]
+    "wave": [
+        {
+            "enemy": "Sniper",
+            "delay": ".25",
+            "armor": true
+        },
+        {
+            "enemy": "Sniper",
+            "delay": ".25",
+            "armor": true
+        },
+        {
+            "enemy": "FlameThrower",
+            "delay": ".25",
+            "armor": true
+        },
+        {
+            "enemy": "RocketLauncher",
+            "delay": ".25",
+            "armor": false
+        },
+        {
+            "enemy": "Rifle",
+            "delay": ".25",
+            "armor": true
+        },
+        {
+            "enemy": "Rifle",
+            "delay": ".50",
+            "armor": true
+        },
+        {
+            "enemy": "MachineGun",
+            "delay": ".25",
+            "armor": true
+        },
+        {
+            "enemy": "Humvee",
+            "delay": ".50",
+            "armor": true
+        },
+        {
+            "enemy": "Sniper",
+            "delay": ".25",
+            "armor": false
+        },
+        {
+            "enemy": "RocketLauncher",
+            "delay": ".25",
+            "armor": false
+        },
+        {
+            "enemy": "FlameThrower",
+            "delay": ".50",
+            "armor": false
+        },
+        {
+            "enemy": "Rifle",
+            "delay": ".50",
+            "armor": true
+        },
+        {
+            "enemy": "Rifle",
+            "delay": ".25",
+            "armor": false
+        },
+        {
+            "enemy": "Sniper",
+            "delay": ".25",
+            "armor": false
+        },
+        {
+            "enemy": "FlameThrower",
+            "delay": ".50",
+            "armor": false
+        }
+    ]
 }

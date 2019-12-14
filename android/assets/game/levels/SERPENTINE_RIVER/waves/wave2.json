@@ -2,51 +2,11 @@
 "wave": [
     {
         "enemy": "Rifle",
-        "delay": ".25",
+        "delay": "1",
         "armor": false
     },
     {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-        {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
+        "enemy": "MachineGun",
         "delay": ".25",
         "armor": false
     }

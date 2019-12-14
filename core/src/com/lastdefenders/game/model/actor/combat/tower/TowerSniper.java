@@ -24,9 +24,9 @@ public class TowerSniper extends Tower {
     public static final int COST = 400;
     private static final float HEALTH = 8;
     private static final float ARMOR = 4;
-    private static final float ATTACK = 7;
-    private static final float ATTACK_SPEED = 1;
-    private static final float RANGE = 100;
+    private static final float ATTACK = 12;
+    private static final float ATTACK_SPEED = 2.6f;
+    private static final float RANGE = 70;
     private static final int ARMOR_COST = 200;
     private static final int RANGE_INCREASE_COST = 100;
     private static final int SPEED_INCREASE_COST = 100;

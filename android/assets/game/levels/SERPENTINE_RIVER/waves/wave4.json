@@ -6,38 +6,18 @@
         "armor": false
     },
     {
-        "enemy": "Rifle",
-        "delay": ".25",
+        "enemy": "MachineGun",
+        "delay": ".5",
         "armor": false
     },
     {
-        "enemy": "Rifle",
-        "delay": ".25",
+        "enemy": "MachineGun",
+        "delay": ".5",
         "armor": false
     },
     {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-        {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
+        "enemy": "Sniper",
+        "delay": "2",
         "armor": false
     },
     {

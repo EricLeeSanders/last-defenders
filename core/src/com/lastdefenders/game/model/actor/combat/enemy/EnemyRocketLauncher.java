@@ -22,13 +22,13 @@ import com.lastdefenders.util.UtilPool;
  */
 public class EnemyRocketLauncher extends Enemy implements IRocket {
 
-    private static final float HEALTH = 8;
-    private static final float ARMOR = 4;
-    private static final float ATTACK = 9;
-    private static final float ATTACK_SPEED = 1;
-    private static final float RANGE = 60;
+    private static final float HEALTH = 10;
+    private static final float ARMOR = 5;
+    private static final float ATTACK = 6;
+    private static final float ATTACK_SPEED = 3;
+    private static final float RANGE = 50;
     private static final float SPEED = 55f;
-    private static final float AOE_RADIUS = 50f;
+    private static final float AOE_RADIUS = 20f;
     private static final int KILL_REWARD = 15;
 
     private static final Dimension ROCKET_SIZE = new Dimension(23, 6);

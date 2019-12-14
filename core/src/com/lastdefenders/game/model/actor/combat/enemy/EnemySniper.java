@@ -24,8 +24,8 @@ public class EnemySniper extends Enemy {
     private static final float HEALTH = 8;
     private static final float ARMOR = 4;
     private static final float ATTACK = 5;
-    private static final float ATTACK_SPEED = 1;
-    private static final float RANGE = 100;
+    private static final float ATTACK_SPEED = 2.6f;
+    private static final float RANGE = 70;
     private static final float SPEED = 70f;
     private static final int KILL_REWARD = 15;
 

@@ -1,34 +1,59 @@
 {
-"wave": [
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    }
-]
+    "wave": [
+        {
+            "enemy": "MachineGun",
+            "delay": ".25",
+            "armor": true
+        },
+        {
+            "enemy": "FlameThrower",
+            "delay": ".25",
+            "armor": true
+        },
+        {
+            "enemy": "Sniper",
+            "delay": ".25",
+            "armor": true
+        },
+        {
+            "enemy": "Sniper",
+            "delay": ".50",
+            "armor": false
+        },
+        {
+            "enemy": "Rifle",
+            "delay": ".25",
+            "armor": true
+        },
+        {
+            "enemy": "RocketLauncher",
+            "delay": ".50",
+            "armor": true
+        },
+        {
+            "enemy": "FlameThrower",
+            "delay": ".25",
+            "armor": true
+        },
+        {
+            "enemy": "MachineGun",
+            "delay": ".50",
+            "armor": false
+        },
+        {
+            "enemy": "Rifle",
+            "delay": ".25",
+            "armor": false
+        },
+        {
+            "enemy": "Rifle",
+            "delay": ".25",
+            "armor": false
+        },
+        {
+            "enemy": "MachineGun",
+            "delay": ".50",
+            "armor": false
+        }
+    ]
 }

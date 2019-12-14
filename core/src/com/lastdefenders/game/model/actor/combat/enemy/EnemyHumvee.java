@@ -21,11 +21,11 @@ import com.lastdefenders.util.UtilPool;
  */
 public class EnemyHumvee extends EnemyTurret implements IVehicle {
 
-    private static final float HEALTH = 7;
+    private static final float HEALTH = 14;
     private static final float ARMOR = 8;
     private static final float ATTACK = 2;
-    private static final float ATTACK_SPEED = .2f;
-    private static final float RANGE = 70;
+    private static final float ATTACK_SPEED = .6f;
+    private static final float RANGE = 60;
     private static final float SPEED = 140f;
     private static final int KILL_REWARD = 15;
 

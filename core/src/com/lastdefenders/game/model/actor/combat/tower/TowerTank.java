@@ -35,10 +35,10 @@ public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatabl
     public static final int COST = 1500;
     private static final float HEALTH = 20;
     private static final float ARMOR = 10;
-    private static final float ATTACK = 10;
-    private static final float ATTACK_SPEED = 0.9f;
-    private static final float RANGE = 80;
-    private static final float AOE_RADIUS = 75f;
+    private static final float ATTACK = 12;
+    private static final float ATTACK_SPEED = 3f;
+    private static final float RANGE = 60;
+    private static final float AOE_RADIUS = 40f;
     private static final int ARMOR_COST = 1200;
     private static final int RANGE_INCREASE_COST = 650;
     private static final int SPEED_INCREASE_COST = 650;

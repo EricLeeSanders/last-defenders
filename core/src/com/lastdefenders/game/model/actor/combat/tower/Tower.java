@@ -27,6 +27,7 @@ public abstract class Tower extends CombatActor {
     private static final float TOWER_SPEED_INCREASE_RATE = 0.33f;
     private static final float TOWER_ATTACK_INCREASE_RATE = 0.33f;
     private static final float TOWER_SELL_RATE = 0.75f;
+    private static final float UPGRADE_MODIFIER = .4f;
     private int cost, armorCost, speedIncreaseCost, rangeIncreaseCost, attackIncreaseCost;
     private boolean rangeIncreaseEnabled, speedIncreaseEnabled, attackIncreaseEnabled;
     private TowerAIType ai = TowerAIType.CLOSEST;
@@ -45,10 +46,10 @@ public abstract class Tower extends CombatActor {
         super(textureRegion, textureSize, pool, targetGroup, gunPos, health, armor, attack,
             attackSpeed, range, deathEffectType);
         this.cost = cost;
-        this.armorCost = armorCost;
-        this.speedIncreaseCost = speedIncreaseCost;
-        this.rangeIncreaseCost = rangeIncreaseCost;
-        this.attackIncreaseCost = attackIncreaseCost;
+        this.armorCost = (int)(UPGRADE_MODIFIER * cost);
+        this.speedIncreaseCost = (int)(UPGRADE_MODIFIER * cost);
+        this.rangeIncreaseCost = (int)(UPGRADE_MODIFIER * cost);
+        this.attackIncreaseCost = (int)(UPGRADE_MODIFIER * cost);
         this.collidingRangeRegion = collidingRangeRegion;
         this.rangeRegion = rangeRegion;
     }
