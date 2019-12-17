@@ -89,7 +89,7 @@ public class CombatActorFactory {
      */
     public Tower loadTower(String type) {
 
-        Logger.info("Combat Actor Factory: loading Tower: " + type);
+        Logger.debug("Combat Actor Factory: loading Tower: " + type);
         Tower tower = null;
         switch (type) {
             case "Rifle":
@@ -117,6 +117,8 @@ public class CombatActorFactory {
                 throw new IllegalArgumentException(type + " is not a valid Tower");
         }
 
+        Logger.debug("CombatActorFactory:" + type + " tower (" + tower.ID +") loaded");
+
         return tower;
     }
 
@@ -128,7 +130,7 @@ public class CombatActorFactory {
      */
     public Enemy loadEnemy(String type) {
 
-        Logger.info("Combat Actor Factory: loading Enemy: " + type);
+        Logger.debug("Combat Actor Factory: loading Enemy: " + type);
 
         Enemy enemy = null;
         switch (type) {
@@ -156,6 +158,8 @@ public class CombatActorFactory {
             default:
                 throw new IllegalArgumentException(type + " is not a valid Enemy");
         }
+
+        Logger.debug("CombatActorFactory:" + type + " enemy (" + enemy.ID +") loaded");
 
         return enemy;
     }
@@ -314,7 +318,7 @@ public class CombatActorFactory {
     private CombatActor createCombatActor(Class<? extends CombatActor> type) {
 
         String className = type.getSimpleName();
-        Logger.info("Combat Actor Factory: creating combat actor: " + className);
+        Logger.debug("CombatActorFactory: creating combat actor: " + className);
         CombatActor actor;
         switch(className){
             case "TowerRifle":
@@ -375,12 +379,14 @@ public class CombatActorFactory {
         EventManager eventManager = new EventManagerImpl(actor, effectFactory);
         actor.setEventManager(eventManager);
 
+        Logger.debug("CombatActorFactory: created actor: " + className + " : " + actor.ID);
+
         return actor;
     }
 
     private SpawningEnemy createSpawningEnemy() {
 
-        Logger.info("CombatActorFactory: creating SpawningEnemy");
+        Logger.debug("CombatActorFactory: creating SpawningEnemy");
 
         return new SpawningEnemy(spawningEnemyPool);
     }

@@ -207,6 +207,8 @@ public class Resources {
         loadedAtlasRegions.put("shield-destroyed", actorAtlas.findRegions("shield-destroyed"));
         loadedAtlasRegions.put("coin", actorAtlas.findRegions("coin"));
 
+
+
         Logger.info("Resources: textures initialized");
     }
 

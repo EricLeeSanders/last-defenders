@@ -36,6 +36,8 @@ import com.lastdefenders.util.UtilPool;
 public abstract class CombatActor extends GameActor implements Pool.Poolable, Collidable, Attacker,
     Targetable {
 
+    public final String ID = ActorUtil.getRandomID();
+
     private final float RESET_ATTACK_SPEED, RESET_RANGE, MAX_HEALTH, MAX_ARMOR, RESET_ATTACK;
     private float attackSpeed, range, health, attack, armor;
     private Vector2 gunPos;
@@ -74,7 +76,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
     @Override
     public void reset() {
 
-        Logger.info("Combat Actor: " + this.getClass().getSimpleName() + " Resetting");
+        Logger.debug("Combat Actor " + ID + ": " + this.getClass().getSimpleName() + " Resetting");
         health = MAX_HEALTH;
         armor = MAX_ARMOR;
         hasArmor = false;
@@ -204,9 +206,9 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 
         this.dead = dead;
         if (isDead()) {
-            Logger.info("Combat Actor: " + this.getClass().getSimpleName() + " Dead");
+            Logger.info("Combat Actor " + ID  + ": " + this.getClass().getSimpleName() + " Dead");
             deadState();
-            pool.free(this);
+            freeActor();
         }
     }
 

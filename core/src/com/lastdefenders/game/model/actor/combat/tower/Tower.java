@@ -140,7 +140,7 @@ public abstract class Tower extends CombatActor {
     public void reset() {
 
         super.reset();
-        Logger.info("Tower: " + this.getClass().getSimpleName() + " Resetting");
+        Logger.debug("Tower " + ID  + ": " + this.getClass().getSimpleName() + " Resetting");
         rangeIncreaseEnabled = false;
         speedIncreaseEnabled = false;
         attackIncreaseEnabled = false;
@@ -156,7 +156,7 @@ public abstract class Tower extends CombatActor {
 
     public void heal() {
 
-        Logger.info("Tower: " + this.getClass().getSimpleName() + " Healing");
+        Logger.info("Tower " + ID  + ": " + this.getClass().getSimpleName() + " Healing");
         resetHealth();
         resetArmor();
     }
@@ -164,7 +164,7 @@ public abstract class Tower extends CombatActor {
     public void increaseRange() {
 
         if (!rangeIncreaseEnabled) {
-            Logger.info("Tower: " + this.getClass().getSimpleName() + " Increasing Range");
+            Logger.info("Tower " + ID  + ": "  + this.getClass().getSimpleName() + " Increasing Range");
             rangeIncreaseEnabled = true;
             this.setRange(this.getRange() + (this.getRange() * TOWER_RANGE_INCREASE_RATE));
         }
@@ -173,7 +173,7 @@ public abstract class Tower extends CombatActor {
     public void increaseSpeed() {
 
         if (!speedIncreaseEnabled) {
-            Logger.info("Tower: " + this.getClass().getSimpleName() + " Increasing Speed");
+            Logger.info("Tower " + ID  + ": " + this.getClass().getSimpleName() + " Increasing Speed");
             speedIncreaseEnabled = true;
             this.setAttackSpeed(
                 this.getAttackSpeed() - (this.getAttackSpeed() * TOWER_SPEED_INCREASE_RATE));
@@ -183,7 +183,7 @@ public abstract class Tower extends CombatActor {
     public void increaseAttack() {
 
         if (!attackIncreaseEnabled) {
-            Logger.info("Tower: " + this.getClass().getSimpleName() + " Increasing attack");
+            Logger.info("Tower " + ID  + ": "  + this.getClass().getSimpleName() + " Increasing attack");
             attackIncreaseEnabled = true;
             this.setAttack(this.getAttack() + (this.getAttack() * TOWER_ATTACK_INCREASE_RATE));
         }
@@ -236,7 +236,7 @@ public abstract class Tower extends CombatActor {
 
     public void giveKill() {
 
-        Logger.info("Tower: " + this.getClass().getSimpleName() + " giving kill");
+        Logger.info("Tower " + ID  + ": "  + this.getClass().getSimpleName() + " giving kill");
         kills++;
     }
 

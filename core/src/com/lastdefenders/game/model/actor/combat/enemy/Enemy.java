@@ -67,6 +67,10 @@ public abstract class Enemy extends CombatActor {
         this.stateManager = stateManager;
     }
 
+    public StateManager getStateManager(){
+        return this.stateManager;
+    }
+
     public void init() {
 
         stateManager.transition(EnemyState.RUNNING);
@@ -156,7 +160,7 @@ public abstract class Enemy extends CombatActor {
 
     public void reachedEnd() {
 
-        Logger.info("Enemy: " + this.getClass().getSimpleName() + " reached end");
+        Logger.info("Enemy " + ID  + ": "  + this.getClass().getSimpleName() + " reached end");
         freeActor();
     }
 

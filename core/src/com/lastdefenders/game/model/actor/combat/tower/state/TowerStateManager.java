@@ -70,7 +70,7 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
 
     private void swapState(TowerState oldState, TowerState newState) {
 
-        Logger.info("Swapping states: " + oldState.name() + " to: " + newState.name());
+        Logger.info("TowerStateManager: Swapping states (" + tower.ID + ") : " + oldState.name() + " to: " + newState.name());
         getState(oldState).postState();
         getState(newState).preState();
         currentState = newState;

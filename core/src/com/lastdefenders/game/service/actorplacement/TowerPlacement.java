@@ -84,8 +84,9 @@ public class TowerPlacement {
      */
     public boolean placeTower() {
 
-        Logger.info("TowerPlacement: trying to place tower");
+
         if (currentTower != null) {
+            Logger.info("TowerPlacement: trying to place tower at: " + currentTower.getPositionCenter() );
             if (!towerCollides()) {
                 currentTower.init();
                 HealthBar healthBar = healthFactory.loadHealthBar();
@@ -105,6 +106,8 @@ public class TowerPlacement {
                     Logger.info("TowerPlacement: tower collides with another Actor");
                 }
             }
+        } else {
+            Logger.error("TowerPlacement: current tower is null!");
         }
         return false;
     }

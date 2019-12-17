@@ -55,6 +55,7 @@ public class Level {
         delayCount = 0;
 
         SpawningEnemy spawningEnemy = spawningEnemyQueue.removeFirst();
+        System.out.println("SPAWNING: " + spawningEnemy.getEnemy().getClass().getSimpleName());
         actorGroups.getEnemyGroup().addActor(spawningEnemy.getEnemy());
 
         HealthBar healthBar = healthFactory.loadHealthBar();
@@ -94,6 +95,10 @@ public class Level {
     public int getSpawningEnemiesCount() {
 
         return spawningEnemyQueue.size;
+    }
+
+    public Queue<SpawningEnemy> getSpawningEnemyQueue(){
+        return spawningEnemyQueue;
     }
 
     public int getCurrentWave() {

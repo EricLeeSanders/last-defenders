@@ -25,15 +25,16 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
 
     private Map<EnemyState, CombatActorState> enemyStates = new HashMap<>();
     private EnemyState currentState;
+    private Enemy enemy;
 
     public EnemyStateManager(Enemy enemy, EffectFactory effectFactory, Player player) {
 
         initStateObjects(enemy, effectFactory, player);
         currentState = EnemyState.STANDBY;
+        this.enemy = enemy;
     }
 
     private void initStateObjects(Enemy enemy, EffectFactory effectFactory, Player player) {
-
         enemyStates.put(EnemyState.RUNNING, new EnemyRunningState(enemy, this));
         enemyStates.put(EnemyState.DYING, new EnemyDyingState(enemy, this, effectFactory, player));
         enemyStates.put(EnemyState.REACHED_END, new EnemyReachedEndState(enemy, this, player));
@@ -50,7 +51,7 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
 
     private void swapState(EnemyState oldState, EnemyState newState) {
 
-        Logger.info("Swapping states: " + oldState.name() + " to: " + newState.name());
+        Logger.info("EnemyStateManager: Swapping states (" + enemy.ID +"): " + oldState.name() + " to: " + newState.name());
         getState(oldState).postState();
         currentState = newState;
         getState(newState).preState();
@@ -94,6 +95,10 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
 
         getState(state).loadParameters(parameters);
         transition(state);
+    }
+
+    public Enemy getEnemy(){
+        return enemy;
     }
 
     public enum EnemyState {

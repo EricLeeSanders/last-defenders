@@ -55,6 +55,7 @@ import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
+import java.util.Random;
 
 /**
  * Created by Eric on 4/23/2017.
@@ -280,5 +281,19 @@ public class TestUtil {
         doNothing().when(vector2).free();
 
         return vector2;
+    }
+
+    public static int getRandomNumberInRange(int min, int max, boolean ordered) {
+
+        if (min >= max && ordered) {
+            throw new IllegalArgumentException("max must be greater than min");
+        } else if(min >= max && !ordered){
+            int temp = min;
+            min = max;
+            max = temp;
+        }
+
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
     }
 }

@@ -3,6 +3,7 @@ package com.lastdefenders.util;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
+import java.util.Random;
 
 public class ActorUtil {
 
@@ -66,6 +67,21 @@ public class ActorUtil {
     public static float getResolutionScaledStageHeightCoordinate(float y, Viewport viewport){
 
         return y * (viewport.getWorldHeight() / Resources.VIRTUAL_HEIGHT);
+    }
+
+    public static String getRandomID(){
+        final String chars = "0123456789abcdefghijklmnopqrstuvwxyz";
+        final int N = chars.length();
+        final int idSize = 8;
+
+        Random r = new Random();
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < idSize; i++) {
+            sb.append(chars.charAt(r.nextInt(N)));
+        }
+
+        return sb.toString();
     }
 
 }

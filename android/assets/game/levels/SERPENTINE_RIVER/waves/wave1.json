@@ -2,7 +2,7 @@
 "wave": [
     {
         "enemy": "MachineGun",
-        "delay": ".05",
+        "delay": "0.5",
         "armor": false
     }
 ]
