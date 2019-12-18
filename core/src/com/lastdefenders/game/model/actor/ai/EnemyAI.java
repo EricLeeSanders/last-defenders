@@ -1,5 +1,6 @@
 package com.lastdefenders.game.model.actor.ai;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.lastdefenders.game.helper.CollisionDetection;
@@ -16,7 +17,7 @@ import com.lastdefenders.game.model.actor.interfaces.IRocket;
 public class EnemyAI {
 
     /**
-     * Finds the nearest tower relative to the enemy
+     * Finds a random tower in range.
      *
      * @return Tower
      */
@@ -25,8 +26,9 @@ public class EnemyAI {
         if (towers.size == 0) {
             return null;
         }
-        float firstTowerDistance = Integer.MAX_VALUE;
-        Tower firstTower = null;
+
+        SnapshotArray<Tower> towersInRange = new SnapshotArray<>();
+
         for (Actor actor : towers) {
             if (actor instanceof Tower) {
                 Tower tower = (Tower) actor;
@@ -34,20 +36,25 @@ public class EnemyAI {
                 if (!tower.isDead() && tower.isActive()) {
                     if (CollisionDetection
                         .shapesIntersect(tower.getBody(), enemy.getRangeShape())) {
-                        if (tower.getPositionCenter().dst(enemy.getPositionCenter())
-                            < firstTowerDistance) {
-                            // If the enemy is instanceof IRPG then it can
-                            // attack plated towers.
-                            if ((!(tower instanceof PlatedArmor)) || (enemy instanceof IRocket)) {
-                                firstTower = tower;
-                                firstTowerDistance = tower.getPositionCenter()
-                                    .dst(enemy.getPositionCenter());
-                            }
+
+                        // If the enemy is instanceof IRPG then it can
+                        // attack plated towers.
+                        if ((!(tower instanceof PlatedArmor)) || (enemy instanceof IRocket)) {
+                            towersInRange.add(tower);
                         }
+
                     }
                 }
             }
         }
-        return firstTower;
+
+        if(towersInRange.size > 0) {
+            int rndIdx = MathUtils.random(towersInRange.size - 1);
+
+            return towersInRange.get(rndIdx);
+        } else {
+            return null;
+        }
+
     }
 }

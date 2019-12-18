@@ -7,22 +7,15 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
-import com.badlogic.gdx.backends.headless.HeadlessFiles;
 import com.badlogic.gdx.backends.headless.HeadlessNativesLoader;
-import com.badlogic.gdx.backends.headless.mock.graphics.MockGraphics;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.PixmapIO;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.BufferUtils;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.ads.AdControllerHelper;
@@ -40,19 +33,19 @@ import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import java.awt.Image;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
 import org.junit.Before;
 import org.junit.Test;
 import simulate.state.GameBeginState;
 import simulate.state.GameEndState;
 import simulate.state.GameState;
-import simulate.state.StateWriter;
+import simulate.state.writer.StateWriter;
 import testutil.TestUtil;
 
 /**
@@ -67,6 +60,7 @@ public class Simulation {
     private GameStage gameStage;
     private ActorGroups actorGroups;
     private Player player;
+    private Resources resources;
     private LevelStateManager levelStateManager;
     private String [] towerTypes = {"FlameThrower", "Humvee", "MachineGun", "Rifle", "RocketLauncher", "Sniper", "Tank"};
     private List<GameState> gameStates = new ArrayList<>();
@@ -97,7 +91,7 @@ public class Simulation {
     }
 
     @Test
-    public void run(){
+    public void run() throws IOException {
         while(!levelStateManager.getState().equals(LevelState.GAME_OVER)) {
             addTowers();
             startWave();
@@ -117,10 +111,10 @@ public class Simulation {
 
             gameStates.add(gameState);
         }
-        StateWriter.save(gameStates);
+
+        StateWriter.save(gameStates, gameStage.getLevel().getActiveLevel());
 
     }
-
 
     private void startWave(){
         levelStateManager.setState(LevelState.WAVE_IN_PROGRESS);
@@ -171,7 +165,7 @@ public class Simulation {
 
 
         UserPreferences userPreferences = TestUtil.createUserPreferencesMock();
-        Resources resources = new Resources(userPreferences);
+        resources = new Resources(userPreferences);
 
         resources.loadActorAtlasRegions();
 

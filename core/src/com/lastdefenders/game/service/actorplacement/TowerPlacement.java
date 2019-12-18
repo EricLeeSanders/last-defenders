@@ -12,6 +12,7 @@ import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.game.service.factory.CombatActorFactory;
 import com.lastdefenders.game.service.factory.HealthFactory;
 import com.lastdefenders.util.Logger;
+import com.lastdefenders.util.Resources;
 
 /**
  * Responsible for placing the Tower on the Stage
@@ -104,6 +105,8 @@ public class TowerPlacement {
                     Logger.info("TowerPlacement: tower collides with path");
                 } else if (CollisionDetection.collisionWithActors(towers, currentTower)) {
                     Logger.info("TowerPlacement: tower collides with another Actor");
+                } else if(CollisionDetection.outOfMapBoundary(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, currentTower)){
+                    Logger.info("TowerPlacement: tower is out of bounds");
                 }
             }
         } else {
@@ -121,12 +124,10 @@ public class TowerPlacement {
 
         SnapshotArray<Actor> towers = actorGroups.getTowerGroup().getChildren();
 
-        if (CollisionDetection.collisionWithPath(map.getPathBoundaries(), currentTower)) {
-            return true;
-        } else if (CollisionDetection.collisionWithActors(towers, currentTower)) {
-            return true;
-        }
-        return false;
+        return CollisionDetection.collisionWithPath(map.getPathBoundaries(), currentTower) ||
+                CollisionDetection.collisionWithActors(towers, currentTower) ||
+                CollisionDetection.outOfMapBoundary(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, currentTower);
+
 
     }
 

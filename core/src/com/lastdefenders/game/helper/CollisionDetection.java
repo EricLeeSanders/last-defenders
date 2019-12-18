@@ -26,6 +26,14 @@ public final class CollisionDetection {
     private static Polygon rectPoly = new Polygon();
     private static float rectanglePoints[] = new float[8];
 
+    public static boolean outOfMapBoundary(float mapWidth, float mapHeight, Collidable actor){
+        return actor.getPositionCenter().x < 0 ||
+            actor.getPositionCenter().x > mapWidth ||
+            actor.getPositionCenter().y < 0 ||
+            actor.getPositionCenter().y > mapHeight;
+
+    }
+
     /**
      * Checks for collision with the path boundaries when placing a tower
      *
