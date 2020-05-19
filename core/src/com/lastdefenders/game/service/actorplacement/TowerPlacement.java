@@ -87,14 +87,12 @@ public class TowerPlacement {
 
 
         if (currentTower != null) {
-            Logger.info("TowerPlacement: trying to place tower at: " + currentTower.getPositionCenter() );
             if (!towerCollides()) {
                 currentTower.init();
                 HealthBar healthBar = healthFactory.loadHealthBar();
                 healthBar.setActor(currentTower);
                 ArmorIcon armorIcon = healthFactory.loadArmorIcon();
                 armorIcon.setActor(currentTower);
-                Logger.info("TowerPlacement: placing tower");
                 return true;
             } else {
 
@@ -102,11 +100,11 @@ public class TowerPlacement {
                 SnapshotArray<Actor> towers = actorGroups.getTowerGroup().getChildren();
 
                 if (CollisionDetection.collisionWithPath(map.getPathBoundaries(), currentTower)) {
-                    Logger.info("TowerPlacement: tower collides with path");
+                    //Logger.info("TowerPlacement: tower collides with path");
                 } else if (CollisionDetection.collisionWithActors(towers, currentTower)) {
-                    Logger.info("TowerPlacement: tower collides with another Actor");
+                    //Logger.info("TowerPlacement: tower collides with another Actor");
                 } else if(CollisionDetection.outOfMapBoundary(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, currentTower)){
-                    Logger.info("TowerPlacement: tower is out of bounds");
+                    //Logger.info("TowerPlacement: tower is out of bounds");
                 }
             }
         } else {

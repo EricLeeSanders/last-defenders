@@ -100,7 +100,7 @@ public class CombatSupportActor extends GameActor implements Pool.Poolable, Atta
     }
 
     @Override
-    public Shape2D getRangeShape() {
+    public Circle getRangeShape() {
 
         rangeShape.setPosition(getPositionCenter().x, getPositionCenter().y);
         return rangeShape;

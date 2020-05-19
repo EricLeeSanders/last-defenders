@@ -1,12 +1,13 @@
-package simulate.state;
+package simulate.state.combat.tower;
 
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import simulate.state.combat.CombatActorState;
 
 /**
  * Created by Eric on 12/16/2019.
  */
 
-public class TowerState extends CombatActorState{
+public class TowerState extends CombatActorState {
 
     private Boolean rangeIncreased;
     private Boolean speedIncreased;
@@ -41,4 +42,5 @@ public class TowerState extends CombatActorState{
 
         return kills;
     }
+
 }

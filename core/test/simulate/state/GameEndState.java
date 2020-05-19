@@ -2,10 +2,9 @@ package simulate.state;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Queue;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.level.SpawningEnemy;
+import simulate.state.combat.tower.TowerState;
 
 /**
  * Created by Eric on 12/16/2019.
@@ -15,7 +14,6 @@ public class GameEndState {
 
     private PlayerState playerState;
     private Array<TowerState> towers = new Array<>();
-
 
     public GameEndState(
         Player player,
@@ -38,6 +36,7 @@ public class GameEndState {
 
         return towers;
     }
+
 
     @Override
     public String toString() {

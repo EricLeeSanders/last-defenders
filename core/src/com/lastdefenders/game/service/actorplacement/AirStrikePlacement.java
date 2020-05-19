@@ -20,7 +20,7 @@ public class AirStrikePlacement {
     public void createAirStrike() {
 
         Logger.info("AirStrikePlacement: creating air strike");
-        currentAirStrike = (AirStrike) supportActorFactory.loadSupportActor(AirStrike.class, true);
+        currentAirStrike = supportActorFactory.loadSupportActor(AirStrike.class, true);
         currentAirStrike.setPosition(0, 0);
         currentAirStrike.setActive(false);
         currentAirStrike.setVisible(false);

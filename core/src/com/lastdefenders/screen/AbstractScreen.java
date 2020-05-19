@@ -83,9 +83,6 @@ public abstract class AbstractScreen implements Screen {
     public void resize(int width, int height) {
         for(Viewport viewport : viewports){
             viewport.update(width, height, true);
-            System.out.println(viewport.getScreenX() + ", " + viewport.getScreenY() + ", " + viewport.getScreenWidth()
-                + ", " + viewport.getScreenHeight() + ", " + viewport.getRightGutterX() + ", " + viewport.getTopGutterY()
-                + ", " + viewport.getWorldWidth() + ", " + viewport.getWorldHeight());
         }
     }
 

@@ -38,7 +38,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 
     public final String ID = ActorUtil.getRandomID();
 
-    private final float RESET_ATTACK_SPEED, RESET_RANGE, MAX_HEALTH, MAX_ARMOR, RESET_ATTACK;
     private float attackSpeed, range, health, attack, armor;
     private Vector2 gunPos;
     private Vector2 rotatedGunPos = UtilPool.getVector2();
@@ -48,23 +47,20 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
     private DeathEffectType deathEffectType;
     private Group targetGroup;
     private EventManager eventManager;
+    private CombatActorAttributes attributes;
 
     protected CombatActor(TextureRegion textureRegion, Dimension textureSize,
-        CombatActorPool<? extends CombatActor> pool, Group targetGroup, Vector2 gunPos, float health, float armor,
-        float attack, float attackSpeed, float range, DeathEffectType deathEffectType) {
+        CombatActorPool<? extends CombatActor> pool, Group targetGroup, Vector2 gunPos, DeathEffectType deathEffectType,
+        CombatActorAttributes attributes) {
 
         super(textureSize);
-        this.MAX_HEALTH = health;
-        this.MAX_ARMOR = armor;
-        this.RESET_ATTACK = attack;
-        this.RESET_RANGE = range;
-        this.RESET_ATTACK_SPEED = attackSpeed;
-        this.health = health;
-        this.armor = armor;
-        this.attackSpeed = attackSpeed;
-        this.attack = attack;
+        this.attributes = attributes;
+        this.health = attributes.getHealth();
+        this.armor = attributes.getArmor();
+        this.attackSpeed = attributes.getAttackSpeed();
+        this.attack = attributes.getAttack();
         this.gunPos = gunPos;
-        this.range = range;
+        this.range = attributes.getRange();
         this.pool = pool;
         this.targetGroup = targetGroup;
         this.deathEffectType = deathEffectType;
@@ -77,12 +73,12 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
     public void reset() {
 
         Logger.debug("Combat Actor " + ID + ": " + this.getClass().getSimpleName() + " Resetting");
-        health = MAX_HEALTH;
-        armor = MAX_ARMOR;
+        health = attributes.getHealth();
+        armor = attributes.getArmor();
         hasArmor = false;
-        attack = RESET_ATTACK;
-        attackSpeed = RESET_ATTACK_SPEED;
-        range = RESET_RANGE;
+        attack = attributes.getAttack();
+        attackSpeed = attributes.getAttackSpeed();
+        range = attributes.getRange();
         this.setRotation(0);
         this.clear();
         this.remove();
@@ -227,23 +223,23 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
      */
     public float getArmorPercent() {
 
-        return this.armor / this.MAX_ARMOR;
+        return this.armor / this.attributes.getArmor();
     }
 
     public float getMaxHealth() {
 
-        return MAX_HEALTH;
+        return attributes.getHealth();
     }
 
     protected void resetHealth() {
 
-        health = MAX_HEALTH;
+        health = attributes.getHealth();
     }
 
     public void resetArmor() {
 
         if (hasArmor()) {
-            armor = MAX_ARMOR;
+            armor = attributes.getArmor();
         }
     }
 

@@ -30,11 +30,13 @@ public abstract class AbstractTowerAI implements TowerAI {
                     if (CollisionDetection
                         .shapesIntersect(enemy.getBody(), attacker.getRangeShape())) {
                         if (returnEnemy == null || swap(returnEnemy, enemy)) {
-                            if (!(enemy instanceof PlatedArmor) || (attacker instanceof IRocket)) {
+                            if (canAttackTarget(attacker, enemy)) {
                                 returnEnemy = enemy;
                             } else {
-                                // Attack the plated enemy if there are no
-                                // Other enemies to attack
+                                /* This target must be a plated enemy (i.e., tank).
+                                   Attack the plated enemy if there are no
+                                   Other enemies to attack
+                                 */
                                 platedReturnEnemy = enemy;
                             }
                         }
@@ -50,6 +52,10 @@ public abstract class AbstractTowerAI implements TowerAI {
             return returnEnemy;
         }
 
+    }
+
+    private boolean canAttackTarget(Attacker attacker, Enemy target){
+        return !(target instanceof PlatedArmor) || (attacker instanceof IRocket);
     }
 
     protected abstract boolean swap(Enemy currentEnemy, Enemy replacingEnemy);

@@ -22,33 +22,22 @@ import com.lastdefenders.util.UtilPool;
  */
 public class TowerFlameThrower extends Tower implements IFlame {
 
-    public static final int COST = 600;
-    private static final float HEALTH = 10;
-    private static final float ARMOR = 5;
-    private static final float ATTACK = 0.7f;
-    private static final float ATTACK_SPEED = 1.20f;
-    private static final float RANGE = 70;
-    private static final int ARMOR_COST = 5665;
-    private static final int RANGE_INCREASE_COST = 450;
-    private static final int SPEED_INCREASE_COST = 450;
-    private static final int ATTACK_INCREASE_COST = 450;
-
     private static final Vector2 GUN_POS = UtilPool.getVector2(26, 4);
     private static final Dimension TEXTURE_SIZE = new Dimension(56, 26);
     private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
 
     private Circle body;
-    private Dimension flameSize = new Dimension(RANGE - 26, 20);
+    private Dimension flameSize;
     private LDAudio audio;
     private ProjectileFactory projectileFactory;
 
     public TowerFlameThrower(TextureRegion actorRegion, CombatActorPool<TowerFlameThrower> pool,
         Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
-        ProjectileFactory projectileFactory, LDAudio audio) {
+        ProjectileFactory projectileFactory, LDAudio audio, TowerAttributes attributes) {
 
         super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion,
-            collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST,
-            RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
+            collidingRangeRegion, DEATH_EFFECT_TYPE, attributes);
+        flameSize = new Dimension(attributes.getRange() - 26, 20);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
         this.body = new Circle(this.getPositionCenter(), 10);

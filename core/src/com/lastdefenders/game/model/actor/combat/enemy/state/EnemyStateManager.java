@@ -53,8 +53,8 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
 
         Logger.info("EnemyStateManager: Swapping states (" + enemy.ID +"): " + oldState.name() + " to: " + newState.name());
         getState(oldState).postState();
-        currentState = newState;
         getState(newState).preState();
+        currentState = newState;
     }
 
     @Override

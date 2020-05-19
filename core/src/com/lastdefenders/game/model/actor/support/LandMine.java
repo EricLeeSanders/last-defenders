@@ -23,9 +23,9 @@ import com.lastdefenders.util.UtilPool;
 
 public class LandMine extends CombatSupportActor implements IRocket {
 
-    public static final int COST = 300;
+    public static final int COST = 200;
     private static final float ATTACK = 15f;
-    private static final float RANGE = 50;
+    private static final float RANGE = 75;
     private static final Vector2 GUN_POS = UtilPool.getVector2(0, 0);
     private static final Dimension TEXTURE_SIZE = new Dimension(30, 30);
 

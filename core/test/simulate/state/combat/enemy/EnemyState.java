@@ -1,8 +1,7 @@
-package simulate.state;
+package simulate.state.combat.enemy;
 
-import com.lastdefenders.game.model.actor.combat.CombatActor;
-import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.level.SpawningEnemy;
+import simulate.state.combat.CombatActorState;
 
 /**
  * Created by Eric on 12/16/2019.

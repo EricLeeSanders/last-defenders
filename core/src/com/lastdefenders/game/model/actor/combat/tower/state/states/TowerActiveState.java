@@ -30,7 +30,7 @@ public class TowerActiveState implements CombatActorState {
     @Override
     public void preState() {
 
-        attackCounter = 100; // ready to attack
+        attackCounter = Float.MAX_VALUE; // ready to attack
     }
 
     @Override

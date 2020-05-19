@@ -1,9 +1,10 @@
 package com.lastdefenders.game.model.level.wave.impl;
 
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
-import com.lastdefenders.game.model.level.Level;
 import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.game.model.level.SpawningEnemy;
 import com.lastdefenders.game.service.factory.CombatActorFactory;
@@ -19,160 +20,113 @@ import java.util.Random;
 
 public class DynamicWaveLoader extends AbstractWaveLoader {
 
-    private Random random = new Random();
-    private java.util.Map<String, Integer> enemyMap = new HashMap<>();
+    private static final float ENEMY_STARTING_WEIGHT = 575;
+    private static final float ENEMY_WEIGHT_MODIFIER = 0.35f;
+    private static final float ENEMY_WEIGHT_MODIFIER_2 = 0.2f;
+    private static final int WAVES_PER_TANK = 10;
+
+    private Array<EnemyWeight> enemies = new Array<>();
+    private float enemyWeight = ENEMY_STARTING_WEIGHT;
 
     public DynamicWaveLoader(CombatActorFactory combatActorFactory, Map map) {
 
         super(combatActorFactory, map);
-    }
 
-    /**
-     * Init the Wave Loader with a a Queue of initial spawning enemies to start with
-     */
-    public void initDynamicWaveLoader(Queue<SpawningEnemy> initialSpawningEnemies) {
+        EnemyWeight rifle = new EnemyWeight("Rifle",4, false);
+        EnemyWeight rifleArmor = new EnemyWeight("Rifle",6, true);
+        EnemyWeight machineGun = new EnemyWeight("MachineGun",4, false);
+        EnemyWeight machineGunArmor = new EnemyWeight("MachineGun",6, true);
+        EnemyWeight sniper = new EnemyWeight("Sniper",7, false);
+        EnemyWeight sniperArmor = new EnemyWeight("Sniper",10, true);
+        EnemyWeight flameThrower = new EnemyWeight("FlameThrower",9, false);
+        EnemyWeight flameThrowerArmor = new EnemyWeight("FlameThrower",13, true);
+        EnemyWeight rocketLauncher = new EnemyWeight("RocketLauncher",11, false);
+        EnemyWeight rocketLauncherArmor = new EnemyWeight("RocketLauncher",16, true);
+        EnemyWeight humvee = new EnemyWeight("Humvee",13, false);
+        EnemyWeight humveeArmor = new EnemyWeight("Humvee",19, true);
+        EnemyWeight tank = new EnemyWeight("Tank",50, false);
+        EnemyWeight tankArmor = new EnemyWeight("Tank",75, true);
 
-        for (SpawningEnemy spawningEnemy : initialSpawningEnemies) {
-            incrementEnemyMapCount(convertEnemyClassToStringType(
-                spawningEnemy.getEnemy().getClass()), 1);
-        }
-    }
-
-    private String convertEnemyClassToStringType(Class<? extends Enemy> enemyClass) {
-
-        String type = enemyClass.getSimpleName();
-        // Remove the enemy from the string (i.e. EnemyRifle -> Rifle)
-        type = type.replaceFirst("Enemy", "");
-
-        return type;
+        enemies.add(rifle);
+        enemies.add(rifleArmor);
+        enemies.add(machineGun);
+        enemies.add(machineGunArmor);
+        enemies.add(sniper);
+        enemies.add(sniperArmor);
+        enemies.add(flameThrower);
+        enemies.add(flameThrowerArmor);
+        enemies.add(rocketLauncher);
+        enemies.add(rocketLauncherArmor);
+        enemies.add(humvee);
+        enemies.add(humveeArmor);
+        enemies.add(tank);
+        enemies.add(tankArmor);
     }
 
     @Override
     public Queue<SpawningEnemy> loadWave(LevelName levelName, int wave) {
 
-        Logger.info("DynamicWaveGenerator: Generating Wave: " + wave);
+        Logger.info("DynamicWaveGenerator: Generating Wave: " + wave + "; weight: " + enemyWeight);
 
-        int currentGeneratedWave = wave - Level.MAX_WAVES;
+        Array<SpawningEnemy> enemies = getEnemies(enemyWeight, wave);
 
-        if ((currentGeneratedWave % 3) == 0) {
-            everyThirdWave();
+        enemies.shuffle();
+
+        Queue<SpawningEnemy> enemyQueue = new Queue<>();
+        for(SpawningEnemy e : enemies){
+            enemyQueue.addFirst(e);
         }
 
-        if ((currentGeneratedWave % 4) == 0) {
-            everyFourthWave();
-        }
-        if ((currentGeneratedWave % 6) == 0) {
-            everySixthWave();
-        }
-
-        everyWave();
-
-        return createEnemies();
+        enemyWeight += enemyWeight * (ENEMY_WEIGHT_MODIFIER/(wave*ENEMY_WEIGHT_MODIFIER_2));
+        return enemyQueue;
     }
 
-    private Queue<SpawningEnemy> createEnemies() {
 
-        SnapshotArray<SpawningEnemy> enemies = new SnapshotArray<>();
+    private Array<SpawningEnemy> getEnemies(float weight, int waveNum){
+        Array<SpawningEnemy> wave = new Array<>();
 
-        for (Entry<String, Integer> entry : enemyMap.entrySet()) {
-            enemies.addAll(createEnemiesByType(entry.getValue(), entry.getKey()));
+        float remainingWeight = weight;
+        int tankCount = 0;
+        int numOfTanksAllowed = waveNum / WAVES_PER_TANK;
+
+        while(remainingWeight >= 4){
+            int randomIdx = MathUtils.random(enemies.size - 1);
+            EnemyWeight rndEnemy = enemies.get(randomIdx);
+
+            if(rndEnemy.weight <= remainingWeight){
+
+                if(rndEnemy.name.equals("Tank")){
+                    tankCount++;
+                }
+
+                if(rndEnemy.name.equals("Tank") && tankCount > numOfTanksAllowed){
+                    continue;
+                }
+
+                remainingWeight -= rndEnemy.weight;
+                float delay = MathUtils.random(1,10)/10f;
+
+                SpawningEnemy enemy = loadSpawningEnemy(rndEnemy.name, rndEnemy.armor, delay);
+
+                wave.add(enemy);
+            }
         }
 
-        shuffle(enemies);
+        return wave;
+    }
 
-        Queue<SpawningEnemy> spawningEnemiesQueue = new Queue<>(enemies.size);
-        for (SpawningEnemy spawningEnemy : enemies) {
-            spawningEnemiesQueue.addFirst(spawningEnemy);
+    private static class EnemyWeight {
+        int weight;
+        boolean armor;
+        String name;
+
+        EnemyWeight(String name, int weight, boolean armor) {
+
+            this.weight = weight;
+            this.armor = armor;
+            this.name = name;
         }
 
-        return spawningEnemiesQueue;
-    }
-
-    private SnapshotArray<SpawningEnemy> createEnemiesByType(int n, String type) {
-
-        SnapshotArray<SpawningEnemy> enemies = new SnapshotArray<>();
-
-        for (int i = 0; i < n; i++) {
-            int randArmor = random.nextInt(3); //0-2
-            boolean armor = (randArmor == 0);
-            float randSpawnDelay = random.nextFloat() * 1.5f + 0.25f; // .25 - 1.75
-
-            SpawningEnemy spawningEnemy = loadSpawningEnemy(type, armor, randSpawnDelay);
-            enemies.add(spawningEnemy);
-        }
-        return enemies;
-    }
-
-    private void shuffle(SnapshotArray<SpawningEnemy> enemies) {
-
-        int n = enemies.size;
-        for (int i = 0; i < n; i++) {
-            int rand = i + (int) (Math.random() * (n - i)); // between i and n-1
-            swap(enemies, i, rand);
-        }
-    }
-
-    private void swap(SnapshotArray<SpawningEnemy> enemies, int i, int j) {
-
-        enemies.swap(i, j);
-    }
-
-    /**
-     * Every wave add 3 rifles or
-     * 3 machines guns or 2 snipers
-     */
-    private void everyWave() {
-
-        int rnd = random.nextInt(3); // 0-2
-
-        if (rnd == 0) {
-            incrementEnemyMapCount("Rifle", 3);
-        } else if (rnd == 1) {
-            incrementEnemyMapCount("MachineGun", 3);
-        } else {
-            incrementEnemyMapCount("Sniper", 2);
-        }
-    }
-
-    /**
-     * Add a Humvee every third wave
-     */
-    private void everyThirdWave() {
-
-        incrementEnemyMapCount("Humvee", 1);
-    }
-
-    /**
-     * Add either 1 rocket launcher
-     * or 1 flame thrower and 1 sniper
-     * every fourth wave
-     */
-    private void everyFourthWave() {
-
-        int rnd = random.nextInt(2); // 0 or 1
-        if (rnd == 0) {
-            incrementEnemyMapCount("RocketLauncher", 1);
-        } else {
-            incrementEnemyMapCount("FlameThrower", 1);
-            incrementEnemyMapCount("Sniper", 1);
-        }
-    }
-
-    /**
-     * Add a Tank every sixth wave
-     */
-    private void everySixthWave() {
-
-        incrementEnemyMapCount("Tank", 1);
-    }
-
-    private void incrementEnemyMapCount(String type, int amount) {
-
-        Integer count = enemyMap.get(type);
-        if (count == null) {
-            count = 0;
-        }
-        count += amount;
-        enemyMap.put(type, count);
     }
 }
+

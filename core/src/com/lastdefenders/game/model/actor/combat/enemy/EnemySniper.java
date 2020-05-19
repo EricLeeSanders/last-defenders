@@ -21,14 +21,6 @@ import com.lastdefenders.util.UtilPool;
  */
 public class EnemySniper extends Enemy {
 
-    private static final float HEALTH = 8;
-    private static final float ARMOR = 4;
-    private static final float ATTACK = 5;
-    private static final float ATTACK_SPEED = 2.6f;
-    private static final float RANGE = 70;
-    private static final float SPEED = 70f;
-    private static final int KILL_REWARD = 15;
-
     private static final Dimension BULLET_SIZE = new Dimension(5, 5);
     private static final Vector2 GUN_POS = UtilPool.getVector2(37, -10);
     private static final Dimension TEXTURE_SIZE = new Dimension(78, 41);
@@ -40,10 +32,10 @@ public class EnemySniper extends Enemy {
 
     public EnemySniper(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions,
         CombatActorPool<EnemySniper> pool, Group targetGroup, ProjectileFactory projectileFactory,
-        LDAudio audio) {
+        LDAudio audio, EnemyAttributes attributes) {
 
         super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS,
-            SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
+            DEATH_EFFECT_TYPE, attributes);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
         this.body = new Circle(this.getPositionCenter(), 10);

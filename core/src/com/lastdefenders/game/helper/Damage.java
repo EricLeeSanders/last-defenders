@@ -61,17 +61,37 @@ public class Damage {
         }
     }
 
+    private static final Circle immediateAOECircle = new Circle();
     public static void dealExplosionDamage(Attacker attacker, float radius, Vector2 position,
         SnapshotArray<Actor> targetGroup) {
 
         aoeRadius.setPosition(position.x, position.y);
         aoeRadius.setRadius(radius);
+
+        immediateAOECircle.setPosition(position.x, position.y);
+        immediateAOECircle.setRadius(aoeRadius.radius / 2);
         for (int i = targetGroup.size - 1; i >= 0; i--) {
             Actor actor = targetGroup.get(i);
             Targetable aoeTarget = (Targetable) actor;
             if (!aoeTarget.isDead() && aoeTarget.isActive()) {
                 if (CollisionDetection.shapesIntersect(aoeTarget.getBody(), aoeRadius)) {
-                    float damage = attacker.getAttack();
+                    Logger.debug("Explosion: dst: " + position.dst(aoeTarget.getPositionCenter()));
+
+                    float dst = position.dst(aoeTarget.getPositionCenter());
+                    dst = dst <= radius ? dst : radius;
+                    float dmgFallOff;
+                    if(CollisionDetection.shapesIntersect(aoeTarget.getBody(), immediateAOECircle)){
+                        dmgFallOff = 0;
+                    } else {
+                        dmgFallOff = attacker.getAttack() * (dst/ radius);
+                    }
+
+                    float damage = attacker.getAttack() - dmgFallOff;
+                    damage = damage > 1 ? damage : 1;
+
+                    Logger.debug("Explosion: dmg: " + damage);
+                    Logger.debug("Explosion: dst: " + dst);
+                    Logger.debug("Explosion: dmgFallOff: " + dmgFallOff);
                     aoeTarget.takeDamage(damage);
                     if (aoeTarget.isDead() && attacker instanceof Tower) {
                         if (!((Tower) attacker).isDead()) {

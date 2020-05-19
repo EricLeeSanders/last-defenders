@@ -31,14 +31,7 @@ import com.lastdefenders.util.UtilPool;
  */
 public class EnemyTank extends EnemyTurret implements PlatedArmor, IVehicle, IRocket {
 
-    private static final float HEALTH = 20;
-    private static final float ARMOR = 10;
-    private static final float ATTACK = 6;
-    private static final float ATTACK_SPEED = 3f;
-    private static final float RANGE = 60;
-    private static final float SPEED = 45;
     private static final float AOE_RADIUS = 40f;
-    private static final int KILL_REWARD = 15;
 
     private static final Dimension ROCKET_SIZE = new Dimension(23, 6);
     private static final Vector2 GUN_POS = UtilPool.getVector2(57, 0);
@@ -52,11 +45,10 @@ public class EnemyTank extends EnemyTurret implements PlatedArmor, IVehicle, IRo
 
     public EnemyTank(TextureRegion bodyRegion, TextureRegion turretRegion,
         TextureRegion[] animatedRegions, CombatActorPool<EnemyTank> pool, Group targetGroup,
-        ProjectileFactory projectileFactory, LDAudio audio) {
+        ProjectileFactory projectileFactory, LDAudio audio, EnemyAttributes attributes) {
 
-        super(turretRegion, animatedRegions, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, SPEED,
-            HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE, TEXTURE_SIZE_BODY,
-            bodyRegion, BODY_POINTS);
+        super(turretRegion, animatedRegions, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS,
+            DEATH_EFFECT_TYPE, TEXTURE_SIZE_BODY, bodyRegion, BODY_POINTS, attributes);
         this.projectileFactory = projectileFactory;
         this.audio = audio;
     }

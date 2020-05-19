@@ -30,17 +30,6 @@ import com.lastdefenders.util.UtilPool;
  */
 public class TowerHumvee extends TowerTurret implements IRotatable {
 
-    public static final int COST = 1300;
-    private static final float HEALTH = 14;
-    private static final float ARMOR = 8;
-    private static final float ATTACK = 2;
-    private static final float ATTACK_SPEED = .3f;
-    private static final float RANGE = 60;
-    private static final int ARMOR_COST = 900;
-    private static final int RANGE_INCREASE_COST = 500;
-    private static final int SPEED_INCREASE_COST = 500;
-    private static final int ATTACK_INCREASE_COST = 500;
-
     private static final Dimension BULLET_SIZE = new Dimension(5, 5);
     private static final Vector2 GUN_POS = UtilPool.getVector2(29, 0);
     private static final Dimension TEXTURE_SIZE_BODY = new Dimension(75, 40);
@@ -53,12 +42,11 @@ public class TowerHumvee extends TowerTurret implements IRotatable {
 
     public TowerHumvee(TextureRegion bodyRegion, TextureRegion turretRegion,
         CombatActorPool<TowerHumvee> pool, Group targetGroup, TextureRegion rangeRegion,
-        TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, LDAudio audio) {
+        TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, LDAudio audio,
+        TowerAttributes attributes) {
 
         super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion,
-            collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST,
-            RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE,
-            TEXTURE_SIZE_BODY, bodyRegion, BODY_POINTS);
+            collidingRangeRegion, DEATH_EFFECT_TYPE, TEXTURE_SIZE_BODY, bodyRegion, BODY_POINTS, attributes);
 
         this.audio = audio;
         this.projectileFactory = projectileFactory;

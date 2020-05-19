@@ -20,6 +20,7 @@ import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.interfaces.IEnlistView;
 import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
 import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
@@ -40,6 +41,7 @@ public class EnlistPresenterTest {
     private TowerPlacement towerPlacementMock = mock(TowerPlacement.class);
     private GameUIStateManager gameUIStateManagerMock = mock(GameUIStateManager.class);
     private Viewport gameViewportMock = mock(Viewport.class);
+    private Resources resourcesMock = TestUtil.createResourcesMock();
 
     @DataProvider
     public static Object[][] filteredGameUIStateEnums() {
@@ -70,7 +72,7 @@ public class EnlistPresenterTest {
         MessageDisplayer messageDisplayerMock = mock(MessageDisplayer.class);
 
         return new EnlistPresenter(gameUIStateManagerMock, playerMock, audioMock,
-            towerPlacementMock, messageDisplayerMock, gameViewportMock);
+            towerPlacementMock, messageDisplayerMock, gameViewportMock, resourcesMock);
     }
 
     /**

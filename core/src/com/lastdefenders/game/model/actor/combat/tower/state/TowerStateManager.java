@@ -7,6 +7,7 @@ import com.lastdefenders.game.model.actor.combat.state.states.CombatActorStandBy
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
 import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerActiveState;
+import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerWaveEndState;
 import com.lastdefenders.game.service.factory.EffectFactory;
 import com.lastdefenders.util.Logger;
 import java.util.HashMap;
@@ -42,6 +43,8 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
         towerStates.put(TowerState.ACTIVE, new TowerActiveState(tower, this));
         towerStates.put(TowerState.DYING,
             new CombatActorDyingState<>(tower, this, TowerState.STANDBY, effectFactory));
+        towerStates.put(TowerState.WAVE_END,
+            new TowerWaveEndState(tower, effectFactory));
         towerStates.put(TowerState.STANDBY, new CombatActorStandByState());
     }
 
@@ -96,6 +99,7 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
     public enum TowerState {
         ACTIVE,
         DYING,
-        STANDBY
+        STANDBY,
+        WAVE_END
     }
 }

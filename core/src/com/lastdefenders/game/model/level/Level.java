@@ -55,7 +55,6 @@ public class Level {
         delayCount = 0;
 
         SpawningEnemy spawningEnemy = spawningEnemyQueue.removeFirst();
-        System.out.println("SPAWNING: " + spawningEnemy.getEnemy().getClass().getSimpleName());
         actorGroups.getEnemyGroup().addActor(spawningEnemy.getEnemy());
 
         HealthBar healthBar = healthFactory.loadHealthBar();
@@ -68,7 +67,6 @@ public class Level {
         enemyDelay = spawningEnemy.getSpawnDelay();
 
         spawningEnemy.free();
-
     }
 
     /**
@@ -85,11 +83,6 @@ public class Level {
         spawningEnemyQueue = waveLoader.loadWave(activeLevel, currentWave);
         delayCount = 0;
         enemyDelay = 0;
-
-        // Once we reach the MAX WAVES, initialize the dynamic wave loader
-        if (currentWave == MAX_WAVES) {
-            dynamicWaveLoader.initDynamicWaveLoader(spawningEnemyQueue);
-        }
     }
 
     public int getSpawningEnemiesCount() {

@@ -1,41 +1,32 @@
 package simulate.state.writer;
 
 import com.badlogic.gdx.utils.Array;
-import com.lastdefenders.game.model.actor.combat.tower.TowerSniper;
-import com.lastdefenders.game.model.level.Level;
 import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.util.Resources;
-import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.ClientAnchor;
 import org.apache.poi.ss.usermodel.ClientAnchor.AnchorType;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Picture;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
 import org.apache.poi.xssf.usermodel.XSSFCreationHelper;
 import org.apache.poi.xssf.usermodel.XSSFDrawing;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import simulate.state.EnemyState;
+import simulate.SimulationRunType;
+import simulate.state.combat.enemy.EnemyState;
 import simulate.state.GameBeginState;
 import simulate.state.GameEndState;
 import simulate.state.GameState;
 import simulate.state.PlayerState;
-import simulate.state.TowerState;
+import simulate.state.combat.tower.TowerState;
 
 /**
  * Created by Eric on 12/17/2019.
@@ -45,7 +36,7 @@ public class StateWriter {
 
     private static final String SIMULATION_SAVE_PATH = "../../files/simulation/simulations/";
 
-    public static void save(List<GameState> states, LevelName levelName) throws IOException {
+    public static void save(List<GameState> states, LevelName levelName, SimulationRunType simulationType) throws IOException {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
         for(GameState state : states){
@@ -56,7 +47,7 @@ public class StateWriter {
             new SimpleDateFormat("MMddYYYYhhmmss");
         String dateAsString = simpleDateFormat.format(new Date());
 
-        FileOutputStream fos = new FileOutputStream(SIMULATION_SAVE_PATH+ dateAsString +".xlsx");
+        FileOutputStream fos = new FileOutputStream(SIMULATION_SAVE_PATH+ dateAsString + "-" + simulationType + ".xlsx");
         workbook.write(fos);
         fos.close();
 

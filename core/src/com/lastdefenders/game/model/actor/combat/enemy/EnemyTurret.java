@@ -28,13 +28,11 @@ public abstract class EnemyTurret extends Enemy {
     private Polygon body;
 
     public EnemyTurret(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions, Dimension textureSizeTurret,
-        CombatActorPool<? extends CombatActor> pool, Group targetGroup, Vector2 gunPos, float speed,
-        float health, float armor, float attack, float attackSpeed, float range, int killReward,
-        DeathEffectType deathEffectType, Dimension textureSizeBody, TextureRegion bodyRegion,
-        float [] bodyPoints) {
+        CombatActorPool<? extends CombatActor> pool, Group targetGroup, Vector2 gunPos, DeathEffectType deathEffectType,
+        Dimension textureSizeBody, TextureRegion bodyRegion, float [] bodyPoints, EnemyAttributes attributes) {
 
         super(stationaryTextureRegion, animatedRegions, textureSizeTurret, pool, targetGroup, gunPos,
-            speed,  health, armor, attack, attackSpeed, range, killReward, deathEffectType);
+            deathEffectType, attributes);
 
         this.textureSizeBody = textureSizeBody;
         this.bodyRegion = bodyRegion;

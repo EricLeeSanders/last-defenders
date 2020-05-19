@@ -1,9 +1,10 @@
 {
-"wave": [
+  "wave": [
     {
-        "enemy": "MachineGun",
-        "delay": "0.5",
-        "armor": false
+      "name": "Rifle",
+      "armor": false,
+      "level": 1,
+      "delay": 0.3
     }
-]
+  ]
 }

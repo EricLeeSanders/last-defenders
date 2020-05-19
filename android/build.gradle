@@ -57,7 +57,7 @@ android {
         applicationId "com.lastdefenders.game"
         multiDexEnabled true
         minSdkVersion 15
-        targetSdkVersion 20
+        targetSdkVersion 28
     }
 }
 // called every time gradle gets executed, takes the native dependencies of

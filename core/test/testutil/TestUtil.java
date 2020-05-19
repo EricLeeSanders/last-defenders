@@ -11,9 +11,16 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.backends.headless.HeadlessApplication;
+import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
+import com.badlogic.gdx.backends.headless.HeadlessNativesLoader;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -22,6 +29,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyAttributes;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyHumvee;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyMachineGun;
@@ -33,6 +41,7 @@ import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
 import com.lastdefenders.game.model.actor.combat.event.EventManagerImpl;
 import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerAttributes;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
 import com.lastdefenders.game.model.actor.combat.tower.TowerMachineGun;
@@ -62,12 +71,39 @@ import java.util.Random;
  */
 
 public class TestUtil {
+    public static final int HORIZONTAL = 0;
+    public static final int VERTICAL = 1;
 
     public static final double DELTA = 1e-15;
     private static EffectFactory effectFactoryMock = createEffectFactoryMock();
     private static ProjectileFactory projectileFactoryMock = createProjectileFactoryMock();
     private static Player playerMock = mock(Player.class);
     private static LDAudio audioMock = mock(LDAudio.class);
+    private static TowerAttributes towerAttributes = mock(TowerAttributes.class);
+    private static EnemyAttributes enemyAttributes = mock(EnemyAttributes.class);
+
+    static {
+
+        System.out.println("TEST UTIL");
+        HeadlessNativesLoader.load();
+        HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
+
+        new HeadlessApplication(new ApplicationListener() {
+            public void create() {}
+            public void resize(int width, int height) {}
+            public void render() {}
+            public void pause() {}
+            public void resume() {}
+            public void dispose() {}
+        }, config);
+        GL20 gl20 = mock(GL20.class);
+        Gdx.gl = gl20;
+        Gdx.gl20 = gl20;
+
+        Resources resources = new Resources(mock(UserPreferences.class));
+
+        System.out.println(resources.getTowerAttribute(TowerRifle.class));
+    }
 
     public static Resources createResourcesMock() {
 
@@ -129,31 +165,31 @@ public class TestUtil {
         switch (name) {
             case "Rifle":
                 tower = new TowerRifle(null, null, new Group(), null, null, projectileFactoryMock,
-                    audioMock);
+                    audioMock, towerAttributes);
                 break;
             case "MachineGun":
                 tower = new TowerMachineGun(null, null, new Group(), null, null,
-                    projectileFactoryMock, audioMock);
+                    projectileFactoryMock, audioMock, towerAttributes);
                 break;
             case "Sniper":
                 tower = new TowerSniper(null, null, new Group(), null, null, projectileFactoryMock,
-                    audioMock);
+                    audioMock, towerAttributes);
                 break;
             case "RocketLauncher":
                 tower = new TowerRocketLauncher(null, null, new Group(), null, null,
-                    projectileFactoryMock, audioMock);
+                    projectileFactoryMock, audioMock, towerAttributes);
                 break;
             case "FlameThrower":
                 tower = new TowerFlameThrower(null, null, new Group(), null, null,
-                    projectileFactoryMock, audioMock);
+                    projectileFactoryMock, audioMock, towerAttributes);
                 break;
             case "Tank":
                 tower = new TowerTank(null, null, null, new Group(), null, null,
-                    projectileFactoryMock, audioMock);
+                    projectileFactoryMock, audioMock, towerAttributes);
                 break;
             case "Humvee":
                 tower = new TowerHumvee(null, null, null, new Group(), null, null,
-                    projectileFactoryMock, audioMock);
+                    projectileFactoryMock, audioMock, towerAttributes);
                 break;
             default:
                 throw new NullPointerException("Type: " + name + " doesn't exist");
@@ -190,31 +226,31 @@ public class TestUtil {
         switch (name) {
             case "Rifle":
                 enemy = new EnemyRifle(null, animatedRegions, null, new Group(),
-                    projectileFactoryMock, audioMock);
+                    projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             case "MachineGun":
                 enemy = new EnemyMachineGun(null, animatedRegions, null, new Group(),
-                    projectileFactoryMock, audioMock);
+                    projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             case "Sniper":
                 enemy = new EnemySniper(null, animatedRegions, null, new Group(),
-                    projectileFactoryMock, audioMock);
+                    projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             case "FlameThrower":
                 enemy = new EnemyFlameThrower(null, animatedRegions, null, new Group(),
-                    projectileFactoryMock, audioMock);
+                    projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             case "Humvee":
                 enemy = new EnemyHumvee(null, null, animatedRegions, null, new Group(),
-                    projectileFactoryMock, audioMock);
+                    projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             case "RocketLauncher":
                 enemy = new EnemyRocketLauncher(null, animatedRegions, null, new Group(),
-                    projectileFactoryMock, audioMock);
+                    projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             case "Tank":
                 enemy = new EnemyTank(null, null, animatedRegions, null, new Group(),
-                    projectileFactoryMock, audioMock);
+                    projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             default:
                 throw new NullPointerException("Type: " + name + " doesn't exist");
@@ -283,11 +319,9 @@ public class TestUtil {
         return vector2;
     }
 
-    public static int getRandomNumberInRange(int min, int max, boolean ordered) {
+    public static int getRandomNumberInRange(int min, int max) {
 
-        if (min >= max && ordered) {
-            throw new IllegalArgumentException("max must be greater than min");
-        } else if(min >= max && !ordered){
+        if(min >= max ){
             int temp = min;
             min = max;
             max = temp;
@@ -295,5 +329,25 @@ public class TestUtil {
 
         Random r = new Random();
         return r.nextInt((max - min) + 1) + min;
+    }
+
+    /*
+        Determines if a line is horizontal or vertical.
+        Returns 0 if the line is horizontal.
+        Returns 1 if the line is vertical.
+        Returns -1 if the two points are equal.
+     */
+    public static int lineDirection(Vector2 start, Vector2 end){
+
+        if (start.equals(end)) {
+            return -1;
+        }
+        if(start.y == end.y){
+            // Horizontal
+            return HORIZONTAL;
+        } else {
+            // Vertical
+            return VERTICAL;
+        }
     }
 }

@@ -22,17 +22,7 @@ import com.lastdefenders.util.UtilPool;
  */
 public class TowerRocketLauncher extends Tower implements IRocket {
 
-    public static final int COST = 800;
-    private static final float HEALTH = 10;
-    private static final float ARMOR = 5;
-    private static final float ATTACK = 12;
-    private static final float ATTACK_SPEED = 3f;
-    private static final float RANGE = 50;
-    private static final float AOE_RADIUS = 20f;
-    private static final int ARMOR_COST = 500;
-    private static final int RANGE_INCREASE_COST = 450;
-    private static final int SPEED_INCREASE_COST = 450;
-    private static final int ATTACK_INCREASE_COST = 450;
+    private static final float AOE_RADIUS = 75f;
 
     private static final Dimension ROCKET_SIZE = new Dimension(23, 6);
     private static final Vector2 GUN_POS = UtilPool.getVector2(25, -10);
@@ -45,11 +35,10 @@ public class TowerRocketLauncher extends Tower implements IRocket {
 
     public TowerRocketLauncher(TextureRegion actorRegion, CombatActorPool<TowerRocketLauncher> pool,
         Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
-        ProjectileFactory projectileFactory, LDAudio audio) {
+        ProjectileFactory projectileFactory, LDAudio audio, TowerAttributes attributes) {
 
         super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion,
-            collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST,
-            RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
+            collidingRangeRegion, DEATH_EFFECT_TYPE, attributes);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
         this.body = new Circle(this.getPositionCenter(), 10);

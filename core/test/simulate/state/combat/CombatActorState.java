@@ -1,44 +1,41 @@
-package simulate.state;
+package simulate.state.combat;
 
 import static org.mockito.Mockito.doNothing;
 
 import com.badlogic.gdx.math.Vector2;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
+import simulate.state.GameActorState;
 
 /**
  * Created by Eric on 12/16/2019.
  */
 
-public class CombatActorState {
-    private Vector2 position;
+public class CombatActorState extends GameActorState {
     private Boolean hasArmor;
-    private String name;
     private String ID;
+    private boolean dead;
 
     public CombatActorState(CombatActor actor){
-        this.position = actor.getPositionCenter();
+        super(actor);
         this.hasArmor = actor.hasArmor();
-        this.name = actor.getClass().getSimpleName();
         this.ID = actor.ID;
     }
-
-    public Vector2 getPosition() {
-
-        return position;
-    }
-
     public Boolean getHasArmor() {
 
         return hasArmor;
     }
-
-    public String getName() {
-
-        return name;
-    }
-
     public String getID(){
 
         return ID;
+    }
+
+    public boolean isDead() {
+
+        return dead;
+    }
+
+    public void setDead(boolean dead) {
+
+        this.dead = dead;
     }
 }

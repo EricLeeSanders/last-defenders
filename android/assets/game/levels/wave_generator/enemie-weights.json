@@ -1,0 +1,86 @@
+[
+  {
+    "name": "Tank",
+    "armor": false,
+    "weight": 50,
+    "level": 16
+  },
+  {
+    "name": "Tank",
+    "armor": true,
+    "weight": 75,
+    "level": 20
+  },
+  {
+    "name": "Humvee",
+    "armor": false,
+    "weight": 13,
+    "level": 10
+  },
+  {
+    "name": "Humvee",
+    "armor": true,
+    "weight": 19,
+    "level": 14
+  },
+  {
+    "name": "RocketLauncher",
+    "armor": false,
+    "weight": 11,
+    "level": 9
+  },
+  {
+    "name": "RocketLauncher",
+    "armor": true,
+    "weight": 16,
+    "level": 12
+  },
+  {
+    "name": "FlameThrower",
+    "armor": false,
+    "weight": 9,
+    "level": 5
+  },
+  {
+    "name": "FlameThrower",
+    "armor": true,
+    "weight": 13,
+    "level": 8
+  },
+  {
+    "name": "Sniper",
+    "armor": false,
+    "weight": 7,
+    "level": 4
+  },
+  {
+    "name": "Sniper",
+    "armor": true,
+    "weight": 10,
+    "level": 7
+  },
+  {
+    "name": "Rifle",
+    "armor": false,
+    "weight": 4,
+    "level": 1
+  },
+  {
+    "name": "Rifle",
+    "armor": true,
+    "weight": 6,
+    "level": 3
+  },
+  {
+    "name": "MachineGun",
+    "armor": false,
+    "weight": 4,
+    "level": 1
+  },
+  {
+    "name": "MachineGun",
+    "armor": true,
+    "weight": 6,
+    "level": 3
+  }
+]

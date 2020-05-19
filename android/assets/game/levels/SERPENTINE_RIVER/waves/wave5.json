@@ -1,44 +1,46 @@
 {
-"wave": [
+  "wave": [
     {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
+      "name": "MachineGun",
+      "armor": false,
+      "level": 1,
+      "delay": 0.6
     },
     {
-        "enemy": "FlameThrower",
-        "delay": ".50",
-        "armor": true
+      "name": "Sniper",
+      "armor": false,
+      "level": 4,
+      "delay": 0.8
     },
     {
-        "enemy": "Sniper",
-        "delay": ".50",
-        "armor": false
+      "name": "Rifle",
+      "armor": false,
+      "level": 1,
+      "delay": 0.1
     },
     {
-        "enemy": "Humvee",
-        "delay": ".50",
-        "armor": true
+      "name": "FlameThrower",
+      "armor": false,
+      "level": 5,
+      "delay": 1
     },
     {
-        "enemy": "Sniper",
-        "delay": ".50",
-        "armor": true
+      "name": "Rifle",
+      "armor": true,
+      "level": 3,
+      "delay": 0.9
     },
     {
-        "enemy": "Sniper",
-        "delay": ".50",
-        "armor": false
+      "name": "MachineGun",
+      "armor": true,
+      "level": 3,
+      "delay": 0.2
     },
     {
-        "enemy": "MachineGun",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "FlameThrower",
+      "armor": false,
+      "level": 5,
+      "delay": 0.2
     }
-]
+  ]
 }

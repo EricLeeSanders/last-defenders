@@ -46,7 +46,7 @@ import com.lastdefenders.util.Resources;
  */
 public class GameStage extends Stage implements PlayerObserver {
 
-    private static final int WAVE_OVER_MONEY_MULTIPLIER = 100;
+    private static final int WAVE_OVER_MONEY_MULTIPLIER = 50;
     private LevelStateManager levelStateManager;
     private GameUIStateManager uiStateManager;
     private Level level;
@@ -205,7 +205,7 @@ public class GameStage extends Stage implements PlayerObserver {
         }
         WaveOverCoinEffect waveOverCoinEffect = effectFactory.loadEffect(WaveOverCoinEffect.class, true);
         waveOverCoinEffect.initialize(money);
-        healTowers();
+        resetTowersForNewWave();
         playServices.submitScore(GooglePlayLeaderboard.findByLevelName(level.getActiveLevel()), level.getCurrentWave());
         level.loadNextWave(); //load the next wave
     }
@@ -225,25 +225,13 @@ public class GameStage extends Stage implements PlayerObserver {
         playServices.unlockAchievement(GooglePlayAchievement.findByLevelName(level.getActiveLevel()));
     }
 
-    private void healTowers() {
+    private void resetTowersForNewWave() {
 
-        Logger.info("Game Stage: healing towers");
+        Logger.info("Game Stage: Resetting towers for new wave");
         for (Actor actor : actorGroups.getTowerGroup().getChildren()) {
             if (actor instanceof Tower) {
                 Tower tower = (Tower) actor;
-                if (tower.isActive()){
-                    if ( tower.getHealthPercent() < 1){
-                        TowerHealEffect effect = effectFactory
-                            .loadEffect(TowerHealEffect.class, true);
-                        effect.initialize(tower);
-
-                        tower.heal();
-                    }
-
-                    if(tower.hasArmor()){
-                        tower.resetArmor();
-                    }
-                }
+                tower.waveReset();
             }
         }
     }
@@ -259,7 +247,7 @@ public class GameStage extends Stage implements PlayerObserver {
         }
     }
 
-    private ActorGroups getActorGroups() {
+    public ActorGroups getActorGroups() {
 
         return actorGroups;
     }
@@ -282,6 +270,11 @@ public class GameStage extends Stage implements PlayerObserver {
     public SupplyDropPlacement getSupplyDropPlacement() {
 
         return supplyDropPlacement;
+    }
+
+    public CombatActorFactory getCombatActorFactory(){
+
+        return combatActorFactory;
     }
 
     public Map getMap(){

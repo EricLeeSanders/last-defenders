@@ -4,12 +4,6 @@ import static com.lastdefenders.levelselect.LevelName.SERPENTINE_RIVER;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
-import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
-import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
-import com.lastdefenders.game.model.actor.combat.tower.TowerMachineGun;
-import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
-import com.lastdefenders.game.model.actor.combat.tower.TowerSniper;
-import com.lastdefenders.game.model.actor.combat.tower.TowerTank;
 import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.util.Resources;
 import java.awt.Graphics2D;
@@ -18,10 +12,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import javax.imageio.ImageIO;
-import simulate.state.TowerState;
+import simulate.state.combat.tower.TowerState;
 
 /**
  * Created by Eric on 12/17/2019.

@@ -29,14 +29,11 @@ public abstract class TowerTurret extends Tower {
 
     public TowerTurret(TextureRegion textureRegion, Dimension textureSizeTurret,
         CombatActorPool<? extends CombatActor> pool, Group targetGroup, Vector2 gunPos,
-        TextureRegion rangeRegion, TextureRegion collidingRangeRegion, float health, float armor,
-        float attack, float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost,
-        int rangeIncreaseCost, int attackIncreaseCost, DeathEffectType deathEffectType, Dimension textureSizeBody,
-        TextureRegion bodyRegion, float [] bodyPoints) {
+        TextureRegion rangeRegion, TextureRegion collidingRangeRegion, DeathEffectType deathEffectType, Dimension textureSizeBody,
+        TextureRegion bodyRegion, float [] bodyPoints, TowerAttributes attributes) {
 
         super(textureRegion, textureSizeTurret, pool, targetGroup, gunPos, rangeRegion, collidingRangeRegion,
-            health, armor, attack, attackSpeed, range, cost, armorCost, speedIncreaseCost,
-            rangeIncreaseCost, attackIncreaseCost, deathEffectType);
+            deathEffectType, attributes);
 
         this.textureSizeBody = textureSizeBody;
         this.bodyRegion = bodyRegion;

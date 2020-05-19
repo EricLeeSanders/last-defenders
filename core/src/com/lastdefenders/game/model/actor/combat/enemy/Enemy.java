@@ -23,6 +23,8 @@ import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.UtilPool;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An abstract class that represents an Enemy. Enemies are created from the
@@ -35,9 +37,6 @@ public abstract class Enemy extends CombatActor {
 
     public static final float MOVEMENT_DELAY = 1f; // The delay to wait after a target begins attacking
     private static final float FRAME_DURATION = 0.3f;
-    private static final float MIN_FIND_TARGET_DELAY = 1.0f;
-    private static final float MAX_FIND_TARGET_DELAY = 5.0f;
-    private float findTargetDelay;
     private float speed;
     private int killReward;
     private float lengthToEnd;
@@ -50,16 +49,14 @@ public abstract class Enemy extends CombatActor {
 
     public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions,
         Dimension textureSize, CombatActorPool<? extends CombatActor> pool, Group targetGroup, Vector2 gunPos,
-        float speed, float health, float armor, float attack, float attackSpeed, float range,
-        int killReward, DeathEffectType deathEffectType) {
+        DeathEffectType deathEffectType, EnemyAttributes attributes) {
 
-        super(stationaryTextureRegion, textureSize, pool, targetGroup, gunPos, health, armor,
-            attack, attackSpeed, range, deathEffectType);
+        super(stationaryTextureRegion, textureSize, pool, targetGroup, gunPos, deathEffectType, attributes);
         movementAnimation = new Animation<>(FRAME_DURATION, animatedRegions);
         movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
-        this.speed = speed;
+        this.speed = attributes.getSpeed();
         this.stationaryTextureRegion = stationaryTextureRegion;
-        this.killReward = killReward;
+        this.killReward = attributes.getKillReward();
     }
 
     public void setStateManager(StateManager<EnemyState, CombatActorState> stateManager) {
@@ -73,11 +70,13 @@ public abstract class Enemy extends CombatActor {
 
     public void init() {
 
-        stateManager.transition(EnemyState.RUNNING);
+        Map<String, Object> params = new HashMap<>();
+        params.put("NewSpawn", Boolean.TRUE);
+
+        stateManager.transition(EnemyState.RUNNING, params);
         setActive(true);
         setDead(false);
-        findTargetDelay = MathUtils.random(MIN_FIND_TARGET_DELAY, MAX_FIND_TARGET_DELAY);
-        System.out.println("findTargetDelay: " + findTargetDelay);
+        lengthToEndCalculated = false;
     }
 
     /**
@@ -127,7 +126,6 @@ public abstract class Enemy extends CombatActor {
         }
 
         addAction(sequenceAction);
-
     }
 
     private WaypointAction createWaypointAction(float x, float y, float duration, float rotation) {
@@ -161,6 +159,7 @@ public abstract class Enemy extends CombatActor {
     public void reachedEnd() {
 
         Logger.info("Enemy " + ID  + ": "  + this.getClass().getSimpleName() + " reached end");
+        System.out.println("enemy reached end : " + ID + " : " + getClass().getSimpleName());
         freeActor();
     }
 
@@ -183,7 +182,7 @@ public abstract class Enemy extends CombatActor {
     }
 
     public void deadState() {
-
+        System.out.println("enemy dying : " + ID + " : " + getClass().getSimpleName());
         stateManager.transition(EnemyState.DYING);
     }
 
@@ -208,7 +207,7 @@ public abstract class Enemy extends CombatActor {
         // The enemy should only have 1 action and it should
         // be a LDSequenceAction;
         if (getActions().size != 1) {
-            return;
+            throw new IllegalStateException("Enemy: " + ID + " has no action");
         }
 
         LDSequenceAction sequenceAction = (LDSequenceAction) getActions().first();
@@ -256,10 +255,6 @@ public abstract class Enemy extends CombatActor {
     public float getSpeed(){
 
         return speed;
-    }
-
-    public float getFindTargetDelay(){
-        return findTargetDelay;
     }
 
 }

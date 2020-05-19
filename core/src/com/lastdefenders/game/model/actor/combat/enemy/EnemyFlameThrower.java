@@ -22,32 +22,25 @@ import com.lastdefenders.util.UtilPool;
  */
 public class EnemyFlameThrower extends Enemy implements IFlame {
 
-    private static final float HEALTH = 10;
-    private static final float ARMOR = 5;
-    private static final float ATTACK = .35f;
-    private static final float ATTACK_SPEED = 1.2f;
-    private static final float RANGE = 70;
-    private static final float SPEED = 70f;
-    private static final int KILL_REWARD = 15;
-
     private static final Vector2 GUN_POS = UtilPool.getVector2(26, 4);
     private static final Dimension TEXTURE_SIZE = new Dimension(56, 36);
     private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
 
     private Circle body;
-    private Dimension flameSize = new Dimension(RANGE - 26, 20);
+    private Dimension flameSize;
     private LDAudio audio;
     private ProjectileFactory projectileFactory;
 
     public EnemyFlameThrower(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions,
         CombatActorPool<EnemyFlameThrower> pool, Group targetGroup,
-        ProjectileFactory projectileFactory, LDAudio audio) {
+        ProjectileFactory projectileFactory, LDAudio audio, EnemyAttributes attributes) {
 
         super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS,
-            SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
+            DEATH_EFFECT_TYPE, attributes);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
         this.body = new Circle(this.getPositionCenter(), 10);
+        flameSize = new Dimension(attributes.getRange() - 26, 20);
     }
 
     @Override

@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.interfaces.Collidable;
@@ -61,15 +62,17 @@ public final class CollisionDetection {
     /**
      * Checks for collisions with actors when placing a tower
      *
-     * @param Actors - A collection of Actors that implement Collidable
+     * @param actors - A collection of Actors that implement Collidable
      * @param placeActor - The actor that is being placed
      * @return boolean - If there is a collision
      */
-    public static boolean collisionWithActors(SnapshotArray<Actor> Actors, Collidable placeActor) {
+    public static boolean collisionWithActors(SnapshotArray<Actor> actors, Collidable placeActor) {
 
         Shape2D placeBody = placeActor.getBody();
-        for (Actor actor : Actors) {
+        for (Actor actor : actors) {
+
             if (!actor.equals(placeActor) && actor instanceof Tower) {
+
                 Shape2D towerBody = ((CombatActor) actor).getBody();
                 if (shapesIntersect(placeBody, towerBody)) {
                     return true;
@@ -77,6 +80,18 @@ public final class CollisionDetection {
             }
         }
         return false;
+    }
+
+    public static <T extends CombatActor> Array<T> gameActorsInRange(Shape2D rangeShape, Array<T> actors){
+        Array<T> actorsInRange = new Array<>();
+        for(T actor : actors){
+            Shape2D body = actor.getBody();
+            if(CollisionDetection.shapesIntersect(body, rangeShape)){
+                actorsInRange.add(actor);
+            }
+        }
+
+        return actorsInRange;
     }
 
     public static boolean shapesIntersect(Shape2D shape1, Shape2D shape2) {

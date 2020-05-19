@@ -22,14 +22,7 @@ import com.lastdefenders.util.UtilPool;
  */
 public class EnemyRocketLauncher extends Enemy implements IRocket {
 
-    private static final float HEALTH = 10;
-    private static final float ARMOR = 5;
-    private static final float ATTACK = 6;
-    private static final float ATTACK_SPEED = 3;
-    private static final float RANGE = 50;
-    private static final float SPEED = 55f;
     private static final float AOE_RADIUS = 20f;
-    private static final int KILL_REWARD = 15;
 
     private static final Dimension ROCKET_SIZE = new Dimension(23, 6);
     private static final Vector2 GUN_POS = UtilPool.getVector2(25, -10);
@@ -42,10 +35,10 @@ public class EnemyRocketLauncher extends Enemy implements IRocket {
 
     public EnemyRocketLauncher(TextureRegion stationaryTextureRegion,
         TextureRegion[] animatedRegions, CombatActorPool<EnemyRocketLauncher> pool,
-        Group targetGroup, ProjectileFactory projectileFactory, LDAudio audio) {
+        Group targetGroup, ProjectileFactory projectileFactory, LDAudio audio, EnemyAttributes attributes) {
 
         super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS,
-            SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
+            DEATH_EFFECT_TYPE, attributes);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
         this.body = new Circle(this.getPositionCenter(), 10);

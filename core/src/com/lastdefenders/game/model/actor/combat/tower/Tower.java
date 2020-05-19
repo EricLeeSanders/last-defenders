@@ -23,11 +23,11 @@ import com.lastdefenders.util.datastructures.Dimension;
  */
 public abstract class Tower extends CombatActor {
 
-    private static final float TOWER_RANGE_INCREASE_RATE = (1 / 2f);
+    private static final float TOWER_RANGE_INCREASE_RATE = (1 / 3f);
     private static final float TOWER_SPEED_INCREASE_RATE = 0.33f;
     private static final float TOWER_ATTACK_INCREASE_RATE = 0.33f;
     private static final float TOWER_SELL_RATE = 0.75f;
-    private static final float UPGRADE_MODIFIER = .4f;
+    private static final float UPGRADE_MODIFIER = .3f;
     private int cost, armorCost, speedIncreaseCost, rangeIncreaseCost, attackIncreaseCost;
     private boolean rangeIncreaseEnabled, speedIncreaseEnabled, attackIncreaseEnabled;
     private TowerAIType ai = TowerAIType.CLOSEST;
@@ -39,13 +39,10 @@ public abstract class Tower extends CombatActor {
 
     public Tower(TextureRegion textureRegion, Dimension textureSize, CombatActorPool<? extends CombatActor> pool,
         Group targetGroup, Vector2 gunPos, TextureRegion rangeRegion,
-        TextureRegion collidingRangeRegion, float health, float armor, float attack,
-        float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost,
-        int rangeIncreaseCost, int attackIncreaseCost, DeathEffectType deathEffectType) {
+        TextureRegion collidingRangeRegion, DeathEffectType deathEffectType, TowerAttributes attributes) {
 
-        super(textureRegion, textureSize, pool, targetGroup, gunPos, health, armor, attack,
-            attackSpeed, range, deathEffectType);
-        this.cost = cost;
+        super(textureRegion, textureSize, pool, targetGroup, gunPos, deathEffectType, attributes);
+        this.cost = attributes.getCost();
         this.armorCost = (int)(UPGRADE_MODIFIER * cost);
         this.speedIncreaseCost = (int)(UPGRADE_MODIFIER * cost);
         this.rangeIncreaseCost = (int)(UPGRADE_MODIFIER * cost);
@@ -268,5 +265,12 @@ public abstract class Tower extends CombatActor {
     public TowerState getState() {
 
         return stateManager.getCurrentStateName();
+    }
+
+    public void waveReset(){
+        if(isActive()){
+            stateManager.transition(TowerState.WAVE_END);
+            stateManager.transition(TowerState.ACTIVE);
+        }
     }
 }

@@ -1,6 +1,10 @@
 package com.lastdefenders.game.model.actor;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.SnapshotArray;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
 
 /**
  * A class that holds all of the various Actor Groups that are placed on the
@@ -41,9 +45,31 @@ public class ActorGroups {
         return towerGroup;
     }
 
+    public SnapshotArray<Tower> getTowerChildren(){
+
+        SnapshotArray<Tower> towers = new SnapshotArray<>();
+        for(Actor actor : getTowerGroup().getChildren()){
+            Tower tower = (Tower)actor;
+            towers.add(tower);
+        }
+
+        return towers;
+    }
+
     public Group getEnemyGroup() {
 
         return enemyGroup;
+    }
+
+    public SnapshotArray<Enemy> getEnemyChildren(){
+
+        SnapshotArray<Enemy> enemies = new SnapshotArray<>();
+        for(Actor actor : getEnemyGroup().getChildren()){
+            Enemy enemy = (Enemy)actor;
+            enemies.add(enemy);
+        }
+
+        return enemies;
     }
 
     public Group getHealthGroup() {

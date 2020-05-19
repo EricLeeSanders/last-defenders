@@ -65,7 +65,6 @@ public class SupportActorFactory {
      * @param addToGroup
      * @return Support Actor
      */
-    @SuppressWarnings("unchecked")
     public <T extends Actor> T loadSupportActor(Class<T> type, boolean addToGroup) {
 
         Logger.info("Actor Factory: loading support actor: " + type.getSimpleName());

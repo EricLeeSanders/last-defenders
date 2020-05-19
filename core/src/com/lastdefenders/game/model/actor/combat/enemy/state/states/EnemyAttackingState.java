@@ -5,6 +5,7 @@ import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.E
 import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
 import com.lastdefenders.game.model.actor.combat.state.StateTransitioner;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -48,7 +49,7 @@ public class EnemyAttackingState implements CombatActorState {
 
         movementDelayCounter += delta;
         if (movementDelayCounter >= Enemy.MOVEMENT_DELAY) {
-            stateTransitioner.transition(EnemyState.RUNNING);
+            changeToRunning();
             return;
         }
 
@@ -71,5 +72,12 @@ public class EnemyAttackingState implements CombatActorState {
     public void postState() {
 
         enemy.postAttack();
+    }
+
+    private void changeToRunning(){
+        Map<String, Object> params = new HashMap<>();
+        params.put("NewSpawn", Boolean.FALSE);
+
+        stateTransitioner.transition(EnemyState.RUNNING, params);
     }
 }

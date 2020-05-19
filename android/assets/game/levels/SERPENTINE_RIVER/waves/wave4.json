@@ -1,34 +1,40 @@
 {
-"wave": [
+  "wave": [
     {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
+      "name": "Rifle",
+      "armor": true,
+      "level": 3,
+      "delay": 0.6
     },
     {
-        "enemy": "MachineGun",
-        "delay": ".5",
-        "armor": false
+      "name": "Rifle",
+      "armor": false,
+      "level": 1,
+      "delay": 0.8
     },
     {
-        "enemy": "MachineGun",
-        "delay": ".5",
-        "armor": false
+      "name": "Rifle",
+      "armor": true,
+      "level": 3,
+      "delay": 0.7
     },
     {
-        "enemy": "Sniper",
-        "delay": "2",
-        "armor": false
+      "name": "MachineGun",
+      "armor": false,
+      "level": 1,
+      "delay": 0.5
     },
     {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
+      "name": "MachineGun",
+      "armor": true,
+      "level": 3,
+      "delay": 0.8
     },
     {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
+      "name": "MachineGun",
+      "armor": true,
+      "level": 3,
+      "delay": 0.8
     }
-]
+  ]
 }

@@ -38,7 +38,6 @@ public class CombatActorDyingState<E> implements CombatActorState {
             .initialize(combatActor.getPositionCenter());
 
             //.initialize(combatActor.getPositionCenter());
-        stateTransitioner.transition(transitionState);
     }
 
     @Override

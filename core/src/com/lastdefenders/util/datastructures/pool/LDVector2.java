@@ -13,6 +13,8 @@ public class LDVector2 extends Vector2 implements LDPoolable {
 
     public LDVector2() {}
 
+    public LDVector2(Vector2 vector) { super(vector); }
+
     public LDVector2(float x, float y) {
         super(x, y);
     }

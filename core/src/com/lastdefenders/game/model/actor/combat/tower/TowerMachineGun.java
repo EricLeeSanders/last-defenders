@@ -21,17 +21,6 @@ import com.lastdefenders.util.UtilPool;
  */
 public class TowerMachineGun extends Tower {
 
-    public static final int COST = 200;
-    private static final float HEALTH = 8;
-    private static final float ARMOR = 4;
-    private static final float ATTACK = 1.5f;
-    private static final float ATTACK_SPEED = 0.3f;
-    private static final float RANGE = 40;
-    private static final int ARMOR_COST = 100;
-    private static final int RANGE_INCREASE_COST = 50;
-    private static final int SPEED_INCREASE_COST = 50;
-    private static final int ATTACK_INCREASE_COST = 50;
-
     private static final Dimension BULLET_SIZE = new Dimension(5, 5);
     private static final Vector2 GUN_POS = UtilPool.getVector2(19, 4);
     private static final Dimension TEXTURE_SIZE = new Dimension(40, 26);
@@ -43,11 +32,10 @@ public class TowerMachineGun extends Tower {
 
     public TowerMachineGun(TextureRegion actorRegion, CombatActorPool<TowerMachineGun> pool,
         Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
-        ProjectileFactory projectileFactory, LDAudio audio) {
+        ProjectileFactory projectileFactory, LDAudio audio, TowerAttributes attributes) {
 
         super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion,
-            collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST,
-            RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
+            collidingRangeRegion, DEATH_EFFECT_TYPE, attributes);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
         this.body = new Circle(this.getPositionCenter(), 10);

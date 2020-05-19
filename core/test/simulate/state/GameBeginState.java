@@ -4,9 +4,10 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Queue;
 import com.lastdefenders.game.model.Player;
-import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.level.SpawningEnemy;
+import simulate.state.combat.enemy.EnemyState;
+import simulate.state.combat.tower.TowerState;
 
 /**
  * Created by Eric on 12/16/2019.
@@ -37,6 +38,8 @@ public class GameBeginState {
 
     }
 
+
+
     public PlayerState getPlayerState() {
 
         return playerState;
@@ -51,7 +54,6 @@ public class GameBeginState {
 
         return enemies;
     }
-
 
     @Override
     public String toString() {

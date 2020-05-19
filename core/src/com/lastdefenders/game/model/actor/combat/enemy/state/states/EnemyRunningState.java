@@ -1,5 +1,6 @@
 package com.lastdefenders.game.model.actor.combat.enemy.state.states;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.lastdefenders.game.model.actor.ai.EnemyAI;
@@ -17,11 +18,17 @@ import java.util.Map;
 
 public class EnemyRunningState implements CombatActorState {
 
+    //private static final float MIN_FIND_TARGET_DELAY = 0f;
+    private static final float MAX_FIND_TARGET_DELAY = 2.0f;
+
     private final Enemy enemy;
     private final StateTransitioner<EnemyState> stateTransitioner;
     private float movementAnimationStateTime;
     private float findTargetDelayCounter;
+    private float findTargetDelay;
     private Map<String, Object> attackTransitionParameters = new HashMap<>();
+
+    private float minTargetDelay = 0;
 
     public EnemyRunningState(Enemy enemy, StateTransitioner<EnemyState> stateTransitioner) {
 
@@ -36,9 +43,14 @@ public class EnemyRunningState implements CombatActorState {
 
     @Override
     public void preState() {
-
+        if(enemy.getState() != null && enemy.getState().equals(EnemyState.ATTACKING)){
+            minTargetDelay = enemy.getAttackSpeed();
+        } else {
+            minTargetDelay = 0;
+        }
         movementAnimationStateTime = 0;
         findTargetDelayCounter = 0;
+        createFindTargetDelay();
     }
 
     @Override
@@ -52,6 +64,9 @@ public class EnemyRunningState implements CombatActorState {
         }
 
         if ( isReadyToFindTarget()) {
+            minTargetDelay = 0;
+            createFindTargetDelay();
+            findTargetDelayCounter = 0;
             Targetable target = findTarget();
             if (target != null) {
                 attackTransitionParameters.put("target", target);
@@ -64,13 +79,13 @@ public class EnemyRunningState implements CombatActorState {
 
     private boolean isReadyToFindTarget() {
 
-        return findTargetDelayCounter >= enemy.getFindTargetDelay();
+        return findTargetDelayCounter >= findTargetDelay;
     }
 
+        /**
+         * Finds a tower to attack.
+         */
 
-    /**
-     * Finds a tower to attack.
-     */
     private Targetable findTarget() {
 
         SnapshotArray<Actor> children = enemy.getTargetGroup().getChildren();
@@ -89,5 +104,13 @@ public class EnemyRunningState implements CombatActorState {
     @Override
     public void postState() {
 
+    }
+
+    private void createFindTargetDelay() {
+
+        float min = minTargetDelay;
+        float max = minTargetDelay + MAX_FIND_TARGET_DELAY;
+
+        findTargetDelay = MathUtils.random(min, max);
     }
 }

@@ -32,15 +32,15 @@ public class EnemyReachedEndState implements CombatActorState {
 
     @Override
     public void preState() {
-
+        enemy.reachedEnd();
+        player.enemyReachedEnd();
+        stateTransitioner.transition(EnemyState.STANDBY);
     }
 
     @Override
     public void update(float delta) {
 
-        enemy.reachedEnd();
-        player.enemyReachedEnd();
-        stateTransitioner.transition(EnemyState.STANDBY);
+
     }
 
     @Override

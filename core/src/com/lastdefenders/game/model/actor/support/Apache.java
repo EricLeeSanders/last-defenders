@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.ai.TowerAI;
 import com.lastdefenders.game.model.actor.ai.towerai.ClosestEnemyAI;
+import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
@@ -28,11 +29,11 @@ import com.lastdefenders.util.UtilPool;
 
 public class Apache extends CombatSupportActor {
 
-    public static final int COST = 2000;
+    public static final int COST = 750;
     public static final float TIME_ACTIVE_LIMIT = 10f;
     private static final float FRAME_DURATION = 0.05f;
     private static final float ATTACK_SPEED = 0.2f;
-    private static final float RANGE = 75f;
+    private static final float RANGE = 125f;
     private static final float ATTACK = 5f;
     private static final float MOVE_SPEED = 200f;
     private static final Dimension BULLET_SIZE = new Dimension(5, 5);
@@ -151,6 +152,7 @@ public class Apache extends CombatSupportActor {
                 ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
             if (attackCounter >= ATTACK_SPEED) {
                 attackCounter = 0;
+                System.out.println("Apache attacking target : " + ((CombatActor)target).ID +" : " + target.getClass().getSimpleName());
                 attackTarget(target);
             }
         }
@@ -159,6 +161,7 @@ public class Apache extends CombatSupportActor {
     private void exitStage() {
 
         Logger.info("Apache: exiting stage");
+        System.out.println("Apache exiting stage");
         exitingStage = true;
         LDVector2 destination = UtilPool.getVector2(-getWidth(), Resources.VIRTUAL_HEIGHT / 2);
 
