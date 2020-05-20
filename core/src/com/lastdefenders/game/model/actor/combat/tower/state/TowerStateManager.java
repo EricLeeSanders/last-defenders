@@ -2,7 +2,7 @@ package com.lastdefenders.game.model.actor.combat.tower.state;
 
 import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
 import com.lastdefenders.game.model.actor.combat.state.StateManager;
-import com.lastdefenders.game.model.actor.combat.state.states.CombatActorDyingState;
+import com.lastdefenders.game.model.actor.combat.state.states.CombatActorDeadState;
 import com.lastdefenders.game.model.actor.combat.state.states.CombatActorStandByState;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
@@ -42,7 +42,7 @@ public class TowerStateManager implements StateManager<TowerState, CombatActorSt
 
         towerStates.put(TowerState.ACTIVE, new TowerActiveState(tower, this));
         towerStates.put(TowerState.DYING,
-            new CombatActorDyingState<>(tower, this, TowerState.STANDBY, effectFactory));
+            new CombatActorDeadState<>(tower, this, TowerState.STANDBY, effectFactory));
         towerStates.put(TowerState.WAVE_END,
             new TowerWaveEndState(tower, effectFactory));
         towerStates.put(TowerState.STANDBY, new CombatActorStandByState());

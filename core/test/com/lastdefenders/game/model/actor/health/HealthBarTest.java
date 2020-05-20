@@ -18,6 +18,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.health.HealthBar;
 import com.lastdefenders.game.service.factory.HealthFactory.HealthPool;
 import org.junit.Before;
@@ -77,7 +78,7 @@ public class HealthBarTest {
 
         HealthBar healthBar = createHealthBar();
         healthBar = spy(healthBar);
-        Tower tower = TestUtil.createTower("Rifle", true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true);
         tower.setPositionCenter(20, 20);
 
         healthBar.setActor(tower);
@@ -136,7 +137,7 @@ public class HealthBarTest {
 
         HealthBar healthBar = createHealthBar();
         healthBar = spy(healthBar);
-        Tower tower = TestUtil.createTower("Rifle", true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true);
         tower.setPositionCenter(20, 20);
 
         healthBar.setActor(tower);
@@ -196,7 +197,7 @@ public class HealthBarTest {
 
         HealthBar healthBar = createHealthBar();
         healthBar = spy(healthBar);
-        Tower tower = TestUtil.createTower("Rifle", true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true);
         tower.setPositionCenter(20, 20);
 
         healthBar.setActor(tower);
@@ -256,7 +257,7 @@ public class HealthBarTest {
 
         HealthBar healthBar = createHealthBar();
         healthBar = spy(healthBar);
-        Tower tower = TestUtil.createTower("Rifle", true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true);
         tower.setHasArmor(true);
         tower.setPositionCenter(20, 20);
 

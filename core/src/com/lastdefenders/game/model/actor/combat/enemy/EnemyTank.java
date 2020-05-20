@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
+import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.model.actor.health.interfaces.PlatedArmor;
 import com.lastdefenders.game.model.actor.interfaces.IRocket;
 import com.lastdefenders.game.model.actor.interfaces.IVehicle;
@@ -44,7 +46,7 @@ public class EnemyTank extends EnemyTurret implements PlatedArmor, IVehicle, IRo
     private LDAudio audio;
 
     public EnemyTank(TextureRegion bodyRegion, TextureRegion turretRegion,
-        TextureRegion[] animatedRegions, CombatActorPool<EnemyTank> pool, Group targetGroup,
+        TextureRegion[] animatedRegions, CombatActorPool<EnemyTank> pool, GenericGroup<Tower> targetGroup,
         ProjectileFactory projectileFactory, LDAudio audio, EnemyAttributes attributes) {
 
         super(turretRegion, animatedRegions, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS,

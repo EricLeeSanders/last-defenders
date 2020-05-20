@@ -6,13 +6,9 @@ import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.lastdefenders.game.model.actor.ActorGroups;
-import com.lastdefenders.game.model.actor.effects.texture.animation.death.BloodSplatter;
-import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.health.ArmorIcon;
 import com.lastdefenders.game.model.actor.health.HealthBar;
-import com.lastdefenders.game.service.factory.EffectFactory;
-import com.lastdefenders.game.service.factory.HealthFactory;
 import com.lastdefenders.util.Resources;
 import org.junit.Before;
 import org.junit.Test;

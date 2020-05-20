@@ -3,12 +3,11 @@ package com.lastdefenders.game.model.actor.combat.enemy;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.lastdefenders.util.action.LDSequenceAction;
 import com.lastdefenders.util.action.WaypointAction;
@@ -44,19 +43,22 @@ public abstract class Enemy extends CombatActor {
     private Animation<TextureRegion> movementAnimation;
     private TextureRegion stationaryTextureRegion;
     private float rotationBeforeAttacking;
-
+    private CombatActorPool<? extends Enemy> pool;
     private StateManager<EnemyState, CombatActorState> stateManager;
+    private GenericGroup<Tower> targetGroup;
 
     public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions,
-        Dimension textureSize, CombatActorPool<? extends CombatActor> pool, Group targetGroup, Vector2 gunPos,
+        Dimension textureSize, CombatActorPool<? extends Enemy> pool, GenericGroup<Tower> targetGroup, Vector2 gunPos,
         DeathEffectType deathEffectType, EnemyAttributes attributes) {
 
-        super(stationaryTextureRegion, textureSize, pool, targetGroup, gunPos, deathEffectType, attributes);
+        super(stationaryTextureRegion, textureSize, gunPos, deathEffectType, attributes);
         movementAnimation = new Animation<>(FRAME_DURATION, animatedRegions);
         movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
         this.speed = attributes.getSpeed();
         this.stationaryTextureRegion = stationaryTextureRegion;
         this.killReward = attributes.getKillReward();
+        this.pool = pool;
+        this.targetGroup = targetGroup;
     }
 
     public void setStateManager(StateManager<EnemyState, CombatActorState> stateManager) {
@@ -183,7 +185,7 @@ public abstract class Enemy extends CombatActor {
 
     public void deadState() {
         System.out.println("enemy dying : " + ID + " : " + getClass().getSimpleName());
-        stateManager.transition(EnemyState.DYING);
+        stateManager.transition(EnemyState.DEAD);
     }
 
 
@@ -255,6 +257,15 @@ public abstract class Enemy extends CombatActor {
     public float getSpeed(){
 
         return speed;
+    }
+
+    public GenericGroup<Tower> getTargetGroup(){
+        return targetGroup;
+    }
+
+    @Override
+    public void freeActor() {
+        pool.free(this);
     }
 
 }

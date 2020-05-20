@@ -10,7 +10,7 @@ import simulate.state.GameActorState;
  * Created by Eric on 12/16/2019.
  */
 
-public class CombatActorState extends GameActorState {
+public abstract class CombatActorState extends GameActorState {
     private Boolean hasArmor;
     private String ID;
     private boolean dead;

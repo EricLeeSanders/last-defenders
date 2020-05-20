@@ -1,6 +1,7 @@
-package simulate.state.combat.enemy;
+package simulate.state.combat;
 
 import com.lastdefenders.game.model.level.SpawningEnemy;
+import org.apache.poi.ss.usermodel.Row;
 import simulate.state.combat.CombatActorState;
 
 /**
@@ -27,4 +28,5 @@ public class EnemyState extends CombatActorState {
 
         return speed;
     }
+
 }

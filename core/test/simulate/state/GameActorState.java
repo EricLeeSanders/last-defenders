@@ -3,7 +3,7 @@ package simulate.state;
 import com.badlogic.gdx.math.Vector2;
 import com.lastdefenders.game.model.actor.GameActor;
 
-public class GameActorState {
+public abstract class GameActorState {
     private Vector2 position;
     private String name;
 
@@ -21,4 +21,5 @@ public class GameActorState {
 
         return name;
     }
+
 }

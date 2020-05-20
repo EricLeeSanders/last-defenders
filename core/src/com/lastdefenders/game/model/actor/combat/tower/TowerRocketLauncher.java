@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
+import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.model.actor.interfaces.IRocket;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
@@ -34,7 +36,7 @@ public class TowerRocketLauncher extends Tower implements IRocket {
     private ProjectileFactory projectileFactory;
 
     public TowerRocketLauncher(TextureRegion actorRegion, CombatActorPool<TowerRocketLauncher> pool,
-        Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
+        GenericGroup<Enemy> targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
         ProjectileFactory projectileFactory, LDAudio audio, TowerAttributes attributes) {
 
         super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion,

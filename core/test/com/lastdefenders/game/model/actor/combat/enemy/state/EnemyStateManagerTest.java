@@ -7,9 +7,11 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.service.factory.EffectFactory;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +34,7 @@ public class EnemyStateManagerTest {
     @Test
     public void transitionTest() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
         Player player = mock(Player.class);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
 
@@ -46,8 +48,8 @@ public class EnemyStateManagerTest {
     @Test
     public void transitionWithParametersTest() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", false);
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
 
         Player player = mock(Player.class);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);

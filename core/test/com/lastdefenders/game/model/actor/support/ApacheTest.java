@@ -16,6 +16,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyRocketLauncher;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
@@ -57,9 +60,9 @@ public class ApacheTest {
 
     }
 
-    private Enemy createEnemy(String type, float lengthToEnd, Vector2 posCenter) {
+    private Enemy createEnemy(Class<? extends Enemy> enemyClass, float lengthToEnd, Vector2 posCenter) {
 
-        Enemy enemy = TestUtil.createEnemy(type, true);
+        Enemy enemy = TestUtil.createEnemy(enemyClass, true);
         enemy.setPositionCenter(posCenter);
         doReturn(lengthToEnd).when(enemy).getLengthToEnd();
         enemy.setDead(false);
@@ -78,9 +81,9 @@ public class ApacheTest {
 
         Apache apache = createApache();
 
-        Enemy enemy1 = createEnemy("Rifle", 200, new Vector2(250, 240));
-        Enemy enemy2 = createEnemy("FlameThrower", 100, new Vector2(250, 260));
-        Enemy enemy3 = createEnemy("RocketLauncher", 300, new Vector2(250, 150));
+        Enemy enemy1 = createEnemy(EnemyRifle.class, 200, new Vector2(250, 240));
+        Enemy enemy2 = createEnemy(EnemyFlameThrower.class, 100, new Vector2(250, 260));
+        Enemy enemy3 = createEnemy(EnemyRocketLauncher.class, 300, new Vector2(250, 150));
 
         Group targetGroup = apache.getTargetGroup();
         targetGroup.addActor(enemy1);

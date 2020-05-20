@@ -1,6 +1,5 @@
 package com.lastdefenders.game.service.actorplacement;
 
-import com.lastdefenders.game.model.actor.ActorGroups;
 import com.lastdefenders.game.model.actor.support.AirStrike;
 import com.lastdefenders.game.model.actor.support.AirStrikeLocation;
 import com.lastdefenders.game.service.factory.SupportActorFactory;

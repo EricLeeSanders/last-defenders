@@ -16,12 +16,13 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.lastdefenders.game.helper.CollisionDetection;
-import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
+import com.lastdefenders.game.model.actor.groups.TowerGroup;
 import com.lastdefenders.game.model.actor.health.ArmorIcon;
 import com.lastdefenders.game.model.actor.health.HealthBar;
 import com.lastdefenders.game.model.level.Map;
-import com.lastdefenders.game.service.actorplacement.TowerPlacement;
 import com.lastdefenders.game.service.factory.CombatActorFactory;
 import com.lastdefenders.game.service.factory.HealthFactory;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
@@ -64,10 +65,10 @@ public class TowerPlacementTest {
         TowerPlacement towerPlacement = createTowerPlacement();
 
         // Create tower
-        Group towerGroup = new Group();
+        TowerGroup towerGroup = new TowerGroup();
         doReturn(towerGroup).when(actorGroups).getTowerGroup();
 
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
         doReturn(tower).when(combatActorFactory).loadTower(eq("Rifle"));
 
         towerPlacement.createTower("Rifle");
@@ -116,10 +117,10 @@ public class TowerPlacementTest {
         TowerPlacement towerPlacement = createTowerPlacement();
 
         // Create tower
-        Group towerGroup = new Group();
+        TowerGroup towerGroup = new TowerGroup();
         doReturn(towerGroup).when(actorGroups).getTowerGroup();
 
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
         doReturn(tower).when(combatActorFactory).loadTower(eq("Rifle"));
 
         towerPlacement.createTower("Rifle");

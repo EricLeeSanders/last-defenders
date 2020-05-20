@@ -8,6 +8,7 @@ import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
 import com.lastdefenders.game.model.actor.combat.state.StateTransitioner;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,11 +44,13 @@ public class EnemyRunningState implements CombatActorState {
 
     @Override
     public void preState() {
-        if(enemy.getState() != null && enemy.getState().equals(EnemyState.ATTACKING)){
-            minTargetDelay = enemy.getAttackSpeed();
-        } else {
-            minTargetDelay = 0;
-        }
+//        System.out.println("Enemy Running State Pre State");
+//        if(enemy.getState() != null && enemy.getState().equals(EnemyState.ATTACKING)){
+//            minTargetDelay = enemy.getAttackSpeed();
+//        } else {
+//            minTargetDelay = 0;
+//        }
+        minTargetDelay = enemy.getAttackSpeed();
         movementAnimationStateTime = 0;
         findTargetDelayCounter = 0;
         createFindTargetDelay();
@@ -88,7 +91,7 @@ public class EnemyRunningState implements CombatActorState {
 
     private Targetable findTarget() {
 
-        SnapshotArray<Actor> children = enemy.getTargetGroup().getChildren();
+        SnapshotArray<Tower> children = enemy.getTargetGroup().getCastedChildren();
         return EnemyAI.findNearestTower(enemy, children);
     }
 

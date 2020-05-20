@@ -1,7 +1,7 @@
 package com.lastdefenders.game.model.level;
 
 import com.badlogic.gdx.utils.Queue;
-import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.health.ArmorIcon;
 import com.lastdefenders.game.model.actor.health.HealthBar;
 import com.lastdefenders.game.model.level.wave.WaveLoader;

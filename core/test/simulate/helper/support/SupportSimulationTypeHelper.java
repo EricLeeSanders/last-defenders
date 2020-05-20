@@ -105,7 +105,7 @@ public class SupportSimulationTypeHelper {
 
         if(canUseApache() && shouldUseApache()){
             Vector2 apacheLoc = getBestApacheLocation();
-            for(Enemy enemy : gameStage.getActorGroups().getEnemyChildren()){
+            for(Enemy enemy : gameStage.getActorGroups().getEnemyGroup().getCastedChildren()){
                 System.out.println("Enemy pos: " + enemy.getPositionCenter() + "; dist: " + enemy.getLengthToEnd());
             }
             if(apacheLoc != null){
@@ -136,7 +136,7 @@ public class SupportSimulationTypeHelper {
 
     private boolean shouldUseApache(){
 
-        Array<Enemy> enemies = gameStage.getActorGroups().getEnemyChildren();
+        Array<Enemy> enemies = gameStage.getActorGroups().getEnemyGroup().getCastedChildren();
         int numOfEnemies = 0;
         for(Enemy enemy : enemies){
             if(enemy.isActive() && enemy.getLengthToEnd() <= minEnemyDistanceForApache){
@@ -152,7 +152,7 @@ public class SupportSimulationTypeHelper {
         Vector2 bestLoc = null;
         float closestEnemyDist = Float.MAX_VALUE;
 
-        for(Enemy enemy : gameStage.getActorGroups().getEnemyChildren()){
+        for(Enemy enemy : gameStage.getActorGroups().getEnemyGroup().getCastedChildren()){
 
             if(enemy.getLengthToEnd() < closestEnemyDist){
                 closestEnemyDist = enemy.getLengthToEnd();
@@ -169,7 +169,7 @@ public class SupportSimulationTypeHelper {
     }
 
     private boolean shouldCheckBestSupplyDropLocation(){
-        Array<Tower> towers = gameStage.getActorGroups().getTowerChildren();
+        Array<Tower> towers = gameStage.getActorGroups().getTowerGroup().getCastedChildren();
         int numOfWeakTowers = 0;
         for (Tower tower : towers) {
             if (tower.getHealthPercent() <= .5) {
@@ -181,7 +181,7 @@ public class SupportSimulationTypeHelper {
     }
 
     private Vector2 getBestSupplyDropLocation(){
-        Array<Tower> towers = gameStage.getActorGroups().getTowerChildren();
+        Array<Tower> towers = gameStage.getActorGroups().getTowerGroup().getCastedChildren();
         supplyDropPlacement.createSupplyDrop();
         Vector2 bestLoc = null;
         int bestLocAmount = 0;
@@ -225,7 +225,7 @@ public class SupportSimulationTypeHelper {
         }
 
         // Check Enemy distances
-        Array<Enemy> enemies = gameStage.getActorGroups().getEnemyChildren();
+        Array<Enemy> enemies = gameStage.getActorGroups().getEnemyGroup().getCastedChildren();
         for(Enemy enemy : enemies){
             if(enemy.getLengthToEnd() < minEnemyDistanceForLandmine){
                 if(enemy instanceof EnemyTank) {

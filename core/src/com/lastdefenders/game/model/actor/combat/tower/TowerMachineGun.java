@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
+import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
@@ -31,7 +33,7 @@ public class TowerMachineGun extends Tower {
     private ProjectileFactory projectileFactory;
 
     public TowerMachineGun(TextureRegion actorRegion, CombatActorPool<TowerMachineGun> pool,
-        Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
+        GenericGroup<Enemy> targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
         ProjectileFactory projectileFactory, LDAudio audio, TowerAttributes attributes) {
 
         super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion,

@@ -23,7 +23,7 @@ import com.lastdefenders.ads.AdControllerHelper;
 import com.lastdefenders.game.GameStage;
 import com.lastdefenders.game.helper.CollisionDetection;
 import com.lastdefenders.game.model.Player;
-import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;

@@ -8,7 +8,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
+import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.model.actor.interfaces.IRotatable;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
@@ -41,7 +43,7 @@ public class TowerHumvee extends TowerTurret implements IRotatable {
     private ProjectileFactory projectileFactory;
 
     public TowerHumvee(TextureRegion bodyRegion, TextureRegion turretRegion,
-        CombatActorPool<TowerHumvee> pool, Group targetGroup, TextureRegion rangeRegion,
+        CombatActorPool<TowerHumvee> pool, GenericGroup<Enemy> targetGroup, TextureRegion rangeRegion,
         TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, LDAudio audio,
         TowerAttributes attributes) {
 

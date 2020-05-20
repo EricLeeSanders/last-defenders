@@ -1,8 +1,8 @@
 package simulate.state;
 
 import com.badlogic.gdx.utils.Array;
-import simulate.state.combat.enemy.EnemyState;
-import simulate.state.combat.tower.TowerState;
+import simulate.state.combat.EnemyState;
+import simulate.state.combat.TowerState;
 
 public class RoundState {
     private int waveNumber;

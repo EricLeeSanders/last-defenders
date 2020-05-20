@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager;
 import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
 import com.lastdefenders.game.service.factory.EffectFactory;
@@ -28,7 +29,7 @@ public class TowerStateManagerTest {
     @Test
     public void transitionTest() {
 
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
 
         TowerStateManager stateManager = new TowerStateManager(tower, effectFactoryMock);

@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.effects.label.ArmorDestroyedEffect;
 import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
 import com.lastdefenders.game.model.actor.effects.label.WaveOverCoinEffect;

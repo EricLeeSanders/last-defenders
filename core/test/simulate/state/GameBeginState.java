@@ -6,8 +6,8 @@ import com.badlogic.gdx.utils.Queue;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.level.SpawningEnemy;
-import simulate.state.combat.enemy.EnemyState;
-import simulate.state.combat.tower.TowerState;
+import simulate.state.combat.EnemyState;
+import simulate.state.combat.TowerState;
 
 /**
  * Created by Eric on 12/16/2019.

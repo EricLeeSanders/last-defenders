@@ -17,10 +17,12 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.lastdefenders.game.model.actor.ai.EnemyAI;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.lastdefenders.game.model.actor.combat.enemy.state.states.EnemyRunningState;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
@@ -48,8 +50,8 @@ public class EnemyRunningStateTest {
     @SuppressWarnings("unchecked")
     public void enemyRunningStateTest1() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", true);
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
 
         Array<Action> arrayAction = new Array<>();
         arrayAction.add(new SequenceAction());
@@ -60,7 +62,7 @@ public class EnemyRunningStateTest {
 
         EnemyRunningState runningState = new EnemyRunningState(enemy, stateManagerMock);
 
-        SnapshotArray<Actor> targetGroupArray = enemy.getTargetGroup().getChildren();
+        SnapshotArray<Tower> targetGroupArray = enemy.getTargetGroup().getCastedChildren();
         when(EnemyAI.findNearestTower(enemy, targetGroupArray)).thenReturn(tower);
         runningState.update(10f);
         runningState.update(1f);

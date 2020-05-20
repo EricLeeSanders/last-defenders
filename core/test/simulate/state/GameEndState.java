@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import simulate.state.combat.tower.TowerState;
+import simulate.state.combat.TowerState;
 
 /**
  * Created by Eric on 12/16/2019.

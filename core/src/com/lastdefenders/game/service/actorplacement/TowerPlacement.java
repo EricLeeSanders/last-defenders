@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.lastdefenders.game.helper.CollisionDetection;
-import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.health.ArmorIcon;
 import com.lastdefenders.game.model.actor.health.HealthBar;

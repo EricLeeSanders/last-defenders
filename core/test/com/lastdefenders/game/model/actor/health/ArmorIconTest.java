@@ -11,6 +11,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.health.ArmorIcon;
 import com.lastdefenders.game.service.factory.HealthFactory.HealthPool;
 import org.junit.Before;
@@ -55,7 +56,7 @@ public class ArmorIconTest {
     public void armorIconTest1() {
 
         ArmorIcon armorIcon = createArmorIcon();
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
         tower.setHasArmor(true);
         tower.setPositionCenter(20, 20);
 

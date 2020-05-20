@@ -5,7 +5,7 @@ import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.lastdefenders.game.model.actor.combat.enemy.state.states.EnemyAttackingState;
-import com.lastdefenders.game.model.actor.combat.enemy.state.states.EnemyDyingState;
+import com.lastdefenders.game.model.actor.combat.enemy.state.states.EnemyDeadState;
 import com.lastdefenders.game.model.actor.combat.enemy.state.states.EnemyReachedEndState;
 import com.lastdefenders.game.model.actor.combat.enemy.state.states.EnemyRunningState;
 import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
@@ -36,7 +36,7 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
 
     private void initStateObjects(Enemy enemy, EffectFactory effectFactory, Player player) {
         enemyStates.put(EnemyState.RUNNING, new EnemyRunningState(enemy, this));
-        enemyStates.put(EnemyState.DYING, new EnemyDyingState(enemy, this, effectFactory, player));
+        enemyStates.put(EnemyState.DEAD, new EnemyDeadState(enemy, this, effectFactory, player));
         enemyStates.put(EnemyState.REACHED_END, new EnemyReachedEndState(enemy, this, player));
         enemyStates.put(EnemyState.ATTACKING, new EnemyAttackingState(enemy, this));
         enemyStates.put(EnemyState.STANDBY, new CombatActorStandByState());
@@ -103,7 +103,7 @@ public class EnemyStateManager implements StateManager<EnemyState, CombatActorSt
 
     public enum EnemyState {
         ATTACKING,
-        DYING,
+        DEAD,
         RUNNING,
         REACHED_END,
         STANDBY

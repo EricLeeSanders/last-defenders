@@ -16,6 +16,7 @@ import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager;
 import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager.CombatActorEventEnum;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
+import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.model.actor.interfaces.Collidable;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
@@ -43,14 +44,11 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
     private Vector2 rotatedGunPos = UtilPool.getVector2();
     private Circle rangeCircle = new Circle();
     private boolean hasArmor, dead, active;
-    private CombatActorPool<? extends CombatActor> pool;
     private DeathEffectType deathEffectType;
-    private Group targetGroup;
     private EventManager eventManager;
     private CombatActorAttributes attributes;
 
-    protected CombatActor(TextureRegion textureRegion, Dimension textureSize,
-        CombatActorPool<? extends CombatActor> pool, Group targetGroup, Vector2 gunPos, DeathEffectType deathEffectType,
+    protected CombatActor(TextureRegion textureRegion, Dimension textureSize, Vector2 gunPos, DeathEffectType deathEffectType,
         CombatActorAttributes attributes) {
 
         super(textureSize);
@@ -61,8 +59,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
         this.attack = attributes.getAttack();
         this.gunPos = gunPos;
         this.range = attributes.getRange();
-        this.pool = pool;
-        this.targetGroup = targetGroup;
         this.deathEffectType = deathEffectType;
         setTextureRegion(textureRegion);
 
@@ -273,15 +269,8 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
         this.hasArmor = hasArmor;
     }
 
-    public void freeActor() {
+    public abstract void freeActor();
 
-        pool.free(this);
-    }
-
-    public Group getTargetGroup() {
-
-        return targetGroup;
-    }
 
     /**
      * Combat actor is an active actor on the stage.
@@ -296,15 +285,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
     public void setActive(boolean active) {
 
         this.active = active;
-    }
-
-    public void setPool(CombatActorPool<? extends CombatActor> pool) {
-
-        this.pool = pool;
-    }
-
-    public CombatActorPool<? extends Actor> getPool(){
-        return pool;
     }
 
 }

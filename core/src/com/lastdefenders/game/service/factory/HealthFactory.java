@@ -3,7 +3,7 @@ package com.lastdefenders.game.service.factory;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Pool;
-import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.health.ArmorIcon;
 import com.lastdefenders.game.model.actor.health.HealthBar;
 import com.lastdefenders.util.Logger;

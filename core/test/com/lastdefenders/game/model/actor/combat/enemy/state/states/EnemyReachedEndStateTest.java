@@ -43,10 +43,9 @@ public class EnemyReachedEndStateTest {
         EnemyReachedEndState reachedEndState = new EnemyReachedEndState(enemy, stateManagerMock,
             playerMock);
 
-        reachedEndState.update(1f);
+        reachedEndState.preState();
 
         verify(enemy, times(1)).reachedEnd();
         verify(playerMock, times(1)).enemyReachedEnd();
-        verify(stateManagerMock, times(1)).transition(EnemyState.STANDBY);
     }
 }

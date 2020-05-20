@@ -12,6 +12,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyRocketLauncher;
 import com.lastdefenders.game.model.actor.projectile.Explosion;
 import com.lastdefenders.game.model.actor.support.LandMine;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
@@ -32,7 +35,7 @@ public class LandMineTest {
     private Explosion explosionMock = mock(Explosion.class);
 
     @Before
-    public void initLandMinTest() {
+    public void initLandMineTest() {
 
         Gdx.app = mock(Application.class);
     }
@@ -47,7 +50,7 @@ public class LandMineTest {
             resourcesMock.getTexture(""), resourcesMock.getTexture(""));
     }
 
-    private Enemy createEnemy(String type, float lengthToEnd, Vector2 posCenter) {
+    private Enemy createEnemy(Class<? extends Enemy> type, float lengthToEnd, Vector2 posCenter) {
 
         Enemy enemy = TestUtil.createEnemy(type, true);
         enemy.setPositionCenter(posCenter);
@@ -59,15 +62,15 @@ public class LandMineTest {
     }
 
     @Test
-    public void landMinTest1() {
+    public void landMineTest1() {
 
         LandMine landMine = createLandMine();
         landMine.setPositionCenter(250, 255);
         landMine.setActive(true);
 
-        Enemy enemy1 = createEnemy("Rifle", 200, new Vector2(250, 240));
-        Enemy enemy2 = createEnemy("FlameThrower", 100, new Vector2(250, 260));
-        Enemy enemy3 = createEnemy("RocketLauncher", 300, new Vector2(250, 150));
+        Enemy enemy1 = createEnemy(EnemyRifle.class, 200, new Vector2(250, 240));
+        Enemy enemy2 = createEnemy(EnemyFlameThrower.class, 100, new Vector2(250, 260));
+        Enemy enemy3 = createEnemy(EnemyRocketLauncher.class, 300, new Vector2(250, 150));
 
         Group targetGroup = landMine.getTargetGroup();
         targetGroup.addActor(enemy1);

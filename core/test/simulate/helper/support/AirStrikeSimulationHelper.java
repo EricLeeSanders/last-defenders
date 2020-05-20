@@ -54,7 +54,7 @@ public class AirStrikeSimulationHelper{
             if(bestLocations.size() == 3){
                 System.out.println("using airstrike");
                 System.out.println(bestLocations);
-                for(Enemy enemy : gameStage.getActorGroups().getEnemyChildren()){
+                for(Enemy enemy : gameStage.getActorGroups().getEnemyGroup().getCastedChildren()){
                     System.out.println("Enemy: " + enemy.ID + " - " + enemy.getClass().getSimpleName() + "  pos: " + enemy.getPositionCenter() + "; dist: " + enemy.getLengthToEnd());
                 }
 
@@ -77,7 +77,7 @@ public class AirStrikeSimulationHelper{
 
     private boolean shouldUseAirStrike(){
 
-        Array<Enemy> enemies = gameStage.getActorGroups().getEnemyChildren();
+        Array<Enemy> enemies = gameStage.getActorGroups().getEnemyGroup().getCastedChildren();
         int numOfEnemies = 0;
         for(Enemy enemy : enemies){
             if(enemy.isActive() && enemy.getLengthToEnd() <= minEnemyDistanceForAirStrike){
@@ -90,7 +90,7 @@ public class AirStrikeSimulationHelper{
 
     private List<AirStrikeLocation> getLocationsForAirStrike(){
         System.out.println("getting locations for airstrike");
-        Array<Enemy> enemies = gameStage.getActorGroups().getEnemyChildren();
+        Array<Enemy> enemies = gameStage.getActorGroups().getEnemyGroup().getCastedChildren();
         airStrikePlacement.createAirStrike();
         List<AirStrikeLocation> locations = new ArrayList<>();
         Circle airStrikePos = new Circle(0, 0, AirStrike.AIRSTRIKE_RADIUS);

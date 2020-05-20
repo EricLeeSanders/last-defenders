@@ -30,6 +30,7 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonWriter.OutputType;
 import com.lastdefenders.game.model.actor.combat.CombatActorAttributes;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyAttributes;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyHumvee;
@@ -38,6 +39,7 @@ import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRocketLauncher;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemySniper;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerAttributes;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
@@ -235,11 +237,11 @@ public class Resources {
         Logger.info("Resources: combat actor attributes loaded");
     }
 
-    public TowerAttributes getTowerAttribute(Class clazz){
+    public TowerAttributes getTowerAttribute(Class<? extends Tower> clazz){
         return towerAttributes.get(clazz);
     }
 
-    public EnemyAttributes getEnemyAttributes(Class clazz){
+    public EnemyAttributes getEnemyAttributes(Class<? extends Enemy> clazz){
         return enemyAttributes.get(clazz);
     }
 

@@ -1,4 +1,4 @@
-package com.lastdefenders.game.model.actor;
+package com.lastdefenders.game.model.actor.groups;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -15,8 +15,8 @@ import com.lastdefenders.game.model.actor.combat.tower.Tower;
 public class ActorGroups {
 
     private final Group projectileGroup = new Group();
-    private final Group enemyGroup = new Group();
-    private final Group towerGroup = new Group();
+    private final EnemyGroup enemyGroup = new EnemyGroup();
+    private final TowerGroup towerGroup = new TowerGroup();
     private final Group healthBarGroup = new Group();
     private final Group supportGroup = new Group();
     private final Group landmineGroup = new Group();
@@ -40,36 +40,14 @@ public class ActorGroups {
         return projectileGroup;
     }
 
-    public Group getTowerGroup() {
+    public TowerGroup getTowerGroup() {
 
         return towerGroup;
     }
 
-    public SnapshotArray<Tower> getTowerChildren(){
-
-        SnapshotArray<Tower> towers = new SnapshotArray<>();
-        for(Actor actor : getTowerGroup().getChildren()){
-            Tower tower = (Tower)actor;
-            towers.add(tower);
-        }
-
-        return towers;
-    }
-
-    public Group getEnemyGroup() {
+    public EnemyGroup getEnemyGroup() {
 
         return enemyGroup;
-    }
-
-    public SnapshotArray<Enemy> getEnemyChildren(){
-
-        SnapshotArray<Enemy> enemies = new SnapshotArray<>();
-        for(Actor actor : getEnemyGroup().getChildren()){
-            Enemy enemy = (Enemy)actor;
-            enemies.add(enemy);
-        }
-
-        return enemies;
     }
 
     public Group getHealthGroup() {

@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
+import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.model.actor.interfaces.IFlame;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Flame;
@@ -32,7 +34,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
     private ProjectileFactory projectileFactory;
 
     public TowerFlameThrower(TextureRegion actorRegion, CombatActorPool<TowerFlameThrower> pool,
-        Group targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
+        GenericGroup<Enemy> targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
         ProjectileFactory projectileFactory, LDAudio audio, TowerAttributes attributes) {
 
         super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion,

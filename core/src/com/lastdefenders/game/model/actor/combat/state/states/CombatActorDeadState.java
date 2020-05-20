@@ -10,14 +10,14 @@ import java.util.Map;
  * Created by Eric on 5/10/2017.
  */
 
-public class CombatActorDyingState<E> implements CombatActorState {
+public class CombatActorDeadState<E> implements CombatActorState {
 
     private final CombatActor combatActor;
     private final StateTransitioner<E> stateTransitioner;
     private final E transitionState;
     private final EffectFactory effectFactory;
 
-    public CombatActorDyingState(CombatActor combatActor, StateTransitioner<E> stateTransitioner,
+    public CombatActorDeadState(CombatActor combatActor, StateTransitioner<E> stateTransitioner,
         E transitionState, EffectFactory effectFactory) {
 
         this.combatActor = combatActor;

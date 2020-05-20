@@ -21,12 +21,12 @@ import org.apache.poi.xssf.usermodel.XSSFDrawing;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import simulate.SimulationRunType;
-import simulate.state.combat.enemy.EnemyState;
+import simulate.state.combat.EnemyState;
 import simulate.state.GameBeginState;
 import simulate.state.GameEndState;
 import simulate.state.GameState;
 import simulate.state.PlayerState;
-import simulate.state.combat.tower.TowerState;
+import simulate.state.combat.TowerState;
 
 /**
  * Created by Eric on 12/17/2019.

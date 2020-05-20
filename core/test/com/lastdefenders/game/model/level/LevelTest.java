@@ -9,12 +9,14 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Queue;
-import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyHumvee;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
+import com.lastdefenders.game.model.actor.groups.EnemyGroup;
 import com.lastdefenders.game.model.actor.health.ArmorIcon;
 import com.lastdefenders.game.model.actor.health.HealthBar;
-import com.lastdefenders.game.model.level.Level;
-import com.lastdefenders.game.model.level.SpawningEnemy;
 import com.lastdefenders.game.model.level.wave.impl.DynamicWaveLoader;
 import com.lastdefenders.game.model.level.wave.impl.FileWaveLoader;
 import com.lastdefenders.game.service.factory.CombatActorFactory.SpawningEnemyPool;
@@ -48,9 +50,9 @@ public class LevelTest {
         Level level = new Level(LevelName.SERPENTINE_RIVER, actorGroups, healthFactory, fileWaveLoader, dynamicWaveLoader);
 
         Queue<SpawningEnemy> loadedEnemies = new Queue<>();
-        Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
-        Enemy enemy2 = TestUtil.createEnemy("Tank", false);
-        Enemy enemy3 = TestUtil.createEnemy("Humvee", false);
+        Enemy enemy1 = TestUtil.createEnemy(EnemyRifle.class, false);
+        Enemy enemy2 = TestUtil.createEnemy(EnemyTank.class, false);
+        Enemy enemy3 = TestUtil.createEnemy(EnemyHumvee.class, false);
         float spawnDelay = 0.5f;
         SpawningEnemy spawningEnemy1 = new SpawningEnemy(spawningEnemyPool);
         SpawningEnemy spawningEnemy2 = new SpawningEnemy(spawningEnemyPool);
@@ -69,7 +71,7 @@ public class LevelTest {
             .loadWave(isA(LevelName.class), isA(Integer.class));
         doReturn(loadedEnemies).when(dynamicWaveLoader)
             .loadWave(isA(LevelName.class), isA(Integer.class));
-        doReturn(new Group()).when(actorGroups).getEnemyGroup();
+        doReturn(new EnemyGroup()).when(actorGroups).getEnemyGroup();
         HealthBar healthBarMock = mock(HealthBar.class);
         doReturn(healthBarMock).when(healthFactory).loadHealthBar();
         ArmorIcon armorIconMock = mock(ArmorIcon.class);

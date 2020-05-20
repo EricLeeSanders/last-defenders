@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.imageio.ImageIO;
-import simulate.state.combat.tower.TowerState;
+import simulate.state.combat.TowerState;
 
 /**
  * Created by Eric on 12/17/2019.

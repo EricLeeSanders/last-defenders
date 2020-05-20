@@ -7,10 +7,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.ai.TowerAIType;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
 import com.lastdefenders.game.model.actor.combat.state.StateManager;
 import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
+import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
@@ -37,11 +39,15 @@ public abstract class Tower extends CombatActor {
     private boolean towerColliding;
     private StateManager<TowerState, CombatActorState> stateManager;
 
-    public Tower(TextureRegion textureRegion, Dimension textureSize, CombatActorPool<? extends CombatActor> pool,
-        Group targetGroup, Vector2 gunPos, TextureRegion rangeRegion,
+    private CombatActorPool<? extends Tower> pool;
+
+    private GenericGroup<Enemy> targetGroup;
+
+    public Tower(TextureRegion textureRegion, Dimension textureSize, CombatActorPool<? extends Tower> pool,
+        GenericGroup<Enemy> targetGroup, Vector2 gunPos, TextureRegion rangeRegion,
         TextureRegion collidingRangeRegion, DeathEffectType deathEffectType, TowerAttributes attributes) {
 
-        super(textureRegion, textureSize, pool, targetGroup, gunPos, deathEffectType, attributes);
+        super(textureRegion, textureSize, gunPos, deathEffectType, attributes);
         this.cost = attributes.getCost();
         this.armorCost = (int)(UPGRADE_MODIFIER * cost);
         this.speedIncreaseCost = (int)(UPGRADE_MODIFIER * cost);
@@ -49,6 +55,8 @@ public abstract class Tower extends CombatActor {
         this.attackIncreaseCost = (int)(UPGRADE_MODIFIER * cost);
         this.collidingRangeRegion = collidingRangeRegion;
         this.rangeRegion = rangeRegion;
+        this.pool = pool;
+        this.targetGroup = targetGroup;
     }
 
     public void init() {
@@ -272,5 +280,14 @@ public abstract class Tower extends CombatActor {
             stateManager.transition(TowerState.WAVE_END);
             stateManager.transition(TowerState.ACTIVE);
         }
+    }
+
+    public GenericGroup<Enemy> getTargetGroup(){
+        return targetGroup;
+    }
+
+    @Override
+    public void freeActor() {
+        pool.free(this);
     }
 }
