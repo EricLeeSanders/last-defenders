@@ -10,19 +10,14 @@ import java.util.Map;
  * Created by Eric on 5/10/2017.
  */
 
-public class CombatActorDeadState<E> implements CombatActorState {
+public class CombatActorDeadState implements CombatActorState {
 
     private final CombatActor combatActor;
-    private final StateTransitioner<E> stateTransitioner;
-    private final E transitionState;
     private final EffectFactory effectFactory;
 
-    public CombatActorDeadState(CombatActor combatActor, StateTransitioner<E> stateTransitioner,
-        E transitionState, EffectFactory effectFactory) {
+    public CombatActorDeadState(CombatActor combatActor, EffectFactory effectFactory) {
 
         this.combatActor = combatActor;
-        this.stateTransitioner = stateTransitioner;
-        this.transitionState = transitionState;
         this.effectFactory = effectFactory;
     }
 
@@ -37,7 +32,11 @@ public class CombatActorDeadState<E> implements CombatActorState {
         effectFactory.loadDeathEffect(combatActor.getDeathEffectType(), true)
             .initialize(combatActor.getPositionCenter());
 
-            //.initialize(combatActor.getPositionCenter());
+    }
+
+    @Override
+    public void immediateStep() {
+
     }
 
     @Override

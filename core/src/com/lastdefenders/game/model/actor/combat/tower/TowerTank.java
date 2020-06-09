@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.groups.GenericGroup;
@@ -17,7 +16,7 @@ import com.lastdefenders.game.model.actor.interfaces.IRotatable;
 import com.lastdefenders.game.model.actor.interfaces.IVehicle;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.TowerPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.DebugOptions;
@@ -51,7 +50,7 @@ public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatabl
     private LDAudio audio;
 
     public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion,
-        CombatActorPool<TowerTank> pool, GenericGroup<Enemy> targetGroup, TextureRegion rangeRegion,
+        TowerPool<TowerTank> pool, GenericGroup<Enemy> targetGroup, TextureRegion rangeRegion,
         TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, LDAudio audio, TowerAttributes attributes) {
 
         super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion,

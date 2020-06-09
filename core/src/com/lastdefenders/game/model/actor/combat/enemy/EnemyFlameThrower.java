@@ -3,14 +3,13 @@ package com.lastdefenders.game.model.actor.combat.enemy;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.model.actor.interfaces.IFlame;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Flame;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.EnemyPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
@@ -34,7 +33,7 @@ public class EnemyFlameThrower extends Enemy implements IFlame {
     private ProjectileFactory projectileFactory;
 
     public EnemyFlameThrower(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions,
-        CombatActorPool<EnemyFlameThrower> pool, GenericGroup<Tower> targetGroup,
+        EnemyPool<EnemyFlameThrower> pool, GenericGroup<Tower> targetGroup,
         ProjectileFactory projectileFactory, LDAudio audio, EnemyAttributes attributes) {
 
         super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS,

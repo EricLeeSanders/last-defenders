@@ -1,14 +1,14 @@
-package simulate.state.combat;
+package simulate.state.combatactor;
 
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import org.apache.poi.ss.usermodel.Row;
-import simulate.state.combat.CombatActorState;
+import com.lastdefenders.game.model.actor.combat.CombatActorStateObserver;
+import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
 
 /**
  * Created by Eric on 12/16/2019.
  */
 
-public class TowerState extends CombatActorState {
+public class TowerState extends CombatActorState implements CombatActorStateObserver<TowerStateEnum, Tower> {
 
     private Boolean rangeIncreased;
     private Boolean speedIncreased;
@@ -21,6 +21,7 @@ public class TowerState extends CombatActorState {
         this.speedIncreased = actor.hasIncreasedSpeed();
         this.attackIncreased = actor.hasIncreasedAttack();
         this.kills = actor.getNumOfKills();
+        actor.getStateManger().attachObserver(this);
 
     }
 
@@ -44,4 +45,8 @@ public class TowerState extends CombatActorState {
         return kills;
     }
 
+    @Override
+    public void stateChange(TowerStateEnum state, Tower combatActor) {
+
+    }
 }

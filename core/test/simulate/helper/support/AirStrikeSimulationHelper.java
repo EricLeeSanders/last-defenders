@@ -8,17 +8,14 @@ import com.lastdefenders.game.helper.CollisionDetection;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.support.AirStrike;
-import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.service.actorplacement.AirStrikePlacement;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UtilPool;
-import com.lastdefenders.util.datastructures.pool.LDVector2;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
+import simulate.state.WaveState;
+import simulate.state.support.AirStrikeState;
 
 public class AirStrikeSimulationHelper{
 
@@ -35,6 +32,8 @@ public class AirStrikeSimulationHelper{
     private GameStage gameStage;
     private Player player;
     private AirStrikePlacement airStrikePlacement;
+
+    private WaveState currentWaveState;
 
     public AirStrikeSimulationHelper(GameStage gameStage, Player player){
         minEnemyDistanceForAirStrike = gameStage.getMap().getPathDistance() * ENEMY_DISTANCE_FOR_AIR_STRIKE_MOD;
@@ -63,6 +62,7 @@ public class AirStrikeSimulationHelper{
                 }
                 airStrikePlacement.finishCurrentAirStrike();
                 player.spendMoney(AirStrike.COST);
+                currentWaveState.addSupportState(new AirStrikeState(bestLocations));
                 airStrikeCooldownCounter = AIR_STRIKE_COOLDOWN_RESET;
             } else {
                 System.out.println("less than 3!");
@@ -150,6 +150,10 @@ public class AirStrikeSimulationHelper{
 
     private boolean areLocationsTooClose(Vector2 loc1, Vector2 loc2){
         return loc1.dst(loc2) < MIN_DISTANCE_FOR_AIR_STRIKE_LOCATIONS;
+    }
+
+    void setCurrentWaveState(WaveState currentWaveState){
+        this.currentWaveState = currentWaveState;
     }
 
 

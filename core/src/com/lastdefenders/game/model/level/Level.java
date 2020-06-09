@@ -57,11 +57,6 @@ public class Level {
         SpawningEnemy spawningEnemy = spawningEnemyQueue.removeFirst();
         actorGroups.getEnemyGroup().addActor(spawningEnemy.getEnemy());
 
-        HealthBar healthBar = healthFactory.loadHealthBar();
-        healthBar.setActor(spawningEnemy.getEnemy());
-        ArmorIcon armorIcon = healthFactory.loadArmorIcon();
-        armorIcon.setActor(spawningEnemy.getEnemy());
-
         spawningEnemy.getEnemy().init();
 
         enemyDelay = spawningEnemy.getSpawnDelay();

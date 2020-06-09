@@ -1,11 +1,9 @@
 package simulate.state.support;
 
-import com.badlogic.gdx.math.Vector2;
+import java.awt.Graphics2D;
+import java.io.IOException;
 
-public class SupportState {
-    private Vector2 location;
+public interface SupportState {
 
-    public SupportState(Vector2 location){
-        this.location = location;
-    }
+    void writeState(Graphics2D background) throws IOException;
 }

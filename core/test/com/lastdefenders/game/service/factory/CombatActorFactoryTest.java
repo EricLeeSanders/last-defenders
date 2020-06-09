@@ -31,6 +31,7 @@ public class CombatActorFactoryTest {
     @Mock private LDAudio audio;
     @Mock private EffectFactory effectFactory;
     @Mock private ProjectileFactory projectileFactory;
+    @Mock private HealthFactory healthFactory;
     @Mock private Player player;
 
     @InjectMocks

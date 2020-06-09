@@ -14,7 +14,6 @@ import com.lastdefenders.game.model.actor.ai.EnemyAI;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
-import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.lastdefenders.game.model.actor.effects.texture.TextureEffect;
 import com.lastdefenders.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.lastdefenders.game.service.factory.EffectFactory;
@@ -56,7 +55,7 @@ public class EnemyDeadStateTest {
         doReturn(enemyCoinEffectMock).when(effectFactoryMock)
             .loadEffect(eq(EnemyCoinEffect.class), isA(Boolean.class));
 
-        EnemyDeadState deadState = new EnemyDeadState(enemy, stateManagerMock, effectFactoryMock,
+        EnemyDeadState deadState = new EnemyDeadState(enemy, effectFactoryMock,
             playerMock);
 
         deadState.preState();

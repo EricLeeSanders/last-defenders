@@ -1,8 +1,8 @@
 {
-  "cost": "400",
-  "attack": "8",
+  "attack": "6",
   "attackSpeed": "2.5",
   "range": "70",
   "health": "8",
-  "armor": "4"
+  "armor": "4",
+  "cost": "400"
 }

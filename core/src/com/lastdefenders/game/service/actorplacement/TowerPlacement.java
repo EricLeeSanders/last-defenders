@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.lastdefenders.game.helper.CollisionDetection;
+import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.health.ArmorIcon;
@@ -48,6 +49,7 @@ public class TowerPlacement {
         currentTower.setPosition(0, 0);
         actorGroups.getTowerGroup().addActor(currentTower);
         currentTower.setVisible(false);
+        currentTower.getStateManger().transition(TowerStateEnum.STANDBY);
     }
 
     /**
@@ -89,10 +91,6 @@ public class TowerPlacement {
         if (currentTower != null) {
             if (!towerCollides()) {
                 currentTower.init();
-                HealthBar healthBar = healthFactory.loadHealthBar();
-                healthBar.setActor(currentTower);
-                ArmorIcon armorIcon = healthFactory.loadArmorIcon();
-                armorIcon.setActor(currentTower);
                 return true;
             } else {
 

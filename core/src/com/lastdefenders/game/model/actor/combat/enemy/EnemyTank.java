@@ -1,13 +1,8 @@
 package com.lastdefenders.game.model.actor.combat.enemy;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
+
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.groups.GenericGroup;
@@ -16,13 +11,10 @@ import com.lastdefenders.game.model.actor.interfaces.IRocket;
 import com.lastdefenders.game.model.actor.interfaces.IVehicle;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.EnemyPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
-import com.lastdefenders.util.ActorUtil;
-import com.lastdefenders.util.DebugOptions;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
-import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.UtilPool;
 
@@ -46,7 +38,7 @@ public class EnemyTank extends EnemyTurret implements PlatedArmor, IVehicle, IRo
     private LDAudio audio;
 
     public EnemyTank(TextureRegion bodyRegion, TextureRegion turretRegion,
-        TextureRegion[] animatedRegions, CombatActorPool<EnemyTank> pool, GenericGroup<Tower> targetGroup,
+        TextureRegion[] animatedRegions, EnemyPool<EnemyTank> pool, GenericGroup<Tower> targetGroup,
         ProjectileFactory projectileFactory, LDAudio audio, EnemyAttributes attributes) {
 
         super(turretRegion, animatedRegions, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS,

@@ -6,15 +6,14 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.utils.Array;
+import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
+import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.groups.GenericGroup;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.EnemyPool;
 import com.lastdefenders.util.action.LDSequenceAction;
 import com.lastdefenders.util.action.WaypointAction;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
-import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
-import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
-import com.lastdefenders.game.model.actor.combat.state.StateManager;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.util.ActorUtil;
@@ -43,12 +42,12 @@ public abstract class Enemy extends CombatActor {
     private Animation<TextureRegion> movementAnimation;
     private TextureRegion stationaryTextureRegion;
     private float rotationBeforeAttacking;
-    private CombatActorPool<? extends Enemy> pool;
-    private StateManager<EnemyState, CombatActorState> stateManager;
+    private EnemyPool<? extends Enemy> pool;
+    private EnemyStateManager stateManager;
     private GenericGroup<Tower> targetGroup;
 
     public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions,
-        Dimension textureSize, CombatActorPool<? extends Enemy> pool, GenericGroup<Tower> targetGroup, Vector2 gunPos,
+        Dimension textureSize, EnemyPool<? extends Enemy> pool, GenericGroup<Tower> targetGroup, Vector2 gunPos,
         DeathEffectType deathEffectType, EnemyAttributes attributes) {
 
         super(stationaryTextureRegion, textureSize, gunPos, deathEffectType, attributes);
@@ -61,12 +60,12 @@ public abstract class Enemy extends CombatActor {
         this.targetGroup = targetGroup;
     }
 
-    public void setStateManager(StateManager<EnemyState, CombatActorState> stateManager) {
+    public void setStateManager(EnemyStateManager stateManager) {
 
         this.stateManager = stateManager;
     }
 
-    public StateManager getStateManager(){
+    public EnemyStateManager getStateManager(){
         return this.stateManager;
     }
 
@@ -75,8 +74,7 @@ public abstract class Enemy extends CombatActor {
         Map<String, Object> params = new HashMap<>();
         params.put("NewSpawn", Boolean.TRUE);
 
-        stateManager.transition(EnemyState.RUNNING, params);
-        setActive(true);
+        stateManager.transition(EnemyStateEnum.SPAWNING, params);
         setDead(false);
         lengthToEndCalculated = false;
     }
@@ -99,17 +97,16 @@ public abstract class Enemy extends CombatActor {
 
         // The enemy always faces its target (tower or way point) and the top/front of the enemy needs to be off screen.
         // That ensures that the entire body of the enemy is off the screen when spawning.
-        // rotatedCoords are the coords of the top/front of the enemy.
+        // topCenterAfterRotation are the coords of the top/front of the enemy.
         Vector2 centerPos = getPositionCenter();
-        LDVector2 rotatedCoords = ActorUtil
+        LDVector2 topCenterAfterRotation = ActorUtil
             .calculateRotatedCoords(this.getX() + getWidth(), centerPos.y, centerPos.x, centerPos.y,
                 Math.toRadians(getRotation()));
 
         // Reposition the enemy so that it is off the screen
-        float newX = this.getPositionCenter().x + (this.getPositionCenter().x - rotatedCoords.x);
-        float newY = this.getPositionCenter().y + (this.getPositionCenter().y - rotatedCoords.y);
-
-        rotatedCoords.free();
+        float newX = this.getPositionCenter().x + (this.getPositionCenter().x - topCenterAfterRotation.x);
+        float newY = this.getPositionCenter().y + (this.getPositionCenter().y - topCenterAfterRotation.y);
+        topCenterAfterRotation.free();
 
         this.setPositionCenter(newX, newY); // Start off screen
 
@@ -161,7 +158,6 @@ public abstract class Enemy extends CombatActor {
     public void reachedEnd() {
 
         Logger.info("Enemy " + ID  + ": "  + this.getClass().getSimpleName() + " reached end");
-        System.out.println("enemy reached end : " + ID + " : " + getClass().getSimpleName());
         freeActor();
     }
 
@@ -184,8 +180,7 @@ public abstract class Enemy extends CombatActor {
     }
 
     public void deadState() {
-        System.out.println("enemy dying : " + ID + " : " + getClass().getSimpleName());
-        stateManager.transition(EnemyState.DEAD);
+        stateManager.transition(EnemyStateEnum.DEAD);
     }
 
 
@@ -200,6 +195,7 @@ public abstract class Enemy extends CombatActor {
         this.setRotation(0);
         lengthToEnd = 0;
         rotationBeforeAttacking = 0;
+        stateManager.reset();
     }
 
     /**
@@ -232,7 +228,7 @@ public abstract class Enemy extends CombatActor {
 
     boolean isAttacking() {
 
-        return stateManager.getCurrentStateName().equals(EnemyState.ATTACKING);
+        return stateManager.getCurrentStateName().equals(EnemyStateEnum.ATTACKING);
     }
 
     public float getLengthToEnd() {
@@ -249,7 +245,7 @@ public abstract class Enemy extends CombatActor {
         return killReward;
     }
 
-    public EnemyState getState() {
+    public EnemyStateEnum getState() {
 
         return stateManager.getCurrentStateName();
     }

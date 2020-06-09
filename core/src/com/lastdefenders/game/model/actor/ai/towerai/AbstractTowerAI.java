@@ -21,12 +21,13 @@ public abstract class AbstractTowerAI implements TowerAI {
         if (enemies.size == 0) {
             return null;
         }
+
         Enemy returnEnemy = null;
         Enemy platedReturnEnemy = null;
         for (Actor actor : enemies) {
             if (actor instanceof Enemy) {
                 Enemy enemy = (Enemy) actor;
-                if (!enemy.isDead()) {
+                if (!enemy.isDead() && enemy.isActive()) {
                     if (CollisionDetection
                         .shapesIntersect(enemy.getBody(), attacker.getRangeShape())) {
                         if (returnEnemy == null || swap(returnEnemy, enemy)) {

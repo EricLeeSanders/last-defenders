@@ -7,12 +7,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.groups.GenericGroup;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.TowerPool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.DebugOptions;
 import com.lastdefenders.util.Resources;
@@ -30,7 +28,7 @@ public abstract class TowerTurret extends Tower {
     private Polygon body;
 
     public TowerTurret(TextureRegion textureRegion, Dimension textureSizeTurret,
-        CombatActorPool<? extends Tower> pool, GenericGroup<Enemy> targetGroup, Vector2 gunPos,
+        TowerPool<? extends Tower> pool, GenericGroup<Enemy> targetGroup, Vector2 gunPos,
         TextureRegion rangeRegion, TextureRegion collidingRangeRegion, DeathEffectType deathEffectType, Dimension textureSizeBody,
         TextureRegion bodyRegion, float [] bodyPoints, TowerAttributes attributes) {
 

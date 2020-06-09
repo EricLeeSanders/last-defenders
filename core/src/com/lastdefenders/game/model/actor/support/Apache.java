@@ -152,7 +152,6 @@ public class Apache extends CombatSupportActor {
                 ActorUtil.calculateRotation(target.getPositionCenter(), getPositionCenter()));
             if (attackCounter >= ATTACK_SPEED) {
                 attackCounter = 0;
-                System.out.println("Apache attacking target : " + ((CombatActor)target).ID +" : " + target.getClass().getSimpleName());
                 attackTarget(target);
             }
         }
@@ -161,7 +160,6 @@ public class Apache extends CombatSupportActor {
     private void exitStage() {
 
         Logger.info("Apache: exiting stage");
-        System.out.println("Apache exiting stage");
         exitingStage = true;
         LDVector2 destination = UtilPool.getVector2(-getWidth(), Resources.VIRTUAL_HEIGHT / 2);
 

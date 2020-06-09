@@ -28,6 +28,9 @@ public class Map implements Disposable {
     private float tiledMapScale;
     private float pathDistance;
 
+    // For reasons I can't explain, the Tiled Map has a Y Buffer of 8.
+    private static final int TILED_MAP_Y_BUFFER = 8;
+
     public Map(TiledMap tiledMap, float tiledMapScale) {
 
         this.tiledMap = tiledMap;
@@ -60,13 +63,13 @@ public class Map implements Disposable {
 
         // X and Y are the first point
         float pathX = path.getPolyline().getX();
-        float pathY = path.getPolyline().getY();
+        float pathY = path.getPolyline().getY(); // See constant comment. Need to remove buffer.
         for (int i = 0; i < vertices.length - 1; i = i + 2) {
             // Need to get absolute value because vertices can be negative. The points are all relative
             // to the first point (pathX and pathY)
-            pathCoords
-                .add(UtilPool.getVector2(Math.abs(vertices[i] + pathX) * tiledMapScale
-                    , Math.abs(vertices[i + 1] + pathY) * tiledMapScale));
+            float pointX = Math.abs(vertices[i] + pathX) * tiledMapScale;
+            float pointY = Math.abs(vertices[i + 1] + pathY) * tiledMapScale;
+            pathCoords.add(UtilPool.getVector2(pointX, pointY));
         }
     }
 

@@ -97,12 +97,7 @@ public class TowerPlacementTest {
         towerPlacement.rotateTower(rotation);
         assertEquals(-rotation, tower.getRotation(), TestUtil.DELTA);
 
-        // place tower
-        HealthBar healthBar = mock(HealthBar.class);
-        ArmorIcon armorIcon = mock(ArmorIcon.class);
 
-        doReturn(healthBar).when(healthFactory).loadHealthBar();
-        doReturn(armorIcon).when(healthFactory).loadArmorIcon();
 
         boolean placed = towerPlacement.placeTower();
 

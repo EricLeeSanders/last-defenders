@@ -4,16 +4,16 @@ package com.lastdefenders.game.model.actor.combat.tower;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.ai.TowerAIType;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
-import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
 import com.lastdefenders.game.model.actor.combat.state.StateManager;
-import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
+import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager;
+import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.groups.GenericGroup;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.TowerPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.TowerPool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.Dimension;
@@ -37,13 +37,13 @@ public abstract class Tower extends CombatActor {
     private TextureRegion rangeRegion, collidingRangeRegion;
     private int kills;
     private boolean towerColliding;
-    private StateManager<TowerState, CombatActorState> stateManager;
+    private StateManager<TowerStateEnum, Tower> stateManager;
 
-    private CombatActorPool<? extends Tower> pool;
+    private TowerPool<? extends Tower> pool;
 
     private GenericGroup<Enemy> targetGroup;
 
-    public Tower(TextureRegion textureRegion, Dimension textureSize, CombatActorPool<? extends Tower> pool,
+    public Tower(TextureRegion textureRegion, Dimension textureSize, TowerPool<? extends Tower> pool,
         GenericGroup<Enemy> targetGroup, Vector2 gunPos, TextureRegion rangeRegion,
         TextureRegion collidingRangeRegion, DeathEffectType deathEffectType, TowerAttributes attributes) {
 
@@ -60,15 +60,9 @@ public abstract class Tower extends CombatActor {
     }
 
     public void init() {
-
-        stateManager.transition(TowerState.ACTIVE);
+        stateManager.transition(TowerStateEnum.ACTIVE);
         setActive(true);
         setDead(false);
-    }
-
-    public void setStateManager(StateManager<TowerState, CombatActorState> stateManager) {
-
-        this.stateManager = stateManager;
     }
 
     /**
@@ -151,12 +145,12 @@ public abstract class Tower extends CombatActor {
         attackIncreaseEnabled = false;
         kills = 0;
         this.setShowRange(false);
-        stateManager.transition(TowerState.STANDBY);
+        stateManager.reset();
     }
 
     public void deadState() {
 
-        stateManager.transition(TowerState.DYING);
+        stateManager.transition(TowerStateEnum.DYING);
     }
 
     public void heal() {
@@ -270,15 +264,23 @@ public abstract class Tower extends CombatActor {
         this.towerColliding = towerColliding;
     }
 
-    public TowerState getState() {
+    public TowerStateEnum getState() {
 
         return stateManager.getCurrentStateName();
     }
 
+    public StateManager<TowerStateEnum, Tower> getStateManger(){
+        return stateManager;
+    }
+
+    public void setStateManager(StateManager<TowerStateEnum, Tower> stateManager){
+        this.stateManager = stateManager;
+    }
+
     public void waveReset(){
         if(isActive()){
-            stateManager.transition(TowerState.WAVE_END);
-            stateManager.transition(TowerState.ACTIVE);
+            stateManager.transition(TowerStateEnum.WAVE_END);
+            stateManager.transition(TowerStateEnum.ACTIVE);
         }
     }
 

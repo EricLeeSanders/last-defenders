@@ -104,7 +104,7 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
                 }
 
                 remainingWeight -= rndEnemy.weight;
-                float delay = MathUtils.random(1,10)/10f;
+                float delay = MathUtils.random(1,1)/10f;
 
                 SpawningEnemy enemy = loadSpawningEnemy(rndEnemy.name, rndEnemy.armor, delay);
 

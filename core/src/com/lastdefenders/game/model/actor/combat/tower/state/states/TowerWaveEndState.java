@@ -42,6 +42,11 @@ public class TowerWaveEndState implements CombatActorState {
     }
 
     @Override
+    public void immediateStep() {
+
+    }
+
+    @Override
     public void update(float delta) {
 
     }

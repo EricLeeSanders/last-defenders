@@ -1,10 +1,6 @@
 package simulate.helper.support;
 
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.lastdefenders.game.GameStage;
 import com.lastdefenders.game.helper.CollisionDetection;
@@ -12,19 +8,17 @@ import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.actor.support.AirStrike;
 import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.model.actor.support.LandMine;
-import com.lastdefenders.game.model.actor.support.SupplyDrop;
 import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
-import com.lastdefenders.game.service.actorplacement.AirStrikePlacement;
 import com.lastdefenders.game.service.actorplacement.SupplyDropPlacement;
 import com.lastdefenders.game.service.actorplacement.SupportActorPlacement;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import simulate.state.WaveState;
+import simulate.state.support.ApacheState;
+import simulate.state.support.LandMineState;
+import simulate.state.support.SupplyDropState;
 import testutil.TestUtil;
 
 public class SupportSimulationTypeHelper {
@@ -33,7 +27,6 @@ public class SupportSimulationTypeHelper {
     private Player player;
     private SupplyDropPlacement supplyDropPlacement;
     private SupportActorPlacement supportActorPlacement;
-    private AirStrikePlacement airStrikePlacement;
 
     private static final int MAX_LANDMINES = 1;
     // How close an enemy must be to the end of the path to place a mine
@@ -56,6 +49,9 @@ public class SupportSimulationTypeHelper {
     private final float minEnemyDistanceForApache;
 
     private AirStrikeSimulationHelper airStrikeSimulationHelper;
+
+
+    private WaveState currentWaveState;
 
     public SupportSimulationTypeHelper(GameStage gameStage, Player player) {
 
@@ -93,6 +89,7 @@ public class SupportSimulationTypeHelper {
             if(supplyDropLoc != null){
                 System.out.println("Placing Supply Drop at: " + supplyDropLoc);
                 supplyDropPlacement.setLocation(supplyDropLoc);
+                currentWaveState.addSupportState(new SupplyDropState(supportActorPlacement.getCurrentSupportActor().getPositionCenter()));
                 supplyDropPlacement.placeSupplyDrop();
                 player.spendMoney(SupplyDropCrate.COST);
                 supplyDropCooldownCounter = SUPPLY_DROP_COOLDOWN_RESET;
@@ -111,6 +108,7 @@ public class SupportSimulationTypeHelper {
             if(apacheLoc != null){
                 System.out.println("Placing Apache at: " + apacheLoc);
                 supportActorPlacement.moveSupportActor(apacheLoc);
+                currentWaveState.addSupportState(new ApacheState(supportActorPlacement.getCurrentSupportActor().getPositionCenter()));
                 supportActorPlacement.placeSupportActor();
                 player.spendMoney(Apache.COST);
                 apacheCooldownCounter = APACHE_COOLDOWN_RESET;
@@ -257,6 +255,14 @@ public class SupportSimulationTypeHelper {
         }
         System.out.println("Adding landmine at: " +landMinePos);
         placementService.moveSupportActor(landMinePos);
+        currentWaveState.addSupportState(new LandMineState(supportActorPlacement.getCurrentSupportActor().getPositionCenter()));
         placementService.placeSupportActor();
+    }
+
+    public void setCurrentWaveState(WaveState currentWaveState) {
+
+        this.currentWaveState = currentWaveState;
+        // Also set it on dependencies
+        airStrikeSimulationHelper.setCurrentWaveState(currentWaveState);
     }
 }

@@ -57,9 +57,7 @@ import org.junit.Test;
 import simulate.helper.support.SupportSimulationTypeHelper;
 import simulate.helper.UpgradeSimulationTypeHelper;
 import simulate.positionweights.TowerPositionWeight;
-import simulate.state.GameBeginState;
-import simulate.state.GameEndState;
-import simulate.state.GameState;
+import simulate.state.WaveState;
 import simulate.state.writer.StateWriter;
 import testutil.TestUtil;
 
@@ -72,7 +70,7 @@ public class Simulation {
     private static final int PATH_SIZE = (16*3);
     private static final float GAME_STEP_SIZE = (1f/60); // 60 FPS
 
-    private static final int WAVE_LIMIT = 100;
+    private static final int WAVE_LIMIT = 50;
 
     private GameStage gameStage;
     private ActorGroups actorGroups;
@@ -120,7 +118,7 @@ public class Simulation {
     @Test
     public void run() throws IOException {
         //runAggregate(1);
-//        simulate(SimulationRunType.TOWER_ONLY);
+        simulate(SimulationRunType.ALL, true);
 //        initSimulation();
 //        simulate(SimulationRunType.UPGRADES_ALL);
 //        initSimulation();
@@ -131,10 +129,9 @@ public class Simulation {
 //        simulate(SimulationRunType.UPGRADE_ATTACK_SPEED);
 //        initSimulation();
 //        simulate(SimulationRunType.UPGRADE_RANGE);
-//        simulate(SimulationRunType.SUPPORT, true);
-        runAggregate(100, new SimulationRunType[]{ SimulationRunType.SUPPORT_AIR_STRIKE, SimulationRunType.SUPPORT_ALL, SimulationRunType.ALL});
+//        runAggregate(100, new SimulationRunType[]{ SimulationRunType.SUPPORT_AIR_STRIKE, SimulationRunType.SUPPORT_ALL, SimulationRunType.ALL});
 
-//        runAggregate(50, new SimulationRunType[]{SimulationRunType.TOWER_ONLY, SimulationRunType.UPGRADES_ALL, SimulationRunType.SUPPORT, SimulationRunType.ALL});
+//        runAggregate(50, new SimulationRunType[]{SimulationRunType.TOWER_ONLY, SimulationRunType.UPGRADES_ALL, SimulationRunType.SUPPORT_ALL, SimulationRunType.ALL});
 //        runAggregate(10);
     }
 
@@ -143,12 +140,12 @@ public class Simulation {
 
         for(int i = 0; i < count; i++){
             for(SimulationRunType runType : runTypes){
-                List<GameState> gameStates = simulate(runType, false);
+                List<WaveState> waveStates = simulate(runType, false);
                 HashMap<Integer, Integer> waveCount = waveCounts.get(runType);
                 if(waveCount == null){
                     waveCount = new HashMap<>();
                 }
-                waveCount.put(i+1, gameStates.size());
+                waveCount.put(i+1, waveStates.size());
                 waveCounts.put(runType,waveCount);
                 initSimulation();
             }
@@ -175,22 +172,22 @@ public class Simulation {
         runAggregate(count, SimulationRunType.values());
     }
 
-    private List<GameState> simulate(SimulationRunType simulationRunType, boolean writeState) throws IOException{
+    private List<WaveState> simulate(SimulationRunType simulationRunType, boolean writeState) throws IOException{
 
         System.out.println("Running simulation for " + simulationRunType);
-        List<GameState> gameStates = new ArrayList<>();
+        List<WaveState> waveStates = new ArrayList<>();
         int wave = 1;
         while(!levelStateManager.getState().equals(LevelState.GAME_OVER) && wave <= WAVE_LIMIT) {
             addTowers();
-            System.out.println("Wave: " + wave++ + "; remaining lives: " + player.getLives());
+            System.out.println("Wave: " + wave + "; remaining lives: " + player.getLives());
             startWave();
 
             // Create begin state
-            GameState gameState = new GameState();
-            GameBeginState startState = new GameBeginState(player, actorGroups.getTowerGroup().getChildren(), gameStage.getLevel().getSpawningEnemyQueue());
-            gameState.setBeginState(startState);
-
-
+//            GameState gameState = new GameState();
+//            GameBeginState startState = new GameBeginState(player, actorGroups.getTowerGroup().getCastedChildren(), gameStage.getLevel().getSpawningEnemyQueue());
+//            gameState.setBeginState(startState);
+            WaveState waveState = new WaveState(wave, player.getLives(), player.getMoney(), actorGroups.getTowerGroup().getCastedChildren(), gameStage.getLevel().getSpawningEnemyQueue());
+            supportHelper.setCurrentWaveState(waveState);
             while (levelStateManager.getState().equals(LevelState.WAVE_IN_PROGRESS)) {
                 gameStage.act(GAME_STEP_SIZE);
                 switch(simulationRunType){
@@ -214,10 +211,17 @@ public class Simulation {
             }
 
             // Create end state
-            GameEndState endState = new GameEndState(player, actorGroups.getTowerGroup().getChildren());
-            gameState.setEndState(endState);
+//            GameEndState endState = new GameEndState(player, actorGroups.getTowerGroup().getChildren());
+//            gameState.setEndState(endState);
+//
+//            gameStates.add(gameState);
 
-            gameStates.add(gameState);
+            waveState.setLivesEnd(player.getLives());
+            waveState.setMoneyEnd(player.getMoney());
+
+            waveStates.add(waveState);
+
+
             if(simulationRunType.equals(SimulationRunType.UPGRADES_ALL)
                 || simulationRunType.equals(SimulationRunType.UPGRADE_RANGE)
                 || simulationRunType.equals(SimulationRunType.UPGRADE_ATTACK_SPEED)
@@ -228,19 +232,21 @@ public class Simulation {
                 UpgradeSimulationTypeHelper.upgradeTowers(simulationRunType, player, actorGroups.getTowerGroup().getChildren());
             }
 
+            wave++;
+
         }
 
         if(writeState) {
-            StateWriter.save(gameStates, gameStage.getLevel().getActiveLevel(), simulationRunType);
+            StateWriter.save(waveStates, gameStage.getLevel().getActiveLevel(), simulationRunType);
         }
 
-        GameEndState lastEndState = gameStates.get(gameStates.size() - 1).getEndState();
+        WaveState lastRound = waveStates.get(waveStates.size() - 1);
         System.out.println("Completed simulation for " + simulationRunType);
         System.out.println("Last wave: " + wave);
-        System.out.println("Lives left: " + lastEndState.getPlayerState().getLives());
+        System.out.println("Lives left: " + lastRound.getLivesEnd());
 
 
-        return gameStates;
+        return waveStates;
 
     }
 
@@ -542,27 +548,27 @@ public class Simulation {
         Vector2 position = getRandomPosition();
 
         // Try up
-        Vector2 upPos = new LDVector2(position.x, position.y + (PATH_SIZE/2) + towerHeight);
+        Vector2 upPos = new LDVector2(position.x, position.y + (PATH_SIZE/2.0f) + towerHeight);
         towerPlacement.moveTower(upPos);
         boolean placed = towerPlacement.placeTower();
 
         if(!placed) {
             // Try down
-            Vector2 downPos = new LDVector2(position.x, position.y - (PATH_SIZE/2) - towerHeight);
+            Vector2 downPos = new LDVector2(position.x, position.y - (PATH_SIZE/2.0f) - towerHeight);
             towerPlacement.moveTower(downPos);
             placed = towerPlacement.placeTower();
         }
 
         if(!placed) {
             // Try right
-            Vector2 rightPos = new LDVector2(position.x + (PATH_SIZE/2) + towerWidth, position.y);
+            Vector2 rightPos = new LDVector2(position.x + (PATH_SIZE/2.0f) + towerWidth, position.y);
             towerPlacement.moveTower(rightPos);
             placed = towerPlacement.placeTower();
         }
 
         if(!placed) {
             // Try left
-            Vector2 leftPos = new LDVector2(position.x - (PATH_SIZE/2) - towerWidth, position.y);
+            Vector2 leftPos = new LDVector2(position.x - (PATH_SIZE/2.0f) - towerWidth, position.y);
             towerPlacement.moveTower(leftPos);
             placed = towerPlacement.placeTower();
         }

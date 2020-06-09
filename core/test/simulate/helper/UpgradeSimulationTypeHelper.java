@@ -54,22 +54,22 @@ public class UpgradeSimulationTypeHelper {
             for(int i = 0; i < 4; i++){
                 if(!tower.hasArmor() && (tower.getArmorCost() <= remainingMoney)
                     && (simulationRunType.equals(SimulationRunType.UPGRADE_ARMOR) || simulationRunType.equals(
-                    SimulationRunType.UPGRADES_ALL))){
+                    SimulationRunType.UPGRADES_ALL) || simulationRunType.equals(SimulationRunType.ALL))){
                     availableUpgrades.add(UpgradeTypes.ARMOR);
                 }
                 if(!tower.hasIncreasedAttack() && (tower.getAttackIncreaseCost() <= remainingMoney)
                     && (simulationRunType.equals(SimulationRunType.UPGRADE_ATTACK) || simulationRunType.equals(
-                    SimulationRunType.UPGRADES_ALL))){
+                    SimulationRunType.UPGRADES_ALL) || simulationRunType.equals(SimulationRunType.ALL))){
                     availableUpgrades.add(UpgradeTypes.ATTACK);
                 }
                 if(!tower.hasIncreasedSpeed() && (tower.getSpeedIncreaseCost() <= remainingMoney)
                      && (simulationRunType.equals(SimulationRunType.UPGRADE_ATTACK_SPEED) || simulationRunType.equals(
-                    SimulationRunType.UPGRADES_ALL))){
+                    SimulationRunType.UPGRADES_ALL) || simulationRunType.equals(SimulationRunType.ALL))){
                     availableUpgrades.add(UpgradeTypes.ATTACK_SPEED);
                 }
                 if(!tower.hasIncreasedRange() && (tower.getRangeIncreaseCost() <= remainingMoney)
                     && (simulationRunType.equals(SimulationRunType.UPGRADE_RANGE) || simulationRunType.equals(
-                    SimulationRunType.UPGRADES_ALL))){
+                    SimulationRunType.UPGRADES_ALL) || simulationRunType.equals(SimulationRunType.ALL))){
                     availableUpgrades.add(UpgradeTypes.RANGE);
                 }
             }

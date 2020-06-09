@@ -2,33 +2,28 @@ package com.lastdefenders.game.model.actor.health;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
-import com.lastdefenders.game.service.factory.HealthFactory.HealthPool;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarPadding;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarStyle;
-import com.lastdefenders.util.Logger;
-
 /**
  * Healthbar that is placed over Actors. Is only displayed when that actor has
  * taken damage. Gray - Armor Green - Health Red - Death!
  *
  * @author Eric
  */
-public class HealthBar extends Group implements Pool.Poolable {
+public class HealthBar extends Group {
 
     public static final float X_OFFSET = -10;
     public static final float Y_OFFSET = 20;
     public static final float BAR_WIDTH = 25;
     public static final float BAR_HEIGHT = 5;
-    private CombatActor actor = null;
-    private HealthPool<HealthBar> pool;
-    private TextureRegionDrawable greenBar, orangeBar, redBar, grayBar, unfilledBar;
+    private CombatActor actor;
+    private TextureRegionDrawable greenBar, orangeBar, redBar, grayBar;
     private LDProgressBar progressBar;
 
-    public HealthBar(HealthPool<HealthBar> pool, TextureRegionDrawable green, TextureRegionDrawable orange,
-        TextureRegionDrawable red, TextureRegionDrawable gray, TextureRegionDrawable unfilled) {
+    public HealthBar( TextureRegionDrawable green, TextureRegionDrawable orange,
+        TextureRegionDrawable red, TextureRegionDrawable gray, TextureRegionDrawable unfilled, CombatActor actor) {
 
         setTransform(false);
         setVisible(false);
@@ -37,13 +32,13 @@ public class HealthBar extends Group implements Pool.Poolable {
         this.orangeBar = orange;
         this.redBar = red;
         this.grayBar = gray;
-        this.unfilledBar = unfilled;
-        this.pool = pool;
+        this.actor = actor;
         progressBar = new LDProgressBar(0,1, 0.000001f,
             new LDProgressBarPadding(0),
             new LDProgressBarStyle(null, green, unfilled));
 
         addActor(progressBar);
+        progressBar.setSize(BAR_WIDTH, BAR_HEIGHT);
 
     }
 
@@ -52,7 +47,7 @@ public class HealthBar extends Group implements Pool.Poolable {
 
         super.act(delta);
         if (actor == null || actor.isDead() || !actor.isActive()) {
-            pool.free(this);
+            setVisible(false);
             return;
         }
 
@@ -93,27 +88,4 @@ public class HealthBar extends Group implements Pool.Poolable {
         return redBar;
     }
 
-    @Override
-    public void setSize(float width, float height){
-
-        progressBar.setSize(width, height);
-    }
-
-    public void setActor(CombatActor actor) {
-
-        Logger.info("HealthBar: setting actor: " + actor.getClass().getSimpleName());
-        this.actor = actor;
-        this.setSize(BAR_WIDTH, BAR_HEIGHT);
-
-    }
-
-    @Override
-    public void reset() {
-
-        Logger.info("HealthBar: setting resetting");
-        this.actor = null;
-        setVisible(false);
-        this.remove();
-
-    }
 }

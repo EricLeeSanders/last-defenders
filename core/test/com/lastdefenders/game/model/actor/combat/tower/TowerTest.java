@@ -11,8 +11,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
-import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
+import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -96,11 +95,11 @@ public class TowerTest {
     public void testStateAttackTarget() {
 
         Tower tower = TestUtil.createTower(TowerRifle.class, true);
-        Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
+        Enemy enemy = TestUtil.createRunningEnemy(EnemyRifle.class, false);
 
         tower.getTargetGroup().addActor(enemy);
 
-        assertEquals(TowerState.ACTIVE, tower.getState());
+        assertEquals(TowerStateEnum.ACTIVE, tower.getState());
 
         enemy.setPositionCenter(120, 120);
         tower.setPositionCenter(120, 120);
@@ -118,7 +117,7 @@ public class TowerTest {
 
         Tower tower = TestUtil.createTower(TowerRifle.class, true);
 
-        assertEquals(TowerState.ACTIVE, tower.getState());
+        assertEquals(TowerStateEnum.ACTIVE, tower.getState());
 
         tower.takeDamage(tower.getHealth());
 

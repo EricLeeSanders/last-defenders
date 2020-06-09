@@ -22,12 +22,11 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
-import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyAttributes;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
@@ -37,6 +36,7 @@ import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRocketLauncher;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemySniper;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
+import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
 import com.lastdefenders.game.model.actor.combat.event.EventManagerImpl;
 import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager;
@@ -49,7 +49,6 @@ import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
 import com.lastdefenders.game.model.actor.combat.tower.TowerSniper;
 import com.lastdefenders.game.model.actor.combat.tower.TowerTank;
-import com.lastdefenders.game.model.actor.combat.tower.TowerTurret;
 import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager;
 import com.lastdefenders.game.model.actor.effects.label.ArmorDestroyedEffect;
 import com.lastdefenders.game.model.actor.effects.texture.TextureEffect;
@@ -59,13 +58,15 @@ import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathE
 import com.lastdefenders.game.model.actor.groups.EnemyGroup;
 import com.lastdefenders.game.model.actor.groups.TowerGroup;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.EnemyPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.TowerPool;
 import com.lastdefenders.game.service.factory.EffectFactory;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
+import java.util.Collection;
 import java.util.Random;
 
 /**
@@ -162,39 +163,41 @@ public class TestUtil {
         return effectFactoryMock;
     }
 
+    @SuppressWarnings("unchecked")
     public static Tower createTower(Class<? extends Tower> towerClass, boolean spy) {
 
         Tower tower;
         TowerAttributes towerAttributes = resources.getTowerAttribute(towerClass);
 
+        TowerPool towerPoolMock = mock(TowerPool.class);
 
         switch (towerClass.getSimpleName()) {
             case "TowerRifle":
-                tower = new TowerRifle(null, mock(CombatActorPool.class), new EnemyGroup(), null, null, projectileFactoryMock,
+                tower = new TowerRifle(null, towerPoolMock, new EnemyGroup(), null, null, projectileFactoryMock,
                     audioMock, towerAttributes);
                 break;
             case "TowerMachineGun":
-                tower = new TowerMachineGun(null, mock(CombatActorPool.class), new EnemyGroup(), null, null,
+                tower = new TowerMachineGun(null,towerPoolMock, new EnemyGroup(), null, null,
                     projectileFactoryMock, audioMock, towerAttributes);
                 break;
             case "TowerSniper":
-                tower = new TowerSniper(null, mock(CombatActorPool.class), new EnemyGroup(), null, null, projectileFactoryMock,
+                tower = new TowerSniper(null, towerPoolMock, new EnemyGroup(), null, null, projectileFactoryMock,
                     audioMock, towerAttributes);
                 break;
             case "TowerRocketLauncher":
-                tower = new TowerRocketLauncher(null, mock(CombatActorPool.class), new EnemyGroup(), null, null,
+                tower = new TowerRocketLauncher(null, towerPoolMock, new EnemyGroup(), null, null,
                     projectileFactoryMock, audioMock, towerAttributes);
                 break;
             case "TowerFlameThrower":
-                tower = new TowerFlameThrower(null, mock(CombatActorPool.class), new EnemyGroup(), null, null,
+                tower = new TowerFlameThrower(null, towerPoolMock, new EnemyGroup(), null, null,
                     projectileFactoryMock, audioMock, towerAttributes);
                 break;
             case "TowerTank":
-                tower = new TowerTank(null, null, mock(CombatActorPool.class), new EnemyGroup(), null, null,
+                tower = new TowerTank(null, null, towerPoolMock, new EnemyGroup(), null, null,
                     projectileFactoryMock, audioMock, towerAttributes);
                 break;
             case "TowerHumvee":
-                tower = new TowerHumvee(null, null, mock(CombatActorPool.class), new EnemyGroup(), null, null,
+                tower = new TowerHumvee(null, null, towerPoolMock, new EnemyGroup(), null, null,
                     projectileFactoryMock, audioMock, towerAttributes);
                 break;
             default:
@@ -217,7 +220,7 @@ public class TestUtil {
         return tower;
     }
 
-
+    @SuppressWarnings("unchecked")
     public static Enemy createEnemy(Class<? extends Enemy> enemyClass, boolean spy) {
 
         Enemy enemy;
@@ -226,33 +229,35 @@ public class TestUtil {
         TextureRegion[] animatedRegions = atlasRegion.toArray(TextureRegion.class);
         EnemyAttributes enemyAttributes = resources.getEnemyAttributes(enemyClass);
 
+        EnemyPool enemyPoolMock = mock(EnemyPool.class);
+
         switch (enemyClass.getSimpleName()) {
             case "EnemyRifle":
-                enemy = new EnemyRifle(null, animatedRegions, mock(CombatActorPool.class), new TowerGroup(),
+                enemy = new EnemyRifle(null, animatedRegions, enemyPoolMock, new TowerGroup(),
                     projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             case "EnemyMachineGun":
-                enemy = new EnemyMachineGun(null, animatedRegions, mock(CombatActorPool.class), new TowerGroup(),
+                enemy = new EnemyMachineGun(null, animatedRegions, enemyPoolMock, new TowerGroup(),
                     projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             case "EnemySniper":
-                enemy = new EnemySniper(null, animatedRegions, mock(CombatActorPool.class), new TowerGroup(),
+                enemy = new EnemySniper(null, animatedRegions, enemyPoolMock, new TowerGroup(),
                     projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             case "EnemyFlameThrower":
-                enemy = new EnemyFlameThrower(null, animatedRegions, mock(CombatActorPool.class), new TowerGroup(),
+                enemy = new EnemyFlameThrower(null, animatedRegions, enemyPoolMock, new TowerGroup(),
                     projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             case "EnemyHumvee":
-                enemy = new EnemyHumvee(null, null, animatedRegions, mock(CombatActorPool.class), new TowerGroup(),
+                enemy = new EnemyHumvee(null, null, animatedRegions, enemyPoolMock, new TowerGroup(),
                     projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             case "EnemyRocketLauncher":
-                enemy = new EnemyRocketLauncher(null, animatedRegions, mock(CombatActorPool.class), new TowerGroup(),
+                enemy = new EnemyRocketLauncher(null, animatedRegions, enemyPoolMock, new TowerGroup(),
                     projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             case "EnemyTank":
-                enemy = new EnemyTank(null, null, animatedRegions, mock(CombatActorPool.class), new TowerGroup(),
+                enemy = new EnemyTank(null, null, animatedRegions, enemyPoolMock, new TowerGroup(),
                     projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             default:
@@ -274,6 +279,23 @@ public class TestUtil {
         enemy.init();
 
         return enemy;
+    }
+
+    public static Enemy createRunningEnemy(Class<? extends Enemy> enemyClass, boolean spy) {
+        Enemy enemy = createEnemy(enemyClass, spy);
+        enemy.getStateManager().transition(EnemyStateEnum.RUNNING);
+
+        return enemy;
+    }
+
+    public static void finishEnemySpawn(Enemy enemy){
+        enemy.getStateManager().transition(EnemyStateEnum.RUNNING);
+    }
+
+    public static void finishEnemySpawns(Array<Enemy> enemies){
+        for(Enemy enemy : enemies){
+            finishEnemySpawn(enemy);
+        }
     }
 
     public static Viewport mockViewportUnproject(LDVector2 coords){

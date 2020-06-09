@@ -12,9 +12,8 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
+import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
-import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
-import com.lastdefenders.game.model.actor.combat.enemy.state.states.EnemyAttackingState;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
@@ -61,7 +60,7 @@ public class EnemyAttackingStateTest {
 
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("NewSpawn", Boolean.FALSE);
-        verify(stateManagerMock, times(1)).transition(EnemyState.RUNNING, params);
+        verify(stateManagerMock, times(1)).transition(EnemyStateEnum.RUNNING, params);
 
     }
 }

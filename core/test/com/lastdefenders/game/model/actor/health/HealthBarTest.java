@@ -17,10 +17,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
-import com.lastdefenders.game.model.actor.health.HealthBar;
-import com.lastdefenders.game.service.factory.HealthFactory.HealthPool;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -36,8 +35,6 @@ public class HealthBarTest {
     private TextureRegionDrawable redMock = mock(TextureRegionDrawable.class);
     private TextureRegionDrawable grayMock = mock(TextureRegionDrawable.class);
     private TextureRegionDrawable unfilledMock = mock(TextureRegionDrawable.class);
-    @SuppressWarnings("unchecked")
-    private HealthPool<HealthBar> poolMock = mock(HealthPool.class);
 
     @Before
     public void initHealthBarTest() {
@@ -45,7 +42,7 @@ public class HealthBarTest {
         Gdx.app = mock(Application.class);
     }
 
-    private HealthBar createHealthBar() {
+    private HealthBar createHealthBar(CombatActor actor) {
 
         setupBarMock(greenMock);
         setupBarMock(orangeMock);
@@ -53,7 +50,7 @@ public class HealthBarTest {
         setupBarMock(grayMock);
         setupBarMock(unfilledMock);
 
-        return new HealthBar(poolMock, greenMock, orangeMock, redMock, grayMock, unfilledMock);
+        return new HealthBar(greenMock, orangeMock, redMock, grayMock, unfilledMock, actor);
     }
 
     private void setupBarMock(TextureRegionDrawable bar){
@@ -76,12 +73,12 @@ public class HealthBarTest {
     @Test
     public void healthBarNoArmorTest1() {
 
-        HealthBar healthBar = createHealthBar();
-        healthBar = spy(healthBar);
         Tower tower = TestUtil.createTower(TowerRifle.class, true);
         tower.setPositionCenter(20, 20);
 
-        healthBar.setActor(tower);
+        HealthBar healthBar = createHealthBar(tower);
+        healthBar = spy(healthBar);
+
         assertFalse(healthBar.isVisible());
 
         doReturn(.9f).when(tower).getHealthPercent();
@@ -125,7 +122,7 @@ public class HealthBarTest {
         tower.takeDamage(1000);
         healthBar.act(1f);
 
-        verify(poolMock, times(1)).free(healthBar);
+        assertFalse(healthBar.isVisible());
 
     }
 
@@ -135,12 +132,12 @@ public class HealthBarTest {
     @Test
     public void healthBarNoArmorTest2() {
 
-        HealthBar healthBar = createHealthBar();
-        healthBar = spy(healthBar);
         Tower tower = TestUtil.createTower(TowerRifle.class, true);
         tower.setPositionCenter(20, 20);
 
-        healthBar.setActor(tower);
+        HealthBar healthBar = createHealthBar(tower);
+        healthBar = spy(healthBar);
+
         assertFalse(healthBar.isVisible());
 
         doReturn(.6f).when(tower).getHealthPercent();
@@ -185,7 +182,7 @@ public class HealthBarTest {
         tower.takeDamage(1000);
         healthBar.act(1f);
 
-        verify(poolMock, times(1)).free(healthBar);
+        assertFalse(healthBar.isVisible());
 
     }
 
@@ -195,12 +192,12 @@ public class HealthBarTest {
     @Test
     public void healthBarNoArmorTest3() {
 
-        HealthBar healthBar = createHealthBar();
-        healthBar = spy(healthBar);
         Tower tower = TestUtil.createTower(TowerRifle.class, true);
         tower.setPositionCenter(20, 20);
 
-        healthBar.setActor(tower);
+        HealthBar healthBar = createHealthBar(tower);
+        healthBar = spy(healthBar);
+
         assertFalse(healthBar.isVisible());
 
         doReturn(.3f).when(tower).getHealthPercent();
@@ -245,7 +242,7 @@ public class HealthBarTest {
         tower.takeDamage(1000);
         healthBar.act(1f);
 
-        verify(poolMock, times(1)).free(healthBar);
+        assertFalse(healthBar.isVisible());
 
     }
 
@@ -255,13 +252,14 @@ public class HealthBarTest {
     @Test
     public void healthBarWithArmorTest1() {
 
-        HealthBar healthBar = createHealthBar();
-        healthBar = spy(healthBar);
+
         Tower tower = TestUtil.createTower(TowerRifle.class, true);
         tower.setHasArmor(true);
         tower.setPositionCenter(20, 20);
 
-        healthBar.setActor(tower);
+        HealthBar healthBar = createHealthBar(tower);
+        healthBar = spy(healthBar);
+
         assertFalse(healthBar.isVisible());
 
         doReturn(.3f).when(tower).getArmorPercent();
@@ -307,7 +305,7 @@ public class HealthBarTest {
         tower.takeDamage(1000);
         healthBar.act(1f);
 
-        verify(poolMock, times(1)).free(healthBar);
+        assertFalse(healthBar.isVisible());
 
     }
 

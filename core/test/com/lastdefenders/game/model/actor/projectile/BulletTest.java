@@ -61,7 +61,7 @@ public class BulletTest {
 
         Tower attacker = TestUtil.createTower(TowerRifle.class, false);
         attacker.setPositionCenter(40, 40);
-        Enemy target = TestUtil.createEnemy(EnemyRifle.class, false);
+        Enemy target = TestUtil.createRunningEnemy(EnemyRifle.class, false);
         target.setPositionCenter(140, 140);
 
         Bullet bullet = createBullet();

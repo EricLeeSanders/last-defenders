@@ -44,7 +44,7 @@ public class Damage {
         }
     }
 
-    public static void dealFlameGroupDamage(Attacker attacker, SnapshotArray<Actor> targetGroup,
+    public static void dealFlameGroupDamage(Attacker attacker, SnapshotArray<? extends Actor> targetGroup,
         Polygon flameBody) {
 
         for (int i = targetGroup.size - 1; i >= 0; i--) {
@@ -63,13 +63,15 @@ public class Damage {
 
     private static final Circle immediateAOECircle = new Circle();
     public static void dealExplosionDamage(Attacker attacker, float radius, Vector2 position,
-        SnapshotArray<Actor> targetGroup) {
+        SnapshotArray<? extends Actor> targetGroup) {
 
         aoeRadius.setPosition(position.x, position.y);
         aoeRadius.setRadius(radius);
 
-        immediateAOECircle.setPosition(position.x, position.y);
-        immediateAOECircle.setRadius(aoeRadius.radius / 2);
+//        immediateAOECircle.setPosition(position.x, position.y);
+//        immediateAOECircle.setRadius(aoeRadius.radius / 4);
+        immediateAOECircle.setPosition(0, 0);
+        immediateAOECircle.setRadius(0);
         for (int i = targetGroup.size - 1; i >= 0; i--) {
             Actor actor = targetGroup.get(i);
             Targetable aoeTarget = (Targetable) actor;

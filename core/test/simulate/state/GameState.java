@@ -1,5 +1,6 @@
 package simulate.state;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -8,26 +9,13 @@ import java.util.List;
 
 public class GameState {
 
-    GameBeginState beginState;
-    GameEndState endState;
+    private List<WaveState> waveStates = new ArrayList<>();
 
-    public GameBeginState getBeginState() {
-
-        return beginState;
+    public void addWaveState(WaveState waveState){
+        waveStates.add(waveState);
     }
 
-    public void setBeginState(GameBeginState beginState) {
-
-        this.beginState = beginState;
-    }
-
-    public GameEndState getEndState() {
-
-        return endState;
-    }
-
-    public void setEndState(GameEndState endState) {
-
-        this.endState = endState;
+    public List<WaveState> getWaveStates(){
+        return waveStates;
     }
 }

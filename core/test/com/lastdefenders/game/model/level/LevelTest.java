@@ -72,10 +72,7 @@ public class LevelTest {
         doReturn(loadedEnemies).when(dynamicWaveLoader)
             .loadWave(isA(LevelName.class), isA(Integer.class));
         doReturn(new EnemyGroup()).when(actorGroups).getEnemyGroup();
-        HealthBar healthBarMock = mock(HealthBar.class);
-        doReturn(healthBarMock).when(healthFactory).loadHealthBar();
-        ArmorIcon armorIconMock = mock(ArmorIcon.class);
-        doReturn(armorIconMock).when(healthFactory).loadArmorIcon();
+
 
         // Calls FileWaveLoader and DynamicWaveLoader
         for (int i = 0; i <= Level.MAX_WAVES + 1; i++) {

@@ -12,6 +12,8 @@ public interface CombatActorState {
 
     void preState();
 
+    void immediateStep();
+
     void update(float delta);
 
     void postState();

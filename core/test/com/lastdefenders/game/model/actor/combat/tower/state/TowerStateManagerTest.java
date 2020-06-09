@@ -7,8 +7,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
-import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager;
-import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
+import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
 import com.lastdefenders.game.service.factory.EffectFactory;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,14 +29,11 @@ public class TowerStateManagerTest {
     public void transitionTest() {
 
         Tower tower = TestUtil.createTower(TowerRifle.class, false);
-        EffectFactory effectFactoryMock = mock(EffectFactory.class);
 
-        TowerStateManager stateManager = new TowerStateManager(tower, effectFactoryMock);
+        assertEquals(TowerStateEnum.ACTIVE, tower.getStateManger().getCurrentStateName());
 
-        assertEquals(TowerState.STANDBY, stateManager.getCurrentStateName());
-
-        stateManager.transition(TowerState.ACTIVE);
-        assertEquals(TowerState.ACTIVE, stateManager.getCurrentStateName());
+        tower.getStateManger().transition(TowerStateEnum.WAVE_END);
+        assertEquals(TowerStateEnum.WAVE_END, tower.getStateManger().getCurrentStateName());
     }
 
 }

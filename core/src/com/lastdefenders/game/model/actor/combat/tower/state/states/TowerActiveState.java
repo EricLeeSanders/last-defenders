@@ -3,7 +3,6 @@ package com.lastdefenders.game.model.actor.combat.tower.state.states;
 import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
 import com.lastdefenders.game.model.actor.combat.state.StateTransitioner;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.util.ActorUtil;
 import java.util.Map;
@@ -17,7 +16,7 @@ public class TowerActiveState implements CombatActorState {
     private final Tower tower;
     private float attackCounter;
 
-    public TowerActiveState(Tower tower, StateTransitioner<TowerState> stateTransitioner) {
+    public TowerActiveState(Tower tower, StateTransitioner<TowerStateEnum> stateTransitioner) {
 
         this.tower = tower;
     }
@@ -29,8 +28,12 @@ public class TowerActiveState implements CombatActorState {
 
     @Override
     public void preState() {
-
         attackCounter = Float.MAX_VALUE; // ready to attack
+    }
+
+    @Override
+    public void immediateStep() {
+
     }
 
     @Override

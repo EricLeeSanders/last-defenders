@@ -11,16 +11,14 @@ import static org.mockito.Mockito.when;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.lastdefenders.game.model.actor.ai.EnemyAI;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
+import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
-import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
-import com.lastdefenders.game.model.actor.combat.enemy.state.states.EnemyRunningState;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import java.util.Map;
@@ -67,7 +65,7 @@ public class EnemyRunningStateTest {
         runningState.update(10f);
         runningState.update(1f);
 
-        verify(stateManagerMock, times(1)).transition(eq(EnemyState.ATTACKING), isA(Map.class));
+        verify(stateManagerMock, times(1)).transition(eq(EnemyStateEnum.ATTACKING), isA(Map.class));
 
     }
 }

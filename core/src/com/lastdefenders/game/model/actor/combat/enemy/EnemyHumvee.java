@@ -2,14 +2,13 @@ package com.lastdefenders.game.model.actor.combat.enemy;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.model.actor.interfaces.IVehicle;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.EnemyPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
@@ -34,7 +33,7 @@ public class EnemyHumvee extends EnemyTurret implements IVehicle {
     private ProjectileFactory projectileFactory;
 
     public EnemyHumvee(TextureRegion bodyRegion, TextureRegion turretRegion,
-        TextureRegion[] animatedRegions, CombatActorPool<EnemyHumvee> pool, GenericGroup<Tower> targetGroup,
+        TextureRegion[] animatedRegions, EnemyPool<EnemyHumvee> pool, GenericGroup<Tower> targetGroup,
         ProjectileFactory projectileFactory, LDAudio audio, EnemyAttributes attributes) {
 
         super(turretRegion, animatedRegions, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS,

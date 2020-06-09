@@ -53,11 +53,10 @@ public class DamageTest {
 
         Tower tower = TestUtil.createTower(TowerRifle.class, true);
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
-
+        TestUtil.finishEnemySpawn(enemy);
         doReturn(1f).when(tower).getAttack();
 
         Damage.dealBulletDamage(tower, enemy);
-
         assertEquals(enemy.getMaxHealth() - 1, enemy.getHealth(), TestUtil.DELTA);
     }
 
@@ -66,6 +65,7 @@ public class DamageTest {
 
         Tower tower = TestUtil.createTower(TowerRifle.class, false);
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, true);
+        TestUtil.finishEnemySpawn(enemy);
 
         doReturn(1f).when(enemy).getAttack();
 
@@ -79,7 +79,7 @@ public class DamageTest {
 
         Tower tower = TestUtil.createTower(TowerRifle.class, true);
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
-
+        TestUtil.finishEnemySpawn(enemy);
         doReturn(enemy.getHealth()).when(tower).getAttack();
 
         Damage.dealBulletDamage(tower, enemy);
@@ -124,8 +124,10 @@ public class DamageTest {
         Enemy enemy3 = TestUtil.createEnemy(EnemyRocketLauncher.class, false);
         Enemy enemy4 = TestUtil.createEnemy(EnemyTank.class, false);
 
-        SnapshotArray<Actor> enemies = new SnapshotArray<>();
+        SnapshotArray<Enemy> enemies = new SnapshotArray<>();
         enemies.addAll(enemy1, enemy2, enemy3, enemy4);
+
+        TestUtil.finishEnemySpawns(enemies);
 
         Polygon flameBody = new Polygon();
 
@@ -159,8 +161,10 @@ public class DamageTest {
         Enemy enemy3 = TestUtil.createEnemy(EnemyRocketLauncher.class, false);
         Enemy enemy4 = TestUtil.createEnemy(EnemyTank.class, false);
 
-        SnapshotArray<Actor> enemies = new SnapshotArray<>();
+        SnapshotArray<Enemy> enemies = new SnapshotArray<>();
         enemies.addAll(enemy1, enemy2, enemy3, enemy4);
+
+        TestUtil.finishEnemySpawns(enemies);
 
         Polygon flameBody = new Polygon();
 
@@ -196,8 +200,10 @@ public class DamageTest {
         Enemy enemy3 = TestUtil.createEnemy(EnemyRocketLauncher.class, false);
         Enemy enemy4 = TestUtil.createEnemy(EnemyTank.class, false);
 
-        SnapshotArray<Actor> enemies = new SnapshotArray<>();
+        SnapshotArray<Enemy> enemies = new SnapshotArray<>();
         enemies.addAll(enemy1, enemy2, enemy3, enemy4);
+
+        TestUtil.finishEnemySpawns(enemies);
 
         when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), any(Shape2D.class)))
             .thenReturn(true);
@@ -230,8 +236,10 @@ public class DamageTest {
         Enemy enemy3 = TestUtil.createEnemy(EnemyRocketLauncher.class, false);
         Enemy enemy4 = TestUtil.createEnemy(EnemyTank.class, false);
 
-        SnapshotArray<Actor> enemies = new SnapshotArray<>();
+        SnapshotArray<Enemy> enemies = new SnapshotArray<>();
         enemies.addAll(enemy1, enemy2, enemy3, enemy4);
+
+        TestUtil.finishEnemySpawns(enemies);
 
         when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), any(Shape2D.class)))
             .thenReturn(true);

@@ -28,6 +28,8 @@ import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
 import com.lastdefenders.game.model.actor.combat.tower.TowerSniper;
 import com.lastdefenders.game.model.actor.combat.tower.TowerTank;
 import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager;
+import com.lastdefenders.game.model.actor.health.ArmorIcon;
+import com.lastdefenders.game.model.actor.health.HealthBar;
 import com.lastdefenders.game.model.level.SpawningEnemy;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Logger;
@@ -39,27 +41,27 @@ import com.lastdefenders.util.Resources;
 
 public class CombatActorFactory {
 
-    private CombatActorPool<TowerRifle> towerRiflePool = new CombatActorPool<>(TowerRifle.class);
-    private CombatActorPool<TowerTank> towerTankPool = new CombatActorPool<>(TowerTank.class);
-    private CombatActorPool<TowerFlameThrower> towerFlameThrowerPool = new CombatActorPool<>(
+    private TowerPool<TowerRifle> towerRiflePool = new TowerPool<>(TowerRifle.class);
+    private TowerPool<TowerTank> towerTankPool = new TowerPool<>(TowerTank.class);
+    private TowerPool<TowerFlameThrower> towerFlameThrowerPool = new TowerPool<>(
         TowerFlameThrower.class);
-    private CombatActorPool<TowerHumvee> towerHumveePool = new CombatActorPool<>(TowerHumvee.class);
-    private CombatActorPool<TowerSniper> towerSniperPool = new CombatActorPool<>(TowerSniper.class);
-    private CombatActorPool<TowerMachineGun> towerMachinePool = new CombatActorPool<>(
+    private TowerPool<TowerHumvee> towerHumveePool = new TowerPool<>(TowerHumvee.class);
+    private TowerPool<TowerSniper> towerSniperPool = new TowerPool<>(TowerSniper.class);
+    private TowerPool<TowerMachineGun> towerMachinePool = new TowerPool<>(
         TowerMachineGun.class);
-    private CombatActorPool<TowerRocketLauncher> towerRocketLauncherPool = new CombatActorPool<>(
+    private TowerPool<TowerRocketLauncher> towerRocketLauncherPool = new TowerPool<>(
         TowerRocketLauncher.class);
 
-    private CombatActorPool<EnemyRifle> enemyRiflePool = new CombatActorPool<>(EnemyRifle.class);
-    private CombatActorPool<EnemyTank> enemyTankPool = new CombatActorPool<>(EnemyTank.class);
-    private CombatActorPool<EnemyFlameThrower> enemyFlameThrowerPool = new CombatActorPool<>(
+    private EnemyPool<EnemyRifle> enemyRiflePool = new EnemyPool<>(EnemyRifle.class);
+    private EnemyPool<EnemyTank> enemyTankPool = new EnemyPool<>(EnemyTank.class);
+    private EnemyPool<EnemyFlameThrower> enemyFlameThrowerPool = new EnemyPool<>(
         EnemyFlameThrower.class);
-    private CombatActorPool<EnemyMachineGun> enemyMachinePool = new CombatActorPool<>(
+    private EnemyPool<EnemyMachineGun> enemyMachinePool = new EnemyPool<>(
         EnemyMachineGun.class);
-    private CombatActorPool<EnemyRocketLauncher> enemyRocketLauncherPool = new CombatActorPool<>(
+    private EnemyPool<EnemyRocketLauncher> enemyRocketLauncherPool = new EnemyPool<>(
         EnemyRocketLauncher.class);
-    private CombatActorPool<EnemySniper> enemySniperPool = new CombatActorPool<>(EnemySniper.class);
-    private CombatActorPool<EnemyHumvee> enemyHumveePool = new CombatActorPool<>(EnemyHumvee.class);
+    private EnemyPool<EnemySniper> enemySniperPool = new EnemyPool<>(EnemySniper.class);
+    private EnemyPool<EnemyHumvee> enemyHumveePool = new EnemyPool<>(EnemyHumvee.class);
 
     private SpawningEnemyPool spawningEnemyPool = new SpawningEnemyPool();
 
@@ -67,11 +69,12 @@ public class CombatActorFactory {
     private ActorGroups actorGroups;
     private Resources resources;
     private EffectFactory effectFactory;
+    private HealthFactory healthFactory;
     private ProjectileFactory projectileFactory;
     private Player player;
 
     public CombatActorFactory(ActorGroups actorGroups, LDAudio audio, Resources resources,
-        EffectFactory effectFactory, ProjectileFactory projectileFactory, Player player) {
+        EffectFactory effectFactory, HealthFactory healthFactory, ProjectileFactory projectileFactory, Player player) {
 
         this.actorGroups = actorGroups;
         this.audio = audio;
@@ -79,6 +82,7 @@ public class CombatActorFactory {
         this.effectFactory = effectFactory;
         this.projectileFactory = projectileFactory;
         this.player = player;
+        this.healthFactory = healthFactory;
 
     }
 
@@ -326,78 +330,116 @@ public class CombatActorFactory {
     }
 
     /**
-     * Create an {@link CombatActor}
+     * Create an {@link Enemy}
      *
-     * @param type - Type of Game Actor
-     * @return CombatActor
+     * @param type - Type of Enemy
+     * @return Enemy
      */
-    private CombatActor createCombatActor(Class<? extends CombatActor> type) {
+    private Enemy createEnemy(Class<? extends Enemy> type){
 
         String className = type.getSimpleName();
-        Logger.debug("CombatActorFactory: creating combat actor: " + className);
-        CombatActor actor;
+        Logger.debug("CombatActorFactory: creating enemy: " + className);
+        Enemy enemy;
+
         switch(className){
-            case "TowerRifle":
-                actor = createTowerRifle();
-                break;
-            case "TowerFlameThrower":
-                actor = createTowerFlameThrower();
-                break;
-            case "TowerSniper":
-                actor = createTowerSniper();
-                break;
-            case "TowerMachineGun":
-                actor = createTowerMachineGun();
-                break;
-            case "TowerRocketLauncher":
-                actor = createTowerRocketLauncher();
-                break;
-            case "TowerTank":
-                actor = createTowerTank();
-                break;
-            case "TowerHumvee":
-                actor = createTowerHumvee();
-                break;
             case "EnemyRifle":
-                actor = createEnemyRifle();
+                enemy = createEnemyRifle();
                 break;
             case "EnemyFlameThrower":
-                actor = createEnemyFlameThrower();
+                enemy = createEnemyFlameThrower();
                 break;
             case "EnemyHumvee":
-                actor = createEnemyHumvee();
+                enemy = createEnemyHumvee();
                 break;
             case "EnemyMachineGun":
-                actor = createEnemyMachineGun();
+                enemy = createEnemyMachineGun();
                 break;
             case "EnemyRocketLauncher":
-                actor = createEnemyRocketLauncher();
+                enemy = createEnemyRocketLauncher();
                 break;
             case "EnemySniper":
-                actor = createEnemySniper();
+                enemy = createEnemySniper();
                 break;
             case "EnemyTank":
-                actor = createEnemyTank();
+                enemy = createEnemyTank();
                 break;
             default:
                 throw new IllegalArgumentException(className + " is not a valid CombatActor");
         }
-        if (actor instanceof Tower) {
-            TowerStateManager towerStateManager = new TowerStateManager((Tower) actor,
-                effectFactory);
-            ((Tower) actor).setStateManager(towerStateManager);
-        } else {
-            EnemyStateManager enemyStateManager = new EnemyStateManager((Enemy) actor,
-                effectFactory, player);
-            ((Enemy) actor).setStateManager(enemyStateManager);
+
+        EnemyStateManager enemyStateManager = new EnemyStateManager(enemy,
+            effectFactory, player);
+        enemy.setStateManager(enemyStateManager);
+
+        HealthBar healthBar = healthFactory.createHealthBar(enemy);
+        actorGroups.getHealthGroup().addActor(healthBar);
+        ArmorIcon armorIcon = healthFactory.createArmorIcon(enemy);
+        actorGroups.getHealthGroup().addActor(armorIcon);
+
+
+        EventManager eventManager = new EventManagerImpl(enemy, effectFactory);
+        enemy.setEventManager(eventManager);
+
+        Logger.debug("CombatActorFactory: created enemy: " + className + " : " + enemy.ID);
+
+        return enemy;
+    }
+
+    /**
+     * Create an {@link Tower}
+     *
+     * @param type - Type of Tower
+     * @return Tower
+     */
+    private Tower createTower(Class<? extends Tower> type) {
+
+        String className = type.getSimpleName();
+        Logger.debug("CombatActorFactory: creating tower: " + className);
+        Tower tower;
+
+
+        switch(className){
+            case "TowerRifle":
+                tower = createTowerRifle();
+                break;
+            case "TowerFlameThrower":
+                tower = createTowerFlameThrower();
+                break;
+            case "TowerSniper":
+                tower = createTowerSniper();
+                break;
+            case "TowerMachineGun":
+                tower = createTowerMachineGun();
+                break;
+            case "TowerRocketLauncher":
+                tower = createTowerRocketLauncher();
+                break;
+            case "TowerTank":
+                tower = createTowerTank();
+                break;
+            case "TowerHumvee":
+                tower = createTowerHumvee();
+                break;
+            default:
+                throw new IllegalArgumentException(className + " is not a valid tower");
         }
 
-        EventManager eventManager = new EventManagerImpl(actor, effectFactory);
-        actor.setEventManager(eventManager);
+        TowerStateManager towerStateManager = new TowerStateManager(tower,
+            effectFactory);
+        tower.setStateManager(towerStateManager);
 
-        Logger.debug("CombatActorFactory: created actor: " + className + " : " + actor.ID);
+        HealthBar healthBar = healthFactory.createHealthBar(tower);
+        actorGroups.getHealthGroup().addActor(healthBar);
+        ArmorIcon armorIcon = healthFactory.createArmorIcon(tower);
+        actorGroups.getHealthGroup().addActor(armorIcon);
 
-        return actor;
+
+        EventManager eventManager = new EventManagerImpl(tower, effectFactory);
+        tower.setEventManager(eventManager);
+
+        Logger.debug("CombatActorFactory: created actor: " + className + " : " + tower.ID);
+
+        return tower;
     }
 
     private SpawningEnemy createSpawningEnemy() {
@@ -407,19 +449,36 @@ public class CombatActorFactory {
         return new SpawningEnemy(spawningEnemyPool);
     }
 
-    public class CombatActorPool<T extends CombatActor> extends Pool<Actor> {
+    public class EnemyPool<T extends Enemy> extends Pool<Actor> {
 
         private final Class<T> type;
 
-        public CombatActorPool(Class<T> type) {
+        public EnemyPool(Class<T> type) {
 
             this.type = type;
         }
 
         @Override
-        protected CombatActor newObject() {
+        protected Enemy newObject() {
 
-            return createCombatActor(type);
+            return createEnemy(type);
+        }
+
+    }
+
+    public class TowerPool<T extends Tower> extends Pool<Actor> {
+
+        private final Class<T> type;
+
+        public TowerPool(Class<T> type) {
+
+            this.type = type;
+        }
+
+        @Override
+        protected Tower newObject() {
+
+            return createTower(type);
         }
 
     }

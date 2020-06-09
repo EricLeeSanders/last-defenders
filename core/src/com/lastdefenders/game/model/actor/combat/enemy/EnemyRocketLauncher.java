@@ -3,14 +3,13 @@ package com.lastdefenders.game.model.actor.combat.enemy;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.model.actor.interfaces.IRocket;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.EnemyPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
@@ -36,7 +35,7 @@ public class EnemyRocketLauncher extends Enemy implements IRocket {
     private ProjectileFactory projectileFactory;
 
     public EnemyRocketLauncher(TextureRegion stationaryTextureRegion,
-        TextureRegion[] animatedRegions, CombatActorPool<EnemyRocketLauncher> pool,
+        TextureRegion[] animatedRegions, EnemyPool<EnemyRocketLauncher> pool,
         GenericGroup<Tower> targetGroup, ProjectileFactory projectileFactory, LDAudio audio, EnemyAttributes attributes) {
 
         super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS,

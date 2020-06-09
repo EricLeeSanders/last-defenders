@@ -6,8 +6,8 @@ import com.badlogic.gdx.utils.Queue;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.level.SpawningEnemy;
-import simulate.state.combat.EnemyState;
-import simulate.state.combat.TowerState;
+import simulate.state.combatactor.EnemyState;
+import simulate.state.combatactor.TowerState;
 
 /**
  * Created by Eric on 12/16/2019.
@@ -23,7 +23,7 @@ public class GameBeginState {
 
     public GameBeginState(
         Player player,
-        Array<Actor> towers,
+        Array<Tower> towers,
         Queue<SpawningEnemy> enemies) {
 
         this.playerState = new PlayerState(player);

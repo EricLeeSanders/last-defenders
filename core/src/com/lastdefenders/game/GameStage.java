@@ -104,7 +104,7 @@ public class GameStage extends Stage implements PlayerObserver {
         supportActorFactory = new SupportActorFactory(actorGroups, audio, resources, effectFactory,
             projectileFactory);
         combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory,
-            projectileFactory, player);
+            healthFactory, projectileFactory, player);
     }
 
     private void createPlacementServices(Map map) {
@@ -283,4 +283,5 @@ public class GameStage extends Stage implements PlayerObserver {
     public Level getLevel(){
         return level;
     }
+
 }
