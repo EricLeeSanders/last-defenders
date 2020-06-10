@@ -25,12 +25,7 @@ public class EnemyDeadState extends CombatActorDeadState {
         this.effectFactory = effectFactory;
         this.player = player;
     }
-
-    @Override
-    public void loadParameters(Map<String, Object> parameters) {
-
-    }
-
+    
     @Override
     public void preState() {
         // Has to be put in preState because Update is never called (Enemy is removed from stage)
@@ -40,18 +35,4 @@ public class EnemyDeadState extends CombatActorDeadState {
         super.preState();
     }
 
-    @Override
-    public void immediateStep() {
-
-    }
-
-    @Override
-    public void update(float delta) {
-
-    }
-
-    @Override
-    public void postState() {
-
-    }
 }

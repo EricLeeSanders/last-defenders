@@ -60,8 +60,10 @@ public class EnemyState extends CombatActorState implements
         if(state.equals(EnemyStateEnum.DEAD)){
             setDead(true);
             setDeadPosition(new Vector2(enemy.getPositionCenter()));
+            addKills(enemy.getNumOfKills());
         } else if(state.equals(EnemyStateEnum.REACHED_END)){
             setReachedEnd(true);
+            addKills(enemy.getNumOfKills());
         }
     }
 }

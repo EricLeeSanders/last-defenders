@@ -14,12 +14,14 @@ public abstract class CombatActorState {
     private boolean dead;
     private Vector2 position;
     private String name;
+    private int kills;
 
     public CombatActorState(CombatActor actor){
         this.hasArmor = actor.hasArmor();
         this.ID = actor.ID;
         this.position = new Vector2(actor.getPositionCenter().x, actor.getPositionCenter().y);
         this.name = actor.getClass().getSimpleName();
+        this.kills = actor.getNumOfKills();
     }
 
     public Vector2 getPosition() {
@@ -49,5 +51,14 @@ public abstract class CombatActorState {
     public void setDead(boolean dead) {
 
         this.dead = dead;
+    }
+
+    public Integer getKills() {
+
+        return kills;
+    }
+
+    void addKills(int kills){
+        this.kills += kills;
     }
 }
