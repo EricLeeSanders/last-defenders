@@ -198,7 +198,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
         if (isDead()) {
             Logger.info("Combat Actor " + ID  + ": " + this.getClass().getSimpleName() + " Dead");
             deadState();
-            freeActor();
         }
     }
 
