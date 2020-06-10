@@ -2,7 +2,7 @@ package com.lastdefenders.game.model.actor.combat.tower.state.states;
 
 public enum TowerStateEnum {
     ACTIVE,
-    DYING,
+    DEAD,
     STANDBY,
     WAVE_END
 }

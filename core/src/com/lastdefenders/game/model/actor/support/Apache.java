@@ -94,6 +94,8 @@ public class Apache extends CombatSupportActor {
      */
     private void createInitialActions(LDVector2 destination){
 
+        System.out.println("Apache Loc: " + destination);
+
         SequenceAction sequenceAction = Actions.sequence();
 
         float duration = destination.dst(getPositionCenter()) / MOVE_SPEED;

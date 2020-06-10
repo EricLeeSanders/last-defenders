@@ -22,4 +22,12 @@ public class LandMineState implements SupportState{
 
         SnapshotWriter.drawLandMine(background, this);
     }
+
+    @Override
+    public String toString() {
+
+        return "LandMineState{" +
+            "location=" + location +
+            '}';
+    }
 }

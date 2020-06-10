@@ -71,10 +71,8 @@ public abstract class Enemy extends CombatActor {
 
     public void init() {
 
-        Map<String, Object> params = new HashMap<>();
-        params.put("NewSpawn", Boolean.TRUE);
 
-        stateManager.transition(EnemyStateEnum.SPAWNING, params);
+        stateManager.transition(EnemyStateEnum.SPAWNING);
         setDead(false);
         lengthToEndCalculated = false;
     }

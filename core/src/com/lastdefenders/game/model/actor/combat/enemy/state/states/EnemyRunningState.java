@@ -27,7 +27,6 @@ public class EnemyRunningState implements CombatActorState {
     private float findTargetDelayCounter;
     private float findTargetDelay;
     private Map<String, Object> attackTransitionParameters = new HashMap<>();
-    private Boolean newSpawn = false;
 
     private float minTargetDelay = 0;
 
@@ -39,16 +38,6 @@ public class EnemyRunningState implements CombatActorState {
 
     @Override
     public void loadParameters(Map<String, Object> parameters) {
-        Object newSpawn = parameters.get("NewSpawn");
-
-
-        if(newSpawn != null ){
-            if(newSpawn instanceof Boolean){
-                this.newSpawn = (Boolean) newSpawn;
-            } else {
-                throw new IllegalArgumentException("NewSpawn parameter is not a boolean as expected");
-            }
-        }
 
     }
 
@@ -60,7 +49,7 @@ public class EnemyRunningState implements CombatActorState {
 //        } else {
 //            minTargetDelay = 0;
 //        }
-        if(newSpawn){
+        if(enemy.getState() != null && enemy.getState().equals(EnemyStateEnum.SPAWNING)){
             minTargetDelay = 0;
         } else {
             minTargetDelay = enemy.getAttackSpeed();
@@ -86,9 +75,9 @@ public class EnemyRunningState implements CombatActorState {
         }
 
         if ( isReadyToFindTarget()) {
-            minTargetDelay = 0;
-            createFindTargetDelay();
-            findTargetDelayCounter = 0;
+//            minTargetDelay = 0;
+//            createFindTargetDelay();
+//            findTargetDelayCounter = 0;
             Targetable target = findTarget();
             if (target != null) {
                 attackTransitionParameters.put("target", target);
@@ -129,10 +118,10 @@ public class EnemyRunningState implements CombatActorState {
     }
 
     private void createFindTargetDelay() {
-
         float min = minTargetDelay;
         float max = minTargetDelay + MAX_FIND_TARGET_DELAY;
 
         findTargetDelay = MathUtils.random(min, max);
+
     }
 }

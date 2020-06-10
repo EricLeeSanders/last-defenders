@@ -100,6 +100,7 @@ public class WaveState {
     }
 
     public Array<SupportState> getSupportStates(){
+
         return this.supportStates;
     }
 

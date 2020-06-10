@@ -89,7 +89,7 @@ public class SupportSimulationTypeHelper {
             if(supplyDropLoc != null){
                 System.out.println("Placing Supply Drop at: " + supplyDropLoc);
                 supplyDropPlacement.setLocation(supplyDropLoc);
-                currentWaveState.addSupportState(new SupplyDropState(supportActorPlacement.getCurrentSupportActor().getPositionCenter()));
+                currentWaveState.addSupportState(new SupplyDropState(new Vector2(supplyDropLoc)));
                 supplyDropPlacement.placeSupplyDrop();
                 player.spendMoney(SupplyDropCrate.COST);
                 supplyDropCooldownCounter = SUPPLY_DROP_COOLDOWN_RESET;
@@ -108,7 +108,7 @@ public class SupportSimulationTypeHelper {
             if(apacheLoc != null){
                 System.out.println("Placing Apache at: " + apacheLoc);
                 supportActorPlacement.moveSupportActor(apacheLoc);
-                currentWaveState.addSupportState(new ApacheState(supportActorPlacement.getCurrentSupportActor().getPositionCenter()));
+                currentWaveState.addSupportState(new ApacheState(new Vector2(apacheLoc)));
                 supportActorPlacement.placeSupportActor();
                 player.spendMoney(Apache.COST);
                 apacheCooldownCounter = APACHE_COOLDOWN_RESET;
@@ -255,7 +255,7 @@ public class SupportSimulationTypeHelper {
         }
         System.out.println("Adding landmine at: " +landMinePos);
         placementService.moveSupportActor(landMinePos);
-        currentWaveState.addSupportState(new LandMineState(supportActorPlacement.getCurrentSupportActor().getPositionCenter()));
+        currentWaveState.addSupportState(new LandMineState(new Vector2(supportActorPlacement.getCurrentSupportActor().getPositionCenter())));
         placementService.placeSupportActor();
     }
 

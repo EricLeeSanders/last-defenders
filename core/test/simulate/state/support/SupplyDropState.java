@@ -22,4 +22,12 @@ public class SupplyDropState implements SupportState{
 
         SnapshotWriter.drawSupplyDropState(background, this);
     }
+
+    @Override
+    public String toString() {
+
+        return "SupplyDropState{" +
+            "location=" + location +
+            '}';
+    }
 }

@@ -22,4 +22,12 @@ public class ApacheState implements SupportState{
 
         SnapshotWriter.drawApacheState(background, this);
     }
+
+    @Override
+    public String toString() {
+
+        return "ApacheState{" +
+            "location=" + location +
+            '}';
+    }
 }

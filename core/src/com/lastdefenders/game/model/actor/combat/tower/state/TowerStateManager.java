@@ -23,7 +23,7 @@ public class TowerStateManager extends StateManager<TowerStateEnum, Tower>{
     public TowerStateManager(Tower tower, EffectFactory effectFactory) {
         super(tower);
         towerStates.put(TowerStateEnum.ACTIVE, new TowerActiveState(tower, this));
-        towerStates.put(TowerStateEnum.DYING,
+        towerStates.put(TowerStateEnum.DEAD,
             new CombatActorDeadState(tower, effectFactory));
         towerStates.put(TowerStateEnum.WAVE_END,
             new TowerWaveEndState(tower, effectFactory));

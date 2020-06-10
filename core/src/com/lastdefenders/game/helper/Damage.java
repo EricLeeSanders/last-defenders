@@ -68,10 +68,10 @@ public class Damage {
         aoeRadius.setPosition(position.x, position.y);
         aoeRadius.setRadius(radius);
 
-//        immediateAOECircle.setPosition(position.x, position.y);
-//        immediateAOECircle.setRadius(aoeRadius.radius / 4);
-        immediateAOECircle.setPosition(0, 0);
-        immediateAOECircle.setRadius(0);
+        immediateAOECircle.setPosition(position.x, position.y);
+        immediateAOECircle.setRadius(aoeRadius.radius / 2);
+//        immediateAOECircle.setPosition(0, 0);
+//        immediateAOECircle.setRadius(0);
         for (int i = targetGroup.size - 1; i >= 0; i--) {
             Actor actor = targetGroup.get(i);
             Targetable aoeTarget = (Targetable) actor;

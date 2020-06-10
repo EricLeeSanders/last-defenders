@@ -23,4 +23,12 @@ public class AirStrikeState implements SupportState{
 
         SnapshotWriter.drawAirStrikeState(background, this);
     }
+
+    @Override
+    public String toString() {
+
+        return "AirStrikeState{" +
+            "locations=" + locations +
+            '}';
+    }
 }

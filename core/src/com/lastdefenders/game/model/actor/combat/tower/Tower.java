@@ -8,11 +8,9 @@ import com.lastdefenders.game.model.actor.ai.TowerAIType;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.state.StateManager;
-import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager;
 import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.groups.GenericGroup;
-import com.lastdefenders.game.service.factory.CombatActorFactory.TowerPool;
 import com.lastdefenders.game.service.factory.CombatActorFactory.TowerPool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
@@ -150,7 +148,7 @@ public abstract class Tower extends CombatActor {
 
     public void deadState() {
 
-        stateManager.transition(TowerStateEnum.DYING);
+        stateManager.transition(TowerStateEnum.DEAD);
     }
 
     public void heal() {

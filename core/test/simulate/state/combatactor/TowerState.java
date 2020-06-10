@@ -47,6 +47,11 @@ public class TowerState extends CombatActorState implements CombatActorStateObse
 
     @Override
     public void stateChange(TowerStateEnum state, Tower combatActor) {
-
+        if(state.equals(TowerStateEnum.DEAD)){
+            setDead(true);
+            combatActor.getStateManger().detachObserver(this);
+        } else if(state.equals(TowerStateEnum.WAVE_END)){
+            combatActor.getStateManger().detachObserver(this);
+        }
     }
 }

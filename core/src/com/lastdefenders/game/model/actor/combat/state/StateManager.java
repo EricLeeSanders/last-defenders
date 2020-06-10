@@ -51,7 +51,7 @@ public abstract class StateManager<E extends Enum<E>, T extends CombatActor> imp
 
     @SuppressWarnings("unchecked")
     private void notifyObservers(){
-        Logger.info("Enemy State Manager: notifying observers");
+        Logger.info("State Manager: notifying observers");
         Object[] objects = observers.begin();
         for (int i = observers.size - 1; i >= 0; i--) {
             CombatActorStateObserver<E, T> observer = (CombatActorStateObserver<E,T>) objects[i];
