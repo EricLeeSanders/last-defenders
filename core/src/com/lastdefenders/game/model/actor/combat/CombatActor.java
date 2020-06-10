@@ -43,6 +43,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
     private DeathEffectType deathEffectType;
     private EventManager eventManager;
     private CombatActorAttributes attributes;
+    private int kills;
 
     protected CombatActor(TextureRegion textureRegion, Dimension textureSize, Vector2 gunPos, DeathEffectType deathEffectType,
         CombatActorAttributes attributes) {
@@ -71,6 +72,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
         attack = attributes.getAttack();
         attackSpeed = attributes.getAttackSpeed();
         range = attributes.getRange();
+        kills = 0;
         this.setRotation(0);
         this.clear();
         this.remove();
@@ -263,6 +265,16 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
         }
         resetArmor();
         this.hasArmor = hasArmor;
+    }
+
+    public int getNumOfKills() {
+
+        return kills;
+    }
+
+    public void giveKill() {
+
+        kills++;
     }
 
     public abstract void freeActor();

@@ -33,7 +33,6 @@ public abstract class Tower extends CombatActor {
     private TowerAIType ai = TowerAIType.CLOSEST;
     private boolean showRange;
     private TextureRegion rangeRegion, collidingRangeRegion;
-    private int kills;
     private boolean towerColliding;
     private StateManager<TowerStateEnum, Tower> stateManager;
 
@@ -141,7 +140,6 @@ public abstract class Tower extends CombatActor {
         rangeIncreaseEnabled = false;
         speedIncreaseEnabled = false;
         attackIncreaseEnabled = false;
-        kills = 0;
         this.setShowRange(false);
         stateManager.reset();
     }
@@ -224,17 +222,6 @@ public abstract class Tower extends CombatActor {
     public void sellTower() {
 
         removeTower();
-    }
-
-    public int getNumOfKills() {
-
-        return kills;
-    }
-
-    public void giveKill() {
-
-        Logger.info("Tower " + ID  + ": "  + this.getClass().getSimpleName() + " giving kill");
-        kills++;
     }
 
     private void removeTower() {

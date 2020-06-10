@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.health.interfaces.PlatedArmor;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
@@ -27,11 +28,11 @@ public class Damage {
             Logger.debug("Doing " + attacker.getAttack() + " damage to: " + target.getClass()
                 .getSimpleName());
             target.takeDamage(attacker.getAttack());
-            if (target.isDead() && attacker instanceof Tower) {
-                // Only give the tower a kill if it is alive.
-                if (!((Tower) attacker).isDead()) {
+            if (target.isDead() && attacker instanceof CombatActor) {
+                CombatActor combatActor = (CombatActor) attacker;
+                if (!combatActor.isDead()) {
                     Logger.debug("Target: giving kill to attacker");
-                    ((Tower) attacker).giveKill();
+                    combatActor.giveKill();
                 }
             }
         }
