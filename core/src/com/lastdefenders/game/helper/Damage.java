@@ -33,6 +33,8 @@ public class Damage {
                 if (!combatActor.isDead()) {
                     Logger.debug("Target: giving kill to attacker");
                     combatActor.giveKill();
+                } else {
+                    System.out.println("Attacker " + combatActor.ID + " is dead!");
                 }
             }
         }
@@ -83,10 +85,11 @@ public class Damage {
                     float dst = position.dst(aoeTarget.getPositionCenter());
                     dst = dst <= radius ? dst : radius;
                     float dmgFallOff;
-                    if(CollisionDetection.shapesIntersect(aoeTarget.getBody(), immediateAOECircle)){
+                    if (CollisionDetection
+                        .shapesIntersect(aoeTarget.getBody(), immediateAOECircle)) {
                         dmgFallOff = 0;
                     } else {
-                        dmgFallOff = attacker.getAttack() * (dst/ radius);
+                        dmgFallOff = attacker.getAttack() * (dst / radius);
                     }
 
                     float damage = attacker.getAttack() - dmgFallOff;
@@ -96,10 +99,11 @@ public class Damage {
                     Logger.debug("Explosion: dst: " + dst);
                     Logger.debug("Explosion: dmgFallOff: " + dmgFallOff);
                     aoeTarget.takeDamage(damage);
-                    if (aoeTarget.isDead() && attacker instanceof Tower) {
-                        if (!((Tower) attacker).isDead()) {
+                    if (aoeTarget.isDead() && attacker instanceof CombatActor) {
+                        CombatActor combatActor = (CombatActor) attacker;
+                        if (!combatActor.isDead()) {
                             Logger.debug("Explosion: giving kill to attacker");
-                            ((Tower) attacker).giveKill();
+                            combatActor.giveKill();
                         }
                     }
                 }
