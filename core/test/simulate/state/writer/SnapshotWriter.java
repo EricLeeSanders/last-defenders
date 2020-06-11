@@ -54,7 +54,8 @@ public class SnapshotWriter {
         TOWER_IMAGE_PATHS.put("TowerSniper", TOWER_IMAGE_PATH_BASE + "tower-sniper.png");
         TOWER_IMAGE_PATHS.put("TowerTank", TOWER_IMAGE_PATH_BASE + "tower-tank-body.png");
     }
-    static byte[] createSnapshot(Array<TowerState> towers, Array<EnemyState> enemies, Array<SupportState> supportStates, LevelName levelName)
+
+    byte[] createSnapshot(Array<TowerState> towers, Array<EnemyState> enemies, Array<SupportState> supportStates, LevelName levelName)
         throws IOException {
 
         BufferedImage levelImage = getLevelImage(levelName);
@@ -71,7 +72,7 @@ public class SnapshotWriter {
         }
 
         for(SupportState supportState : supportStates){
-            supportState.writeState(background);
+            supportState.writeSnapshotState(background, this);
         }
 
         ByteArrayOutputStream baps = new ByteArrayOutputStream();
@@ -80,7 +81,7 @@ public class SnapshotWriter {
         return baps.toByteArray();
     }
 
-    private static void drawTower(Graphics2D background, TowerState tower) throws IOException {
+    private void drawTower(Graphics2D background, TowerState tower) throws IOException {
 
         BufferedImage towerImg = getImage(TOWER_IMAGE_PATHS.get(tower.getName()));
 
@@ -105,7 +106,7 @@ public class SnapshotWriter {
         }
     }
 
-    private static void drawDeadEnemy(Graphics2D background, EnemyState enemy) throws IOException {
+    private void drawDeadEnemy(Graphics2D background, EnemyState enemy) throws IOException {
 
         BufferedImage deadImg = getImage(DEAD_IMAGE);
 
@@ -117,7 +118,7 @@ public class SnapshotWriter {
         background.drawImage(deadImg, (int)x, (int)y, null);
     }
 
-    public static void drawLandMine(Graphics2D background, LandMineState state)
+    public void drawLandMine(Graphics2D background, LandMineState state)
         throws IOException {
 
         BufferedImage landmineImg = getImage(LANDMINE_IMAGE);
@@ -130,7 +131,7 @@ public class SnapshotWriter {
         background.drawImage(landmineImg, (int)x, (int)y, null);
     }
 
-    public static void drawApacheState(Graphics2D background, ApacheState state)
+    public void drawApacheState(Graphics2D background, ApacheState state)
         throws IOException {
 
         BufferedImage apacheImg = getImage(APACHE_IMAGE);
@@ -145,7 +146,7 @@ public class SnapshotWriter {
         background.drawImage(apacheImg, (int)x, (int)y, null);
     }
 
-    public static void drawSupplyDropState(Graphics2D background, SupplyDropState state)
+    public void drawSupplyDropState(Graphics2D background, SupplyDropState state)
         throws IOException {
 
         BufferedImage supplyDropImg = getImage(SUPPLY_DROP_IMAGE);
@@ -158,7 +159,7 @@ public class SnapshotWriter {
         background.drawImage(supplyDropImg, (int)x, (int)y, null);
     }
 
-    public static void drawAirStrikeState(Graphics2D background, AirStrikeState state)
+    public void drawAirStrikeState(Graphics2D background, AirStrikeState state)
         throws IOException {
 
         BufferedImage airStrikeImage = getImage(AIRSTRIKE_IMAGE);
@@ -175,11 +176,11 @@ public class SnapshotWriter {
 
     }
 
-    private static BufferedImage getLevelImage(LevelName levelName) throws IOException {
+    private BufferedImage getLevelImage(LevelName levelName) throws IOException {
         return getImage(LEVEL_IMAGE_PATHS.get(levelName));
     }
 
-    private static BufferedImage getImage(String path) throws IOException {
+    private BufferedImage getImage(String path) throws IOException {
         BufferedImage img = ImageIO.read(Gdx.files.internal(path).file());
 
         return img;

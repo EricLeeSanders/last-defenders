@@ -37,11 +37,14 @@ public class StateWriter {
 
     private static final String SIMULATION_SAVE_PATH = "../../files/simulation/simulations/";
 
-    public static void save(List<WaveState> states, LevelName levelName, SimulationRunType simulationType) throws IOException {
+    private SummaryStateWriter summaryStateWriter = new SummaryStateWriter();
+    private SnapshotWriter snapshotWriter = new SnapshotWriter();
+
+    public void save(List<WaveState> states, LevelName levelName, SimulationRunType simulationType) throws IOException {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
 
-        SummaryStateWriter.writeSummary(workbook, states);
+        summaryStateWriter.writeSummary(workbook, states);
 
         for(WaveState state : states){
             saveState(workbook, state, levelName);
@@ -57,7 +60,7 @@ public class StateWriter {
 
     }
 
-    private static void saveState(XSSFWorkbook workbook, WaveState state, LevelName levelName)
+    private void saveState(XSSFWorkbook workbook, WaveState state, LevelName levelName)
         throws IOException {
         RowCounter rowCounter = new RowCounter();
         Integer wave = state.getWaveNumber();
@@ -66,7 +69,7 @@ public class StateWriter {
         writeState(sheet, state, levelName, rowCounter);
     }
 
-    private static void writeState(XSSFSheet sheet, WaveState waveState, LevelName levelName, RowCounter rowCounter) throws IOException {
+    private void writeState(XSSFSheet sheet, WaveState waveState, LevelName levelName, RowCounter rowCounter) throws IOException {
         createStats(sheet, waveState, rowCounter, "Stats");
 
         rowCounter.skip(1);// Skip for buffer
@@ -85,10 +88,10 @@ public class StateWriter {
     }
 
 
-    private static void addSnapshot(XSSFSheet sheet, Array<TowerState> towers, Array<EnemyState> enemies, Array<SupportState> supportStates, LevelName levelName, RowCounter counter)
+    private void addSnapshot(XSSFSheet sheet, Array<TowerState> towers, Array<EnemyState> enemies, Array<SupportState> supportStates, LevelName levelName, RowCounter counter)
         throws IOException {
 
-        byte [] snapshot = SnapshotWriter.createSnapshot(towers, enemies, supportStates, levelName);
+        byte [] snapshot = snapshotWriter.createSnapshot(towers, enemies, supportStates, levelName);
         int pictureIdx = sheet.getWorkbook().addPicture(snapshot, Workbook.PICTURE_TYPE_PNG);
         XSSFDrawing drawing = sheet.createDrawingPatriarch();
         XSSFCreationHelper helper = sheet.getWorkbook().getCreationHelper();
@@ -101,7 +104,7 @@ public class StateWriter {
         picture.resize();
     }
 
-    private static void writeEnemies(XSSFSheet sheet, Array<EnemyState> enemies, RowCounter counter){
+    private void writeEnemies(XSSFSheet sheet, Array<EnemyState> enemies, RowCounter counter){
 
         Row titleRow = sheet.createRow(counter.next());
 
@@ -123,7 +126,7 @@ public class StateWriter {
         }
     }
 
-    private static void writeEnemy(EnemyState enemy, Row row){
+    private void writeEnemy(EnemyState enemy, Row row){
         int counter = 0;
         row.createCell(counter++).setCellValue(enemy.getName());
         row.createCell(counter++).setCellValue(enemy.getID());
@@ -141,7 +144,7 @@ public class StateWriter {
     }
 
 
-    private static void createEnemyHeader(Row row){
+    private void createEnemyHeader(Row row){
         int counter = 0;
         row.createCell(counter++).setCellValue("Name");
         row.createCell(counter++).setCellValue("ID");
@@ -167,7 +170,7 @@ public class StateWriter {
         }
     }
 
-    private static void writeTowers(XSSFSheet sheet, Array<TowerState> towers, RowCounter counter){
+    private void writeTowers(XSSFSheet sheet, Array<TowerState> towers, RowCounter counter){
 
         Row towerTitleRow = sheet.createRow(counter.next());
 
@@ -189,7 +192,7 @@ public class StateWriter {
         }
     }
 
-    private static void writeTower(TowerState tower, Row row){
+    private void writeTower(TowerState tower, Row row){
         int counter = 0;
         row.createCell(counter++).setCellValue(tower.getName());
         row.createCell(counter++).setCellValue(tower.getID());
@@ -203,7 +206,7 @@ public class StateWriter {
         row.createCell(counter++).setCellValue(tower.isDead());
     }
 
-    private static void createTowerHeader(Row row){
+    private void createTowerHeader(Row row){
         int counter = 0;
         row.createCell(counter++).setCellValue("Name");
         row.createCell(counter++).setCellValue("ID");
@@ -229,7 +232,7 @@ public class StateWriter {
         }
     }
 
-    private static void writeSupports(XSSFSheet sheet, Array<SupportState> supportStates, RowCounter counter){
+    private void writeSupports(XSSFSheet sheet, Array<SupportState> supportStates, RowCounter counter){
 
         Row supportTitleRow = sheet.createRow(counter.next());
 
@@ -257,14 +260,14 @@ public class StateWriter {
         }
     }
 
-    private static void writeSupport(String name, Integer count, Row row){
+    private void writeSupport(String name, Integer count, Row row){
         int counter = 0;
         row.createCell(counter++).setCellValue(name);
         row.createCell(counter++).setCellValue(count);
 
     }
 
-    private static void createSupportHeader(Row row){
+    private void createSupportHeader(Row row){
         int counter = 0;
         row.createCell(counter++).setCellValue("Name");
         row.createCell(counter++).setCellValue("Count");
@@ -282,7 +285,7 @@ public class StateWriter {
         }
     }
 
-    private static void createStats(XSSFSheet sheet, WaveState waveState, RowCounter counter, String titleStr){
+    private void createStats(XSSFSheet sheet, WaveState waveState, RowCounter counter, String titleStr){
 
         Row titleRow = sheet.createRow(counter.next());
 

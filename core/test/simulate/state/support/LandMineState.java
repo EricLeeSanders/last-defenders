@@ -18,9 +18,9 @@ public class LandMineState implements SupportState{
     }
 
     @Override
-    public void writeState(Graphics2D background) throws IOException {
+    public void writeSnapshotState(Graphics2D background, SnapshotWriter snapshotWriter) throws IOException {
 
-        SnapshotWriter.drawLandMine(background, this);
+        snapshotWriter.drawLandMine(background, this);
     }
 
     @Override

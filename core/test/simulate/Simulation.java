@@ -81,6 +81,8 @@ public class Simulation {
 
     private SupportSimulationTypeHelper supportHelper;
 
+    private StateWriter stateWriter = new StateWriter();
+
     @Before
     public void initSimulation() {
         towerTypes = new HashMap<>();
@@ -136,36 +138,36 @@ public class Simulation {
     }
 
     public void runAggregate(int count, SimulationRunType [] runTypes)  throws IOException{
-        HashMap<SimulationRunType, HashMap<Integer, Integer>> waveCounts = new HashMap<>();
+        java.util.Map<SimulationRunType, java.util.Map<Integer, List<WaveState>>> waveStatesByRunType = new HashMap<>();
 
         for(int i = 0; i < count; i++){
             for(SimulationRunType runType : runTypes){
                 List<WaveState> waveStates = simulate(runType, false);
-                HashMap<Integer, Integer> waveCount = waveCounts.get(runType);
-                if(waveCount == null){
-                    waveCount = new HashMap<>();
+                java.util.Map<Integer, List<WaveState>> waveStatesByIter = waveStatesByRunType.get(runType);
+                if(waveStatesByIter == null){
+                    waveStatesByIter = new HashMap<>();
                 }
-                waveCount.put(i+1, waveStates.size());
-                waveCounts.put(runType,waveCount);
+                waveStatesByIter.put(i+1, waveStates);
+                waveStatesByRunType.put(runType,waveStatesByIter);
                 initSimulation();
             }
         }
 
-        for (HashMap.Entry<SimulationRunType, HashMap<Integer, Integer>> entry : waveCounts.entrySet()) {
-            SimulationRunType runType = entry.getKey();
-            HashMap<Integer, Integer> waveCount = entry.getValue();
-
-            IntSummaryStatistics stats = new IntSummaryStatistics();
-            for(HashMap.Entry<Integer, Integer> waveEntry : waveCount.entrySet()){
-                stats.accept(waveEntry.getValue());
-            }
-
-            System.out.println("Stats for " + runType);
-            System.out.println("Min: " + stats.getMin());
-            System.out.println("Max: " + stats.getMax());
-            System.out.println("Avg: " + stats.getAverage());
-            System.out.println(waveCount);
-        }
+//        for (HashMap.Entry<SimulationRunType, HashMap<Integer, List<WaveState>>> entry : waveStatesByRunType.entrySet()) {
+//            SimulationRunType runType = entry.getKey();
+//            HashMap<Integer, List<WaveState>> waveCount = entry.getValue();
+//
+//            IntSummaryStatistics stats = new IntSummaryStatistics();
+//            for(HashMap.Entry<Integer, List<WaveState>> waveEntry : waveCount.entrySet()){
+//                stats.accept(waveEntry.getValue().size());
+//            }
+//
+//            System.out.println("Stats for " + runType);
+//            System.out.println("Min: " + stats.getMin());
+//            System.out.println("Max: " + stats.getMax());
+//            System.out.println("Avg: " + stats.getAverage());
+//            System.out.println(waveCount);
+//        }
     }
 
     public void runAggregate(int count) throws IOException {
@@ -237,7 +239,7 @@ public class Simulation {
         }
 
         if(writeState) {
-            StateWriter.save(waveStates, gameStage.getLevel().getActiveLevel(), simulationRunType);
+            stateWriter.save(waveStates, gameStage.getLevel().getActiveLevel(), simulationRunType);
         }
 
         WaveState lastRound = waveStates.get(waveStates.size() - 1);

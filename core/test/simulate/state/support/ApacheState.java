@@ -18,9 +18,9 @@ public class ApacheState implements SupportState{
     }
 
     @Override
-    public void writeState(Graphics2D background) throws IOException {
+    public void writeSnapshotState(Graphics2D background, SnapshotWriter snapshotWriter) throws IOException {
 
-        SnapshotWriter.drawApacheState(background, this);
+        snapshotWriter.drawApacheState(background, this);
     }
 
     @Override

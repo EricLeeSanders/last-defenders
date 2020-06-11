@@ -19,9 +19,9 @@ public class AirStrikeState implements SupportState{
     }
 
     @Override
-    public void writeState(Graphics2D background) throws IOException {
+    public void writeSnapshotState(Graphics2D background, SnapshotWriter snapshotWriter) throws IOException {
 
-        SnapshotWriter.drawAirStrikeState(background, this);
+        snapshotWriter.drawAirStrikeState(background, this);
     }
 
     @Override
