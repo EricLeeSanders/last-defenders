@@ -16,6 +16,7 @@ public class EnemyState extends CombatActorState implements
     private float spawnDelay;
     private float speed;
     private boolean reachedEnd;
+    private int reward;
 
     private Vector2 deadPosition;
 
@@ -23,6 +24,7 @@ public class EnemyState extends CombatActorState implements
         super(actor.getEnemy());
         this.spawnDelay = actor.getSpawnDelay();
         this.speed = actor.getEnemy().getSpeed();
+        this.reward = actor.getEnemy().getKillReward();
         actor.getEnemy().getStateManager().attachObserver(this);
     }
 
@@ -53,6 +55,10 @@ public class EnemyState extends CombatActorState implements
     public void setDeadPosition(Vector2 deadPosition) {
 
         this.deadPosition = deadPosition;
+    }
+
+    public int getReward(){
+        return reward;
     }
 
     @Override

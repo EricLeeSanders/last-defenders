@@ -44,10 +44,12 @@ public class TowerState extends CombatActorState implements CombatActorStateObse
         if(state.equals(TowerStateEnum.DEAD)){
             setDead(true);
             combatActor.getStateManger().detachObserver(this);
-            addKills(combatActor.getNumOfKills());
+            // subtract the states number of kills (what the tower started with)
+            // from the current number so we get how many were added this wave
+            addKills(combatActor.getNumOfKills() - getKills());
         } else if(state.equals(TowerStateEnum.WAVE_END)){
             combatActor.getStateManger().detachObserver(this);
-            addKills(combatActor.getNumOfKills());
+            addKills(combatActor.getNumOfKills() - getKills());
         }
     }
 }

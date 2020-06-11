@@ -27,6 +27,7 @@ import simulate.state.WaveState;
 import simulate.state.combatactor.EnemyState;
 import simulate.state.combatactor.TowerState;
 import simulate.state.support.SupportState;
+import simulate.state.writer.StateWriterUtil.RowCounter;
 
 /**
  * Created by Eric on 12/17/2019.
@@ -39,6 +40,9 @@ public class StateWriter {
     public static void save(List<WaveState> states, LevelName levelName, SimulationRunType simulationType) throws IOException {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
+
+        SummaryStateWriter.writeSummary(workbook, states);
+
         for(WaveState state : states){
             saveState(workbook, state, levelName);
         }
@@ -123,6 +127,7 @@ public class StateWriter {
         int counter = 0;
         row.createCell(counter++).setCellValue(enemy.getName());
         row.createCell(counter++).setCellValue(enemy.getID());
+        row.createCell(counter++).setCellValue(enemy.getKills());
         row.createCell(counter++).setCellValue(enemy.getHasArmor());
         row.createCell(counter++).setCellValue(enemy.getSpeed());
         row.createCell(counter++).setCellValue(enemy.getSpawnDelay());
@@ -140,6 +145,7 @@ public class StateWriter {
         int counter = 0;
         row.createCell(counter++).setCellValue("Name");
         row.createCell(counter++).setCellValue("ID");
+        row.createCell(counter++).setCellValue("Kills");
         row.createCell(counter++).setCellValue("Armor");
         row.createCell(counter++).setCellValue("Speed");
         row.createCell(counter++).setCellValue("Spawn Delay");
@@ -317,18 +323,5 @@ public class StateWriter {
         return headerFont;
     }
 
-    private static class RowCounter {
-        private Integer value = 0;
-
-        public Integer next(){
-            return value++;
-        }
-
-        public Integer skip(Integer amount){
-            value += amount;
-
-            return next();
-        }
-    }
 
 }
