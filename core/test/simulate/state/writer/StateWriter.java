@@ -38,9 +38,10 @@ public class StateWriter {
     private static final String SIMULATION_SAVE_PATH = "../../files/simulation/simulations/";
 
     private SummaryStateWriter summaryStateWriter = new SummaryStateWriter();
+    private AggregateSummaryStateWriter aggregateSummaryStateWriter = new AggregateSummaryStateWriter();
     private SnapshotWriter snapshotWriter = new SnapshotWriter();
 
-    public void save(List<WaveState> states, LevelName levelName, SimulationRunType simulationType) throws IOException {
+    public void saveSimulation(List<WaveState> states, LevelName levelName, SimulationRunType simulationType) throws IOException {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
 
@@ -50,16 +51,30 @@ public class StateWriter {
             saveState(workbook, state, levelName);
         }
 
+        saveWorkbook(workbook, simulationType.name());
+
+
+    }
+
+    public void saveSimulationAggregate(Map<SimulationRunType, Map<Integer, List<WaveState>>> waveStatesByRunType, LevelName levelName) throws IOException {
+
+        XSSFWorkbook workbook = new XSSFWorkbook();
+
+        aggregateSummaryStateWriter.writeState(workbook, waveStatesByRunType, levelName);
+
+        saveWorkbook(workbook, "Aggregate");
+    }
+
+    private void saveWorkbook(XSSFWorkbook workbook, String name)throws IOException{
+
         SimpleDateFormat simpleDateFormat =
             new SimpleDateFormat("MMddYYYYhhmmss");
         String dateAsString = simpleDateFormat.format(new Date());
 
-        FileOutputStream fos = new FileOutputStream(SIMULATION_SAVE_PATH+ dateAsString + "-" + simulationType + ".xlsx");
+        FileOutputStream fos = new FileOutputStream(SIMULATION_SAVE_PATH+ dateAsString + "-" + name + ".xlsx");
         workbook.write(fos);
         fos.close();
-
     }
-
     private void saveState(XSSFWorkbook workbook, WaveState state, LevelName levelName)
         throws IOException {
         RowCounter rowCounter = new RowCounter();

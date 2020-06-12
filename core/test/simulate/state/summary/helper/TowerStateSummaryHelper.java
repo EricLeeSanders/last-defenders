@@ -1,10 +1,11 @@
-package simulate.state.helper;
+package simulate.state.summary.helper;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import simulate.state.WaveState;
 import simulate.state.combatactor.TowerState;
+import simulate.state.summary.TowerStateSummary;
 
 public class TowerStateSummaryHelper {
 
@@ -59,5 +60,7 @@ public class TowerStateSummaryHelper {
         return towerSummaries;
 
     }
+
+
 
 }

@@ -24,6 +24,12 @@ public class SupplyDropState implements SupportState{
     }
 
     @Override
+    public String getSupportName() {
+
+        return "SupplyDrop";
+    }
+
+    @Override
     public String toString() {
 
         return "SupplyDropState{" +

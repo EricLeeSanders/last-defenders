@@ -24,6 +24,12 @@ public class LandMineState implements SupportState{
     }
 
     @Override
+    public String getSupportName() {
+
+        return "LandMine";
+    }
+
+    @Override
     public String toString() {
 
         return "LandMineState{" +

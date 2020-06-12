@@ -49,7 +49,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map.Entry;
 import org.junit.Before;
@@ -58,6 +57,7 @@ import simulate.helper.support.SupportSimulationTypeHelper;
 import simulate.helper.UpgradeSimulationTypeHelper;
 import simulate.positionweights.TowerPositionWeight;
 import simulate.state.WaveState;
+import simulate.state.writer.AggregateSummaryStateWriter;
 import simulate.state.writer.StateWriter;
 import testutil.TestUtil;
 
@@ -82,7 +82,6 @@ public class Simulation {
     private SupportSimulationTypeHelper supportHelper;
 
     private StateWriter stateWriter = new StateWriter();
-
     @Before
     public void initSimulation() {
         towerTypes = new HashMap<>();
@@ -120,7 +119,7 @@ public class Simulation {
     @Test
     public void run() throws IOException {
         //runAggregate(1);
-        simulate(SimulationRunType.ALL, true);
+//        simulate(SimulationRunType.ALL, true);
 //        initSimulation();
 //        simulate(SimulationRunType.UPGRADES_ALL);
 //        initSimulation();
@@ -133,7 +132,7 @@ public class Simulation {
 //        simulate(SimulationRunType.UPGRADE_RANGE);
 //        runAggregate(100, new SimulationRunType[]{ SimulationRunType.SUPPORT_AIR_STRIKE, SimulationRunType.SUPPORT_ALL, SimulationRunType.ALL});
 
-//        runAggregate(50, new SimulationRunType[]{SimulationRunType.TOWER_ONLY, SimulationRunType.UPGRADES_ALL, SimulationRunType.SUPPORT_ALL, SimulationRunType.ALL});
+        runAggregate(1, new SimulationRunType[]{SimulationRunType.TOWER_ONLY, SimulationRunType.UPGRADES_ALL, SimulationRunType.SUPPORT_ALL, SimulationRunType.ALL});
 //        runAggregate(10);
     }
 
@@ -152,6 +151,10 @@ public class Simulation {
                 initSimulation();
             }
         }
+
+        stateWriter.saveSimulationAggregate(waveStatesByRunType, gameStage.getLevel().getActiveLevel());
+
+
 
 //        for (HashMap.Entry<SimulationRunType, HashMap<Integer, List<WaveState>>> entry : waveStatesByRunType.entrySet()) {
 //            SimulationRunType runType = entry.getKey();
@@ -239,7 +242,7 @@ public class Simulation {
         }
 
         if(writeState) {
-            stateWriter.save(waveStates, gameStage.getLevel().getActiveLevel(), simulationRunType);
+            stateWriter.saveSimulation(waveStates, gameStage.getLevel().getActiveLevel(), simulationRunType);
         }
 
         WaveState lastRound = waveStates.get(waveStates.size() - 1);

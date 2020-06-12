@@ -1,9 +1,6 @@
 package simulate.state.writer;
 
-import com.badlogic.gdx.utils.Array;
-import com.lastdefenders.util.Resources;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.poi.ss.usermodel.Cell;
@@ -13,12 +10,12 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import simulate.state.WaveState;
-import simulate.state.combatactor.EnemyState;
-import simulate.state.combatactor.TowerState;
-import simulate.state.helper.EnemyStateSummary;
-import simulate.state.helper.EnemyStateSummaryHelper;
-import simulate.state.helper.TowerStateSummary;
-import simulate.state.helper.TowerStateSummaryHelper;
+import simulate.state.summary.EnemyStateSummary;
+import simulate.state.summary.SupportStateSummary;
+import simulate.state.summary.helper.EnemyStateSummaryHelper;
+import simulate.state.summary.TowerStateSummary;
+import simulate.state.summary.helper.SupportStateSummaryHelper;
+import simulate.state.summary.helper.TowerStateSummaryHelper;
 import simulate.state.writer.StateWriterUtil.RowCounter;
 
 
@@ -26,6 +23,7 @@ public class SummaryStateWriter {
 
     private TowerStateSummaryHelper towerStateSummaryHelper = new TowerStateSummaryHelper();
     private EnemyStateSummaryHelper enemyStateSummaryHelper = new EnemyStateSummaryHelper();
+    private SupportStateSummaryHelper supportStateSummaryHelper = new SupportStateSummaryHelper();
 
 
     public void writeSummary(XSSFWorkbook workbook, List<WaveState> waveStates){
@@ -43,6 +41,66 @@ public class SummaryStateWriter {
 
         writeTowers(sheet, waveStates, rowCounter);
 
+        rowCounter.skip(1);// Skip for buffer
+
+        writeSupport(sheet, waveStates, rowCounter);
+
+    }
+
+    private void writeSupport(XSSFSheet sheet, List<WaveState> waveStates, RowCounter counter){
+
+        Row titleRow = sheet.createRow(counter.next());
+
+        Font titleFont = sheet.getWorkbook().createFont();
+        titleFont.setFontHeightInPoints((short)14);
+        CellStyle titleStyle = sheet.getWorkbook().createCellStyle();
+        titleStyle.setFont(titleFont);
+
+        Cell titleCell = titleRow.createCell(0);
+        titleCell.setCellValue("Support");
+        titleCell.setCellStyle(titleStyle);
+
+        Row headerRow = sheet.createRow(counter.next());
+        createSupportSummariesHeader(headerRow);
+
+        Map<String, SupportStateSummary> supportSummaries = supportStateSummaryHelper.calculateSupportStateSummaries(waveStates);
+
+        writeSupportSummmaries(supportSummaries.values(), sheet, counter);
+
+
+    }
+
+    private void writeSupportSummmaries(Collection<SupportStateSummary> supportSummaries, XSSFSheet sheet, RowCounter counter){
+        for(SupportStateSummary supportSummary : supportSummaries){
+            Row row = sheet.createRow(counter.next());
+            writeSupportSummary(row, supportSummary);
+        }
+    }
+
+    private void writeSupportSummary(Row row, SupportStateSummary supportSummary){
+        int counter = 0;
+        row.createCell(counter++).setCellValue(supportSummary.getSupportName());
+        row.createCell(counter++).setCellValue(supportSummary.getTotalCount());
+    }
+
+
+    private void createSupportSummariesHeader(Row row){
+
+        int counter = 0;
+        row.createCell(counter++).setCellValue("Name");
+        row.createCell(counter++).setCellValue("Total");
+
+        Font font= row.getSheet().getWorkbook().createFont();
+        font.setFontHeightInPoints((short)12);
+        font.setBold(true);
+        font.setItalic(false);
+
+        CellStyle rowStyle = row.getSheet().getWorkbook().createCellStyle();
+        rowStyle.setFont(font);
+
+        for(int i = 0; i<counter; i++) {
+            row.getCell(i).setCellStyle(rowStyle);
+        }
     }
 
     private void writeEnemies(XSSFSheet sheet, List<WaveState> waveStates, RowCounter counter){

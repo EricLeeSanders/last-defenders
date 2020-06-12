@@ -7,4 +7,6 @@ import simulate.state.writer.SnapshotWriter;
 public interface SupportState {
 
     void writeSnapshotState(Graphics2D background, SnapshotWriter snapshotWriter) throws IOException;
+
+    String getSupportName();
 }

@@ -1,10 +1,11 @@
-package simulate.state.helper;
+package simulate.state.summary.helper;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import simulate.state.WaveState;
 import simulate.state.combatactor.EnemyState;
+import simulate.state.summary.EnemyStateSummary;
 
 public class EnemyStateSummaryHelper {
 

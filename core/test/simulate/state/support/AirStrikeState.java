@@ -25,6 +25,13 @@ public class AirStrikeState implements SupportState{
     }
 
     @Override
+    public String getSupportName() {
+
+        return "AirStrike";
+    }
+
+
+    @Override
     public String toString() {
 
         return "AirStrikeState{" +

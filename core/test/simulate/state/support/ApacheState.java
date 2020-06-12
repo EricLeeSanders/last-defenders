@@ -24,6 +24,12 @@ public class ApacheState implements SupportState{
     }
 
     @Override
+    public String getSupportName() {
+
+        return "Apache";
+    }
+
+    @Override
     public String toString() {
 
         return "ApacheState{" +

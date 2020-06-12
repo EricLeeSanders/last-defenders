@@ -1,4 +1,4 @@
-package simulate.state.helper;
+package simulate.state.summary;
 
 public class EnemyStateSummary {
 

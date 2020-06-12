@@ -1,4 +1,4 @@
-package simulate.state.helper;
+package simulate.state.summary;
 
 import java.util.List;
 import simulate.state.WaveState;
