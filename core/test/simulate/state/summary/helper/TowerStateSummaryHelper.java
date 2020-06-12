@@ -22,32 +22,32 @@ public class TowerStateSummaryHelper {
                     towerSummaries.put(tower.getName(), towerSummary);
                 }
 
-                towerSummary.addCount();
-
-                if(tower.getHasArmor()) {
-                    towerSummary.addArmorCount();
-                }
-
-                if(tower.getAttackIncreased()){
-                    towerSummary.addAttackIncreaseCount();
-                }
-
-                if(tower.getRangeIncreased()){
-                    towerSummary.addRangeIncreaseCount();
-                }
-
-                if(tower.getSpeedIncreased()){
-                    towerSummary.addSpeedIncreaseCount();
-                }
 
                 if(tower.isDead()) {
                     towerSummary.addDeadCount();
                 }
                 /*
-                If the tower is dead, or we are on the last state, we add the kills.
+                If the tower is dead, or we are on the last state, we add the stats
                 */
                 if(tower.isDead() || i == waveStates.size() - 1) {
                     towerSummary.addKills(tower.getKills());
+                    towerSummary.addCount();
+
+                    if(tower.getHasArmor()) {
+                        towerSummary.addArmorCount();
+                    }
+
+                    if(tower.getAttackIncreased()){
+                        towerSummary.addAttackIncreaseCount();
+                    }
+
+                    if(tower.getRangeIncreased()){
+                        towerSummary.addRangeIncreaseCount();
+                    }
+
+                    if(tower.getSpeedIncreased()){
+                        towerSummary.addSpeedIncreaseCount();
+                    }
                 }
 
             }
