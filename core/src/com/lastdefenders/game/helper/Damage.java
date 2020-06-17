@@ -33,8 +33,6 @@ public class Damage {
                 if (!combatActor.isDead()) {
                     Logger.debug("Target: giving kill to attacker");
                     combatActor.giveKill();
-                } else {
-                    System.out.println("Attacker " + combatActor.ID + " is dead!");
                 }
             }
         }

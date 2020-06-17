@@ -1,16 +1,16 @@
 package simulate.state.summary.aggregate;
 
-import java.util.List;
+import java.util.Collection;
 import simulate.SimulationRunType;
 import simulate.state.summary.EnemyStateSummary;
 
 public class EnemyStateSummaryAggregate {
 
     private SimulationRunType simulationRunType;
-    private List<EnemyStateSummary> enemyStateSummaries;
+    private Collection<EnemyStateSummary> enemyStateSummaries;
 
     public EnemyStateSummaryAggregate(SimulationRunType simulationRunType,
-        List<EnemyStateSummary> enemyStateSummaries) {
+        Collection<EnemyStateSummary> enemyStateSummaries) {
 
         this.simulationRunType = simulationRunType;
         this.enemyStateSummaries = enemyStateSummaries;
@@ -21,7 +21,7 @@ public class EnemyStateSummaryAggregate {
         return simulationRunType;
     }
 
-    public List<EnemyStateSummary> getEnemyStateSummaries() {
+    public Collection<EnemyStateSummary> getEnemyStateSummaries() {
 
         return enemyStateSummaries;
     }

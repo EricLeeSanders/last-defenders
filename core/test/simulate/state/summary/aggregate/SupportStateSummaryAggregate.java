@@ -1,16 +1,16 @@
 package simulate.state.summary.aggregate;
 
-import java.util.List;
+import java.util.Collection;
 import simulate.SimulationRunType;
 import simulate.state.summary.SupportStateSummary;
 
 public class SupportStateSummaryAggregate {
 
     private SimulationRunType simulationRunType;
-    private List<SupportStateSummary> supportStateSummaries;
+    private Collection<SupportStateSummary> supportStateSummaries;
 
     public SupportStateSummaryAggregate(SimulationRunType simulationRunType,
-        List<SupportStateSummary> supportStateSummaries) {
+        Collection<SupportStateSummary> supportStateSummaries) {
 
         this.simulationRunType = simulationRunType;
         this.supportStateSummaries = supportStateSummaries;
@@ -21,7 +21,7 @@ public class SupportStateSummaryAggregate {
         return simulationRunType;
     }
 
-    public List<SupportStateSummary> getSupportStateSummaries() {
+    public Collection<SupportStateSummary> getSupportStateSummaries() {
 
         return supportStateSummaries;
     }

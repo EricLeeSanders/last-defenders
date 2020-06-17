@@ -42,7 +42,6 @@ public class AirStrikeSimulationHelper{
         this.player = player;
         this.airStrikePlacement = gameStage.getAirStrikePlacement();
 
-        System.out.println("minEnemyDistanceForAirStrike: " + minEnemyDistanceForAirStrike);
     }
 
     public void handleAirStrike(float delta){
@@ -51,11 +50,6 @@ public class AirStrikeSimulationHelper{
         if(canUseAirStrike() && shouldUseAirStrike()){
             List<Vector2> bestLocations = getBestLocationsForAirStrike();
             if(bestLocations.size() == 3){
-                System.out.println("using airstrike");
-                System.out.println(bestLocations);
-                for(Enemy enemy : gameStage.getActorGroups().getEnemyGroup().getCastedChildren()){
-                    System.out.println("Enemy: " + enemy.ID + " - " + enemy.getClass().getSimpleName() + "  pos: " + enemy.getPositionCenter() + "; dist: " + enemy.getLengthToEnd());
-                }
 
                 for(int i = 0; i < 3; i++){
                     airStrikePlacement.addLocation(UtilPool.getVector2(bestLocations.get(i)));
@@ -64,8 +58,6 @@ public class AirStrikeSimulationHelper{
                 player.spendMoney(AirStrike.COST);
                 currentWaveState.addSupportState(new AirStrikeState(bestLocations));
                 airStrikeCooldownCounter = AIR_STRIKE_COOLDOWN_RESET;
-            } else {
-                System.out.println("less than 3!");
             }
         }
     }
@@ -89,7 +81,6 @@ public class AirStrikeSimulationHelper{
     }
 
     private List<AirStrikeLocation> getLocationsForAirStrike(){
-        System.out.println("getting locations for airstrike");
         Array<Enemy> enemies = gameStage.getActorGroups().getEnemyGroup().getCastedChildren();
         airStrikePlacement.createAirStrike();
         List<AirStrikeLocation> locations = new ArrayList<>();
@@ -111,20 +102,15 @@ public class AirStrikeSimulationHelper{
             }
         }
 
-        System.out.println("got locations for airstrike");
-
         return locations;
 
     }
 
     private List<Vector2> getBestLocationsForAirStrike( ){
-        System.out.println("getBestLocationsForAirStrike start");
         List<Vector2> bestLocations = new ArrayList<>();
 
         List<AirStrikeLocation>  locations = getLocationsForAirStrike();
-        System.out.println("getBestLocationsForAirStrike start sort");
         Collections.sort(locations);
-        System.out.println("getBestLocationsForAirStrike end sort");
         for(int i = 0; i < locations.size(); i++){
             Vector2 location = locations.get(i).location;
             boolean isLocationValid = true;
@@ -136,7 +122,6 @@ public class AirStrikeSimulationHelper{
             }
 
             if(isLocationValid){
-                System.out.println("adding: " + location + "; size: " +locations.get(i).numOfEnemies);
                 bestLocations.add(location);
             }
 
@@ -144,7 +129,7 @@ public class AirStrikeSimulationHelper{
                 break;
             }
         }
-        System.out.println("getBestLocationsForAirStrike end");
+
         return bestLocations;
     }
 

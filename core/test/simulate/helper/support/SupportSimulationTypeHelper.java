@@ -64,10 +64,6 @@ public class SupportSimulationTypeHelper {
         minEnemyDistanceForApache = gameStage.getMap().getPathDistance() * ENEMY_DISTANCE_FOR_APACHE_MOD;
 
         airStrikeSimulationHelper = new AirStrikeSimulationHelper(gameStage, player);
-
-        System.out.println("Map Distance: " + gameStage.getMap().getPathDistance());
-        System.out.println("minEnemyDistanceForLandmine: " + minEnemyDistanceForLandmine);
-        System.out.println("minEnemyDistanceForApache: " + minEnemyDistanceForApache);
     }
 
     public void handleSupportLandmine(float delta){
@@ -87,7 +83,6 @@ public class SupportSimulationTypeHelper {
         if(canUseSupplyDrop() && shouldCheckBestSupplyDropLocation()){
             Vector2 supplyDropLoc = getBestSupplyDropLocation();
             if(supplyDropLoc != null){
-                System.out.println("Placing Supply Drop at: " + supplyDropLoc);
                 supplyDropPlacement.setLocation(supplyDropLoc);
                 currentWaveState.addSupportState(new SupplyDropState(new Vector2(supplyDropLoc)));
                 supplyDropPlacement.placeSupplyDrop();
@@ -102,11 +97,8 @@ public class SupportSimulationTypeHelper {
 
         if(canUseApache() && shouldUseApache()){
             Vector2 apacheLoc = getBestApacheLocation();
-            for(Enemy enemy : gameStage.getActorGroups().getEnemyGroup().getCastedChildren()){
-                System.out.println("Enemy pos: " + enemy.getPositionCenter() + "; dist: " + enemy.getLengthToEnd());
-            }
+
             if(apacheLoc != null){
-                System.out.println("Placing Apache at: " + apacheLoc);
                 supportActorPlacement.moveSupportActor(apacheLoc);
                 currentWaveState.addSupportState(new ApacheState(new Vector2(apacheLoc)));
                 supportActorPlacement.placeSupportActor();
@@ -158,7 +150,7 @@ public class SupportSimulationTypeHelper {
             }
         }
         supportActorPlacement.moveSupportActor(bestLoc);
-        System.out.println("Returning best apache loc: " + bestLoc + " with amount: " + closestEnemyDist);
+
         return bestLoc;
     }
 
@@ -253,7 +245,7 @@ public class SupportSimulationTypeHelper {
             landMinePos.y = (firstPoint.y + secondPoint.y)/2;
             landMinePos.x = firstPoint.x;
         }
-        System.out.println("Adding landmine at: " +landMinePos);
+
         placementService.moveSupportActor(landMinePos);
         currentWaveState.addSupportState(new LandMineState(new Vector2(supportActorPlacement.getCurrentSupportActor().getPositionCenter())));
         placementService.placeSupportActor();

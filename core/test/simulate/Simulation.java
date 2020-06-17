@@ -70,7 +70,7 @@ public class Simulation {
     private static final int PATH_SIZE = (16*3);
     private static final float GAME_STEP_SIZE = (1f/60); // 60 FPS
 
-    private static final int WAVE_LIMIT = 50;
+    private static final int WAVE_LIMIT = 100;
 
     private GameStage gameStage;
     private ActorGroups actorGroups;
@@ -118,8 +118,8 @@ public class Simulation {
 
     @Test
     public void run() throws IOException {
-        //runAggregate(1);
-//        simulate(SimulationRunType.ALL, true);
+//        runAggregate(15);
+       simulate(SimulationRunType.ALL, true);
 //        initSimulation();
 //        simulate(SimulationRunType.UPGRADES_ALL);
 //        initSimulation();
@@ -131,15 +131,19 @@ public class Simulation {
 //        initSimulation();
 //        simulate(SimulationRunType.UPGRADE_RANGE);
 //        runAggregate(100, new SimulationRunType[]{ SimulationRunType.SUPPORT_AIR_STRIKE, SimulationRunType.SUPPORT_ALL, SimulationRunType.ALL});
-
-        runAggregate(1, new SimulationRunType[]{SimulationRunType.TOWER_ONLY, SimulationRunType.UPGRADES_ALL, SimulationRunType.SUPPORT_ALL, SimulationRunType.ALL});
+//
+//        runAggregate(3, new SimulationRunType[]{SimulationRunType.ALL});
 //        runAggregate(10);
     }
 
     public void runAggregate(int count, SimulationRunType [] runTypes)  throws IOException{
+
+        System.out.println("Running Aggregate Simulation " + count + " times");
+
         java.util.Map<SimulationRunType, java.util.Map<Integer, List<WaveState>>> waveStatesByRunType = new HashMap<>();
 
         for(int i = 0; i < count; i++){
+            System.out.println("Iteration: " + (i + 1));
             for(SimulationRunType runType : runTypes){
                 List<WaveState> waveStates = simulate(runType, false);
                 java.util.Map<Integer, List<WaveState>> waveStatesByIter = waveStatesByRunType.get(runType);
@@ -178,13 +182,11 @@ public class Simulation {
     }
 
     private List<WaveState> simulate(SimulationRunType simulationRunType, boolean writeState) throws IOException{
-
-        System.out.println("Running simulation for " + simulationRunType);
+        System.out.println("Simulation: " + simulationRunType.name());
         List<WaveState> waveStates = new ArrayList<>();
         int wave = 1;
         while(!levelStateManager.getState().equals(LevelState.GAME_OVER) && wave <= WAVE_LIMIT) {
             addTowers();
-            System.out.println("Wave: " + wave + "; remaining lives: " + player.getLives());
             startWave();
 
             // Create begin state
@@ -245,11 +247,7 @@ public class Simulation {
             stateWriter.saveSimulation(waveStates, gameStage.getLevel().getActiveLevel(), simulationRunType);
         }
 
-        WaveState lastRound = waveStates.get(waveStates.size() - 1);
-        System.out.println("Completed simulation for " + simulationRunType);
-        System.out.println("Last wave: " + wave);
-        System.out.println("Lives left: " + lastRound.getLivesEnd());
-
+        System.out.println("Waves Reached = " + waveStates.size());
 
         return waveStates;
 

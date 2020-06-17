@@ -1,16 +1,16 @@
 package simulate.state.summary.aggregate;
 
-import java.util.List;
+import java.util.Collection;
 import simulate.SimulationRunType;
 import simulate.state.summary.TowerStateSummary;
 
 public class TowerStateSummaryAggregate {
 
     private SimulationRunType simulationRunType;
-    private List<TowerStateSummary> towerStateSummaries;
+    private Collection<TowerStateSummary> towerStateSummaries;
 
     public TowerStateSummaryAggregate(SimulationRunType simulationRunType,
-        List<TowerStateSummary> towerStateSummaries) {
+        Collection<TowerStateSummary> towerStateSummaries) {
 
         this.simulationRunType = simulationRunType;
         this.towerStateSummaries = towerStateSummaries;
@@ -21,7 +21,7 @@ public class TowerStateSummaryAggregate {
         return simulationRunType;
     }
 
-    public List<TowerStateSummary> getTowerStateSummaries() {
+    public Collection<TowerStateSummary> getTowerStateSummaries() {
 
         return towerStateSummaries;
     }

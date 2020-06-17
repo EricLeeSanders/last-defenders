@@ -141,8 +141,6 @@ public class SnapshotWriter {
 
         y = Resources.VIRTUAL_HEIGHT - y;
 
-        System.out.println("drawing apache at: " + x + " , " + y);
-
         background.drawImage(apacheImg, (int)x, (int)y, null);
     }
 

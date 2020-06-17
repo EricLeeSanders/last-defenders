@@ -3,6 +3,7 @@ package simulate.state.writer;
 import com.lastdefenders.levelselect.LevelName;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
@@ -48,24 +49,24 @@ public class AggregateSummaryStateWriter {
 
             SimulationRunType simulationRunType = runTypeMapEntry.getKey();
 
-            List<TowerStateSummary> towerStateSummaries = new ArrayList<>();
-            List<EnemyStateSummary> enemyStateSummaries = new ArrayList<>();
-            List<SupportStateSummary> supportStateSummaries = new ArrayList<>();
+            Map<String, TowerStateSummary> towerSummariesMap = new HashMap<>();
+            Map<String, EnemyStateSummary> enemySummariesMap = new HashMap<>();
+            Map<String, SupportStateSummary> supportSummariesMap = new HashMap<>();
             IntSummaryStatistics stats = new IntSummaryStatistics();
 
             for (Map.Entry<Integer, List<WaveState>> waveStatesEntry : runTypeMapEntry.getValue().entrySet()) {
 
                 List<WaveState> waveStates = waveStatesEntry.getValue();
 
-                towerStateSummaries.addAll(towerStateSummaryHelper.calculateTowerSummaries(waveStates).values());
-                enemyStateSummaries.addAll(enemyStateSummaryHelper.calculateEnemyStateSummaries(waveStates).values());
-                supportStateSummaries.addAll(supportStateSummaryHelper.calculateSupportStateSummaries(waveStates).values());
+                towerSummariesMap.putAll(towerStateSummaryHelper.calculateTowerSummaries(waveStates));
+                enemySummariesMap.putAll(enemyStateSummaryHelper.calculateEnemyStateSummaries(waveStates));
+                supportSummariesMap.putAll(supportStateSummaryHelper.calculateSupportStateSummaries(waveStates));
                 stats.accept(waveStatesEntry.getValue().size());
             }
 
-            towerStateSummaryAggregates.add( new TowerStateSummaryAggregate(simulationRunType, towerStateSummaries));
-            enemyStateSummaryAggregates.add( new EnemyStateSummaryAggregate(simulationRunType, enemyStateSummaries));
-            supportStateSummaryAggregates.add( new SupportStateSummaryAggregate(simulationRunType, supportStateSummaries));
+            towerStateSummaryAggregates.add( new TowerStateSummaryAggregate(simulationRunType, towerSummariesMap.values()));
+            enemyStateSummaryAggregates.add( new EnemyStateSummaryAggregate(simulationRunType, enemySummariesMap.values()));
+            supportStateSummaryAggregates.add( new SupportStateSummaryAggregate(simulationRunType, supportSummariesMap.values()));
             roundStatsAggregates.add( new RoundStatsAggregate(simulationRunType, stats));
         }
 
