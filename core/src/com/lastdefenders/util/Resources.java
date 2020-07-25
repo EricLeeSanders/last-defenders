@@ -8,28 +8,20 @@ import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver.Resolution;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.tools.bmfont.BitmapFontWriter;
-import com.badlogic.gdx.tools.bmfont.BitmapFontWriter.FontInfo;
-import com.badlogic.gdx.tools.bmfont.BitmapFontWriter.Padding;
-import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.JsonWriter.OutputType;
-import com.lastdefenders.game.model.actor.combat.CombatActorAttributes;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyAttributes;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
@@ -48,7 +40,10 @@ import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
 import com.lastdefenders.game.model.actor.combat.tower.TowerSniper;
 import com.lastdefenders.game.model.actor.combat.tower.TowerTank;
+import com.lastdefenders.game.model.level.wave.impl.DynamicWaveLoader.EnemyWeight;
+import com.lastdefenders.game.model.level.wave.impl.DynamicWaveLoader.WaveGeneratorMetadata;
 import com.lastdefenders.levelselect.LevelName;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +60,9 @@ public class Resources {
     public static final float VIRTUAL_HEIGHT = 360;
     public static final float MAX_GAME_SPEED = 2.0f;
 
+    private static final String ENEMY_WEIGHTS_LOC = "game/levels/wave_generator/enemy-weights.json";
+    private static final String WAVE_GENERATOR_METADATA_LOC = "game/levels/wave_generator/wave-generator-metadata.json";
+
     private static ShapeRenderer shapeRenderer;
     private float gameSpeed = 1;
     private UserPreferences userPreferences;
@@ -79,6 +77,8 @@ public class Resources {
     private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<>();
     private Map<Class, TowerAttributes> towerAttributes = new HashMap<>();
     private Map<Class, EnemyAttributes> enemyAttributes = new HashMap<>();
+    private Array<EnemyWeight> enemyWeights;
+    private Map<LevelName, WaveGeneratorMetadata> waveGeneratorMetadata = new HashMap<>();
 
     public Resources() {
 
@@ -122,6 +122,8 @@ public class Resources {
         Texture.setAssetManager(manager);
 
         loadCombatActorAttributes();
+        loadEnemyWeights();
+        loadWaveGeneratorMetadata();
     }
 
     public static ShapeRenderer getShapeRenderer() {
@@ -207,6 +209,46 @@ public class Resources {
 
 
         Logger.info("Resources: textures initialized");
+    }
+
+    @SuppressWarnings("unchecked")
+    private void loadWaveGeneratorMetadata(){
+        Logger.info("Resources: loading Wave Generator Metadata");
+
+        FileHandle file = Gdx.files.internal(WAVE_GENERATOR_METADATA_LOC);
+
+        Json json = new Json();
+        json.setIgnoreUnknownFields(true);
+
+        Array<WaveGeneratorMetadata> metadataList = json.fromJson(Array.class, WaveGeneratorMetadata.class, file);
+        for(WaveGeneratorMetadata m : metadataList){
+            waveGeneratorMetadata.put(m.getLevelName(), m);
+        }
+
+
+        Logger.info("Resources: Wave Generator Metadata loaded");
+    }
+
+    public WaveGeneratorMetadata getWaveGeneratorMetadataByLevelName(LevelName levelName){
+        return waveGeneratorMetadata.get(levelName);
+    }
+
+    @SuppressWarnings("unchecked")
+    private void loadEnemyWeights(){
+        Logger.info("Resources: loading Enemy Weights");
+
+        FileHandle file = Gdx.files.internal(ENEMY_WEIGHTS_LOC);
+
+        Json json = new Json();
+        json.setIgnoreUnknownFields(true);
+        enemyWeights = json.fromJson(Array.class, EnemyWeight.class, file);
+        System.out.println(enemyWeights);
+        Logger.info("Resources: Enemy Weights loaded");
+
+    }
+
+    public Array<EnemyWeight> getEnemyWeights(){
+        return enemyWeights;
     }
 
     private void loadCombatActorAttributes(){

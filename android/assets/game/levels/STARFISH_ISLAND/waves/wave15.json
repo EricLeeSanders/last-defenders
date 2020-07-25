@@ -1,0 +1,82 @@
+{
+  "wave": [
+    {
+      "name": "Humvee",
+      "armor": true,
+      "level": 14,
+      "delay": 0.1
+    },
+    {
+      "name": "Rifle",
+      "armor": false,
+      "level": 1,
+      "delay": 0.2
+    },
+    {
+      "name": "MachineGun",
+      "armor": true,
+      "level": 3,
+      "delay": 1
+    },
+    {
+      "name": "RocketLauncher",
+      "armor": true,
+      "level": 12,
+      "delay": 0.8
+    },
+    {
+      "name": "MachineGun",
+      "armor": false,
+      "level": 1,
+      "delay": 0.7
+    },
+    {
+      "name": "RocketLauncher",
+      "armor": true,
+      "level": 12,
+      "delay": 0.3
+    },
+    {
+      "name": "Rifle",
+      "armor": false,
+      "level": 1,
+      "delay": 0.4
+    },
+    {
+      "name": "Humvee",
+      "armor": true,
+      "level": 14,
+      "delay": 0.5
+    },
+    {
+      "name": "FlameThrower",
+      "armor": true,
+      "level": 8,
+      "delay": 0.2
+    },
+    {
+      "name": "MachineGun",
+      "armor": false,
+      "level": 1,
+      "delay": 0.9
+    },
+    {
+      "name": "MachineGun",
+      "armor": false,
+      "level": 1,
+      "delay": 0.2
+    },
+    {
+      "name": "MachineGun",
+      "armor": false,
+      "level": 1,
+      "delay": 0.3
+    },
+    {
+      "name": "MachineGun",
+      "armor": false,
+      "level": 1,
+      "delay": 0.6
+    }
+  ]
+}

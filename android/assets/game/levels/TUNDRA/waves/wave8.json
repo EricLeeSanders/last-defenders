@@ -1,34 +1,94 @@
 {
-"wave": [
+  "wave": [
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "Sniper",
+      "armor": false,
+      "level": 4,
+      "delay": 0.1
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "Rifle",
+      "armor": false,
+      "level": 1,
+      "delay": 0.2
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "Rifle",
+      "armor": true,
+      "level": 3,
+      "delay": 0.8
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "FlameThrower",
+      "armor": true,
+      "level": 8,
+      "delay": 1
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "FlameThrower",
+      "armor": false,
+      "level": 5,
+      "delay": 0.6
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "MachineGun",
+      "armor": true,
+      "level": 3,
+      "delay": 0.8
+    },
+    {
+      "name": "Rifle",
+      "armor": false,
+      "level": 1,
+      "delay": 0.4
+    },
+    {
+      "name": "Rifle",
+      "armor": false,
+      "level": 1,
+      "delay": 0.5
+    },
+    {
+      "name": "Rifle",
+      "armor": false,
+      "level": 1,
+      "delay": 0.4
+    },
+    {
+      "name": "MachineGun",
+      "armor": true,
+      "level": 3,
+      "delay": 0.3
+    },
+    {
+      "name": "FlameThrower",
+      "armor": true,
+      "level": 8,
+      "delay": 0.5
+    },
+    {
+      "name": "Rifle",
+      "armor": true,
+      "level": 3,
+      "delay": 0.7
+    },
+    {
+      "name": "Rifle",
+      "armor": true,
+      "level": 3,
+      "delay": 0.6
+    },
+    {
+      "name": "MachineGun",
+      "armor": true,
+      "level": 3,
+      "delay": 0.7
+    },
+    {
+      "name": "Sniper",
+      "armor": false,
+      "level": 4,
+      "delay": 0.5
     }
-]
+  ]
 }

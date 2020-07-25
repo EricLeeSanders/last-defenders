@@ -1,6 +1,9 @@
 package simulate.state.writer;
 
 import static com.lastdefenders.levelselect.LevelName.SERPENTINE_RIVER;
+import static com.lastdefenders.levelselect.LevelName.STARFISH_ISLAND;
+import static com.lastdefenders.levelselect.LevelName.THE_BADLANDS;
+import static com.lastdefenders.levelselect.LevelName.THE_GOLD_COAST;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
@@ -28,18 +31,12 @@ import simulate.state.support.SupportState;
 
 public class SnapshotWriter {
 
-    private static final Map<LevelName, String> LEVEL_IMAGE_PATHS = new HashMap<>();
     private static final String LEVEL_IMAGE_PATH_BASE = "../../files/simulation/images/level-images/";
     private static final String DEAD_IMAGE = "../../files/simulation/images/tower-dead.png";
     private static final String LANDMINE_IMAGE = "../../files/simulation/images/landmine.png";
     private static final String APACHE_IMAGE = "../../files/simulation/images/apache.png";
     private static final String SUPPLY_DROP_IMAGE = "../../files/simulation/images/supplydrop.png";
     private static final String AIRSTRIKE_IMAGE = "../../files/simulation/images/airstrike-loc.png";
-
-    static
-    {
-        LEVEL_IMAGE_PATHS.put(SERPENTINE_RIVER, LEVEL_IMAGE_PATH_BASE + "serpentine-river.png");
-    }
 
     private static final Map<String, String> TOWER_IMAGE_PATHS = new HashMap<>();
     private static final String TOWER_IMAGE_PATH_BASE = "../../files/assets/game/actor/lo/";
@@ -175,7 +172,7 @@ public class SnapshotWriter {
     }
 
     private BufferedImage getLevelImage(LevelName levelName) throws IOException {
-        return getImage(LEVEL_IMAGE_PATHS.get(levelName));
+        return getImage(LEVEL_IMAGE_PATH_BASE + levelName.toString() + ".png");
     }
 
     private BufferedImage getImage(String path) throws IOException {

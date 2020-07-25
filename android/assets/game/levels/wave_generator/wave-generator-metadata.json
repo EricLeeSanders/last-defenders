@@ -1,0 +1,58 @@
+[
+  {
+    "levelName": "SERPENTINE_RIVER",
+    "enemyStartingWeight": 4,
+    "enemyWeightModifier": 0.35,
+    "enemyWeightModifier2": 0.2,
+    "wavesPerTank": 10,
+    "dynamicEnemyStartingWeight": 528.29
+  },
+  {
+    "levelName": "STARFISH_ISLAND",
+    "enemyStartingWeight": 4,
+    "enemyWeightModifier": 0.325,
+    "enemyWeightModifier2": 0.25,
+    "wavesPerTank": 15,
+    "dynamicEnemyStartingWeight": 134.6
+  },
+  {
+    "levelName": "THE_GREENLANDS",
+    "enemyStartingWeight": 4,
+    "enemyWeightModifier": 0.325,
+    "enemyWeightModifier2": 0.25,
+    "wavesPerTank": 15,
+    "dynamicEnemyStartingWeight": 134.6
+  },
+  {
+    "levelName": "THE_GOLD_COAST",
+    "enemyStartingWeight": 4,
+    "enemyWeightModifier": 0.325,
+    "enemyWeightModifier2": 0.25,
+    "wavesPerTank": 15,
+    "dynamicEnemyStartingWeight": 134.6
+  },
+  {
+    "levelName": "THE_BADLANDS",
+    "enemyStartingWeight": 4,
+    "enemyWeightModifier": 0.325,
+    "enemyWeightModifier2": 0.25,
+    "wavesPerTank": 15,
+    "dynamicEnemyStartingWeight": 134.6
+  },
+  {
+    "levelName": "TUNDRA",
+    "enemyStartingWeight": 4,
+    "enemyWeightModifier": 0.35,
+    "enemyWeightModifier2": 0.2,
+    "wavesPerTank": 10,
+    "dynamicEnemyStartingWeight": 528.29
+  },
+  {
+    "levelName": "WHISPERING_THICKET",
+    "enemyStartingWeight": 4,
+    "enemyWeightModifier": 0.35,
+    "enemyWeightModifier2": 0.2,
+    "wavesPerTank": 10,
+    "dynamicEnemyStartingWeight": 528.29
+  }
+]

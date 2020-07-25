@@ -1,54 +1,16 @@
 {
-"wave": [
+  "wave": [
     {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
+      "name": "MachineGun",
+      "armor": false,
+      "level": 1,
+      "delay": 0.8
     },
     {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-        {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
+      "name": "Rifle",
+      "armor": false,
+      "level": 1,
+      "delay": 0.2
     }
-]
+  ]
 }

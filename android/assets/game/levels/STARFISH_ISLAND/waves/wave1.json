@@ -1,64 +1,10 @@
 {
-"wave": [
+  "wave": [
     {
-        "enemy": "Tank",
-        "delay": ".45",
-        "armor": false
-    },
-    {
-        "enemy": "Humvee",
-        "delay": ".45",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".45",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".60",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".75",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".30",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".9",
-        "armor": false
-    },
-        {
-        "enemy": "Rifle",
-        "delay": ".5",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".5",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".5",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".5",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".5",
-        "armor": false
+      "name": "Rifle",
+      "armor": false,
+      "level": 1,
+      "delay": 0.3
     }
-]
+  ]
 }

@@ -1,34 +1,82 @@
 {
-"wave": [
+  "wave": [
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "FlameThrower",
+      "armor": true,
+      "level": 8,
+      "delay": 0.2
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "FlameThrower",
+      "armor": true,
+      "level": 8,
+      "delay": 0.7
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "Rifle",
+      "armor": true,
+      "level": 3,
+      "delay": 0.6
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "Sniper",
+      "armor": true,
+      "level": 7,
+      "delay": 1
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "MachineGun",
+      "armor": false,
+      "level": 1,
+      "delay": 0.5
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "MachineGun",
+      "armor": true,
+      "level": 3,
+      "delay": 0.6
+    },
+    {
+      "name": "Rifle",
+      "armor": false,
+      "level": 1,
+      "delay": 0.1
+    },
+    {
+      "name": "FlameThrower",
+      "armor": false,
+      "level": 5,
+      "delay": 0.1
+    },
+    {
+      "name": "FlameThrower",
+      "armor": false,
+      "level": 5,
+      "delay": 0.1
+    },
+    {
+      "name": "MachineGun",
+      "armor": true,
+      "level": 3,
+      "delay": 0.8
+    },
+    {
+      "name": "FlameThrower",
+      "armor": false,
+      "level": 5,
+      "delay": 0.7
+    },
+    {
+      "name": "MachineGun",
+      "armor": true,
+      "level": 3,
+      "delay": 0.8
+    },
+    {
+      "name": "MachineGun",
+      "armor": false,
+      "level": 1,
+      "delay": 1
     }
-]
+  ]
 }

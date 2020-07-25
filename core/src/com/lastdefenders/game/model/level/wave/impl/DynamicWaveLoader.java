@@ -5,11 +5,13 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.level.Level;
 import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.game.model.level.SpawningEnemy;
 import com.lastdefenders.game.service.factory.CombatActorFactory;
 import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.util.Logger;
+import com.lastdefenders.util.Resources;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Random;
@@ -20,52 +22,22 @@ import java.util.Random;
 
 public class DynamicWaveLoader extends AbstractWaveLoader {
 
-    private static final float ENEMY_STARTING_WEIGHT = 575;
-    private static final float ENEMY_WEIGHT_MODIFIER = 0.35f;
-    private static final float ENEMY_WEIGHT_MODIFIER_2 = 0.2f;
-    private static final int WAVES_PER_TANK = 10;
+    private Array<EnemyWeight> enemyWeights;
+    private WaveGeneratorMetadata metadata;
+    private float enemyWeight;
 
-    private Array<EnemyWeight> enemies = new Array<>();
-    private float enemyWeight = ENEMY_STARTING_WEIGHT;
-
-    public DynamicWaveLoader(CombatActorFactory combatActorFactory, Map map) {
+    public DynamicWaveLoader(CombatActorFactory combatActorFactory, Map map, Resources resources,
+        LevelName levelName) {
 
         super(combatActorFactory, map);
 
-        EnemyWeight rifle = new EnemyWeight("Rifle",4, false);
-        EnemyWeight rifleArmor = new EnemyWeight("Rifle",6, true);
-        EnemyWeight machineGun = new EnemyWeight("MachineGun",4, false);
-        EnemyWeight machineGunArmor = new EnemyWeight("MachineGun",6, true);
-        EnemyWeight sniper = new EnemyWeight("Sniper",7, false);
-        EnemyWeight sniperArmor = new EnemyWeight("Sniper",10, true);
-        EnemyWeight flameThrower = new EnemyWeight("FlameThrower",9, false);
-        EnemyWeight flameThrowerArmor = new EnemyWeight("FlameThrower",13, true);
-        EnemyWeight rocketLauncher = new EnemyWeight("RocketLauncher",11, false);
-        EnemyWeight rocketLauncherArmor = new EnemyWeight("RocketLauncher",16, true);
-        EnemyWeight humvee = new EnemyWeight("Humvee",13, false);
-        EnemyWeight humveeArmor = new EnemyWeight("Humvee",19, true);
-        EnemyWeight tank = new EnemyWeight("Tank",50, false);
-        EnemyWeight tankArmor = new EnemyWeight("Tank",75, true);
-
-        enemies.add(rifle);
-        enemies.add(rifleArmor);
-        enemies.add(machineGun);
-        enemies.add(machineGunArmor);
-        enemies.add(sniper);
-        enemies.add(sniperArmor);
-        enemies.add(flameThrower);
-        enemies.add(flameThrowerArmor);
-        enemies.add(rocketLauncher);
-        enemies.add(rocketLauncherArmor);
-        enemies.add(humvee);
-        enemies.add(humveeArmor);
-        enemies.add(tank);
-        enemies.add(tankArmor);
+        enemyWeights = resources.getEnemyWeights();
+        metadata = resources.getWaveGeneratorMetadataByLevelName(levelName);
+        enemyWeight = metadata.dynamicEnemyStartingWeight;
     }
 
     @Override
     public Queue<SpawningEnemy> loadWave(LevelName levelName, int wave) {
-
         Logger.info("DynamicWaveGenerator: Generating Wave: " + wave + "; weight: " + enemyWeight);
 
         Array<SpawningEnemy> enemies = getEnemies(enemyWeight, wave);
@@ -77,7 +49,7 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
             enemyQueue.addFirst(e);
         }
 
-        enemyWeight += enemyWeight * (ENEMY_WEIGHT_MODIFIER/(wave*ENEMY_WEIGHT_MODIFIER_2));
+        enemyWeight += enemyWeight * (metadata.enemyWeightModifier/(wave*metadata.enemyWeightModifier2));
         return enemyQueue;
     }
 
@@ -87,11 +59,11 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
 
         float remainingWeight = weight;
         int tankCount = 0;
-        int numOfTanksAllowed = waveNum / WAVES_PER_TANK;
+        int numOfTanksAllowed = waveNum / metadata.wavesPerTank;
 
         while(remainingWeight >= 4){
-            int randomIdx = MathUtils.random(enemies.size - 1);
-            EnemyWeight rndEnemy = enemies.get(randomIdx);
+            int randomIdx = MathUtils.random(enemyWeights.size - 1);
+            EnemyWeight rndEnemy = enemyWeights.get(randomIdx);
 
             if(rndEnemy.weight <= remainingWeight){
 
@@ -115,18 +87,101 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
         return wave;
     }
 
-    private static class EnemyWeight {
-        int weight;
-        boolean armor;
-        String name;
 
-        EnemyWeight(String name, int weight, boolean armor) {
+    public static class WaveGeneratorMetadata {
+        private LevelName levelName;
+        private float dynamicEnemyStartingWeight;
+        private float enemyWeightModifier;
+        private float enemyWeightModifier2;
+        private int wavesPerTank;
 
-            this.weight = weight;
-            this.armor = armor;
-            this.name = name;
+        public LevelName getLevelName() {
+
+            return levelName;
         }
 
+        public void setLevelName(LevelName levelName) {
+
+            this.levelName = levelName;
+        }
+
+
+        public float getDynamicEnemyStartingWeight() {
+
+            return dynamicEnemyStartingWeight;
+        }
+
+        public void setDynamicEnemyStartingWeight(float dynamicEnemyStartingWeight) {
+
+            this.dynamicEnemyStartingWeight = dynamicEnemyStartingWeight;
+        }
+
+        public float getEnemyWeightModifier() {
+
+            return enemyWeightModifier;
+        }
+
+        public void setEnemyWeightModifier(float enemyWeightModifier) {
+
+            this.enemyWeightModifier = enemyWeightModifier;
+        }
+
+        public float getEnemyWeightModifier2() {
+
+            return enemyWeightModifier2;
+        }
+
+        public void setEnemyWeightModifier2(float enemyWeightModifier2) {
+
+            this.enemyWeightModifier2 = enemyWeightModifier2;
+        }
+
+        public int getWavesPerTank() {
+
+            return wavesPerTank;
+        }
+
+        public void setWavesPerTank(int wavesPerTank) {
+
+            this.wavesPerTank = wavesPerTank;
+        }
+    }
+
+    public static class EnemyWeight {
+        private int weight;
+        private boolean armor;
+        private String name;
+
+
+        public int getWeight() {
+
+            return weight;
+        }
+
+        public void setWeight(int weight) {
+
+            this.weight = weight;
+        }
+
+        public boolean isArmor() {
+
+            return armor;
+        }
+
+        public void setArmor(boolean armor) {
+
+            this.armor = armor;
+        }
+
+        public String getName() {
+
+            return name;
+        }
+
+        public void setName(String name) {
+
+            this.name = name;
+        }
     }
 }
 

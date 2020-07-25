@@ -72,6 +72,8 @@ public class Simulation {
 
     private static final int WAVE_LIMIT = 100;
 
+    private final LevelName levelName = LevelName.THE_BADLANDS;
+
     private GameStage gameStage;
     private ActorGroups actorGroups;
     private Player player;
@@ -116,10 +118,14 @@ public class Simulation {
         supportHelper = new SupportSimulationTypeHelper(gameStage, player);
     }
 
+    public void resetGame(){
+        gameStage = createGameStage();
+    }
+
     @Test
     public void run() throws IOException {
 //        runAggregate(15);
-       simulate(SimulationRunType.ALL, true);
+simulate(SimulationRunType.ALL, true);
 //        initSimulation();
 //        simulate(SimulationRunType.UPGRADES_ALL);
 //        initSimulation();
@@ -131,9 +137,9 @@ public class Simulation {
 //        initSimulation();
 //        simulate(SimulationRunType.UPGRADE_RANGE);
 //        runAggregate(100, new SimulationRunType[]{ SimulationRunType.SUPPORT_AIR_STRIKE, SimulationRunType.SUPPORT_ALL, SimulationRunType.ALL});
-//
-//        runAggregate(3, new SimulationRunType[]{SimulationRunType.ALL});
-//        runAggregate(10);
+////
+//  runAggregate(10, new SimulationRunType[]{SimulationRunType.ALL});
+//        runAggregate(15);
     }
 
     public void runAggregate(int count, SimulationRunType [] runTypes)  throws IOException{
@@ -152,7 +158,7 @@ public class Simulation {
                 }
                 waveStatesByIter.put(i+1, waveStates);
                 waveStatesByRunType.put(runType,waveStatesByIter);
-                initSimulation();
+                resetGame();
             }
         }
 
@@ -525,7 +531,7 @@ public class Simulation {
         AdControllerImpl adController = new AdControllerImpl();
         AdControllerHelper adControllerHelper = new AdControllerHelper(adController, Integer.MAX_VALUE);
 
-        GameStage gameStage = new GameStage(LevelName.SERPENTINE_RIVER, player, actorGroups, audio,
+        GameStage gameStage = new GameStage(levelName, player, actorGroups, audio,
             levelStateManager, gameUIStateManager, gameViewport, resources, spriteBatch,
             googlePlayServices, adControllerHelper);
 

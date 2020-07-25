@@ -1,0 +1,58 @@
+{
+  "wave": [
+    {
+      "name": "Tank",
+      "armor": false,
+      "level": 16,
+      "delay": 0.8
+    },
+    {
+      "name": "Humvee",
+      "armor": true,
+      "level": 14,
+      "delay": 0.5
+    },
+    {
+      "name": "Humvee",
+      "armor": true,
+      "level": 14,
+      "delay": 0.1
+    },
+    {
+      "name": "RocketLauncher",
+      "armor": true,
+      "level": 12,
+      "delay": 0.4
+    },
+    {
+      "name": "FlameThrower",
+      "armor": true,
+      "level": 8,
+      "delay": 0.6
+    },
+    {
+      "name": "FlameThrower",
+      "armor": false,
+      "level": 5,
+      "delay": 0.3
+    },
+    {
+      "name": "RocketLauncher",
+      "armor": true,
+      "level": 12,
+      "delay": 0.6
+    },
+    {
+      "name": "Humvee",
+      "armor": false,
+      "level": 10,
+      "delay": 0.7
+    },
+    {
+      "name": "FlameThrower",
+      "armor": true,
+      "level": 8,
+      "delay": 0.5
+    }
+  ]
+}

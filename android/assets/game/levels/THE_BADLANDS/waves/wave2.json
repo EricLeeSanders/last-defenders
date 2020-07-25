@@ -1,54 +1,16 @@
 {
-"wave": [
+  "wave": [
     {
-        "enemy": "Rifle",
-        "delay": ".05",
-        "armor": false
+      "name": "Rifle",
+      "armor": false,
+      "level": 1,
+      "delay": 0.7
     },
     {
-        "enemy": "Rifle",
-        "delay": ".10",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".15",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".20",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-        {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".25",
-        "armor": false
+      "name": "Rifle",
+      "armor": false,
+      "level": 1,
+      "delay": 0.8
     }
-]
+  ]
 }
