@@ -40,7 +40,7 @@ public class EnemyAttackingState implements CombatActorState {
     public void preState() {
 
         movementDelayCounter = 0;
-        attackCounter = 100;
+        attackCounter = 100; // ready to attack
         enemy.preAttack();
     }
 

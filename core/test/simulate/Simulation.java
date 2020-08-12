@@ -70,7 +70,7 @@ public class Simulation {
     private static final int PATH_SIZE = (16*3);
     private static final float GAME_STEP_SIZE = (1f/60); // 60 FPS
 
-    private static final int WAVE_LIMIT = 100;
+    private static final int WAVE_LIMIT = 80;
 
     private final LevelName levelName = LevelName.THE_BADLANDS;
 
@@ -125,7 +125,7 @@ public class Simulation {
     @Test
     public void run() throws IOException {
 //        runAggregate(15);
-simulate(SimulationRunType.ALL, true);
+// simulate(SimulationRunType.ALL, true);
 //        initSimulation();
 //        simulate(SimulationRunType.UPGRADES_ALL);
 //        initSimulation();
@@ -138,7 +138,7 @@ simulate(SimulationRunType.ALL, true);
 //        simulate(SimulationRunType.UPGRADE_RANGE);
 //        runAggregate(100, new SimulationRunType[]{ SimulationRunType.SUPPORT_AIR_STRIKE, SimulationRunType.SUPPORT_ALL, SimulationRunType.ALL});
 ////
-//  runAggregate(10, new SimulationRunType[]{SimulationRunType.ALL});
+  runAggregate(10);
 //        runAggregate(15);
     }
 

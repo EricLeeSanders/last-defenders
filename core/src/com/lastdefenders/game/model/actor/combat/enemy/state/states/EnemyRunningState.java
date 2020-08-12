@@ -18,8 +18,8 @@ import java.util.Map;
 
 public class EnemyRunningState implements CombatActorState {
 
-    //private static final float MIN_FIND_TARGET_DELAY = 0f;
-    private static final float MAX_FIND_TARGET_DELAY = 2.0f;
+    private static final float MIN_FIND_TARGET_DELAY = 1f;
+    private static final float MAX_FIND_TARGET_DELAY = 3.0f;
 
     private final Enemy enemy;
     private final StateTransitioner<EnemyStateEnum> stateTransitioner;
@@ -75,9 +75,9 @@ public class EnemyRunningState implements CombatActorState {
         }
 
         if ( isReadyToFindTarget()) {
-//            minTargetDelay = 0;
-//            createFindTargetDelay();
-//            findTargetDelayCounter = 0;
+            minTargetDelay = 0;
+            createFindTargetDelay();
+            findTargetDelayCounter = 0;
             Targetable target = findTarget();
             if (target != null) {
                 attackTransitionParameters.put("target", target);
@@ -100,7 +100,7 @@ public class EnemyRunningState implements CombatActorState {
     private Targetable findTarget() {
 
         SnapshotArray<Tower> children = enemy.getTargetGroup().getCastedChildren();
-        return EnemyAI.findNearestTower(enemy, children);
+        return EnemyAI.findRandomTowerInRange(enemy, children);
     }
 
 
@@ -118,8 +118,8 @@ public class EnemyRunningState implements CombatActorState {
     }
 
     private void createFindTargetDelay() {
-        float min = minTargetDelay;
-        float max = minTargetDelay + MAX_FIND_TARGET_DELAY;
+        float min = MIN_FIND_TARGET_DELAY;
+        float max = min + MAX_FIND_TARGET_DELAY;
 
         findTargetDelay = MathUtils.random(min, max);
 

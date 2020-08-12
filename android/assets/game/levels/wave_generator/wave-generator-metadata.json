@@ -34,16 +34,16 @@
   {
     "levelName": "THE_BADLANDS",
     "enemyStartingWeight": 4,
-    "enemyWeightModifier": 0.325,
-    "enemyWeightModifier2": 0.25,
-    "wavesPerTank": 15,
-    "dynamicEnemyStartingWeight": 134.6
+    "enemyWeightModifier": 0.35,
+    "enemyWeightModifier2": 0.2,
+    "wavesPerTank": 12,
+    "dynamicEnemyStartingWeight": 528.29
   },
   {
     "levelName": "TUNDRA",
     "enemyStartingWeight": 4,
     "enemyWeightModifier": 0.35,
-    "enemyWeightModifier2": 0.2,
+    "enemyWeightModifier2": 0.225,
     "wavesPerTank": 10,
     "dynamicEnemyStartingWeight": 528.29
   },

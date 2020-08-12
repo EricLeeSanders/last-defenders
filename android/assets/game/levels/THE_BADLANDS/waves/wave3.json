@@ -4,19 +4,25 @@
       "name": "MachineGun",
       "armor": true,
       "level": 3,
+      "delay": 0.7
+    },
+    {
+      "name": "MachineGun",
+      "armor": false,
+      "level": 1,
       "delay": 0.1
     },
     {
-      "name": "MachineGun",
-      "armor": false,
-      "level": 1,
-      "delay": 0.4
+      "name": "Rifle",
+      "armor": true,
+      "level": 3,
+      "delay": 0.9
     },
     {
       "name": "MachineGun",
       "armor": false,
       "level": 1,
-      "delay": 0.5
+      "delay": 0.2
     }
   ]
 }

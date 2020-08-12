@@ -4,13 +4,13 @@
       "name": "Rifle",
       "armor": false,
       "level": 1,
-      "delay": 0.7
+      "delay": 0.8
     },
     {
       "name": "Rifle",
       "armor": false,
       "level": 1,
-      "delay": 0.8
+      "delay": 0.4
     }
   ]
 }
