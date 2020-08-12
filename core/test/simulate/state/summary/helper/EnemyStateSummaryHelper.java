@@ -8,10 +8,15 @@ import simulate.state.combatactor.EnemyState;
 import simulate.state.summary.EnemyStateSummary;
 
 public class EnemyStateSummaryHelper {
-
-    public Map<String, EnemyStateSummary> calculateEnemyStateSummaries(List<WaveState> waveStates){
+    public Map<String, EnemyStateSummary> calculateEnemyStateSummaries(List<WaveState> waveStates) {
 
         Map<String, EnemyStateSummary> enemySummaries = new HashMap<>();
+
+        return calculateEnemyStateSummaries(waveStates, enemySummaries);
+    }
+
+    public Map<String, EnemyStateSummary> calculateEnemyStateSummaries(List<WaveState> waveStates, Map<String, EnemyStateSummary> enemySummaries){
+
         for(WaveState waveState : waveStates){
             for(EnemyState enemy : waveState.getEnemyStates()){
                 EnemyStateSummary enemySummary = enemySummaries.get(enemy.getName());

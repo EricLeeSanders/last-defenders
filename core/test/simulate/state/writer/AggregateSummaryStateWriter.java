@@ -58,9 +58,9 @@ public class AggregateSummaryStateWriter {
 
                 List<WaveState> waveStates = waveStatesEntry.getValue();
 
-                towerSummariesMap.putAll(towerStateSummaryHelper.calculateTowerSummaries(waveStates));
-                enemySummariesMap.putAll(enemyStateSummaryHelper.calculateEnemyStateSummaries(waveStates));
-                supportSummariesMap.putAll(supportStateSummaryHelper.calculateSupportStateSummaries(waveStates));
+                towerStateSummaryHelper.calculateTowerSummaries(waveStates, towerSummariesMap);
+                enemyStateSummaryHelper.calculateEnemyStateSummaries(waveStates, enemySummariesMap);
+                supportStateSummaryHelper.calculateSupportStateSummaries(waveStates, supportSummariesMap);
                 stats.accept(waveStatesEntry.getValue().size());
             }
 

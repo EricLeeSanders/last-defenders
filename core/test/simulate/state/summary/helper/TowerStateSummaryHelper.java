@@ -10,8 +10,12 @@ import simulate.state.summary.TowerStateSummary;
 public class TowerStateSummaryHelper {
 
     public  Map<String, TowerStateSummary> calculateTowerSummaries(List<WaveState> waveStates){
-
         Map<String, TowerStateSummary> towerSummaries = new HashMap<>();
+        return calculateTowerSummaries(waveStates, towerSummaries);
+    }
+
+    public  Map<String, TowerStateSummary> calculateTowerSummaries(List<WaveState> waveStates, Map<String, TowerStateSummary> towerSummaries){
+
         for(int i = 0; i < waveStates.size(); i++){
             WaveState waveState = waveStates.get(i);
             for(TowerState tower : waveState.getTowerStates()){

@@ -10,8 +10,13 @@ import simulate.state.support.SupportState;
 public class SupportStateSummaryHelper {
 
     public Map<String, SupportStateSummary> calculateSupportStateSummaries(List<WaveState> waveStates){
-
         Map<String, SupportStateSummary> supportSummaries = new HashMap<>();
+
+        return calculateSupportStateSummaries(waveStates, supportSummaries);
+    }
+
+    public Map<String, SupportStateSummary> calculateSupportStateSummaries(List<WaveState> waveStates, Map<String, SupportStateSummary> supportSummaries){
+
 
         for(WaveState waveState : waveStates){
             for(SupportState supportState : waveState.getSupportStates()){
