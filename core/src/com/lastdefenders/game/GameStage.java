@@ -44,8 +44,8 @@ import com.lastdefenders.util.Resources;
  */
 public class GameStage extends Stage implements PlayerObserver {
 
-    private static final int WAVE_VOER_MONEY_ADDITION = 200;
-    private static final int WAVE_OVER_MONEY_MULTIPLIER = 10;
+    private static final int WAVE_OVER_MONEY_ADDITION = 300;
+    private static final int WAVE_OVER_MONEY_MULTIPLIER = 20;
     private LevelStateManager levelStateManager;
     private GameUIStateManager uiStateManager;
     private Level level;
@@ -195,7 +195,7 @@ public class GameStage extends Stage implements PlayerObserver {
 
         Logger.info("Game Stage: Wave over");
         adControllerHelper.incrementEventTriggered();
-        int money = (int) (WAVE_OVER_MONEY_MULTIPLIER * (float) level.getCurrentWave()) + WAVE_VOER_MONEY_ADDITION;
+        int money = (int) (WAVE_OVER_MONEY_MULTIPLIER * (float) level.getCurrentWave()) + WAVE_OVER_MONEY_ADDITION;
         player.giveMoney(money);
         levelStateManager.setState(LevelState.STANDBY);
         player.setWaveCount(player.getWaveCount() + 1);
