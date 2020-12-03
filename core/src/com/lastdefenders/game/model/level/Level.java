@@ -13,7 +13,7 @@ import com.lastdefenders.util.Logger;
 
 public class Level {
 
-    public static final int MAX_WAVES = 20;
+    public static final int MAX_WAVES = 100;
 
     private float delayCount = 0;
     private float enemyDelay = 0f;

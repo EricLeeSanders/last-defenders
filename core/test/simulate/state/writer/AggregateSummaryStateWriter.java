@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Font;
@@ -53,6 +55,7 @@ public class AggregateSummaryStateWriter {
             Map<String, EnemyStateSummary> enemySummariesMap = new HashMap<>();
             Map<String, SupportStateSummary> supportSummariesMap = new HashMap<>();
             IntSummaryStatistics stats = new IntSummaryStatistics();
+            Map<Integer, Integer> numOfWavesByWaveCount = new HashMap<>();
 
             for (Map.Entry<Integer, List<WaveState>> waveStatesEntry : runTypeMapEntry.getValue().entrySet()) {
 
@@ -61,13 +64,21 @@ public class AggregateSummaryStateWriter {
                 towerStateSummaryHelper.calculateTowerSummaries(waveStates, towerSummariesMap);
                 enemyStateSummaryHelper.calculateEnemyStateSummaries(waveStates, enemySummariesMap);
                 supportStateSummaryHelper.calculateSupportStateSummaries(waveStates, supportSummariesMap);
+                int waveCount = waveStatesEntry.getValue().size();
                 stats.accept(waveStatesEntry.getValue().size());
+
+                Integer numOfWaves = numOfWavesByWaveCount.get(waveCount);
+                if(numOfWaves == null){
+                    numOfWaves = 0;
+                }
+                numOfWaves++;
+                numOfWavesByWaveCount.put(waveCount, numOfWaves);
             }
 
             towerStateSummaryAggregates.add( new TowerStateSummaryAggregate(simulationRunType, towerSummariesMap.values()));
             enemyStateSummaryAggregates.add( new EnemyStateSummaryAggregate(simulationRunType, enemySummariesMap.values()));
             supportStateSummaryAggregates.add( new SupportStateSummaryAggregate(simulationRunType, supportSummariesMap.values()));
-            roundStatsAggregates.add( new RoundStatsAggregate(simulationRunType, stats));
+            roundStatsAggregates.add( new RoundStatsAggregate(simulationRunType, stats, numOfWavesByWaveCount));
         }
 
         writeSummariesByRunType(sheet, rowCounter, towerStateSummaryAggregates, enemyStateSummaryAggregates, supportStateSummaryAggregates, roundStatsAggregates );
@@ -348,6 +359,15 @@ public class AggregateSummaryStateWriter {
         row.createCell(counter++).setCellValue(roundStats.getStats().getMin());
         row.createCell(counter++).setCellValue(roundStats.getStats().getMax());
         row.createCell(counter++).setCellValue(roundStats.getStats().getAverage());
+
+        Map<Integer, Integer> numOfWavesByWaveCount = roundStats.getNumOfWavesByWaveCount();
+
+        SortedSet<Integer> waveCountSortedKeys = new TreeSet<>(numOfWavesByWaveCount.keySet());
+        for(Integer waveCount : waveCountSortedKeys){
+            Integer numOfWaves = numOfWavesByWaveCount.get(waveCount);
+            row.createCell(counter++).setCellValue(waveCount + " - " + numOfWaves);
+        }
+
     }
 
 

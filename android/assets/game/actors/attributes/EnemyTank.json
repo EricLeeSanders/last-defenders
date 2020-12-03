@@ -1,9 +1,9 @@
 {
   "attack": "5.4",
   "attackSpeed": "5",
-  "range": "60",
+  "range": "75",
   "health": "36",
   "armor": "18",
   "speed": "45",
-  "killReward": "150"
+  "killReward": "225"
 }

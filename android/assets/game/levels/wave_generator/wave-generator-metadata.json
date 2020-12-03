@@ -1,58 +1,176 @@
 [
   {
     "levelName": "SERPENTINE_RIVER",
-    "enemyStartingWeight": 4,
-    "enemyWeightModifier": 0.35,
-    "enemyWeightModifier2": 0.2,
+    "enemyStartingCost": 4,
+    "enemyCostModifier": 0.375,
+    "enemyCostModifier2": 0.19,
+    "rampUps": {
+      "enemyCostRampUps": [
+        {
+          "level": 30,
+          "enemyCostModifier2": 0.19
+        },
+        {
+          "level": 45,
+          "enemyCostModifier2": 0.12
+        },
+        {
+          "level": 60,
+          "enemyCostModifier2": 0.1
+        }
+      ],
+      "wavesPerTankRampUp": [
+        {
+          "level": 30,
+          "wavesPerTank": 5
+        },
+        {
+          "level": 45,
+          "wavesPerTank": 2
+        },
+        {
+          "level": 60,
+          "wavesPerTank": 0
+        }
+      ],
+      "enemyWeightRampUps": {
+        "levelStart": 25,
+        "modulo": 5,
+        "modifiers": [
+          {
+            "name": "tankArmor",
+            "weightModifier": 0.1
+          },
+          {
+            "name": "humveeArmor",
+            "weightModifier": 0.1
+          },
+          {
+            "name": "rocketLauncherArmor",
+            "weightModifier": 0.1
+          }
+        ]
+      }
+    },
     "wavesPerTank": 10,
-    "dynamicEnemyStartingWeight": 528.29
+    "dynamicEnemyStartingCost": 46083.11
   },
   {
     "levelName": "STARFISH_ISLAND",
-    "enemyStartingWeight": 4,
-    "enemyWeightModifier": 0.325,
-    "enemyWeightModifier2": 0.25,
+    "enemyStartingCost": 4,
+    "enemyCostModifier": 0.325,
+    "enemyCostModifier2": 0.25,
     "wavesPerTank": 15,
-    "dynamicEnemyStartingWeight": 134.6
+    "dynamicEnemyStartingCost": 134.6
   },
   {
     "levelName": "THE_GREENLANDS",
-    "enemyStartingWeight": 4,
-    "enemyWeightModifier": 0.325,
-    "enemyWeightModifier2": 0.25,
+    "enemyStartingCost": 4,
+    "enemyCostModifier": 0.325,
+    "enemyCostModifier2": 0.25,
     "wavesPerTank": 15,
-    "dynamicEnemyStartingWeight": 134.6
+    "dynamicEnemyStartingCost": 134.6
   },
   {
     "levelName": "THE_GOLD_COAST",
-    "enemyStartingWeight": 4,
-    "enemyWeightModifier": 0.325,
-    "enemyWeightModifier2": 0.25,
-    "wavesPerTank": 15,
-    "dynamicEnemyStartingWeight": 134.6
+    "enemyStartingCost": 4,
+    "enemyCostModifier": 0.325,
+    "enemyCostModifier2": 0.25,
+    "rampUps": {
+      "enemyCostRampUps": [
+        {
+          "level": 30,
+          "enemyCostModifier2": 0.19
+        },
+        {
+          "level": 45,
+          "enemyCostModifier2": 0.12
+        },
+        {
+          "level": 60,
+          "enemyCostModifier2": 0.1
+        }
+      ],
+      "wavesPerTankRampUp": [
+        {
+          "level": 30,
+          "wavesPerTank": 5
+        },
+        {
+          "level": 45,
+          "wavesPerTank": 2
+        },
+        {
+          "level": 60,
+          "wavesPerTank": 0
+        }
+      ],
+      "enemyWeightRampUps": {
+        "levelStart": 25,
+        "modulo": 5,
+        "modifiers": [
+          {
+            "name": "tankArmor",
+            "weightModifier": 0.1
+          },
+          {
+            "name": "humveeArmor",
+            "weightModifier": 0.1
+          },
+          {
+            "name": "rocketLauncherArmor",
+            "weightModifier": 0.1
+          }
+        ]
+      }
+    },
+    "wavesPerTank": 10,
+    "dynamicEnemyStartingCost": 22490.67
   },
   {
     "levelName": "THE_BADLANDS",
-    "enemyStartingWeight": 4,
-    "enemyWeightModifier": 0.35,
-    "enemyWeightModifier2": 0.2,
-    "wavesPerTank": 12,
-    "dynamicEnemyStartingWeight": 528.29
+    "enemyStartingCost": 4,
+    "enemyCostModifier": 0.3,
+    "enemyCostModifier2": 0.2,
+    "rampUps": {
+      "enemyCostRampUps": [],
+      "wavesPerTankRampUp": [],
+      "enemyWeightRampUps": {
+        "levelStart": 25,
+        "modulo": 5,
+        "modifiers": [
+          {
+            "name": "tankArmor",
+            "weightModifier": 0.1
+          },
+          {
+            "name": "humveeArmor",
+            "weightModifier": 0.1
+          },
+          {
+            "name": "rocketLauncherArmor",
+            "weightModifier": 0.1
+          }
+        ]
+      }
+    },
+    "wavesPerTank": 10,
+    "dynamicEnemyStartingCost": 22490.67
   },
   {
     "levelName": "TUNDRA",
-    "enemyStartingWeight": 4,
-    "enemyWeightModifier": 0.35,
-    "enemyWeightModifier2": 0.225,
+    "enemyStartingCost": 4,
+    "enemyCostModifier": 0.35,
+    "enemyCostModifier2": 0.225,
     "wavesPerTank": 10,
-    "dynamicEnemyStartingWeight": 528.29
+    "dynamicEnemyStartingCost": 528.29
   },
   {
     "levelName": "WHISPERING_THICKET",
-    "enemyStartingWeight": 4,
-    "enemyWeightModifier": 0.35,
-    "enemyWeightModifier2": 0.2,
+    "enemyStartingCost": 4,
+    "enemyCostModifier": 0.35,
+    "enemyCostModifier2": 0.2,
     "wavesPerTank": 10,
-    "dynamicEnemyStartingWeight": 528.29
+    "dynamicEnemyStartingCost": 528.29
   }
 ]

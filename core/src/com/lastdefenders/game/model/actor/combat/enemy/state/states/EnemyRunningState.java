@@ -19,7 +19,7 @@ import java.util.Map;
 public class EnemyRunningState implements CombatActorState {
 
     private static final float MIN_FIND_TARGET_DELAY = 1f;
-    private static final float MAX_FIND_TARGET_DELAY = 3.0f;
+    private static final float MAX_FIND_TARGET_DELAY = 2.0f;
 
     private final Enemy enemy;
     private final StateTransitioner<EnemyStateEnum> stateTransitioner;
@@ -118,7 +118,7 @@ public class EnemyRunningState implements CombatActorState {
     }
 
     private void createFindTargetDelay() {
-        float min = MIN_FIND_TARGET_DELAY;
+        float min = minTargetDelay;
         float max = min + MAX_FIND_TARGET_DELAY;
 
         findTargetDelay = MathUtils.random(min, max);

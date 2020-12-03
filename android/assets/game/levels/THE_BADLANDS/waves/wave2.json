@@ -3,14 +3,18 @@
     {
       "name": "Rifle",
       "armor": false,
+      "cost": 4,
       "level": 1,
+      "weight": 1,
       "delay": 0.8
     },
     {
-      "name": "Rifle",
+      "name": "MachineGun",
       "armor": false,
+      "cost": 4,
       "level": 1,
-      "delay": 0.4
+      "weight": 1,
+      "delay": 0.2
     }
   ]
 }
