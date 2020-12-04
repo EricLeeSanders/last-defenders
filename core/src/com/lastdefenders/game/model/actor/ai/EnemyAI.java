@@ -60,6 +60,7 @@ public class EnemyAI {
      *
      * @return Tower
      */
+    @Deprecated
     public static Tower findNearestTower(Enemy enemy, SnapshotArray<Tower> towers) {
 
         if (towers.size == 0) {

@@ -154,7 +154,7 @@ public class DamageTest {
 
         Tower tower = TestUtil.createTower(TowerFlameThrower.class, true);
 
-        doReturn(20f).when(tower).getAttack();
+        doReturn(30f).when(tower).getAttack();
 
         Enemy enemy1 = TestUtil.createEnemy(EnemyRifle.class, false);
         Enemy enemy2 = TestUtil.createEnemy(EnemyHumvee.class, false);

@@ -1,11 +1,16 @@
 package com.lastdefenders.game.service.factory;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
@@ -41,6 +46,10 @@ public class CombatActorFactoryTest {
     public void initCombatActorFactoryTest() {
         Gdx.app = mock(Application.class);
         MockitoAnnotations.initMocks(this);
+
+        Group healthGroup = spy(actorGroups.getHealthGroup());
+        doReturn(healthGroup).when(actorGroups).getHealthGroup();
+        doNothing().when(healthGroup).addActor(any(Actor.class));
     }
 
     @Test
