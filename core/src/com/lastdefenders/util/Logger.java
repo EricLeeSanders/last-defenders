@@ -13,7 +13,7 @@ public class Logger {
     }
 
     public static void info(String message) {
-        //Gdx.app.log(INFO_TAG, message);
+        Gdx.app.log(INFO_TAG, message);
     }
 
     public static void error(String message, Throwable exception) {

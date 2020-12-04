@@ -40,8 +40,6 @@ import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
 import com.lastdefenders.game.model.actor.combat.tower.TowerSniper;
 import com.lastdefenders.game.model.actor.combat.tower.TowerTank;
-import com.lastdefenders.game.model.level.wave.impl.DynamicWaveLoader.EnemyWeight;
-import com.lastdefenders.game.model.level.wave.impl.DynamicWaveLoader.WaveGeneratorMetadata;
 import com.lastdefenders.levelselect.LevelName;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,8 +75,6 @@ public class Resources {
     private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<>();
     private Map<Class, TowerAttributes> towerAttributes = new HashMap<>();
     private Map<Class, EnemyAttributes> enemyAttributes = new HashMap<>();
-    private Array<EnemyWeight> enemyWeights;
-    private Map<LevelName, WaveGeneratorMetadata> waveGeneratorMetadata = new HashMap<>();
 
     public Resources() {
 
@@ -122,8 +118,6 @@ public class Resources {
         Texture.setAssetManager(manager);
 
         loadCombatActorAttributes();
-        loadEnemyWeights();
-        loadWaveGeneratorMetadata();
     }
 
     public static ShapeRenderer getShapeRenderer() {
@@ -209,46 +203,6 @@ public class Resources {
 
 
         Logger.info("Resources: textures initialized");
-    }
-
-    @SuppressWarnings("unchecked")
-    private void loadWaveGeneratorMetadata(){
-        Logger.info("Resources: loading Wave Generator Metadata");
-
-        FileHandle file = Gdx.files.internal(WAVE_GENERATOR_METADATA_LOC);
-
-        Json json = new Json();
-        json.setIgnoreUnknownFields(true);
-
-        Array<WaveGeneratorMetadata> metadataList = json.fromJson(Array.class, WaveGeneratorMetadata.class, file);
-        for(WaveGeneratorMetadata m : metadataList){
-            waveGeneratorMetadata.put(m.getLevelName(), m);
-        }
-
-
-        Logger.info("Resources: Wave Generator Metadata loaded");
-    }
-
-    public WaveGeneratorMetadata getWaveGeneratorMetadataByLevelName(LevelName levelName){
-        return waveGeneratorMetadata.get(levelName);
-    }
-
-    @SuppressWarnings("unchecked")
-    private void loadEnemyWeights(){
-        Logger.info("Resources: loading Enemy Weights");
-
-        FileHandle file = Gdx.files.internal(ENEMY_WEIGHTS_LOC);
-
-        Json json = new Json();
-        json.setIgnoreUnknownFields(true);
-        enemyWeights = json.fromJson(Array.class, EnemyWeight.class, file);
-        System.out.println(enemyWeights);
-        Logger.info("Resources: Enemy Weights loaded");
-
-    }
-
-    public Array<EnemyWeight> getEnemyWeights(){
-        return enemyWeights;
     }
 
     private void loadCombatActorAttributes(){

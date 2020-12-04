@@ -91,8 +91,8 @@ public class GameStage extends Stage implements PlayerObserver {
         createPlacementServices(map);
         mapRenderer = new MapRenderer(tiledMap, resources.getTiledMapScale(), getCamera(), getBatch());
         FileWaveLoader fileWaveLoader = new FileWaveLoader(combatActorFactory, map);
-        DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map, resources, levelName);
-        level = new Level(levelName, getActorGroups(), healthFactory, fileWaveLoader,
+        DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
+        level = new Level(levelName, getActorGroups(), fileWaveLoader,
             dynamicWaveLoader);
         player.attachObserver(this);
     }
@@ -214,7 +214,7 @@ public class GameStage extends Stage implements PlayerObserver {
      */
     private boolean isLevelComplete() {
 
-        return (player.getWavesCompleted() == Level.MAX_WAVES);
+        return (player.getWavesCompleted() == Level.WAVE_LEVEL_WIN_LIMIT);
     }
 
     private void levelComplete() {
