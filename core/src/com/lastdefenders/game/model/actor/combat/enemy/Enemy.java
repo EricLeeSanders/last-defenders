@@ -3,19 +3,17 @@ package com.lastdefenders.game.model.actor.combat.enemy;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
+import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.groups.GenericGroup;
+import com.lastdefenders.game.service.factory.CombatActorFactory.EnemyPool;
 import com.lastdefenders.util.action.LDSequenceAction;
 import com.lastdefenders.util.action.WaypointAction;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
-import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
-import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
-import com.lastdefenders.game.model.actor.combat.state.StateManager;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.util.ActorUtil;
@@ -23,6 +21,8 @@ import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.UtilPool;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An abstract class that represents an Enemy. Enemies are created from the
@@ -35,9 +35,6 @@ public abstract class Enemy extends CombatActor {
 
     public static final float MOVEMENT_DELAY = 1f; // The delay to wait after a target begins attacking
     private static final float FRAME_DURATION = 0.3f;
-    private static final float MIN_FIND_TARGET_DELAY = 1.0f;
-    private static final float MAX_FIND_TARGET_DELAY = 5.0f;
-    private float findTargetDelay;
     private float speed;
     private int killReward;
     private float lengthToEnd;
@@ -45,35 +42,39 @@ public abstract class Enemy extends CombatActor {
     private Animation<TextureRegion> movementAnimation;
     private TextureRegion stationaryTextureRegion;
     private float rotationBeforeAttacking;
-
-    private StateManager<EnemyState, CombatActorState> stateManager;
+    private EnemyPool<? extends Enemy> pool;
+    private EnemyStateManager stateManager;
+    private GenericGroup<Tower> targetGroup;
 
     public Enemy(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions,
-        Dimension textureSize, CombatActorPool<? extends CombatActor> pool, Group targetGroup, Vector2 gunPos,
-        float speed, float health, float armor, float attack, float attackSpeed, float range,
-        int killReward, DeathEffectType deathEffectType) {
+        Dimension textureSize, EnemyPool<? extends Enemy> pool, GenericGroup<Tower> targetGroup, Vector2 gunPos,
+        DeathEffectType deathEffectType, EnemyAttributes attributes) {
 
-        super(stationaryTextureRegion, textureSize, pool, targetGroup, gunPos, health, armor,
-            attack, attackSpeed, range, deathEffectType);
+        super(stationaryTextureRegion, textureSize, gunPos, deathEffectType, attributes);
         movementAnimation = new Animation<>(FRAME_DURATION, animatedRegions);
         movementAnimation.setPlayMode(Animation.PlayMode.LOOP);
-        this.speed = speed;
+        this.speed = attributes.getSpeed();
         this.stationaryTextureRegion = stationaryTextureRegion;
-        this.killReward = killReward;
+        this.killReward = attributes.getKillReward();
+        this.pool = pool;
+        this.targetGroup = targetGroup;
     }
 
-    public void setStateManager(StateManager<EnemyState, CombatActorState> stateManager) {
+    public void setStateManager(EnemyStateManager stateManager) {
 
         this.stateManager = stateManager;
     }
 
+    public EnemyStateManager getStateManager(){
+        return this.stateManager;
+    }
+
     public void init() {
 
-        stateManager.transition(EnemyState.RUNNING);
-        setActive(true);
+
+        stateManager.transition(EnemyStateEnum.SPAWNING);
         setDead(false);
-        findTargetDelay = MathUtils.random(MIN_FIND_TARGET_DELAY, MAX_FIND_TARGET_DELAY);
-        System.out.println("findTargetDelay: " + findTargetDelay);
+        lengthToEndCalculated = false;
     }
 
     /**
@@ -94,17 +95,16 @@ public abstract class Enemy extends CombatActor {
 
         // The enemy always faces its target (tower or way point) and the top/front of the enemy needs to be off screen.
         // That ensures that the entire body of the enemy is off the screen when spawning.
-        // rotatedCoords are the coords of the top/front of the enemy.
+        // topCenterAfterRotation are the coords of the top/front of the enemy.
         Vector2 centerPos = getPositionCenter();
-        LDVector2 rotatedCoords = ActorUtil
+        LDVector2 topCenterAfterRotation = ActorUtil
             .calculateRotatedCoords(this.getX() + getWidth(), centerPos.y, centerPos.x, centerPos.y,
                 Math.toRadians(getRotation()));
 
         // Reposition the enemy so that it is off the screen
-        float newX = this.getPositionCenter().x + (this.getPositionCenter().x - rotatedCoords.x);
-        float newY = this.getPositionCenter().y + (this.getPositionCenter().y - rotatedCoords.y);
-
-        rotatedCoords.free();
+        float newX = this.getPositionCenter().x + (this.getPositionCenter().x - topCenterAfterRotation.x);
+        float newY = this.getPositionCenter().y + (this.getPositionCenter().y - topCenterAfterRotation.y);
+        topCenterAfterRotation.free();
 
         this.setPositionCenter(newX, newY); // Start off screen
 
@@ -123,7 +123,6 @@ public abstract class Enemy extends CombatActor {
         }
 
         addAction(sequenceAction);
-
     }
 
     private WaypointAction createWaypointAction(float x, float y, float duration, float rotation) {
@@ -156,7 +155,7 @@ public abstract class Enemy extends CombatActor {
 
     public void reachedEnd() {
 
-        Logger.info("Enemy: " + this.getClass().getSimpleName() + " reached end");
+        Logger.info("Enemy " + ID  + ": "  + this.getClass().getSimpleName() + " reached end");
         freeActor();
     }
 
@@ -179,8 +178,7 @@ public abstract class Enemy extends CombatActor {
     }
 
     public void deadState() {
-
-        stateManager.transition(EnemyState.DYING);
+        stateManager.transition(EnemyStateEnum.DEAD);
     }
 
 
@@ -195,6 +193,7 @@ public abstract class Enemy extends CombatActor {
         this.setRotation(0);
         lengthToEnd = 0;
         rotationBeforeAttacking = 0;
+        stateManager.reset();
     }
 
     /**
@@ -204,7 +203,7 @@ public abstract class Enemy extends CombatActor {
         // The enemy should only have 1 action and it should
         // be a LDSequenceAction;
         if (getActions().size != 1) {
-            return;
+            throw new IllegalStateException("Enemy: " + ID + " has no action");
         }
 
         LDSequenceAction sequenceAction = (LDSequenceAction) getActions().first();
@@ -227,7 +226,7 @@ public abstract class Enemy extends CombatActor {
 
     boolean isAttacking() {
 
-        return stateManager.getCurrentStateName().equals(EnemyState.ATTACKING);
+        return stateManager.getCurrentStateName().equals(EnemyStateEnum.ATTACKING);
     }
 
     public float getLengthToEnd() {
@@ -235,6 +234,7 @@ public abstract class Enemy extends CombatActor {
         if (!lengthToEndCalculated) {
             calcLengthToEnd();
         }
+
         return lengthToEnd;
     }
 
@@ -243,7 +243,7 @@ public abstract class Enemy extends CombatActor {
         return killReward;
     }
 
-    public EnemyState getState() {
+    public EnemyStateEnum getState() {
 
         return stateManager.getCurrentStateName();
     }
@@ -253,8 +253,13 @@ public abstract class Enemy extends CombatActor {
         return speed;
     }
 
-    public float getFindTargetDelay(){
-        return findTargetDelay;
+    public GenericGroup<Tower> getTargetGroup(){
+        return targetGroup;
+    }
+
+    @Override
+    public void freeActor() {
+        pool.free(this);
     }
 
 }

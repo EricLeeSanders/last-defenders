@@ -7,9 +7,9 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
-import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
-import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.service.factory.EffectFactory;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,33 +32,23 @@ public class EnemyStateManagerTest {
     @Test
     public void transitionTest() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", false);
-        Player player = mock(Player.class);
-        EffectFactory effectFactoryMock = mock(EffectFactory.class);
+        Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
 
-        EnemyStateManager stateManager = new EnemyStateManager(enemy, effectFactoryMock, player);
-        assertEquals(EnemyState.STANDBY, stateManager.getCurrentStateName());
-
-        stateManager.transition(EnemyState.ATTACKING);
-        assertEquals(EnemyState.ATTACKING, stateManager.getCurrentStateName());
+        enemy.getStateManager().transition(EnemyStateEnum.RUNNING);
+        assertEquals(EnemyStateEnum.RUNNING, enemy.getStateManager().getCurrentStateName());
     }
 
     @Test
     public void transitionWithParametersTest() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", false);
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
 
-        Player player = mock(Player.class);
-        EffectFactory effectFactoryMock = mock(EffectFactory.class);
-
-        EnemyStateManager stateManager = new EnemyStateManager(enemy, effectFactoryMock, player);
-        assertEquals(EnemyState.STANDBY, stateManager.getCurrentStateName());
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("target", tower);
 
-        stateManager.transition(EnemyState.ATTACKING, parameters);
-        assertEquals(EnemyState.ATTACKING, stateManager.getCurrentStateName());
+        enemy.getStateManager().transition(EnemyStateEnum.ATTACKING, parameters);
+        assertEquals(EnemyStateEnum.ATTACKING, enemy.getStateManager().getCurrentStateName());
     }
 }

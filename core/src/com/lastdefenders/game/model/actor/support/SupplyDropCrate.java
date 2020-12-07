@@ -31,7 +31,7 @@ import com.lastdefenders.util.datastructures.pool.LDVector2;
 
 public class SupplyDropCrate extends GameActor implements Pool.Poolable {
 
-    public static final int COST = 1000;
+    public static final int COST = 500;
     private static final float SUPPLYDROP_DURATION = 1f;
     private static final float RANGE = 150f;
     private static final Dimension TEXTURE_SIZE = new Dimension(50, 50);
@@ -157,7 +157,7 @@ public class SupplyDropCrate extends GameActor implements Pool.Poolable {
         this.active = active;
     }
 
-    private Shape2D getRangeShape() {
+    public Shape2D getRangeShape() {
 
         rangeCircle.set(getPositionCenter().x, getPositionCenter().y, RANGE);
         return rangeCircle;

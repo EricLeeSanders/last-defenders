@@ -3,12 +3,13 @@ package com.lastdefenders.game.model.actor.combat.enemy;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
+import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.model.actor.interfaces.IRocket;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.EnemyPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
@@ -22,14 +23,7 @@ import com.lastdefenders.util.UtilPool;
  */
 public class EnemyRocketLauncher extends Enemy implements IRocket {
 
-    private static final float HEALTH = 8;
-    private static final float ARMOR = 4;
-    private static final float ATTACK = 9;
-    private static final float ATTACK_SPEED = 1;
-    private static final float RANGE = 60;
-    private static final float SPEED = 55f;
-    private static final float AOE_RADIUS = 50f;
-    private static final int KILL_REWARD = 15;
+    private static final float AOE_RADIUS = 20f;
 
     private static final Dimension ROCKET_SIZE = new Dimension(23, 6);
     private static final Vector2 GUN_POS = UtilPool.getVector2(25, -10);
@@ -41,11 +35,11 @@ public class EnemyRocketLauncher extends Enemy implements IRocket {
     private ProjectileFactory projectileFactory;
 
     public EnemyRocketLauncher(TextureRegion stationaryTextureRegion,
-        TextureRegion[] animatedRegions, CombatActorPool<EnemyRocketLauncher> pool,
-        Group targetGroup, ProjectileFactory projectileFactory, LDAudio audio) {
+        TextureRegion[] animatedRegions, EnemyPool<EnemyRocketLauncher> pool,
+        GenericGroup<Tower> targetGroup, ProjectileFactory projectileFactory, LDAudio audio, EnemyAttributes attributes) {
 
         super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS,
-            SPEED, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, KILL_REWARD, DEATH_EFFECT_TYPE);
+            DEATH_EFFECT_TYPE, attributes);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
         this.body = new Circle(this.getPositionCenter(), 10);

@@ -10,9 +10,9 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.actor.health.ArmorIcon;
-import com.lastdefenders.game.service.factory.HealthFactory.HealthPool;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -24,8 +24,6 @@ import testutil.TestUtil;
 public class ArmorIconTest {
 
     private Batch batchMock = mock(Batch.class);
-    @SuppressWarnings("unchecked")
-    private HealthPool<ArmorIcon> poolMock = mock(HealthPool.class);
 
     @Before
     public void initArmorIconTest() {
@@ -33,14 +31,14 @@ public class ArmorIconTest {
         Gdx.app = mock(Application.class);
     }
 
-    private ArmorIcon createArmorIcon() {
+    private ArmorIcon createArmorIcon(CombatActor actor) {
 
         TextureRegion iconMock = mock(TextureRegion.class);
         doReturn(20).when(iconMock).getRegionWidth();
         doReturn(20).when(iconMock).getRegionHeight();
 
         @SuppressWarnings("unchecked")
-        ArmorIcon armorIcon = new ArmorIcon(poolMock, iconMock);
+        ArmorIcon armorIcon = new ArmorIcon(iconMock, actor);
 
         return armorIcon;
     }
@@ -54,12 +52,12 @@ public class ArmorIconTest {
     @SuppressWarnings("unchecked")
     public void armorIconTest1() {
 
-        ArmorIcon armorIcon = createArmorIcon();
-        Tower tower = TestUtil.createTower("Rifle", false);
+
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
         tower.setHasArmor(true);
         tower.setPositionCenter(20, 20);
 
-        armorIcon.setActor(tower);
+        ArmorIcon armorIcon = createArmorIcon(tower);
 
         armorIcon.draw(batchMock, 1);
 
@@ -74,13 +72,9 @@ public class ArmorIconTest {
 
         assertEquals(tower.getPositionCenter().y + ArmorIcon.Y_OFFSET, armorIcon.getY(),
             TestUtil.DELTA);
-        assertEquals(tower.getPositionCenter().x + ArmorIcon.X_HEALTH_BAR_DISPALYING_OFFSET,
+        assertEquals(tower.getPositionCenter().x + ArmorIcon.X_HEALTH_BAR_DISPLAYING_OFFSET,
             armorIcon.getX(), TestUtil.DELTA);
 
-        tower.setDead(true);
-        armorIcon.act(0.001f);
-
-        verify(poolMock, times(1)).free(armorIcon);
 
     }
 }

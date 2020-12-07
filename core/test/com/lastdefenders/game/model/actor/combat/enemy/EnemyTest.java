@@ -13,9 +13,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Array;
+import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.util.action.LDSequenceAction;
-import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
-import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
@@ -59,7 +59,7 @@ public class EnemyTest {
     @Test
     public void testEnemyDead() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
         enemy.setHasArmor(true);
         enemy.takeDamage(100);
 
@@ -74,7 +74,7 @@ public class EnemyTest {
     @Test
     public void testEnemyArmor1() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy = TestUtil.createRunningEnemy(EnemyRifle.class, false);
         float damageAmount = enemy.getHealth() / 2;
         enemy.setHasArmor(true);
         enemy.takeDamage(damageAmount);
@@ -89,7 +89,7 @@ public class EnemyTest {
     @Test
     public void testEnemyArmor2() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy = TestUtil.createRunningEnemy(EnemyRifle.class, false);
         float damageAmount = enemy.getHealth() / 4;
         enemy.setHasArmor(true);
         enemy.takeDamage(damageAmount);
@@ -104,7 +104,7 @@ public class EnemyTest {
     @Test
     public void testEnemyArmor3() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy = TestUtil.createRunningEnemy(EnemyRifle.class, false);
         float damageAmount = enemy.getHealth();
         enemy.setHasArmor(true);
         enemy.takeDamage(damageAmount);
@@ -116,7 +116,7 @@ public class EnemyTest {
     @Test
     public void testWaypointActions1() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
 
         Array<LDVector2> path = createWaypoints();
         enemy.setPath(path);
@@ -136,7 +136,7 @@ public class EnemyTest {
     @Test
     public void testWaypointActions2() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
 
         Array<LDVector2> path = createWaypoints();
         enemy.setPath(path);
@@ -158,7 +158,7 @@ public class EnemyTest {
     @Test
     public void testEnemyLengthToEnd1() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
 
         Array<LDVector2> path = createWaypoints();
         enemy.setPath(path);
@@ -207,45 +207,47 @@ public class EnemyTest {
     @Test
     public void testRunningState() {
 
-        Tower tower = TestUtil.createTower("Rifle", false);
-        Enemy enemy = TestUtil.createEnemy("Rifle", true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Enemy enemy = TestUtil.createRunningEnemy(EnemyRifle.class, true);
 
         enemy.getTargetGroup().addActor(tower);
 
         Array<LDVector2> path = createWaypoints();
         enemy.setPath(path);
 
-        assertEquals(EnemyState.RUNNING, enemy.getState());
+        assertEquals(EnemyStateEnum.RUNNING, enemy.getState());
     }
 
     @Test
     public void testAttackingState() {
 
-        Tower tower = TestUtil.createTower("Rifle", false);
-        Enemy enemy = TestUtil.createEnemy("Rifle", true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, true);
 
         enemy.getTargetGroup().addActor(tower);
 
         Array<LDVector2> path = createWaypoints();
         enemy.setPath(path);
 
-        assertEquals(EnemyState.RUNNING, enemy.getState());
+        assertEquals(EnemyStateEnum.SPAWNING, enemy.getState());
+
+        enemy.act(0.0001f); // Change to running
 
         enemy.setPositionCenter(120, 120);
         tower.setPositionCenter(100, 100);
 
-        enemy.act(2f);
+        enemy.act(4.1f);
         enemy.act(0.0001f);
 
-        assertEquals(EnemyState.ATTACKING, enemy.getState());
+        assertEquals(EnemyStateEnum.ATTACKING, enemy.getState());
     }
 
     @Test
     public void testReachedEndState() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", false);
+        Enemy enemy = TestUtil.createRunningEnemy(EnemyRifle.class, false);
 
-        assertEquals(EnemyState.RUNNING, enemy.getState());
+        assertEquals(EnemyStateEnum.RUNNING, enemy.getState());
 
         Array<LDVector2> path = createWaypoints();
         enemy.setPath(path);
@@ -260,11 +262,7 @@ public class EnemyTest {
         }
 
         enemy.act(10f);
-        assertEquals(EnemyState.REACHED_END, enemy.getState());
-        enemy.act(0.001f);
-        assertEquals(EnemyState.STANDBY, enemy.getState());
-
-        assertEquals(0, enemy.getLengthToEnd(), TestUtil.DELTA);
+        assertEquals(EnemyStateEnum.REACHED_END, enemy.getState());
 
     }
 
@@ -274,13 +272,17 @@ public class EnemyTest {
     @Test
     public void testDeadState() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", true);
+        Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, true);
 
-        assertEquals(EnemyState.RUNNING, enemy.getState());
+        assertEquals(EnemyStateEnum.SPAWNING, enemy.getState());
+
+        enemy.act(.01f);
+
+        assertEquals(EnemyStateEnum.RUNNING, enemy.getState());
 
         enemy.takeDamage(enemy.getHealth());
 
         verify(enemy, times(1)).deadState();
-        assertEquals(EnemyState.STANDBY, enemy.getState());
+        assertEquals(EnemyStateEnum.DEAD, enemy.getState());
     }
 }

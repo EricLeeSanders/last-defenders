@@ -1,6 +1,5 @@
 package com.lastdefenders.game.service.actorplacement;
 
-import com.lastdefenders.game.model.actor.ActorGroups;
 import com.lastdefenders.game.model.actor.support.AirStrike;
 import com.lastdefenders.game.model.actor.support.AirStrikeLocation;
 import com.lastdefenders.game.service.factory.SupportActorFactory;
@@ -20,7 +19,7 @@ public class AirStrikePlacement {
     public void createAirStrike() {
 
         Logger.info("AirStrikePlacement: creating air strike");
-        currentAirStrike = (AirStrike) supportActorFactory.loadSupportActor(AirStrike.class, true);
+        currentAirStrike = supportActorFactory.loadSupportActor(AirStrike.class, true);
         currentAirStrike.setPosition(0, 0);
         currentAirStrike.setActive(false);
         currentAirStrike.setVisible(false);

@@ -233,10 +233,10 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
 
         Logger.info("HUD Presenter: setWaveCount");
         int waveCount = player.getWaveCount();
-        if (waveCount > Level.MAX_WAVES) {
+        if (waveCount > Level.WAVE_LEVEL_WIN_LIMIT) {
             view.setWaveCount(String.valueOf(waveCount));
         } else {
-            view.setWaveCount(String.valueOf(waveCount + "/" + Level.MAX_WAVES));
+            view.setWaveCount(String.valueOf(waveCount + "/" + Level.WAVE_LEVEL_WIN_LIMIT));
         }
     }
 

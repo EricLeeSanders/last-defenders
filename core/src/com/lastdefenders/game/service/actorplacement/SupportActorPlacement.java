@@ -2,7 +2,6 @@ package com.lastdefenders.game.service.actorplacement;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.lastdefenders.game.model.actor.ActorGroups;
 import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.model.actor.support.CombatSupportActor;
 import com.lastdefenders.game.service.factory.SupportActorFactory;

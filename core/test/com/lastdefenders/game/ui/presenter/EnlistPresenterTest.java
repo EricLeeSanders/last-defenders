@@ -13,6 +13,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.service.actorplacement.TowerPlacement;
 import com.lastdefenders.game.ui.presenter.EnlistPresenter;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
@@ -20,6 +22,7 @@ import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.interfaces.IEnlistView;
 import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
 import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
@@ -40,6 +43,7 @@ public class EnlistPresenterTest {
     private TowerPlacement towerPlacementMock = mock(TowerPlacement.class);
     private GameUIStateManager gameUIStateManagerMock = mock(GameUIStateManager.class);
     private Viewport gameViewportMock = mock(Viewport.class);
+    private Resources resources = TestUtil.getResources();
 
     @DataProvider
     public static Object[][] filteredGameUIStateEnums() {
@@ -70,7 +74,7 @@ public class EnlistPresenterTest {
         MessageDisplayer messageDisplayerMock = mock(MessageDisplayer.class);
 
         return new EnlistPresenter(gameUIStateManagerMock, playerMock, audioMock,
-            towerPlacementMock, messageDisplayerMock, gameViewportMock);
+            towerPlacementMock, messageDisplayerMock, gameViewportMock, resources);
     }
 
     /**
@@ -269,7 +273,7 @@ public class EnlistPresenterTest {
         doReturn(GameUIState.PLACING_TOWER).when(gameUIStateManagerMock).getState();
         enlistPresenter.setView(enlistView);
 
-        Tower tower = TestUtil.createTower("Rifle", true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true);
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 
@@ -298,7 +302,7 @@ public class EnlistPresenterTest {
         doReturn(GameUIState.ENLISTING).when(gameUIStateManagerMock).getState();
         enlistPresenter.setView(enlistView);
 
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 
@@ -320,7 +324,7 @@ public class EnlistPresenterTest {
         doReturn(GameUIState.PLACING_TOWER).when(gameUIStateManagerMock).getState();
         enlistPresenter.setView(enlistView);
 
-        Tower tower = TestUtil.createTower("Humvee", true);
+        Tower tower = TestUtil.createTower(TowerHumvee.class, true);
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 

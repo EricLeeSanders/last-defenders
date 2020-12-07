@@ -1,27 +1,31 @@
 package com.lastdefenders.game.model.level;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyInt;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Queue;
-import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
-import com.lastdefenders.game.model.actor.health.ArmorIcon;
-import com.lastdefenders.game.model.actor.health.HealthBar;
-import com.lastdefenders.game.model.level.Level;
-import com.lastdefenders.game.model.level.SpawningEnemy;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyHumvee;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
+import com.lastdefenders.game.model.actor.groups.EnemyGroup;
 import com.lastdefenders.game.model.level.wave.impl.DynamicWaveLoader;
 import com.lastdefenders.game.model.level.wave.impl.FileWaveLoader;
 import com.lastdefenders.game.service.factory.CombatActorFactory.SpawningEnemyPool;
-import com.lastdefenders.game.service.factory.HealthFactory;
 import com.lastdefenders.levelselect.LevelName;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
 import testutil.TestUtil;
 
 /**
@@ -34,7 +38,6 @@ public class LevelTest {
     private FileWaveLoader fileWaveLoader = mock(FileWaveLoader.class);
     private DynamicWaveLoader dynamicWaveLoader = mock(DynamicWaveLoader.class);
     private ActorGroups actorGroups = mock(ActorGroups.class);
-    private HealthFactory healthFactory = mock(HealthFactory.class);
 
     @Before
     public void initLevelTest() {
@@ -45,12 +48,14 @@ public class LevelTest {
     @Test
     public void levelTest1() {
 
-        Level level = new Level(LevelName.SERPENTINE_RIVER, actorGroups, healthFactory, fileWaveLoader, dynamicWaveLoader);
+        LevelName levelName = LevelName.SERPENTINE_RIVER;
+
+        Level level = new Level(levelName, actorGroups, fileWaveLoader, dynamicWaveLoader);
 
         Queue<SpawningEnemy> loadedEnemies = new Queue<>();
-        Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
-        Enemy enemy2 = TestUtil.createEnemy("Tank", false);
-        Enemy enemy3 = TestUtil.createEnemy("Humvee", false);
+        Enemy enemy1 = TestUtil.createEnemy(EnemyRifle.class, false);
+        Enemy enemy2 = TestUtil.createEnemy(EnemyTank.class, false);
+        Enemy enemy3 = TestUtil.createEnemy(EnemyHumvee.class, false);
         float spawnDelay = 0.5f;
         SpawningEnemy spawningEnemy1 = new SpawningEnemy(spawningEnemyPool);
         SpawningEnemy spawningEnemy2 = new SpawningEnemy(spawningEnemyPool);
@@ -69,19 +74,20 @@ public class LevelTest {
             .loadWave(isA(LevelName.class), isA(Integer.class));
         doReturn(loadedEnemies).when(dynamicWaveLoader)
             .loadWave(isA(LevelName.class), isA(Integer.class));
-        doReturn(new Group()).when(actorGroups).getEnemyGroup();
-        HealthBar healthBarMock = mock(HealthBar.class);
-        doReturn(healthBarMock).when(healthFactory).loadHealthBar();
-        ArmorIcon armorIconMock = mock(ArmorIcon.class);
-        doReturn(armorIconMock).when(healthFactory).loadArmorIcon();
+        doReturn(new EnemyGroup()).when(actorGroups).getEnemyGroup();
+
 
         // Calls FileWaveLoader and DynamicWaveLoader
-        for (int i = 0; i <= Level.MAX_WAVES + 1; i++) {
+        for (int i = 0; i <= Level.FILE_WAVE_LIMIT + 1; i++) {
             level.loadNextWave();
             for (int j = level.getSpawningEnemiesCount() - 1; j >= 0; j--) {
                 level.update(spawnDelay);
                 assertEquals(j, level.getSpawningEnemiesCount());
             }
         }
+
+        verify(dynamicWaveLoader, times(1)).loadCurrentWaveQueue(Matchers.any(Queue.class));
+        verify(dynamicWaveLoader, times(1)).loadWave(levelName, Level.FILE_WAVE_LIMIT + 1);
+        verify(fileWaveLoader, times(Level.FILE_WAVE_LIMIT)).loadWave(eq(levelName), anyInt());
     }
 }

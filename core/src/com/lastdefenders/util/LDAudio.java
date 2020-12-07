@@ -135,7 +135,6 @@ public class LDAudio {
         }
 
         if(currentMusic != null && queue) {
-            System.out.println("Queueing music: " + m);
             musicQueue.add(m);
             currentMusic.setOnCompletionListener(new Music.OnCompletionListener() {
 
@@ -260,7 +259,6 @@ public class LDAudio {
             private final float currentMusicVolumne = currentMusic != null ? currentMusic.getVolume() : 0;
             @Override
             public void run() {
-                System.out.println("fadeout run");
                 if(currentMusic != null){
 
                     float newVolume = currentMusic.getVolume() - (currentMusicVolumne / 10);

@@ -9,8 +9,6 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager;
@@ -19,7 +17,6 @@ import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathE
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.model.actor.interfaces.Collidable;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.DebugOptions;
 import com.lastdefenders.util.Logger;
@@ -36,35 +33,29 @@ import com.lastdefenders.util.UtilPool;
 public abstract class CombatActor extends GameActor implements Pool.Poolable, Collidable, Attacker,
     Targetable {
 
-    private final float RESET_ATTACK_SPEED, RESET_RANGE, MAX_HEALTH, MAX_ARMOR, RESET_ATTACK;
+    public final String ID = ActorUtil.getRandomID();
+
     private float attackSpeed, range, health, attack, armor;
     private Vector2 gunPos;
     private Vector2 rotatedGunPos = UtilPool.getVector2();
     private Circle rangeCircle = new Circle();
     private boolean hasArmor, dead, active;
-    private CombatActorPool<? extends CombatActor> pool;
     private DeathEffectType deathEffectType;
-    private Group targetGroup;
     private EventManager eventManager;
+    private CombatActorAttributes attributes;
+    private int kills;
 
-    protected CombatActor(TextureRegion textureRegion, Dimension textureSize,
-        CombatActorPool<? extends CombatActor> pool, Group targetGroup, Vector2 gunPos, float health, float armor,
-        float attack, float attackSpeed, float range, DeathEffectType deathEffectType) {
+    protected CombatActor(TextureRegion textureRegion, Dimension textureSize, Vector2 gunPos, DeathEffectType deathEffectType,
+        CombatActorAttributes attributes) {
 
         super(textureSize);
-        this.MAX_HEALTH = health;
-        this.MAX_ARMOR = armor;
-        this.RESET_ATTACK = attack;
-        this.RESET_RANGE = range;
-        this.RESET_ATTACK_SPEED = attackSpeed;
-        this.health = health;
-        this.armor = armor;
-        this.attackSpeed = attackSpeed;
-        this.attack = attack;
+        this.attributes = attributes;
+        this.health = attributes.getHealth();
+        this.armor = attributes.getArmor();
+        this.attackSpeed = attributes.getAttackSpeed();
+        this.attack = attributes.getAttack();
         this.gunPos = gunPos;
-        this.range = range;
-        this.pool = pool;
-        this.targetGroup = targetGroup;
+        this.range = attributes.getRange();
         this.deathEffectType = deathEffectType;
         setTextureRegion(textureRegion);
 
@@ -74,13 +65,14 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
     @Override
     public void reset() {
 
-        Logger.info("Combat Actor: " + this.getClass().getSimpleName() + " Resetting");
-        health = MAX_HEALTH;
-        armor = MAX_ARMOR;
+        Logger.debug("Combat Actor " + ID + ": " + this.getClass().getSimpleName() + " Resetting");
+        health = attributes.getHealth();
+        armor = attributes.getArmor();
         hasArmor = false;
-        attack = RESET_ATTACK;
-        attackSpeed = RESET_ATTACK_SPEED;
-        range = RESET_RANGE;
+        attack = attributes.getAttack();
+        attackSpeed = attributes.getAttackSpeed();
+        range = attributes.getRange();
+        kills = 0;
         this.setRotation(0);
         this.clear();
         this.remove();
@@ -204,9 +196,8 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 
         this.dead = dead;
         if (isDead()) {
-            Logger.info("Combat Actor: " + this.getClass().getSimpleName() + " Dead");
+            Logger.info("Combat Actor " + ID  + ": " + this.getClass().getSimpleName() + " Dead");
             deadState();
-            pool.free(this);
         }
     }
 
@@ -225,23 +216,23 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
      */
     public float getArmorPercent() {
 
-        return this.armor / this.MAX_ARMOR;
+        return this.armor / this.attributes.getArmor();
     }
 
     public float getMaxHealth() {
 
-        return MAX_HEALTH;
+        return attributes.getHealth();
     }
 
     protected void resetHealth() {
 
-        health = MAX_HEALTH;
+        health = attributes.getHealth();
     }
 
     public void resetArmor() {
 
         if (hasArmor()) {
-            armor = MAX_ARMOR;
+            armor = attributes.getArmor();
         }
     }
 
@@ -275,15 +266,18 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
         this.hasArmor = hasArmor;
     }
 
-    public void freeActor() {
+    public int getNumOfKills() {
 
-        pool.free(this);
+        return kills;
     }
 
-    public Group getTargetGroup() {
+    public void giveKill() {
 
-        return targetGroup;
+        kills++;
     }
+
+    public abstract void freeActor();
+
 
     /**
      * Combat actor is an active actor on the stage.
@@ -291,22 +285,11 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
      */
     @Override
     public boolean isActive() {
-
         return active;
     }
 
     public void setActive(boolean active) {
-
         this.active = active;
-    }
-
-    public void setPool(CombatActorPool<? extends CombatActor> pool) {
-
-        this.pool = pool;
-    }
-
-    public CombatActorPool<? extends Actor> getPool(){
-        return pool;
     }
 
 }

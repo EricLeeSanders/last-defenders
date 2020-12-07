@@ -1,0 +1,124 @@
+{
+  "wave": [
+    {
+      "name": "Tank",
+      "armor": true,
+      "cost": 75,
+      "level": 20,
+      "weight": 2,
+      "delay": 0.1
+    },
+    {
+      "name": "Humvee",
+      "armor": true,
+      "cost": 19,
+      "level": 16,
+      "weight": 2,
+      "delay": 0.5
+    },
+    {
+      "name": "MachineGun",
+      "armor": true,
+      "cost": 6,
+      "level": 3,
+      "weight": 1,
+      "delay": 0.8
+    },
+    {
+      "name": "Tank",
+      "armor": false,
+      "cost": 50,
+      "level": 16,
+      "weight": 1,
+      "delay": 0.1
+    },
+    {
+      "name": "Humvee",
+      "armor": false,
+      "cost": 13,
+      "level": 13,
+      "weight": 1,
+      "delay": 0.7
+    },
+    {
+      "name": "Humvee",
+      "armor": true,
+      "cost": 19,
+      "level": 16,
+      "weight": 2,
+      "delay": 0.5
+    },
+    {
+      "name": "RocketLauncher",
+      "armor": true,
+      "cost": 16,
+      "level": 12,
+      "weight": 2,
+      "delay": 0.8
+    },
+    {
+      "name": "Rifle",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.3
+    },
+    {
+      "name": "Sniper",
+      "armor": false,
+      "cost": 7,
+      "level": 4,
+      "weight": 1,
+      "delay": 0.8
+    },
+    {
+      "name": "RocketLauncher",
+      "armor": true,
+      "cost": 16,
+      "level": 12,
+      "weight": 2,
+      "delay": 0.8
+    },
+    {
+      "name": "RocketLauncher",
+      "armor": true,
+      "cost": 16,
+      "level": 12,
+      "weight": 2,
+      "delay": 0.8
+    },
+    {
+      "name": "Humvee",
+      "armor": true,
+      "cost": 19,
+      "level": 16,
+      "weight": 2,
+      "delay": 0.5
+    },
+    {
+      "name": "Humvee",
+      "armor": true,
+      "cost": 19,
+      "level": 16,
+      "weight": 2,
+      "delay": 0.5
+    },
+    {
+      "name": "RocketLauncher",
+      "armor": true,
+      "cost": 16,
+      "level": 12,
+      "weight": 2,
+      "delay": 0.8
+    },
+    {
+      "name": "Humvee",
+      "armor": true,
+      "cost": 19,
+      "level": 16,
+      "weight": 2,
+      "delay": 0.5
+    }
+  ]
+}

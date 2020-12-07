@@ -2,13 +2,13 @@ package com.lastdefenders.game.model.actor.combat.tower.state;
 
 import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
 import com.lastdefenders.game.model.actor.combat.state.StateManager;
-import com.lastdefenders.game.model.actor.combat.state.states.CombatActorDyingState;
+import com.lastdefenders.game.model.actor.combat.state.states.CombatActorDeadState;
 import com.lastdefenders.game.model.actor.combat.state.states.CombatActorStandByState;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
 import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerActiveState;
+import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
+import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerWaveEndState;
 import com.lastdefenders.game.service.factory.EffectFactory;
-import com.lastdefenders.util.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,86 +16,23 @@ import java.util.Map;
  * Created by Eric on 5/8/2017.
  */
 
-public class TowerStateManager implements StateManager<TowerState, CombatActorState> {
+public class TowerStateManager extends StateManager<TowerStateEnum, Tower>{
 
-    private final Tower tower;
-    private final EffectFactory effectFactory;
-    private Map<TowerState, CombatActorState> towerStates = new HashMap<>();
-    private TowerState currentState;
+    private Map<TowerStateEnum, CombatActorState> towerStates = new HashMap<>();
 
     public TowerStateManager(Tower tower, EffectFactory effectFactory) {
-
-        this.tower = tower;
-        this.effectFactory = effectFactory;
-        initStateObjects();
-        currentState = TowerState.STANDBY;
+        super(tower);
+        towerStates.put(TowerStateEnum.ACTIVE, new TowerActiveState(tower, this));
+        towerStates.put(TowerStateEnum.DEAD,
+            new CombatActorDeadState(tower, effectFactory));
+        towerStates.put(TowerStateEnum.WAVE_END,
+            new TowerWaveEndState(tower, effectFactory));
+        towerStates.put(TowerStateEnum.STANDBY, new CombatActorStandByState());
     }
 
     @Override
-    public void update(float delta) {
+    protected Map<TowerStateEnum, CombatActorState> getStates() {
 
-        getCurrentState().update(delta);
-    }
-
-    private void initStateObjects() {
-
-        towerStates.put(TowerState.ACTIVE, new TowerActiveState(tower, this));
-        towerStates.put(TowerState.DYING,
-            new CombatActorDyingState<>(tower, this, TowerState.STANDBY, effectFactory));
-        towerStates.put(TowerState.STANDBY, new CombatActorStandByState());
-    }
-
-    @Override
-    public CombatActorState getState(TowerState state) {
-
-        return towerStates.get(state);
-    }
-
-    @Override
-    public CombatActorState getCurrentState() {
-
-        return towerStates.get(currentState);
-    }
-
-    private void setCurrentState(TowerState state) {
-
-        this.currentState = state;
-    }
-
-    @Override
-    public TowerState getCurrentStateName() {
-
-        return currentState;
-    }
-
-    private void swapState(TowerState oldState, TowerState newState) {
-
-        Logger.info("Swapping states: " + oldState.name() + " to: " + newState.name());
-        getState(oldState).postState();
-        getState(newState).preState();
-        currentState = newState;
-    }
-
-    @Override
-    public void transition(TowerState state) {
-
-        if (currentState == null) {
-            setCurrentState(state);
-        } else {
-            swapState(currentState, state);
-        }
-    }
-
-    @Override
-    public void transition(TowerState state, Map<String, Object> parameters) {
-
-        getState(state).loadParameters(parameters);
-        transition(state);
-    }
-
-    public enum TowerState {
-        ACTIVE,
-        DYING,
-        STANDBY
+        return towerStates;
     }
 }

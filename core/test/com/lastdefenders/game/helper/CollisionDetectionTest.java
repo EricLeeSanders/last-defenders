@@ -14,6 +14,12 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.lastdefenders.game.helper.CollisionDetection;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
+import com.lastdefenders.game.model.actor.combat.tower.TowerMachineGun;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
+import com.lastdefenders.game.model.actor.combat.tower.TowerSniper;
+import com.lastdefenders.game.model.actor.combat.tower.TowerTank;
 import com.lastdefenders.util.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +46,7 @@ public class CollisionDetectionTest {
     @Test
     public void collisionWithPathWithCircleBodyTest1() {
 
-        Tower tower = TestUtil.createTower("FlameThrower", false);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, false);
         Rectangle rect1 = new Rectangle(10, 10, 20, 20);
         Rectangle rect2 = new Rectangle(35, 15, 15, 20);
         Rectangle rect3 = new Rectangle(15, 10, 2, 12);
@@ -58,7 +64,7 @@ public class CollisionDetectionTest {
     @Test
     public void collisionWithPathWithCircleBodyTest2() {
 
-        Tower tower = TestUtil.createTower("FlameThrower", false);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, false);
         Rectangle rect1 = new Rectangle(10, 10, 12, 12);
 
         Array<Rectangle> boundaries = new Array<>();
@@ -75,7 +81,7 @@ public class CollisionDetectionTest {
     @Test
     public void collisionWithPathWithPolygonBodyTest1() {
 
-        Tower tower = TestUtil.createTower("Tank", false);
+        Tower tower = TestUtil.createTower(TowerTank.class, false);
         Rectangle rect1 = new Rectangle(10, 10, 20, 20);
         Rectangle rect2 = new Rectangle(30, 30, 10, 10);
 
@@ -92,7 +98,7 @@ public class CollisionDetectionTest {
     @Test
     public void collisionWithPathWithPolygonBodyTest2() {
 
-        Tower tower = TestUtil.createTower("Tank", false);
+        Tower tower = TestUtil.createTower(TowerTank.class, false);
         Rectangle rect1 = new Rectangle(10, 10, 20, 20);
 
         Array<Rectangle> boundaries = new Array<>();
@@ -108,11 +114,11 @@ public class CollisionDetectionTest {
     @Test
     public void collisionWithActorsWithCircleBodyTest1() {
 
-        Tower tower = TestUtil.createTower("Sniper", false);
+        Tower tower = TestUtil.createTower(TowerSniper.class, false);
 
-        Tower tower1 = TestUtil.createTower("MachineGun", false);
-        Tower tower2 = TestUtil.createTower("Rifle", false);
-        Tower tower3 = TestUtil.createTower("Humvee", false);
+        Tower tower1 = TestUtil.createTower(TowerMachineGun.class, false);
+        Tower tower2 = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower3 = TestUtil.createTower(TowerHumvee.class, false);
 
         tower1.setPositionCenter(75, 56);
         tower2.setPositionCenter(56, 75);
@@ -131,11 +137,11 @@ public class CollisionDetectionTest {
     @Test
     public void collisionWithActorsWithCircleBodyTest2() {
 
-        Tower tower = TestUtil.createTower("Sniper", false);
+        Tower tower = TestUtil.createTower(TowerSniper.class, false);
 
-        Tower tower1 = TestUtil.createTower("MachineGun", false);
-        Tower tower2 = TestUtil.createTower("Rifle", false);
-        Tower tower3 = TestUtil.createTower("Tank", false);
+        Tower tower1 = TestUtil.createTower(TowerMachineGun.class, false);
+        Tower tower2 = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower3 = TestUtil.createTower(TowerTank.class, false);
 
         tower1.setPositionCenter(75, 55);
         tower2.setPositionCenter(55, 75);
@@ -155,11 +161,11 @@ public class CollisionDetectionTest {
     @Test
     public void collisionWithActorsWithPolygonBodyTest1() {
 
-        Tower tower = TestUtil.createTower("Tank", false);
+        Tower tower = TestUtil.createTower(TowerTank.class, false);
 
-        Tower tower1 = TestUtil.createTower("MachineGun", false);
-        Tower tower2 = TestUtil.createTower("Rifle", false);
-        Tower tower3 = TestUtil.createTower("Humvee", false);
+        Tower tower1 = TestUtil.createTower(TowerMachineGun.class, false);
+        Tower tower2 = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower3 = TestUtil.createTower(TowerHumvee.class, false);
 
         tower1.setPositionCenter(75, 56);
         tower2.setPositionCenter(56, 75);
@@ -179,11 +185,11 @@ public class CollisionDetectionTest {
     @Test
     public void collisionWithActorsWithPolygonBodyTest2() {
 
-        Tower tower = TestUtil.createTower("Tank", false);
+        Tower tower = TestUtil.createTower(TowerTank.class, false);
 
-        Tower tower1 = TestUtil.createTower("MachineGun", false);
-        Tower tower2 = TestUtil.createTower("Rifle", false);
-        Tower tower3 = TestUtil.createTower("Humvee", false);
+        Tower tower1 = TestUtil.createTower(TowerMachineGun.class, false);
+        Tower tower2 = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower3 = TestUtil.createTower(TowerHumvee.class, false);
 
         tower1.setPositionCenter(250, 56);
         tower2.setPositionCenter(56, 250);
@@ -233,8 +239,8 @@ public class CollisionDetectionTest {
     @Test
     public void towerHitTest1() {
 
-        Tower tower1 = TestUtil.createTower("MachineGun", false);
-        Tower tower2 = TestUtil.createTower("Tank", false);
+        Tower tower1 = TestUtil.createTower(TowerMachineGun.class, false);
+        Tower tower2 = TestUtil.createTower(TowerTank.class, false);
 
         tower1.setPositionCenter(20, 20);
         tower2.setPositionCenter(250, 75);

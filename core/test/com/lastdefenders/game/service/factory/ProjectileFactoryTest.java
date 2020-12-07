@@ -6,9 +6,8 @@ import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
-import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import org.junit.Before;

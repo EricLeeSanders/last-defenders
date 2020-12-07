@@ -11,7 +11,9 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
 import com.lastdefenders.game.model.actor.projectile.Explosion;
 import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.LDAudio;
@@ -52,9 +54,9 @@ public class ExplosionTest {
     @Test
     public void explosionTest1() {
 
-        Enemy attacker = TestUtil.createEnemy("Tank", false);
+        Enemy attacker = TestUtil.createEnemy(EnemyTank.class, false);
         attacker.setPositionCenter(50, 50);
-        Tower target = TestUtil.createTower("Humvee", false);
+        Tower target = TestUtil.createTower(TowerHumvee.class, false);
         target.setPositionCenter(200, 200);
 
         Explosion explosion = createExplosion();
@@ -73,9 +75,9 @@ public class ExplosionTest {
     @Test
     public void explosionTest2() {
 
-        Enemy attacker = TestUtil.createEnemy("Tank", false);
+        Enemy attacker = TestUtil.createEnemy(EnemyTank.class, false);
         attacker.setPositionCenter(50, 50);
-        Tower target = TestUtil.createTower("Humvee", false);
+        Tower target = TestUtil.createTower(TowerHumvee.class, false);
         target.setPositionCenter(200, 200);
 
         Explosion explosion = createExplosion();

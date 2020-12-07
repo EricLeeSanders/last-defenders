@@ -15,7 +15,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.lastdefenders.game.model.actor.ai.TowerAIType;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager;
 import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerActiveState;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
@@ -47,8 +49,8 @@ public class TowerActiveStateTest {
     @Test
     public void towerActiveStateTest1() {
 
-        Enemy enemy = TestUtil.createEnemy("Rifle", false);
-        Tower tower = TestUtil.createTower("Rifle", true);
+        Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true);
 
         TowerStateManager stateManagerMock = mock(TowerStateManager.class);
         TowerActiveState towerActiveState = new TowerActiveState(tower, stateManagerMock);

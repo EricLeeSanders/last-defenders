@@ -104,7 +104,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         messageDisplayer = new MessageDisplayerImpl(resources);
 
         EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio,
-            gameStage.getTowerPlacement(), messageDisplayer, gameStage.getViewport());
+            gameStage.getTowerPlacement(), messageDisplayer, gameStage.getViewport(), resources);
         EnlistView enlistView = new EnlistView(enlistPresenter, resources);
         addActor(enlistView);
         enlistView.init();

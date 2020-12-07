@@ -4,7 +4,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.lastdefenders.game.helper.CollisionDetection;
-import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.health.ArmorIcon;
 import com.lastdefenders.game.model.actor.health.HealthBar;
@@ -12,6 +13,7 @@ import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.game.service.factory.CombatActorFactory;
 import com.lastdefenders.game.service.factory.HealthFactory;
 import com.lastdefenders.util.Logger;
+import com.lastdefenders.util.Resources;
 
 /**
  * Responsible for placing the Tower on the Stage
@@ -47,6 +49,7 @@ public class TowerPlacement {
         currentTower.setPosition(0, 0);
         actorGroups.getTowerGroup().addActor(currentTower);
         currentTower.setVisible(false);
+        currentTower.getStateManger().transition(TowerStateEnum.STANDBY);
     }
 
     /**
@@ -84,15 +87,10 @@ public class TowerPlacement {
      */
     public boolean placeTower() {
 
-        Logger.info("TowerPlacement: trying to place tower");
+
         if (currentTower != null) {
             if (!towerCollides()) {
                 currentTower.init();
-                HealthBar healthBar = healthFactory.loadHealthBar();
-                healthBar.setActor(currentTower);
-                ArmorIcon armorIcon = healthFactory.loadArmorIcon();
-                armorIcon.setActor(currentTower);
-                Logger.info("TowerPlacement: placing tower");
                 return true;
             } else {
 
@@ -100,11 +98,15 @@ public class TowerPlacement {
                 SnapshotArray<Actor> towers = actorGroups.getTowerGroup().getChildren();
 
                 if (CollisionDetection.collisionWithPath(map.getPathBoundaries(), currentTower)) {
-                    Logger.info("TowerPlacement: tower collides with path");
+                    //Logger.info("TowerPlacement: tower collides with path");
                 } else if (CollisionDetection.collisionWithActors(towers, currentTower)) {
-                    Logger.info("TowerPlacement: tower collides with another Actor");
+                    //Logger.info("TowerPlacement: tower collides with another Actor");
+                } else if(CollisionDetection.outOfMapBoundary(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, currentTower)){
+                    //Logger.info("TowerPlacement: tower is out of bounds");
                 }
             }
+        } else {
+            Logger.error("TowerPlacement: current tower is null!");
         }
         return false;
     }
@@ -118,12 +120,10 @@ public class TowerPlacement {
 
         SnapshotArray<Actor> towers = actorGroups.getTowerGroup().getChildren();
 
-        if (CollisionDetection.collisionWithPath(map.getPathBoundaries(), currentTower)) {
-            return true;
-        } else if (CollisionDetection.collisionWithActors(towers, currentTower)) {
-            return true;
-        }
-        return false;
+        return CollisionDetection.collisionWithPath(map.getPathBoundaries(), currentTower) ||
+                CollisionDetection.collisionWithActors(towers, currentTower) ||
+                CollisionDetection.outOfMapBoundary(Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT, currentTower);
+
 
     }
 

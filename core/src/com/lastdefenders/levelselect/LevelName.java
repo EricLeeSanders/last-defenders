@@ -23,4 +23,14 @@ public enum LevelName {
         return name;
     }
 
+    public static LevelName getLevel(String levelName){
+        for(LevelName l : LevelName.values()){
+            if(l.toString().equals(levelName)){
+                return l;
+            }
+        }
+
+        throw new IllegalArgumentException("LevelName: " + levelName + " does not exist.");
+    }
+
 }

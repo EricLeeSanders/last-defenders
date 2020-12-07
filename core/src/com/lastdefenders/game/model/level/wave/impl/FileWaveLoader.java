@@ -32,7 +32,7 @@ public class FileWaveLoader extends AbstractWaveLoader {
 
         for (JsonValue enemyJson : enemiesJson.iterator()) {
 
-            String type = enemyJson.getString("enemy");
+            String type = enemyJson.getString("name");
             boolean armor = enemyJson.getBoolean("armor");
             float spawnDelay = enemyJson.getFloat("delay");
 

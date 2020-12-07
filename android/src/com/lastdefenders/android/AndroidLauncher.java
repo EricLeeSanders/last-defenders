@@ -28,6 +28,7 @@ public class AndroidLauncher extends AndroidApplication {
 		FirebaseAnalytics.getInstance(this);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useWakelock = true;
+		config.useImmersiveMode = true;
 
 		View gameView = initializeForView(new LDGame(googlePlayServicesHelper, adController), config);
 		RelativeLayout layout = createLayout(gameView);

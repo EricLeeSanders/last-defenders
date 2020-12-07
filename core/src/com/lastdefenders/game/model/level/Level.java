@@ -1,19 +1,17 @@
 package com.lastdefenders.game.model.level;
 
 import com.badlogic.gdx.utils.Queue;
-import com.lastdefenders.game.model.actor.ActorGroups;
-import com.lastdefenders.game.model.actor.health.ArmorIcon;
-import com.lastdefenders.game.model.actor.health.HealthBar;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.level.wave.WaveLoader;
 import com.lastdefenders.game.model.level.wave.impl.DynamicWaveLoader;
 import com.lastdefenders.game.model.level.wave.impl.FileWaveLoader;
-import com.lastdefenders.game.service.factory.HealthFactory;
 import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.util.Logger;
 
 public class Level {
 
-    public static final int MAX_WAVES = 20;
+    public static final int WAVE_LEVEL_WIN_LIMIT = 20;
+    static final int FILE_WAVE_LIMIT = 100;
 
     private float delayCount = 0;
     private float enemyDelay = 0f;
@@ -23,14 +21,12 @@ public class Level {
     private WaveLoader waveLoader;
     private DynamicWaveLoader dynamicWaveLoader;
     private ActorGroups actorGroups;
-    private HealthFactory healthFactory;
 
-    public Level(LevelName activeLevel, ActorGroups actorGroups, HealthFactory healthFactory,
-        FileWaveLoader fileWaveLoader, DynamicWaveLoader dynamicWaveLoader) {
+    public Level(LevelName activeLevel, ActorGroups actorGroups, FileWaveLoader fileWaveLoader,
+        DynamicWaveLoader dynamicWaveLoader) {
 
         this.activeLevel = activeLevel;
         this.actorGroups = actorGroups;
-        this.healthFactory = healthFactory;
         this.waveLoader = fileWaveLoader;
         this.dynamicWaveLoader = dynamicWaveLoader;
     }
@@ -57,17 +53,11 @@ public class Level {
         SpawningEnemy spawningEnemy = spawningEnemyQueue.removeFirst();
         actorGroups.getEnemyGroup().addActor(spawningEnemy.getEnemy());
 
-        HealthBar healthBar = healthFactory.loadHealthBar();
-        healthBar.setActor(spawningEnemy.getEnemy());
-        ArmorIcon armorIcon = healthFactory.loadArmorIcon();
-        armorIcon.setActor(spawningEnemy.getEnemy());
-
         spawningEnemy.getEnemy().init();
 
         enemyDelay = spawningEnemy.getSpawnDelay();
 
         spawningEnemy.free();
-
     }
 
     /**
@@ -78,22 +68,29 @@ public class Level {
         currentWave++;
 
         //Switch the wave loader when we reach MAX_WAVES
-        if (currentWave == MAX_WAVES + 1) {
+        if (currentWave == FILE_WAVE_LIMIT + 1) {
+            Logger.info("Level: Switching to DynamicWaveLoader");
             waveLoader = dynamicWaveLoader;
         }
         spawningEnemyQueue = waveLoader.loadWave(activeLevel, currentWave);
+
+        // Prep the dynamicWaveLoader when we are on the last file wave
+        if(currentWave == FILE_WAVE_LIMIT){
+
+            dynamicWaveLoader.loadCurrentWaveQueue(spawningEnemyQueue);
+        }
+
         delayCount = 0;
         enemyDelay = 0;
-
-        // Once we reach the MAX WAVES, initialize the dynamic wave loader
-        if (currentWave == MAX_WAVES) {
-            dynamicWaveLoader.initDynamicWaveLoader(spawningEnemyQueue);
-        }
     }
 
     public int getSpawningEnemiesCount() {
 
         return spawningEnemyQueue.size;
+    }
+
+    public Queue<SpawningEnemy> getSpawningEnemyQueue(){
+        return spawningEnemyQueue;
     }
 
     public int getCurrentWave() {

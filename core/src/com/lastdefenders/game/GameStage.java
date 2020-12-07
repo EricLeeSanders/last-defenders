@@ -5,13 +5,11 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.lastdefenders.ads.AdController;
 import com.lastdefenders.ads.AdControllerHelper;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.PlayerObserver;
-import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
 import com.lastdefenders.game.model.actor.effects.label.WaveOverCoinEffect;
 import com.lastdefenders.game.model.level.Level;
 import com.lastdefenders.game.model.level.Map;
@@ -46,7 +44,8 @@ import com.lastdefenders.util.Resources;
  */
 public class GameStage extends Stage implements PlayerObserver {
 
-    private static final int WAVE_OVER_MONEY_MULTIPLIER = 100;
+    private static final int WAVE_OVER_MONEY_ADDITION = 300;
+    private static final int WAVE_OVER_MONEY_MULTIPLIER = 20;
     private LevelStateManager levelStateManager;
     private GameUIStateManager uiStateManager;
     private Level level;
@@ -93,7 +92,7 @@ public class GameStage extends Stage implements PlayerObserver {
         mapRenderer = new MapRenderer(tiledMap, resources.getTiledMapScale(), getCamera(), getBatch());
         FileWaveLoader fileWaveLoader = new FileWaveLoader(combatActorFactory, map);
         DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
-        level = new Level(levelName, getActorGroups(), healthFactory, fileWaveLoader,
+        level = new Level(levelName, getActorGroups(), fileWaveLoader,
             dynamicWaveLoader);
         player.attachObserver(this);
     }
@@ -106,7 +105,7 @@ public class GameStage extends Stage implements PlayerObserver {
         supportActorFactory = new SupportActorFactory(actorGroups, audio, resources, effectFactory,
             projectileFactory);
         combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory,
-            projectileFactory, player);
+            healthFactory, projectileFactory, player);
     }
 
     private void createPlacementServices(Map map) {
@@ -196,7 +195,7 @@ public class GameStage extends Stage implements PlayerObserver {
 
         Logger.info("Game Stage: Wave over");
         adControllerHelper.incrementEventTriggered();
-        int money = (int) (WAVE_OVER_MONEY_MULTIPLIER * (float) level.getCurrentWave());
+        int money = (int) (WAVE_OVER_MONEY_MULTIPLIER * (float) level.getCurrentWave()) + WAVE_OVER_MONEY_ADDITION;
         player.giveMoney(money);
         levelStateManager.setState(LevelState.STANDBY);
         player.setWaveCount(player.getWaveCount() + 1);
@@ -205,7 +204,7 @@ public class GameStage extends Stage implements PlayerObserver {
         }
         WaveOverCoinEffect waveOverCoinEffect = effectFactory.loadEffect(WaveOverCoinEffect.class, true);
         waveOverCoinEffect.initialize(money);
-        healTowers();
+        resetTowersForNewWave();
         playServices.submitScore(GooglePlayLeaderboard.findByLevelName(level.getActiveLevel()), level.getCurrentWave());
         level.loadNextWave(); //load the next wave
     }
@@ -215,7 +214,7 @@ public class GameStage extends Stage implements PlayerObserver {
      */
     private boolean isLevelComplete() {
 
-        return (player.getWavesCompleted() == Level.MAX_WAVES);
+        return (player.getWavesCompleted() == Level.WAVE_LEVEL_WIN_LIMIT);
     }
 
     private void levelComplete() {
@@ -225,25 +224,13 @@ public class GameStage extends Stage implements PlayerObserver {
         playServices.unlockAchievement(GooglePlayAchievement.findByLevelName(level.getActiveLevel()));
     }
 
-    private void healTowers() {
+    private void resetTowersForNewWave() {
 
-        Logger.info("Game Stage: healing towers");
+        Logger.info("Game Stage: Resetting towers for new wave");
         for (Actor actor : actorGroups.getTowerGroup().getChildren()) {
             if (actor instanceof Tower) {
                 Tower tower = (Tower) actor;
-                if (tower.isActive()){
-                    if ( tower.getHealthPercent() < 1){
-                        TowerHealEffect effect = effectFactory
-                            .loadEffect(TowerHealEffect.class, true);
-                        effect.initialize(tower);
-
-                        tower.heal();
-                    }
-
-                    if(tower.hasArmor()){
-                        tower.resetArmor();
-                    }
-                }
+                tower.waveReset();
             }
         }
     }
@@ -259,7 +246,7 @@ public class GameStage extends Stage implements PlayerObserver {
         }
     }
 
-    private ActorGroups getActorGroups() {
+    public ActorGroups getActorGroups() {
 
         return actorGroups;
     }
@@ -284,6 +271,11 @@ public class GameStage extends Stage implements PlayerObserver {
         return supplyDropPlacement;
     }
 
+    public CombatActorFactory getCombatActorFactory(){
+
+        return combatActorFactory;
+    }
+
     public Map getMap(){
 
         return map;
@@ -292,4 +284,5 @@ public class GameStage extends Stage implements PlayerObserver {
     public Level getLevel(){
         return level;
     }
+
 }

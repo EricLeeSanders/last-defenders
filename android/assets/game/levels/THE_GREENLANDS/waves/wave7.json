@@ -1,34 +1,100 @@
 {
-"wave": [
+  "wave": [
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "MachineGun",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.4
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "MachineGun",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.4
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "Sniper",
+      "armor": true,
+      "cost": 10,
+      "level": 7,
+      "weight": 1,
+      "delay": 0.8
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "Rifle",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.9
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "MachineGun",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.4
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "MachineGun",
+      "armor": true,
+      "cost": 6,
+      "level": 3,
+      "weight": 1,
+      "delay": 0.6
+    },
+    {
+      "name": "FlameThrower",
+      "armor": false,
+      "cost": 9,
+      "level": 5,
+      "weight": 1,
+      "delay": 0.3
+    },
+    {
+      "name": "FlameThrower",
+      "armor": false,
+      "cost": 9,
+      "level": 5,
+      "weight": 1,
+      "delay": 0.3
+    },
+    {
+      "name": "MachineGun",
+      "armor": true,
+      "cost": 6,
+      "level": 3,
+      "weight": 1,
+      "delay": 0.6
+    },
+    {
+      "name": "Rifle",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.9
+    },
+    {
+      "name": "Rifle",
+      "armor": true,
+      "cost": 6,
+      "level": 3,
+      "weight": 1,
+      "delay": 0.2
+    },
+    {
+      "name": "FlameThrower",
+      "armor": false,
+      "cost": 9,
+      "level": 5,
+      "weight": 1,
+      "delay": 0.3
     }
-]
+  ]
 }

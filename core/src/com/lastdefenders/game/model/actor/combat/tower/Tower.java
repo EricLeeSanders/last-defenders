@@ -4,14 +4,14 @@ package com.lastdefenders.game.model.actor.combat.tower;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.ai.TowerAIType;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
-import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.state.StateManager;
-import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
+import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.model.actor.groups.GenericGroup;
+import com.lastdefenders.game.service.factory.CombatActorFactory.TowerPool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.Dimension;
@@ -23,46 +23,43 @@ import com.lastdefenders.util.datastructures.Dimension;
  */
 public abstract class Tower extends CombatActor {
 
-    private static final float TOWER_RANGE_INCREASE_RATE = (1 / 2f);
+    private static final float TOWER_RANGE_INCREASE_RATE = (1 / 3f);
     private static final float TOWER_SPEED_INCREASE_RATE = 0.33f;
     private static final float TOWER_ATTACK_INCREASE_RATE = 0.33f;
     private static final float TOWER_SELL_RATE = 0.75f;
+    private static final float UPGRADE_MODIFIER = .3f;
     private int cost, armorCost, speedIncreaseCost, rangeIncreaseCost, attackIncreaseCost;
     private boolean rangeIncreaseEnabled, speedIncreaseEnabled, attackIncreaseEnabled;
     private TowerAIType ai = TowerAIType.CLOSEST;
     private boolean showRange;
     private TextureRegion rangeRegion, collidingRangeRegion;
-    private int kills;
     private boolean towerColliding;
-    private StateManager<TowerState, CombatActorState> stateManager;
+    private StateManager<TowerStateEnum, Tower> stateManager;
 
-    public Tower(TextureRegion textureRegion, Dimension textureSize, CombatActorPool<? extends CombatActor> pool,
-        Group targetGroup, Vector2 gunPos, TextureRegion rangeRegion,
-        TextureRegion collidingRangeRegion, float health, float armor, float attack,
-        float attackSpeed, float range, int cost, int armorCost, int speedIncreaseCost,
-        int rangeIncreaseCost, int attackIncreaseCost, DeathEffectType deathEffectType) {
+    private TowerPool<? extends Tower> pool;
 
-        super(textureRegion, textureSize, pool, targetGroup, gunPos, health, armor, attack,
-            attackSpeed, range, deathEffectType);
-        this.cost = cost;
-        this.armorCost = armorCost;
-        this.speedIncreaseCost = speedIncreaseCost;
-        this.rangeIncreaseCost = rangeIncreaseCost;
-        this.attackIncreaseCost = attackIncreaseCost;
+    private GenericGroup<Enemy> targetGroup;
+
+    public Tower(TextureRegion textureRegion, Dimension textureSize, TowerPool<? extends Tower> pool,
+        GenericGroup<Enemy> targetGroup, Vector2 gunPos, TextureRegion rangeRegion,
+        TextureRegion collidingRangeRegion, DeathEffectType deathEffectType, TowerAttributes attributes) {
+
+        super(textureRegion, textureSize, gunPos, deathEffectType, attributes);
+        this.cost = attributes.getCost();
+        this.armorCost = (int)(UPGRADE_MODIFIER * cost);
+        this.speedIncreaseCost = (int)(UPGRADE_MODIFIER * cost);
+        this.rangeIncreaseCost = (int)(UPGRADE_MODIFIER * cost);
+        this.attackIncreaseCost = (int)(UPGRADE_MODIFIER * cost);
         this.collidingRangeRegion = collidingRangeRegion;
         this.rangeRegion = rangeRegion;
+        this.pool = pool;
+        this.targetGroup = targetGroup;
     }
 
     public void init() {
-
-        stateManager.transition(TowerState.ACTIVE);
+        stateManager.transition(TowerStateEnum.ACTIVE);
         setActive(true);
         setDead(false);
-    }
-
-    public void setStateManager(StateManager<TowerState, CombatActorState> stateManager) {
-
-        this.stateManager = stateManager;
     }
 
     /**
@@ -139,23 +136,22 @@ public abstract class Tower extends CombatActor {
     public void reset() {
 
         super.reset();
-        Logger.info("Tower: " + this.getClass().getSimpleName() + " Resetting");
+        Logger.debug("Tower " + ID  + ": " + this.getClass().getSimpleName() + " Resetting");
         rangeIncreaseEnabled = false;
         speedIncreaseEnabled = false;
         attackIncreaseEnabled = false;
-        kills = 0;
         this.setShowRange(false);
-        stateManager.transition(TowerState.STANDBY);
+        stateManager.reset();
     }
 
     public void deadState() {
 
-        stateManager.transition(TowerState.DYING);
+        stateManager.transition(TowerStateEnum.DEAD);
     }
 
     public void heal() {
 
-        Logger.info("Tower: " + this.getClass().getSimpleName() + " Healing");
+        Logger.info("Tower " + ID  + ": " + this.getClass().getSimpleName() + " Healing");
         resetHealth();
         resetArmor();
     }
@@ -163,7 +159,7 @@ public abstract class Tower extends CombatActor {
     public void increaseRange() {
 
         if (!rangeIncreaseEnabled) {
-            Logger.info("Tower: " + this.getClass().getSimpleName() + " Increasing Range");
+            Logger.info("Tower " + ID  + ": "  + this.getClass().getSimpleName() + " Increasing Range");
             rangeIncreaseEnabled = true;
             this.setRange(this.getRange() + (this.getRange() * TOWER_RANGE_INCREASE_RATE));
         }
@@ -172,7 +168,7 @@ public abstract class Tower extends CombatActor {
     public void increaseSpeed() {
 
         if (!speedIncreaseEnabled) {
-            Logger.info("Tower: " + this.getClass().getSimpleName() + " Increasing Speed");
+            Logger.info("Tower " + ID  + ": " + this.getClass().getSimpleName() + " Increasing Speed");
             speedIncreaseEnabled = true;
             this.setAttackSpeed(
                 this.getAttackSpeed() - (this.getAttackSpeed() * TOWER_SPEED_INCREASE_RATE));
@@ -182,7 +178,7 @@ public abstract class Tower extends CombatActor {
     public void increaseAttack() {
 
         if (!attackIncreaseEnabled) {
-            Logger.info("Tower: " + this.getClass().getSimpleName() + " Increasing attack");
+            Logger.info("Tower " + ID  + ": "  + this.getClass().getSimpleName() + " Increasing attack");
             attackIncreaseEnabled = true;
             this.setAttack(this.getAttack() + (this.getAttack() * TOWER_ATTACK_INCREASE_RATE));
         }
@@ -228,17 +224,6 @@ public abstract class Tower extends CombatActor {
         removeTower();
     }
 
-    public int getNumOfKills() {
-
-        return kills;
-    }
-
-    public void giveKill() {
-
-        Logger.info("Tower: " + this.getClass().getSimpleName() + " giving kill");
-        kills++;
-    }
-
     private void removeTower() {
 
         freeActor();
@@ -264,8 +249,32 @@ public abstract class Tower extends CombatActor {
         this.towerColliding = towerColliding;
     }
 
-    public TowerState getState() {
+    public TowerStateEnum getState() {
 
         return stateManager.getCurrentStateName();
+    }
+
+    public StateManager<TowerStateEnum, Tower> getStateManger(){
+        return stateManager;
+    }
+
+    public void setStateManager(StateManager<TowerStateEnum, Tower> stateManager){
+        this.stateManager = stateManager;
+    }
+
+    public void waveReset(){
+        if(isActive()){
+            stateManager.transition(TowerStateEnum.WAVE_END);
+            stateManager.transition(TowerStateEnum.ACTIVE);
+        }
+    }
+
+    public GenericGroup<Enemy> getTargetGroup(){
+        return targetGroup;
+    }
+
+    @Override
+    public void freeActor() {
+        pool.free(this);
     }
 }

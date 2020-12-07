@@ -18,7 +18,7 @@ public class SupplyDropPlacement {
 
     public void createSupplyDrop() {
 
-        Logger.info("SupplyDropPlacement: creating supply drop");
+        //Logger.info("SupplyDropPlacement: creating supply drop");
         currentSupplyDropCrate = supportActorFactory.loadSupportActor(SupplyDropCrate.class, true);
         currentSupplyDropCrate.setPosition(0, 0);
         currentSupplyDropCrate.setActive(false);
@@ -27,7 +27,6 @@ public class SupplyDropPlacement {
 
     public void setLocation(Vector2 location) {
 
-        Logger.info("SupplyDropPlacement: setting location");
         currentSupplyDropCrate.setVisible(true);
         currentSupplyDropCrate.setShowRange(true);
         currentSupplyDropCrate.setPositionCenter(location);

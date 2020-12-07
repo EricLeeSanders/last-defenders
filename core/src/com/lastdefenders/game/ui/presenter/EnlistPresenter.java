@@ -20,6 +20,7 @@ import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
+import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.UtilPool;
 import java.util.HashMap;
@@ -40,10 +41,11 @@ public class EnlistPresenter implements GameUIStateObserver {
     private MessageDisplayer messageDisplayer;
     private Map<String, Integer> towerCosts = new HashMap<>();
     private Viewport gameViewport;
+    private Resources resources;
 
     public EnlistPresenter(GameUIStateManager uiStateManager, Player player,
         LDAudio audio, TowerPlacement towerPlacement, MessageDisplayer messageDisplayer,
-        Viewport gameViewport) {
+        Viewport gameViewport, Resources resources) {
 
         this.uiStateManager = uiStateManager;
         uiStateManager.attach(this);
@@ -52,18 +54,19 @@ public class EnlistPresenter implements GameUIStateObserver {
         this.towerPlacement = towerPlacement;
         this.messageDisplayer = messageDisplayer;
         this.gameViewport = gameViewport;
+        this.resources = resources;
         initTowerCostsMap();
     }
 
     private void initTowerCostsMap() {
 
-        towerCosts.put("Rifle", TowerRifle.COST);
-        towerCosts.put("MachineGun", TowerMachineGun.COST);
-        towerCosts.put("Sniper", TowerSniper.COST);
-        towerCosts.put("FlameThrower", TowerFlameThrower.COST);
-        towerCosts.put("RocketLauncher", TowerRocketLauncher.COST);
-        towerCosts.put("Tank", TowerTank.COST);
-        towerCosts.put("Humvee", TowerHumvee.COST);
+        towerCosts.put("Rifle", resources.getTowerAttribute(TowerRifle.class).getCost());
+        towerCosts.put("MachineGun", resources.getTowerAttribute(TowerMachineGun.class).getCost());
+        towerCosts.put("Sniper", resources.getTowerAttribute(TowerSniper.class).getCost());
+        towerCosts.put("FlameThrower", resources.getTowerAttribute(TowerFlameThrower.class).getCost());
+        towerCosts.put("RocketLauncher", resources.getTowerAttribute(TowerRocketLauncher.class).getCost());
+        towerCosts.put("Tank", resources.getTowerAttribute(TowerTank.class).getCost());
+        towerCosts.put("Humvee", resources.getTowerAttribute(TowerHumvee.class).getCost());
 
     }
 
@@ -180,6 +183,10 @@ public class EnlistPresenter implements GameUIStateObserver {
     public int getPlayerMoney() {
 
         return player.getMoney();
+    }
+
+    public Map<String, Integer> getTowerCostMap(){
+        return towerCosts;
     }
 
     /**

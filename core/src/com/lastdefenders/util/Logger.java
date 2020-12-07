@@ -9,7 +9,7 @@ public class Logger {
     private static final String ERROR_TAG = "LD";
 
     public static void debug(String message) {
-        Gdx.app.debug(DEBUG_TAG, message);
+        //Gdx.app.debug(DEBUG_TAG, message);
     }
 
     public static void info(String message) {

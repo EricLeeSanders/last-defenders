@@ -1,14 +1,12 @@
 {
-"wave": [
+  "wave": [
     {
-        "enemy": "Humvee",
-        "delay": ".05",
-        "armor": false
-    },
-    {
-        "enemy": "Tank",
-        "delay": ".05",
-        "armor": false
+      "name": "Rifle",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.7
     }
-]
+  ]
 }

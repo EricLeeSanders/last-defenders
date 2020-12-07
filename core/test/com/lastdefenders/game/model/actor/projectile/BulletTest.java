@@ -15,7 +15,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
@@ -57,9 +59,9 @@ public class BulletTest {
     @Test
     public void bulletTest1() {
 
-        Tower attacker = TestUtil.createTower("Rifle", false);
+        Tower attacker = TestUtil.createTower(TowerRifle.class, false);
         attacker.setPositionCenter(40, 40);
-        Enemy target = TestUtil.createEnemy("Rifle", false);
+        Enemy target = TestUtil.createRunningEnemy(EnemyRifle.class, false);
         target.setPositionCenter(140, 140);
 
         Bullet bullet = createBullet();
@@ -88,9 +90,9 @@ public class BulletTest {
     @Test
     public void bulletTest2() {
 
-        Tower attacker = TestUtil.createTower("Rifle", false);
+        Tower attacker = TestUtil.createTower(TowerRifle.class, false);
         attacker.setPositionCenter(40, 40);
-        Enemy target = TestUtil.createEnemy("Rifle", true);
+        Enemy target = TestUtil.createEnemy(EnemyRifle.class, true);
         target.setPositionCenter(140, 140);
 
         Bullet bullet = createBullet();

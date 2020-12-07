@@ -2,7 +2,7 @@ package com.lastdefenders.game.model.actor.combat.enemy.state.states;
 
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
-import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
+import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
 import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
 import com.lastdefenders.game.model.actor.combat.state.StateTransitioner;
 import java.util.Map;
@@ -14,10 +14,10 @@ import java.util.Map;
 public class EnemyReachedEndState implements CombatActorState {
 
     private final Enemy enemy;
-    private final StateTransitioner<EnemyState> stateTransitioner;
+    private final StateTransitioner<EnemyStateEnum> stateTransitioner;
     private final Player player;
 
-    public EnemyReachedEndState(Enemy enemy, StateTransitioner<EnemyState> stateTransitioner,
+    public EnemyReachedEndState(Enemy enemy, StateTransitioner<EnemyStateEnum> stateTransitioner,
         Player player) {
 
         this.enemy = enemy;
@@ -36,11 +36,14 @@ public class EnemyReachedEndState implements CombatActorState {
     }
 
     @Override
-    public void update(float delta) {
-
+    public void immediateStep() {
         enemy.reachedEnd();
         player.enemyReachedEnd();
-        stateTransitioner.transition(EnemyState.STANDBY);
+    }
+
+    @Override
+    public void update(float delta) {
+
     }
 
     @Override

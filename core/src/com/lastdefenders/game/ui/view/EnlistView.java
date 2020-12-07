@@ -28,6 +28,7 @@ import com.lastdefenders.game.ui.view.interfaces.IEnlistView;
 import com.lastdefenders.game.ui.view.widgets.EnlistButton;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
+import java.util.Map;
 
 /**
  * View class for Enlisting. Shows Enlisting window as well as the options to
@@ -103,16 +104,17 @@ public class EnlistView extends Group implements IEnlistView, InputProcessor {
 
         // The actual values for health, attack, range, and speed are not used for the UI display.
         // TODO attribute scale should be stored somewhere.
-        createTowerButton(enlistTable, skin, "Rifle", TowerRifle.COST, 4, 4, 5, 3);
-        createTowerButton(enlistTable, skin, "Machine Gun", TowerMachineGun.COST, 1, 4, 4, 8);
-        createTowerButton(enlistTable, skin, "Sniper", TowerSniper.COST, 7, 8, 10, 1);
+        Map<String, Integer> towerCosts = presenter.getTowerCostMap();
+        createTowerButton(enlistTable, skin, "Rifle", towerCosts.get("Rifle"), 4, 4, 5, 3);
+        createTowerButton(enlistTable, skin, "Machine Gun", towerCosts.get("MachineGun"), 1, 4, 4, 8);
+        createTowerButton(enlistTable, skin, "Sniper", towerCosts.get("Sniper"), 7, 8, 10, 1);
         enlistTable.row();
-        createTowerButton(enlistTable, skin, "Flame Thrower", TowerFlameThrower.COST, 7, 4, 6, 2);
-        createTowerButton(enlistTable, skin, "Rocket Launcher", TowerRocketLauncher.COST, 10, 4, 6,
+        createTowerButton(enlistTable, skin, "Flame Thrower", towerCosts.get("FlameThrower"), 7, 4, 6, 2);
+        createTowerButton(enlistTable, skin, "Rocket Launcher", towerCosts.get("RocketLauncher"), 10, 4, 6,
             1);
-        createTowerButton(enlistTable, skin, "Humvee", TowerHumvee.COST, 3, 7, 7, 8);
+        createTowerButton(enlistTable, skin, "Humvee", towerCosts.get("Humvee"), 3, 7, 7, 8);
         enlistTable.row();
-        createTowerButton(enlistTable, skin, "Tank", TowerTank.COST, 10, 10, 8, 10);
+        createTowerButton(enlistTable, skin, "Tank", towerCosts.get("Tank"), 10, 10, 8, 10);
 
         ImageButton btnCancel = new ImageButton(skin, "cancel");
         btnCancel.setSize(64, 64);

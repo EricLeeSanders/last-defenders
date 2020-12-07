@@ -12,6 +12,7 @@ import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.actor.combat.event.EventManagerImpl;
 import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager.CombatActorEventEnum;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.effects.label.ArmorDestroyedEffect;
 import com.lastdefenders.game.service.factory.EffectFactory;
 import org.junit.Before;
@@ -33,7 +34,7 @@ public class EventManagerImplTest {
     @Test
     public void sendEventTest() {
 
-        Tower tower = TestUtil.createTower("Rifle", true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
 
         ArmorDestroyedEffect armorDestroyedEffectMock = mock(ArmorDestroyedEffect.class);

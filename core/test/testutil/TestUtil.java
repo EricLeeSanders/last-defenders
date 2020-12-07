@@ -11,17 +11,24 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.when;
 
+import com.badlogic.gdx.ApplicationListener;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.backends.headless.HeadlessApplication;
+import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
+import com.badlogic.gdx.backends.headless.HeadlessNativesLoader;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
-import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyAttributes;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyHumvee;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyMachineGun;
@@ -29,10 +36,12 @@ import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRocketLauncher;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemySniper;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
+import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
 import com.lastdefenders.game.model.actor.combat.event.EventManagerImpl;
 import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerAttributes;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
 import com.lastdefenders.game.model.actor.combat.tower.TowerMachineGun;
@@ -40,33 +49,66 @@ import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
 import com.lastdefenders.game.model.actor.combat.tower.TowerSniper;
 import com.lastdefenders.game.model.actor.combat.tower.TowerTank;
-import com.lastdefenders.game.model.actor.combat.tower.TowerTurret;
 import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager;
 import com.lastdefenders.game.model.actor.effects.label.ArmorDestroyedEffect;
 import com.lastdefenders.game.model.actor.effects.texture.TextureEffect;
 import com.lastdefenders.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.BloodSplatter;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
+import com.lastdefenders.game.model.actor.groups.EnemyGroup;
+import com.lastdefenders.game.model.actor.groups.TowerGroup;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.EnemyPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.TowerPool;
 import com.lastdefenders.game.service.factory.EffectFactory;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
+import java.util.Collection;
+import java.util.Random;
 
 /**
  * Created by Eric on 4/23/2017.
  */
 
 public class TestUtil {
+    public static final int HORIZONTAL = 0;
+    public static final int VERTICAL = 1;
 
     public static final double DELTA = 1e-15;
     private static EffectFactory effectFactoryMock = createEffectFactoryMock();
     private static ProjectileFactory projectileFactoryMock = createProjectileFactoryMock();
     private static Player playerMock = mock(Player.class);
     private static LDAudio audioMock = mock(LDAudio.class);
+
+    private static Resources resources;
+
+    static {
+
+        HeadlessNativesLoader.load();
+        HeadlessApplicationConfiguration config = new HeadlessApplicationConfiguration();
+
+        new HeadlessApplication(new ApplicationListener() {
+            public void create() {}
+            public void resize(int width, int height) {}
+            public void render() {}
+            public void pause() {}
+            public void resume() {}
+            public void dispose() {}
+        }, config);
+        GL20 gl20 = mock(GL20.class);
+        Gdx.gl = gl20;
+        Gdx.gl20 = gl20;
+
+        resources = new Resources(mock(UserPreferences.class));
+
+    }
+
+    public static Resources getResources(){
+        return resources;
+    }
 
     public static Resources createResourcesMock() {
 
@@ -121,51 +163,51 @@ public class TestUtil {
         return effectFactoryMock;
     }
 
-    public static Tower createTower(String name, boolean spy) {
+    @SuppressWarnings("unchecked")
+    public static Tower createTower(Class<? extends Tower> towerClass, boolean spy) {
 
         Tower tower;
+        TowerAttributes towerAttributes = resources.getTowerAttribute(towerClass);
 
-        switch (name) {
-            case "Rifle":
-                tower = new TowerRifle(null, null, new Group(), null, null, projectileFactoryMock,
-                    audioMock);
+        TowerPool towerPoolMock = mock(TowerPool.class);
+
+        switch (towerClass.getSimpleName()) {
+            case "TowerRifle":
+                tower = new TowerRifle(null, towerPoolMock, new EnemyGroup(), null, null, projectileFactoryMock,
+                    audioMock, towerAttributes);
                 break;
-            case "MachineGun":
-                tower = new TowerMachineGun(null, null, new Group(), null, null,
-                    projectileFactoryMock, audioMock);
+            case "TowerMachineGun":
+                tower = new TowerMachineGun(null,towerPoolMock, new EnemyGroup(), null, null,
+                    projectileFactoryMock, audioMock, towerAttributes);
                 break;
-            case "Sniper":
-                tower = new TowerSniper(null, null, new Group(), null, null, projectileFactoryMock,
-                    audioMock);
+            case "TowerSniper":
+                tower = new TowerSniper(null, towerPoolMock, new EnemyGroup(), null, null, projectileFactoryMock,
+                    audioMock, towerAttributes);
                 break;
-            case "RocketLauncher":
-                tower = new TowerRocketLauncher(null, null, new Group(), null, null,
-                    projectileFactoryMock, audioMock);
+            case "TowerRocketLauncher":
+                tower = new TowerRocketLauncher(null, towerPoolMock, new EnemyGroup(), null, null,
+                    projectileFactoryMock, audioMock, towerAttributes);
                 break;
-            case "FlameThrower":
-                tower = new TowerFlameThrower(null, null, new Group(), null, null,
-                    projectileFactoryMock, audioMock);
+            case "TowerFlameThrower":
+                tower = new TowerFlameThrower(null, towerPoolMock, new EnemyGroup(), null, null,
+                    projectileFactoryMock, audioMock, towerAttributes);
                 break;
-            case "Tank":
-                tower = new TowerTank(null, null, null, new Group(), null, null,
-                    projectileFactoryMock, audioMock);
+            case "TowerTank":
+                tower = new TowerTank(null, null, towerPoolMock, new EnemyGroup(), null, null,
+                    projectileFactoryMock, audioMock, towerAttributes);
                 break;
-            case "Humvee":
-                tower = new TowerHumvee(null, null, null, new Group(), null, null,
-                    projectileFactoryMock, audioMock);
+            case "TowerHumvee":
+                tower = new TowerHumvee(null, null, towerPoolMock, new EnemyGroup(), null, null,
+                    projectileFactoryMock, audioMock, towerAttributes);
                 break;
             default:
-                throw new NullPointerException("Type: " + name + " doesn't exist");
+                throw new NullPointerException("Type: " + towerClass.getSimpleName() + " doesn't exist");
 
         }
 
         if (spy) {
             tower = spy(tower);
         }
-
-        CombatActorPool<? extends CombatActor> pool = (CombatActorPool<? extends CombatActor>) mock(
-            CombatActorPool.class);
-        tower.setPool(pool);
 
         TowerStateManager stateManager = new TowerStateManager(tower, effectFactoryMock);
         tower.setStateManager(stateManager);
@@ -178,54 +220,54 @@ public class TestUtil {
         return tower;
     }
 
-
-    public static Enemy createEnemy(String name, boolean spy) {
+    @SuppressWarnings("unchecked")
+    public static Enemy createEnemy(Class<? extends Enemy> enemyClass, boolean spy) {
 
         Enemy enemy;
         Array<AtlasRegion> atlasRegion = new Array<>();
         atlasRegion.add(null);
         TextureRegion[] animatedRegions = atlasRegion.toArray(TextureRegion.class);
+        EnemyAttributes enemyAttributes = resources.getEnemyAttributes(enemyClass);
 
-        switch (name) {
-            case "Rifle":
-                enemy = new EnemyRifle(null, animatedRegions, null, new Group(),
-                    projectileFactoryMock, audioMock);
+        EnemyPool enemyPoolMock = mock(EnemyPool.class);
+
+        switch (enemyClass.getSimpleName()) {
+            case "EnemyRifle":
+                enemy = new EnemyRifle(null, animatedRegions, enemyPoolMock, new TowerGroup(),
+                    projectileFactoryMock, audioMock, enemyAttributes);
                 break;
-            case "MachineGun":
-                enemy = new EnemyMachineGun(null, animatedRegions, null, new Group(),
-                    projectileFactoryMock, audioMock);
+            case "EnemyMachineGun":
+                enemy = new EnemyMachineGun(null, animatedRegions, enemyPoolMock, new TowerGroup(),
+                    projectileFactoryMock, audioMock, enemyAttributes);
                 break;
-            case "Sniper":
-                enemy = new EnemySniper(null, animatedRegions, null, new Group(),
-                    projectileFactoryMock, audioMock);
+            case "EnemySniper":
+                enemy = new EnemySniper(null, animatedRegions, enemyPoolMock, new TowerGroup(),
+                    projectileFactoryMock, audioMock, enemyAttributes);
                 break;
-            case "FlameThrower":
-                enemy = new EnemyFlameThrower(null, animatedRegions, null, new Group(),
-                    projectileFactoryMock, audioMock);
+            case "EnemyFlameThrower":
+                enemy = new EnemyFlameThrower(null, animatedRegions, enemyPoolMock, new TowerGroup(),
+                    projectileFactoryMock, audioMock, enemyAttributes);
                 break;
-            case "Humvee":
-                enemy = new EnemyHumvee(null, null, animatedRegions, null, new Group(),
-                    projectileFactoryMock, audioMock);
+            case "EnemyHumvee":
+                enemy = new EnemyHumvee(null, null, animatedRegions, enemyPoolMock, new TowerGroup(),
+                    projectileFactoryMock, audioMock, enemyAttributes);
                 break;
-            case "RocketLauncher":
-                enemy = new EnemyRocketLauncher(null, animatedRegions, null, new Group(),
-                    projectileFactoryMock, audioMock);
+            case "EnemyRocketLauncher":
+                enemy = new EnemyRocketLauncher(null, animatedRegions, enemyPoolMock, new TowerGroup(),
+                    projectileFactoryMock, audioMock, enemyAttributes);
                 break;
-            case "Tank":
-                enemy = new EnemyTank(null, null, animatedRegions, null, new Group(),
-                    projectileFactoryMock, audioMock);
+            case "EnemyTank":
+                enemy = new EnemyTank(null, null, animatedRegions, enemyPoolMock, new TowerGroup(),
+                    projectileFactoryMock, audioMock, enemyAttributes);
                 break;
             default:
-                throw new NullPointerException("Type: " + name + " doesn't exist");
+                throw new NullPointerException("Type: " + enemyClass.getSimpleName() + " doesn't exist");
         }
 
         if (spy) {
             enemy = spy(enemy);
         }
 
-        CombatActorPool<? extends CombatActor> pool = (CombatActorPool<? extends CombatActor>) mock(
-            CombatActorPool.class);
-        enemy.setPool(pool);
 
         EnemyStateManager stateManager = new EnemyStateManager(enemy, effectFactoryMock,
             playerMock);
@@ -237,6 +279,23 @@ public class TestUtil {
         enemy.init();
 
         return enemy;
+    }
+
+    public static Enemy createRunningEnemy(Class<? extends Enemy> enemyClass, boolean spy) {
+        Enemy enemy = createEnemy(enemyClass, spy);
+        enemy.getStateManager().transition(EnemyStateEnum.RUNNING);
+
+        return enemy;
+    }
+
+    public static void finishEnemySpawn(Enemy enemy){
+        enemy.getStateManager().transition(EnemyStateEnum.RUNNING);
+    }
+
+    public static void finishEnemySpawns(Array<Enemy> enemies){
+        for(Enemy enemy : enemies){
+            finishEnemySpawn(enemy);
+        }
     }
 
     public static Viewport mockViewportUnproject(LDVector2 coords){
@@ -280,5 +339,37 @@ public class TestUtil {
         doNothing().when(vector2).free();
 
         return vector2;
+    }
+
+    public static int getRandomNumberInRange(int min, int max) {
+
+        if(min >= max ){
+            int temp = min;
+            min = max;
+            max = temp;
+        }
+
+        Random r = new Random();
+        return r.nextInt((max - min) + 1) + min;
+    }
+
+    /*
+        Determines if a line is horizontal or vertical.
+        Returns 0 if the line is horizontal.
+        Returns 1 if the line is vertical.
+        Returns -1 if the two points are equal.
+     */
+    public static int lineDirection(Vector2 start, Vector2 end){
+
+        if (start.equals(end)) {
+            return -1;
+        }
+        if(start.y == end.y){
+            // Horizontal
+            return HORIZONTAL;
+        } else {
+            // Vertical
+            return VERTICAL;
+        }
     }
 }

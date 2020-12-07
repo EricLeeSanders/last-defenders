@@ -2,10 +2,8 @@ package com.lastdefenders.game.model.actor.health;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
-import com.lastdefenders.game.service.factory.HealthFactory.HealthPool;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.Dimension;
 
@@ -13,19 +11,18 @@ import com.lastdefenders.util.datastructures.Dimension;
  * Created by Eric on 1/6/2017.
  */
 
-public class ArmorIcon extends GameActor implements Pool.Poolable {
+public class ArmorIcon extends GameActor {
 
     public static final float Y_OFFSET = 16;
-    public static final float X_HEALTH_BAR_DISPALYING_OFFSET = -22;
+    public static final float X_HEALTH_BAR_DISPLAYING_OFFSET = -22;
     public static final float X_OFFSET = -6;
     private static final Dimension TEXTURE_SIZE = new Dimension(12, 13);
-    private CombatActor actor = null;
-    private HealthPool<ArmorIcon> pool;
+    private CombatActor actor;
 
-    public ArmorIcon(HealthPool<ArmorIcon> pool, TextureRegion icon) {
+    public ArmorIcon(TextureRegion icon, CombatActor actor) {
         super(TEXTURE_SIZE);
-        this.pool = pool;
         this.setTextureRegion(icon);
+        this.actor = actor;
     }
 
     @Override
@@ -36,7 +33,7 @@ public class ArmorIcon extends GameActor implements Pool.Poolable {
             // If the health bar is showing, place it to the left.
             // Other wise place it above the actor
             if (actor.getHealthPercent() < 1 || actor.getArmorPercent() < 1) {
-                setX(actor.getPositionCenter().x + X_HEALTH_BAR_DISPALYING_OFFSET);
+                setX(actor.getPositionCenter().x + X_HEALTH_BAR_DISPLAYING_OFFSET);
             } else {
                 setX(actor.getPositionCenter().x + X_OFFSET);
             }
@@ -45,29 +42,4 @@ public class ArmorIcon extends GameActor implements Pool.Poolable {
         }
     }
 
-    @Override
-    public void act(float delta) {
-
-        super.act(delta);
-        if (actor == null || actor.isDead() || !actor.isActive()) {
-            pool.free(this);
-        }
-
-    }
-
-    public void setActor(CombatActor actor) {
-
-        Logger.info("ArmorIcon: setting actor: " + actor.getClass().getSimpleName());
-        this.actor = actor;
-
-    }
-
-    @Override
-    public void reset() {
-
-        Logger.info("ArmorIcon: resetting");
-        this.actor = null;
-        this.remove();
-
-    }
 }

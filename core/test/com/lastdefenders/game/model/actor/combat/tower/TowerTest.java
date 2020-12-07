@@ -10,8 +10,8 @@ import static org.mockito.Mockito.verify;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
-import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager.TowerState;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
+import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -34,7 +34,7 @@ public class TowerTest {
     @Test
     public void testTowerDead() {
 
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
         tower.setHasArmor(true);
         tower.takeDamage(100);
 
@@ -49,7 +49,7 @@ public class TowerTest {
     @Test
     public void testTowerArmor1() {
 
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
         float damageAmount = tower.getHealth() / 2;
         tower.setHasArmor(true);
         tower.takeDamage(damageAmount);
@@ -64,7 +64,7 @@ public class TowerTest {
     @Test
     public void testTowerArmor2() {
 
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
         float damageAmount = tower.getHealth() / 4;
         tower.setHasArmor(true);
         tower.takeDamage(damageAmount);
@@ -79,7 +79,7 @@ public class TowerTest {
     @Test
     public void testTowerArmor3() {
 
-        Tower tower = TestUtil.createTower("Rifle", false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
         float damageAmount = tower.getHealth();
         tower.setHasArmor(true);
         tower.takeDamage(damageAmount);
@@ -94,12 +94,12 @@ public class TowerTest {
     @Test
     public void testStateAttackTarget() {
 
-        Tower tower = TestUtil.createTower("Rifle", true);
-        Enemy enemy = TestUtil.createEnemy("Rifle", false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true);
+        Enemy enemy = TestUtil.createRunningEnemy(EnemyRifle.class, false);
 
         tower.getTargetGroup().addActor(enemy);
 
-        assertEquals(TowerState.ACTIVE, tower.getState());
+        assertEquals(TowerStateEnum.ACTIVE, tower.getState());
 
         enemy.setPositionCenter(120, 120);
         tower.setPositionCenter(120, 120);
@@ -115,9 +115,9 @@ public class TowerTest {
     @Test
     public void testDeadState() {
 
-        Tower tower = TestUtil.createTower("Rifle", true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true);
 
-        assertEquals(TowerState.ACTIVE, tower.getState());
+        assertEquals(TowerStateEnum.ACTIVE, tower.getState());
 
         tower.takeDamage(tower.getHealth());
 

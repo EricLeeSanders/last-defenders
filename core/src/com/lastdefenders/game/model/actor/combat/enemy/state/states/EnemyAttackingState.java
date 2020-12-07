@@ -1,10 +1,11 @@
 package com.lastdefenders.game.model.actor.combat.enemy.state.states;
 
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
-import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
+import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
 import com.lastdefenders.game.model.actor.combat.state.CombatActorState;
 import com.lastdefenders.game.model.actor.combat.state.StateTransitioner;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -14,11 +15,11 @@ import java.util.Map;
 public class EnemyAttackingState implements CombatActorState {
 
     private final Enemy enemy;
-    private final StateTransitioner<EnemyState> stateTransitioner;
+    private final StateTransitioner<EnemyStateEnum> stateTransitioner;
     private float movementDelayCounter, attackCounter;
     private Targetable target;
 
-    public EnemyAttackingState(Enemy enemy, StateTransitioner<EnemyState> stateTransitioner) {
+    public EnemyAttackingState(Enemy enemy, StateTransitioner<EnemyStateEnum> stateTransitioner) {
 
         this.enemy = enemy;
         this.stateTransitioner = stateTransitioner;
@@ -39,8 +40,13 @@ public class EnemyAttackingState implements CombatActorState {
     public void preState() {
 
         movementDelayCounter = 0;
-        attackCounter = 100;
+        attackCounter = 100; // ready to attack
         enemy.preAttack();
+    }
+
+    @Override
+    public void immediateStep() {
+
     }
 
     @Override
@@ -48,7 +54,7 @@ public class EnemyAttackingState implements CombatActorState {
 
         movementDelayCounter += delta;
         if (movementDelayCounter >= Enemy.MOVEMENT_DELAY) {
-            stateTransitioner.transition(EnemyState.RUNNING);
+            changeToRunning();
             return;
         }
 
@@ -71,5 +77,12 @@ public class EnemyAttackingState implements CombatActorState {
     public void postState() {
 
         enemy.postAttack();
+    }
+
+    private void changeToRunning(){
+        Map<String, Object> params = new HashMap<>();
+        params.put("NewSpawn", Boolean.FALSE);
+
+        stateTransitioner.transition(EnemyStateEnum.RUNNING, params);
     }
 }

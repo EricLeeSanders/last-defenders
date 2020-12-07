@@ -10,8 +10,6 @@ import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.ai.EnemyAI;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
-import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager.EnemyState;
-import com.lastdefenders.game.model.actor.combat.enemy.state.states.EnemyReachedEndState;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,10 +41,9 @@ public class EnemyReachedEndStateTest {
         EnemyReachedEndState reachedEndState = new EnemyReachedEndState(enemy, stateManagerMock,
             playerMock);
 
-        reachedEndState.update(1f);
+        reachedEndState.immediateStep();
 
         verify(enemy, times(1)).reachedEnd();
         verify(playerMock, times(1)).enemyReachedEnd();
-        verify(stateManagerMock, times(1)).transition(EnemyState.STANDBY);
     }
 }

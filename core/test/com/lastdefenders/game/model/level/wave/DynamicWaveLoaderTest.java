@@ -40,36 +40,6 @@ public class DynamicWaveLoaderTest {
     @Test
     public void dynamicWaveLoaderTest1() {
 
-        Enemy enemy1 = TestUtil.createEnemy("Rifle", false);
-        Enemy enemy2 = TestUtil.createEnemy("Sniper", false);
-        Enemy enemy3 = TestUtil.createEnemy("Tank", false);
-        Enemy enemy4 = TestUtil.createEnemy("Humvee", false);
-
-        SpawningEnemy spawningEnemy1 = new SpawningEnemy(spawningEnemyPool);
-        SpawningEnemy spawningEnemy2 = new SpawningEnemy(spawningEnemyPool);
-        SpawningEnemy spawningEnemy3 = new SpawningEnemy(spawningEnemyPool);
-        SpawningEnemy spawningEnemy4 = new SpawningEnemy(spawningEnemyPool);
-        spawningEnemy1.setEnemy(enemy1);
-        spawningEnemy2.setEnemy(enemy2);
-        spawningEnemy3.setEnemy(enemy3);
-        spawningEnemy4.setEnemy(enemy4);
-
-        Queue<SpawningEnemy> initSpawningEnemyQueue = new Queue<>();
-        initSpawningEnemyQueue.addFirst(spawningEnemy1);
-        initSpawningEnemyQueue.addFirst(spawningEnemy2);
-        initSpawningEnemyQueue.addFirst(spawningEnemy3);
-        initSpawningEnemyQueue.addFirst(spawningEnemy4);
-
-        doReturn(new Array<LDVector2>()).when(map).getPath();
-        doReturn(TestUtil.createEnemy("Rifle", false)).when(combatActorFactory)
-            .loadEnemy(isA(String.class));
-
-        DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
-        dynamicWaveLoader.initDynamicWaveLoader(initSpawningEnemyQueue);
-
-        Queue<SpawningEnemy> spawningEnemies = dynamicWaveLoader.loadWave(LevelName.SERPENTINE_RIVER, 5);
-
-        assertTrue(spawningEnemies.size > 4);
 
     }
 }

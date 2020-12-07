@@ -207,9 +207,9 @@ public class SupportPresenter implements GameUIStateObserver {
             uiStateManager.setState(GameUIState.PLACING_SUPPORT);
             Logger.info("Support Presenter: support actor created");
         } else {
-            Logger.info("Support Presenter: cannot afford " + type + " player: " + getPlayerMoney()
+            Logger.info("Support Presenter: cannot afford " + type.getSimpleName() + " player: " + getPlayerMoney()
                 + " cost: " + cost);
-            messageDisplayer.displayMessage("You cannot afford a " + type + "!");
+            messageDisplayer.displayMessage("You cannot afford a " + type.getSimpleName() + "!");
         }
     }
 

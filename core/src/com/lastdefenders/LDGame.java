@@ -3,6 +3,7 @@ package com.lastdefenders;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.lastdefenders.ads.AdController;
 import com.lastdefenders.ads.AdControllerHelper;
 import com.lastdefenders.game.GameScreen;
@@ -54,7 +55,7 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
             audio);
         setScreen(loadingScreen);
         gameStateManager.attach(this);
-        Gdx.input.setCatchBackKey(false);
+        Gdx.input.setCatchKey(Input.Keys.BACK, false);
     }
 
     @Override

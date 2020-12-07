@@ -1,19 +1,20 @@
 package com.lastdefenders.game.service.factory;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.Player;
-import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.actor.projectile.Bullet;
-import com.lastdefenders.game.service.factory.CombatActorFactory;
-import com.lastdefenders.game.service.factory.EffectFactory;
-import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import org.junit.Before;
@@ -31,10 +32,11 @@ import testutil.TestUtil;
 public class CombatActorFactoryTest {
 
     @Spy private ActorGroups actorGroups = new ActorGroups();
-    @Mock private Resources resources = TestUtil.createResourcesMock();
+    @Spy private Resources resources = TestUtil.getResources();
     @Mock private LDAudio audio;
     @Mock private EffectFactory effectFactory;
     @Mock private ProjectileFactory projectileFactory;
+    @Mock private HealthFactory healthFactory;
     @Mock private Player player;
 
     @InjectMocks
@@ -44,6 +46,10 @@ public class CombatActorFactoryTest {
     public void initCombatActorFactoryTest() {
         Gdx.app = mock(Application.class);
         MockitoAnnotations.initMocks(this);
+
+        Group healthGroup = spy(actorGroups.getHealthGroup());
+        doReturn(healthGroup).when(actorGroups).getHealthGroup();
+        doNothing().when(healthGroup).addActor(any(Actor.class));
     }
 
     @Test

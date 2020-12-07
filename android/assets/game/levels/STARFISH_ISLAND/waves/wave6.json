@@ -1,34 +1,44 @@
 {
-"wave": [
+  "wave": [
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "Rifle",
+      "armor": true,
+      "cost": 6,
+      "level": 3,
+      "weight": 1,
+      "delay": 1
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "FlameThrower",
+      "armor": false,
+      "cost": 9,
+      "level": 5,
+      "weight": 1,
+      "delay": 0.8
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "Rifle",
+      "armor": true,
+      "cost": 6,
+      "level": 3,
+      "weight": 1,
+      "delay": 1
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "Rifle",
+      "armor": true,
+      "cost": 6,
+      "level": 3,
+      "weight": 1,
+      "delay": 1
     },
     {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
-    },
-    {
-        "enemy": "Rifle",
-        "delay": ".50",
-        "armor": false
+      "name": "FlameThrower",
+      "armor": false,
+      "cost": 9,
+      "level": 5,
+      "weight": 1,
+      "delay": 0.8
     }
-]
+  ]
 }

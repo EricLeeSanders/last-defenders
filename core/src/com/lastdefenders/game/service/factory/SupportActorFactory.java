@@ -4,18 +4,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
-import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.support.AirStrike;
 import com.lastdefenders.game.model.actor.support.AirStrikeLocation;
 import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.model.actor.support.LandMine;
 import com.lastdefenders.game.model.actor.support.SupplyDrop;
 import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
-import com.lastdefenders.game.model.actor.support.CombatSupportActor;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
-import com.lastdefenders.util.datastructures.pool.LDVector2;
 
 /**
  * Created by Eric on 3/31/2017.
@@ -65,7 +63,6 @@ public class SupportActorFactory {
      * @param addToGroup
      * @return Support Actor
      */
-    @SuppressWarnings("unchecked")
     public <T extends Actor> T loadSupportActor(Class<T> type, boolean addToGroup) {
 
         Logger.info("Actor Factory: loading support actor: " + type.getSimpleName());

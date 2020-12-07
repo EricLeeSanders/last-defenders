@@ -1,24 +1,17 @@
 package com.lastdefenders.game.model.actor.combat.tower;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
+import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.model.actor.interfaces.IRotatable;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.TowerPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
-import com.lastdefenders.util.ActorUtil;
-import com.lastdefenders.util.DebugOptions;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
-import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.UtilPool;
 
@@ -29,17 +22,6 @@ import com.lastdefenders.util.UtilPool;
  * @author Eric
  */
 public class TowerHumvee extends TowerTurret implements IRotatable {
-
-    public static final int COST = 1300;
-    private static final float HEALTH = 14;
-    private static final float ARMOR = 8;
-    private static final float ATTACK = 3;
-    private static final float ATTACK_SPEED = .2f;
-    private static final float RANGE = 70;
-    private static final int ARMOR_COST = 900;
-    private static final int RANGE_INCREASE_COST = 500;
-    private static final int SPEED_INCREASE_COST = 500;
-    private static final int ATTACK_INCREASE_COST = 500;
 
     private static final Dimension BULLET_SIZE = new Dimension(5, 5);
     private static final Vector2 GUN_POS = UtilPool.getVector2(29, 0);
@@ -52,13 +34,12 @@ public class TowerHumvee extends TowerTurret implements IRotatable {
     private ProjectileFactory projectileFactory;
 
     public TowerHumvee(TextureRegion bodyRegion, TextureRegion turretRegion,
-        CombatActorPool<TowerHumvee> pool, Group targetGroup, TextureRegion rangeRegion,
-        TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, LDAudio audio) {
+        TowerPool<TowerHumvee> pool, GenericGroup<Enemy> targetGroup, TextureRegion rangeRegion,
+        TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, LDAudio audio,
+        TowerAttributes attributes) {
 
         super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion,
-            collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST,
-            RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE,
-            TEXTURE_SIZE_BODY, bodyRegion, BODY_POINTS);
+            collidingRangeRegion, DEATH_EFFECT_TYPE, TEXTURE_SIZE_BODY, bodyRegion, BODY_POINTS, attributes);
 
         this.audio = audio;
         this.projectileFactory = projectileFactory;

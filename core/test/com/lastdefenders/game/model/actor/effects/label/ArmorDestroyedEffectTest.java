@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerSniper;
 import com.lastdefenders.game.model.actor.effects.label.ArmorDestroyedEffect;
 import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import com.lastdefenders.util.Resources;
@@ -56,7 +58,7 @@ public class ArmorDestroyedEffectTest {
     @Test
     public void armorDestroyedEffectTest1() {
 
-        Tower tower = TestUtil.createTower("Sniper", false);
+        Tower tower = TestUtil.createTower(TowerSniper.class, false);
         tower.setPositionCenter(150, 150);
 
         ArmorDestroyedEffect armorDestroyedEffect = createArmorDestroyedEffect();
@@ -87,7 +89,7 @@ public class ArmorDestroyedEffectTest {
     @Test
     public void armorDestroyedEffectTest2() {
 
-        Tower tower = TestUtil.createTower("FlameThrower", false);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, false);
         tower.setPositionCenter(150, 150);
 
         ArmorDestroyedEffect armorDestroyedEffect = createArmorDestroyedEffect();

@@ -7,26 +7,41 @@ import com.badlogic.gdx.assets.loaders.TextureAtlasLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.ResolutionFileResolver.Resolution;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.tools.bmfont.BitmapFontWriter;
-import com.badlogic.gdx.tools.bmfont.BitmapFontWriter.FontInfo;
-import com.badlogic.gdx.tools.bmfont.BitmapFontWriter.Padding;
-import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyAttributes;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyHumvee;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyMachineGun;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyRocketLauncher;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemySniper;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerAttributes;
+import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
+import com.lastdefenders.game.model.actor.combat.tower.TowerMachineGun;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
+import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
+import com.lastdefenders.game.model.actor.combat.tower.TowerSniper;
+import com.lastdefenders.game.model.actor.combat.tower.TowerTank;
 import com.lastdefenders.levelselect.LevelName;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +58,9 @@ public class Resources {
     public static final float VIRTUAL_HEIGHT = 360;
     public static final float MAX_GAME_SPEED = 2.0f;
 
+    private static final String ENEMY_WEIGHTS_LOC = "game/levels/wave_generator/enemy-weights.json";
+    private static final String WAVE_GENERATOR_METADATA_LOC = "game/levels/wave_generator/wave-generator-metadata.json";
+
     private static ShapeRenderer shapeRenderer;
     private float gameSpeed = 1;
     private UserPreferences userPreferences;
@@ -55,6 +73,8 @@ public class Resources {
 
     private Map<String, TextureRegion> loadedTextures = new HashMap<>();
     private Map<String, Array<AtlasRegion>> loadedAtlasRegions = new HashMap<>();
+    private Map<Class, TowerAttributes> towerAttributes = new HashMap<>();
+    private Map<Class, EnemyAttributes> enemyAttributes = new HashMap<>();
 
     public Resources() {
 
@@ -96,35 +116,8 @@ public class Resources {
         }
 
         Texture.setAssetManager(manager);
-    }
 
-    private void packSkin(){
-        TexturePacker p;
-    }
-
-    private void generateFonts(){
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("riffic.ttf"));
-        FreeTypeFontParameter parameters = new FreeTypeFontParameter ();
-        parameters.size = 18;
-        parameters.borderColor = Color.BLACK;
-        parameters.borderWidth = 1f;
-        parameters.genMipMaps = true;
-        parameters.minFilter = Texture.TextureFilter.MipMapLinearNearest;
-        parameters.magFilter = Texture.TextureFilter.Nearest;
-        //parameters.kerning = true;
-        parameters.characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!?:.,/$%+=#";
-
-        BitmapFont font = generator.generateFont(parameters);
-
-        FontInfo info = new FontInfo();
-        info.padding = new Padding(1, 1, 1, 1);
-
-        Pixmap pixmap = font.getRegion().getTexture().getTextureData().consumePixmap();
-        BitmapFontWriter.writeFont(font.getData(), new Pixmap[]{pixmap}, Gdx.files.local("default-font-_5.fnt"), info);
-        BitmapFontWriter.writePixmaps(new Pixmap[]{pixmap}, Gdx.files.local(""), "default-font-_5");
-
-        generator.dispose();
-
+        loadCombatActorAttributes();
     }
 
     public static ShapeRenderer getShapeRenderer() {
@@ -207,7 +200,45 @@ public class Resources {
         loadedAtlasRegions.put("shield-destroyed", actorAtlas.findRegions("shield-destroyed"));
         loadedAtlasRegions.put("coin", actorAtlas.findRegions("coin"));
 
+
+
         Logger.info("Resources: textures initialized");
+    }
+
+    private void loadCombatActorAttributes(){
+        Logger.info("Resources: loading combat actor attributes");
+
+        Json json = new Json();
+
+        Class [] towerClasses = {TowerFlameThrower.class, TowerHumvee.class, TowerMachineGun.class,
+            TowerRifle.class, TowerRocketLauncher.class, TowerSniper.class, TowerTank.class};
+
+        Class [] enemyClasses = {EnemyFlameThrower.class, EnemyHumvee.class, EnemyMachineGun.class, EnemyRifle.class,
+            EnemyRocketLauncher.class, EnemySniper.class, EnemyTank.class};
+        String path = "game/actors/attributes/%s.json";
+        for(Class clazz : towerClasses){
+            FileHandle file = Gdx.files.internal(String.format(path, clazz.getSimpleName()));
+            TowerAttributes.Builder builder = json.fromJson(TowerAttributes.Builder.class, file);
+
+            towerAttributes.put(clazz, builder.build());
+        }
+
+        for(Class clazz : enemyClasses){
+            FileHandle file = Gdx.files.internal(String.format(path, clazz.getSimpleName()));
+            EnemyAttributes.Builder builder = json.fromJson(EnemyAttributes.Builder.class, file);
+
+            enemyAttributes.put(clazz, builder.build());
+        }
+
+        Logger.info("Resources: combat actor attributes loaded");
+    }
+
+    public TowerAttributes getTowerAttribute(Class<? extends Tower> clazz){
+        return towerAttributes.get(clazz);
+    }
+
+    public EnemyAttributes getEnemyAttributes(Class<? extends Enemy> clazz){
+        return enemyAttributes.get(clazz);
     }
 
     public TextureRegion getTexture(String texture) {
@@ -239,7 +270,6 @@ public class Resources {
         font.setUseIntegerPositions(false);
 
         font.getData().setScale(getFontScale());
-        System.out.println(font.getData().ascent);
         //font.getData().lineHeight = 55;
         //font.getData().ascent = 6;
         //font.getData().capHeight = 28;

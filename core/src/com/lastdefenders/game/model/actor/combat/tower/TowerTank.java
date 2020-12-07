@@ -7,15 +7,16 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Group;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
+import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.model.actor.health.interfaces.PlatedArmor;
 import com.lastdefenders.game.model.actor.interfaces.IRocket;
 import com.lastdefenders.game.model.actor.interfaces.IRotatable;
 import com.lastdefenders.game.model.actor.interfaces.IVehicle;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
-import com.lastdefenders.game.service.factory.CombatActorFactory.CombatActorPool;
+import com.lastdefenders.game.service.factory.CombatActorFactory.TowerPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.DebugOptions;
@@ -32,17 +33,7 @@ import com.lastdefenders.util.UtilPool;
  */
 public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatable, IRocket {
 
-    public static final int COST = 1500;
-    private static final float HEALTH = 20;
-    private static final float ARMOR = 10;
-    private static final float ATTACK = 10;
-    private static final float ATTACK_SPEED = 0.9f;
-    private static final float RANGE = 80;
     private static final float AOE_RADIUS = 75f;
-    private static final int ARMOR_COST = 1200;
-    private static final int RANGE_INCREASE_COST = 650;
-    private static final int SPEED_INCREASE_COST = 650;
-    private static final int ATTACK_INCREASE_COST = 650;
 
     private static final Dimension ROCKET_SIZE = new Dimension(23, 6);
     private static final Vector2 GUN_POS = UtilPool.getVector2(57, 0);
@@ -59,12 +50,11 @@ public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatabl
     private LDAudio audio;
 
     public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion,
-        CombatActorPool<TowerTank> pool, Group targetGroup, TextureRegion rangeRegion,
-        TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, LDAudio audio) {
+        TowerPool<TowerTank> pool, GenericGroup<Enemy> targetGroup, TextureRegion rangeRegion,
+        TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, LDAudio audio, TowerAttributes attributes) {
 
         super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion,
-            collidingRangeRegion, HEALTH, ARMOR, ATTACK, ATTACK_SPEED, RANGE, COST, ARMOR_COST,
-            RANGE_INCREASE_COST, SPEED_INCREASE_COST, ATTACK_INCREASE_COST, DEATH_EFFECT_TYPE);
+            collidingRangeRegion, DEATH_EFFECT_TYPE, attributes);
         this.bodyRegion = bodyRegion;
         this.turretRegion = turretRegion;
         this.projectileFactory = projectileFactory;

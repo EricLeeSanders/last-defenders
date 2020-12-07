@@ -17,7 +17,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
 import com.lastdefenders.game.model.actor.projectile.Flame;
 import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.Resources;
@@ -58,7 +60,7 @@ public class FlameTest {
     @Test
     public void flameTest1() {
 
-        Tower tower = TestUtil.createTower("FlameThrower", true);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true);
         tower.setRotation(90);
         Vector2 gunPos = new Vector2(5, 5);
         doReturn(gunPos).when(tower).getGunPos();
@@ -114,7 +116,7 @@ public class FlameTest {
     @Test
     public void flameTest2() {
 
-        Tower tower = TestUtil.createTower("FlameThrower", true);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true);
         tower.setRotation(90);
         Vector2 gunPos = new Vector2(5, 5);
         doReturn(gunPos).when(tower).getGunPos();
@@ -134,7 +136,7 @@ public class FlameTest {
     @Test
     public void flameTest3() {
 
-        Enemy enemy = TestUtil.createEnemy("FlameThrower", true);
+        Enemy enemy = TestUtil.createEnemy(EnemyFlameThrower.class, true);
         enemy.setRotation(90);
         Vector2 gunPos = new Vector2(5, 5);
         doReturn(gunPos).when(enemy).getGunPos();

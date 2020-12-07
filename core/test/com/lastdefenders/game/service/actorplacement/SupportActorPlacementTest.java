@@ -11,7 +11,7 @@ import static org.powermock.api.mockito.PowerMockito.doReturn;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.lastdefenders.game.model.actor.ActorGroups;
+import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.model.actor.support.ApacheTest;
 import com.lastdefenders.game.model.actor.support.LandMine;

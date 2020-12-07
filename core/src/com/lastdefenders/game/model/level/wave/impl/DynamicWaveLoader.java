@@ -1,17 +1,12 @@
 package com.lastdefenders.game.model.level.wave.impl;
 
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Queue;
-import com.badlogic.gdx.utils.SnapshotArray;
-import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
-import com.lastdefenders.game.model.level.Level;
 import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.game.model.level.SpawningEnemy;
 import com.lastdefenders.game.service.factory.CombatActorFactory;
 import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.util.Logger;
-import java.util.HashMap;
-import java.util.Map.Entry;
-import java.util.Random;
 
 /**
  * Created by Eric on 5/25/2017.
@@ -19,32 +14,11 @@ import java.util.Random;
 
 public class DynamicWaveLoader extends AbstractWaveLoader {
 
-    private Random random = new Random();
-    private java.util.Map<String, Integer> enemyMap = new HashMap<>();
+    private Array<SpawningEnemySnapshot> waveHistory;
 
     public DynamicWaveLoader(CombatActorFactory combatActorFactory, Map map) {
 
         super(combatActorFactory, map);
-    }
-
-    /**
-     * Init the Wave Loader with a a Queue of initial spawning enemies to start with
-     */
-    public void initDynamicWaveLoader(Queue<SpawningEnemy> initialSpawningEnemies) {
-
-        for (SpawningEnemy spawningEnemy : initialSpawningEnemies) {
-            incrementEnemyMapCount(convertEnemyClassToStringType(
-                spawningEnemy.getEnemy().getClass()), 1);
-        }
-    }
-
-    private String convertEnemyClassToStringType(Class<? extends Enemy> enemyClass) {
-
-        String type = enemyClass.getSimpleName();
-        // Remove the enemy from the string (i.e. EnemyRifle -> Rifle)
-        type = type.replaceFirst("Enemy", "");
-
-        return type;
     }
 
     @Override
@@ -52,127 +26,86 @@ public class DynamicWaveLoader extends AbstractWaveLoader {
 
         Logger.info("DynamicWaveGenerator: Generating Wave: " + wave);
 
-        int currentGeneratedWave = wave - Level.MAX_WAVES;
-
-        if ((currentGeneratedWave % 3) == 0) {
-            everyThirdWave();
+        if(waveHistory == null || waveHistory.size == 0){
+            throw new IllegalStateException("DynamicWaveGenerator: currentWave must be loaded.");
         }
 
-        if ((currentGeneratedWave % 4) == 0) {
-            everyFourthWave();
-        }
-        if ((currentGeneratedWave % 6) == 0) {
-            everySixthWave();
-        }
+        /*
+        Create Spawning Enemies from the waveHistory. Create a duplicate and load a duplicate so that
+        the waves are constantly doubling.
+         */
+        Array<SpawningEnemySnapshot> duplicatedSnapshots = new Array<>();
+        Queue<SpawningEnemy> enemyQueue = new Queue<>();
+        waveHistory.shuffle();
 
-        everyWave();
+        for(SpawningEnemySnapshot snapshot : waveHistory){
+            SpawningEnemy spawningEnemy = loadSpawningEnemy(snapshot.getName(), snapshot.hasArmor(), snapshot.getSpawnDelay());
+            SpawningEnemy spawningEnemyDouble = loadSpawningEnemy(snapshot.getName(), snapshot.hasArmor(), snapshot.getSpawnDelay());
+            enemyQueue.addFirst(spawningEnemy);
+            enemyQueue.addFirst(spawningEnemyDouble);
 
-        return createEnemies();
-    }
-
-    private Queue<SpawningEnemy> createEnemies() {
-
-        SnapshotArray<SpawningEnemy> enemies = new SnapshotArray<>();
-
-        for (Entry<String, Integer> entry : enemyMap.entrySet()) {
-            enemies.addAll(createEnemiesByType(entry.getValue(), entry.getKey()));
-        }
-
-        shuffle(enemies);
-
-        Queue<SpawningEnemy> spawningEnemiesQueue = new Queue<>(enemies.size);
-        for (SpawningEnemy spawningEnemy : enemies) {
-            spawningEnemiesQueue.addFirst(spawningEnemy);
+            // Create new snapshot to duplicate the wave history
+            SpawningEnemySnapshot duplicateSnapshot = new SpawningEnemySnapshot(spawningEnemy);
+            duplicatedSnapshots.add(duplicateSnapshot);
         }
 
-        return spawningEnemiesQueue;
-    }
+        waveHistory.addAll(duplicatedSnapshots);
+        return enemyQueue;
 
-    private SnapshotArray<SpawningEnemy> createEnemiesByType(int n, String type) {
 
-        SnapshotArray<SpawningEnemy> enemies = new SnapshotArray<>();
-
-        for (int i = 0; i < n; i++) {
-            int randArmor = random.nextInt(3); //0-2
-            boolean armor = (randArmor == 0);
-            float randSpawnDelay = random.nextFloat() * 1.5f + 0.25f; // .25 - 1.75
-
-            SpawningEnemy spawningEnemy = loadSpawningEnemy(type, armor, randSpawnDelay);
-            enemies.add(spawningEnemy);
-        }
-        return enemies;
-    }
-
-    private void shuffle(SnapshotArray<SpawningEnemy> enemies) {
-
-        int n = enemies.size;
-        for (int i = 0; i < n; i++) {
-            int rand = i + (int) (Math.random() * (n - i)); // between i and n-1
-            swap(enemies, i, rand);
-        }
-    }
-
-    private void swap(SnapshotArray<SpawningEnemy> enemies, int i, int j) {
-
-        enemies.swap(i, j);
     }
 
     /**
-     * Every wave add 3 rifles or
-     * 3 machines guns or 2 snipers
+     * Loads the current wave into the Wave Loader. This is required to be done before the Level switches
+     * to the DynamicWaveLoader.
+     * @param queue
      */
-    private void everyWave() {
+    public void loadCurrentWaveQueue( Queue<SpawningEnemy>  queue){
 
-        int rnd = random.nextInt(3); // 0-2
+        Array<SpawningEnemySnapshot> currentWaveSnapshot = new Array<>();
 
-        if (rnd == 0) {
-            incrementEnemyMapCount("Rifle", 3);
-        } else if (rnd == 1) {
-            incrementEnemyMapCount("MachineGun", 3);
-        } else {
-            incrementEnemyMapCount("Sniper", 2);
+        /*
+        Load the current queue and create snapshots of the spawning enemies.
+         */
+        for(SpawningEnemy spawningEnemy : queue){
+            SpawningEnemySnapshot snapshot = new SpawningEnemySnapshot(spawningEnemy);
+            currentWaveSnapshot.add(snapshot);
         }
+
+        this.waveHistory = currentWaveSnapshot;
     }
 
     /**
-     * Add a Humvee every third wave
+     * Creates a Snapshot of a SpawningEnemy. This is important because the SpawningEnemy is reset after each wave.
      */
-    private void everyThirdWave() {
+    private class SpawningEnemySnapshot {
+        private String name;
+        private float spawnDelay;
+        private boolean armor;
 
-        incrementEnemyMapCount("Humvee", 1);
-    }
+        public SpawningEnemySnapshot(SpawningEnemy spawningEnemy) {
 
-    /**
-     * Add either 1 rocket launcher
-     * or 1 flame thrower and 1 sniper
-     * every fourth wave
-     */
-    private void everyFourthWave() {
+            this.name = spawningEnemy.getEnemy().getClass().getSimpleName().split("Enemy")[1];
+            this.spawnDelay = spawningEnemy.getSpawnDelay();
+            this.armor = spawningEnemy.getEnemy().hasArmor();
+        }
 
-        int rnd = random.nextInt(2); // 0 or 1
-        if (rnd == 0) {
-            incrementEnemyMapCount("RocketLauncher", 1);
-        } else {
-            incrementEnemyMapCount("FlameThrower", 1);
-            incrementEnemyMapCount("Sniper", 1);
+        public String getName() {
+
+            return name;
+        }
+
+        public float getSpawnDelay() {
+
+            return spawnDelay;
+        }
+
+        public boolean hasArmor() {
+
+            return armor;
         }
     }
 
-    /**
-     * Add a Tank every sixth wave
-     */
-    private void everySixthWave() {
 
-        incrementEnemyMapCount("Tank", 1);
-    }
-
-    private void incrementEnemyMapCount(String type, int amount) {
-
-        Integer count = enemyMap.get(type);
-        if (count == null) {
-            count = 0;
-        }
-        count += amount;
-        enemyMap.put(type, count);
-    }
 }
+
