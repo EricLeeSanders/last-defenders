@@ -2,27 +2,11 @@
   "wave": [
     {
       "name": "MachineGun",
-      "armor": false,
-      "cost": 4,
-      "level": 1,
-      "weight": 1,
-      "delay": 0.1
-    },
-    {
-      "name": "MachineGun",
       "armor": true,
       "cost": 6,
       "level": 3,
       "weight": 1,
-      "delay": 0.9
-    },
-    {
-      "name": "Rifle",
-      "armor": false,
-      "cost": 4,
-      "level": 1,
-      "weight": 1,
-      "delay": 0.2
+      "delay": 0.4
     },
     {
       "name": "MachineGun",
@@ -30,7 +14,15 @@
       "cost": 4,
       "level": 1,
       "weight": 1,
-      "delay": 0.1
+      "delay": 1
+    },
+    {
+      "name": "Rifle",
+      "armor": true,
+      "cost": 6,
+      "level": 3,
+      "weight": 1,
+      "delay": 1
     },
     {
       "name": "Rifle",
@@ -38,7 +30,7 @@
       "cost": 4,
       "level": 1,
       "weight": 1,
-      "delay": 0.2
+      "delay": 0.3
     }
   ]
 }

@@ -3,7 +3,9 @@
     {
       "name": "MachineGun",
       "armor": false,
+      "cost": 4,
       "level": 1,
+      "weight": 1,
       "delay": 0.7
     }
   ]

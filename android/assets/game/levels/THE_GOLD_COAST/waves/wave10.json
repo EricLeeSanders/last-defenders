@@ -1,58 +1,100 @@
 {
   "wave": [
     {
-      "name": "FlameThrower",
+      "name": "RocketLauncher",
       "armor": false,
-      "level": 5,
+      "cost": 11,
+      "level": 9,
+      "weight": 1,
       "delay": 0.7
     },
     {
+      "name": "MachineGun",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.4
+    },
+    {
       "name": "FlameThrower",
-      "armor": true,
-      "level": 8,
-      "delay": 1
-    },
-    {
-      "name": "Rifle",
       "armor": false,
-      "level": 1,
-      "delay": 1
+      "cost": 9,
+      "level": 5,
+      "weight": 1,
+      "delay": 0.3
     },
     {
-      "name": "Rifle",
-      "armor": true,
-      "level": 3,
-      "delay": 0.6
-    },
-    {
-      "name": "Rifle",
+      "name": "MachineGun",
       "armor": false,
+      "cost": 4,
       "level": 1,
-      "delay": 0.5
+      "weight": 1,
+      "delay": 0.4
+    },
+    {
+      "name": "RocketLauncher",
+      "armor": false,
+      "cost": 11,
+      "level": 9,
+      "weight": 1,
+      "delay": 0.7
+    },
+    {
+      "name": "Sniper",
+      "armor": false,
+      "cost": 7,
+      "level": 4,
+      "weight": 1,
+      "delay": 0.1
     },
     {
       "name": "MachineGun",
       "armor": true,
+      "cost": 6,
       "level": 3,
+      "weight": 1,
+      "delay": 0.8
+    },
+    {
+      "name": "MachineGun",
+      "armor": true,
+      "cost": 6,
+      "level": 3,
+      "weight": 1,
+      "delay": 0.8
+    },
+    {
+      "name": "MachineGun",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
       "delay": 0.4
     },
     {
-      "name": "Sniper",
+      "name": "RocketLauncher",
       "armor": false,
-      "level": 4,
-      "delay": 0.9
+      "cost": 11,
+      "level": 9,
+      "weight": 1,
+      "delay": 0.7
     },
     {
-      "name": "Sniper",
-      "armor": false,
-      "level": 4,
-      "delay": 0.9
+      "name": "MachineGun",
+      "armor": true,
+      "cost": 6,
+      "level": 3,
+      "weight": 1,
+      "delay": 0.8
     },
     {
-      "name": "Humvee",
-      "armor": false,
-      "level": 10,
-      "delay": 0.2
+      "name": "MachineGun",
+      "armor": true,
+      "cost": 6,
+      "level": 3,
+      "weight": 1,
+      "delay": 0.8
     }
   ]
 }

@@ -6,7 +6,7 @@
       "cost": 4,
       "level": 1,
       "weight": 1,
-      "delay": 0.9
+      "delay": 0.6
     },
     {
       "name": "MachineGun",
@@ -14,7 +14,7 @@
       "cost": 4,
       "level": 1,
       "weight": 1,
-      "delay": 0.5
+      "delay": 0.7
     }
   ]
 }

@@ -1,16 +1,20 @@
 {
   "wave": [
     {
-      "name": "MachineGun",
-      "armor": false,
-      "level": 1,
-      "delay": 1
-    },
-    {
       "name": "Rifle",
       "armor": false,
+      "cost": 4,
       "level": 1,
-      "delay": 0.7
+      "weight": 1,
+      "delay": 0.6
+    },
+    {
+      "name": "MachineGun",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.1
     }
   ]
 }

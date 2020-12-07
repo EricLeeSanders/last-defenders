@@ -1,36 +1,20 @@
 {
   "wave": [
     {
-      "name": "MachineGun",
-      "armor": true,
-      "cost": 6,
-      "level": 3,
-      "weight": 1,
-      "delay": 0.9
-    },
-    {
-      "name": "Rifle",
-      "armor": true,
-      "cost": 6,
-      "level": 3,
-      "weight": 1,
-      "delay": 0.1
-    },
-    {
-      "name": "MachineGun",
-      "armor": false,
-      "cost": 4,
-      "level": 1,
-      "weight": 1,
-      "delay": 0.2
-    },
-    {
       "name": "Sniper",
       "armor": false,
       "cost": 7,
       "level": 4,
       "weight": 1,
-      "delay": 0.4
+      "delay": 0.9
+    },
+    {
+      "name": "MachineGun",
+      "armor": true,
+      "cost": 6,
+      "level": 3,
+      "weight": 1,
+      "delay": 0.1
     },
     {
       "name": "Rifle",
@@ -38,7 +22,7 @@
       "cost": 6,
       "level": 3,
       "weight": 1,
-      "delay": 0.1
+      "delay": 0.8
     },
     {
       "name": "FlameThrower",
@@ -46,31 +30,15 @@
       "cost": 9,
       "level": 5,
       "weight": 1,
-      "delay": 0.9
-    },
-    {
-      "name": "Sniper",
-      "armor": false,
-      "cost": 7,
-      "level": 4,
-      "weight": 1,
-      "delay": 0.4
-    },
-    {
-      "name": "Rifle",
-      "armor": true,
-      "cost": 6,
-      "level": 3,
-      "weight": 1,
-      "delay": 0.1
+      "delay": 0.5
     },
     {
       "name": "MachineGun",
-      "armor": true,
-      "cost": 6,
-      "level": 3,
+      "armor": false,
+      "cost": 4,
+      "level": 1,
       "weight": 1,
-      "delay": 0.9
+      "delay": 0.6
     },
     {
       "name": "Rifle",
@@ -78,31 +46,39 @@
       "cost": 6,
       "level": 3,
       "weight": 1,
-      "delay": 0.1
+      "delay": 0.8
+    },
+    {
+      "name": "FlameThrower",
+      "armor": false,
+      "cost": 9,
+      "level": 5,
+      "weight": 1,
+      "delay": 0.5
     },
     {
       "name": "Rifle",
-      "armor": true,
-      "cost": 6,
-      "level": 3,
+      "armor": false,
+      "cost": 4,
+      "level": 1,
       "weight": 1,
-      "delay": 0.1
+      "delay": 1
+    },
+    {
+      "name": "MachineGun",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.6
     },
     {
       "name": "Rifle",
-      "armor": true,
-      "cost": 6,
-      "level": 3,
+      "armor": false,
+      "cost": 4,
+      "level": 1,
       "weight": 1,
-      "delay": 0.1
-    },
-    {
-      "name": "Rifle",
-      "armor": true,
-      "cost": 6,
-      "level": 3,
-      "weight": 1,
-      "delay": 0.1
+      "delay": 1
     }
   ]
 }
