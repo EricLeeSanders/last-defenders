@@ -38,8 +38,6 @@ import com.lastdefenders.game.model.actor.combat.enemy.EnemySniper;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
-import com.lastdefenders.game.model.actor.combat.event.EventManagerImpl;
-import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerAttributes;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
@@ -212,9 +210,6 @@ public class TestUtil {
         TowerStateManager stateManager = new TowerStateManager(tower, effectFactoryMock);
         tower.setStateManager(stateManager);
 
-        EventManager eventManager = new EventManagerImpl(tower, effectFactoryMock);
-        tower.setEventManager(eventManager);
-
         tower.init();
 
         return tower;
@@ -272,9 +267,6 @@ public class TestUtil {
         EnemyStateManager stateManager = new EnemyStateManager(enemy, effectFactoryMock,
             playerMock);
         enemy.setStateManager(stateManager);
-
-        EventManager eventManager = new EventManagerImpl(enemy, effectFactoryMock);
-        enemy.setEventManager(eventManager);
 
         enemy.init();
 

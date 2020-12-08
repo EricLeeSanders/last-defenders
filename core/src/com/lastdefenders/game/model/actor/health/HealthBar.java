@@ -4,6 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
+import com.lastdefenders.game.model.actor.combat.event.CombatActorEventObserver;
+import com.lastdefenders.game.model.actor.combat.event.events.CombatActorEventEnum;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarPadding;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarStyle;
@@ -13,7 +15,7 @@ import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarS
  *
  * @author Eric
  */
-public class HealthBar extends Group {
+public class HealthBar extends Group implements CombatActorEventObserver {
 
     public static final float X_OFFSET = -10;
     public static final float Y_OFFSET = 20;
@@ -75,12 +77,6 @@ public class HealthBar extends Group {
             actor.getPositionCenter().y + Y_OFFSET);
 
 
-        if(actor.hasArmor()) {
-            armorIcon.setVisible(true);
-        } else {
-            armorIcon.setVisible(false);
-        }
-
         armorIcon.setHealthBarShowing(healthBarShowing);
 
     }
@@ -109,4 +105,23 @@ public class HealthBar extends Group {
         return redBar;
     }
 
+    private void armorActive(){
+        armorIcon.armorActive();
+    }
+
+    private void armorDestroyed(){
+        armorIcon.armorDestroyed();
+    }
+
+    @Override
+    public void combatActorEvent(CombatActorEventEnum event, CombatActor combatActor) {
+        switch(event){
+            case ARMOR_ACTIVE:
+                armorActive();
+                break;
+            case ARMOR_DESTROYED:
+                armorDestroyed();
+                break;
+        }
+    }
 }

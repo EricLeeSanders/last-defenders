@@ -10,9 +10,13 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
+import com.lastdefenders.game.model.Observerable;
 import com.lastdefenders.game.model.actor.GameActor;
-import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager;
-import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager.CombatActorEventEnum;
+import com.lastdefenders.game.model.actor.combat.event.CombatActorEventObserver;
+import com.lastdefenders.game.model.actor.combat.event.events.CombatActorEventEnum;
+import com.lastdefenders.game.model.actor.combat.state.StateManager;
+import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.model.actor.interfaces.Collidable;
@@ -24,6 +28,8 @@ import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.UtilPool;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Represents both a Tower and Enemy.
@@ -31,9 +37,11 @@ import com.lastdefenders.util.UtilPool;
  * @author Eric
  */
 public abstract class CombatActor extends GameActor implements Pool.Poolable, Collidable, Attacker,
-    Targetable {
+    Targetable, Observerable<CombatActorEventObserver> {
 
     public final String ID = ActorUtil.getRandomID();
+
+    private Set<CombatActorEventObserver> eventObservers = new HashSet<>();
 
     private float attackSpeed, range, health, attack, armor;
     private Vector2 gunPos;
@@ -41,7 +49,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
     private Circle rangeCircle = new Circle();
     private boolean hasArmor, dead, active;
     private DeathEffectType deathEffectType;
-    private EventManager eventManager;
     private CombatActorAttributes attributes;
     private int kills;
 
@@ -60,6 +67,27 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
         setTextureRegion(textureRegion);
 
 
+    }
+
+    @Override
+    public void detachObserver(CombatActorEventObserver observer) {
+        eventObservers.remove(observer);
+    }
+
+    @Override
+    public void attachObserver(CombatActorEventObserver observer) {
+        eventObservers.add(observer);
+    }
+
+    private void notifyEventObservers(CombatActorEventEnum event){
+
+        Logger.info("CombatActor: NotifyEventObservers of Event: " + event);
+
+        Set<CombatActorEventObserver> observerCopy = new HashSet<>(eventObservers);
+
+        for(CombatActorEventObserver eventObserver : observerCopy){
+            eventObserver.combatActorEvent(event, this);
+        }
     }
 
     @Override
@@ -87,11 +115,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
         if (DebugOptions.showTextureBoundaries) {
             drawDebugBody(batch);
         }
-    }
-
-    public void setEventManager(EventManager eventManager) {
-
-        this.eventManager = eventManager;
     }
 
     private void drawDebugBody(Batch batch) {
@@ -260,7 +283,10 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 
         if (hasArmor() && !hasArmor) {
             armor = 0;
-            eventManager.sendEvent(CombatActorEventEnum.ARMOR_DESTROYED);
+            notifyEventObservers(CombatActorEventEnum.ARMOR_DESTROYED);
+        } else if(hasArmor){
+            notifyEventObservers(CombatActorEventEnum.ARMOR_ACTIVE);
+            resetHealth();
         }
         resetArmor();
         this.hasArmor = hasArmor;

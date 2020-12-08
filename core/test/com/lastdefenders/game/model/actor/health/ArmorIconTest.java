@@ -1,8 +1,11 @@
 package com.lastdefenders.game.model.actor.health;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -31,50 +34,88 @@ public class ArmorIconTest {
         Gdx.app = mock(Application.class);
     }
 
-    private ArmorIcon createArmorIcon(CombatActor actor) {
-
-        TextureRegion iconMock = mock(TextureRegion.class);
-        doReturn(20).when(iconMock).getRegionWidth();
-        doReturn(20).when(iconMock).getRegionHeight();
-
-        @SuppressWarnings("unchecked")
-        ArmorIcon armorIcon = new ArmorIcon(iconMock, actor);
-
-        return armorIcon;
-    }
-
     /**
-     * Test that the ArmorIcon is placed in the correct position
-     * when the actor takes damage and that it is freed when the
-     * actor is killed.
+     * Tower does not have Armor. Test that the armor Icon is not visible.
      */
     @Test
-    @SuppressWarnings("unchecked")
     public void armorIconTest1() {
 
 
         Tower tower = TestUtil.createTower(TowerRifle.class, false);
+
+        ArmorIcon armorIcon = new ArmorIconTestUtil.ArmorIconBuilder().build();
+
+        HealthBar healthBar = new HealthBarTestUtil.HealthBarBuilder()
+            .setActor(tower).setArmorIcon(armorIcon).build();
+
+        tower.setHasArmor(false);
+
+        assertFalse(armorIcon.isVisible());
+
+
+//        armorIcon.draw(batchMock, 1);
+
+//        assertEquals(tower.getPositionCenter().y + HealthBar.Y_OFFSET, armorIcon.getY(),
+//            TestUtil.DELTA);
+//
+//        tower.takeDamage(1);
+//        tower.setPositionCenter(50, 50);
+//        armorIcon.draw(batchMock, 1);
+//
+//        assertEquals(tower.getPositionCenter().y + ArmorIcon.Y_OFFSET, armorIcon.getY(),
+//            TestUtil.DELTA);
+//        assertEquals(tower.getPositionCenter().x + ArmorIcon.X_HEALTH_BAR_DISPLAYING_OFFSET,
+//            armorIcon.getX(), TestUtil.DELTA);
+
+
+    }
+
+    /**
+     * Tower does have Armor. Test that the armor Icon is visible.
+     */
+    @Test
+    public void armorIconTest2() {
+
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+
+        ArmorIcon armorIcon = new ArmorIconTestUtil.ArmorIconBuilder().build();
+
+        HealthBar healthBar = new HealthBarTestUtil.HealthBarBuilder()
+            .setActor(tower).setArmorIcon(armorIcon).build();
+
         tower.setHasArmor(true);
-        tower.setPositionCenter(20, 20);
 
-        ArmorIcon armorIcon = createArmorIcon(tower);
+        healthBar.act(1f);
+        healthBar.draw(batchMock, 1);
 
-        armorIcon.draw(batchMock, 1);
+        assertTrue(armorIcon.isVisible());
 
-        assertEquals(tower.getPositionCenter().y + ArmorIcon.Y_OFFSET, armorIcon.getY(),
-            TestUtil.DELTA);
-        assertEquals(tower.getPositionCenter().x + ArmorIcon.X_OFFSET, armorIcon.getX(),
-            TestUtil.DELTA);
+    }
 
-        tower.takeDamage(1);
-        tower.setPositionCenter(50, 50);
-        armorIcon.draw(batchMock, 1);
+    /**
+     * Test Armor Destroyed
+     */
+    @Test
+    public void armorIconTest3() {
 
-        assertEquals(tower.getPositionCenter().y + ArmorIcon.Y_OFFSET, armorIcon.getY(),
-            TestUtil.DELTA);
-        assertEquals(tower.getPositionCenter().x + ArmorIcon.X_HEALTH_BAR_DISPLAYING_OFFSET,
-            armorIcon.getX(), TestUtil.DELTA);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false);
 
+        TextureRegion iconMock = mock(TextureRegion.class);
+        TextureRegion destroyedIconMock = mock(TextureRegion.class);
+        ArmorIcon armorIcon = new ArmorIconTestUtil.ArmorIconBuilder().setIcon(iconMock)
+            .setDestroyedIcon(destroyedIconMock).build();
+
+        HealthBar healthBar = new HealthBarTestUtil.HealthBarBuilder()
+            .setActor(tower).setArmorIcon(armorIcon).build();
+
+        tower.setHasArmor(true);
+
+        assertTrue(armorIcon.isVisible());
+
+        int armorAmount = tower.getArmorCost();
+        tower.takeDamage(armorAmount);
+        assertTrue(armorIcon.isVisible());
+        healthBar.draw(batchMock, 1);
 
     }
 }

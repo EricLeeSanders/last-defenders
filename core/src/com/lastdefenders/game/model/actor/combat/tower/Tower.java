@@ -254,7 +254,7 @@ public abstract class Tower extends CombatActor {
         return stateManager.getCurrentStateName();
     }
 
-    public StateManager<TowerStateEnum, Tower> getStateManger(){
+    public StateManager<TowerStateEnum, Tower> getStateManager(){
         return stateManager;
     }
 

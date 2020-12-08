@@ -42,30 +42,6 @@ public class HealthBarTest {
         Gdx.app = mock(Application.class);
     }
 
-    private HealthBar createHealthBar(CombatActor actor) {
-
-        setupBarMock(greenMock);
-        setupBarMock(orangeMock);
-        setupBarMock(redMock);
-        setupBarMock(grayMock);
-        setupBarMock(unfilledMock);
-
-        return new HealthBar(greenMock, orangeMock, redMock, grayMock, unfilledMock, actor);
-    }
-
-    private void setupBarMock(TextureRegionDrawable bar){
-        TextureRegion textureRegionMock = mock(TextureRegion.class);
-        Texture textureMock = mock(Texture.class);
-
-        doReturn(textureRegionMock).when(bar).getRegion();
-        doReturn(textureMock).when(textureRegionMock).getTexture();
-
-        textureRegionMock.setRegionWidth(10);
-        textureRegionMock.setRegionHeight(10);
-        textureRegionMock.setRegionX(1);
-        textureRegionMock.setRegionY(1);
-    }
-
 
     /**
      * Healthbar with green bar is displayed
@@ -76,7 +52,14 @@ public class HealthBarTest {
         Tower tower = TestUtil.createTower(TowerRifle.class, true);
         tower.setPositionCenter(20, 20);
 
-        HealthBar healthBar = createHealthBar(tower);
+        HealthBar healthBar = new HealthBarTestUtil.HealthBarBuilder()
+                                .setGreenBar(greenMock)
+                                .setOrangeBar(orangeMock)
+                                .setRedBar(redMock)
+                                .setGrayBar(grayMock)
+                                .setUnfilledBar(unfilledMock)
+                                .setActor(tower).build();
+
         healthBar = spy(healthBar);
 
         assertFalse(healthBar.isVisible());
@@ -135,7 +118,14 @@ public class HealthBarTest {
         Tower tower = TestUtil.createTower(TowerRifle.class, true);
         tower.setPositionCenter(20, 20);
 
-        HealthBar healthBar = createHealthBar(tower);
+        HealthBar healthBar = new HealthBarTestUtil.HealthBarBuilder()
+            .setGreenBar(greenMock)
+            .setOrangeBar(orangeMock)
+            .setRedBar(redMock)
+            .setGrayBar(grayMock)
+            .setUnfilledBar(unfilledMock)
+            .setActor(tower).build();
+
         healthBar = spy(healthBar);
 
         assertFalse(healthBar.isVisible());
@@ -195,7 +185,14 @@ public class HealthBarTest {
         Tower tower = TestUtil.createTower(TowerRifle.class, true);
         tower.setPositionCenter(20, 20);
 
-        HealthBar healthBar = createHealthBar(tower);
+        HealthBar healthBar = new HealthBarTestUtil.HealthBarBuilder()
+            .setGreenBar(greenMock)
+            .setOrangeBar(orangeMock)
+            .setRedBar(redMock)
+            .setGrayBar(grayMock)
+            .setUnfilledBar(unfilledMock)
+            .setActor(tower).build();
+
         healthBar = spy(healthBar);
 
         assertFalse(healthBar.isVisible());
@@ -257,7 +254,14 @@ public class HealthBarTest {
         tower.setHasArmor(true);
         tower.setPositionCenter(20, 20);
 
-        HealthBar healthBar = createHealthBar(tower);
+        HealthBar healthBar = new HealthBarTestUtil.HealthBarBuilder()
+            .setGreenBar(greenMock)
+            .setOrangeBar(orangeMock)
+            .setRedBar(redMock)
+            .setGrayBar(grayMock)
+            .setUnfilledBar(unfilledMock)
+            .setActor(tower).build();
+
         healthBar = spy(healthBar);
 
         assertFalse(healthBar.isVisible());

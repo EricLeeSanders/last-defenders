@@ -10,7 +10,7 @@ import com.lastdefenders.util.Logger;
  */
 public class Player {
 
-    private int money = 350;
+    private int money = 3050;
     private int lives = 20;
     private int waveCount = 1;
     private SnapshotArray<PlayerObserver> observers = new SnapshotArray<>();

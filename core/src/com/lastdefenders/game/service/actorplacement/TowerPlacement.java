@@ -7,8 +7,6 @@ import com.lastdefenders.game.helper.CollisionDetection;
 import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.actor.health.ArmorIcon;
-import com.lastdefenders.game.model.actor.health.HealthBar;
 import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.game.service.factory.CombatActorFactory;
 import com.lastdefenders.game.service.factory.HealthFactory;
@@ -49,7 +47,7 @@ public class TowerPlacement {
         currentTower.setPosition(0, 0);
         actorGroups.getTowerGroup().addActor(currentTower);
         currentTower.setVisible(false);
-        currentTower.getStateManger().transition(TowerStateEnum.STANDBY);
+        currentTower.getStateManager().transition(TowerStateEnum.STANDBY);
     }
 
     /**
