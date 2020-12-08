@@ -100,7 +100,7 @@ public class GameStage extends Stage implements PlayerObserver {
     private void createFactories(LDAudio audio) {
 
         effectFactory = new EffectFactory(actorGroups, resources);
-        healthFactory = new HealthFactory(actorGroups, resources);
+        healthFactory = new HealthFactory(resources);
         ProjectileFactory projectileFactory = new ProjectileFactory(actorGroups, audio, resources);
         supportActorFactory = new SupportActorFactory(actorGroups, audio, resources, effectFactory,
             projectileFactory);

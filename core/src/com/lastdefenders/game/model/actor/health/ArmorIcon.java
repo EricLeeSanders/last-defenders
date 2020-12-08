@@ -2,6 +2,7 @@ package com.lastdefenders.game.model.actor.health;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.util.Logger;
@@ -13,33 +14,31 @@ import com.lastdefenders.util.datastructures.Dimension;
 
 public class ArmorIcon extends GameActor {
 
-    public static final float Y_OFFSET = 16;
-    public static final float X_HEALTH_BAR_DISPLAYING_OFFSET = -22;
-    public static final float X_OFFSET = -6;
     private static final Dimension TEXTURE_SIZE = new Dimension(12, 13);
-    private CombatActor actor;
 
-    public ArmorIcon(TextureRegion icon, CombatActor actor) {
+    private boolean healthBarShowing;
+
+    public ArmorIcon(TextureRegion icon) {
         super(TEXTURE_SIZE);
         this.setTextureRegion(icon);
-        this.actor = actor;
+        setY(0, Align.center);
     }
 
     @Override
-    public void draw(Batch batch, float alpha) {
-
-        if (actor != null && actor.hasArmor()) {
-            setY(actor.getPositionCenter().y + Y_OFFSET);
-            // If the health bar is showing, place it to the left.
-            // Other wise place it above the actor
-            if (actor.getHealthPercent() < 1 || actor.getArmorPercent() < 1) {
-                setX(actor.getPositionCenter().x + X_HEALTH_BAR_DISPLAYING_OFFSET);
-            } else {
-                setX(actor.getPositionCenter().x + X_OFFSET);
-            }
-
-            super.draw(batch, alpha);
+    public void act(float delta) {
+        super.act(delta);
+        if(healthBarShowing){
+            setX(-TEXTURE_SIZE.getWidth(), Align.right);
+        } else {
+            setX(0, Align.center);
         }
     }
+
+    public void setHealthBarShowing(boolean healthBarShowing){
+        this.healthBarShowing = healthBarShowing;
+    }
+
+
+
 
 }

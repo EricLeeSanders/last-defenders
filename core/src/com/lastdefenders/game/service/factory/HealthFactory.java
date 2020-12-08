@@ -16,12 +16,9 @@ import com.lastdefenders.util.Resources;
 
 public class HealthFactory {
 
-    private ActorGroups actorGroups;
     private Resources resources;
 
-    public HealthFactory(ActorGroups actorGroups, Resources resources) {
-
-        this.actorGroups = actorGroups;
+    public HealthFactory(Resources resources) {
         this.resources = resources;
     }
 
@@ -34,20 +31,17 @@ public class HealthFactory {
     public HealthBar createHealthBar(CombatActor actor) {
 
         Logger.info("Health Factory: creating healthbar");
+
+        ArmorIcon armorIcon = new ArmorIcon(resources.getTexture("shield"));
+
         return new HealthBar(
             new TextureRegionDrawable(resources.getTexture("healthbar-green")),
             new TextureRegionDrawable(resources.getTexture("healthbar-orange")),
             new TextureRegionDrawable(resources.getTexture("healthbar-red")),
             new TextureRegionDrawable(resources.getTexture("healthbar-gray")),
             new TextureRegionDrawable(resources.getTexture("healthbar-unfilled")),
-            actor);
+            actor, armorIcon);
 
-    }
-
-    public ArmorIcon createArmorIcon(CombatActor actor) {
-
-        Logger.info("Actor Factory: creating ArmorIcon");
-        return new ArmorIcon(resources.getTexture("shield"), actor);
     }
 
 }

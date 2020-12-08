@@ -373,8 +373,6 @@ public class CombatActorFactory {
 
         HealthBar healthBar = healthFactory.createHealthBar(enemy);
         actorGroups.getHealthGroup().addActor(healthBar);
-        ArmorIcon armorIcon = healthFactory.createArmorIcon(enemy);
-        actorGroups.getHealthGroup().addActor(armorIcon);
 
 
         EventManager eventManager = new EventManagerImpl(enemy, effectFactory);
@@ -430,8 +428,6 @@ public class CombatActorFactory {
 
         HealthBar healthBar = healthFactory.createHealthBar(tower);
         actorGroups.getHealthGroup().addActor(healthBar);
-        ArmorIcon armorIcon = healthFactory.createArmorIcon(tower);
-        actorGroups.getHealthGroup().addActor(armorIcon);
 
 
         EventManager eventManager = new EventManagerImpl(tower, effectFactory);

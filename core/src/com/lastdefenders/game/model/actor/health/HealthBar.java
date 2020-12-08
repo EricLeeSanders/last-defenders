@@ -2,6 +2,7 @@ package com.lastdefenders.game.model.actor.health;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarPadding;
@@ -21,9 +22,11 @@ public class HealthBar extends Group {
     private CombatActor actor;
     private TextureRegionDrawable greenBar, orangeBar, redBar, grayBar;
     private LDProgressBar progressBar;
+    private ArmorIcon armorIcon;
 
     public HealthBar( TextureRegionDrawable green, TextureRegionDrawable orange,
-        TextureRegionDrawable red, TextureRegionDrawable gray, TextureRegionDrawable unfilled, CombatActor actor) {
+        TextureRegionDrawable red, TextureRegionDrawable gray, TextureRegionDrawable unfilled, CombatActor actor,
+        ArmorIcon armorIcon) {
 
         setTransform(false);
         setVisible(false);
@@ -33,12 +36,16 @@ public class HealthBar extends Group {
         this.redBar = red;
         this.grayBar = gray;
         this.actor = actor;
+        this.armorIcon = armorIcon;
+
         progressBar = new LDProgressBar(0,1, 0.000001f,
             new LDProgressBarPadding(0),
             new LDProgressBarStyle(null, green, unfilled));
 
         addActor(progressBar);
         progressBar.setSize(BAR_WIDTH, BAR_HEIGHT);
+
+        addActor(armorIcon);
 
     }
 
@@ -49,18 +56,32 @@ public class HealthBar extends Group {
         if (actor == null || actor.isDead() || !actor.isActive()) {
             setVisible(false);
             return;
-        }
-
-        if(showArmor() || showHealth()){
-            progressBar.setFilledTextureRegion(getBar().getRegion());
-            setVisible(true);
-            progressBar.setValue(actor.hasArmor() ? actor.getArmorPercent() : actor.getHealthPercent());
         } else {
-            setVisible(false);
+            setVisible(true);
         }
 
-        setPosition(actor.getPositionCenter().x + X_OFFSET,
+        boolean healthBarShowing = showArmor() || showHealth();
+
+        if(healthBarShowing){
+            progressBar.setFilledTextureRegion(getBar().getRegion());
+            progressBar.setVisible(true);
+            progressBar.setValue(actor.hasArmor() ? actor.getArmorPercent() : actor.getHealthPercent());
+            progressBar.setPosition(0,0, Align.center);
+        } else {
+            progressBar.setVisible(false);
+        }
+
+        setPosition(actor.getPositionCenter().x,
             actor.getPositionCenter().y + Y_OFFSET);
+
+
+        if(actor.hasArmor()) {
+            armorIcon.setVisible(true);
+        } else {
+            armorIcon.setVisible(false);
+        }
+
+        armorIcon.setHealthBarShowing(healthBarShowing);
 
     }
 
