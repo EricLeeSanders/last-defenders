@@ -1,7 +1,7 @@
 package simulate.state.combatactor;
 
 import com.badlogic.gdx.math.Vector2;
-import com.lastdefenders.game.model.actor.combat.CombatActorStateObserver;
+import com.lastdefenders.game.model.actor.combat.state.CombatActorStateObserver;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
 import com.lastdefenders.game.model.level.SpawningEnemy;

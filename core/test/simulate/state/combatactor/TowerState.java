@@ -1,7 +1,7 @@
 package simulate.state.combatactor;
 
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.actor.combat.CombatActorStateObserver;
+import com.lastdefenders.game.model.actor.combat.state.CombatActorStateObserver;
 import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
 
 /**
