@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
-import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import testutil.TestUtil;
 
@@ -77,7 +76,7 @@ public class HealthBarTestUtil {
 
             HealthBar healthBar = new HealthBar(greenBar, orangeBar, redBar, grayBar, unfilledBar, actor, armorIcon);
 
-            actor.attachObserver(healthBar);
+            actor.getCombatActorEventObserverManager().attachObserver(healthBar);
 
             return healthBar;
         }

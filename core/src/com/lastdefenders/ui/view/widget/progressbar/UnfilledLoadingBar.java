@@ -21,7 +21,7 @@ public class UnfilledLoadingBar extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha ) {
-
+        System.out.println(textureRegion == null);
         float width = getWidth() - (getWidth() * (progressBar.getValue()/progressBar.getMaxValue()));
         float textureRegionWidth = textureRegion.getRegionWidth() -
             (textureRegion.getRegionWidth() * (progressBar.getValue()/progressBar.getMaxValue()));

@@ -1,13 +1,7 @@
 package com.lastdefenders.game.service.factory;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
-import com.lastdefenders.game.model.actor.combat.state.StateManager;
-import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
-import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.health.ArmorIcon;
 import com.lastdefenders.game.model.actor.health.HealthBar;
 import com.lastdefenders.util.Logger;
@@ -45,9 +39,7 @@ public class HealthFactory {
             new TextureRegionDrawable(resources.getTexture("healthbar-unfilled")),
             actor, armorIcon);
 
-        actor.attachObserver(healthBar);
-
-        StateManager<TowerStateEnum, Tower> stateManager = actor.getStateManager();
+        actor.getCombatActorEventObserverManager().attachObserver(healthBar);
 
         return healthBar;
 

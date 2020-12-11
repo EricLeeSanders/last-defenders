@@ -36,6 +36,7 @@ public class CombatActorDeadState implements CombatActorState {
 
     @Override
     public void immediateStep() {
+        combatActor.setActive(false);
         combatActor.freeActor();
     }
 

@@ -5,7 +5,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.event.CombatActorEventObserver;
-import com.lastdefenders.game.model.actor.combat.event.events.CombatActorEventEnum;
+import com.lastdefenders.game.model.actor.combat.event.CombatActorEventEnum;
+import com.lastdefenders.game.model.actor.combat.event.EventObserver;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarPadding;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarStyle;
@@ -15,7 +16,7 @@ import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarS
  *
  * @author Eric
  */
-public class HealthBar extends Group implements CombatActorEventObserver {
+public class HealthBar extends Group implements EventObserver<CombatActor, CombatActorEventEnum>  {
 
     public static final float X_OFFSET = -10;
     public static final float Y_OFFSET = 20;
@@ -32,6 +33,8 @@ public class HealthBar extends Group implements CombatActorEventObserver {
 
         setTransform(false);
         setVisible(false);
+
+        System.out.println(unfilled == null);
 
         this.greenBar = green;
         this.orangeBar = orange;
@@ -55,12 +58,6 @@ public class HealthBar extends Group implements CombatActorEventObserver {
     public void act(float delta) {
 
         super.act(delta);
-        if (actor == null || actor.isDead() || !actor.isActive()) {
-            setVisible(false);
-            return;
-        } else {
-            setVisible(true);
-        }
 
         boolean healthBarShowing = showArmor() || showHealth();
 
@@ -113,8 +110,34 @@ public class HealthBar extends Group implements CombatActorEventObserver {
         armorIcon.armorDestroyed();
     }
 
+    private void actorActive(){
+        setVisible(true);
+    }
+
+    private void actorInactive(){
+        setVisible(false);
+    }
+
+//    @Override
+//    public void combatActorEvent(CombatActorEventEnum event, CombatActor combatActor) {
+//        switch(event){
+//            case ARMOR_ACTIVE:
+//                armorActive();
+//                break;
+//            case ARMOR_DESTROYED:
+//                armorDestroyed();
+//                break;
+//            case ACTIVE:
+//                actorActive();
+//                break;
+//            case INACTIVE:
+//                actorInactive();
+//                break;
+//        }
+//    }
+
     @Override
-    public void combatActorEvent(CombatActorEventEnum event, CombatActor combatActor) {
+    public void eventNotification(CombatActorEventEnum event, CombatActor observerable) {
         switch(event){
             case ARMOR_ACTIVE:
                 armorActive();
@@ -122,6 +145,13 @@ public class HealthBar extends Group implements CombatActorEventObserver {
             case ARMOR_DESTROYED:
                 armorDestroyed();
                 break;
+            case ACTIVE:
+                actorActive();
+                break;
+            case INACTIVE:
+                actorInactive();
+                break;
         }
     }
+
 }

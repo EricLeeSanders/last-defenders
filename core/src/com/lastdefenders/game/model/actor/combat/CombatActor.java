@@ -10,13 +10,10 @@ import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
-import com.lastdefenders.game.model.Observerable;
 import com.lastdefenders.game.model.actor.GameActor;
-import com.lastdefenders.game.model.actor.combat.event.CombatActorEventObserver;
-import com.lastdefenders.game.model.actor.combat.event.events.CombatActorEventEnum;
-import com.lastdefenders.game.model.actor.combat.state.StateManager;
-import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
+import com.lastdefenders.game.model.actor.combat.event.CombatActorEventEnum;
+import com.lastdefenders.game.model.actor.combat.event.EventObserverManager;
+import com.lastdefenders.game.model.actor.combat.event.EventObserver;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.model.actor.interfaces.Collidable;
@@ -28,8 +25,6 @@ import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.UtilPool;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Represents both a Tower and Enemy.
@@ -37,12 +32,11 @@ import java.util.Set;
  * @author Eric
  */
 public abstract class CombatActor extends GameActor implements Pool.Poolable, Collidable, Attacker,
-    Targetable, Observerable<CombatActorEventObserver> {
+    Targetable {
 
     public final String ID = ActorUtil.getRandomID();
 
-    private Set<CombatActorEventObserver> eventObservers = new HashSet<>();
-
+    private EventObserverManager<EventObserver<CombatActor, CombatActorEventEnum>, CombatActorEventEnum, CombatActor> eventObserverManager = new EventObserverManager<>();
     private float attackSpeed, range, health, attack, armor;
     private Vector2 gunPos;
     private Vector2 rotatedGunPos = UtilPool.getVector2();
@@ -69,26 +63,22 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 
     }
 
-    @Override
-    public void detachObserver(CombatActorEventObserver observer) {
-        eventObservers.remove(observer);
+    protected void init(){
+        setDead(false);
     }
 
-    @Override
-    public void attachObserver(CombatActorEventObserver observer) {
-        eventObservers.add(observer);
-    }
 
-    private void notifyEventObservers(CombatActorEventEnum event){
-
-        Logger.info("CombatActor: NotifyEventObservers of Event: " + event);
-
-        Set<CombatActorEventObserver> observerCopy = new HashSet<>(eventObservers);
-
-        for(CombatActorEventObserver eventObserver : observerCopy){
-            eventObserver.combatActorEvent(event, this);
-        }
-    }
+//
+//    private void notifyEventObservers(CombatActorEventEnum event){
+//
+//        Logger.info("CombatActor: NotifyEventObservers of Event: " + event);
+//
+//        Set<CombatActorEventObserver> observerCopy = new HashSet<>(eventObservers);
+//
+//        for(CombatActorEventObserver eventObserver : observerCopy){
+//            eventObserver.combatActorEvent(event, this);
+//        }
+//    }
 
     @Override
     public void reset() {
@@ -221,6 +211,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
         if (isDead()) {
             Logger.info("Combat Actor " + ID  + ": " + this.getClass().getSimpleName() + " Dead");
             deadState();
+            getCombatActorEventObserverManager().notifyEventObservers(CombatActorEventEnum.DEAD, this);
         }
     }
 
@@ -283,9 +274,9 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 
         if (hasArmor() && !hasArmor) {
             armor = 0;
-            notifyEventObservers(CombatActorEventEnum.ARMOR_DESTROYED);
+            getCombatActorEventObserverManager().notifyEventObservers(CombatActorEventEnum.ARMOR_DESTROYED, this);
         } else if(hasArmor){
-            notifyEventObservers(CombatActorEventEnum.ARMOR_ACTIVE);
+            getCombatActorEventObserverManager().notifyEventObservers(CombatActorEventEnum.ARMOR_ACTIVE, this);
             resetHealth();
         }
         resetArmor();
@@ -315,7 +306,18 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
     }
 
     public void setActive(boolean active) {
+        System.out.println("Set active: " + active);
         this.active = active;
+        if(active){
+            getCombatActorEventObserverManager().notifyEventObservers(CombatActorEventEnum.ACTIVE, this);
+        } else {
+            getCombatActorEventObserverManager().notifyEventObservers(CombatActorEventEnum.INACTIVE, this);
+        }
+    }
+
+    public EventObserverManager<EventObserver<CombatActor, CombatActorEventEnum>, CombatActorEventEnum, CombatActor> getCombatActorEventObserverManager() {
+
+        return eventObserverManager;
     }
 
 }
