@@ -49,7 +49,7 @@ public class EnemyRunningStateTest {
     public void enemyRunningStateTest1() {
 
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, true);
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
 
         Array<Action> arrayAction = new Array<>();
         arrayAction.add(new SequenceAction());

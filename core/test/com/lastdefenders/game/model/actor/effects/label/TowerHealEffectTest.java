@@ -14,7 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerSniper;
-import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
 import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,7 +53,7 @@ public class TowerHealEffectTest {
     @Test
     public void towerHealEffectTest1() {
 
-        Tower tower = TestUtil.createTower(TowerSniper.class, false);
+        Tower tower = TestUtil.createTower(TowerSniper.class, false, true);
         tower.setPositionCenter(150, 150);
 
         TowerHealEffect towerHealEffect = createTowerHealEffect();
@@ -84,7 +83,7 @@ public class TowerHealEffectTest {
     @Test
     public void towerHealEffectTest2() {
 
-        Tower tower = TestUtil.createTower(TowerSniper.class, false);
+        Tower tower = TestUtil.createTower(TowerSniper.class, false, true);
         tower.setPositionCenter(150, 150);
 
         TowerHealEffect towerHealEffect = createTowerHealEffect();

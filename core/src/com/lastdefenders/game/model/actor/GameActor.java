@@ -72,7 +72,7 @@ public class GameActor extends Actor {
         setPosition(x, y, Align.center);
     }
 
-    private TextureRegion getTextureRegion() {
+    public TextureRegion getTextureRegion() {
 
         return textureRegion;
     }

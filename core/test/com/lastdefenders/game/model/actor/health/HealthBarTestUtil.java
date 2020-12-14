@@ -68,7 +68,7 @@ public class HealthBarTestUtil {
                 unfilledBar = createMockBar();
             }
             if(actor == null){
-                actor = TestUtil.createTower(TowerRifle.class, true); // Create random actor
+                actor = TestUtil.createTower(TowerRifle.class, true, true); // Create random actor
             }
             if(armorIcon == null){
                 armorIcon = new ArmorIconTestUtil.ArmorIconBuilder().build();
@@ -80,25 +80,30 @@ public class HealthBarTestUtil {
 
             return healthBar;
         }
+    }
 
-        private TextureRegionDrawable createMockBar(){
-            TextureRegionDrawable textureMock = mock(TextureRegionDrawable.class);
-            setupBarMock(textureMock);
-            return textureMock;
+    private static TextureRegionDrawable createMockBar(){
+        TextureRegionDrawable textureMock = mock(TextureRegionDrawable.class);
+        setupBarMock(textureMock);
+        return textureMock;
+    }
+
+    public static void setupBarMock(TextureRegionDrawable bar){
+        TextureRegion textureRegionMock = mock(TextureRegion.class);
+        Texture textureMock = mock(Texture.class);
+
+        doReturn(textureRegionMock).when(bar).getRegion();
+        doReturn(textureMock).when(textureRegionMock).getTexture();
+
+        textureRegionMock.setRegionWidth(10);
+        textureRegionMock.setRegionHeight(10);
+        textureRegionMock.setRegionX(1);
+        textureRegionMock.setRegionY(1);
+    }
+
+    public static void setupBarMocks(TextureRegionDrawable... bars){
+        for(TextureRegionDrawable bar : bars){
+            setupBarMock(bar);
         }
-
-        private void setupBarMock(TextureRegionDrawable bar){
-            TextureRegion textureRegionMock = mock(TextureRegion.class);
-            Texture textureMock = mock(Texture.class);
-
-            doReturn(textureRegionMock).when(bar).getRegion();
-            doReturn(textureMock).when(textureRegionMock).getTexture();
-
-            textureRegionMock.setRegionWidth(10);
-            textureRegionMock.setRegionHeight(10);
-            textureRegionMock.setRegionX(1);
-            textureRegionMock.setRegionY(1);
-        }
-
     }
 }

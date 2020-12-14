@@ -27,7 +27,7 @@ public class TowerStateManagerTest {
     @Test
     public void transitionTest() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
 
         assertEquals(TowerStateEnum.ACTIVE, tower.getStateManager().getCurrentStateName());
 

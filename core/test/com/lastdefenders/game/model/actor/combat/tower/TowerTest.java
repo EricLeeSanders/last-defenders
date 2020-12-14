@@ -34,7 +34,7 @@ public class TowerTest {
     @Test
     public void testTowerDead() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         tower.setHasArmor(true);
         tower.takeDamage(100);
 
@@ -49,7 +49,7 @@ public class TowerTest {
     @Test
     public void testTowerArmor1() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         float damageAmount = tower.getHealth() / 2;
         tower.setHasArmor(true);
         tower.takeDamage(damageAmount);
@@ -64,7 +64,7 @@ public class TowerTest {
     @Test
     public void testTowerArmor2() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         float damageAmount = tower.getHealth() / 4;
         tower.setHasArmor(true);
         tower.takeDamage(damageAmount);
@@ -79,7 +79,7 @@ public class TowerTest {
     @Test
     public void testTowerArmor3() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         float damageAmount = tower.getHealth();
         tower.setHasArmor(true);
         tower.takeDamage(damageAmount);
@@ -94,7 +94,7 @@ public class TowerTest {
     @Test
     public void testStateAttackTarget() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true, true);
         Enemy enemy = TestUtil.createRunningEnemy(EnemyRifle.class, false);
 
         tower.getTargetGroup().addActor(enemy);
@@ -115,7 +115,7 @@ public class TowerTest {
     @Test
     public void testDeadState() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true, true);
 
         assertEquals(TowerStateEnum.ACTIVE, tower.getState());
 

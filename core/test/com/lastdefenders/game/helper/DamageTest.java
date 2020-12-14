@@ -11,10 +11,7 @@ import static org.powermock.api.mockito.PowerMockito.when;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.lastdefenders.game.helper.CollisionDetection;
-import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyHumvee;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
@@ -51,7 +48,7 @@ public class DamageTest {
     @Test
     public void dealBulletDamageAttackEnemyTest() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true, true);
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
         TestUtil.finishEnemySpawn(enemy);
         doReturn(1f).when(tower).getAttack();
@@ -63,7 +60,7 @@ public class DamageTest {
     @Test
     public void dealBulletDamageAttackTowerTest() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, true);
         TestUtil.finishEnemySpawn(enemy);
 
@@ -77,7 +74,7 @@ public class DamageTest {
     @Test
     public void dealBulletDamageKillEnemyTest() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true, true);
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
         TestUtil.finishEnemySpawn(enemy);
         doReturn(enemy.getHealth()).when(tower).getAttack();
@@ -91,7 +88,7 @@ public class DamageTest {
     @Test
     public void dealBulletDamageKillTowerTest() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, true);
 
         doReturn(tower.getHealth()).when(enemy).getAttack();
@@ -104,7 +101,7 @@ public class DamageTest {
     @Test
     public void dealBulletDamageAttackPlatedArmorTest() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true, true);
         Enemy enemy = TestUtil.createEnemy(EnemyTank.class, true);
 
         Damage.dealBulletDamage(tower, enemy);
@@ -115,7 +112,7 @@ public class DamageTest {
     @Test
     public void dealFlameGroupDamageTest() {
 
-        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true, true);
 
         doReturn(1f).when(tower).getAttack();
 
@@ -152,7 +149,7 @@ public class DamageTest {
     @Test
     public void dealFlameGroupDamageKillEnemiesTest() {
 
-        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true, true);
 
         doReturn(30f).when(tower).getAttack();
 
@@ -191,7 +188,7 @@ public class DamageTest {
     @Test
     public void dealExplosionDamageTest() {
 
-        Tower tower = TestUtil.createTower(TowerRocketLauncher.class, true);
+        Tower tower = TestUtil.createTower(TowerRocketLauncher.class, true, true);
 
         doReturn(1f).when(tower).getAttack();
 
@@ -227,7 +224,7 @@ public class DamageTest {
     @Test
     public void dealExplosionDamageKillEnemiesTest() {
 
-        Tower tower = TestUtil.createTower(TowerRocketLauncher.class, true);
+        Tower tower = TestUtil.createTower(TowerRocketLauncher.class, true, true);
 
         doReturn(20f).when(tower).getAttack();
 

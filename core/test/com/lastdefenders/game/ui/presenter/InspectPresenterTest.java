@@ -21,7 +21,6 @@ import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.helper.CollisionDetection;
 import com.lastdefenders.game.model.Player;
-import com.lastdefenders.game.model.actor.ai.TowerAIType;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
@@ -100,7 +99,7 @@ public class InspectPresenterTest {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.WAVE_IN_PROGRESS).when(gameUIStateManagerMock).getState();
-        Tower tower = TestUtil.createTower(TowerRifle.class, true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true, true);
         tower.setActive(true);
         when(CollisionDetection
             .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
@@ -127,7 +126,7 @@ public class InspectPresenterTest {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.OPTIONS).when(gameUIStateManagerMock).getState();
-        Tower tower = TestUtil.createTower(TowerRifle.class, true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true, true);
         when(CollisionDetection
             .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
             .thenReturn(tower);
@@ -163,7 +162,7 @@ public class InspectPresenterTest {
     public void increaseAttackTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -185,7 +184,7 @@ public class InspectPresenterTest {
     public void increaseAttackTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -207,7 +206,7 @@ public class InspectPresenterTest {
     public void increaseAttackTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -228,7 +227,7 @@ public class InspectPresenterTest {
     public void increaseAttackTest4() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerRifle.class, true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true, true);
         doReturn(true).when(tower).hasIncreasedAttack();
         initInspectPresenter(inspectPresenter, tower);
 
@@ -250,7 +249,7 @@ public class InspectPresenterTest {
     public void giveArmorTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerTank.class, false);
+        Tower tower = TestUtil.createTower(TowerTank.class, false, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -272,7 +271,7 @@ public class InspectPresenterTest {
     public void giveArmorTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerHumvee.class, false);
+        Tower tower = TestUtil.createTower(TowerHumvee.class, false, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -294,7 +293,7 @@ public class InspectPresenterTest {
     public void giveArmorTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -315,7 +314,7 @@ public class InspectPresenterTest {
     public void giveArmorTest4() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true, true);
         doReturn(true).when(tower).hasArmor();
         initInspectPresenter(inspectPresenter, tower);
 
@@ -337,7 +336,7 @@ public class InspectPresenterTest {
     public void increaseRangeTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerTank.class, false);
+        Tower tower = TestUtil.createTower(TowerTank.class, false, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -359,7 +358,7 @@ public class InspectPresenterTest {
     public void increaseRangeTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerHumvee.class, false);
+        Tower tower = TestUtil.createTower(TowerHumvee.class, false, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -381,7 +380,7 @@ public class InspectPresenterTest {
     public void increaseRangeTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -402,7 +401,7 @@ public class InspectPresenterTest {
     public void increaseRangeTest4() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true, true);
         doReturn(true).when(tower).hasIncreasedRange();
         initInspectPresenter(inspectPresenter, tower);
 
@@ -424,7 +423,7 @@ public class InspectPresenterTest {
     public void increaseSpeedTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerTank.class, false);
+        Tower tower = TestUtil.createTower(TowerTank.class, false, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -446,7 +445,7 @@ public class InspectPresenterTest {
     public void increaseSpeedTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerHumvee.class, false);
+        Tower tower = TestUtil.createTower(TowerHumvee.class, false, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -468,7 +467,7 @@ public class InspectPresenterTest {
     public void increaseSpeedTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -489,7 +488,7 @@ public class InspectPresenterTest {
     public void increaseSpeedTest4() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true, true);
         doReturn(true).when(tower).hasIncreasedSpeed();
         initInspectPresenter(inspectPresenter, tower);
 
@@ -511,7 +510,7 @@ public class InspectPresenterTest {
     public void dischargeTest1() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -531,7 +530,7 @@ public class InspectPresenterTest {
     public void dischargeTest2() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);
@@ -551,7 +550,7 @@ public class InspectPresenterTest {
     public void dischargeTest3() {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
-        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true, true);
         initInspectPresenter(inspectPresenter, tower);
 
         reset(gameUIStateManagerMock);

@@ -306,7 +306,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
     }
 
     public void setActive(boolean active) {
-        System.out.println("Set active: " + active);
         this.active = active;
         if(active){
             getCombatActorEventObserverManager().notifyEventObservers(CombatActorEventEnum.ACTIVE, this);

@@ -34,8 +34,6 @@ public class HealthBar extends Group implements EventObserver<CombatActor, Comba
         setTransform(false);
         setVisible(false);
 
-        System.out.println(unfilled == null);
-
         this.greenBar = green;
         this.orangeBar = orange;
         this.redBar = red;
@@ -49,6 +47,7 @@ public class HealthBar extends Group implements EventObserver<CombatActor, Comba
 
         addActor(progressBar);
         progressBar.setSize(BAR_WIDTH, BAR_HEIGHT);
+        progressBar.setVisible(false);
 
         addActor(armorIcon);
 
@@ -56,7 +55,6 @@ public class HealthBar extends Group implements EventObserver<CombatActor, Comba
 
     @Override
     public void act(float delta) {
-
         super.act(delta);
 
         boolean healthBarShowing = showArmor() || showHealth();
@@ -118,26 +116,9 @@ public class HealthBar extends Group implements EventObserver<CombatActor, Comba
         setVisible(false);
     }
 
-//    @Override
-//    public void combatActorEvent(CombatActorEventEnum event, CombatActor combatActor) {
-//        switch(event){
-//            case ARMOR_ACTIVE:
-//                armorActive();
-//                break;
-//            case ARMOR_DESTROYED:
-//                armorDestroyed();
-//                break;
-//            case ACTIVE:
-//                actorActive();
-//                break;
-//            case INACTIVE:
-//                actorInactive();
-//                break;
-//        }
-//    }
-
     @Override
     public void eventNotification(CombatActorEventEnum event, CombatActor observerable) {
+
         switch(event){
             case ARMOR_ACTIVE:
                 armorActive();
@@ -152,6 +133,10 @@ public class HealthBar extends Group implements EventObserver<CombatActor, Comba
                 actorInactive();
                 break;
         }
+    }
+
+    public LDProgressBar getProgressBar(){
+        return progressBar;
     }
 
 }

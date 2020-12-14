@@ -5,7 +5,6 @@ import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRocketLauncher;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
@@ -13,7 +12,6 @@ import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
-import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +32,7 @@ public class ActorUtilTest {
     @Test
     public void calcBotLeftPointFromCenterTest() {
 
-        Tower tower = TestUtil.createTower(TowerFlameThrower.class, false);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, false, true);
         tower.setPositionCenter(100, 200);
 
         float center = ActorUtil
@@ -46,7 +44,7 @@ public class ActorUtilTest {
     @Test
     public void calculateRotationTest() {
 
-        Tower tower = TestUtil.createTower(TowerHumvee.class, false);
+        Tower tower = TestUtil.createTower(TowerHumvee.class, false, true);
         tower.setPositionCenter(100, 100);
 
         Enemy enemy = TestUtil.createEnemy(EnemyTank.class, false);
@@ -61,7 +59,7 @@ public class ActorUtilTest {
     @Test
     public void calculateRotatedCoordsTest() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         tower.setPosition(75, 60);
         tower.setRotation(.5f);
 

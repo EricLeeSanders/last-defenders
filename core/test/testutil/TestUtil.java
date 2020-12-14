@@ -24,7 +24,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
@@ -64,7 +63,6 @@ import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import java.util.Collection;
 import java.util.Random;
 
 /**
@@ -162,7 +160,7 @@ public class TestUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static Tower createTower(Class<? extends Tower> towerClass, boolean spy) {
+    public static Tower createTower(Class<? extends Tower> towerClass, boolean spy, boolean init) {
 
         Tower tower;
         TowerAttributes towerAttributes = resources.getTowerAttribute(towerClass);
@@ -210,7 +208,10 @@ public class TestUtil {
         TowerStateManager stateManager = new TowerStateManager(tower, effectFactoryMock);
         tower.setStateManager(stateManager);
 
-        tower.init();
+        if(init){
+            tower.init();
+        }
+
 
         return tower;
     }

@@ -17,7 +17,7 @@ import com.lastdefenders.util.datastructures.Dimension;
 public class ArmorIcon extends GameActor {
 
     private static final Dimension TEXTURE_SIZE = new Dimension(12, 13);
-    private static final Dimension TEXTURE_PADDING_HEALTH_BAR_SHOWING = new Dimension(-2, 0);
+    static final Dimension TEXTURE_PADDING_HEALTH_BAR_SHOWING = new Dimension(-20, 0);
     private static final float DESTROYED_ICON_DURATION = 2;
     private boolean healthBarShowing;
     private TextureRegion icon;
@@ -34,13 +34,14 @@ public class ArmorIcon extends GameActor {
 
         setVisible(false);
         setY(0, Align.center);
+        setX(0, Align.center);
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
         if(healthBarShowing){
-            setX(-TEXTURE_SIZE.getWidth() + TEXTURE_PADDING_HEALTH_BAR_SHOWING.getWidth(), Align.right);
+            setX(TEXTURE_PADDING_HEALTH_BAR_SHOWING.getWidth(), Align.center);
         } else {
             setX(0, Align.center);
         }

@@ -5,12 +5,10 @@ import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
-import com.lastdefenders.game.service.factory.EffectFactory;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
@@ -42,7 +40,7 @@ public class EnemyStateManagerTest {
     public void transitionWithParametersTest() {
 
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
 
 
         Map<String, Object> parameters = new HashMap<>();

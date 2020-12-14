@@ -207,7 +207,7 @@ public class EnemyTest {
     @Test
     public void testRunningState() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         Enemy enemy = TestUtil.createRunningEnemy(EnemyRifle.class, true);
 
         enemy.getTargetGroup().addActor(tower);
@@ -221,7 +221,7 @@ public class EnemyTest {
     @Test
     public void testAttackingState() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, true);
 
         enemy.getTargetGroup().addActor(tower);

@@ -12,7 +12,6 @@ import static org.powermock.api.mockito.PowerMockito.when;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.lastdefenders.game.helper.CollisionDetection;
@@ -20,8 +19,6 @@ import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.groups.TowerGroup;
-import com.lastdefenders.game.model.actor.health.ArmorIcon;
-import com.lastdefenders.game.model.actor.health.HealthBar;
 import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.game.service.factory.CombatActorFactory;
 import com.lastdefenders.game.service.factory.HealthFactory;
@@ -68,7 +65,7 @@ public class TowerPlacementTest {
         TowerGroup towerGroup = new TowerGroup();
         doReturn(towerGroup).when(actorGroups).getTowerGroup();
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         doReturn(tower).when(combatActorFactory).loadTower(eq("Rifle"));
 
         towerPlacement.createTower("Rifle");
@@ -115,7 +112,7 @@ public class TowerPlacementTest {
         TowerGroup towerGroup = new TowerGroup();
         doReturn(towerGroup).when(actorGroups).getTowerGroup();
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         doReturn(tower).when(combatActorFactory).loadTower(eq("Rifle"));
 
         towerPlacement.createTower("Rifle");

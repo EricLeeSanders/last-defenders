@@ -14,7 +14,6 @@ import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
-import com.lastdefenders.game.model.actor.projectile.Explosion;
 import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
@@ -56,7 +55,7 @@ public class ExplosionTest {
 
         Enemy attacker = TestUtil.createEnemy(EnemyTank.class, false);
         attacker.setPositionCenter(50, 50);
-        Tower target = TestUtil.createTower(TowerHumvee.class, false);
+        Tower target = TestUtil.createTower(TowerHumvee.class, false, true);
         target.setPositionCenter(200, 200);
 
         Explosion explosion = createExplosion();
@@ -77,7 +76,7 @@ public class ExplosionTest {
 
         Enemy attacker = TestUtil.createEnemy(EnemyTank.class, false);
         attacker.setPositionCenter(50, 50);
-        Tower target = TestUtil.createTower(TowerHumvee.class, false);
+        Tower target = TestUtil.createTower(TowerHumvee.class, false, true);
         target.setPositionCenter(200, 200);
 
         Explosion explosion = createExplosion();
