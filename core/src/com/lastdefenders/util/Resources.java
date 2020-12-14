@@ -182,6 +182,7 @@ public class Resources {
         loadedTextures.put("supply-drop-crate", actorAtlas.findRegion("supply-drop-crate"));
         loadedTextures.put("apache-stationary", actorAtlas.findRegion("apache", 1));
         loadedTextures.put("shield", actorAtlas.findRegion("shield"));
+        loadedTextures.put("shield-destroyed", actorAtlas.findRegion("shield-destroyed"));
         loadedTextures.put("pathDisplayCircle", actorAtlas.findRegion("path-display-circle"));
         loadedTextures.put("blood", actorAtlas.findRegion("blood"));
 
@@ -197,7 +198,6 @@ public class Resources {
             .put("enemy-rocket-launcher", actorAtlas.findRegions("enemy-rocket-launcher"));
         loadedAtlasRegions.put("enemy-sprinter", actorAtlas.findRegions("enemy-sprinter"));
         loadedAtlasRegions.put("apache", actorAtlas.findRegions("apache"));
-        loadedAtlasRegions.put("shield-destroyed", actorAtlas.findRegions("shield-destroyed"));
         loadedAtlasRegions.put("coin", actorAtlas.findRegions("coin"));
 
 
@@ -243,12 +243,22 @@ public class Resources {
 
     public TextureRegion getTexture(String texture) {
 
-        return loadedTextures.get(texture);
+        TextureRegion retrievedTexture = loadedTextures.get(texture);
+        if(retrievedTexture == null){
+            throw new IllegalArgumentException("Texture: " + texture + " does not exist");
+        }
+
+        return retrievedTexture;
     }
 
     public Array<AtlasRegion> getAtlasRegion(String region) {
 
-        return loadedAtlasRegions.get(region);
+        Array<AtlasRegion> retrievedRegions = loadedAtlasRegions.get(region);
+        if(retrievedRegions == null){
+            throw new IllegalArgumentException("Region: " + region + " does not exist");
+        }
+
+        return retrievedRegions;
     }
 
     public void reload() {

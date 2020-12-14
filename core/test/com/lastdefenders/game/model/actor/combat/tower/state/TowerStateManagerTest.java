@@ -8,7 +8,6 @@ import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
-import com.lastdefenders.game.service.factory.EffectFactory;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -28,12 +27,12 @@ public class TowerStateManagerTest {
     @Test
     public void transitionTest() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
 
-        assertEquals(TowerStateEnum.ACTIVE, tower.getStateManger().getCurrentStateName());
+        assertEquals(TowerStateEnum.ACTIVE, tower.getStateManager().getCurrentStateName());
 
-        tower.getStateManger().transition(TowerStateEnum.WAVE_END);
-        assertEquals(TowerStateEnum.WAVE_END, tower.getStateManger().getCurrentStateName());
+        tower.getStateManager().transition(TowerStateEnum.WAVE_END);
+        assertEquals(TowerStateEnum.WAVE_END, tower.getStateManager().getCurrentStateName());
     }
 
 }

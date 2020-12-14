@@ -19,7 +19,6 @@ import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager;
-import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerActiveState;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,7 +49,7 @@ public class TowerActiveStateTest {
     public void towerActiveStateTest1() {
 
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
-        Tower tower = TestUtil.createTower(TowerRifle.class, true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true, true);
 
         TowerStateManager stateManagerMock = mock(TowerStateManager.class);
         TowerActiveState towerActiveState = new TowerActiveState(tower, stateManagerMock);

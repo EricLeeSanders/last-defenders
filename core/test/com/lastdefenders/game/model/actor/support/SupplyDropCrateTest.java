@@ -14,18 +14,15 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
 import com.lastdefenders.game.model.actor.combat.tower.TowerTank;
 import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
-import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
 import com.lastdefenders.game.service.factory.EffectFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import javax.sound.midi.Sequence;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -63,15 +60,15 @@ public class SupplyDropCrateTest {
         float dropDelay = .75f;
         LDVector2 destination = new LDVector2(280, 360);
 
-        Tower tower1 = TestUtil.createTower(TowerRifle.class, true);
+        Tower tower1 = TestUtil.createTower(TowerRifle.class, true, true);
         tower1.takeDamage(1);
         tower1.setPositionCenter(new Vector2(275, 355));
 
-        Tower tower2 = TestUtil.createTower(TowerTank.class, true);
+        Tower tower2 = TestUtil.createTower(TowerTank.class, true, true);
         tower2.takeDamage(3);
         tower2.setPositionCenter(new Vector2(284, 362));
 
-        Tower tower3 = TestUtil.createTower(TowerRocketLauncher.class, true);
+        Tower tower3 = TestUtil.createTower(TowerRocketLauncher.class, true, true);
         tower3.setHasArmor(true);
         tower3.takeDamage(1);
         tower3.setPositionCenter(new Vector2(270, 345));

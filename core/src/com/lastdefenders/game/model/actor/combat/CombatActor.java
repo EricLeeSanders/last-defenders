@@ -11,8 +11,9 @@ import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.GameActor;
-import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager;
-import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager.CombatActorEventEnum;
+import com.lastdefenders.game.model.actor.combat.event.CombatActorEventEnum;
+import com.lastdefenders.game.model.actor.combat.event.EventObserverManager;
+import com.lastdefenders.game.model.actor.combat.event.EventObserver;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.model.actor.interfaces.Collidable;
@@ -35,13 +36,13 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 
     public final String ID = ActorUtil.getRandomID();
 
+    private EventObserverManager<EventObserver<CombatActor, CombatActorEventEnum>, CombatActorEventEnum, CombatActor> eventObserverManager = new EventObserverManager<>();
     private float attackSpeed, range, health, attack, armor;
     private Vector2 gunPos;
     private Vector2 rotatedGunPos = UtilPool.getVector2();
     private Circle rangeCircle = new Circle();
     private boolean hasArmor, dead, active;
     private DeathEffectType deathEffectType;
-    private EventManager eventManager;
     private CombatActorAttributes attributes;
     private int kills;
 
@@ -61,6 +62,23 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 
 
     }
+
+    protected void init(){
+        setDead(false);
+    }
+
+
+//
+//    private void notifyEventObservers(CombatActorEventEnum event){
+//
+//        Logger.info("CombatActor: NotifyEventObservers of Event: " + event);
+//
+//        Set<CombatActorEventObserver> observerCopy = new HashSet<>(eventObservers);
+//
+//        for(CombatActorEventObserver eventObserver : observerCopy){
+//            eventObserver.combatActorEvent(event, this);
+//        }
+//    }
 
     @Override
     public void reset() {
@@ -87,11 +105,6 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
         if (DebugOptions.showTextureBoundaries) {
             drawDebugBody(batch);
         }
-    }
-
-    public void setEventManager(EventManager eventManager) {
-
-        this.eventManager = eventManager;
     }
 
     private void drawDebugBody(Batch batch) {
@@ -198,6 +211,7 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
         if (isDead()) {
             Logger.info("Combat Actor " + ID  + ": " + this.getClass().getSimpleName() + " Dead");
             deadState();
+            getCombatActorEventObserverManager().notifyEventObservers(CombatActorEventEnum.DEAD, this);
         }
     }
 
@@ -260,7 +274,10 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 
         if (hasArmor() && !hasArmor) {
             armor = 0;
-            eventManager.sendEvent(CombatActorEventEnum.ARMOR_DESTROYED);
+            getCombatActorEventObserverManager().notifyEventObservers(CombatActorEventEnum.ARMOR_DESTROYED, this);
+        } else if(hasArmor){
+            getCombatActorEventObserverManager().notifyEventObservers(CombatActorEventEnum.ARMOR_ACTIVE, this);
+            resetHealth();
         }
         resetArmor();
         this.hasArmor = hasArmor;
@@ -290,6 +307,16 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 
     public void setActive(boolean active) {
         this.active = active;
+        if(active){
+            getCombatActorEventObserverManager().notifyEventObservers(CombatActorEventEnum.ACTIVE, this);
+        } else {
+            getCombatActorEventObserverManager().notifyEventObservers(CombatActorEventEnum.INACTIVE, this);
+        }
+    }
+
+    public EventObserverManager<EventObserver<CombatActor, CombatActorEventEnum>, CombatActorEventEnum, CombatActor> getCombatActorEventObserverManager() {
+
+        return eventObserverManager;
     }
 
 }

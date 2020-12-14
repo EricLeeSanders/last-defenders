@@ -7,7 +7,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.lastdefenders.game.model.actor.ai.TowerAIType;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.combat.enemy.event.EnemyEventEnum;
+import com.lastdefenders.game.model.actor.combat.event.EventObserver;
+import com.lastdefenders.game.model.actor.combat.event.EventObserverManager;
 import com.lastdefenders.game.model.actor.combat.state.StateManager;
+import com.lastdefenders.game.model.actor.combat.tower.event.TowerEventEnum;
 import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.game.model.actor.groups.GenericGroup;
@@ -28,6 +32,7 @@ public abstract class Tower extends CombatActor {
     private static final float TOWER_ATTACK_INCREASE_RATE = 0.33f;
     private static final float TOWER_SELL_RATE = 0.75f;
     private static final float UPGRADE_MODIFIER = .3f;
+    private EventObserverManager<EventObserver<Tower, TowerEventEnum>, TowerEventEnum, Tower> towerEventObserverManager = new EventObserverManager<>();
     private int cost, armorCost, speedIncreaseCost, rangeIncreaseCost, attackIncreaseCost;
     private boolean rangeIncreaseEnabled, speedIncreaseEnabled, attackIncreaseEnabled;
     private TowerAIType ai = TowerAIType.CLOSEST;
@@ -57,9 +62,9 @@ public abstract class Tower extends CombatActor {
     }
 
     public void init() {
+        super.init();
         stateManager.transition(TowerStateEnum.ACTIVE);
         setActive(true);
-        setDead(false);
     }
 
     /**
@@ -141,7 +146,6 @@ public abstract class Tower extends CombatActor {
         speedIncreaseEnabled = false;
         attackIncreaseEnabled = false;
         this.setShowRange(false);
-        stateManager.reset();
     }
 
     public void deadState() {
@@ -254,7 +258,7 @@ public abstract class Tower extends CombatActor {
         return stateManager.getCurrentStateName();
     }
 
-    public StateManager<TowerStateEnum, Tower> getStateManger(){
+    public StateManager<TowerStateEnum, Tower> getStateManager(){
         return stateManager;
     }
 
@@ -276,5 +280,10 @@ public abstract class Tower extends CombatActor {
     @Override
     public void freeActor() {
         pool.free(this);
+    }
+
+    public EventObserverManager<EventObserver<Tower, TowerEventEnum>, TowerEventEnum, Tower> getTowerEventObserverManager() {
+
+        return towerEventObserverManager;
     }
 }

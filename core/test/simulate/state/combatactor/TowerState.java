@@ -1,14 +1,16 @@
 package simulate.state.combatactor;
 
+import com.lastdefenders.game.model.actor.combat.CombatActor;
+import com.lastdefenders.game.model.actor.combat.event.CombatActorEventEnum;
+import com.lastdefenders.game.model.actor.combat.event.EventObserver;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.actor.combat.CombatActorStateObserver;
-import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
+import com.lastdefenders.game.model.actor.combat.tower.event.TowerEventEnum;
 
 /**
  * Created by Eric on 12/16/2019.
  */
 
-public class TowerState extends CombatActorState implements CombatActorStateObserver<TowerStateEnum, Tower> {
+public class TowerState extends CombatActorState  {
 
     private Boolean rangeIncreased;
     private Boolean speedIncreased;
@@ -19,7 +21,8 @@ public class TowerState extends CombatActorState implements CombatActorStateObse
         this.rangeIncreased = actor.hasIncreasedRange();
         this.speedIncreased = actor.hasIncreasedSpeed();
         this.attackIncreased = actor.hasIncreasedAttack();
-        actor.getStateManger().attachObserver(this);
+        actor.getCombatActorEventObserverManager().attachObserver(combatActorEventObserver());
+        actor.getTowerEventObserverManager().attachObserver(towerEventObserver());
 
     }
 
@@ -38,18 +41,43 @@ public class TowerState extends CombatActorState implements CombatActorStateObse
         return attackIncreased;
     }
 
-    @Override
-    public void stateChange(TowerStateEnum state, Tower combatActor) {
+    private void deadEvent(CombatActor actor){
+        setDead(true);
+        actor.getCombatActorEventObserverManager().detachObserver(combatActorEventObserver());
+        // subtract the states number of kills (what the tower started with)
+        // from the current number so we get how many were added this wave
+        addKills(actor.getNumOfKills() - getKills());
+    }
 
-        if(state.equals(TowerStateEnum.DEAD)){
-            setDead(true);
-            combatActor.getStateManger().detachObserver(this);
-            // subtract the states number of kills (what the tower started with)
-            // from the current number so we get how many were added this wave
-            addKills(combatActor.getNumOfKills() - getKills());
-        } else if(state.equals(TowerStateEnum.WAVE_END)){
-            combatActor.getStateManger().detachObserver(this);
-            addKills(combatActor.getNumOfKills() - getKills());
-        }
+    private void waveEndEvent(Tower tower){
+        tower.getTowerEventObserverManager().detachObserver(towerEventObserver());
+        addKills(tower.getNumOfKills() - getKills());
+    }
+
+    public EventObserver<CombatActor, CombatActorEventEnum> combatActorEventObserver(){
+
+        return new EventObserver<CombatActor, CombatActorEventEnum>(){
+            @Override
+            public void eventNotification(CombatActorEventEnum event, CombatActor observerable) {
+                switch(event){
+                    case DEAD:
+                        deadEvent(observerable);
+                        break;
+                }
+            }
+        };
+    }
+
+    public EventObserver<Tower, TowerEventEnum> towerEventObserver(){
+
+        return new EventObserver<Tower, TowerEventEnum>(){
+            @Override
+            public void eventNotification(TowerEventEnum event, Tower observerable) {
+                switch(event){
+                    case WAVE_END:
+                        waveEndEvent(observerable);
+                }
+            }
+        };
     }
 }

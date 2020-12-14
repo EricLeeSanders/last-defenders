@@ -1,6 +1,5 @@
 package com.lastdefenders.game.model.actor.combat.enemy.state.states;
 
-import static org.mockito.Matchers.anyMap;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -38,7 +37,7 @@ public class EnemyAttackingStateTest {
     public void enemyAttackingStateTest1() {
 
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, true);
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("target", tower);

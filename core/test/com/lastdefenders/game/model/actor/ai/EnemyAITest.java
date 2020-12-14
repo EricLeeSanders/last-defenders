@@ -8,7 +8,6 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.lastdefenders.game.model.actor.ai.EnemyAI;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRocketLauncher;
@@ -63,7 +62,7 @@ public class EnemyAITest {
     private Tower createTower(String name, Class<? extends Tower> towerClass, Vector2 centerPos, boolean outOfRange,
         boolean dead, boolean active) {
 
-        Tower tower = TestUtil.createTower(towerClass, true);
+        Tower tower = TestUtil.createTower(towerClass, true, true);
         if (outOfRange) {
             tower.setPositionCenter(300, 300);
         } else {

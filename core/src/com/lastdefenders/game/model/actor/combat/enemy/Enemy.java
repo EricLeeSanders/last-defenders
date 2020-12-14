@@ -6,8 +6,11 @@ import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.utils.Array;
+import com.lastdefenders.game.model.actor.combat.enemy.event.EnemyEventEnum;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
+import com.lastdefenders.game.model.actor.combat.event.EventObserver;
+import com.lastdefenders.game.model.actor.combat.event.EventObserverManager;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.groups.GenericGroup;
 import com.lastdefenders.game.service.factory.CombatActorFactory.EnemyPool;
@@ -35,6 +38,7 @@ public abstract class Enemy extends CombatActor {
 
     public static final float MOVEMENT_DELAY = 1f; // The delay to wait after a target begins attacking
     private static final float FRAME_DURATION = 0.3f;
+    private EventObserverManager<EventObserver<Enemy, EnemyEventEnum>, EnemyEventEnum, Enemy> enemyEventObserverManager = new EventObserverManager<>();
     private float speed;
     private int killReward;
     private float lengthToEnd;
@@ -60,20 +64,9 @@ public abstract class Enemy extends CombatActor {
         this.targetGroup = targetGroup;
     }
 
-    public void setStateManager(EnemyStateManager stateManager) {
-
-        this.stateManager = stateManager;
-    }
-
-    public EnemyStateManager getStateManager(){
-        return this.stateManager;
-    }
-
     public void init() {
-
-
+        super.init();
         stateManager.transition(EnemyStateEnum.SPAWNING);
-        setDead(false);
         lengthToEndCalculated = false;
     }
 
@@ -167,6 +160,7 @@ public abstract class Enemy extends CombatActor {
         setTextureRegion(stationaryTextureRegion);
     }
 
+    // TODO move this to state
     public void preAttack() {
 
         rotationBeforeAttacking = getRotation();
@@ -193,7 +187,6 @@ public abstract class Enemy extends CombatActor {
         this.setRotation(0);
         lengthToEnd = 0;
         rotationBeforeAttacking = 0;
-        stateManager.reset();
     }
 
     /**
@@ -260,6 +253,20 @@ public abstract class Enemy extends CombatActor {
     @Override
     public void freeActor() {
         pool.free(this);
+    }
+
+    public EventObserverManager<EventObserver<Enemy, EnemyEventEnum>, EnemyEventEnum, Enemy>  getEnemyEventObserverManager() {
+
+        return enemyEventObserverManager;
+    }
+
+    public void setStateManager(EnemyStateManager stateManager) {
+
+        this.stateManager = stateManager;
+    }
+
+    public EnemyStateManager getStateManager(){
+        return this.stateManager;
     }
 
 }

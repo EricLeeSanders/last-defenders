@@ -24,7 +24,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
@@ -38,8 +37,6 @@ import com.lastdefenders.game.model.actor.combat.enemy.EnemySniper;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
-import com.lastdefenders.game.model.actor.combat.event.EventManagerImpl;
-import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerAttributes;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
@@ -66,7 +63,6 @@ import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import java.util.Collection;
 import java.util.Random;
 
 /**
@@ -164,7 +160,7 @@ public class TestUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static Tower createTower(Class<? extends Tower> towerClass, boolean spy) {
+    public static Tower createTower(Class<? extends Tower> towerClass, boolean spy, boolean init) {
 
         Tower tower;
         TowerAttributes towerAttributes = resources.getTowerAttribute(towerClass);
@@ -212,10 +208,10 @@ public class TestUtil {
         TowerStateManager stateManager = new TowerStateManager(tower, effectFactoryMock);
         tower.setStateManager(stateManager);
 
-        EventManager eventManager = new EventManagerImpl(tower, effectFactoryMock);
-        tower.setEventManager(eventManager);
+        if(init){
+            tower.init();
+        }
 
-        tower.init();
 
         return tower;
     }
@@ -272,9 +268,6 @@ public class TestUtil {
         EnemyStateManager stateManager = new EnemyStateManager(enemy, effectFactoryMock,
             playerMock);
         enemy.setStateManager(stateManager);
-
-        EventManager eventManager = new EventManagerImpl(enemy, effectFactoryMock);
-        enemy.setEventManager(eventManager);
 
         enemy.init();
 

@@ -1,16 +1,16 @@
 package com.lastdefenders.game.model.actor.health;
 
+import static com.lastdefenders.game.model.actor.health.ArmorIcon.TEXTURE_PADDING_HEALTH_BAR_SHOWING;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doReturn;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.lastdefenders.game.model.actor.combat.CombatActor;
+import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import org.junit.Before;
@@ -31,50 +31,93 @@ public class ArmorIconTest {
         Gdx.app = mock(Application.class);
     }
 
-    private ArmorIcon createArmorIcon(CombatActor actor) {
-
-        TextureRegion iconMock = mock(TextureRegion.class);
-        doReturn(20).when(iconMock).getRegionWidth();
-        doReturn(20).when(iconMock).getRegionHeight();
-
-        @SuppressWarnings("unchecked")
-        ArmorIcon armorIcon = new ArmorIcon(iconMock, actor);
-
-        return armorIcon;
-    }
-
     /**
-     * Test that the ArmorIcon is placed in the correct position
-     * when the actor takes damage and that it is freed when the
-     * actor is killed.
+     * Tower has armor and takes no damage. Verify that the armor icon is visible and centered.
      */
     @Test
-    @SuppressWarnings("unchecked")
     public void armorIconTest1() {
 
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, false);
+        tower.setHasArmor(false);
+
+        ArmorIcon armorIcon = new ArmorIconTestUtil.ArmorIconBuilder().build();
+
+        HealthBar healthBar = new HealthBarTestUtil.HealthBarBuilder()
+            .setActor(tower).setArmorIcon(armorIcon).build();
+
+        tower.init();
+
+        assertFalse(armorIcon.isVisible());
+
         tower.setHasArmor(true);
-        tower.setPositionCenter(20, 20);
 
-        ArmorIcon armorIcon = createArmorIcon(tower);
+        assertTrue(armorIcon.isVisible());
 
-        armorIcon.draw(batchMock, 1);
+        healthBar.act(1f);
+        healthBar.draw(batchMock, 1);
 
-        assertEquals(tower.getPositionCenter().y + ArmorIcon.Y_OFFSET, armorIcon.getY(),
-            TestUtil.DELTA);
-        assertEquals(tower.getPositionCenter().x + ArmorIcon.X_OFFSET, armorIcon.getX(),
-            TestUtil.DELTA);
+        assertEquals(0, armorIcon.getX(Align.center), TestUtil.DELTA);
+        assertEquals(0, armorIcon.getY(Align.center), TestUtil.DELTA);
 
-        tower.takeDamage(1);
-        tower.setPositionCenter(50, 50);
-        armorIcon.draw(batchMock, 1);
+    }
 
-        assertEquals(tower.getPositionCenter().y + ArmorIcon.Y_OFFSET, armorIcon.getY(),
-            TestUtil.DELTA);
-        assertEquals(tower.getPositionCenter().x + ArmorIcon.X_HEALTH_BAR_DISPLAYING_OFFSET,
-            armorIcon.getX(), TestUtil.DELTA);
+    /**
+     * Tower has armor and takes damage. Verify that the armor icon is visible and positioned to the left.
+     */
+    @Test
+    public void armorIconTest2() {
 
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, false);
 
+        ArmorIcon armorIcon = new ArmorIconTestUtil.ArmorIconBuilder().build();
+
+        HealthBar healthBar = new HealthBarTestUtil.HealthBarBuilder()
+            .setActor(tower).setArmorIcon(armorIcon).build();
+
+        tower.init();
+        tower.setHasArmor(true);
+
+        assertTrue(armorIcon.isVisible());
+
+        tower.takeDamage(tower.getArmor() / 2);
+
+        // Act twice. Once so that the healthbar progressbar is made visible. And 2nd so that the
+        // ArmorIcon is moved after the progressbar is made visible.
+        healthBar.act(1f);
+        healthBar.draw(batchMock, 1);
+        healthBar.act(1f);
+        healthBar.draw(batchMock, 1);
+
+        assertTrue(healthBar.getProgressBar().isVisible());
+
+        assertEquals(TEXTURE_PADDING_HEALTH_BAR_SHOWING.getWidth(), armorIcon.getX(Align.center), TestUtil.DELTA);
+        assertEquals(0, armorIcon.getY(Align.center), TestUtil.DELTA);
+    }
+
+    /**
+     * Test Armor Destroyed
+     */
+    @Test
+    public void armorIconTest3() {
+
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, false);
+
+        TextureRegion icon = mock(TextureRegion.class);
+        TextureRegion destroyedIcon = mock(TextureRegion.class);
+        ArmorIcon armorIcon = new ArmorIconTestUtil.ArmorIconBuilder()
+            .setIcon(icon).setDestroyedIcon(destroyedIcon).build();
+
+        HealthBar healthBar = new HealthBarTestUtil.HealthBarBuilder()
+            .setActor(tower).setArmorIcon(armorIcon).build();
+
+        tower.init();
+        tower.setHasArmor(true);
+
+        assertTrue(armorIcon.isVisible());
+
+        tower.takeDamage(tower.getArmor());
+
+        assertEquals(destroyedIcon, armorIcon.getTextureRegion());
     }
 }

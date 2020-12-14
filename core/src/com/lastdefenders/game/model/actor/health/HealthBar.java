@@ -2,7 +2,11 @@ package com.lastdefenders.game.model.actor.health;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
+import com.lastdefenders.game.model.actor.combat.event.CombatActorEventObserver;
+import com.lastdefenders.game.model.actor.combat.event.CombatActorEventEnum;
+import com.lastdefenders.game.model.actor.combat.event.EventObserver;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarPadding;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarStyle;
@@ -12,7 +16,7 @@ import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarS
  *
  * @author Eric
  */
-public class HealthBar extends Group {
+public class HealthBar extends Group implements EventObserver<CombatActor, CombatActorEventEnum>  {
 
     public static final float X_OFFSET = -10;
     public static final float Y_OFFSET = 20;
@@ -21,9 +25,11 @@ public class HealthBar extends Group {
     private CombatActor actor;
     private TextureRegionDrawable greenBar, orangeBar, redBar, grayBar;
     private LDProgressBar progressBar;
+    private ArmorIcon armorIcon;
 
     public HealthBar( TextureRegionDrawable green, TextureRegionDrawable orange,
-        TextureRegionDrawable red, TextureRegionDrawable gray, TextureRegionDrawable unfilled, CombatActor actor) {
+        TextureRegionDrawable red, TextureRegionDrawable gray, TextureRegionDrawable unfilled, CombatActor actor,
+        ArmorIcon armorIcon) {
 
         setTransform(false);
         setVisible(false);
@@ -33,34 +39,40 @@ public class HealthBar extends Group {
         this.redBar = red;
         this.grayBar = gray;
         this.actor = actor;
+        this.armorIcon = armorIcon;
+
         progressBar = new LDProgressBar(0,1, 0.000001f,
             new LDProgressBarPadding(0),
             new LDProgressBarStyle(null, green, unfilled));
 
         addActor(progressBar);
         progressBar.setSize(BAR_WIDTH, BAR_HEIGHT);
+        progressBar.setVisible(false);
+
+        addActor(armorIcon);
 
     }
 
     @Override
     public void act(float delta) {
-
         super.act(delta);
-        if (actor == null || actor.isDead() || !actor.isActive()) {
-            setVisible(false);
-            return;
-        }
 
-        if(showArmor() || showHealth()){
+        boolean healthBarShowing = showArmor() || showHealth();
+
+        if(healthBarShowing){
             progressBar.setFilledTextureRegion(getBar().getRegion());
-            setVisible(true);
+            progressBar.setVisible(true);
             progressBar.setValue(actor.hasArmor() ? actor.getArmorPercent() : actor.getHealthPercent());
+            progressBar.setPosition(0,0, Align.center);
         } else {
-            setVisible(false);
+            progressBar.setVisible(false);
         }
 
-        setPosition(actor.getPositionCenter().x + X_OFFSET,
+        setPosition(actor.getPositionCenter().x,
             actor.getPositionCenter().y + Y_OFFSET);
+
+
+        armorIcon.setHealthBarShowing(healthBarShowing);
 
     }
 
@@ -86,6 +98,45 @@ public class HealthBar extends Group {
         }
 
         return redBar;
+    }
+
+    private void armorActive(){
+        armorIcon.armorActive();
+    }
+
+    private void armorDestroyed(){
+        armorIcon.armorDestroyed();
+    }
+
+    private void actorActive(){
+        setVisible(true);
+    }
+
+    private void actorInactive(){
+        setVisible(false);
+    }
+
+    @Override
+    public void eventNotification(CombatActorEventEnum event, CombatActor observerable) {
+
+        switch(event){
+            case ARMOR_ACTIVE:
+                armorActive();
+                break;
+            case ARMOR_DESTROYED:
+                armorDestroyed();
+                break;
+            case ACTIVE:
+                actorActive();
+                break;
+            case INACTIVE:
+                actorInactive();
+                break;
+        }
+    }
+
+    public LDProgressBar getProgressBar(){
+        return progressBar;
     }
 
 }

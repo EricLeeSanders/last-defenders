@@ -16,7 +16,6 @@ import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.service.actorplacement.TowerPlacement;
-import com.lastdefenders.game.ui.presenter.EnlistPresenter;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.interfaces.IEnlistView;
@@ -273,7 +272,7 @@ public class EnlistPresenterTest {
         doReturn(GameUIState.PLACING_TOWER).when(gameUIStateManagerMock).getState();
         enlistPresenter.setView(enlistView);
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, true);
+        Tower tower = TestUtil.createTower(TowerRifle.class, true, true);
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 
@@ -302,7 +301,7 @@ public class EnlistPresenterTest {
         doReturn(GameUIState.ENLISTING).when(gameUIStateManagerMock).getState();
         enlistPresenter.setView(enlistView);
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 
@@ -324,7 +323,7 @@ public class EnlistPresenterTest {
         doReturn(GameUIState.PLACING_TOWER).when(gameUIStateManagerMock).getState();
         enlistPresenter.setView(enlistView);
 
-        Tower tower = TestUtil.createTower(TowerHumvee.class, true);
+        Tower tower = TestUtil.createTower(TowerHumvee.class, true, true);
         doReturn(tower).when(towerPlacementMock).getCurrentTower();
         doReturn(true).when(towerPlacementMock).isCurrentTower();
 

@@ -20,7 +20,6 @@ import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
-import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.datastructures.Dimension;
 import org.junit.Before;
@@ -59,7 +58,7 @@ public class BulletTest {
     @Test
     public void bulletTest1() {
 
-        Tower attacker = TestUtil.createTower(TowerRifle.class, false);
+        Tower attacker = TestUtil.createTower(TowerRifle.class, false, true);
         attacker.setPositionCenter(40, 40);
         Enemy target = TestUtil.createRunningEnemy(EnemyRifle.class, false);
         target.setPositionCenter(140, 140);
@@ -90,7 +89,7 @@ public class BulletTest {
     @Test
     public void bulletTest2() {
 
-        Tower attacker = TestUtil.createTower(TowerRifle.class, false);
+        Tower attacker = TestUtil.createTower(TowerRifle.class, false, true);
         attacker.setPositionCenter(40, 40);
         Enemy target = TestUtil.createEnemy(EnemyRifle.class, true);
         target.setPositionCenter(140, 140);

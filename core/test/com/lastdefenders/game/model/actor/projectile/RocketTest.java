@@ -8,13 +8,10 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Interpolation.Exp;
 import com.badlogic.gdx.math.Vector2;
 import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
-import com.lastdefenders.game.model.actor.projectile.Explosion;
-import com.lastdefenders.game.model.actor.projectile.Rocket;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.ActorUtil;
@@ -58,7 +55,7 @@ public class RocketTest {
     @Test
     public void rocketTest1() {
 
-        Tower tower = TestUtil.createTower(TowerRifle.class, false);
+        Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         tower.setPositionCenter(40, 80);
         Vector2 destination = new Vector2(100, 100);
         Dimension size = new Dimension(20, 20);

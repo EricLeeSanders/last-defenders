@@ -20,7 +20,6 @@ import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
-import com.lastdefenders.game.model.actor.projectile.Flame;
 import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
@@ -60,7 +59,7 @@ public class FlameTest {
     @Test
     public void flameTest1() {
 
-        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true, true);
         tower.setRotation(90);
         Vector2 gunPos = new Vector2(5, 5);
         doReturn(gunPos).when(tower).getGunPos();
@@ -116,7 +115,7 @@ public class FlameTest {
     @Test
     public void flameTest2() {
 
-        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true);
+        Tower tower = TestUtil.createTower(TowerFlameThrower.class, true, true);
         tower.setRotation(90);
         Vector2 gunPos = new Vector2(5, 5);
         doReturn(gunPos).when(tower).getGunPos();

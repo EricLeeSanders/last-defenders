@@ -37,8 +37,10 @@ public class EnemyReachedEndState implements CombatActorState {
 
     @Override
     public void immediateStep() {
+        enemy.setActive(false);
         enemy.reachedEnd();
         player.enemyReachedEnd();
+
     }
 
     @Override

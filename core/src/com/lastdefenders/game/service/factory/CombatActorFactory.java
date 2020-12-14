@@ -16,8 +16,6 @@ import com.lastdefenders.game.model.actor.combat.enemy.EnemyRocketLauncher;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemySniper;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
-import com.lastdefenders.game.model.actor.combat.event.EventManagerImpl;
-import com.lastdefenders.game.model.actor.combat.event.interfaces.EventManager;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerAttributes;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
@@ -28,7 +26,6 @@ import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
 import com.lastdefenders.game.model.actor.combat.tower.TowerSniper;
 import com.lastdefenders.game.model.actor.combat.tower.TowerTank;
 import com.lastdefenders.game.model.actor.combat.tower.state.TowerStateManager;
-import com.lastdefenders.game.model.actor.health.ArmorIcon;
 import com.lastdefenders.game.model.actor.health.HealthBar;
 import com.lastdefenders.game.model.level.SpawningEnemy;
 import com.lastdefenders.util.LDAudio;
@@ -373,12 +370,6 @@ public class CombatActorFactory {
 
         HealthBar healthBar = healthFactory.createHealthBar(enemy);
         actorGroups.getHealthGroup().addActor(healthBar);
-        ArmorIcon armorIcon = healthFactory.createArmorIcon(enemy);
-        actorGroups.getHealthGroup().addActor(armorIcon);
-
-
-        EventManager eventManager = new EventManagerImpl(enemy, effectFactory);
-        enemy.setEventManager(eventManager);
 
         Logger.debug("CombatActorFactory: created enemy: " + className + " : " + enemy.ID);
 
@@ -430,12 +421,6 @@ public class CombatActorFactory {
 
         HealthBar healthBar = healthFactory.createHealthBar(tower);
         actorGroups.getHealthGroup().addActor(healthBar);
-        ArmorIcon armorIcon = healthFactory.createArmorIcon(tower);
-        actorGroups.getHealthGroup().addActor(armorIcon);
-
-
-        EventManager eventManager = new EventManagerImpl(tower, effectFactory);
-        tower.setEventManager(eventManager);
 
         Logger.debug("CombatActorFactory: created actor: " + className + " : " + tower.ID);
 

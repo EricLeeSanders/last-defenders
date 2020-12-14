@@ -47,6 +47,8 @@ public class CombatActorFactoryTest {
         Gdx.app = mock(Application.class);
         MockitoAnnotations.initMocks(this);
 
+        resources.loadActorAtlasRegions();
+
         Group healthGroup = spy(actorGroups.getHealthGroup());
         doReturn(healthGroup).when(actorGroups).getHealthGroup();
         doNothing().when(healthGroup).addActor(any(Actor.class));
