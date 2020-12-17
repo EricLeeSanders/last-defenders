@@ -6,7 +6,15 @@
       "cost": 4,
       "level": 1,
       "weight": 1,
-      "delay": 0.6
+      "delay": 0.3
+    },
+    {
+      "name": "MachineGun",
+      "armor": true,
+      "cost": 6,
+      "level": 3,
+      "weight": 1,
+      "delay": 0.3
     },
     {
       "name": "Rifle",
@@ -14,15 +22,7 @@
       "cost": 4,
       "level": 1,
       "weight": 1,
-      "delay": 0.4
-    },
-    {
-      "name": "Rifle",
-      "armor": true,
-      "cost": 6,
-      "level": 3,
-      "weight": 1,
-      "delay": 0.6
+      "delay": 0.7
     }
   ]
 }
