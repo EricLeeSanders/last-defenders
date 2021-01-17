@@ -85,7 +85,7 @@ public class EnemyAITest {
 
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
         enemy.setPositionCenter(new Vector2(0, 0));
-        GenericGroup<Tower> enemyTargetGroup = enemy.getTargetGroup();
+        GenericGroup<Tower> enemyTargetGroup = enemy.getEnemyGroup();
         createTowerGroup(enemyTargetGroup);
 
         Tower tower = EnemyAI.findNearestTower(enemy, enemyTargetGroup.getCastedChildren());
@@ -103,7 +103,7 @@ public class EnemyAITest {
 
         Enemy enemy = TestUtil.createEnemy(EnemyRocketLauncher.class, false);
         enemy.setPositionCenter(new Vector2(0, 0));
-        GenericGroup<Tower> enemyTargetGroup = enemy.getTargetGroup();
+        GenericGroup<Tower> enemyTargetGroup = enemy.getEnemyGroup();
         createTowerGroup(enemyTargetGroup);
 
         Tower tower = EnemyAI.findNearestTower(enemy, enemyTargetGroup.getCastedChildren());

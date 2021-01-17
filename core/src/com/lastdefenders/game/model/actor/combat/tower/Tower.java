@@ -273,7 +273,7 @@ public abstract class Tower extends CombatActor {
         }
     }
 
-    public GenericGroup<Enemy> getTargetGroup(){
+    public GenericGroup<Enemy> getEnemyGroup(){
         return targetGroup;
     }
 

@@ -64,7 +64,7 @@ public class ExplosionTest {
         assertEquals(target.getPositionCenter(), explosion.getPositionCenter());
         verifyStatic(times(1));
         Damage.dealExplosionDamage(eq(attacker), eq(70.0f), eq(target.getPositionCenter()),
-            eq(attacker.getTargetGroup().getChildren()));
+            eq(attacker.getEnemyGroup().getChildren()));
 
     }
 

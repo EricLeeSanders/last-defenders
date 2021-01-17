@@ -8,9 +8,15 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.ads.AdControllerHelper;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.PlayerObserver;
+import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.label.WaveOverCoinEffect;
+import com.lastdefenders.game.model.actor.support.AirStrike;
+import com.lastdefenders.game.model.actor.support.Apache;
+import com.lastdefenders.game.model.actor.support.LandMine;
+import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDrop;
+import com.lastdefenders.game.model.actor.support.SupportActorCooldown;
 import com.lastdefenders.game.model.level.Level;
 import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.game.model.level.state.LevelStateManager;
@@ -26,6 +32,7 @@ import com.lastdefenders.game.service.factory.EffectFactory;
 import com.lastdefenders.game.service.factory.HealthFactory;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory;
+import com.lastdefenders.game.service.validator.SupportActorValidator;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.googleplay.GooglePlayAchievement;
@@ -35,6 +42,7 @@ import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
+import java.util.HashMap;
 
 /**
  * Game Stage class that contains all of the Actors and Groups. Responsible for
@@ -111,11 +119,34 @@ public class GameStage extends Stage implements PlayerObserver {
     private void createPlacementServices(Map map) {
 
         Logger.info("Game Stage: creating placement services");
+
+        java.util.Map<Class<? extends GameActor>, SupportActorValidator> supportActorValidatorMap = createSupportActorValidators();
+
         towerPlacement = new TowerPlacement(map, actorGroups, combatActorFactory, healthFactory);
-        supportActorPlacement = new SupportActorPlacement(supportActorFactory);
-        airStrikePlacement = new AirStrikePlacement(supportActorFactory);
-        supplyDropPlacement = new SupplyDropPlacement(supportActorFactory);
+        supportActorPlacement = new SupportActorPlacement(supportActorFactory, supportActorValidatorMap);
+        airStrikePlacement = new AirStrikePlacement(supportActorFactory, supportActorValidatorMap.get(AirStrike.class));
+        supplyDropPlacement = new SupplyDropPlacement(supportActorFactory, supportActorValidatorMap.get(SupplyDrop.class));
         Logger.info("Game Stage: placement services created");
+    }
+
+    private java.util.Map<Class<? extends GameActor>, SupportActorValidator> createSupportActorValidators(){
+
+        java.util.Map<Class<? extends GameActor>, SupportActorValidator> validatorMap = new HashMap<>();
+
+        validatorMap.put(Apache.class, createSupportActorValidator(Apache.COST, Apache.COOLDOWN_TIME));
+        validatorMap.put(AirStrike.class, createSupportActorValidator(AirStrike.COST, AirStrike.COOLDOWN_TIME));
+        validatorMap.put(LandMine.class, createSupportActorValidator(LandMine.COST, LandMine.COOLDOWN_TIME));
+        //validatorMap.put(SupplyDrop.class, createSupportActorValidator(SupplyDrop.COST, SupplyDrop.COOLDOWN_TIME));
+
+        return validatorMap;
+    }
+
+    private SupportActorValidator createSupportActorValidator(int cost, float cooldownTime){
+
+        SupportActorCooldown cooldown = new SupportActorCooldown(cooldownTime);
+        SupportActorValidator validator = new SupportActorValidator(uiStateManager, cost, cooldown, player);
+
+        return validator;
     }
 
     /**

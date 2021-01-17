@@ -7,7 +7,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
+import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDrop;
 import com.lastdefenders.game.ui.presenter.SupportPresenter;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
@@ -26,7 +26,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
     public void createSupplyDropTest1() {
 
         SupportPresenter supportPresenter = createSupportPresenter();
-        doReturn(SupplyDropCrate.COST).when(player).getMoney();
+        doReturn(SupplyDrop.COST).when(player).getMoney();
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
@@ -45,7 +45,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
     public void createSupplyDropTest2() {
 
         SupportPresenter supportPresenter = createSupportPresenter();
-        doReturn(SupplyDropCrate.COST - 1).when(player).getMoney();
+        doReturn(SupplyDrop.COST - 1).when(player).getMoney();
         doReturn(GameUIState.SUPPORT).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
@@ -64,7 +64,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
     public void createSupplyDropTest3() {
 
         SupportPresenter supportPresenter = createSupportPresenter();
-        doReturn(SupplyDropCrate.COST).when(player).getMoney();
+        doReturn(SupplyDrop.COST).when(player).getMoney();
         doReturn(GameUIState.GAME_OVER).when(uiStateManager).getState();
 
         supportPresenter.setView(supportView);
@@ -149,7 +149,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
         supportPresenter.setView(supportView);
         supportPresenter.placeActor();
 
-        verify(player, times(1)).spendMoney(eq(SupplyDropCrate.COST));
+        verify(player, times(1)).spendMoney(eq(SupplyDrop.COST));
         verify(supplyDropPlacement, times(1)).placeSupplyDrop();
         verify(uiStateManager, times(1)).setStateReturn();
 
@@ -168,7 +168,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
         supportPresenter.setView(supportView);
         supportPresenter.placeActor();
 
-        verify(player, never()).spendMoney(eq(SupplyDropCrate.COST));
+        verify(player, never()).spendMoney(eq(SupplyDrop.COST));
         verify(supplyDropPlacement, never()).placeSupplyDrop();
         verify(uiStateManager, never()).setStateReturn();
 
@@ -187,7 +187,7 @@ public class SupportPresenterSupplyDropTest extends SupportPresenterTest {
         supportPresenter.setView(supportView);
         supportPresenter.placeActor();
 
-        verify(player, never()).spendMoney(eq(SupplyDropCrate.COST));
+        verify(player, never()).spendMoney(eq(SupplyDrop.COST));
         verify(supplyDropPlacement, never()).placeSupplyDrop();
         verify(uiStateManager, never()).setStateReturn();
 

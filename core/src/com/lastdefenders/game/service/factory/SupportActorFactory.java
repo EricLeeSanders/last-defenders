@@ -9,8 +9,8 @@ import com.lastdefenders.game.model.actor.support.AirStrike;
 import com.lastdefenders.game.model.actor.support.AirStrikeLocation;
 import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.model.actor.support.LandMine;
-import com.lastdefenders.game.model.actor.support.SupplyDrop;
-import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
+import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDrop;
+import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDropPlane;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
@@ -22,7 +22,7 @@ import com.lastdefenders.util.Resources;
 public class SupportActorFactory {
 
     private SupportActorPool<SupplyDrop> supplyDropPool;
-    private SupportActorPool<SupplyDropCrate> supplyDropCratePool;
+    private SupportActorPool<SupplyDrop> supplyDropCratePool;
     private SupportActorPool<AirStrikeLocation> airStrikeLocationPool;
     private SupportActorPool<Apache> apachePool;
     private SupportActorPool<AirStrike> airStrikePool;
@@ -48,7 +48,7 @@ public class SupportActorFactory {
 
     private void init(){
         supplyDropPool = new SupportActorPool<>(SupplyDrop.class, actorGroups.getSupportGroup());
-        supplyDropCratePool = new SupportActorPool<>(SupplyDropCrate.class, actorGroups.getSupportGroup());
+        supplyDropCratePool = new SupportActorPool<>(SupplyDrop.class, actorGroups.getSupportGroup());
         airStrikeLocationPool = new SupportActorPool<>(AirStrikeLocation.class, actorGroups.getSupportGroup());
         apachePool = new SupportActorPool<>(Apache.class, actorGroups.getSupportGroup());
         airStrikePool = new SupportActorPool<>(AirStrike.class, actorGroups.getSupportGroup());
@@ -105,16 +105,11 @@ public class SupportActorFactory {
 
     private SupplyDrop createSupplyDrop() {
 
-        TextureRegion supplyDropRegion = resources.getTexture("supply-drop");
-        return new SupplyDrop(supplyDropRegion, supplyDropPool, this, audio);
-    }
-
-    private SupplyDropCrate createSupplyDropCrate() {
-
+        TextureRegion supplyDropPlaneRegion = resources.getTexture("supply-drop-plane");
         TextureRegion supplyDropCrateRegion = resources.getTexture("supply-drop-crate");
         TextureRegion rangeTexture = resources.getTexture("range-black");
-        return new SupplyDropCrate(supplyDropCrateRegion, rangeTexture, supplyDropCratePool,
-            actorGroups.getTowerGroup(), effectFactory);
+        SupplyDropPlane plane = new SupplyDropPlane(supplyDropPlaneRegion, audio);
+        return new SupplyDrop(supplyDropCrateRegion, rangeTexture, supplyDropPool, actorGroups.getTowerGroup(),effectFactory, plane);
     }
 
     private AirStrikeLocation createAirStrikeLocation() {
@@ -171,9 +166,6 @@ public class SupportActorFactory {
                 break;
             case "AirStrikeLocation":
                 actor = (T) createAirStrikeLocation();
-                break;
-            case "SupplyDropCrate":
-                actor = (T) createSupplyDropCrate();
                 break;
             case "SupplyDrop":
                 actor = (T) createSupplyDrop();

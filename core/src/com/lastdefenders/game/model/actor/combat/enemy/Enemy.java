@@ -246,7 +246,7 @@ public abstract class Enemy extends CombatActor {
         return speed;
     }
 
-    public GenericGroup<Tower> getTargetGroup(){
+    public GenericGroup<Tower> getEnemyGroup(){
         return targetGroup;
     }
 

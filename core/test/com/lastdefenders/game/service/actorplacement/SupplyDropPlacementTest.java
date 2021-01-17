@@ -15,11 +15,11 @@ import static org.mockito.Mockito.verify;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.lastdefenders.game.model.actor.support.SupplyDrop;
-import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
+import com.lastdefenders.game.model.actor.groups.TowerGroup;
+import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDrop;
 import com.lastdefenders.game.service.factory.SupportActorFactory;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.lastdefenders.game.model.actor.support.SupplyDropCrateTest;
+import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDropTest;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -29,7 +29,7 @@ import testutil.TestUtil;
  */
 public class SupplyDropPlacementTest {
 
-    private SupplyDropCrateTest supplyDropCrateTest = new SupplyDropCrateTest();
+    private SupplyDropTest supplyDropCrateTest = new SupplyDropTest();
     private SupportActorFactory supportActorFactory = mock(SupportActorFactory.class);
 
     @Before
@@ -41,11 +41,11 @@ public class SupplyDropPlacementTest {
     @Test
     public void supplyDropPlacementTest1() {
 
-        SupplyDropPlacement supplyDropPlacement = new SupplyDropPlacement(supportActorFactory);
-        SupplyDropCrate supplyDropCrate = supplyDropCrateTest.createSupplyDropCrate(new Group());
+        SupplyDropPlacement supplyDropPlacement = new SupplyDropPlacement(supportActorFactory, null);
+        SupplyDrop supplyDropCrate = supplyDropCrateTest.createSupplyDrop(new TowerGroup());
 
         doReturn(supplyDropCrate).when(supportActorFactory).loadSupportActor(
-            eq(SupplyDropCrate.class), eq(true));
+            eq(SupplyDrop.class), eq(true));
 
         supplyDropPlacement.createSupplyDrop();
 

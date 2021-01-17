@@ -19,8 +19,8 @@ import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRocketLauncher;
+import com.lastdefenders.game.model.actor.groups.EnemyGroup;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
-import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.ActorUtil;
@@ -54,7 +54,7 @@ public class ApacheTest {
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(bulletMock).when(projectileFactoryMock).loadProjectile(Bullet.class);
 
-        return new Apache(poolMock, new Group(), projectileFactoryMock,
+        return new Apache(poolMock, new EnemyGroup(), projectileFactoryMock,
             resourcesMock.getTexture(""), new TextureRegion[]{resourcesMock.getTexture("")},
             resourcesMock.getTexture(""), audioMock);
 
@@ -85,7 +85,7 @@ public class ApacheTest {
         Enemy enemy2 = createEnemy(EnemyFlameThrower.class, 100, new Vector2(250, 260));
         Enemy enemy3 = createEnemy(EnemyRocketLauncher.class, 300, new Vector2(250, 150));
 
-        Group targetGroup = apache.getTargetGroup();
+        Group targetGroup = apache.getEnemyGroup();
         targetGroup.addActor(enemy1);
         targetGroup.addActor(enemy2);
         targetGroup.addActor(enemy3);

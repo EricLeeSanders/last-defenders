@@ -56,7 +56,7 @@ public class EnemyFlameThrower extends Enemy implements IFlame {
 
         if (target != null) {
             audio.playSound(LDSound.FLAME_BURST);
-            projectileFactory.loadProjectile(Flame.class).initialize(this, getTargetGroup(), getFlameSize());
+            projectileFactory.loadProjectile(Flame.class).initialize(this, getEnemyGroup(), getFlameSize());
         }
     }
 

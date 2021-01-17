@@ -14,6 +14,7 @@ import static org.mockito.Mockito.verify;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.lastdefenders.game.model.actor.groups.EnemyGroup;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
 import com.lastdefenders.game.model.actor.support.AirStrike;
@@ -52,7 +53,7 @@ public class AirStrikeTest {
         Resources resourcesMock = TestUtil.createResourcesMock();
         LDAudio audioMock = mock(LDAudio.class);
 
-        return new AirStrike(poolMock, new Group(), projectileFactoryMock,
+        return new AirStrike(poolMock, new EnemyGroup(), projectileFactoryMock,
             resourcesMock.getTexture(""), resourcesMock.getTexture(""), audioMock);
 
     }

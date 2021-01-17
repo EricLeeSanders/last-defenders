@@ -99,7 +99,7 @@ public class EnemyRunningState implements CombatActorState {
 
     private Targetable findTarget() {
 
-        SnapshotArray<Tower> children = enemy.getTargetGroup().getCastedChildren();
+        SnapshotArray<Tower> children = enemy.getEnemyGroup().getCastedChildren();
         return EnemyAI.findRandomTowerInRange(enemy, children);
     }
 

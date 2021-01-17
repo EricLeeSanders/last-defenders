@@ -1,16 +1,18 @@
 package com.lastdefenders.game.ui.presenter;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.model.Player;
+import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.support.AirStrike;
 import com.lastdefenders.game.model.actor.support.Apache;
+import com.lastdefenders.game.model.actor.support.CombatSupportActor;
 import com.lastdefenders.game.model.actor.support.LandMine;
-import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
+import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDrop;
 import com.lastdefenders.game.service.actorplacement.AirStrikePlacement;
 import com.lastdefenders.game.service.actorplacement.SupplyDropPlacement;
 import com.lastdefenders.game.service.actorplacement.SupportActorPlacement;
+import com.lastdefenders.game.service.validator.SupportActorValidator;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.state.GameUIStateObserver;
@@ -41,6 +43,8 @@ public class SupportPresenter implements GameUIStateObserver {
     private MessageDisplayer messageDisplayer;
     private Map<Class<?>, Integer> supportCosts = new HashMap<>();
     private Viewport gameViewport;
+    private Map<Class<? extends GameActor>, SupportActorValidator> validatorsMap;
+
 
     public SupportPresenter(GameUIStateManager uiStateManager, Player player, LDAudio audio,
         SupportActorPlacement supportActorPlacement, AirStrikePlacement airStrikePlacement,
@@ -81,13 +85,13 @@ public class SupportPresenter implements GameUIStateObserver {
 
         Logger.info("Support Presenter: creating supply drop");
         audio.playSound(LDSound.SMALL_CLICK);
-        if (canCreateSupport(SupplyDropCrate.COST)) {
+        if (canCreateSupport(SupplyDrop.COST)) {
             supplyDropPlacement.createSupplyDrop();
             uiStateManager.setState(GameUIState.PLACING_SUPPLYDROP);
             Logger.info("Support Presenter: supply drop created");
         } else {
             Logger.info("Support Presenter: cannot afford supply drop player: " + getPlayerMoney()
-                + " cost: " + SupplyDropCrate.COST);
+                + " cost: " + SupplyDrop.COST);
             messageDisplayer.displayMessage("You cannot afford a supply drop!");
         }
 
@@ -119,7 +123,7 @@ public class SupportPresenter implements GameUIStateObserver {
 
         Logger.info("Support Presenter: place supply drop");
         if (canPlaceSupplyDrop()) {
-            int cost = SupplyDropCrate.COST;
+            int cost = SupplyDrop.COST;
             player.spendMoney(cost);
             supplyDropPlacement.placeSupplyDrop();
             uiStateManager.setStateReturn();
@@ -146,7 +150,7 @@ public class SupportPresenter implements GameUIStateObserver {
         } else {
             Logger.info(
                 "Support Presenter: cannot afford airstrike player: " + getPlayerMoney() + " cost: "
-                    + SupplyDropCrate.COST);
+                    + SupplyDrop.COST);
             messageDisplayer.displayMessage("You cannot afford an airstrike!");
         }
     }
@@ -197,7 +201,7 @@ public class SupportPresenter implements GameUIStateObserver {
     /**
      * Create a Support Actor
      */
-    public <T extends Actor> void createSupportActor(Class<T> type ) {
+    public <T extends CombatSupportActor> void createSupportActor(Class<T> type ) {
 
         Logger.info("Support Presenter: creating support actor");
         int cost = supportCosts.get(type);
@@ -354,8 +358,6 @@ public class SupportPresenter implements GameUIStateObserver {
                 view.supportState();
                 break;
             case PLACING_SUPPORT:
-                view.placingSupportState();
-                break;
             case PLACING_AIRSTRIKE:
             case PLACING_SUPPLYDROP:
                 view.placingSupportState();

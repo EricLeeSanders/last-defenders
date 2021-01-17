@@ -60,7 +60,7 @@ public class EnemyRunningStateTest {
 
         EnemyRunningState runningState = new EnemyRunningState(enemy, stateManagerMock);
 
-        SnapshotArray<Tower> targetGroupArray = enemy.getTargetGroup().getCastedChildren();
+        SnapshotArray<Tower> targetGroupArray = enemy.getEnemyGroup().getCastedChildren();
         when(EnemyAI.findRandomTowerInRange(enemy, targetGroupArray)).thenReturn(tower);
         runningState.update(10f);
         runningState.update(1f);

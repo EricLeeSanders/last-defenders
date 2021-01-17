@@ -19,7 +19,7 @@ import com.badlogic.gdx.utils.Scaling;
 import com.lastdefenders.game.model.actor.support.AirStrike;
 import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.model.actor.support.LandMine;
-import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
+import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDrop;
 import com.lastdefenders.game.ui.presenter.SupportPresenter;
 import com.lastdefenders.game.ui.view.interfaces.ISupportView;
 import com.lastdefenders.game.ui.view.widgets.SupportButton;
@@ -107,7 +107,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
         setLandmineListener(landmineButton);
 
         SupportButton supplydropButton = new SupportButton(skin, "Supply Drop",
-            SupplyDropCrate.COST, resources.getFontScale());
+            SupplyDrop.COST, resources.getFontScale());
         supportButtons.add(supplydropButton);
         supportTable.add(supplydropButton).size(133, 100).spaceBottom(5);
         setSupplyDropListener(supplydropButton);

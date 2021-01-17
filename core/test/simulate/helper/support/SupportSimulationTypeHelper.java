@@ -10,7 +10,7 @@ import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.model.actor.support.LandMine;
-import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
+import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDrop;
 import com.lastdefenders.game.service.actorplacement.SupplyDropPlacement;
 import com.lastdefenders.game.service.actorplacement.SupportActorPlacement;
 import com.lastdefenders.util.Resources;
@@ -86,7 +86,7 @@ public class SupportSimulationTypeHelper {
                 supplyDropPlacement.setLocation(supplyDropLoc);
                 currentWaveState.addSupportState(new SupplyDropState(new Vector2(supplyDropLoc)));
                 supplyDropPlacement.placeSupplyDrop();
-                player.spendMoney(SupplyDropCrate.COST);
+                player.spendMoney(SupplyDrop.COST);
                 supplyDropCooldownCounter = SUPPLY_DROP_COOLDOWN_RESET;
             }
         }
@@ -155,7 +155,7 @@ public class SupportSimulationTypeHelper {
     }
 
     private boolean canUseSupplyDrop(){
-        return player.getMoney() >= SupplyDropCrate.COST && supplyDropCooldownCounter <= 0;
+        return player.getMoney() >= SupplyDrop.COST && supplyDropCooldownCounter <= 0;
     }
 
     private boolean shouldCheckBestSupplyDropLocation(){

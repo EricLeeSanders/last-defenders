@@ -39,7 +39,7 @@ public class SupportActorPlacementTest {
     @Test
     public void apachePlacementTest1() {
 
-        SupportActorPlacement supportActorPlacement = new SupportActorPlacement(supportActorFactory);
+        SupportActorPlacement supportActorPlacement = new SupportActorPlacement(supportActorFactory, null);
 
         Group supportGroup = new Group();
         doReturn(supportGroup).when(actorGroups).getSupportGroup();
@@ -76,7 +76,7 @@ public class SupportActorPlacementTest {
     @Test
     public void landMinePlacementTest() {
 
-        SupportActorPlacement supportActorPlacement = new SupportActorPlacement(supportActorFactory);
+        SupportActorPlacement supportActorPlacement = new SupportActorPlacement(supportActorFactory, null);
 
         Group landmineGroup = new Group();
         doReturn(landmineGroup).when(actorGroups).getLandmineGroup();

@@ -62,7 +62,7 @@ public class TowerActiveState implements CombatActorState {
      */
     private Targetable findTarget() {
 
-        return tower.getAI().findTarget(tower, tower.getTargetGroup().getChildren());
+        return tower.getAI().findTarget(tower, tower.getEnemyGroup().getChildren());
     }
 
     @Override

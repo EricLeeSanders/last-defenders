@@ -15,8 +15,8 @@ import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRocketLauncher;
+import com.lastdefenders.game.model.actor.groups.EnemyGroup;
 import com.lastdefenders.game.model.actor.projectile.Explosion;
-import com.lastdefenders.game.model.actor.support.LandMine;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.Resources;
@@ -46,7 +46,7 @@ public class LandMineTest {
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(explosionMock).when(projectileFactoryMock).loadProjectile(Explosion.class);
 
-        return new LandMine(poolMock, new Group(), projectileFactoryMock,
+        return new LandMine(poolMock, new EnemyGroup(), projectileFactoryMock,
             resourcesMock.getTexture(""), resourcesMock.getTexture(""));
     }
 
@@ -72,7 +72,7 @@ public class LandMineTest {
         Enemy enemy2 = createEnemy(EnemyFlameThrower.class, 100, new Vector2(250, 260));
         Enemy enemy3 = createEnemy(EnemyRocketLauncher.class, 300, new Vector2(250, 150));
 
-        Group targetGroup = landMine.getTargetGroup();
+        Group targetGroup = landMine.getEnemyGroup();
         targetGroup.addActor(enemy1);
         targetGroup.addActor(enemy2);
         targetGroup.addActor(enemy3);

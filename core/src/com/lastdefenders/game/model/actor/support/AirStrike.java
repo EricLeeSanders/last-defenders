@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
+import com.lastdefenders.game.model.actor.groups.EnemyGroup;
 import com.lastdefenders.game.model.actor.interfaces.IRocket;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
@@ -16,15 +17,17 @@ import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
+import com.lastdefenders.util.action.LDOneTimeAction;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.UtilPool;
 
 public class AirStrike extends CombatSupportActor implements IRocket {
 
+    public static final float AIRSTRIKE_RADIUS = 60;
     public static final float AIRSTRIKE_DURATION = 2.5f;
     public static final int COST = 1000;
-    public static final float AIRSTRIKE_RADIUS = 60;
+    public static final float COOLDOWN_TIME = 30;
     private static final float ATTACK = 10f;
     private static final int MAX_AIRSTRIKES = 3;
 
@@ -36,15 +39,15 @@ public class AirStrike extends CombatSupportActor implements IRocket {
     private ProjectileFactory projectileFactory;
     private LDAudio audio;
 
-    public AirStrike(SupportActorPool<AirStrike> pool, Group targetGroup,
+
+    public AirStrike(SupportActorPool<AirStrike> pool, EnemyGroup enemyGroup,
         ProjectileFactory projectileFactory, TextureRegion textureRegion,
         TextureRegion rangeTexture, LDAudio audio) {
 
-        super(pool, targetGroup, textureRegion, TEXTURE_SIZE, rangeTexture, AIRSTRIKE_RADIUS,
-            ATTACK, GUN_POS, COST);
+        super(pool, enemyGroup, textureRegion, TEXTURE_SIZE, rangeTexture, AIRSTRIKE_RADIUS,
+            ATTACK, GUN_POS);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
-
     }
 
     public void addLocation(AirStrikeLocation location) {
@@ -69,7 +72,14 @@ public class AirStrike extends CombatSupportActor implements IRocket {
         addAction(
             Actions.sequence(
                 moveAction,
-                UtilPool.getFreeActorAction(getPool())));
+                new LDOneTimeAction() {
+                    @Override
+                    public void action() {
+                        freeActor();
+                    }
+                }
+            )
+        );
 
         audio.playSound(LDSound.AIRCRAFT_FLYOVER);
         audio.playSound(LDSound.ROCKET_LAUNCH);
@@ -105,4 +115,12 @@ public class AirStrike extends CombatSupportActor implements IRocket {
         airStrikeLocations.clear();
         super.reset();
     }
+
+    @Override
+    public int getCost() {
+
+        return COST;
+    }
+
+
 }

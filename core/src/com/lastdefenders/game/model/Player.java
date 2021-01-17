@@ -83,4 +83,8 @@ public class Player {
         setMoney(getMoney() + amount);
     }
 
+    public boolean hasEnoughMoney(int cost){
+        return this.money >= cost;
+    }
+
 }

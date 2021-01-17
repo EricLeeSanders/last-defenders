@@ -2,7 +2,9 @@ package com.lastdefenders.game.service.actorplacement;
 
 import com.lastdefenders.game.model.actor.support.AirStrike;
 import com.lastdefenders.game.model.actor.support.AirStrikeLocation;
+import com.lastdefenders.game.model.actor.support.SupportActorCooldown;
 import com.lastdefenders.game.service.factory.SupportActorFactory;
+import com.lastdefenders.game.service.validator.SupportActorValidator;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 
@@ -10,10 +12,12 @@ public class AirStrikePlacement {
 
     private AirStrike currentAirStrike;
     private SupportActorFactory supportActorFactory;
+    private SupportActorValidator airStrikeValidator;
 
-    public AirStrikePlacement(SupportActorFactory supportActorFactory) {
+    public AirStrikePlacement(SupportActorFactory supportActorFactory, SupportActorValidator airStrikeValidator) {
 
         this.supportActorFactory = supportActorFactory;
+        this.airStrikeValidator = airStrikeValidator;
     }
 
     public void createAirStrike() {

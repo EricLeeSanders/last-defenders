@@ -1,4 +1,4 @@
-package com.lastdefenders.game.model.actor.support;
+package com.lastdefenders.game.model.actor.support.supplydrop;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -7,6 +7,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -19,8 +20,10 @@ import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
 import com.lastdefenders.game.model.actor.combat.tower.TowerTank;
 import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
+import com.lastdefenders.game.model.actor.groups.TowerGroup;
 import com.lastdefenders.game.service.factory.EffectFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
+import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
@@ -31,11 +34,13 @@ import testutil.TestUtil;
  * Created by Eric on 5/23/2017.
  */
 
-public class SupplyDropCrateTest {
+public class SupplyDropTest {
 
     @SuppressWarnings("unchecked")
-    private SupportActorPool<SupplyDropCrate> supplyDropCratePoolMock = mock(SupportActorPool.class);
+    private SupportActorPool<SupplyDrop> supplyDropPoolMock = mock(SupportActorPool.class);
     private TowerHealEffect towerHealEffectMock = mock(TowerHealEffect.class);
+    private LDAudio audioMock = mock(LDAudio.class);
+    private Resources resourcesMock = mock(Resources.class);
 
     @Before
     public void initSupplyDropCrateTest() {
@@ -43,21 +48,30 @@ public class SupplyDropCrateTest {
         Gdx.app = mock(Application.class);
     }
 
-    public SupplyDropCrate createSupplyDropCrate(Group towerGroup) {
+    public SupplyDrop createSupplyDrop(TowerGroup towerGroup) {
 
-        Resources resourcesMock = mock(Resources.class);
+        SupplyDropPlane plane = createSupplyDropPlane();
+
+        return createSupplyDrop(towerGroup, plane);
+    }
+
+    public SupplyDrop createSupplyDrop(TowerGroup towerGroup, SupplyDropPlane plane) {
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
         doReturn(towerHealEffectMock).when(effectFactoryMock)
             .loadEffect(eq(TowerHealEffect.class), isA(Boolean.class));
 
-        return new SupplyDropCrate(resourcesMock.getTexture(""), resourcesMock.getTexture(""),
-            supplyDropCratePoolMock, towerGroup, effectFactoryMock);
+        return new SupplyDrop(resourcesMock.getTexture(""), resourcesMock.getTexture(""),
+            supplyDropPoolMock, towerGroup, effectFactoryMock, plane);
+    }
+
+    public SupplyDropPlane createSupplyDropPlane(){
+        SupplyDropPlane plane = new SupplyDropPlane(resourcesMock.getTexture(""), audioMock);
+        plane = spy(plane);
+        return plane;
     }
 
     @Test
-    public void supplyDropCrateTest1() {
-
-        float dropDelay = .75f;
+    public void supplyDropTest1() {
         LDVector2 destination = new LDVector2(280, 360);
 
         Tower tower1 = TestUtil.createTower(TowerRifle.class, true, true);
@@ -73,46 +87,50 @@ public class SupplyDropCrateTest {
         tower3.takeDamage(1);
         tower3.setPositionCenter(new Vector2(270, 345));
 
-        Group towerGroup = new Group();
+        TowerGroup towerGroup = new TowerGroup();
         towerGroup.addActor(tower1);
         towerGroup.addActor(tower2);
         towerGroup.addActor(tower3);
 
-        SupplyDropCrate supplyDropCrate = createSupplyDropCrate(towerGroup);
+        SupplyDropPlane plane = createSupplyDropPlane();
+        SupplyDrop supplyDrop = createSupplyDrop(towerGroup, plane);
 
-        assertFalse(supplyDropCrate.isActive());
+        assertFalse(supplyDrop.isActive());
 
-        supplyDropCrate.beginDrop(dropDelay, destination);
+        supplyDrop.beginSupplyDrop(destination);
 
-        assertTrue(supplyDropCrate.isActive());
-        assertFalse(supplyDropCrate.isVisible());
-        assertEquals(destination, supplyDropCrate.getPositionCenter());
+        assertTrue(supplyDrop.isActive());
+        assertFalse(supplyDrop.isVisible());
+        verify(plane, times(1)).beginSupplyDrop(eq(destination));
 
+
+        float dropDelay = supplyDrop.calculateDropDelay(destination);
         // Delay Action
-        supplyDropCrate.act(dropDelay);
-        assertEquals(1, supplyDropCrate.getActions().size);
+        supplyDrop.act(dropDelay);
+        assertEquals(1, supplyDrop.getActions().size);
         assertTrue(tower1.getHealthPercent() < 1);
         assertTrue(tower2.getHealthPercent() < 1);
         assertTrue(tower3.getArmorPercent() < 1);
 
         // Visible action
-        supplyDropCrate.act(0.0001f);
+        supplyDrop.act(0.0001f);
         // Scale action
-        supplyDropCrate.act(10f);
+        supplyDrop.act(10f);
         // Heal actors action
-        supplyDropCrate.act(0.0001f);
+        supplyDrop.act(0.0001f);
         // Free action
-        supplyDropCrate.act(0.0001f);
+        supplyDrop.act(0.0001f);
 
-        assertTrue(tower1.getHealthPercent() == 1);
-        assertTrue(tower2.getHealthPercent() == 1);
-        assertTrue(tower3.getArmorPercent() == 1);
+        assertEquals(1, tower1.getHealthPercent(), TestUtil.DELTA);
+        assertEquals(1, tower2.getHealthPercent(), TestUtil.DELTA);
+        assertEquals(1, tower3.getHealthPercent(), TestUtil.DELTA);
 
         verify(towerHealEffectMock, times(1)).initialize(eq(tower1));
         verify(towerHealEffectMock, times(1)).initialize(eq(tower2));
         verify(towerHealEffectMock, times(1)).initialize(eq(tower3));
 
-        verify(supplyDropCratePoolMock, times(1)).free(supplyDropCrate);
+        verify(supplyDropPoolMock, times(1)).free(supplyDrop);
 
     }
+
 }

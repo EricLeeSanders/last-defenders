@@ -210,7 +210,7 @@ public class EnemyTest {
         Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         Enemy enemy = TestUtil.createRunningEnemy(EnemyRifle.class, true);
 
-        enemy.getTargetGroup().addActor(tower);
+        enemy.getEnemyGroup().addActor(tower);
 
         Array<LDVector2> path = createWaypoints();
         enemy.setPath(path);
@@ -224,7 +224,7 @@ public class EnemyTest {
         Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, true);
 
-        enemy.getTargetGroup().addActor(tower);
+        enemy.getEnemyGroup().addActor(tower);
 
         Array<LDVector2> path = createWaypoints();
         enemy.setPath(path);

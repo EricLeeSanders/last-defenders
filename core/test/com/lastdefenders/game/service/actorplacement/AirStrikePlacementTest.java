@@ -43,7 +43,7 @@ public class AirStrikePlacementTest {
     @Test
     public void airStrikePlacementTest1() {
 
-        AirStrikePlacement airStrikePlacement = new AirStrikePlacement(supportActorFactory);
+        AirStrikePlacement airStrikePlacement = new AirStrikePlacement(supportActorFactory, null);
 
         Group supportGroup = new Group();
         doReturn(supportGroup).when(actorGroups).getSupportGroup();
