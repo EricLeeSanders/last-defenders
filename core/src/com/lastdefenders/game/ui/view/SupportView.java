@@ -19,6 +19,8 @@ import com.badlogic.gdx.utils.Scaling;
 import com.lastdefenders.game.model.actor.support.AirStrike;
 import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.model.actor.support.LandMine;
+import com.lastdefenders.game.model.actor.support.SupportActor;
+import com.lastdefenders.game.model.actor.support.SupportActorCooldown;
 import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDrop;
 import com.lastdefenders.game.ui.presenter.SupportPresenter;
 import com.lastdefenders.game.ui.view.interfaces.ISupportView;
@@ -27,6 +29,7 @@ import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.UtilPool;
+import java.util.Map;
 
 /**
  * View class for Support. Shows Support window as well as the options to
@@ -43,11 +46,13 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
     private Group choosingGroup;
     private Label lblMoney;
     private Resources resources;
+    private  Map<Class<? extends SupportActor>, SupportActorCooldown> cooldownsMap;
 
-    public SupportView(SupportPresenter presenter, Resources resources) {
+    public SupportView(SupportPresenter presenter, Resources resources, Map<Class<? extends SupportActor>, SupportActorCooldown> cooldownsMap) {
 
         this.presenter = presenter;
         this.resources = resources;
+        this.cooldownsMap = cooldownsMap;
         this.setTransform(false);
     }
 
@@ -101,25 +106,28 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
         lblMoney.setFontScale(0.6f * resources.getFontScale());
         choosingGroup.addActor(lblMoney);
 
-        SupportButton landmineButton = new SupportButton(skin, "Landmine", LandMine.COST, resources.getFontScale());
+        SupportButton landmineButton = new SupportButton(skin, "Landmine", LandMine.COST, resources.getFontScale(),
+            cooldownsMap.get(LandMine.class), presenter);
         supportButtons.add(landmineButton);
         supportTable.add(landmineButton).size(133, 100).spaceBottom(5);
         setLandmineListener(landmineButton);
 
         SupportButton supplydropButton = new SupportButton(skin, "Supply Drop",
-            SupplyDrop.COST, resources.getFontScale());
+            SupplyDrop.COST, resources.getFontScale(), cooldownsMap.get(SupplyDrop.class), presenter);
         supportButtons.add(supplydropButton);
         supportTable.add(supplydropButton).size(133, 100).spaceBottom(5);
         setSupplyDropListener(supplydropButton);
 
-        SupportButton airstrikeButton = new SupportButton(skin, "Airstrike", AirStrike.COST, resources.getFontScale());
+        SupportButton airstrikeButton = new SupportButton(skin, "Airstrike", AirStrike.COST, resources.getFontScale(),
+            cooldownsMap.get(AirStrike.class), presenter);
         supportButtons.add(airstrikeButton);
         supportTable.add(airstrikeButton).size(133, 100).spaceBottom(5);
         setAirStrikeListener(airstrikeButton);
 
         supportTable.row();
 
-        SupportButton apacheButton = new SupportButton(skin, "Apache", Apache.COST, resources.getFontScale());
+        SupportButton apacheButton = new SupportButton(skin, "Apache", Apache.COST, resources.getFontScale(),
+            cooldownsMap.get(Apache.class), presenter);
         supportButtons.add(apacheButton);
         supportTable.add(apacheButton).size(133, 100).spaceBottom(5);
         setApacheListener(apacheButton);
@@ -152,18 +160,6 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
     }
 
 
-    /**
-     * Updates the Support buttons to disable/enable.
-     */
-    private void updateSupportButtons() {
-
-        for (Actor actor : supportButtons) {
-            SupportButton supportButton = (SupportButton) actor;
-            boolean affordable = presenter.canAffordSupport(supportButton.cost);
-            supportButton.button.setDisabled(!affordable);
-        }
-    }
-
     private void setLandmineListener(final SupportButton supportButton) {
 
         supportButton.addListener(new ActorGestureListener() {
@@ -184,7 +180,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                presenter.createSupplyDrop();
+                presenter.createSupportActor(SupplyDrop.class);
             }
         });
     }
@@ -196,7 +192,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                presenter.createAirStrike();
+                presenter.createSupportActor(AirStrike.class);
             }
         });
     }
@@ -220,7 +216,7 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                presenter.placeActor();
+                presenter.finishPlacement();
             }
         });
     }
@@ -297,7 +293,6 @@ public class SupportView extends Group implements ISupportView, InputProcessor {
     @Override
     public void supportState() {
 
-        updateSupportButtons();
         lblMoney.setText(String.valueOf(presenter.getPlayerMoney()));
         choosingGroup.setVisible(true);
         btnPlacingCancel.setVisible(false);

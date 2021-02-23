@@ -60,13 +60,21 @@ public class SupplyDropTest {
         doReturn(towerHealEffectMock).when(effectFactoryMock)
             .loadEffect(eq(TowerHealEffect.class), isA(Boolean.class));
 
-        return new SupplyDrop(resourcesMock.getTexture(""), resourcesMock.getTexture(""),
+        SupplyDrop supplyDrop = new SupplyDrop(resourcesMock.getTexture(""), resourcesMock.getTexture(""),
             supplyDropPoolMock, towerGroup, effectFactoryMock, plane);
+
+        SupplyDrop supplyDropSpy = spy(supplyDrop);
+
+        doReturn(new Group()).when(supplyDropSpy).getParent();
+
+        return supplyDropSpy;
+
     }
 
     public SupplyDropPlane createSupplyDropPlane(){
         SupplyDropPlane plane = new SupplyDropPlane(resourcesMock.getTexture(""), audioMock);
         plane = spy(plane);
+
         return plane;
     }
 
@@ -94,10 +102,11 @@ public class SupplyDropTest {
 
         SupplyDropPlane plane = createSupplyDropPlane();
         SupplyDrop supplyDrop = createSupplyDrop(towerGroup, plane);
+        supplyDrop.initialize();
 
         assertFalse(supplyDrop.isActive());
-
-        supplyDrop.beginSupplyDrop(destination);
+        supplyDrop.setPlacement(destination);
+        supplyDrop.ready();
 
         assertTrue(supplyDrop.isActive());
         assertFalse(supplyDrop.isVisible());

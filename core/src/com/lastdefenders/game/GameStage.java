@@ -15,6 +15,7 @@ import com.lastdefenders.game.model.actor.effects.label.WaveOverCoinEffect;
 import com.lastdefenders.game.model.actor.support.AirStrike;
 import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.model.actor.support.LandMine;
+import com.lastdefenders.game.model.actor.support.SupportActor;
 import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDrop;
 import com.lastdefenders.game.model.actor.support.SupportActorCooldown;
 import com.lastdefenders.game.model.level.Level;
@@ -23,8 +24,6 @@ import com.lastdefenders.game.model.level.state.LevelStateManager;
 import com.lastdefenders.game.model.level.state.LevelStateManager.LevelState;
 import com.lastdefenders.game.model.level.wave.impl.DynamicWaveLoader;
 import com.lastdefenders.game.model.level.wave.impl.FileWaveLoader;
-import com.lastdefenders.game.service.actorplacement.AirStrikePlacement;
-import com.lastdefenders.game.service.actorplacement.SupplyDropPlacement;
 import com.lastdefenders.game.service.actorplacement.SupportActorPlacement;
 import com.lastdefenders.game.service.actorplacement.TowerPlacement;
 import com.lastdefenders.game.service.factory.CombatActorFactory;
@@ -64,14 +63,14 @@ public class GameStage extends Stage implements PlayerObserver {
     private Resources resources;
     private TowerPlacement towerPlacement;
     private SupportActorPlacement supportActorPlacement;
-    private AirStrikePlacement airStrikePlacement;
-    private SupplyDropPlacement supplyDropPlacement;
     private CombatActorFactory combatActorFactory;
     private HealthFactory healthFactory;
     private SupportActorFactory supportActorFactory;
     private EffectFactory effectFactory;
     private GooglePlayServices playServices;
     private AdControllerHelper adControllerHelper;
+    private java.util.Map<Class<? extends SupportActor>, SupportActorCooldown> supportActorCooldownMap = new HashMap<>();
+    private java.util.Map<Class<? extends SupportActor>, SupportActorValidator> supportActorValidatorMap = new HashMap<>();
 
     public GameStage(LevelName levelName, Player player, ActorGroups actorGroups, LDAudio audio,
         LevelStateManager levelStateManager, GameUIStateManager uiStateManager,
@@ -97,6 +96,8 @@ public class GameStage extends Stage implements PlayerObserver {
         createGroups();
         createFactories(audio);
         createPlacementServices(map);
+        initSupportActorCooldowns();
+        initSupportActorValidators();
         mapRenderer = new MapRenderer(tiledMap, resources.getTiledMapScale(), getCamera(), getBatch());
         FileWaveLoader fileWaveLoader = new FileWaveLoader(combatActorFactory, map);
         DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
@@ -120,31 +121,46 @@ public class GameStage extends Stage implements PlayerObserver {
 
         Logger.info("Game Stage: creating placement services");
 
-        java.util.Map<Class<? extends GameActor>, SupportActorValidator> supportActorValidatorMap = createSupportActorValidators();
-
         towerPlacement = new TowerPlacement(map, actorGroups, combatActorFactory, healthFactory);
         supportActorPlacement = new SupportActorPlacement(supportActorFactory, supportActorValidatorMap);
-        airStrikePlacement = new AirStrikePlacement(supportActorFactory, supportActorValidatorMap.get(AirStrike.class));
-        supplyDropPlacement = new SupplyDropPlacement(supportActorFactory, supportActorValidatorMap.get(SupplyDrop.class));
         Logger.info("Game Stage: placement services created");
     }
 
-    private java.util.Map<Class<? extends GameActor>, SupportActorValidator> createSupportActorValidators(){
+    private void initSupportActorCooldowns(){
+        SupportActorCooldown apacheCooldown = createSupportActorCooldown(Apache.COOLDOWN_TIME);
+        SupportActorCooldown airStrikeCooldown = createSupportActorCooldown(AirStrike.COOLDOWN_TIME);
+        SupportActorCooldown landMineCooldown = createSupportActorCooldown(LandMine.COOLDOWN_TIME);
+        SupportActorCooldown supplyDropCooldown = createSupportActorCooldown(SupplyDrop.COOLDOWN_TIME);
 
-        java.util.Map<Class<? extends GameActor>, SupportActorValidator> validatorMap = new HashMap<>();
+        supportActorCooldownMap.put(Apache.class, apacheCooldown);
+        supportActorCooldownMap.put(AirStrike.class, airStrikeCooldown);
+        supportActorCooldownMap.put(LandMine.class, landMineCooldown);
+        supportActorCooldownMap.put(SupplyDrop.class, supplyDropCooldown);
 
-        validatorMap.put(Apache.class, createSupportActorValidator(Apache.COST, Apache.COOLDOWN_TIME));
-        validatorMap.put(AirStrike.class, createSupportActorValidator(AirStrike.COST, AirStrike.COOLDOWN_TIME));
-        validatorMap.put(LandMine.class, createSupportActorValidator(LandMine.COST, LandMine.COOLDOWN_TIME));
-        //validatorMap.put(SupplyDrop.class, createSupportActorValidator(SupplyDrop.COST, SupplyDrop.COOLDOWN_TIME));
-
-        return validatorMap;
+        actorGroups.getCooldownGroup().addActor(apacheCooldown);
+        actorGroups.getCooldownGroup().addActor(airStrikeCooldown);
+        actorGroups.getCooldownGroup().addActor(landMineCooldown);
+        actorGroups.getCooldownGroup().addActor(supplyDropCooldown);
     }
 
-    private SupportActorValidator createSupportActorValidator(int cost, float cooldownTime){
-
+    private SupportActorCooldown createSupportActorCooldown(float cooldownTime){
         SupportActorCooldown cooldown = new SupportActorCooldown(cooldownTime);
-        SupportActorValidator validator = new SupportActorValidator(uiStateManager, cost, cooldown, player);
+
+        return cooldown;
+    }
+
+    private void initSupportActorValidators(){
+
+        supportActorValidatorMap.put(Apache.class, createSupportActorValidator(Apache.COST, supportActorCooldownMap.get(Apache.class)));
+        supportActorValidatorMap.put(AirStrike.class, createSupportActorValidator(AirStrike.COST, supportActorCooldownMap.get(AirStrike.class)));
+        supportActorValidatorMap.put(LandMine.class, createSupportActorValidator(LandMine.COST, supportActorCooldownMap.get(LandMine.class)));
+        supportActorValidatorMap.put(SupplyDrop.class, createSupportActorValidator(SupplyDrop.COST, supportActorCooldownMap.get(SupplyDrop.class)));
+
+    }
+
+    private SupportActorValidator createSupportActorValidator(int cost, SupportActorCooldown cooldown){
+
+        SupportActorValidator validator = new SupportActorValidator(cost, cooldown, player);
 
         return validator;
     }
@@ -176,6 +192,7 @@ public class GameStage extends Stage implements PlayerObserver {
         this.addActor(getActorGroups().getHealthGroup());
         this.addActor(getActorGroups().getSupportGroup());
         this.addActor(getActorGroups().getEffectGroup());
+        this.addActor(getActorGroups().getCooldownGroup());
         Logger.info("Game Stage: groups created");
     }
 
@@ -258,11 +275,8 @@ public class GameStage extends Stage implements PlayerObserver {
     private void resetTowersForNewWave() {
 
         Logger.info("Game Stage: Resetting towers for new wave");
-        for (Actor actor : actorGroups.getTowerGroup().getChildren()) {
-            if (actor instanceof Tower) {
-                Tower tower = (Tower) actor;
-                tower.waveReset();
-            }
+        for (Tower tower : actorGroups.getTowerGroup().getCastedChildren()) {
+            tower.waveReset();
         }
     }
 
@@ -292,16 +306,6 @@ public class GameStage extends Stage implements PlayerObserver {
         return supportActorPlacement;
     }
 
-    public AirStrikePlacement getAirStrikePlacement() {
-
-        return airStrikePlacement;
-    }
-
-    public SupplyDropPlacement getSupplyDropPlacement() {
-
-        return supplyDropPlacement;
-    }
-
     public CombatActorFactory getCombatActorFactory(){
 
         return combatActorFactory;
@@ -314,6 +318,14 @@ public class GameStage extends Stage implements PlayerObserver {
 
     public Level getLevel(){
         return level;
+    }
+
+    public java.util.Map<Class<? extends SupportActor>, SupportActorValidator> getSupportActorValidatorMap(){
+        return supportActorValidatorMap;
+    }
+
+    public java.util.Map<Class<? extends SupportActor>, SupportActorCooldown> getSupportActorCooldownMap(){
+        return supportActorCooldownMap;
     }
 
 }

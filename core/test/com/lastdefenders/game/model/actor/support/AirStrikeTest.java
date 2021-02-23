@@ -8,17 +8,18 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Array;
 import com.lastdefenders.game.model.actor.groups.EnemyGroup;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
-import com.lastdefenders.game.model.actor.support.AirStrike;
-import com.lastdefenders.game.model.actor.support.AirStrikeLocation;
+import com.lastdefenders.game.model.actor.support.AirStrike.AirStrikeLocation;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.LDAudio;
@@ -38,6 +39,7 @@ public class AirStrikeTest {
     @SuppressWarnings("unchecked")
     private SupportActorPool<AirStrike> poolMock = mock(SupportActorPool.class);
     private Rocket rocketMock = mock(Rocket.class);
+    private Resources resourcesMock = TestUtil.createResourcesMock();
 
     @Before
     public void initAirStrikeTest() {
@@ -50,40 +52,52 @@ public class AirStrikeTest {
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(rocketMock).when(projectileFactoryMock).loadProjectile(Rocket.class);
 
-        Resources resourcesMock = TestUtil.createResourcesMock();
+
         LDAudio audioMock = mock(LDAudio.class);
+        Array<AirStrikeLocation> locations = getAirStrikeLocations(AirStrike.MAX_AIRSTRIKES);
+        AirStrike airStrike =  new AirStrike(poolMock, new EnemyGroup(), projectileFactoryMock,
+            resourcesMock.getTexture(""), resourcesMock.getTexture(""),locations, audioMock);
 
-        return new AirStrike(poolMock, new EnemyGroup(), projectileFactoryMock,
-            resourcesMock.getTexture(""), resourcesMock.getTexture(""), audioMock);
+        AirStrike airStrikeSpy = spy(airStrike);
+        doReturn(new Group()).when(airStrikeSpy).getParent();
 
+        return airStrikeSpy;
+    }
+
+    private Array<AirStrikeLocation> getAirStrikeLocations(int count){
+        Array<AirStrikeLocation> locations = new Array<>();
+        for(int i = 0; i < count; i++){
+            AirStrikeLocation location = new AirStrikeLocation(resourcesMock.getTexture(""));
+            locations.add(location);
+        }
+
+        return locations;
     }
 
     @Test
     public void airStrikeTest1() {
 
         AirStrike airStrike = createAirStrike();
-        AirStrikeLocation airStrikeLocation1 = mock(AirStrikeLocation.class);
-        AirStrikeLocation airStrikeLocation2 = mock(AirStrikeLocation.class);
-        AirStrikeLocation airStrikeLocation3 = mock(AirStrikeLocation.class);
+        LDVector2 airStrikeLocation1 = new LDVector2(100,100);
+        LDVector2 airStrikeLocation2 = new LDVector2(200,200);
+        LDVector2 airStrikeLocation3 = new LDVector2(300,300);
 
+        airStrike.initialize();
         assertFalse(airStrike.isReadyToBegin());
-        airStrike.addLocation(airStrikeLocation1);
-        airStrike.addLocation(airStrikeLocation2);
+        airStrike.setPlacement(airStrikeLocation1);
+        airStrike.setPlacement(airStrikeLocation2);
         assertFalse(airStrike.isReadyToBegin());
-        airStrike.addLocation(airStrikeLocation3);
+        airStrike.setPlacement(airStrikeLocation3);
         assertTrue(airStrike.isReadyToBegin());
 
         assertFalse(airStrike.isActive());
 
-        airStrike.beginAirStrike();
+        airStrike.ready();
 
         assertTrue(airStrike.isActive());
         assertEquals(new LDVector2(-airStrike.getWidth() / 2, Resources.VIRTUAL_HEIGHT / 2),
             airStrike.getPositionCenter());
 
-        verify(airStrikeLocation1, times(1)).setShowRange(eq(false));
-        verify(airStrikeLocation2, times(1)).setShowRange(eq(false));
-        verify(airStrikeLocation3, times(1)).setShowRange(eq(false));
         verify(rocketMock, times(3))
             .initialize(any(Attacker.class), any(LDVector2.class), any(Dimension.class),
                 any(Float.class));

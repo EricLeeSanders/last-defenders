@@ -1,6 +1,8 @@
 package com.lastdefenders.game.model.actor.support;
 
-public class SupportActorCooldown {
+import com.badlogic.gdx.scenes.scene2d.Actor;
+
+public class SupportActorCooldown extends Actor {
 
     private float cooldown;
     private float remaining;
@@ -20,11 +22,22 @@ public class SupportActorCooldown {
         remaining = 0;
         onCooldown = false;
     }
-    public void update(float delta){
+
+    @Override
+    public void act(float delta){
+
+        if(!isOnCooldown()){
+            return;
+        }
+
         remaining -= delta;
 
         onCooldown = remaining > 0;
 
+    }
+
+    public float getRemaining(){
+        return remaining;
     }
 
     public boolean isOnCooldown(){

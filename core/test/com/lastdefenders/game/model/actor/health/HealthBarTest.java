@@ -63,7 +63,7 @@ public class HealthBarTest {
 
         assertFalse(healthBar.isVisible());
 
-        tower.init();
+        tower.ready();
 
         assertTrue(healthBar.isVisible());
         assertFalse(healthBar.getProgressBar().isVisible());
@@ -147,7 +147,7 @@ public class HealthBarTest {
 
         assertFalse(healthBar.isVisible());
 
-        tower.init();
+        tower.ready();
 
         doReturn(.3f).when(tower).getArmorPercent();
         healthBar.act(1f);

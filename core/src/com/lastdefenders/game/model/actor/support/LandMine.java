@@ -44,6 +44,11 @@ public class LandMine extends CombatSupportActor implements IRocket {
     }
 
     @Override
+    public void ready() {
+        setActive(true);
+    }
+
+    @Override
     public void act(float delta) {
 
         super.act(delta);
@@ -76,5 +81,4 @@ public class LandMine extends CombatSupportActor implements IRocket {
         body.setPosition(getPositionCenter().x, getPositionCenter().y);
         return body;
     }
-
 }

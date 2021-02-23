@@ -64,9 +64,12 @@ public class Apache extends CombatSupportActor {
 
     }
 
-    public void initialize(Vector2 placePosition) {
+    @Override
+    public void ready() {
 
         Logger.info("Apache: initializing");
+        setShowRange(false);
+        LDVector2 placePosition = UtilPool.getVector2(getPositionCenter());
         LDVector2 centerPos = UtilPool.getVector2(-this.getWidth(), Resources.VIRTUAL_HEIGHT / 2);
         setPositionCenter(centerPos);
 
@@ -75,7 +78,7 @@ public class Apache extends CombatSupportActor {
 
         createInitialActions(destination);
 
-        UtilPool.freeObjects(centerPos, destination);
+        UtilPool.freeObjects(centerPos, destination, placePosition);
 
         audio.playSound(LDSound.HELICOPTER_HOVER);
     }

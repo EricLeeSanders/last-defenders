@@ -53,7 +53,7 @@ public class Level {
         SpawningEnemy spawningEnemy = spawningEnemyQueue.removeFirst();
         actorGroups.getEnemyGroup().addActor(spawningEnemy.getEnemy());
 
-        spawningEnemy.getEnemy().init();
+        spawningEnemy.getEnemy().ready();
 
         enemyDelay = spawningEnemy.getSpawnDelay();
 

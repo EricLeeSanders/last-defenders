@@ -2,7 +2,6 @@ package com.lastdefenders.game.service.validator;
 
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.support.SupportActorCooldown;
-import com.lastdefenders.game.ui.state.GameUIStateManager;
 
 public class SupportActorValidator {
 
@@ -18,8 +17,25 @@ public class SupportActorValidator {
         this.player = player;
     }
 
-    public boolean canCreateSupportActor(){
-        return !isOnCooldown() && player.hasEnoughMoney(supportCost);
+    public void beginCooldown(){
+        if(isOnCooldown()){
+            throw new IllegalStateException("Cooldown has already started");
+        }
+        cooldown.begin();
+    }
+
+    public ValidationResponseEnum canCreateSupportActor(){
+        if(isOnCooldown()){
+            return ValidationResponseEnum.ON_COOLDOWN;
+        } else if (!player.hasEnoughMoney(supportCost)){
+            return ValidationResponseEnum.INSUFFICIENT_MONEY;
+        } else {
+            return ValidationResponseEnum.OK;
+        }
+    }
+
+    public SupportActorCooldown getCooldown(){
+        return cooldown;
     }
 
     private boolean isOnCooldown(){

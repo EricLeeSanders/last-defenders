@@ -57,7 +57,7 @@ public class CombatActorFactoryTest {
     @Test
     public void loadTowerTest(){
 
-        Tower tower = combatActorFactory.loadTower("Sniper");
+        Tower tower = combatActorFactory.loadTower("Sniper", false);
 
         assertNotNull(tower);
     }
@@ -65,7 +65,7 @@ public class CombatActorFactoryTest {
     @Test
     public void loadEnemyTest(){
 
-        Enemy enemy = combatActorFactory.loadEnemy("Humvee");
+        Enemy enemy = combatActorFactory.loadEnemy("Humvee", false);
 
         assertNotNull(enemy);
     }

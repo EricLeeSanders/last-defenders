@@ -20,6 +20,7 @@ import com.lastdefenders.game.model.actor.projectile.Explosion;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.Resources;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -65,8 +66,8 @@ public class LandMineTest {
     public void landMineTest1() {
 
         LandMine landMine = createLandMine();
-        landMine.setPositionCenter(250, 255);
-        landMine.setActive(true);
+        landMine.initialize();
+        landMine.setPlacement(new LDVector2(250, 255));
 
         Enemy enemy1 = createEnemy(EnemyRifle.class, 200, new Vector2(250, 240));
         Enemy enemy2 = createEnemy(EnemyFlameThrower.class, 100, new Vector2(250, 260));
@@ -76,7 +77,7 @@ public class LandMineTest {
         targetGroup.addActor(enemy1);
         targetGroup.addActor(enemy2);
         targetGroup.addActor(enemy3);
-
+        landMine.ready();
         landMine.act(1f);
 
         verify(explosionMock, times(1))

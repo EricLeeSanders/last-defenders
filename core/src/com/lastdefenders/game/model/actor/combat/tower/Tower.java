@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.lastdefenders.game.model.actor.ai.TowerAIType;
 import com.lastdefenders.game.model.actor.combat.CombatActor;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
-import com.lastdefenders.game.model.actor.combat.enemy.event.EnemyEventEnum;
+import com.lastdefenders.game.model.actor.combat.event.CombatActorEventEnum;
 import com.lastdefenders.game.model.actor.combat.event.EventObserver;
 import com.lastdefenders.game.model.actor.combat.event.EventObserverManager;
 import com.lastdefenders.game.model.actor.combat.state.StateManager;
@@ -61,8 +61,14 @@ public abstract class Tower extends CombatActor {
         this.targetGroup = targetGroup;
     }
 
-    public void init() {
-        super.init();
+    @Override
+    public void initialize(){
+        super.initialize();
+        getStateManager().transition(TowerStateEnum.STANDBY);
+    }
+
+    public void ready() {
+        super.ready();
         stateManager.transition(TowerStateEnum.ACTIVE);
         setActive(true);
     }
@@ -269,6 +275,7 @@ public abstract class Tower extends CombatActor {
     public void waveReset(){
         if(isActive()){
             stateManager.transition(TowerStateEnum.WAVE_END);
+            getTowerEventObserverManager().notifyEventObservers(TowerEventEnum.WAVE_END, this);
             stateManager.transition(TowerStateEnum.ACTIVE);
         }
     }

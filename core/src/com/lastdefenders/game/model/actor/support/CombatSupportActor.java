@@ -67,5 +67,4 @@ public abstract class CombatSupportActor extends SupportActor implements Attacke
         return attack;
     }
 
-    public abstract int getCost();
 }

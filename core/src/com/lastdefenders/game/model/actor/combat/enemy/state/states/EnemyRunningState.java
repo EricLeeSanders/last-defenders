@@ -43,12 +43,7 @@ public class EnemyRunningState implements CombatActorState {
 
     @Override
     public void preState() {
-//        System.out.println("Enemy Running State Pre State");
-//        if(enemy.getState() != null && enemy.getState().equals(EnemyState.ATTACKING)){
-//            minTargetDelay = enemy.getAttackSpeed();
-//        } else {
-//            minTargetDelay = 0;
-//        }
+
         if(enemy.getState() != null && enemy.getState().equals(EnemyStateEnum.SPAWNING)){
             minTargetDelay = 0;
         } else {

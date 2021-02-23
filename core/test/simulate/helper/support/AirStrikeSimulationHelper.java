@@ -8,7 +8,10 @@ import com.lastdefenders.game.helper.CollisionDetection;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.support.AirStrike;
-import com.lastdefenders.game.service.actorplacement.AirStrikePlacement;
+import com.lastdefenders.game.model.actor.support.SupportActorCooldown;
+import com.lastdefenders.game.service.actorplacement.SupportActorPlacement;
+import com.lastdefenders.game.service.validator.SupportActorValidator;
+import com.lastdefenders.game.service.validator.ValidationResponseEnum;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UtilPool;
 import java.util.ArrayList;
@@ -23,15 +26,15 @@ public class AirStrikeSimulationHelper{
     private static final int MIN_TOTAL_NUM_OF_ENEMIES_FOR_AIR_STRIKE = 15;
     private static final float MIN_DISTANCE_FOR_AIR_STRIKE_LOCATIONS = AirStrike.AIRSTRIKE_RADIUS * (3f/5f);
     private static final float ENEMY_DISTANCE_FOR_AIR_STRIKE_MOD = (2/3f);
-    private static final float AIR_STRIKE_COOLDOWN_RESET = 10; // 10 seconds
-
-    private float airStrikeCooldownCounter = AIR_STRIKE_COOLDOWN_RESET;
 
     private final float minEnemyDistanceForAirStrike;
 
+    private SupportActorCooldown cooldown = new SupportActorCooldown(AirStrike.COOLDOWN_TIME);
+    private SupportActorValidator validator;
+
     private GameStage gameStage;
     private Player player;
-    private AirStrikePlacement airStrikePlacement;
+    private SupportActorPlacement supportActorPlacement;
 
     private WaveState currentWaveState;
 
@@ -40,31 +43,26 @@ public class AirStrikeSimulationHelper{
 
         this.gameStage = gameStage;
         this.player = player;
-        this.airStrikePlacement = gameStage.getAirStrikePlacement();
+        this.supportActorPlacement = gameStage.getSupportActorPlacement();
+        this.validator = new SupportActorValidator(AirStrike.COST, cooldown, player);
 
     }
 
-    public void handleAirStrike(float delta){
-        airStrikeCooldownCounter -= delta;
+    public void handleAirStrike(){
 
-        if(canUseAirStrike() && shouldUseAirStrike()){
+        if(validator.canCreateSupportActor() == ValidationResponseEnum.OK && shouldUseAirStrike()){
             List<Vector2> bestLocations = getBestLocationsForAirStrike();
             if(bestLocations.size() == 3){
 
                 for(int i = 0; i < 3; i++){
-                    airStrikePlacement.addLocation(UtilPool.getVector2(bestLocations.get(i)));
+                    supportActorPlacement.setPlacement(UtilPool.getVector2(bestLocations.get(i)));
                 }
-                airStrikePlacement.finishCurrentAirStrike();
+                supportActorPlacement.finish();
                 player.spendMoney(AirStrike.COST);
                 currentWaveState.addSupportState(new AirStrikeState(bestLocations));
-                airStrikeCooldownCounter = AIR_STRIKE_COOLDOWN_RESET;
+                validator.beginCooldown();
             }
         }
-    }
-
-
-    private boolean canUseAirStrike(){
-        return player.getMoney() >= AirStrike.COST && airStrikeCooldownCounter <= 0;
     }
 
     private boolean shouldUseAirStrike(){
@@ -82,7 +80,7 @@ public class AirStrikeSimulationHelper{
 
     private List<AirStrikeLocation> getLocationsForAirStrike(){
         Array<Enemy> enemies = gameStage.getActorGroups().getEnemyGroup().getCastedChildren();
-        airStrikePlacement.createAirStrike();
+        supportActorPlacement.createSupportActor(AirStrike.class);
         List<AirStrikeLocation> locations = new ArrayList<>();
         Circle airStrikePos = new Circle(0, 0, AirStrike.AIRSTRIKE_RADIUS);
         for(int x = 0; x <= Resources.VIRTUAL_WIDTH; x++) {

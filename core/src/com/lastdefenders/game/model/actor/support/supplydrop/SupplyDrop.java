@@ -32,6 +32,7 @@ public class SupplyDrop extends SupportActor implements Pool.Poolable {
     public static final int COST = 500;
     private static final float SUPPLYDROP_CRATE_DURATION = 1f;
     private static final float RANGE = 150f;
+    public static final float COOLDOWN_TIME = 10;
     private static final Dimension TEXTURE_SIZE = new Dimension(50, 50);
     private SupplyDropPlane plane;
     private Circle rangeCircle = new Circle();
@@ -50,16 +51,17 @@ public class SupplyDrop extends SupportActor implements Pool.Poolable {
 
     }
 
-    public void beginSupplyDrop(Vector2 destination) {
+    @Override
+    public void ready() {
 
         Logger.info("SupplyDrop: Beginning Supply drop");
         setActive(true);
         setVisible(false);
-        setPositionCenter(destination);
+        setShowRange(false);
         this.getParent().addActor(plane);
-        plane.beginSupplyDrop(destination);
+        plane.beginSupplyDrop(getPositionCenter());
 
-        float dropDelay = calculateDropDelay(destination);
+        float dropDelay = calculateDropDelay(getPositionCenter());
 
         addAction(
             Actions.sequence(
@@ -80,6 +82,12 @@ public class SupplyDrop extends SupportActor implements Pool.Poolable {
                 }
             )
         );
+    }
+
+    @Override
+    public int getCost() {
+
+        return COST;
     }
 
     private void healActors() {

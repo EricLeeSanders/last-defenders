@@ -76,8 +76,6 @@ public class GameUIStateManager extends
         DEBUG,
         PLACING_TOWER,
         PLACING_SUPPORT,
-        PLACING_AIRSTRIKE,
-        PLACING_SUPPLYDROP,
         WAVE_IN_PROGRESS,
         LEVEL_COMPLETED
 

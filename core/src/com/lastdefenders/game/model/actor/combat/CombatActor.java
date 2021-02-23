@@ -63,22 +63,16 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
 
     }
 
-    protected void init(){
-        setDead(false);
+    public void initialize(){
+        setPosition(0, 0);
+        setVisible(false);
     }
 
+    protected void ready(){
+        setDead(false);
+        setVisible(true);
+    }
 
-//
-//    private void notifyEventObservers(CombatActorEventEnum event){
-//
-//        Logger.info("CombatActor: NotifyEventObservers of Event: " + event);
-//
-//        Set<CombatActorEventObserver> observerCopy = new HashSet<>(eventObservers);
-//
-//        for(CombatActorEventObserver eventObserver : observerCopy){
-//            eventObserver.combatActorEvent(event, this);
-//        }
-//    }
 
     @Override
     public void reset() {
@@ -210,8 +204,8 @@ public abstract class CombatActor extends GameActor implements Pool.Poolable, Co
         this.dead = dead;
         if (isDead()) {
             Logger.info("Combat Actor " + ID  + ": " + this.getClass().getSimpleName() + " Dead");
-            deadState();
             getCombatActorEventObserverManager().notifyEventObservers(CombatActorEventEnum.DEAD, this);
+            deadState();
         }
     }
 

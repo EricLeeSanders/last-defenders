@@ -3,6 +3,7 @@ package com.lastdefenders.game.model.actor.support;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
@@ -11,8 +12,9 @@ import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPo
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.Dimension;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 
-public class SupportActor extends GameActor implements Pool.Poolable {
+public abstract class SupportActor extends GameActor implements Pool.Poolable {
     private boolean showRange;
     private boolean active;
     private float range;
@@ -32,6 +34,14 @@ public class SupportActor extends GameActor implements Pool.Poolable {
         setTextureRegion(textureRegion);
     }
 
+    public abstract void ready();
+
+    public void initialize() {
+        setPosition(0, 0);
+        setActive(false);
+        setVisible(false);
+    }
+
     @Override
     public void draw(Batch batch, float alpha) {
 
@@ -48,6 +58,13 @@ public class SupportActor extends GameActor implements Pool.Poolable {
         float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, width);
         float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, height);
         batch.draw(rangeTexture, x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
+    }
+
+    public boolean setPlacement(LDVector2 coords){
+        setVisible(true);
+        setShowRange(true);
+        setPositionCenter(coords);
+        return true;
     }
 
     public boolean isShowRange() {
@@ -75,6 +92,8 @@ public class SupportActor extends GameActor implements Pool.Poolable {
         rangeShape.setPosition(getPositionCenter().x, getPositionCenter().y);
         return rangeShape;
     }
+
+    public abstract int getCost();
 
 
     public void freeActor() {

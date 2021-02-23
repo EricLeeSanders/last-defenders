@@ -143,10 +143,14 @@ public class Simulation {
         int wave = 1;
         while(!levelStateManager.getState().equals(LevelState.GAME_OVER) && wave <= WAVE_LIMIT) {
             System.out.println("Wave: " + wave);
+
+            int startMoney = player.getMoney();
+
             towerHelper.addTowers();
+
             startWave();
 
-            WaveState waveState = new WaveState(wave, player.getLives(), player.getMoney(),
+            WaveState waveState = new WaveState(wave, player.getLives(), startMoney,
                 actorGroups.getTowerGroup().getCastedChildren(), gameStage.getLevel().getSpawningEnemyQueue());
 
             supportHelper.setCurrentWaveState(waveState);
@@ -154,22 +158,22 @@ public class Simulation {
             while (levelStateManager.getState().equals(LevelState.WAVE_IN_PROGRESS)) {
                 gameStage.act(GAME_STEP_SIZE);
                 waveTimeLength += GAME_STEP_SIZE;
-                switch(simulationRunType){
+                switch (simulationRunType) {
                     case SUPPORT_ALL:
                     case ALL:
-                        supportHelper.handleSupport(GAME_STEP_SIZE);
+                        supportHelper.handleSupport();
                         break;
                     case SUPPORT_LANDMINE:
-                        supportHelper.handleSupportLandmine(GAME_STEP_SIZE);
+                        supportHelper.handleSupportLandmine();
                         break;
                     case SUPPORT_CRATE_DROP:
-                        supportHelper.handleSupportSupplyDrop(GAME_STEP_SIZE);
+                        supportHelper.handleSupportSupplyDrop();
                         break;
                     case SUPPORT_APACHE:
-                        supportHelper.handleSupportApache(GAME_STEP_SIZE);
+                        supportHelper.handleSupportApache();
                         break;
                     case SUPPORT_AIR_STRIKE:
-                        supportHelper.handleAirStrike(GAME_STEP_SIZE);
+                        supportHelper.handleAirStrike();
                         break;
                 }
             }

@@ -46,7 +46,7 @@ public class ArmorIconTest {
         HealthBar healthBar = new HealthBarTestUtil.HealthBarBuilder()
             .setActor(tower).setArmorIcon(armorIcon).build();
 
-        tower.init();
+        tower.ready();
 
         assertFalse(armorIcon.isVisible());
 
@@ -75,7 +75,7 @@ public class ArmorIconTest {
         HealthBar healthBar = new HealthBarTestUtil.HealthBarBuilder()
             .setActor(tower).setArmorIcon(armorIcon).build();
 
-        tower.init();
+        tower.ready();
         tower.setHasArmor(true);
 
         assertTrue(armorIcon.isVisible());
@@ -111,7 +111,7 @@ public class ArmorIconTest {
         HealthBar healthBar = new HealthBarTestUtil.HealthBarBuilder()
             .setActor(tower).setArmorIcon(armorIcon).build();
 
-        tower.init();
+        tower.ready();
         tower.setHasArmor(true);
 
         assertTrue(armorIcon.isVisible());

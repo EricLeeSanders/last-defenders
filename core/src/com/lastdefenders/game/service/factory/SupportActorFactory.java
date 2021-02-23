@@ -3,12 +3,14 @@ package com.lastdefenders.game.service.factory;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.support.AirStrike;
-import com.lastdefenders.game.model.actor.support.AirStrikeLocation;
+import com.lastdefenders.game.model.actor.support.AirStrike.AirStrikeLocation;
 import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.model.actor.support.LandMine;
+import com.lastdefenders.game.model.actor.support.SupportActor;
 import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDrop;
 import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDropPlane;
 import com.lastdefenders.util.LDAudio;
@@ -63,7 +65,7 @@ public class SupportActorFactory {
      * @param addToGroup
      * @return Support Actor
      */
-    public <T extends Actor> T loadSupportActor(Class<T> type, boolean addToGroup) {
+    public <T extends SupportActor> T loadSupportActor(Class<T> type, boolean addToGroup) {
 
         Logger.info("Actor Factory: loading support actor: " + type.getSimpleName());
         String className = type.getSimpleName();
@@ -115,7 +117,7 @@ public class SupportActorFactory {
     private AirStrikeLocation createAirStrikeLocation() {
 
         TextureRegion rangeTexture = resources.getTexture("range-black");
-        return new AirStrikeLocation(airStrikeLocationPool, rangeTexture);
+        return new AirStrikeLocation(rangeTexture);
     }
 
     private Apache createApache(){
@@ -131,8 +133,15 @@ public class SupportActorFactory {
     private AirStrike createAirStrike(){
         TextureRegion textureRegion = resources.getTexture("airstrike");
         TextureRegion rangeTexture = resources.getTexture("range-black");
+
+        Array<AirStrikeLocation> airStrikeLocations = new Array<>();
+        for(int i = 0; i < AirStrike.MAX_AIRSTRIKES; i++){
+            AirStrikeLocation airStrikeLocation = createAirStrikeLocation();
+            airStrikeLocations.add(airStrikeLocation);
+        }
+
         return new AirStrike(airStrikePool, actorGroups.getEnemyGroup(), projectileFactory, textureRegion,
-            rangeTexture, audio);
+            rangeTexture, airStrikeLocations, audio);
     }
 
     private LandMine createLandMine(){

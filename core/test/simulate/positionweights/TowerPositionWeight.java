@@ -18,6 +18,7 @@ public class TowerPositionWeight implements Comparable<TowerPositionWeight>{
     private int depth;
     private SnapshotArray<Actor> towers;
     private Tower tower;
+
     public TowerPositionWeight(float x, float y, int intersectionsSize, SnapshotArray<Actor> towers, float length, int depth, Tower tower){
         this.x = x;
         this.y = y;
@@ -74,14 +75,6 @@ public class TowerPositionWeight implements Comparable<TowerPositionWeight>{
             '}';
     }
 
-    public float getScore(){
-        if(length <= 0){
-            return (-1) * Integer.MAX_VALUE;
-        }
-        return (intersectionsSize / length) - depth;
-    }
-
-
 
     @Override
     public int compareTo(TowerPositionWeight o) {
@@ -91,12 +84,6 @@ public class TowerPositionWeight implements Comparable<TowerPositionWeight>{
         } else if(this.intersectionsSize <= 0){
             return -1;
         }
-
-//            if(this.getScore() > o.getScore()){
-//                return 1;
-//            } else if(this.getScore() < o.getScore()){
-//                return -1;
-//            }
 
         if(getTowersInRange() > o.getTowersInRange()){
             return 1;
@@ -123,21 +110,6 @@ public class TowerPositionWeight implements Comparable<TowerPositionWeight>{
                 }
             }
         }
-
-
-//            if(getScore() == o.getScore()){
-//                if(depth > o.depth){
-//                    return 1;
-//                } else if(depth < o.depth){
-//                    return -1;
-//                } else {
-//                    return 0;
-//                }
-//            } else  if(getScore() > o.getScore()){
-//                return 1;
-//            } else {
-//                return -1;
-//            }
     }
 }
 

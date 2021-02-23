@@ -27,6 +27,7 @@ import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -77,10 +78,10 @@ public class ApacheTest {
     @Test
     public void apacheTest1() {
 
-        Vector2 destination = new Vector2(250, 250);
+        LDVector2 destination = new LDVector2(250, 250);
 
         Apache apache = createApache();
-
+        apache.initialize();
         Enemy enemy1 = createEnemy(EnemyRifle.class, 200, new Vector2(250, 240));
         Enemy enemy2 = createEnemy(EnemyFlameThrower.class, 100, new Vector2(250, 260));
         Enemy enemy3 = createEnemy(EnemyRocketLauncher.class, 300, new Vector2(250, 150));
@@ -92,8 +93,8 @@ public class ApacheTest {
 
         assertFalse(apache.isActive());
         assertFalse(apache.isReadyToAttack());
-
-        apache.initialize(destination);
+        apache.setPlacement(destination);
+        apache.ready();
 
         assertEquals(1, apache.getActions().size);
         assertFalse(apache.isReadyToAttack());
