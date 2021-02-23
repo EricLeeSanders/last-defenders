@@ -97,7 +97,7 @@ public class TowerTest {
         Tower tower = TestUtil.createTower(TowerRifle.class, true, true);
         Enemy enemy = TestUtil.createRunningEnemy(EnemyRifle.class, false);
 
-        tower.getTargetGroup().addActor(enemy);
+        tower.getEnemyGroup().addActor(enemy);
 
         assertEquals(TowerStateEnum.ACTIVE, tower.getState());
 

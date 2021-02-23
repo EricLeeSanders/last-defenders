@@ -54,7 +54,7 @@ public class TowerActiveStateTest {
         TowerStateManager stateManagerMock = mock(TowerStateManager.class);
         TowerActiveState towerActiveState = new TowerActiveState(tower, stateManagerMock);
 
-        SnapshotArray<Actor> targetGroupArray = tower.getTargetGroup().getChildren();
+        SnapshotArray<Actor> targetGroupArray = tower.getEnemyGroup().getChildren();
         TowerAIType ai = tower.getAI();
         ai = spy(ai);
         doReturn(ai).when(tower).getAI();

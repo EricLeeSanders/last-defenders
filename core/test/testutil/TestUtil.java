@@ -209,7 +209,7 @@ public class TestUtil {
         tower.setStateManager(stateManager);
 
         if(init){
-            tower.init();
+            tower.ready();
         }
 
 
@@ -269,7 +269,7 @@ public class TestUtil {
             playerMock);
         enemy.setStateManager(stateManager);
 
-        enemy.init();
+        enemy.ready();
 
         return enemy;
     }

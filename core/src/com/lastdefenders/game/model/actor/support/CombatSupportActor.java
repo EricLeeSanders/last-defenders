@@ -9,6 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.GameActor;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.groups.EnemyGroup;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.ActorUtil;
@@ -17,93 +19,33 @@ import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.UtilPool;
 
-public class CombatSupportActor extends GameActor implements Pool.Poolable, Attacker {
+public abstract class CombatSupportActor extends SupportActor implements Attacker {
 
     private SupportActorPool<? extends Actor> pool;
-    private float range, attack;
+    private float attack;
     private Vector2 gunPos;
     private Vector2 rotatedGunPos = UtilPool.getVector2();
-    private boolean active;
-    private int cost;
-    private Group getTargetGroup;
-    private boolean showRange;
-    private TextureRegion rangeTexture;
-    private Circle rangeShape;
+    private EnemyGroup enemyGroup;
 
-    CombatSupportActor(SupportActorPool<? extends Actor> pool, Group targetGroup, TextureRegion textureRegion,
+    CombatSupportActor(SupportActorPool<? extends SupportActor> pool, EnemyGroup enemyGroup, TextureRegion textureRegion,
         Dimension textureSize, TextureRegion rangeTexture, float range, float attack,
-        Vector2 gunPos, int cost) {
+        Vector2 gunPos) {
 
-        super(textureSize);
+        super(rangeTexture, textureRegion, textureSize, pool, range);
         this.pool = pool;
-        this.range = range;
         this.attack = attack;
         this.gunPos = gunPos;
-        this.cost = cost;
-        this.getTargetGroup = targetGroup;
-        this.rangeTexture = rangeTexture;
-        rangeShape = new Circle(getPositionCenter().x, getPositionCenter().y, range);
-        setTextureRegion(textureRegion);
+        this.enemyGroup = enemyGroup;
     }
 
-    @Override
-    public void draw(Batch batch, float alpha) {
+    public EnemyGroup getEnemyGroup() {
 
-        if (isShowRange()) {
-            drawRange(batch);
-        }
-        super.draw(batch, alpha);
-    }
-
-    private void drawRange(Batch batch) {
-
-        float width = range * 2;
-        float height = range * 2;
-        float x = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().x, width);
-        float y = ActorUtil.calcBotLeftPointFromCenter(getPositionCenter().y, height);
-        batch.draw(rangeTexture, x, y, getOriginX(), getOriginY(), width, height, 1, 1, 0);
-    }
-
-    public Group getTargetGroup() {
-
-        return getTargetGroup;
-    }
-
-    public void freeActor() {
-
-        pool.free(this);
-    }
-
-    public boolean isActive() {
-
-        return active;
-    }
-
-    public void setActive(boolean active) {
-
-        this.active = active;
-    }
-
-    public int getCost() {
-
-        return cost;
-    }
-
-    public boolean isShowRange() {
-
-        return showRange;
-    }
-
-    public void setShowRange(boolean bool) {
-
-        showRange = bool;
+        return enemyGroup;
     }
 
     @Override
     public Circle getRangeShape() {
-
-        rangeShape.setPosition(getPositionCenter().x, getPositionCenter().y);
-        return rangeShape;
+        return super.getRangeShape();
     }
 
     @Override
@@ -125,18 +67,4 @@ public class CombatSupportActor extends GameActor implements Pool.Poolable, Atta
         return attack;
     }
 
-    public SupportActorPool<? extends Actor> getPool(){
-        return pool;
-    }
-
-    @Override
-    public void reset() {
-
-        Logger.info("SupportActor: Resetting");
-        this.setActive(false);
-        this.setPosition(0, 0);
-        this.setRotation(0);
-        this.clear();
-        this.remove();
-    }
 }

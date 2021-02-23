@@ -31,7 +31,7 @@ public class WaveState {
         this.moneyStart = moneyStart;
 
         for(Tower t : towers){
-            this.towerStates.add(new TowerState(t));
+            this.towerStates.add(new TowerState(waveNumber, t));
         }
 
         for(SpawningEnemy e : enemies){

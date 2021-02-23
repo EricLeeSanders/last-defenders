@@ -43,11 +43,8 @@ public class TowerPlacement {
     public void createTower(String type) {
 
         Logger.info("TowerPlacement: creating tower: " + type);
-        currentTower = combatActorFactory.loadTower(type);
-        currentTower.setPosition(0, 0);
-        actorGroups.getTowerGroup().addActor(currentTower);
-        currentTower.setVisible(false);
-        currentTower.getStateManager().transition(TowerStateEnum.STANDBY);
+        currentTower = combatActorFactory.loadTower(type, true);
+        currentTower.initialize();
     }
 
     /**
@@ -88,7 +85,7 @@ public class TowerPlacement {
 
         if (currentTower != null) {
             if (!towerCollides()) {
-                currentTower.init();
+                currentTower.ready();
                 return true;
             } else {
 

@@ -24,8 +24,6 @@ import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.UtilPool;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * An abstract class that represents an Enemy. Enemies are created from the
@@ -64,8 +62,8 @@ public abstract class Enemy extends CombatActor {
         this.targetGroup = targetGroup;
     }
 
-    public void init() {
-        super.init();
+    public void ready() {
+        super.ready();
         stateManager.transition(EnemyStateEnum.SPAWNING);
         lengthToEndCalculated = false;
     }
@@ -149,6 +147,7 @@ public abstract class Enemy extends CombatActor {
     public void reachedEnd() {
 
         Logger.info("Enemy " + ID  + ": "  + this.getClass().getSimpleName() + " reached end");
+        getEnemyEventObserverManager().notifyEventObservers(EnemyEventEnum.REACHED_END, this);
         freeActor();
     }
 
@@ -246,7 +245,7 @@ public abstract class Enemy extends CombatActor {
         return speed;
     }
 
-    public GenericGroup<Tower> getTargetGroup(){
+    public GenericGroup<Tower> getEnemyGroup(){
         return targetGroup;
     }
 

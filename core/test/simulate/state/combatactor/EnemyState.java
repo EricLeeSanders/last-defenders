@@ -6,6 +6,7 @@ import com.lastdefenders.game.model.actor.combat.enemy.event.EnemyEventEnum;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
 import com.lastdefenders.game.model.actor.combat.event.CombatActorEventEnum;
+import com.lastdefenders.game.model.actor.combat.event.CombatActorEventObserver;
 import com.lastdefenders.game.model.actor.combat.event.EventObserver;
 import com.lastdefenders.game.model.level.SpawningEnemy;
 
@@ -22,13 +23,16 @@ public class EnemyState extends CombatActorState {
 
     private Vector2 deadPosition;
 
+    private EventObserver<CombatActor, CombatActorEventEnum> combatActorEventObserver = combatActorEventObserver();
+    private EventObserver<Enemy, EnemyEventEnum> enemyEventObserver = enemyEventObserver();
+
     public EnemyState(SpawningEnemy actor) {
         super(actor.getEnemy());
         this.spawnDelay = actor.getSpawnDelay();
         this.speed = actor.getEnemy().getSpeed();
         this.reward = actor.getEnemy().getKillReward();
-        actor.getEnemy().getCombatActorEventObserverManager().attachObserver(combatActorEventObserver());
-        actor.getEnemy().getEnemyEventObserverManager().attachObserver(enemyEventObserver());
+        actor.getEnemy().getCombatActorEventObserverManager().attachObserver(combatActorEventObserver);
+        actor.getEnemy().getEnemyEventObserverManager().attachObserver(enemyEventObserver);
     }
 
     public Float getSpawnDelay() {
@@ -68,13 +72,13 @@ public class EnemyState extends CombatActorState {
         setDead(true);
         setDeadPosition(new Vector2(combatActor.getPositionCenter()));
         addKills(combatActor.getNumOfKills());
-        combatActor.getCombatActorEventObserverManager().detachObserver(combatActorEventObserver());
+        combatActor.getCombatActorEventObserverManager().detachObserver(combatActorEventObserver);
     }
 
     public void reachedEndEvent(Enemy enemy){
         setReachedEnd(true);
         addKills(enemy.getNumOfKills());
-        enemy.getEnemyEventObserverManager().detachObserver(enemyEventObserver());
+        enemy.getEnemyEventObserverManager().detachObserver(enemyEventObserver);
     }
 
     public EventObserver<CombatActor, CombatActorEventEnum> combatActorEventObserver(){

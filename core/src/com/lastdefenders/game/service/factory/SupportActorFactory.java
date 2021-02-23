@@ -3,14 +3,16 @@ package com.lastdefenders.game.service.factory;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.support.AirStrike;
-import com.lastdefenders.game.model.actor.support.AirStrikeLocation;
+import com.lastdefenders.game.model.actor.support.AirStrike.AirStrikeLocation;
 import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.model.actor.support.LandMine;
-import com.lastdefenders.game.model.actor.support.SupplyDrop;
-import com.lastdefenders.game.model.actor.support.SupplyDropCrate;
+import com.lastdefenders.game.model.actor.support.SupportActor;
+import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDrop;
+import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDropPlane;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
@@ -22,7 +24,7 @@ import com.lastdefenders.util.Resources;
 public class SupportActorFactory {
 
     private SupportActorPool<SupplyDrop> supplyDropPool;
-    private SupportActorPool<SupplyDropCrate> supplyDropCratePool;
+    private SupportActorPool<SupplyDrop> supplyDropCratePool;
     private SupportActorPool<AirStrikeLocation> airStrikeLocationPool;
     private SupportActorPool<Apache> apachePool;
     private SupportActorPool<AirStrike> airStrikePool;
@@ -48,7 +50,7 @@ public class SupportActorFactory {
 
     private void init(){
         supplyDropPool = new SupportActorPool<>(SupplyDrop.class, actorGroups.getSupportGroup());
-        supplyDropCratePool = new SupportActorPool<>(SupplyDropCrate.class, actorGroups.getSupportGroup());
+        supplyDropCratePool = new SupportActorPool<>(SupplyDrop.class, actorGroups.getSupportGroup());
         airStrikeLocationPool = new SupportActorPool<>(AirStrikeLocation.class, actorGroups.getSupportGroup());
         apachePool = new SupportActorPool<>(Apache.class, actorGroups.getSupportGroup());
         airStrikePool = new SupportActorPool<>(AirStrike.class, actorGroups.getSupportGroup());
@@ -63,7 +65,7 @@ public class SupportActorFactory {
      * @param addToGroup
      * @return Support Actor
      */
-    public <T extends Actor> T loadSupportActor(Class<T> type, boolean addToGroup) {
+    public <T extends SupportActor> T loadSupportActor(Class<T> type, boolean addToGroup) {
 
         Logger.info("Actor Factory: loading support actor: " + type.getSimpleName());
         String className = type.getSimpleName();
@@ -105,22 +107,17 @@ public class SupportActorFactory {
 
     private SupplyDrop createSupplyDrop() {
 
-        TextureRegion supplyDropRegion = resources.getTexture("supply-drop");
-        return new SupplyDrop(supplyDropRegion, supplyDropPool, this, audio);
-    }
-
-    private SupplyDropCrate createSupplyDropCrate() {
-
+        TextureRegion supplyDropPlaneRegion = resources.getTexture("supply-drop-plane");
         TextureRegion supplyDropCrateRegion = resources.getTexture("supply-drop-crate");
         TextureRegion rangeTexture = resources.getTexture("range-black");
-        return new SupplyDropCrate(supplyDropCrateRegion, rangeTexture, supplyDropCratePool,
-            actorGroups.getTowerGroup(), effectFactory);
+        SupplyDropPlane plane = new SupplyDropPlane(supplyDropPlaneRegion, audio);
+        return new SupplyDrop(supplyDropCrateRegion, rangeTexture, supplyDropPool, actorGroups.getTowerGroup(),effectFactory, plane);
     }
 
     private AirStrikeLocation createAirStrikeLocation() {
 
         TextureRegion rangeTexture = resources.getTexture("range-black");
-        return new AirStrikeLocation(airStrikeLocationPool, rangeTexture);
+        return new AirStrikeLocation(rangeTexture);
     }
 
     private Apache createApache(){
@@ -136,8 +133,15 @@ public class SupportActorFactory {
     private AirStrike createAirStrike(){
         TextureRegion textureRegion = resources.getTexture("airstrike");
         TextureRegion rangeTexture = resources.getTexture("range-black");
+
+        Array<AirStrikeLocation> airStrikeLocations = new Array<>();
+        for(int i = 0; i < AirStrike.MAX_AIRSTRIKES; i++){
+            AirStrikeLocation airStrikeLocation = createAirStrikeLocation();
+            airStrikeLocations.add(airStrikeLocation);
+        }
+
         return new AirStrike(airStrikePool, actorGroups.getEnemyGroup(), projectileFactory, textureRegion,
-            rangeTexture, audio);
+            rangeTexture, airStrikeLocations, audio);
     }
 
     private LandMine createLandMine(){
@@ -171,9 +175,6 @@ public class SupportActorFactory {
                 break;
             case "AirStrikeLocation":
                 actor = (T) createAirStrikeLocation();
-                break;
-            case "SupplyDropCrate":
-                actor = (T) createSupplyDropCrate();
                 break;
             case "SupplyDrop":
                 actor = (T) createSupplyDrop();

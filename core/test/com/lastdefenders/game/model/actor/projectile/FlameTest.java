@@ -66,7 +66,7 @@ public class FlameTest {
 
         Flame flame = createFlame();
         Dimension flameSize = new Dimension(56, 26);
-        flame.initialize(tower, tower.getTargetGroup(), flameSize);
+        flame.initialize(tower, tower.getEnemyGroup(), flameSize);
 
         //Check origin
         assertEquals(0, flame.getOriginX(), TestUtil.DELTA);
@@ -96,7 +96,7 @@ public class FlameTest {
 
         // Verify that Damage.dealFlameGroupDamage is called once
         verifyStatic(times(1));
-        SnapshotArray<Actor> targets = tower.getTargetGroup().getChildren();
+        SnapshotArray<Actor> targets = tower.getEnemyGroup().getChildren();
         //Damage.dealFlameGroupDamage(any(CombatActor.class), any(SnapshotArray.class), any(Polygon.class));
         Polygon flameBody = flame.getFlameBody();
         Damage.dealFlameGroupDamage(eq(tower), eq(targets), eq(flameBody));
@@ -122,7 +122,7 @@ public class FlameTest {
 
         Flame flame = createFlame();
         Dimension flameSize = new Dimension(56, 26);
-        flame.initialize(tower, tower.getTargetGroup(), flameSize);
+        flame.initialize(tower, tower.getEnemyGroup(), flameSize);
 
         flame.act(Flame.DURATION);
         verify(poolMock, times(1)).free(flame);
@@ -142,7 +142,7 @@ public class FlameTest {
 
         Flame flame = createFlame();
         Dimension flameSize = new Dimension(56, 26);
-        flame.initialize(enemy, enemy.getTargetGroup(), flameSize);
+        flame.initialize(enemy, enemy.getEnemyGroup(), flameSize);
 
         flame.act(0.0001f);
 

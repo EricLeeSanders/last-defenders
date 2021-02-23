@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.helper.CollisionDetection;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
+import com.lastdefenders.game.model.actor.groups.EnemyGroup;
 import com.lastdefenders.game.model.actor.interfaces.IRocket;
 import com.lastdefenders.game.model.actor.projectile.Explosion;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
@@ -23,6 +24,7 @@ import com.lastdefenders.util.UtilPool;
 
 public class LandMine extends CombatSupportActor implements IRocket {
 
+    public static final float COOLDOWN_TIME = 3;
     public static final int COST = 200;
     private static final float ATTACK = 15f;
     private static final float RANGE = 75;
@@ -32,14 +34,18 @@ public class LandMine extends CombatSupportActor implements IRocket {
     private Circle body;
     private ProjectileFactory projectileFactory;
 
-    public LandMine(SupportActorPool<LandMine> pool, Group targetGroup,
+    public LandMine(SupportActorPool<LandMine> pool, EnemyGroup enemyGroup,
         ProjectileFactory projectileFactory, TextureRegion textureRegion,
         TextureRegion rangeTexture) {
 
-        super(pool, targetGroup, textureRegion, TEXTURE_SIZE, rangeTexture, RANGE, ATTACK, GUN_POS,
-            COST);
+        super(pool, enemyGroup, textureRegion, TEXTURE_SIZE, rangeTexture, RANGE, ATTACK, GUN_POS);
         this.projectileFactory = projectileFactory;
         this.body = new Circle(getPositionCenter(), getWidth() / 2);
+    }
+
+    @Override
+    public void ready() {
+        setActive(true);
     }
 
     @Override
@@ -47,39 +53,21 @@ public class LandMine extends CombatSupportActor implements IRocket {
 
         super.act(delta);
         if (isActive()) {
-            for (Actor enemy : getTargetGroup().getChildren()) {
-                if (enemy instanceof Enemy) {
-                    if (CollisionDetection.shapesIntersect(((Enemy) enemy).getBody(), getBody())) {
-                        explode();
-                        return;
-                    }
+            for (Enemy enemy : getEnemyGroup().getCastedChildren()) {
+                if (CollisionDetection.shapesIntersect(enemy.getBody(), getBody())) {
+                    explode();
+                    return;
                 }
             }
         }
     }
 
     @Override
-    public void draw(Batch batch, float alpha) {
+    public int getCost() {
 
-        super.draw(batch, alpha);
-        if (DebugOptions.showTextureBoundaries) {
-            drawDebugBody(batch);
-        }
+        return COST;
     }
 
-    private void drawDebugBody(Batch batch) {
-
-        ShapeRenderer debugBody = Resources.getShapeRenderer();
-        batch.end();
-
-        debugBody.setProjectionMatrix(getParent().getStage().getCamera().combined);
-        debugBody.begin(ShapeType.Line);
-        debugBody.setColor(Color.YELLOW);
-        debugBody.circle(getPositionCenter().x, getPositionCenter().y, getWidth() / 2);
-        debugBody.end();
-
-        batch.begin();
-    }
 
     private void explode() {
 

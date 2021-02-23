@@ -19,14 +19,15 @@ import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyFlameThrower;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRocketLauncher;
+import com.lastdefenders.game.model.actor.groups.EnemyGroup;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
-import com.lastdefenders.game.model.actor.support.Apache;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
+import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
 import testutil.TestUtil;
@@ -54,7 +55,7 @@ public class ApacheTest {
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(bulletMock).when(projectileFactoryMock).loadProjectile(Bullet.class);
 
-        return new Apache(poolMock, new Group(), projectileFactoryMock,
+        return new Apache(poolMock, new EnemyGroup(), projectileFactoryMock,
             resourcesMock.getTexture(""), new TextureRegion[]{resourcesMock.getTexture("")},
             resourcesMock.getTexture(""), audioMock);
 
@@ -77,23 +78,23 @@ public class ApacheTest {
     @Test
     public void apacheTest1() {
 
-        Vector2 destination = new Vector2(250, 250);
+        LDVector2 destination = new LDVector2(250, 250);
 
         Apache apache = createApache();
-
+        apache.initialize();
         Enemy enemy1 = createEnemy(EnemyRifle.class, 200, new Vector2(250, 240));
         Enemy enemy2 = createEnemy(EnemyFlameThrower.class, 100, new Vector2(250, 260));
         Enemy enemy3 = createEnemy(EnemyRocketLauncher.class, 300, new Vector2(250, 150));
 
-        Group targetGroup = apache.getTargetGroup();
+        Group targetGroup = apache.getEnemyGroup();
         targetGroup.addActor(enemy1);
         targetGroup.addActor(enemy2);
         targetGroup.addActor(enemy3);
 
         assertFalse(apache.isActive());
         assertFalse(apache.isReadyToAttack());
-
-        apache.initialize(destination);
+        apache.setPlacement(destination);
+        apache.ready();
 
         assertEquals(1, apache.getActions().size);
         assertFalse(apache.isReadyToAttack());

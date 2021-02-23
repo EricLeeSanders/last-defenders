@@ -3,6 +3,7 @@ package com.lastdefenders.util.action;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Pool;
+import com.badlogic.gdx.utils.Pool.Poolable;
 
 /**
  * Created by Eric on 5/21/2018.

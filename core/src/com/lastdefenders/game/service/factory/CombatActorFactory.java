@@ -87,38 +87,47 @@ public class CombatActorFactory {
      * Obtains a tower from the pool
      *
      * @param type - The type of tower
+     * @param addToGroup - Add the Tower to the Tower Group
      * @return Tower
      */
-    public Tower loadTower(String type) {
+    public <T extends Tower> T loadTower(String type, boolean addToGroup) {
 
-        Logger.debug("Combat Actor Factory: loading Tower: " + type);
-        Tower tower = null;
+        Logger.info("Combat Actor Factory: loading tower: " + type);
+
+        TowerPool<? extends Tower> towerPool = null;
+
         switch (type) {
             case "Rifle":
-                tower = (Tower) towerRiflePool.obtain();
+                towerPool = towerRiflePool;
                 break;
             case "Tank":
-                tower = (Tower) towerTankPool.obtain();
+                towerPool = towerTankPool;
                 break;
             case "Humvee":
-                tower = (Tower) towerHumveePool.obtain();
+                towerPool = towerHumveePool;
                 break;
             case "Sniper":
-                tower = (Tower) towerSniperPool.obtain();
+                towerPool = towerSniperPool;
                 break;
             case "MachineGun":
-                tower = (Tower) towerMachinePool.obtain();
+                towerPool = towerMachinePool;
                 break;
             case "RocketLauncher":
-                tower = (Tower) towerRocketLauncherPool.obtain();
+                towerPool = towerRocketLauncherPool;
                 break;
             case "FlameThrower":
-                tower = (Tower) towerFlameThrowerPool.obtain();
+                towerPool = towerFlameThrowerPool;
                 break;
             default:
                 throw new IllegalArgumentException(type + " is not a valid Tower");
         }
 
+        @SuppressWarnings("unchecked")
+        T tower = (T) towerPool.obtain();
+
+        if(addToGroup){
+            actorGroups.getTowerGroup().addActor(tower);
+        }
         Logger.debug("CombatActorFactory:" + type + " tower (" + tower.ID +") loaded");
 
         return tower;
@@ -128,39 +137,47 @@ public class CombatActorFactory {
      * Obtains an Enemy from the pool
      *
      * @param type - The type of enemy
+     * @param addToGroup - Add the Enemy to the Enemy Group
      * @return Enemy
      */
-    public Enemy loadEnemy(String type) {
+    public <T extends Enemy> T  loadEnemy(String type, boolean addToGroup) {
 
-        Logger.debug("Combat Actor Factory: loading Enemy: " + type);
+        Logger.info("Combat Actor Factory: loading enemy: " + type);
 
-        Enemy enemy = null;
+        EnemyPool<? extends Enemy> enemyPool = null;
+
         switch (type) {
             case "Rifle":
-                enemy = (Enemy) enemyRiflePool.obtain();
+                enemyPool = enemyRiflePool;
                 break;
             case "Tank":
-                enemy = (Enemy) enemyTankPool.obtain();
+                enemyPool = enemyTankPool;
                 break;
             case "FlameThrower":
-                enemy = (Enemy) enemyFlameThrowerPool.obtain();
+                enemyPool = enemyFlameThrowerPool;
                 break;
             case "MachineGun":
-                enemy = (Enemy) enemyMachinePool.obtain();
+                enemyPool = enemyMachinePool;
                 break;
             case "RocketLauncher":
-                enemy = (Enemy) enemyRocketLauncherPool.obtain();
+                enemyPool = enemyRocketLauncherPool;
                 break;
             case "Sniper":
-                enemy = (Enemy) enemySniperPool.obtain();
+                enemyPool = enemySniperPool;
                 break;
             case "Humvee":
-                enemy = (Enemy) enemyHumveePool.obtain();
+                enemyPool = enemyHumveePool;
                 break;
             default:
                 throw new IllegalArgumentException(type + " is not a valid Enemy");
         }
 
+        @SuppressWarnings("unchecked")
+        T enemy = (T) enemyPool.obtain();
+
+        if(addToGroup){
+            actorGroups.getEnemyGroup().addActor(enemy);
+        }
         Logger.debug("CombatActorFactory:" + type + " enemy (" + enemy.ID +") loaded");
 
         return enemy;

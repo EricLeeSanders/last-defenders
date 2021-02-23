@@ -65,18 +65,8 @@ public class SimulationTowerHelper {
                 Vector2 center = new Vector2(x, y);
                 tower.setPositionCenter(center);
                 if(invalidPlacement(gameStage.getMap(), tower)){
-
                     continue;
                 }
-                //                for (int i = 0; i < waypoints.size - 1; i++) {
-//                    Vector2 start = waypoints.get(i);
-//                    Vector2 end = waypoints.get(i + 1);
-//                    float d = intersectSegmentCircleDisplace(start, end, location, 50,
-//                        displacement);
-//                    if(d != Float.POSITIVE_INFINITY ) {
-//                        locationWeight += d;
-//                    }
-//                }
                 Array<Vector2> intersections = new Array<>();
                 int depth =Integer.MAX_VALUE;
                 float locationLength = 0;
@@ -109,11 +99,6 @@ public class SimulationTowerHelper {
                             intersections.add(firstPoint);
                         }
 
-//                        if (!inLine(start, end, firstPoint)) {
-//                            firstPoint = start;
-//                        }
-//
-//                        intersections.add(firstPoint);
                     }
 
                     if(points.size() > 1 ) {
@@ -122,14 +107,10 @@ public class SimulationTowerHelper {
                         if (SimulationMathUtil.inLine(start, end, secondPoint)) {
                             intersections.add(secondPoint);
                         }
-//                        if (!inLine(start, end, secondPoint)) {
-//                            secondPoint = end;
-//                        }
-//
-//                        intersections.add(secondPoint);
                     }
                 }
-                positionWeights.add(new TowerPositionWeight(x, y, intersections.size, actorGroups.getTowerGroup().getChildren(), locationLength, depth, tower));
+                positionWeights.add(new TowerPositionWeight(x, y, intersections.size,
+                    actorGroups.getTowerGroup().getChildren(), locationLength, depth, tower));
             }
         }
 
@@ -165,13 +146,9 @@ public class SimulationTowerHelper {
     private void placeTower(List<TowerPositionWeight> positionWeights){
         for(TowerPositionWeight position : positionWeights){
             gameStage.getTowerPlacement().moveTower(new LDVector2(position.getX(), position.getY()));
+
             if(gameStage.getTowerPlacement().placeTower()){
                 return;
-            } else if(gameStage.getTowerPlacement().getCurrentTower() instanceof IRotatable){
-                gameStage.getTowerPlacement().rotateTower(90);
-                if(gameStage.getTowerPlacement().placeTower()){
-                    return;
-                }
             }
         }
     }

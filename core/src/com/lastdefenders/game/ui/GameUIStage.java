@@ -11,7 +11,11 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.GameStage;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
+import com.lastdefenders.game.model.actor.groups.TowerGroup;
+import com.lastdefenders.game.model.actor.support.SupportActor;
+import com.lastdefenders.game.model.actor.support.SupportActorCooldown;
 import com.lastdefenders.game.model.level.state.LevelStateManager;
+import com.lastdefenders.game.service.validator.SupportActorValidator;
 import com.lastdefenders.game.ui.presenter.DebugPresenter;
 import com.lastdefenders.game.ui.presenter.EnlistPresenter;
 import com.lastdefenders.game.ui.presenter.GameOverPresenter;
@@ -58,13 +62,13 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
     private LevelStateManager levelStateManager;
     private GameStateManager gameStateManager;
     private ScreenChanger screenChanger;
-    private Group towerGroup;
+    private TowerGroup towerGroup;
     private InputMultiplexer imp;
     private Resources resources;
     private MessageDisplayerImpl messageDisplayer;
     private Array<Updatable> updatablePresenters = new Array<>();
 
-    public GameUIStage(Player player, Group towerGroup, GameUIStateManager uiStateManager,
+    public GameUIStage(Player player, TowerGroup towerGroup, GameUIStateManager uiStateManager,
         LevelStateManager levelStateManager, GameStateManager gameStateManager,
         GooglePlayServices playServices, ScreenChanger screenChanger, InputMultiplexer imp,
         Viewport viewport, Resources resources, LDAudio audio, GameStage gameStage, SpriteBatch spriteBatch) {
@@ -111,10 +115,11 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         enlistPresenter.setView(enlistView);
         imp.addProcessor(enlistView);
 
+        java.util.Map<Class<? extends SupportActor>, SupportActorCooldown> supportActorCooldownMapMap = gameStage.getSupportActorCooldownMap();
+
         SupportPresenter supportPresenter = new SupportPresenter(uiStateManager, player, audio,
-            gameStage.getSupportActorPlacement(), gameStage.getAirStrikePlacement(),
-            gameStage.getSupplyDropPlacement(), messageDisplayer, gameStage.getViewport());
-        SupportView supportView = new SupportView(supportPresenter, resources);
+            gameStage.getSupportActorPlacement(), messageDisplayer, gameStage.getViewport());
+        SupportView supportView = new SupportView(supportPresenter, resources, supportActorCooldownMapMap);
         addActor(supportView);
         supportView.init();
         supportPresenter.setView(supportView);
@@ -205,10 +210,8 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
     private void showTowerRanges(boolean showRanges) {
 
         Logger.info("GameUIStage: showTowerRanges: " + showRanges);
-        for (Actor tower : towerGroup.getChildren()) {
-            if (tower instanceof Tower) {
-                ((Tower) tower).setShowRange(showRanges);
-            }
+        for (Tower tower : towerGroup.getCastedChildren()) {
+            tower.setShowRange(showRanges);
         }
     }
 
@@ -219,7 +222,6 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 
         switch (state) {
             case PLACING_SUPPORT:
-            case PLACING_AIRSTRIKE:
             case INSPECTING:
             case PLACING_TOWER:
                 showTowerRanges(true);

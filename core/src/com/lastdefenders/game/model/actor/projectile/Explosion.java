@@ -52,7 +52,7 @@ public class Explosion extends GameActor implements Pool.Poolable {
         audio.playSound(LDSound.ROCKET_EXPLOSION);
 
         this.setPositionCenter(posCenter);
-        Group targetGroup = attacker.getTargetGroup();
+        Group targetGroup = attacker.getEnemyGroup();
         Damage.dealExplosionDamage(attacker, radius, posCenter, targetGroup.getChildren());
 
         return this;

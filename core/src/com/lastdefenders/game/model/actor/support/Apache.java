@@ -12,7 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.ai.TowerAI;
 import com.lastdefenders.game.model.actor.ai.towerai.ClosestEnemyAI;
-import com.lastdefenders.game.model.actor.combat.CombatActor;
+import com.lastdefenders.game.model.actor.groups.EnemyGroup;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
@@ -29,8 +29,9 @@ import com.lastdefenders.util.UtilPool;
 
 public class Apache extends CombatSupportActor {
 
+    static final float TIME_ACTIVE_LIMIT = 10f;
+    public static final float COOLDOWN_TIME = 30;
     public static final int COST = 750;
-    public static final float TIME_ACTIVE_LIMIT = 10f;
     private static final float FRAME_DURATION = 0.05f;
     private static final float ATTACK_SPEED = 0.2f;
     private static final float RANGE = 125f;
@@ -40,20 +41,20 @@ public class Apache extends CombatSupportActor {
     private static final Vector2 GUN_POS = UtilPool.getVector2(0, 0);
     private static final Dimension TEXTURE_SIZE = new Dimension(150, 116);
 
-    private boolean readyToAttack, exitingStage;
-    private float attackCounter, timeActive;
+    private boolean readyToAttack;
+    private float attackCounter;
     private ProjectileFactory projectileFactory;
     private LDAudio audio;
     private TowerAI ai = new ClosestEnemyAI();
     private Animation<TextureRegion> movementAnimation;
     private float movementAnimationStateTime;
 
-    public Apache(SupportActorPool<Apache> pool, Group targetGroup,
+    public Apache(SupportActorPool<Apache> pool, EnemyGroup enemyGroup,
         ProjectileFactory projectileFactory, TextureRegion stationaryTextureRegion,
         TextureRegion[] textureRegions, TextureRegion rangeTexture, LDAudio audio) {
 
-        super(pool, targetGroup, stationaryTextureRegion, TEXTURE_SIZE, rangeTexture, RANGE, ATTACK,
-            GUN_POS, COST);
+        super(pool, enemyGroup, stationaryTextureRegion, TEXTURE_SIZE, rangeTexture, RANGE, ATTACK,
+            GUN_POS);
         this.audio = audio;
         this.projectileFactory = projectileFactory;
 
@@ -63,9 +64,12 @@ public class Apache extends CombatSupportActor {
 
     }
 
-    public void initialize(Vector2 placePosition) {
+    @Override
+    public void ready() {
 
         Logger.info("Apache: initializing");
+        setShowRange(false);
+        LDVector2 placePosition = UtilPool.getVector2(getPositionCenter());
         LDVector2 centerPos = UtilPool.getVector2(-this.getWidth(), Resources.VIRTUAL_HEIGHT / 2);
         setPositionCenter(centerPos);
 
@@ -74,7 +78,7 @@ public class Apache extends CombatSupportActor {
 
         createInitialActions(destination);
 
-        UtilPool.freeObjects(centerPos, destination);
+        UtilPool.freeObjects(centerPos, destination, placePosition);
 
         audio.playSound(LDSound.HELICOPTER_HOVER);
     }
@@ -125,10 +129,14 @@ public class Apache extends CombatSupportActor {
 
         Logger.info("Apache: resetting");
         setReadyToAttack(false);
-        timeActive = 0;
         attackCounter = ATTACK_SPEED;
-        exitingStage = false;
         super.reset();
+    }
+
+    @Override
+    public int getCost() {
+
+        return COST;
     }
 
     @Override
@@ -160,7 +168,6 @@ public class Apache extends CombatSupportActor {
     private void exitStage() {
 
         Logger.info("Apache: exiting stage");
-        exitingStage = true;
         LDVector2 destination = UtilPool.getVector2(-getWidth(), Resources.VIRTUAL_HEIGHT / 2);
 
         float duration = destination.dst(getPositionCenter()) / MOVE_SPEED;
@@ -171,7 +178,12 @@ public class Apache extends CombatSupportActor {
         addAction(
             Actions.sequence(
                 moveToAction,
-                UtilPool.getFreeActorAction(getPool())
+                new LDOneTimeAction() {
+                    @Override
+                    public void action() {
+                        freeActor();
+                    }
+                }
             ));
 
         setRotation(ActorUtil.calculateRotation(destination, getPositionCenter()));
@@ -186,7 +198,7 @@ public class Apache extends CombatSupportActor {
      */
     private Targetable findTarget() {
 
-        return ai.findTarget(this, getTargetGroup().getChildren());
+        return ai.findTarget(this, getEnemyGroup().getChildren());
     }
 
     private void attackTarget(Targetable target) {
@@ -207,4 +219,5 @@ public class Apache extends CombatSupportActor {
 
         this.readyToAttack = readyToAttack;
     }
+
 }

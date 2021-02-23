@@ -22,6 +22,7 @@ public class ActorGroups {
     private final Group landmineGroup = new Group();
     private final Group deathEffectGroup = new Group();
     private final Group effectGroup = new Group();
+    private final Group cooldownGroup = new Group();
 
     public ActorGroups() {
 
@@ -33,6 +34,7 @@ public class ActorGroups {
         landmineGroup.setTransform(false);
         deathEffectGroup.setTransform(false);
         effectGroup.setTransform(false);
+        cooldownGroup.setTransform(false);
     }
 
     public Group getProjectileGroup() {
@@ -73,6 +75,11 @@ public class ActorGroups {
     public Group getEffectGroup() {
 
         return effectGroup;
+    }
+
+    public Group getCooldownGroup() {
+
+        return cooldownGroup;
     }
 
 }

@@ -20,5 +20,5 @@ public interface Attacker {
 
     float getAttack();
 
-    Group getTargetGroup();
+    Group getEnemyGroup();
 }

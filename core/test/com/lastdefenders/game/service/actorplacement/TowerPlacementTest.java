@@ -66,11 +66,10 @@ public class TowerPlacementTest {
         doReturn(towerGroup).when(actorGroups).getTowerGroup();
 
         Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
-        doReturn(tower).when(combatActorFactory).loadTower(eq("Rifle"));
+        doReturn(tower).when(combatActorFactory).loadTower(eq("Rifle"), isA(Boolean.class));
 
         towerPlacement.createTower("Rifle");
 
-        assertFalse(tower.isVisible());
         assertEquals(0, tower.getX(), TestUtil.DELTA);
         assertEquals(0, tower.getY(), TestUtil.DELTA);
 
@@ -113,7 +112,7 @@ public class TowerPlacementTest {
         doReturn(towerGroup).when(actorGroups).getTowerGroup();
 
         Tower tower = TestUtil.createTower(TowerRifle.class, false, true);
-        doReturn(tower).when(combatActorFactory).loadTower(eq("Rifle"));
+        doReturn(tower).when(combatActorFactory).loadTower(eq("Rifle"), isA(Boolean.class));
 
         towerPlacement.createTower("Rifle");
 

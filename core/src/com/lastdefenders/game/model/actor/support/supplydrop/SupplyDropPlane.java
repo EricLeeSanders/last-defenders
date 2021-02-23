@@ -1,4 +1,4 @@
-package com.lastdefenders.game.model.actor.support;
+package com.lastdefenders.game.model.actor.support.supplydrop;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
@@ -14,61 +14,60 @@ import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
+import com.lastdefenders.util.UtilPool;
+import com.lastdefenders.util.action.LDOneTimeAction;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.lastdefenders.util.UtilPool;
 
-public class SupplyDrop extends GameActor implements Pool.Poolable {
-
-    private static final float SUPPLYDROP_DURATION = 2f;
+public class SupplyDropPlane extends GameActor {
+    static final float SUPPLYDROP_PLANE_DURATION = 2f;
     private static final Dimension TEXTURE_SIZE = new Dimension(206, 131);
 
     private boolean active;
-    private SupportActorPool<SupplyDrop> pool;
-    private SupportActorFactory supportActorFactory;
     private LDAudio audio;
 
-    public SupplyDrop(TextureRegion textureRegion, SupportActorPool<SupplyDrop> pool,
-        SupportActorFactory supportActorFactory, LDAudio audio) {
-
+    public SupplyDropPlane(TextureRegion textureRegion, LDAudio audio) {
         super(TEXTURE_SIZE);
-        this.pool = pool;
-        this.supportActorFactory = supportActorFactory;
-        this.audio = audio;
+
         setTextureRegion(textureRegion);
+        this.audio = audio;
+
     }
 
     public void beginSupplyDrop(Vector2 destination) {
 
-        Logger.info("SupplyDrop: Beginning Supply drop");
+        Logger.info("SupplyDropPlane: Beginning Supply drop");
 
         setActive(true);
+        setVisible(true);
 
-        LDVector2 centerPos = UtilPool.getVector2(-getWidth(), destination.y);
-        setPositionCenter(centerPos);
-        centerPos.free();
+        setPositionCenter(-getWidth(), destination.y);
 
-        float moveToX = Resources.VIRTUAL_WIDTH + (getWidth() / 2);
-        float moveToY = destination.y;
+        LDVector2 endPosition = getEndPositionByDestination(destination);
         MoveToAction moveToAction = Actions
-            .moveTo(moveToX, moveToY, SUPPLYDROP_DURATION, Interpolation.linear);
+            .moveTo(endPosition.x, endPosition.y, SUPPLYDROP_PLANE_DURATION, Interpolation.linear);
         moveToAction.setAlignment(Align.center);
 
         addAction(
             Actions.sequence(
                 moveToAction,
-                UtilPool.getFreeActorAction(pool)
+                new LDOneTimeAction() {
+                    @Override
+                    public void action() {
+                        reset();
+                    }
+                }
             )
         );
 
-        float dropDelay = SUPPLYDROP_DURATION * ( (destination.x + getWidth()) / (moveToX + getWidth())) ;
-
-        Logger.info("DropDelay: " + dropDelay);
-
-        supportActorFactory.loadSupportActor(SupplyDropCrate.class, true).beginDrop(dropDelay, destination).toBack();
 
         audio.playSound(LDSound.AIRCRAFT_FLYOVER);
     }
+
+    LDVector2 getEndPositionByDestination(Vector2 destination){
+        return UtilPool.getVector2( Resources.VIRTUAL_WIDTH + (getWidth() / 2), destination.y);
+    }
+
 
     public boolean isActive() {
 
@@ -80,10 +79,9 @@ public class SupplyDrop extends GameActor implements Pool.Poolable {
         this.active = active;
     }
 
-    @Override
     public void reset() {
 
-        Logger.info("SupplyDrop: Resetting");
+        Logger.info("SupplyDropPlane: Resetting");
         setActive(false);
         this.setPosition(0, 0);
         this.setRotation(0);
