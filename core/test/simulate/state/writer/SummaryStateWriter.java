@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import simulate.state.SingleSimulationState;
 import simulate.state.WaveState;
 import simulate.state.summary.EnemyStateSummary;
 import simulate.state.summary.SupportStateSummary;
@@ -26,24 +27,24 @@ public class SummaryStateWriter {
     private SupportStateSummaryHelper supportStateSummaryHelper = new SupportStateSummaryHelper();
 
 
-    public void writeSummary(XSSFWorkbook workbook, List<WaveState> waveStates){
+    public void writeSummary(XSSFWorkbook workbook, SingleSimulationState singleSimulationState){
 
         XSSFSheet sheet = workbook.createSheet("Summary");
         RowCounter rowCounter = new RowCounter();
 
-        writeStats(sheet, rowCounter, waveStates);
+        writeStats(sheet, rowCounter, singleSimulationState.getWaveStates());
 
         rowCounter.skip(1);// Skip for buffer
 
-        writeEnemies(sheet, waveStates, rowCounter);
+        writeEnemies(sheet, singleSimulationState.getWaveStates(), rowCounter);
 
         rowCounter.skip(1);// Skip for buffer
 
-        writeTowers(sheet, waveStates, rowCounter);
+        writeTowers(sheet, singleSimulationState.getWaveStates(), rowCounter);
 
         rowCounter.skip(1);// Skip for buffer
 
-        writeSupport(sheet, waveStates, rowCounter);
+        writeSupport(sheet, singleSimulationState.getWaveStates(), rowCounter);
 
     }
 

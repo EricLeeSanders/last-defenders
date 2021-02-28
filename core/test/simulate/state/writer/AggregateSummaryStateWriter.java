@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import org.apache.poi.ss.usermodel.Cell;
@@ -16,18 +17,20 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import simulate.SimulationRunType;
+import simulate.state.AggregateSimulationState;
+import simulate.state.SingleSimulationState;
 import simulate.state.StateUtil;
 import simulate.state.WaveState;
 import simulate.state.summary.EnemyStateSummary;
 import simulate.state.summary.SupportStateSummary;
-import simulate.state.summary.aggregate.SupportStateSummaryAggregate;
+import simulate.state.summary.aggregate.AggregateSupportStateSummary;
 import simulate.state.summary.helper.EnemyStateSummaryHelper;
 import simulate.state.summary.TowerStateSummary;
 import simulate.state.summary.helper.SupportStateSummaryHelper;
 import simulate.state.summary.helper.TowerStateSummaryHelper;
-import simulate.state.summary.aggregate.EnemyStateSummaryAggregate;
-import simulate.state.summary.aggregate.RoundStatsAggregate;
-import simulate.state.summary.aggregate.TowerStateSummaryAggregate;
+import simulate.state.summary.aggregate.AggregateEnemyStateSummary;
+import simulate.state.summary.aggregate.AggregateRoundStats;
+import simulate.state.summary.aggregate.AggregateTowerStateSummary;
 import simulate.state.writer.StateWriterUtil.RowCounter;
 
 public class AggregateSummaryStateWriter {
@@ -36,36 +39,37 @@ public class AggregateSummaryStateWriter {
     private EnemyStateSummaryHelper enemyStateSummaryHelper = new EnemyStateSummaryHelper();
     private SupportStateSummaryHelper supportStateSummaryHelper = new SupportStateSummaryHelper();
 
-    public void writeState(XSSFWorkbook workbook, Map<SimulationRunType, Map<Integer, List<WaveState>>> waveStatesByRunType,
+    public void writeState(XSSFWorkbook workbook, Set<AggregateSimulationState> aggregateSimulationStates,
         LevelName levelName){
 
         XSSFSheet sheet = workbook.createSheet(levelName.getName());
         RowCounter rowCounter = new RowCounter();
 
-        List<TowerStateSummaryAggregate> towerStateSummaryAggregates = new ArrayList<>();
-        List<EnemyStateSummaryAggregate> enemyStateSummaryAggregates = new ArrayList<>();
-        List<SupportStateSummaryAggregate> supportStateSummaryAggregates = new ArrayList<>();
-        List<RoundStatsAggregate> roundStatsAggregates = new ArrayList<>();
+        List<AggregateTowerStateSummary> aggregateTowerStateSummaries = new ArrayList<>();
+        List<AggregateEnemyStateSummary> aggregateEnemyStateSummaries = new ArrayList<>();
+        List<AggregateSupportStateSummary> aggregateSupportStateSummaries = new ArrayList<>();
+        List<AggregateRoundStats> aggregateRoundStats = new ArrayList<>();
 
-        for (Map.Entry<SimulationRunType, Map<Integer, List<WaveState>>> runTypeMapEntry : waveStatesByRunType.entrySet()) {
+        for (AggregateSimulationState aggregateSimulationState : aggregateSimulationStates) {
 
-            SimulationRunType simulationRunType = runTypeMapEntry.getKey();
+            SimulationRunType simulationRunType = aggregateSimulationState.getSimulationRunType();
 
-            Map<String, TowerStateSummary> towerSummariesMap = new HashMap<>();
-            Map<String, EnemyStateSummary> enemySummariesMap = new HashMap<>();
-            Map<String, SupportStateSummary> supportSummariesMap = new HashMap<>();
+            Map<String, TowerStateSummary> towerSummaries = new HashMap<>();
+            Map<String, EnemyStateSummary> enemySummaries = new HashMap<>();
+            Map<String, SupportStateSummary> supportSummaries = new HashMap<>();
             IntSummaryStatistics stats = new IntSummaryStatistics();
+
             Map<Integer, Integer> numOfWavesByWaveCount = new HashMap<>();
 
-            for (Map.Entry<Integer, List<WaveState>> waveStatesEntry : runTypeMapEntry.getValue().entrySet()) {
+            for (SingleSimulationState singleSimulationState : aggregateSimulationState.getSingleSimulationStates()) {
 
-                List<WaveState> waveStates = waveStatesEntry.getValue();
+                List<WaveState> waveStates = singleSimulationState.getWaveStates();
 
-                towerStateSummaryHelper.calculateTowerSummaries(waveStates, towerSummariesMap);
-                enemyStateSummaryHelper.calculateEnemyStateSummaries(waveStates, enemySummariesMap);
-                supportStateSummaryHelper.calculateSupportStateSummaries(waveStates, supportSummariesMap);
-                int waveCount = waveStatesEntry.getValue().size();
-                stats.accept(waveStatesEntry.getValue().size());
+                towerStateSummaryHelper.calculateTowerSummaries(waveStates, towerSummaries);
+                enemyStateSummaryHelper.calculateEnemyStateSummaries(waveStates, enemySummaries);
+                supportStateSummaryHelper.calculateSupportStateSummaries(waveStates, supportSummaries);
+                int waveCount = singleSimulationState.getWaveStates().size();
+                stats.accept(waveCount);
 
                 Integer numOfWaves = numOfWavesByWaveCount.get(waveCount);
                 if(numOfWaves == null){
@@ -75,23 +79,23 @@ public class AggregateSummaryStateWriter {
                 numOfWavesByWaveCount.put(waveCount, numOfWaves);
             }
 
-            towerStateSummaryAggregates.add( new TowerStateSummaryAggregate(simulationRunType, towerSummariesMap.values()));
-            enemyStateSummaryAggregates.add( new EnemyStateSummaryAggregate(simulationRunType, enemySummariesMap.values()));
-            supportStateSummaryAggregates.add( new SupportStateSummaryAggregate(simulationRunType, supportSummariesMap.values()));
-            roundStatsAggregates.add( new RoundStatsAggregate(simulationRunType, stats, numOfWavesByWaveCount));
+            aggregateTowerStateSummaries.add( new AggregateTowerStateSummary(simulationRunType, towerSummaries.values()));
+            aggregateEnemyStateSummaries.add( new AggregateEnemyStateSummary(simulationRunType, enemySummaries.values()));
+            aggregateSupportStateSummaries.add( new AggregateSupportStateSummary(simulationRunType, supportSummaries.values()));
+            aggregateRoundStats.add( new AggregateRoundStats(simulationRunType, stats, numOfWavesByWaveCount));
         }
 
-        writeSummariesByRunType(sheet, rowCounter, towerStateSummaryAggregates, enemyStateSummaryAggregates, supportStateSummaryAggregates, roundStatsAggregates );
+        writeSummariesByRunType(sheet, rowCounter, aggregateTowerStateSummaries, aggregateEnemyStateSummaries, aggregateSupportStateSummaries, aggregateRoundStats);
 
 
     }
 
     private void writeSummariesByRunType(XSSFSheet sheet,
         RowCounter rowCounter,
-        List<TowerStateSummaryAggregate> towerStateSummaryAggregates,
-        List<EnemyStateSummaryAggregate> enemyStateSummaryAggregates,
-        List<SupportStateSummaryAggregate> supportStateSummaryAggregates,
-        List<RoundStatsAggregate> roundStatsAggregates){
+        List<AggregateTowerStateSummary> towerStateSummaryAggregates,
+        List<AggregateEnemyStateSummary> enemyStateSummaryAggregates,
+        List<AggregateSupportStateSummary> supportStateSummaryAggregates,
+        List<AggregateRoundStats> roundStatsAggregates){
 
         StateUtil.sortRoundStatisticsByAverage(roundStatsAggregates);
 
@@ -128,7 +132,7 @@ public class AggregateSummaryStateWriter {
         titleCell.setCellStyle(titleStyle);
     }
 
-    private void writeSupportSummariesAggregate(XSSFSheet sheet, List<SupportStateSummaryAggregate> supportStateSummaryAggregates, RowCounter counter){
+    private void writeSupportSummariesAggregate(XSSFSheet sheet, List<AggregateSupportStateSummary> supportStateSummaryAggregates, RowCounter counter){
 
         Row titleRow = sheet.createRow(counter.next());
 
@@ -144,7 +148,7 @@ public class AggregateSummaryStateWriter {
         Row headerRow = sheet.createRow(counter.next());
         createSupportSummariesHeader(headerRow);
 
-        for(SupportStateSummaryAggregate supportStateSummaryAggregate : supportStateSummaryAggregates) {
+        for(AggregateSupportStateSummary supportStateSummaryAggregate : supportStateSummaryAggregates) {
             writeSimulationRunTypeSubHeader(sheet, counter, supportStateSummaryAggregate.getSimulationRunType());
             writeSupportSummaries(supportStateSummaryAggregate.getSupportStateSummaries(), sheet, counter);
             counter.skip(1);
@@ -185,7 +189,7 @@ public class AggregateSummaryStateWriter {
         }
     }
 
-    private void writeEnemySummariesAggregate(XSSFSheet sheet, List<EnemyStateSummaryAggregate> enemyStateSummaryAggregates, RowCounter counter){
+    private void writeEnemySummariesAggregate(XSSFSheet sheet, List<AggregateEnemyStateSummary> enemyStateSummaryAggregates, RowCounter counter){
 
         Row titleRow = sheet.createRow(counter.next());
 
@@ -201,7 +205,7 @@ public class AggregateSummaryStateWriter {
         Row enemyHeaderRow = sheet.createRow(counter.next());
         createEnemySummariesHeader(enemyHeaderRow);
 
-        for(EnemyStateSummaryAggregate enemyStateSummaryAggregate : enemyStateSummaryAggregates) {
+        for(AggregateEnemyStateSummary enemyStateSummaryAggregate : enemyStateSummaryAggregates) {
             writeSimulationRunTypeSubHeader(sheet, counter, enemyStateSummaryAggregate.getSimulationRunType());
             writeEnemySummaries(enemyStateSummaryAggregate.getEnemyStateSummaries(), sheet, counter);
             counter.skip(1);
@@ -257,7 +261,7 @@ public class AggregateSummaryStateWriter {
     }
 
 
-    private void writeTowerSummariesAggregate(XSSFSheet sheet, List<TowerStateSummaryAggregate> towerStateSummaryAggregates, RowCounter counter){
+    private void writeTowerSummariesAggregate(XSSFSheet sheet, List<AggregateTowerStateSummary> towerStateSummaryAggregates, RowCounter counter){
 
         Row titleRow = sheet.createRow(counter.next());
 
@@ -273,7 +277,7 @@ public class AggregateSummaryStateWriter {
         Row towerHeaderRow = sheet.createRow(counter.next());
         createTowerSummariesHeader(towerHeaderRow);
 
-        for(TowerStateSummaryAggregate towerStateSummaryAggregate : towerStateSummaryAggregates) {
+        for(AggregateTowerStateSummary towerStateSummaryAggregate : towerStateSummaryAggregates) {
             writeSimulationRunTypeSubHeader(sheet, counter, towerStateSummaryAggregate.getSimulationRunType());
             writeTowerSummaries(towerStateSummaryAggregate.getTowerStateSummaries(), sheet, counter);
             counter.skip(1);
@@ -330,7 +334,7 @@ public class AggregateSummaryStateWriter {
         }
     }
 
-    private void writeRoundStatsAggregate(XSSFSheet sheet, RowCounter rowCounter,  List<RoundStatsAggregate> roundStatsAggregates){
+    private void writeRoundStatsAggregate(XSSFSheet sheet, RowCounter rowCounter,  List<AggregateRoundStats> roundStatsAggregates){
 
         Row titleRow = sheet.createRow(rowCounter.next());
 
@@ -346,14 +350,14 @@ public class AggregateSummaryStateWriter {
         Row headerRow = sheet.createRow(rowCounter.next());
         createStatsHeader(headerRow);
 
-        for(RoundStatsAggregate roundStats : roundStatsAggregates){
+        for(AggregateRoundStats roundStats : roundStatsAggregates){
             writeRoundStats(sheet.createRow(rowCounter.next()), roundStats);
         }
 
     }
 
 
-    private void writeRoundStats(Row row, RoundStatsAggregate roundStats){
+    private void writeRoundStats(Row row, AggregateRoundStats roundStats){
         int counter = 0;
         row.createCell(counter++).setCellValue(roundStats.getSimulationRunType().name());
         row.createCell(counter++).setCellValue(roundStats.getStats().getMin());

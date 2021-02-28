@@ -4,13 +4,13 @@ import java.util.IntSummaryStatistics;
 import java.util.Map;
 import simulate.SimulationRunType;
 
-public class RoundStatsAggregate {
+public class AggregateRoundStats {
     private SimulationRunType simulationRunType;
     private IntSummaryStatistics stats;
     private Map<Integer, Integer> numOfWavesByWaveCount;
 
 
-    public RoundStatsAggregate(SimulationRunType simulationRunType,
+    public AggregateRoundStats(SimulationRunType simulationRunType,
         IntSummaryStatistics stats, Map<Integer, Integer> numOfWavesByWaveCount) {
 
         this.simulationRunType = simulationRunType;

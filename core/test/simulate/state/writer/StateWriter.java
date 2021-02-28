@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.ClientAnchor.AnchorType;
@@ -23,6 +24,8 @@ import org.apache.poi.xssf.usermodel.XSSFDrawing;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import simulate.SimulationRunType;
+import simulate.state.AggregateSimulationState;
+import simulate.state.SingleSimulationState;
 import simulate.state.WaveState;
 import simulate.state.combatactor.EnemyState;
 import simulate.state.combatactor.TowerState;
@@ -41,13 +44,13 @@ public class StateWriter {
     private AggregateSummaryStateWriter aggregateSummaryStateWriter = new AggregateSummaryStateWriter();
     private SnapshotWriter snapshotWriter = new SnapshotWriter();
 
-    public void saveSimulation(List<WaveState> states, LevelName levelName, SimulationRunType simulationType) throws IOException {
+    public void saveSimulation(SingleSimulationState singleSimulationState, LevelName levelName, SimulationRunType simulationType) throws IOException {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
 
-        summaryStateWriter.writeSummary(workbook, states);
+        summaryStateWriter.writeSummary(workbook, singleSimulationState);
 
-        for(WaveState state : states){
+        for(WaveState state : singleSimulationState.getWaveStates()){
             saveState(workbook, state, levelName);
         }
 
@@ -56,11 +59,11 @@ public class StateWriter {
 
     }
 
-    public void saveSimulationAggregate(Map<SimulationRunType, Map<Integer, List<WaveState>>> waveStatesByRunType, LevelName levelName) throws IOException {
+    public void saveSimulationAggregate(Set<AggregateSimulationState> aggregateSimulationStates, LevelName levelName) throws IOException {
 
         XSSFWorkbook workbook = new XSSFWorkbook();
 
-        aggregateSummaryStateWriter.writeState(workbook, waveStatesByRunType, levelName);
+        aggregateSummaryStateWriter.writeState(workbook, aggregateSimulationStates, levelName);
 
         saveWorkbook(workbook, "Aggregate");
     }

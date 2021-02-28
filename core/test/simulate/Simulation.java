@@ -28,12 +28,16 @@ import com.lastdefenders.util.UserPreferences;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 import simulate.helper.SimulationTowerHelper;
 import simulate.helper.support.SupportSimulationTypeHelper;
 import simulate.helper.UpgradeSimulationTypeHelper;
+import simulate.state.AggregateSimulationState;
+import simulate.state.SingleSimulationState;
 import simulate.state.WaveState;
 import simulate.state.writer.StateWriter;
 import testutil.TestUtil;
@@ -93,7 +97,7 @@ public class Simulation {
     @Test
     public void run() throws IOException {
 //        runAggregate(15);
-//  simulate(SimulationRunType.ALL, true);
+//  runSingle(SimulationRunType.ALL);
 //        initSimulation();
 //        simulate(SimulationRunType.UPGRADES_ALL);
 //        initSimulation();
@@ -104,7 +108,7 @@ public class Simulation {
 //        simulate(SimulationRunType.UPGRADE_ATTACK_SPEED);
 //        initSimulation();
 //        simulate(SimulationRunType.UPGRADE_RANGE);
-        runAggregate(80, new SimulationRunType[]{  SimulationRunType.ALL});
+        runAggregate(2, new SimulationRunType[]{  SimulationRunType.ALL});
 ////
  // runAggregate(10);
 //        runAggregate(15);
@@ -114,32 +118,34 @@ public class Simulation {
 
         System.out.println("Running Aggregate Simulation " + count + " times");
 
-        java.util.Map<SimulationRunType, java.util.Map<Integer, List<WaveState>>> waveStatesByRunType = new HashMap<>();
+        Set<AggregateSimulationState> aggregateSimulationStateSet = new HashSet<>();
 
-        for(int i = 0; i < count; i++){
-            System.out.println("Iteration: " + (i + 1));
-            for(SimulationRunType runType : runTypes){
-                List<WaveState> waveStates = simulate(runType, false);
-                java.util.Map<Integer, List<WaveState>> waveStatesByIter = waveStatesByRunType.get(runType);
-                if(waveStatesByIter == null){
-                    waveStatesByIter = new HashMap<>();
-                }
-                waveStatesByIter.put(i+1, waveStates);
-                waveStatesByRunType.put(runType,waveStatesByIter);
+        for(SimulationRunType runType : runTypes){
+            AggregateSimulationState aggregateSimulationState = new AggregateSimulationState(runType);
+            for(int i = 0; i < count; i++){
+                SingleSimulationState singleSimulationState = simulate(runType);
+                aggregateSimulationState.addSingleSimulationState(singleSimulationState);
                 resetGame();
             }
+
+            aggregateSimulationStateSet.add(aggregateSimulationState);
         }
 
-        stateWriter.saveSimulationAggregate(waveStatesByRunType, gameStage.getLevel().getActiveLevel());
+        stateWriter.saveSimulationAggregate(aggregateSimulationStateSet, gameStage.getLevel().getActiveLevel());
+    }
+
+    public void runSingle(SimulationRunType simulationRunType) throws IOException {
+        SingleSimulationState singleSimulationState = simulate(SimulationRunType.ALL);
+        stateWriter.saveSimulation(singleSimulationState, gameStage.getLevel().getActiveLevel(), simulationRunType);
     }
 
     public void runAggregate(int count) throws IOException {
         runAggregate(count, SimulationRunType.values());
     }
 
-    private List<WaveState> simulate(SimulationRunType simulationRunType, boolean writeState) throws IOException{
+    private SingleSimulationState simulate(SimulationRunType simulationRunType) throws IOException{
         System.out.println("Simulation: " + simulationRunType.name());
-        List<WaveState> waveStates = new ArrayList<>();
+        SingleSimulationState singleSimulationState = new SingleSimulationState();
         int wave = 1;
         while(!levelStateManager.getState().equals(LevelState.GAME_OVER) && wave <= WAVE_LIMIT) {
             System.out.println("Wave: " + wave);
@@ -181,7 +187,7 @@ public class Simulation {
             waveState.setLivesEnd(player.getLives());
             waveState.setMoneyEnd(player.getMoney());
 
-            waveStates.add(waveState);
+            singleSimulationState.addWaveState(waveState);
 
 
             if(simulationRunType.equals(SimulationRunType.UPGRADES_ALL)
@@ -199,13 +205,9 @@ public class Simulation {
 
         }
 
-        if(writeState) {
-            stateWriter.saveSimulation(waveStates, gameStage.getLevel().getActiveLevel(), simulationRunType);
-        }
+        System.out.println("Waves Reached = " + singleSimulationState.getWaveStates().size());
 
-        System.out.println("Waves Reached = " + waveStates.size());
-
-        return waveStates;
+        return singleSimulationState;
 
     }
 

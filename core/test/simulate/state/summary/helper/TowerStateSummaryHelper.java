@@ -56,11 +56,6 @@ public class TowerStateSummaryHelper {
 
             }
         }
-
-        for(TowerStateSummary towerSummary : towerSummaries.values()){
-            towerSummary.calculateMaxKill(waveStates);
-        }
-
         return towerSummaries;
 
     }
