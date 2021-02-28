@@ -4,12 +4,12 @@ import java.util.Collection;
 import simulate.SimulationRunType;
 import simulate.state.summary.EnemyStateSummary;
 
-public class EnemyStateSummaryAggregate {
+public class AggregateEnemyStateSummary {
 
     private SimulationRunType simulationRunType;
     private Collection<EnemyStateSummary> enemyStateSummaries;
 
-    public EnemyStateSummaryAggregate(SimulationRunType simulationRunType,
+    public AggregateEnemyStateSummary(SimulationRunType simulationRunType,
         Collection<EnemyStateSummary> enemyStateSummaries) {
 
         this.simulationRunType = simulationRunType;

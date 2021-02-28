@@ -3,16 +3,16 @@ package simulate.state;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import simulate.state.summary.aggregate.RoundStatsAggregate;
+import simulate.state.summary.aggregate.AggregateRoundStats;
 
 public class StateUtil {
 
-    public static void sortRoundStatisticsByAverage(List<RoundStatsAggregate> stats){
-        Collections.sort(stats, new Comparator<RoundStatsAggregate>() {
+    public static void sortRoundStatisticsByAverage(List<AggregateRoundStats> stats){
+        Collections.sort(stats, new Comparator<AggregateRoundStats>() {
 
 
             @Override
-            public int compare(RoundStatsAggregate o1, RoundStatsAggregate o2) {
+            public int compare(AggregateRoundStats o1, AggregateRoundStats o2) {
 
                 if(o1.getStats().getAverage() > o2.getStats().getAverage()){
                     return -1;

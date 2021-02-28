@@ -4,12 +4,12 @@ import java.util.Collection;
 import simulate.SimulationRunType;
 import simulate.state.summary.SupportStateSummary;
 
-public class SupportStateSummaryAggregate {
+public class AggregateSupportStateSummary {
 
     private SimulationRunType simulationRunType;
     private Collection<SupportStateSummary> supportStateSummaries;
 
-    public SupportStateSummaryAggregate(SimulationRunType simulationRunType,
+    public AggregateSupportStateSummary(SimulationRunType simulationRunType,
         Collection<SupportStateSummary> supportStateSummaries) {
 
         this.simulationRunType = simulationRunType;
