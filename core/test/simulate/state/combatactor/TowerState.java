@@ -65,6 +65,15 @@ public class TowerState extends CombatActorState  {
         addKills(tower.getNumOfKills() - getKills());
     }
 
+    public void gameOver(){
+        // If the Tower is dead, their kills have already been totaled.
+        if(!isDead()) {
+            addKills(actor.getNumOfKills() - getKills());
+        }
+
+        detachFromObservers();
+    }
+
     public EventObserver<CombatActor, CombatActorEventEnum> combatActorEventObserver(){
 
         return new EventObserver<CombatActor, CombatActorEventEnum>(){

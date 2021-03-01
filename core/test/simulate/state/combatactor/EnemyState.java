@@ -20,6 +20,7 @@ public class EnemyState extends CombatActorState {
     private float speed;
     private boolean reachedEnd;
     private int reward;
+    private Enemy actor;
 
     private Vector2 deadPosition;
 
@@ -28,6 +29,7 @@ public class EnemyState extends CombatActorState {
 
     public EnemyState(SpawningEnemy actor) {
         super(actor.getEnemy());
+        this.actor = actor.getEnemy();
         this.spawnDelay = actor.getSpawnDelay();
         this.speed = actor.getEnemy().getSpeed();
         this.reward = actor.getEnemy().getKillReward();
@@ -68,17 +70,32 @@ public class EnemyState extends CombatActorState {
         return reward;
     }
 
-    public void deadEvent(CombatActor combatActor){
+    private void detachFromObservers(){
+        actor.getEnemyEventObserverManager().detachObserver(enemyEventObserver);
+        actor.getCombatActorEventObserverManager().detachObserver(combatActorEventObserver);
+    }
+
+    private void deadEvent(CombatActor combatActor){
         setDead(true);
         setDeadPosition(new Vector2(combatActor.getPositionCenter()));
         addKills(combatActor.getNumOfKills());
-        combatActor.getCombatActorEventObserverManager().detachObserver(combatActorEventObserver);
+        detachFromObservers();
     }
 
-    public void reachedEndEvent(Enemy enemy){
+    private void reachedEndEvent(Enemy enemy){
         setReachedEnd(true);
         addKills(enemy.getNumOfKills());
-        enemy.getEnemyEventObserverManager().detachObserver(enemyEventObserver);
+        detachFromObservers();
+    }
+
+    public void gameOver(){
+
+        // If the Enemy is dead or if they have reached the end, their kills have already been totaled.
+        if (!isDead() && !getReachedEnd()) {
+            addKills(actor.getNumOfKills());
+        }
+
+        detachFromObservers();
     }
 
     public EventObserver<CombatActor, CombatActorEventEnum> combatActorEventObserver(){
