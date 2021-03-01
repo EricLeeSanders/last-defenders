@@ -97,7 +97,7 @@ public class Simulation {
     @Test
     public void run() throws IOException {
 //        runAggregate(15);
-//  runSingle(SimulationRunType.ALL);
+  runSingle(SimulationRunType.ALL);
 //        initSimulation();
 //        simulate(SimulationRunType.UPGRADES_ALL);
 //        initSimulation();
@@ -108,7 +108,7 @@ public class Simulation {
 //        simulate(SimulationRunType.UPGRADE_ATTACK_SPEED);
 //        initSimulation();
 //        simulate(SimulationRunType.UPGRADE_RANGE);
-        runAggregate(2, new SimulationRunType[]{  SimulationRunType.ALL});
+//        runAggregate(80, new SimulationRunType[]{  SimulationRunType.ALL});
 ////
  // runAggregate(10);
 //        runAggregate(15);
@@ -121,8 +121,10 @@ public class Simulation {
         Set<AggregateSimulationState> aggregateSimulationStateSet = new HashSet<>();
 
         for(SimulationRunType runType : runTypes){
+            System.out.println("Simulation Run Type: " + runType);
             AggregateSimulationState aggregateSimulationState = new AggregateSimulationState(runType);
             for(int i = 0; i < count; i++){
+                System.out.println("Iteration Count: " + i);
                 SingleSimulationState singleSimulationState = simulate(runType);
                 aggregateSimulationState.addSingleSimulationState(singleSimulationState);
                 resetGame();
@@ -182,6 +184,10 @@ public class Simulation {
                         supportHelper.handleAirStrike();
                         break;
                 }
+            }
+
+            if(levelStateManager.getState().equals(LevelState.GAME_OVER)){
+                waveState.gameOver();
             }
 
             waveState.setLivesEnd(player.getLives());

@@ -2,6 +2,7 @@ package simulate.state;
 
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Queue;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.level.SpawningEnemy;
 import simulate.state.combatactor.EnemyState;
@@ -93,8 +94,10 @@ public class WaveState {
     }
 
 
-//  SupportStates are added as the game is played unlike towers which are currently added only at the beginning of the wave.
-//  Therefore, we need to have a method that adds Support States.
+    /*
+        SupportStates are added as the game is played unlike towers which are currently added only at the beginning of the wave.
+        Therefore, we need to have a method that adds Support States.
+     */
     public void addSupportState(SupportState supportState){
         this.supportStates.add(supportState);
     }
@@ -102,6 +105,16 @@ public class WaveState {
     public Array<SupportState> getSupportStates(){
 
         return this.supportStates;
+    }
+
+    public void gameOver(){
+        for(TowerState state : towerStates){
+            state.gameOver();
+        }
+
+        for(EnemyState state : enemyStates){
+            state.gameOver();
+        }
     }
 
 }
