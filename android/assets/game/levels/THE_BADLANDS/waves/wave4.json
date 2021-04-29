@@ -6,31 +6,31 @@
       "cost": 6,
       "level": 3,
       "weight": 1,
-      "delay": 0.6
+      "delay": 0.7
     },
     {
-      "name": "Sniper",
-      "armor": false,
-      "cost": 7,
-      "level": 4,
-      "weight": 1,
-      "delay": 0.5
-    },
-    {
-      "name": "Rifle",
+      "name": "MachineGun",
       "armor": false,
       "cost": 4,
       "level": 1,
       "weight": 1,
-      "delay": 0.8
+      "delay": 0.2
     },
     {
-      "name": "Rifle",
+      "name": "MachineGun",
       "armor": false,
       "cost": 4,
       "level": 1,
       "weight": 1,
-      "delay": 0.8
+      "delay": 0.2
+    },
+    {
+      "name": "MachineGun",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.2
     }
   ]
 }
