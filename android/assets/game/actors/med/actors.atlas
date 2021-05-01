@@ -11,13 +11,6 @@ airstrike
   orig: 412, 262
   offset: 0, 0
   index: -1
-supply-drop
-  rotate: false
-  xy: 4, 574
-  size: 412, 262
-  orig: 412, 262
-  offset: 0, 0
-  index: -1
 apache
   rotate: false
   xy: 4, 34
