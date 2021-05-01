@@ -147,8 +147,8 @@ enemy-humvee
 enemy-humvee-turret
   rotate: false
   xy: 1322, 7
-  size: 150, 45
-  orig: 150, 45
+  size: 168, 45
+  orig: 168, 45
   offset: 0, 0
   index: -1
 enemy-machine-gun
@@ -405,7 +405,7 @@ healthbar-gray
   index: -1
 healthbar-green
   rotate: false
-  xy: 1630, 42
+  xy: 1666, 42
   size: 50, 10
   orig: 50, 10
   offset: 0, 0
@@ -510,9 +510,9 @@ tower-humvee
   index: -1
 tower-humvee-turret
   rotate: false
-  xy: 1476, 7
-  size: 150, 45
-  orig: 150, 45
+  xy: 1494, 7
+  size: 168, 45
+  orig: 168, 45
   offset: 0, 0
   index: -1
 tower-machine-gun

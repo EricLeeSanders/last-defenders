@@ -69,7 +69,7 @@ blood
   index: -1
 bullet
   rotate: false
-  xy: 300, 115
+  xy: 1267, 298
   size: 5, 5
   orig: 5, 5
   offset: 0, 0
@@ -147,8 +147,8 @@ enemy-humvee
 enemy-humvee-turret
   rotate: false
   xy: 576, 148
-  size: 75, 23
-  orig: 75, 23
+  size: 84, 23
+  orig: 84, 23
   offset: 0, 0
   index: -1
 enemy-machine-gun
@@ -174,21 +174,21 @@ enemy-machine-gun-stationary
   index: -1
 enemy-rifle
   rotate: false
-  xy: 1087, 270
+  xy: 1096, 270
   size: 53, 33
   orig: 53, 33
   offset: 0, 0
   index: 1
 enemy-rifle
   rotate: false
-  xy: 1144, 270
+  xy: 1153, 270
   size: 53, 33
   orig: 53, 33
   offset: 0, 0
   index: 2
 enemy-rifle-stationary
   rotate: false
-  xy: 1030, 270
+  xy: 1039, 270
   size: 53, 33
   orig: 53, 33
   offset: 0, 0
@@ -742,8 +742,8 @@ tower-humvee
 tower-humvee-turret
   rotate: false
   xy: 951, 280
-  size: 75, 23
-  orig: 75, 23
+  size: 84, 23
+  orig: 84, 23
   offset: 0, 0
   index: -1
 tower-machine-gun
@@ -755,7 +755,7 @@ tower-machine-gun
   index: -1
 tower-rifle
   rotate: false
-  xy: 1201, 277
+  xy: 1210, 277
   size: 53, 26
   orig: 53, 26
   offset: 0, 0
