@@ -51,8 +51,8 @@ import java.util.HashMap;
  */
 public class GameStage extends Stage implements PlayerObserver {
 
-    private static final int WAVE_OVER_MONEY_ADDITION = 300;
-    private static final int WAVE_OVER_MONEY_MULTIPLIER = 20;
+    private static final int WAVE_OVER_MONEY_ADDITION = 210;
+    private static final int WAVE_OVER_MONEY_MULTIPLIER = 10;
     private LevelStateManager levelStateManager;
     private GameUIStateManager uiStateManager;
     private Level level;
