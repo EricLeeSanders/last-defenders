@@ -11,13 +11,6 @@ airplane
   orig: 618, 393
   offset: 0, 0
   index: -1
-supply-drop
-  rotate: false
-  xy: 908, 747
-  size: 618, 393
-  orig: 618, 393
-  offset: 0, 0
-  index: -1
 blood
   rotate: false
   xy: 1414, 145

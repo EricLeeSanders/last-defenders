@@ -142,7 +142,7 @@ public class Resources {
         loadedTextures.put("range-red", actorAtlas.findRegion("range-red"));
         loadedTextures.put("range", actorAtlas.findRegion("range"));
         loadedTextures.put("range-black", actorAtlas.findRegion("range-black"));
-        loadedTextures.put("airstrike", actorAtlas.findRegion("airstrike"));
+        loadedTextures.put("airstrike", actorAtlas.findRegion("airplane"));
         loadedTextures.put("bullet", actorAtlas.findRegion("bullet"));
         loadedTextures.put("rocket", actorAtlas.findRegion("rocket"));
         loadedTextures.put("healthbar-frame", actorAtlas.findRegion("healthbar-frame"));
@@ -178,7 +178,7 @@ public class Resources {
         loadedTextures.put("enemy-tank-turret", actorAtlas.findRegion("enemy-tank-turret"));
         loadedTextures.put("enemy-humvee", actorAtlas.findRegion("enemy-humvee"));
         loadedTextures.put("enemy-humvee-turret", actorAtlas.findRegion("enemy-humvee-turret"));
-        loadedTextures.put("supply-drop-plane", actorAtlas.findRegion("airstrike"));
+        loadedTextures.put("supply-drop-plane", actorAtlas.findRegion("airplane"));
         loadedTextures.put("supply-drop-crate", actorAtlas.findRegion("supply-drop-crate"));
         loadedTextures.put("apache-stationary", actorAtlas.findRegion("apache", 1));
         loadedTextures.put("shield", actorAtlas.findRegion("shield"));

@@ -2,57 +2,57 @@
   "wave": [
     {
       "name": "Humvee",
+      "armor": false,
+      "cost": 13,
+      "level": 13,
+      "weight": 1,
+      "delay": 0.3
+    },
+    {
+      "name": "FlameThrower",
+      "armor": true,
+      "cost": 13,
+      "level": 8,
+      "weight": 1,
+      "delay": 0.6
+    },
+    {
+      "name": "Rifle",
+      "armor": true,
+      "cost": 6,
+      "level": 3,
+      "weight": 1,
+      "delay": 0.5
+    },
+    {
+      "name": "FlameThrower",
+      "armor": true,
+      "cost": 13,
+      "level": 8,
+      "weight": 1,
+      "delay": 0.6
+    },
+    {
+      "name": "MachineGun",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.3
+    },
+    {
+      "name": "Humvee",
       "armor": true,
       "cost": 19,
       "level": 16,
       "weight": 4,
-      "delay": 0.1
+      "delay": 0.3
     },
     {
-      "name": "Sniper",
+      "name": "FlameThrower",
       "armor": true,
-      "cost": 10,
-      "level": 7,
-      "weight": 1,
-      "delay": 0.4
-    },
-    {
-      "name": "Sniper",
-      "armor": false,
-      "cost": 7,
-      "level": 4,
-      "weight": 1,
-      "delay": 0.6
-    },
-    {
-      "name": "Sniper",
-      "armor": false,
-      "cost": 7,
-      "level": 4,
-      "weight": 1,
-      "delay": 0.6
-    },
-    {
-      "name": "Tank",
-      "armor": true,
-      "cost": 75,
-      "level": 20,
-      "weight": 4,
-      "delay": 0.4
-    },
-    {
-      "name": "Sniper",
-      "armor": false,
-      "cost": 7,
-      "level": 4,
-      "weight": 1,
-      "delay": 0.6
-    },
-    {
-      "name": "Sniper",
-      "armor": false,
-      "cost": 7,
-      "level": 4,
+      "cost": 13,
+      "level": 8,
       "weight": 1,
       "delay": 0.6
     },
@@ -62,7 +62,39 @@
       "cost": 16,
       "level": 12,
       "weight": 4,
-      "delay": 0.5
+      "delay": 0.6
+    },
+    {
+      "name": "Humvee",
+      "armor": false,
+      "cost": 13,
+      "level": 13,
+      "weight": 1,
+      "delay": 0.3
+    },
+    {
+      "name": "RocketLauncher",
+      "armor": true,
+      "cost": 16,
+      "level": 12,
+      "weight": 4,
+      "delay": 0.6
+    },
+    {
+      "name": "Humvee",
+      "armor": true,
+      "cost": 19,
+      "level": 16,
+      "weight": 4,
+      "delay": 0.3
+    },
+    {
+      "name": "Humvee",
+      "armor": true,
+      "cost": 19,
+      "level": 16,
+      "weight": 4,
+      "delay": 0.3
     },
     {
       "name": "MachineGun",
@@ -73,44 +105,12 @@
       "delay": 0.5
     },
     {
-      "name": "Sniper",
-      "armor": false,
-      "cost": 7,
-      "level": 4,
-      "weight": 1,
-      "delay": 0.6
-    },
-    {
       "name": "Humvee",
-      "armor": false,
-      "cost": 13,
-      "level": 13,
-      "weight": 1,
-      "delay": 0.2
-    },
-    {
-      "name": "Sniper",
       "armor": true,
-      "cost": 10,
-      "level": 7,
-      "weight": 1,
-      "delay": 0.4
-    },
-    {
-      "name": "Tank",
-      "armor": false,
-      "cost": 50,
+      "cost": 19,
       "level": 16,
-      "weight": 1,
-      "delay": 0.5
-    },
-    {
-      "name": "Humvee",
-      "armor": false,
-      "cost": 13,
-      "level": 13,
-      "weight": 1,
-      "delay": 0.2
+      "weight": 4,
+      "delay": 0.3
     },
     {
       "name": "Tank",
@@ -118,39 +118,7 @@
       "cost": 75,
       "level": 20,
       "weight": 4,
-      "delay": 0.4
-    },
-    {
-      "name": "RocketLauncher",
-      "armor": true,
-      "cost": 16,
-      "level": 12,
-      "weight": 4,
-      "delay": 0.5
-    },
-    {
-      "name": "RocketLauncher",
-      "armor": true,
-      "cost": 16,
-      "level": 12,
-      "weight": 4,
-      "delay": 0.5
-    },
-    {
-      "name": "Tank",
-      "armor": false,
-      "cost": 50,
-      "level": 16,
-      "weight": 1,
-      "delay": 0.5
-    },
-    {
-      "name": "RocketLauncher",
-      "armor": false,
-      "cost": 11,
-      "level": 9,
-      "weight": 1,
-      "delay": 0.6
+      "delay": 0.1
     },
     {
       "name": "Rifle",
@@ -158,47 +126,7 @@
       "cost": 6,
       "level": 3,
       "weight": 1,
-      "delay": 0.3
-    },
-    {
-      "name": "Sniper",
-      "armor": true,
-      "cost": 10,
-      "level": 7,
-      "weight": 1,
-      "delay": 0.4
-    },
-    {
-      "name": "Tank",
-      "armor": true,
-      "cost": 75,
-      "level": 20,
-      "weight": 4,
-      "delay": 0.4
-    },
-    {
-      "name": "Sniper",
-      "armor": false,
-      "cost": 7,
-      "level": 4,
-      "weight": 1,
-      "delay": 0.6
-    },
-    {
-      "name": "Rifle",
-      "armor": true,
-      "cost": 6,
-      "level": 3,
-      "weight": 1,
-      "delay": 0.3
-    },
-    {
-      "name": "Humvee",
-      "armor": true,
-      "cost": 19,
-      "level": 16,
-      "weight": 4,
-      "delay": 0.1
+      "delay": 0.5
     },
     {
       "name": "RocketLauncher",
@@ -206,23 +134,7 @@
       "cost": 16,
       "level": 12,
       "weight": 4,
-      "delay": 0.5
-    },
-    {
-      "name": "Humvee",
-      "armor": true,
-      "cost": 19,
-      "level": 16,
-      "weight": 4,
-      "delay": 0.1
-    },
-    {
-      "name": "Humvee",
-      "armor": false,
-      "cost": 13,
-      "level": 13,
-      "weight": 1,
-      "delay": 0.2
+      "delay": 0.6
     },
     {
       "name": "Rifle",
@@ -230,26 +142,26 @@
       "cost": 4,
       "level": 1,
       "weight": 1,
-      "delay": 0.6
+      "delay": 0.1
     },
     {
-      "name": "RocketLauncher",
+      "name": "Rifle",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.1
+    },
+    {
+      "name": "Humvee",
       "armor": true,
-      "cost": 16,
-      "level": 12,
+      "cost": 19,
+      "level": 16,
       "weight": 4,
-      "delay": 0.5
+      "delay": 0.3
     },
     {
-      "name": "RocketLauncher",
-      "armor": true,
-      "cost": 16,
-      "level": 12,
-      "weight": 4,
-      "delay": 0.5
-    },
-    {
-      "name": "MachineGun",
+      "name": "Rifle",
       "armor": true,
       "cost": 6,
       "level": 3,
@@ -257,52 +169,12 @@
       "delay": 0.5
     },
     {
-      "name": "RocketLauncher",
-      "armor": true,
-      "cost": 16,
-      "level": 12,
-      "weight": 4,
-      "delay": 0.5
-    },
-    {
-      "name": "RocketLauncher",
+      "name": "Rifle",
       "armor": false,
-      "cost": 11,
-      "level": 9,
+      "cost": 4,
+      "level": 1,
       "weight": 1,
-      "delay": 0.6
-    },
-    {
-      "name": "RocketLauncher",
-      "armor": false,
-      "cost": 11,
-      "level": 9,
-      "weight": 1,
-      "delay": 0.6
-    },
-    {
-      "name": "Sniper",
-      "armor": true,
-      "cost": 10,
-      "level": 7,
-      "weight": 1,
-      "delay": 0.4
-    },
-    {
-      "name": "Sniper",
-      "armor": false,
-      "cost": 7,
-      "level": 4,
-      "weight": 1,
-      "delay": 0.6
-    },
-    {
-      "name": "RocketLauncher",
-      "armor": true,
-      "cost": 16,
-      "level": 12,
-      "weight": 4,
-      "delay": 0.5
+      "delay": 0.1
     }
   ]
 }

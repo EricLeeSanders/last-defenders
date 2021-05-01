@@ -4,14 +4,7 @@ size: 2048,1024
 format: RGBA8888
 filter: MipMapLinearNearest,Nearest
 repeat: none
-airstrike
-  rotate: false
-  xy: 4, 278
-  size: 206, 131
-  orig: 206, 131
-  offset: 0, 0
-  index: -1
-supply-drop
+airplane
   rotate: false
   xy: 4, 278
   size: 206, 131

@@ -1,28 +1,12 @@
 {
   "wave": [
     {
-      "name": "Sniper",
-      "armor": false,
-      "cost": 7,
-      "level": 4,
-      "weight": 1,
-      "delay": 1
-    },
-    {
       "name": "Rifle",
       "armor": true,
       "cost": 6,
       "level": 3,
       "weight": 1,
-      "delay": 1
-    },
-    {
-      "name": "Rifle",
-      "armor": false,
-      "cost": 4,
-      "level": 1,
-      "weight": 1,
-      "delay": 0.6
+      "delay": 0.5
     },
     {
       "name": "MachineGun",
@@ -30,15 +14,23 @@
       "cost": 4,
       "level": 1,
       "weight": 1,
-      "delay": 0.7
+      "delay": 0.5
     },
     {
-      "name": "Rifle",
+      "name": "MachineGun",
       "armor": false,
       "cost": 4,
       "level": 1,
       "weight": 1,
-      "delay": 0.6
+      "delay": 0.5
+    },
+    {
+      "name": "MachineGun",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.5
     }
   ]
 }

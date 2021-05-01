@@ -1,12 +1,12 @@
 {
   "wave": [
     {
-      "name": "Sniper",
+      "name": "Rifle",
       "armor": false,
-      "cost": 7,
-      "level": 4,
+      "cost": 4,
+      "level": 1,
       "weight": 1,
-      "delay": 0.3
+      "delay": 0.1
     },
     {
       "name": "RocketLauncher",
@@ -14,15 +14,15 @@
       "cost": 16,
       "level": 12,
       "weight": 1,
-      "delay": 0.6
+      "delay": 0.7
     },
     {
-      "name": "RocketLauncher",
+      "name": "Rifle",
       "armor": false,
-      "cost": 11,
-      "level": 9,
+      "cost": 4,
+      "level": 1,
       "weight": 1,
-      "delay": 0.5
+      "delay": 0.1
     },
     {
       "name": "MachineGun",
@@ -30,7 +30,15 @@
       "cost": 4,
       "level": 1,
       "weight": 1,
-      "delay": 0.4
+      "delay": 0.1
+    },
+    {
+      "name": "Rifle",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.1
     },
     {
       "name": "Rifle",
@@ -38,7 +46,15 @@
       "cost": 6,
       "level": 3,
       "weight": 1,
-      "delay": 0.1
+      "delay": 0.5
+    },
+    {
+      "name": "RocketLauncher",
+      "armor": false,
+      "cost": 11,
+      "level": 9,
+      "weight": 1,
+      "delay": 0.9
     },
     {
       "name": "RocketLauncher",
@@ -46,45 +62,13 @@
       "cost": 16,
       "level": 12,
       "weight": 1,
-      "delay": 0.6
+      "delay": 0.7
     },
     {
-      "name": "Sniper",
+      "name": "Rifle",
       "armor": false,
-      "cost": 7,
-      "level": 4,
-      "weight": 1,
-      "delay": 0.3
-    },
-    {
-      "name": "Sniper",
-      "armor": false,
-      "cost": 7,
-      "level": 4,
-      "weight": 1,
-      "delay": 0.3
-    },
-    {
-      "name": "FlameThrower",
-      "armor": true,
-      "cost": 13,
-      "level": 8,
-      "weight": 1,
-      "delay": 0.1
-    },
-    {
-      "name": "Sniper",
-      "armor": false,
-      "cost": 7,
-      "level": 4,
-      "weight": 1,
-      "delay": 0.3
-    },
-    {
-      "name": "FlameThrower",
-      "armor": true,
-      "cost": 13,
-      "level": 8,
+      "cost": 4,
+      "level": 1,
       "weight": 1,
       "delay": 0.1
     }

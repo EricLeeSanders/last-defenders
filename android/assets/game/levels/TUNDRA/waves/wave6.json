@@ -1,44 +1,36 @@
 {
   "wave": [
     {
+      "name": "Sniper",
+      "armor": false,
+      "cost": 7,
+      "level": 4,
+      "weight": 1,
+      "delay": 1
+    },
+    {
+      "name": "MachineGun",
+      "armor": false,
+      "cost": 4,
+      "level": 1,
+      "weight": 1,
+      "delay": 0.3
+    },
+    {
       "name": "Rifle",
       "armor": false,
       "cost": 4,
       "level": 1,
       "weight": 1,
-      "delay": 0.4
+      "delay": 0.9
     },
     {
-      "name": "MachineGun",
+      "name": "Rifle",
       "armor": true,
       "cost": 6,
       "level": 3,
       "weight": 1,
       "delay": 0.1
-    },
-    {
-      "name": "MachineGun",
-      "armor": false,
-      "cost": 4,
-      "level": 1,
-      "weight": 1,
-      "delay": 0.3
-    },
-    {
-      "name": "FlameThrower",
-      "armor": false,
-      "cost": 9,
-      "level": 5,
-      "weight": 1,
-      "delay": 0.8
-    },
-    {
-      "name": "MachineGun",
-      "armor": false,
-      "cost": 4,
-      "level": 1,
-      "weight": 1,
-      "delay": 0.3
     },
     {
       "name": "Sniper",
@@ -46,23 +38,7 @@
       "cost": 7,
       "level": 4,
       "weight": 1,
-      "delay": 0.4
-    },
-    {
-      "name": "MachineGun",
-      "armor": true,
-      "cost": 6,
-      "level": 3,
-      "weight": 1,
-      "delay": 0.1
-    },
-    {
-      "name": "MachineGun",
-      "armor": true,
-      "cost": 6,
-      "level": 3,
-      "weight": 1,
-      "delay": 0.1
+      "delay": 1
     },
     {
       "name": "Rifle",
@@ -70,21 +46,21 @@
       "cost": 6,
       "level": 3,
       "weight": 1,
-      "delay": 0.7
+      "delay": 0.1
     },
     {
-      "name": "Rifle",
+      "name": "Sniper",
       "armor": false,
-      "cost": 4,
-      "level": 1,
+      "cost": 7,
+      "level": 4,
       "weight": 1,
-      "delay": 0.4
+      "delay": 1
     },
     {
-      "name": "MachineGun",
+      "name": "FlameThrower",
       "armor": false,
-      "cost": 4,
-      "level": 1,
+      "cost": 9,
+      "level": 5,
       "weight": 1,
       "delay": 0.3
     }
