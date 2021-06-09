@@ -5,7 +5,7 @@ import android.widget.ImageView.ScaleType;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.bumptech.glide.request.target.DrawableImageViewTarget ;
 
 /**
  * Created by Eric on 6/27/2018.
@@ -38,7 +38,7 @@ public class LoadingView {
 
         loadingView = new ImageView(androidLauncher);
         loadingView.setImageResource(R.drawable.loading);
-        GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(loadingView);
+        DrawableImageViewTarget  imageViewTarget = new DrawableImageViewTarget (loadingView);
         Glide.with(androidLauncher).load(R.drawable.loading).into(imageViewTarget);
 
         RelativeLayout.LayoutParams loadingViewParams = new RelativeLayout.LayoutParams(

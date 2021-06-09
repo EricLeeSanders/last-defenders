@@ -12,9 +12,10 @@ buildscript {
             classpath 'org.gretty:gretty:3.0.2'
             classpath 'com.android.tools.build:gradle:3.5.4'
             classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.12'
+            classpath 'com.google.firebase:perf-plugin:1.4.0'
+            classpath 'com.google.firebase:firebase-crashlytics-gradle:2.6.1'
+            classpath 'com.google.gms:google-services:4.3.5'
         }
-
-        classpath 'com.google.gms:google-services:4.3.5'
     }
 }
 
@@ -22,7 +23,7 @@ allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
 
-    version = '1.1'
+    version = '1.9'
     ext {
         appName = "Last Defenders"
         gdxVersion = '1.10.0'
@@ -59,27 +60,39 @@ project(":desktop") {
 project(":android") {
     apply plugin: "com.android.application"
     apply plugin: 'com.google.gms.google-services'
+    apply plugin: 'com.google.firebase.firebase-perf'
+    apply plugin: 'com.google.firebase.crashlytics'
 
     configurations { natives }
 
     dependencies {
         implementation project(":core")
-        implementation 'ch.acra:acra:4.9.0'
         implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
+        implementation 'androidx.annotation:annotation:1.2.0'
+
+        //ACRA
+        def acraVersion = '5.7.0'
+        implementation "ch.acra:acra-http:$acraVersion"
+        implementation "ch.acra:acra-toast:$acraVersion"
 
         // Google Play Services
         implementation 'com.google.android.gms:play-services-auth:19.0.0'
         implementation 'com.google.android.gms:play-services-games:21.0.0'
         implementation 'com.google.android.gms:play-services-identity:17.0.0'
 
-        implementation 'com.github.bumptech.glide:glide:3.7.0' // Used for loading gif
+        implementation 'com.github.bumptech.glide:glide:4.12.0' // Used for loading gif
 
         // Google Ads
         implementation 'com.google.android.gms:play-services-ads:20.1.0'
+
+        // Google Firebase
+        implementation 'com.google.firebase:firebase-analytics:19.0.0'
+        implementation 'com.google.firebase:firebase-perf:20.0.0'
+        implementation 'com.google.firebase:firebase-crashlytics:18.0.0'
 
     }
 }
@@ -126,9 +139,8 @@ project(":core") {
     dependencies {
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
-
         testImplementation 'junit:junit:4.12'
-        testImplementation "org.mockito:mockito-all:1.9.5"
+        testImplementation "org.mockito:mockito-all:1.10.8"
 
         testImplementation "com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion"
 
@@ -138,8 +150,9 @@ project(":core") {
         testImplementation 'org.powermock:powermock-module-junit4:1.6.1'
         testImplementation group: 'junit', name: 'junit', version: '4.12'
         testImplementation group: 'com.tngtech.java', name: 'junit-dataprovider', version: '1.10.0'
-        testImplementation group: 'org.apache.poi', name: 'poi', version: '3.9'
+        testImplementation group: 'org.apache.poi', name: 'poi', version: '3.15'
         testImplementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.15'
+
     }
 }
 
