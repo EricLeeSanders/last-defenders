@@ -37,7 +37,7 @@ public class ActorUtil {
     public static float calculateRotation(Vector2 target, Vector2 centerVector) {
 
         LDVector2 targetCopy = UtilPool.getVector2(target);
-        float rotation = targetCopy.sub(centerVector).angle();
+        float rotation = targetCopy.sub(centerVector).angleDeg();
         targetCopy.free();
         return rotation;
     }
