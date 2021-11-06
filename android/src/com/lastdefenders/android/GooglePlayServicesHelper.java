@@ -213,7 +213,7 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
 
     private void handleGooglePlayServicesError(Exception exception, boolean silent){
 
-        ACRA.getErrorReporter().handleException(exception);
+        ACRA.getErrorReporter().handleSilentException(exception);
 
         Logger.error("Google Play Services Error", exception);
 

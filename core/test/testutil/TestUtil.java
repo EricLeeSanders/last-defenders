@@ -20,6 +20,7 @@ import com.badlogic.gdx.backends.headless.HeadlessNativesLoader;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -98,7 +99,7 @@ public class TestUtil {
         Gdx.gl = gl20;
         Gdx.gl20 = gl20;
 
-        resources = new Resources(mock(UserPreferences.class));
+        resources = new Resources(mock(UserPreferences.class), mock(ShapeRenderer.class));
 
     }
 

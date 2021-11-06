@@ -8,7 +8,9 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.lastdefenders.LDGame;
+import com.lastdefenders.log.EventLogger;
 
 public class AndroidLauncher extends AndroidApplication {
 
@@ -23,11 +25,14 @@ public class AndroidLauncher extends AndroidApplication {
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		FirebaseAnalytics fb = FirebaseAnalytics.getInstance(this);
+		EventLogger eventLogger = new FirebaseEventLogger(fb);
+
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		config.useWakelock = true;
 		config.useImmersiveMode = true;
 
-		View gameView = initializeForView(new LDGame(googlePlayServicesHelper, adController), config);
+		View gameView = initializeForView(new LDGame(googlePlayServicesHelper, adController, eventLogger), config);
 		RelativeLayout layout = createLayout(gameView);
 		googlePlayServicesHelper.initialize(this, layout, gameView);
 		adController.initialize(this);

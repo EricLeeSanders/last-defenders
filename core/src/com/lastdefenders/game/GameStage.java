@@ -2,13 +2,11 @@ package com.lastdefenders.game;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.ads.AdControllerHelper;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.PlayerObserver;
-import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.label.WaveOverCoinEffect;
@@ -38,6 +36,10 @@ import com.lastdefenders.googleplay.GooglePlayAchievement;
 import com.lastdefenders.googleplay.GooglePlayLeaderboard;
 import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.levelselect.LevelName;
+import com.lastdefenders.log.EventLogBuilder;
+import com.lastdefenders.log.EventLogger;
+import com.lastdefenders.log.EventLogger.LogEvent;
+import com.lastdefenders.log.EventLogger.LogParam;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
@@ -69,13 +71,15 @@ public class GameStage extends Stage implements PlayerObserver {
     private EffectFactory effectFactory;
     private GooglePlayServices playServices;
     private AdControllerHelper adControllerHelper;
+    private EventLogger eventLogger;
     private java.util.Map<Class<? extends SupportActor>, SupportActorCooldown> supportActorCooldownMap = new HashMap<>();
     private java.util.Map<Class<? extends SupportActor>, SupportActorValidator> supportActorValidatorMap = new HashMap<>();
 
     public GameStage(LevelName levelName, Player player, ActorGroups actorGroups, LDAudio audio,
         LevelStateManager levelStateManager, GameUIStateManager uiStateManager,
         Viewport viewport, Resources resources, SpriteBatch spriteBatch,
-        GooglePlayServices playServices, AdControllerHelper adControllerHelper) {
+        GooglePlayServices playServices, AdControllerHelper adControllerHelper,
+        EventLogger eventLogger) {
 
         super(viewport, spriteBatch);
         this.player = player;
@@ -85,11 +89,13 @@ public class GameStage extends Stage implements PlayerObserver {
         this.resources = resources;
         this.playServices = playServices;
         this.adControllerHelper = adControllerHelper;
+        this.eventLogger = eventLogger;
 
         initialize(levelName, audio);
     }
 
     private void initialize(LevelName levelName, LDAudio audio){
+        eventLogger.addDefaultStringParameter(LogParam.LEVEL_NAME.getTag(), levelName.getName());
         TiledMap tiledMap = resources.getMap(levelName);
         map = new Map(tiledMap, resources.getTiledMapScale());
         map.init();
@@ -104,6 +110,8 @@ public class GameStage extends Stage implements PlayerObserver {
         level = new Level(levelName, getActorGroups(), fileWaveLoader,
             dynamicWaveLoader);
         player.attachObserver(this);
+
+        eventLogger.logEvent(new EventLogBuilder(LogEvent.LEVEL_START));
     }
 
     private void createFactories(LDAudio audio) {
@@ -242,7 +250,14 @@ public class GameStage extends Stage implements PlayerObserver {
     private void waveOver() {
 
         Logger.info("Game Stage: Wave over");
+
+        eventLogger.logEvent(
+            new EventLogBuilder(LogEvent.WAVE_COMPLETE)
+                .withIntegerParameter(LogParam.COMPLETED_WAVES.getTag(), this.getLevel().getCurrentWave())
+        );
+
         adControllerHelper.incrementEventTriggered();
+
         int money = (int) (WAVE_OVER_MONEY_MULTIPLIER * (float) level.getCurrentWave()) + WAVE_OVER_MONEY_ADDITION;
         player.giveMoney(money);
         levelStateManager.setState(LevelState.STANDBY);
@@ -254,7 +269,7 @@ public class GameStage extends Stage implements PlayerObserver {
         waveOverCoinEffect.initialize(money);
         resetTowersForNewWave();
         playServices.submitScore(GooglePlayLeaderboard.findByLevelName(level.getActiveLevel()), level.getCurrentWave());
-        level.loadNextWave(); //load the next wave
+        level.loadNextWave();
     }
 
     /**
@@ -266,10 +281,36 @@ public class GameStage extends Stage implements PlayerObserver {
     }
 
     private void levelComplete() {
+
         Logger.info("Game Stage: Level Over");
+
+        eventLogger.logEvent(
+            new EventLogBuilder(LogEvent.LEVEL_COMPLETE)
+                .withIntegerParameter(LogParam.COMPLETED_WAVES.getTag(), this.getLevel().getCurrentWave())
+        );
+
         uiStateManager.setState(GameUIState.LEVEL_COMPLETED);
         levelStateManager.setState(LevelState.LEVEL_COMPLETED);
         playServices.unlockAchievement(GooglePlayAchievement.findByLevelName(level.getActiveLevel()));
+    }
+
+    private void gameOver(){
+
+        Logger.info("Game Stage: game over");
+
+        eventLogger.logEvent(
+            new EventLogBuilder(LogEvent.GAME_OVER)
+                .withIntegerParameter(LogParam.COMPLETED_WAVES.getTag(), this.getLevel().getCurrentWave())
+        );
+
+        levelStateManager.setState(LevelState.GAME_OVER);
+        uiStateManager.setState(GameUIState.GAME_OVER);
+    }
+
+    private boolean isGameOver(){
+
+        return player.getLives() <= 0;
+
     }
 
     private void resetTowersForNewWave() {
@@ -283,11 +324,8 @@ public class GameStage extends Stage implements PlayerObserver {
     @Override
     public void playerAttributeChange() {
 
-        if (player.getLives() <= 0 && !levelStateManager.getState()
-            .equals(LevelState.GAME_OVER)) { // end game
-            Logger.info("Game Stage: game over");
-            levelStateManager.setState(LevelState.GAME_OVER);
-            uiStateManager.setState(GameUIState.GAME_OVER);
+        if (isGameOver() && !levelStateManager.getState().equals(LevelState.GAME_OVER)) {
+            gameOver();
         }
     }
 

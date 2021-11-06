@@ -15,6 +15,6 @@ public class DesktopLauncher {
 		config.addIcon("icon/icon_128.png", FileType.Internal); // Mac
 		config.addIcon("icon/icon_32.png", FileType.Internal);// Windows and Linux
 		config.addIcon("icon/icon_16.png", FileType.Internal); // Windows
-		new LwjglApplication(new LDGame(new GooglePlayServicesHelper(), new AdControllerImpl()), config);
+		new LwjglApplication(new LDGame(new GooglePlayServicesHelper(), new AdControllerImpl(), new EventLoggerImpl()), config);
 	}
 }
