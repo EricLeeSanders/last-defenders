@@ -80,10 +80,10 @@ public class Resources {
 
     }
 
-    public Resources(UserPreferences userPreferences) {
+    public Resources(UserPreferences userPreferences, ShapeRenderer shapeRenderer) {
 
         this.userPreferences = userPreferences;
-        shapeRenderer = new ShapeRenderer();
+        this.shapeRenderer = shapeRenderer;
 
         Resolution[] resolutions = {new Resolution(1, 1, "lo"),
             new Resolution(361, 641, "med"),

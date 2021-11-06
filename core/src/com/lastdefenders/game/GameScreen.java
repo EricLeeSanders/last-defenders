@@ -17,6 +17,7 @@ import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.levelselect.LevelName;
+import com.lastdefenders.log.EventLogger;
 import com.lastdefenders.screen.AbstractScreen;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.state.GameStateManager;
@@ -44,7 +45,8 @@ public class GameScreen extends AbstractScreen {
     private Viewport uiViewport;
 
     public GameScreen(LevelName levelName, GameStateManager gameStateManager, ScreenChanger screenChanger,
-        Resources resources, LDAudio audio, GooglePlayServices playServices, AdControllerHelper adControllerHelper) {
+        Resources resources, LDAudio audio, GooglePlayServices playServices, AdControllerHelper adControllerHelper,
+        EventLogger eventLogger) {
 
         super(gameStateManager);
         this.resources = resources;
@@ -53,7 +55,7 @@ public class GameScreen extends AbstractScreen {
         spriteBatch = new SpriteBatch();
 
         createCameraAndViewports();
-        createStages(levelName, audio, playServices, adControllerHelper);
+        createStages(levelName, audio, playServices, adControllerHelper, eventLogger);
 
         super.show();
         audio.fadeOutMusic();
@@ -74,7 +76,8 @@ public class GameScreen extends AbstractScreen {
         addViewport(uiViewport);
     }
 
-    private void createStages(LevelName levelName, LDAudio audio, GooglePlayServices playServices,  AdControllerHelper adControllerHelper ) {
+    private void createStages(LevelName levelName, LDAudio audio, GooglePlayServices playServices,
+        AdControllerHelper adControllerHelper, EventLogger eventLogger) {
 
         Player player = new Player();
         ActorGroups actorGroups = new ActorGroups();
@@ -82,7 +85,7 @@ public class GameScreen extends AbstractScreen {
         uiStateManager = new GameUIStateManager(levelStateManager);
 
         gameStage = new GameStage(levelName, player, actorGroups, audio, levelStateManager,
-            uiStateManager, gameViewport, resources, spriteBatch, playServices, adControllerHelper);
+            uiStateManager, gameViewport, resources, spriteBatch, playServices, adControllerHelper, eventLogger);
         gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager,
             levelStateManager, gameStateManager, playServices, screenChanger, super.getInputMultiplexer(),
             uiViewport, resources, audio, gameStage, spriteBatch);

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.lastdefenders.ads.AdController;
 import com.lastdefenders.ads.AdControllerHelper;
 import com.lastdefenders.game.GameScreen;
@@ -12,6 +13,7 @@ import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.levelselect.LevelSelectScreen;
 import com.lastdefenders.load.GameLoadingScreen;
 import com.lastdefenders.load.LevelLoadingScreen;
+import com.lastdefenders.log.EventLogger;
 import com.lastdefenders.menu.MenuScreen;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.state.GameStateManager;
@@ -29,6 +31,7 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
     private LDAudio audio;
     private GooglePlayServices playServices;
     private AdControllerHelper adControllerHelper;
+    private EventLogger eventLogger;
 
     // Needed for launcher without play services
     // TODO remove this
@@ -36,10 +39,11 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
 
     }
 
-    public LDGame(GooglePlayServices playServices, AdController adController){
+    public LDGame(GooglePlayServices playServices, AdController adController, EventLogger eventLogger){
 
         this.playServices = playServices;
         this.adControllerHelper = new AdControllerHelper(adController);
+        this.eventLogger = eventLogger;
     }
 
     @Override
@@ -48,7 +52,8 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
         Logger.info("LDGame: Creating");
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
         UserPreferences userPreferences = new UserPreferences();
-        resources = new Resources(userPreferences);
+        ShapeRenderer shapeRenderer = new ShapeRenderer();
+        resources = new Resources(userPreferences, shapeRenderer);
         audio = new LDAudio(userPreferences);
         gameStateManager = new GameStateManager();
         GameLoadingScreen loadingScreen = new GameLoadingScreen(gameStateManager, this, resources,
@@ -107,7 +112,7 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
         Logger.info("LDGame: Changing to level: " + level.toString());
         this.getScreen().dispose(); // dispose current screen
         this.setScreen(new GameScreen(level, gameStateManager, this, resources,
-            audio, playServices, adControllerHelper));
+            audio, playServices, adControllerHelper, eventLogger));
     }
 
     @Override

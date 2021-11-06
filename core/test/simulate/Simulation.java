@@ -11,6 +11,7 @@ import com.badlogic.gdx.backends.headless.HeadlessNativesLoader;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.ads.AdControllerHelper;
@@ -22,6 +23,7 @@ import com.lastdefenders.game.model.level.state.LevelStateManager.LevelState;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.levelselect.LevelName;
+import com.lastdefenders.log.EventLogger;
 import com.lastdefenders.util.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
@@ -224,7 +226,8 @@ public class Simulation {
     private GameStage createGameStage() {
 
         UserPreferences userPreferences = TestUtil.createUserPreferencesMock();
-        resources = new Resources(userPreferences);
+        ShapeRenderer shapeRendererMock = mock(ShapeRenderer.class);
+        resources = new Resources(userPreferences, shapeRendererMock);
 
         resources.loadActorAtlasRegions();
 
@@ -242,9 +245,11 @@ public class Simulation {
         AdControllerHelper adControllerHelper = new AdControllerHelper(adController,
             Integer.MAX_VALUE);
 
+        EventLogger eventLogger = mock(EventLogger.class);
+
         GameStage gameStage = new GameStage(levelName, player, actorGroups, audio,
             levelStateManager, gameUIStateManager, gameViewport, resources, spriteBatch,
-            googlePlayServices, adControllerHelper);
+            googlePlayServices, adControllerHelper, eventLogger);
 
         gameStage.loadFirstWave();
 
