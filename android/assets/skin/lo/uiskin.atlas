@@ -6,35 +6,35 @@ filter: Linear,Linear
 repeat: none
 achievements
   rotate: false
-  xy: 547, 374
+  xy: 547, 373
   size: 37, 38
   orig: 37, 38
   offset: 0, 0
   index: -1
 arrow-left
   rotate: false
-  xy: 823, 542
+  xy: 601, 479
   size: 40, 27
   orig: 40, 27
   offset: 0, 0
   index: -1
 arrow-right
   rotate: false
-  xy: 865, 542
+  xy: 613, 413
   size: 40, 27
   orig: 40, 27
   offset: 0, 0
   index: -1
 arrow-small-down
   rotate: false
-  xy: 566, 237
+  xy: 238, 125
   size: 35, 30
   orig: 35, 30
   offset: 0, 0
   index: -1
 arrow-small-up
   rotate: false
-  xy: 560, 171
+  xy: 275, 125
   size: 35, 30
   orig: 35, 30
   offset: 0, 0
@@ -62,7 +62,7 @@ button_disabled
   index: -1
 button_disabled_round
   rotate: false
-  xy: 534, 480
+  xy: 781, 608
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -76,7 +76,7 @@ button_normal
   index: -1
 button_normal_round
   rotate: false
-  xy: 781, 608
+  xy: 494, 181
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
@@ -90,56 +90,56 @@ button_over
   index: -1
 button_over_round
   rotate: false
-  xy: 494, 181
+  xy: 547, 413
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 button_press
   rotate: false
-  xy: 913, 637
+  xy: 913, 571
   size: 64, 63
   orig: 64, 63
   offset: 0, 0
   index: -1
 button_press_round
   rotate: false
-  xy: 547, 414
+  xy: 847, 636
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 button_red
   rotate: false
-  xy: 913, 572
+  xy: 798, 506
   size: 64, 63
   orig: 64, 63
   offset: 0, 0
   index: -1
 button_red_round
   rotate: false
-  xy: 847, 636
+  xy: 913, 636
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 cancel
   rotate: false
-  xy: 600, 508
+  xy: 601, 508
   size: 35, 36
   orig: 35, 36
   offset: 0, 0
   index: -1
 check-off
   rotate: false
-  xy: 560, 137
+  xy: 624, 379
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 check-on
   rotate: false
-  xy: 560, 103
+  xy: 899, 523
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
@@ -167,21 +167,21 @@ enlist_disabled
   index: -1
 games
   rotate: false
-  xy: 566, 340
+  xy: 586, 379
   size: 36, 32
   orig: 36, 32
   offset: 0, 0
   index: -1
 heart
   rotate: false
-  xy: 203, 110
+  xy: 933, 504
   size: 32, 31
   orig: 32, 31
   offset: 0, 0
   index: -1
 help
   rotate: false
-  xy: 172, 2
+  xy: 995, 893
   size: 15, 25
   orig: 15, 25
   offset: 0, 0
@@ -230,7 +230,7 @@ main-panel
   index: -1
 money
   rotate: false
-  xy: 798, 537
+  xy: 995, 920
   size: 23, 33
   orig: 23, 33
   offset: 0, 0
@@ -249,16 +249,23 @@ music
   orig: 28, 36
   offset: 0, 0
   index: -1
+no_ads
+  rotate: false
+  xy: 534, 479
+  size: 65, 65
+  orig: 65, 65
+  offset: 0, 0
+  index: -1
 options
   rotate: false
-  xy: 566, 303
+  xy: 613, 442
   size: 33, 35
   orig: 33, 35
   offset: 0, 0
   index: -1
 pause
   rotate: false
-  xy: 995, 930
+  xy: 312, 132
   size: 17, 23
   orig: 17, 23
   offset: 0, 0
@@ -293,28 +300,28 @@ progress-bar-unfilled
   index: -1
 range_icon
   rotate: false
-  xy: 237, 110
+  xy: 566, 340
   size: 29, 31
   orig: 29, 31
   offset: 0, 0
   index: -1
 resume
   rotate: false
-  xy: 586, 374
+  xy: 864, 517
   size: 33, 38
   orig: 33, 38
   offset: 0, 0
   index: -1
 rotate
   rotate: false
-  xy: 566, 269
+  xy: 203, 115
   size: 33, 32
   orig: 33, 32
   offset: 0, 0
   index: -1
 select
   rotate: false
-  xy: 600, 483
+  xy: 172, 4
   size: 30, 23
   orig: 30, 23
   offset: 0, 0
@@ -335,14 +342,14 @@ slider-knob
   index: -1
 sound
   rotate: false
-  xy: 560, 203
+  xy: 933, 537
   size: 34, 32
   orig: 34, 32
   offset: 0, 0
   index: -1
 speed_icon
   rotate: false
-  xy: 604, 342
+  xy: 566, 308
   size: 30, 30
   orig: 30, 30
   offset: 0, 0
@@ -391,7 +398,7 @@ text_button_press
   index: -1
 tower-attr-full
   rotate: false
-  xy: 220, 143
+  xy: 864, 557
   size: 63, 12
   orig: 63, 12
   offset: 0, 0

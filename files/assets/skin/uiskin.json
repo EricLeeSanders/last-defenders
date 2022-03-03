@@ -47,6 +47,8 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	achievements_round: {imageUp: achievements, over: button_over_round, down: button_press_round, up: button_normal_round, disabled: button_disabled_round},
 	leaderboard_round: {imageUp: leaderboard, over: button_over_round, down: button_press_round, up: button_normal_round, disabled: button_disabled_round},
 	play_round: {imageUp: resume, over: button_over_round, down: button_press_round, up: button_normal_round, disabled: button_disabled_round},
+	remove_ads_round: {imageUp: no_ads, over: button_over_round, down: button_press_round, up: button_normal_round, disabled: button_disabled_round},
+	remove_ads_red: {imageUp: no_ads, over: button_over, down: button_press, up: button_red, disabled: button_disabled},
 },
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
 	default: { down: text_button_press, up: text_button_normal, over: text_button_over, disabled: text_button_disabled, font: default-font, fontColor: white },
