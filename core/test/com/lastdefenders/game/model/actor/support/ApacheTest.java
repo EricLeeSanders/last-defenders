@@ -24,7 +24,7 @@ import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.ActorUtil;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;

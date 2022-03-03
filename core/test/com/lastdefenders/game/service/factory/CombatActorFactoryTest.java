@@ -15,7 +15,7 @@ import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,11 +1,9 @@
 package com.lastdefenders.game.model.actor.support;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Align;
@@ -17,8 +15,8 @@ import com.lastdefenders.game.model.actor.projectile.Rocket;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.ActorUtil;
-import com.lastdefenders.util.LDAudio;
-import com.lastdefenders.util.LDAudio.LDSound;
+import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.action.LDOneTimeAction;

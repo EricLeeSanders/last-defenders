@@ -10,12 +10,11 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.level.state.LevelStateManager;
 import com.lastdefenders.game.model.level.state.LevelStateManager.LevelState;
-import com.lastdefenders.game.ui.presenter.LevelCompletedPresenter;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.LevelCompletedView;
 import com.lastdefenders.screen.ScreenChanger;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.sound.LDAudio;
 import org.junit.Before;
 import org.junit.Test;
 

@@ -8,7 +8,7 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
 import org.junit.Before;
 import org.junit.Test;

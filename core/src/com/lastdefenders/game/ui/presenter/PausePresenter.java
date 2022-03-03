@@ -7,8 +7,8 @@ import com.lastdefenders.game.ui.view.interfaces.IPauseView;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.state.GameStateManager.GameState;
-import com.lastdefenders.util.LDAudio;
-import com.lastdefenders.util.LDAudio.LDSound;
+import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
 
 /**

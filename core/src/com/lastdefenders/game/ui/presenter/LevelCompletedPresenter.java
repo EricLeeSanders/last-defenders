@@ -7,8 +7,8 @@ import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.state.GameUIStateObserver;
 import com.lastdefenders.game.ui.view.interfaces.ILevelCompletedView;
 import com.lastdefenders.screen.ScreenChanger;
-import com.lastdefenders.util.LDAudio;
-import com.lastdefenders.util.LDAudio.LDSound;
+import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
 
 public class LevelCompletedPresenter implements GameUIStateObserver {

@@ -13,7 +13,7 @@ import com.lastdefenders.game.model.actor.support.LandMine;
 import com.lastdefenders.game.model.actor.support.SupportActor;
 import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDrop;
 import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDropPlane;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 

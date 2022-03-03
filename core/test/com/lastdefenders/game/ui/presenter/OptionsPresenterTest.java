@@ -9,13 +9,11 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
-import com.lastdefenders.game.ui.presenter.OptionsPresenter;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.OptionsView;
 import com.lastdefenders.screen.ScreenChanger;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
 import org.junit.Before;

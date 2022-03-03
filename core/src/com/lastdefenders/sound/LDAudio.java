@@ -1,4 +1,4 @@
-package com.lastdefenders.util;
+package com.lastdefenders.sound;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -6,6 +6,8 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.backends.lwjgl.audio.Ogg;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
+import com.lastdefenders.util.Logger;
+import com.lastdefenders.util.UserPreferences;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

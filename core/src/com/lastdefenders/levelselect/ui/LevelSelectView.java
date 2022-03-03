@@ -15,8 +15,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Scaling;
 import com.lastdefenders.levelselect.LevelName;
-import com.lastdefenders.util.LDAudio;
-import com.lastdefenders.util.LDAudio.LDSound;
+import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 

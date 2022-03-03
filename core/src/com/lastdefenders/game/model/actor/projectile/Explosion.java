@@ -13,8 +13,8 @@ import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
-import com.lastdefenders.util.LDAudio;
-import com.lastdefenders.util.LDAudio.LDSound;
+import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.LDAudio.LDSound;
 import com.lastdefenders.util.datastructures.Dimension;
 
 /**
