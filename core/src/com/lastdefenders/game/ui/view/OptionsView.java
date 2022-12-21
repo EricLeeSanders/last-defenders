@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
@@ -31,8 +32,9 @@ import com.lastdefenders.util.Resources;
 public class OptionsView extends Group implements IOptionsView {
 
     private OptionsPresenter presenter;
-    private TextButton btnClose, btnNewGame, btnMainMenu;
+    private TextButton btnNewGame, btnMainMenu;
     private CheckBox btnShowRanges, btnSound, btnMusic;
+    private ImageButton btnRemoveAds;
     private Resources resources;
 
     public OptionsView(OptionsPresenter presenter, Resources resources) {
@@ -81,20 +83,9 @@ public class OptionsView extends Group implements IOptionsView {
         btnNewGame.getLabel().setFontScale(0.5f * resources.getFontScale());
         setBtnNewGameListener();
 
-        btnClose = new TextButton("Close", skin);
-        btnClose.getLabel().setFontScale(0.5f * resources.getFontScale());
-        setBtnCloseListener();
-
         btnMainMenu = new TextButton("Main Menu", skin);
         btnMainMenu.getLabel().setFontScale(0.5f * resources.getFontScale());
         setBtnMainMenuListener();
-
-        TextButton btnDebug = new TextButton("Debug", skin);
-        btnDebug.setSize(75, 35);
-        btnDebug.setPosition((getStage().getViewport().getWorldWidth() / 2) + 155, lblTitleY - 30);
-        btnDebug.getLabel().setFontScale(0.5f * resources.getFontScale());
-        addActor(btnDebug);
-        setBtnDebugListener(btnDebug);
 
         btnSound = new CheckBox(" Sound On", skin);
         btnSound.getLabel().setFontScale(0.5f * resources.getFontScale());
@@ -171,11 +162,58 @@ public class OptionsView extends Group implements IOptionsView {
 
 
         container.row();
-        container.add(btnClose).size(150,45).spaceTop(10);
-        container.add(btnNewGame).size(150,45).spaceTop(10).spaceLeft(5).spaceRight(5);
+        container.add(btnNewGame).size(150,45).spaceTop(10).padLeft(5);
         container.add(btnMainMenu).size(150,45).spaceTop(10);
 
+        // Free position elements
+        ImageButton btnDebug = new ImageButton(skin, "debug");
+        btnDebug.setSize(50,50);
+        btnDebug.getImageCell().size(30, 30);
+        btnDebug.setPosition(80, lblTitleY - 30);
+        addActor(btnDebug);
+        setBtnDebugListener(btnDebug);
+
+        ImageButton btnClose = new ImageButton(skin, "cancel");
+        btnClose.setSize(50, 50);
+        btnClose.getImageCell().size(28, 28);
+        btnClose.setPosition(getStage().getViewport().getWorldWidth() - 131, lblTitleY - 30);
+        addActor(btnClose);
+        setBtnCloseListener(btnClose);
+
+        btnRemoveAds = new ImageButton(skin, "remove_ads_red");
+        btnRemoveAds.setSize(50, 50);
+        btnRemoveAds.getImageCell().size(40, 40);
+        btnRemoveAds.setPosition(getStage().getViewport().getWorldWidth() - 131, btnClose.getY(Align.bottom) - 10, Align.topLeft);
+        setBtnRemoveAdsListener(btnRemoveAds);
+        addAdsBtnToStage();
+
         Logger.info("Options View: controls created");
+    }
+
+    private void addAdsBtnToStage(){
+        if(presenter.isAdsRemovalPurchasable() && !btnRemoveAds.hasParent()) {
+            addActor(btnRemoveAds);
+        }
+    }
+
+    private void removeAdsBtnFromStage(){
+        removeActor(btnRemoveAds);
+    }
+
+    @Override
+    public void setPurchaseManagerInstalled(boolean installed){
+        if(installed) {
+            addAdsBtnToStage();
+        }
+    }
+
+    @Override
+    public void adRemovalPurchased(boolean purchased) {
+        if(purchased){
+            removeAdsBtnFromStage();
+        } else {
+            addAdsBtnToStage();
+        }
     }
 
     private LDSlider createVolSlider(Skin skin){
@@ -196,8 +234,20 @@ public class OptionsView extends Group implements IOptionsView {
         return slider;
     }
 
+    private void setBtnRemoveAdsListener(Button btnRemoveAds) {
 
-    private void setBtnCloseListener() {
+        btnRemoveAds.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+                super.touchUp(event, x, y, pointer, button);
+                presenter.removeAds();
+            }
+        });
+
+    }
+
+    private void setBtnCloseListener(Button btnClose) {
 
         btnClose.addListener(new ClickListener() {
             @Override

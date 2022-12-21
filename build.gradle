@@ -23,12 +23,13 @@ allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
 
-    version = '1.9'
+    version = '1.11.0'
     ext {
         appName = "Last Defenders"
         gdxVersion = '1.10.0'
         roboVMVersion = '2.3.12'
         gdxControllersVersion = '2.1.0'
+        gdxPayVersion = '1.3.2'
     }
 
     repositories {
@@ -47,6 +48,7 @@ project(":desktop") {
 
     dependencies {
         implementation project(":core")
+        implementation "com.badlogicgames.gdxpay:gdx-pay-client:$gdxPayVersion"
         implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         implementation "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-desktop"
@@ -65,6 +67,7 @@ project(":android") {
     dependencies {
         implementation project(":core")
         implementation "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
+        implementation "com.badlogicgames.gdxpay:gdx-pay-android-googlebilling:$gdxPayVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
@@ -133,6 +136,7 @@ project(":core") {
     dependencies {
         implementation "com.badlogicgames.gdx:gdx:$gdxVersion"
         implementation "com.badlogicgames.gdx:gdx-tools:$gdxVersion"
+        implementation "com.badlogicgames.gdxpay:gdx-pay-client:$gdxPayVersion"
         testImplementation 'junit:junit:4.12'
         testImplementation "org.mockito:mockito-all:1.10.8"
 

@@ -5,3 +5,10 @@ Bars
 To create frames (loading screen)
 -- Ctrl click the layer image in the layer view 
 -- select frame layer and delete
+
+
+Order Management
+	- Google Play Console
+		- https://play.google.com/console/u/0/developers/6098707238824711971/orders
+	- Refund
+	- Remove Entitlement

@@ -12,7 +12,8 @@ import com.lastdefenders.screen.AbstractScreen;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.state.GameStateManager.GameState;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.store.StoreManager;
+import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -28,23 +29,24 @@ public class MenuScreen extends AbstractScreen {
     private Viewport viewport;
 
     public MenuScreen(ScreenChanger screenChanger, GameStateManager gameStateManager,
-        Resources resources, LDAudio audio, GooglePlayServices playServices) {
+        Resources resources, LDAudio audio, GooglePlayServices playServices,
+        StoreManager storeManager) {
 
         super(gameStateManager);
         this.gameStateManager = gameStateManager;
-        createStageAndViewport(screenChanger, resources, audio, playServices);
+        createStageAndViewport(screenChanger, resources, audio, playServices, storeManager);
         audio.playMenuMusic();
 
         createBackListener();
     }
 
     private void createStageAndViewport(ScreenChanger screenChanger, Resources resources,
-        LDAudio audio, GooglePlayServices playServices){
+        LDAudio audio, GooglePlayServices playServices, StoreManager storeManager){
 
         viewport = new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT,
             new OrthographicCamera());
         addViewport(viewport);
-        stage = new MenuStage(screenChanger, resources, audio, viewport, playServices);
+        stage = new MenuStage(screenChanger, resources, audio, viewport, playServices, storeManager);
         addInputProcessor(stage);
     }
 

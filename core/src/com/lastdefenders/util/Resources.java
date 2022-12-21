@@ -85,6 +85,9 @@ public class Resources {
         this.userPreferences = userPreferences;
         this.shapeRenderer = shapeRenderer;
 
+        System.out.println("Screen Width: " + Gdx.graphics.getWidth());
+        System.out.println("Screen Height: " + Gdx.graphics.getHeight());
+
         Resolution[] resolutions = {new Resolution(1, 1, "lo"),
             new Resolution(361, 641, "med"),
             new Resolution(721, 1281, "hi")};

@@ -2,9 +2,12 @@ package com.lastdefenders.menu.ui;
 
 import com.lastdefenders.menu.ui.view.interfaces.IMenuOptionsView;
 import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.store.StoreManager;
+import com.lastdefenders.store.StoreManager.PurchasableItem;
+import com.lastdefenders.store.StoreManagerObserver;
 import com.lastdefenders.ui.presenter.GooglePlayServicesPresenter;
-import com.lastdefenders.util.LDAudio;
-import com.lastdefenders.util.LDAudio.LDSound;
+import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.menu.ui.view.interfaces.IMenuView;
 
@@ -13,25 +16,24 @@ import com.lastdefenders.menu.ui.view.interfaces.IMenuView;
  *
  * @author Eric
  */
-public class MenuPresenter {
+public class MenuPresenter implements StoreManagerObserver {
 
     private ScreenChanger screenChanger;
     private IMenuView view;
     private IMenuOptionsView menuOptionsView;
     private LDAudio audio;
-    // Optional
     private GooglePlayServicesPresenter gpsPresenter;
     private boolean optionsActive;
+    private StoreManager storeManager;
 
-    public MenuPresenter(ScreenChanger screenChanger, LDAudio audio) {
-
+    public MenuPresenter(ScreenChanger screenChanger, LDAudio audio, GooglePlayServicesPresenter gpsPresenter,
+        StoreManager storeManager) {
         this.screenChanger = screenChanger;
         this.audio = audio;
-    }
-
-    public MenuPresenter(ScreenChanger screenChanger, LDAudio audio, GooglePlayServicesPresenter gpsPresenter) {
-        this(screenChanger, audio);
         this.gpsPresenter = gpsPresenter;
+        this.storeManager = storeManager;
+
+        storeManager.addObserver(this);
     }
 
     public void setView(IMenuView view, IMenuOptionsView menuOptionsView) {
@@ -127,6 +129,17 @@ public class MenuPresenter {
         return optionsActive;
     }
 
+    public boolean isAdsRemovalPurchasable(){
+        return storeManager.isAdsRemovalPurchasable();
+    }
+
+    public void removeAds(){
+        if(!isAdsRemovalPurchasable()){
+            throw new IllegalStateException("Ad removal is not purchasable");
+        }
+        storeManager.purchaseItem(PurchasableItem.NO_ADS);
+    }
+
     /**
      * Handles a back/escape request. Returns true if the event was handled.
      * @return - boolean
@@ -144,4 +157,15 @@ public class MenuPresenter {
         return handled;
     }
 
+    @Override
+    public void handlePurchase(PurchasableItem purchasableItem) {
+        if(purchasableItem.equals(PurchasableItem.NO_ADS)){
+            view.adRemovalPurchased(true);
+        }
+    }
+
+    @Override
+    public void purchaseManagerInstalled(boolean installed) {
+        view.setPurchaseManagerInstalled(installed);
+    }
 }

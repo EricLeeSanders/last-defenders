@@ -20,28 +20,28 @@ arrow-left
   index: -1
 arrow-right
   rotate: false
-  xy: 744, 154
+  xy: 747, 154
   size: 80, 54
   orig: 80, 54
   offset: 0, 0
   index: -1
 arrow-small-down
   rotate: false
-  xy: 826, 148
+  xy: 829, 148
   size: 70, 60
   orig: 70, 60
   offset: 0, 0
   index: -1
 arrow-small-up
   rotate: false
-  xy: 898, 148
+  xy: 901, 148
   size: 70, 60
   orig: 70, 60
   offset: 0, 0
   index: -1
 attack_icon
   rotate: false
-  xy: 4010, 381
+  xy: 4010, 522
   size: 54, 53
   orig: 54, 53
   offset: 0, 0
@@ -125,23 +125,30 @@ button_red_round
   index: -1
 cancel
   rotate: false
-  xy: 303, 75
+  xy: 533, 116
   size: 70, 72
   orig: 70, 72
   offset: 0, 0
   index: -1
 check-off
   rotate: false
-  xy: 1039, 144
+  xy: 1111, 144
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
 check-on
   rotate: false
-  xy: 1105, 144
+  xy: 1667, 327
   size: 64, 64
   orig: 64, 64
+  offset: 0, 0
+  index: -1
+debug
+  rotate: false
+  xy: 1585, 333
+  size: 80, 80
+  orig: 80, 80
   offset: 0, 0
   index: -1
 default-font
@@ -167,14 +174,14 @@ enlist_disabled
   index: -1
 games
   rotate: false
-  xy: 533, 123
+  xy: 673, 143
   size: 72, 65
   orig: 72, 65
   offset: 0, 0
   index: -1
 heart
   rotate: false
-  xy: 4018, 626
+  xy: 1733, 330
   size: 64, 61
   orig: 64, 61
   offset: 0, 0
@@ -216,7 +223,7 @@ kills_label
   index: -1
 leaderboard
   rotate: false
-  xy: 1585, 345
+  xy: 303, 79
   size: 79, 68
   orig: 79, 68
   offset: 0, 0
@@ -258,14 +265,14 @@ no_ads
   index: -1
 options
   rotate: false
-  xy: 675, 138
+  xy: 973, 138
   size: 67, 70
   orig: 67, 70
   offset: 0, 0
   index: -1
 pause
   rotate: false
-  xy: 1171, 162
+  xy: 4050, 772
   size: 33, 46
   orig: 33, 46
   offset: 0, 0
@@ -300,42 +307,42 @@ progress-bar-unfilled
   index: -1
 range_icon
   rotate: false
-  xy: 4010, 498
+  xy: 1861, 327
   size: 57, 63
   orig: 57, 63
   offset: 0, 0
   index: -1
 resume
   rotate: false
-  xy: 607, 133
+  xy: 605, 133
   size: 66, 75
   orig: 66, 75
   offset: 0, 0
   index: -1
 rotate
   rotate: false
-  xy: 970, 144
+  xy: 1042, 144
   size: 67, 64
   orig: 67, 64
   offset: 0, 0
   index: -1
 select
   rotate: false
-  xy: 1734, 345
+  xy: 4010, 474
   size: 60, 46
   orig: 60, 46
   offset: 0, 0
   index: -1
 shield
   rotate: false
-  xy: 4010, 436
+  xy: 4018, 627
   size: 55, 60
   orig: 55, 60
   offset: 0, 0
   index: -1
 slider-knob
   rotate: false
-  xy: 1666, 343
+  xy: 4010, 577
   size: 66, 48
   orig: 66, 48
   offset: 0, 0
@@ -349,7 +356,7 @@ sound
   index: -1
 speed_icon
   rotate: false
-  xy: 4010, 563
+  xy: 1799, 329
   size: 60, 61
   orig: 60, 61
   offset: 0, 0

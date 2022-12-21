@@ -22,7 +22,8 @@ import com.lastdefenders.screen.AbstractScreen;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.state.GameStateManager.GameState;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.store.StoreManager;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -46,7 +47,7 @@ public class GameScreen extends AbstractScreen {
 
     public GameScreen(LevelName levelName, GameStateManager gameStateManager, ScreenChanger screenChanger,
         Resources resources, LDAudio audio, GooglePlayServices playServices, AdControllerHelper adControllerHelper,
-        EventLogger eventLogger) {
+        EventLogger eventLogger, StoreManager storeManager) {
 
         super(gameStateManager);
         this.resources = resources;
@@ -55,7 +56,7 @@ public class GameScreen extends AbstractScreen {
         spriteBatch = new SpriteBatch();
 
         createCameraAndViewports();
-        createStages(levelName, audio, playServices, adControllerHelper, eventLogger);
+        createStages(levelName, audio, playServices, adControllerHelper, eventLogger, storeManager);
 
         super.show();
         audio.fadeOutMusic();
@@ -77,7 +78,7 @@ public class GameScreen extends AbstractScreen {
     }
 
     private void createStages(LevelName levelName, LDAudio audio, GooglePlayServices playServices,
-        AdControllerHelper adControllerHelper, EventLogger eventLogger) {
+        AdControllerHelper adControllerHelper, EventLogger eventLogger, StoreManager storeManager) {
 
         Player player = new Player();
         ActorGroups actorGroups = new ActorGroups();
@@ -88,7 +89,7 @@ public class GameScreen extends AbstractScreen {
             uiStateManager, gameViewport, resources, spriteBatch, playServices, adControllerHelper, eventLogger);
         gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager,
             levelStateManager, gameStateManager, playServices, screenChanger, super.getInputMultiplexer(),
-            uiViewport, resources, audio, gameStage, spriteBatch);
+            uiViewport, resources, audio, storeManager, gameStage, spriteBatch);
     }
     private void createBackListener() {
 

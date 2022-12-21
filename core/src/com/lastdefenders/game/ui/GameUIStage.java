@@ -3,8 +3,6 @@ package com.lastdefenders.game.ui;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -15,7 +13,6 @@ import com.lastdefenders.game.model.actor.groups.TowerGroup;
 import com.lastdefenders.game.model.actor.support.SupportActor;
 import com.lastdefenders.game.model.actor.support.SupportActorCooldown;
 import com.lastdefenders.game.model.level.state.LevelStateManager;
-import com.lastdefenders.game.service.validator.SupportActorValidator;
 import com.lastdefenders.game.ui.presenter.DebugPresenter;
 import com.lastdefenders.game.ui.presenter.EnlistPresenter;
 import com.lastdefenders.game.ui.presenter.GameOverPresenter;
@@ -46,7 +43,8 @@ import com.lastdefenders.game.ui.view.interfaces.Updatable;
 import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.state.GameStateManager;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.store.StoreManager;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -71,7 +69,8 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
     public GameUIStage(Player player, TowerGroup towerGroup, GameUIStateManager uiStateManager,
         LevelStateManager levelStateManager, GameStateManager gameStateManager,
         GooglePlayServices playServices, ScreenChanger screenChanger, InputMultiplexer imp,
-        Viewport viewport, Resources resources, LDAudio audio, GameStage gameStage, SpriteBatch spriteBatch) {
+        Viewport viewport, Resources resources, LDAudio audio, StoreManager storeManager,
+        GameStage gameStage, SpriteBatch spriteBatch) {
 
         super(viewport, spriteBatch);
         this.imp = imp;
@@ -84,14 +83,15 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         this.screenChanger = screenChanger;
         uiStateManager.attach(this);
         imp.addProcessor(this);
-        createUI(resources, audio, gameStage, playServices);
+        createUI(resources, audio, gameStage, playServices, storeManager);
     }
 
 
     /**
      * Create and initialize the views and presenters of the Game UI
      */
-    private void createUI(Resources resources, LDAudio audio, GameStage gameStage, GooglePlayServices playServices) {
+    private void createUI(Resources resources, LDAudio audio, GameStage gameStage,
+        GooglePlayServices playServices, StoreManager storeManager) {
 
         Logger.info("GameUIStage: creating ui");
 
@@ -134,7 +134,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         imp.addProcessor(inspectView);
 
         OptionsPresenter optionsPresenter = new OptionsPresenter(uiStateManager, screenChanger,
-            resources, audio);
+            resources, audio, storeManager);
         OptionsView optionsView = new OptionsView(optionsPresenter, resources);
         addActor(optionsView);
         optionsView.init();

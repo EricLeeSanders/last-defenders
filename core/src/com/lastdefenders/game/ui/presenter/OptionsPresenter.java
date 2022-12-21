@@ -1,13 +1,15 @@
 package com.lastdefenders.game.ui.presenter;
 
-import com.badlogic.gdx.Preferences;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.state.GameUIStateObserver;
 import com.lastdefenders.game.ui.view.interfaces.IOptionsView;
 import com.lastdefenders.screen.ScreenChanger;
-import com.lastdefenders.util.LDAudio;
-import com.lastdefenders.util.LDAudio.LDSound;
+import com.lastdefenders.store.StoreManager;
+import com.lastdefenders.store.StoreManager.PurchasableItem;
+import com.lastdefenders.store.StoreManagerObserver;
+import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -16,22 +18,25 @@ import com.lastdefenders.util.Resources;
  *
  * @author Eric
  */
-public class OptionsPresenter implements GameUIStateObserver {
+public class OptionsPresenter implements GameUIStateObserver, StoreManagerObserver {
 
     private GameUIStateManager uiStateManager;
     private ScreenChanger screenChanger;
     private IOptionsView view;
     private LDAudio audio;
     private Resources resources;
+    private StoreManager storeManager;
 
     public OptionsPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger,
-        Resources resources, LDAudio audio) {
+        Resources resources, LDAudio audio, StoreManager storeManager) {
 
         this.uiStateManager = uiStateManager;
         uiStateManager.attach(this);
+        storeManager.addObserver(this);
         this.screenChanger = screenChanger;
         this.audio = audio;
         this.resources = resources;
+        this.storeManager = storeManager;
     }
 
     /**
@@ -177,6 +182,29 @@ public class OptionsPresenter implements GameUIStateObserver {
                 break;
         }
 
+    }
+
+    public boolean isAdsRemovalPurchasable(){
+        return storeManager.isAdsRemovalPurchasable();
+    }
+
+    public void removeAds(){
+        if(!isAdsRemovalPurchasable()){
+            throw new IllegalStateException("Ad removal is not purchasable");
+        }
+        storeManager.purchaseItem(PurchasableItem.NO_ADS);
+    }
+
+    @Override
+    public void handlePurchase(PurchasableItem purchasableItem) {
+        if(purchasableItem.equals(PurchasableItem.NO_ADS)){
+            view.adRemovalPurchased(true);
+        }
+    }
+
+    @Override
+    public void purchaseManagerInstalled(boolean installed) {
+        view.setPurchaseManagerInstalled(installed);
     }
 
 }
