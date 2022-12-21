@@ -9,7 +9,7 @@ import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.model.actor.projectile.Explosion;
 import com.lastdefenders.game.model.actor.projectile.Flame;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
 
 /**

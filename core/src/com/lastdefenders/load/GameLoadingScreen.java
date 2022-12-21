@@ -14,31 +14,31 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.screen.AbstractScreen;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.state.GameStateManager;
-import com.lastdefenders.util.ActorUtil;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.store.StoreManager;
+import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
 public class GameLoadingScreen extends AbstractScreen {
 
-    private static final float MIN_LOAD_TIME = 3.50f;
+    private static final float MIN_LOAD_TIME = 2f;
+    private static final float MAX_LOAD_TIME = 4f;
     private Resources resources;
     private LDAudio audio;
     private ScreenChanger screenChanger;
     private Stage stage;
+    private StoreManager storeManager;
     private float loadTime = 0;
 
     public GameLoadingScreen(GameStateManager gameStateManager, ScreenChanger screenChanger,
-        Resources resources, LDAudio audio) {
+        Resources resources, LDAudio audio, StoreManager storeManager, Viewport viewport, Stage stage) {
 
         super(gameStateManager);
         this.resources = resources;
         this.screenChanger = screenChanger;
         this.audio = audio;
-        Viewport viewport = new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH,
-            Resources.VIRTUAL_HEIGHT,
-            new OrthographicCamera());
-        this.stage = new Stage(viewport);
+        this.storeManager = storeManager;
+        this.stage = stage;
         super.addViewport(viewport);
         super.addInputProcessor(stage);
         createBackListener();
@@ -86,8 +86,19 @@ public class GameLoadingScreen extends AbstractScreen {
 
         loadTime += delta;
         super.render(delta);
+
+        /*
+            Need to wait for resources to finish loading. Also have a min load time so the loading
+            screen doesn't just flash for the user.
+         */
         if (resources.getManager().update() && loadTime >= MIN_LOAD_TIME) {
-            finishedLoading();
+            /*
+                If possible, we want to wait for the store manager to finish installing. However,
+                we don't want to force the user to wait.
+             */
+            if(storeManager.installed() || loadTime >= MAX_LOAD_TIME) {
+                finishedLoading();
+            }
         }
     }
 

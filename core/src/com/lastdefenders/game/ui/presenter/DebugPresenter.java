@@ -1,5 +1,7 @@
 package com.lastdefenders.game.ui.presenter;
 
+import static com.lastdefenders.util.UserPreferences.AD_REMOVAL_PURCHASED;
+
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.state.GameUIStateObserver;
@@ -69,6 +71,10 @@ public class DebugPresenter implements GameUIStateObserver {
         Logger.info("Debug Presenter: crashing game");
         Object o = null;
         o.toString();
+    }
+
+    public void removeAdPreferences(){
+        resources.getUserPreferences().getPreferences().remove(AD_REMOVAL_PURCHASED);
     }
 
     private void debugState(){

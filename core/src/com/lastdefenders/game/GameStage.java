@@ -40,7 +40,7 @@ import com.lastdefenders.log.EventLogBuilder;
 import com.lastdefenders.log.EventLogger;
 import com.lastdefenders.log.EventLogger.LogEvent;
 import com.lastdefenders.log.EventLogger.LogParam;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import java.util.HashMap;

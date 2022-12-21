@@ -24,14 +24,11 @@ import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.log.EventLogger;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
@@ -242,7 +239,7 @@ public class Simulation {
         SpriteBatch spriteBatch = mock(SpriteBatch.class);
         GooglePlayServices googlePlayServices = new GooglePlayServicesHelper();
         AdControllerImpl adController = new AdControllerImpl();
-        AdControllerHelper adControllerHelper = new AdControllerHelper(adController,
+        AdControllerHelper adControllerHelper = new AdControllerHelper(adController, userPreferences,
             Integer.MAX_VALUE);
 
         EventLogger eventLogger = mock(EventLogger.class);

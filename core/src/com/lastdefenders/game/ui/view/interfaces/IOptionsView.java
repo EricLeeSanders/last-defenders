@@ -1,12 +1,15 @@
 package com.lastdefenders.game.ui.view.interfaces;
 
+import com.lastdefenders.sound.SoundAdjusterView;
+import com.lastdefenders.store.PurchasableView;
+
 /**
  * Interface for Options View. Used by the Options Presenter to communicate with
  * the view
  *
  * @author Eric
  */
-public interface IOptionsView {
+public interface IOptionsView extends SoundAdjusterView, PurchasableView {
 
     void optionsState();
 
@@ -14,7 +17,4 @@ public interface IOptionsView {
 
     void setBtnShowRangesOn(boolean showRangesOn);
 
-    void setBtnSoundOn(boolean soundOn);
-
-    void setBtnMusicOn(boolean musicOn);
 }

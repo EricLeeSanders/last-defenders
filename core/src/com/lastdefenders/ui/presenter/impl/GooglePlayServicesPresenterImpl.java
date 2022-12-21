@@ -3,8 +3,8 @@ package com.lastdefenders.ui.presenter.impl;
 import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.ui.presenter.GooglePlayServicesPresenter;
 import com.lastdefenders.ui.view.GooglePlayServicesView;
-import com.lastdefenders.util.LDAudio;
-import com.lastdefenders.util.LDAudio.LDSound;
+import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
 
 /**

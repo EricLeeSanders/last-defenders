@@ -5,28 +5,20 @@ import static com.lastdefenders.game.model.actor.support.supplydrop.SupplyDropPl
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.Shape2D;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.Pool;
 import com.lastdefenders.game.helper.CollisionDetection;
-import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
 import com.lastdefenders.game.model.actor.groups.TowerGroup;
 import com.lastdefenders.game.model.actor.support.SupportActor;
 import com.lastdefenders.game.service.factory.EffectFactory;
-import com.lastdefenders.game.service.factory.SupportActorFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
-import com.lastdefenders.util.LDAudio;
-import com.lastdefenders.util.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.action.LDOneTimeAction;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.lastdefenders.util.UtilPool;
 
 public class SupplyDrop extends SupportActor implements Pool.Poolable {
     public static final int COST = 500;

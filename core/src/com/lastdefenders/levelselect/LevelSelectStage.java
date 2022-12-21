@@ -7,7 +7,7 @@ import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.levelselect.ui.LevelSelectPresenter;
 import com.lastdefenders.levelselect.ui.LevelSelectView;
 import com.lastdefenders.screen.ScreenChanger;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 

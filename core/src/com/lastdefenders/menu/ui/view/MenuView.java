@@ -5,15 +5,11 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Button.ButtonStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton.ImageButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.menu.ui.MenuPresenter;
 import com.lastdefenders.menu.ui.view.interfaces.IMenuView;
@@ -30,6 +26,9 @@ public class MenuView extends Group implements IMenuView {
     private MenuPresenter presenter;
     private ImageButton btnSound, btnMusic;
     private Resources resources;
+
+    private Table btnTable;
+    private ImageButton btnRemoveAds;
 
     public MenuView(MenuPresenter presenter, Resources resources) {
 
@@ -57,39 +56,78 @@ public class MenuView extends Group implements IMenuView {
         addActor(btnPlay);
         setBtnPlayListener(btnPlay);
 
+        this.btnTable = new Table();
+        btnTable.setTransform(false);
+
         btnSound = new ImageButton(skin, "sound_round");
-        btnSound.setSize(64, 64);
         btnSound.getImageCell().size(34, 32);
-        btnSound.setPosition(175, 22);
-        addActor(btnSound);
         setBtnSoundListener(btnSound);
+        btnTable.add(btnSound).size(64, 64).pad(5);
 
         btnMusic = new ImageButton(skin, "music_round");
-        btnMusic.setSize(64, 64);
         btnMusic.getImageCell().size(28, 36);
-        btnMusic.setPosition(250, 22);
-        addActor(btnMusic);
         setBtnMusicListener(btnMusic);
+        btnTable.add(btnMusic).size(64, 64).pad(5);
 
         ImageButton btnOptions = new ImageButton(skin, "options_round");
-        btnOptions.setSize(64, 64);
         btnOptions.getImageCell().size(34, 35);
-        btnOptions.setPosition(325, 22);
-        addActor(btnOptions);
         setBtnOptionsListener(btnOptions);
+        btnTable.add(btnOptions).size(64, 64).pad(5);
 
         ImageButton btnPlayServices = new ImageButton(skin, "games_round");
-        btnPlayServices.setSize(64, 64);
         btnPlayServices.getImageCell().size(36, 33);
-        btnPlayServices.setPosition(400, 22);
-        addActor(btnPlayServices);
         setBtnPlayServicesListener(btnPlayServices);
         if(!presenter.isGooglePlayServicesAvailable()){
             btnPlayServices.setDisabled(true);
             btnPlayServices.setTouchable(Touchable.disabled);
         }
+        btnTable.add(btnPlayServices).size(64, 64).pad(5);
 
+        btnRemoveAds = new ImageButton(skin, "remove_ads_round");
+        btnRemoveAds.getImageCell().size(65, 65);
+        setBtnRemoveAdsListener(btnRemoveAds);
+        addAdsBtnToTable();
+
+        setBtnTablePosition();
+
+        addActor(btnTable);
         Logger.info("Menu view: view initialized");
+    }
+
+    private void addAdsBtnToTable(){
+        if(presenter.isAdsRemovalPurchasable() && btnTable.getCell(btnRemoveAds) == null) {
+            btnTable.add(btnRemoveAds).size(64, 64).pad(5);
+        }
+    }
+
+    private void removeAdsBtnFromTable(){
+        if(btnTable.getCell(btnRemoveAds) != null) {
+            // There is no way to remove a cell. So we have to do this...
+            btnTable.getCell(btnRemoveAds).size(0,0).pad(0);
+            btnRemoveAds.remove();
+            setBtnTablePosition();
+        }
+    }
+
+    private void setBtnTablePosition(){
+        btnTable.pack();
+        btnTable.setPosition(getStage().getViewport().getWorldWidth() / 2, 60, Align.center);
+    }
+
+    @Override
+    public void setPurchaseManagerInstalled(boolean installed){
+        if(installed) {
+            addAdsBtnToTable();
+        }
+    }
+
+    @Override
+    public void adRemovalPurchased(boolean purchased) {
+        if(purchased){
+            removeAdsBtnFromTable();
+        } else {
+            addAdsBtnToTable();
+        }
     }
 
 
@@ -101,6 +139,19 @@ public class MenuView extends Group implements IMenuView {
             Align.center);
         getStage().addActor(background);
         background.setZIndex(0);
+    }
+
+    private void setBtnRemoveAdsListener(Button btnRemoveAds) {
+
+        btnRemoveAds.addListener(new ClickListener() {
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+
+                super.touchUp(event, x, y, pointer, button);
+                presenter.removeAds();
+            }
+        });
+
     }
 
     private void setBtnPlayServicesListener(Button btnOptions) {

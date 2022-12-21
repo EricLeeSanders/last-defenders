@@ -10,6 +10,7 @@ public class UserPreferences {
     private static final String MASTER_VOLUME = "masterVolume";
     private static final String SOUND_ENABLED = "soundEnabled";
     private static final String MUSIC_ENABLED = "musicEnabled";
+    public static final String AD_REMOVAL_PURCHASED = "adRemovalPurchased";
 
     private Preferences prefs = Gdx.app.getPreferences("LastDefendersPreferences");
 
@@ -62,4 +63,14 @@ public class UserPreferences {
         prefs.putBoolean(MUSIC_ENABLED, musicEnabled);
         prefs.flush();
     }
+
+    public void setAdRemovalPurchased(boolean adRemovalPurchased){
+        prefs.putBoolean(AD_REMOVAL_PURCHASED, adRemovalPurchased);
+        prefs.flush();
+    }
+
+    public boolean getAdRemovalPurchased(){
+        return prefs.getBoolean(AD_REMOVAL_PURCHASED);
+    }
+
 }

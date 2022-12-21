@@ -9,13 +9,13 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Preferences;
-import com.lastdefenders.game.ui.presenter.OptionsPresenter;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.OptionsView;
 import com.lastdefenders.screen.ScreenChanger;
-import com.lastdefenders.util.LDAudio;
+import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.store.StoreManager;
+import com.lastdefenders.store.StoreManager.PurchasableItem;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
 import org.junit.Before;
@@ -37,6 +37,7 @@ public class OptionsPresenterTest {
     @Mock private UserPreferences userPreferences;
     @Mock private LDAudio audio;
     @Mock private OptionsView view;
+    @Mock private StoreManager storeManager;
     @Spy private Resources resources = TestUtil.createResourcesMock();
 
     @InjectMocks private OptionsPresenter optionsPresenter;
@@ -46,17 +47,21 @@ public class OptionsPresenterTest {
 
         Gdx.app = mock(Application.class);
         MockitoAnnotations.initMocks(this);
+
+        initView();
     }
 
-    @Test
-    public void initViewTest1() {
-
+    private void initView(){
         doReturn(GameUIState.STANDBY).when(uiStateManager).getState();
         doReturn(true).when(audio).isMusicEnabled();
         doReturn(false).when(audio).isSoundEnabled();
         doReturn(userPreferences).when(resources).getUserPreferences();
         doReturn(true).when(userPreferences).getShowTowerRanges();
         optionsPresenter.setView(view);
+    }
+
+    @Test
+    public void initViewTest1() {
 
         verify(view, times(1)).setBtnMusicOn(eq(true));
         verify(view, times(1)).setBtnSoundOn(eq(false));
@@ -135,4 +140,36 @@ public class OptionsPresenterTest {
 
         verify(screenChanger, never()).changeToLevelSelect();
     }
+
+    @Test
+    public void handlePurchaseTest(){
+
+        optionsPresenter.handlePurchase(PurchasableItem.NO_ADS);
+
+        verify(view, times(1)).adRemovalPurchased(true);
+        verify(view, never()).adRemovalPurchased(false);
+    }
+
+    @Test
+    public void removeAdsTest(){
+
+        doReturn(true).when(storeManager).isAdsRemovalPurchasable();
+
+        optionsPresenter.removeAds();
+
+        verify(storeManager, times(1)).purchaseItem(PurchasableItem.NO_ADS);
+
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void removeAdsInvalidTest(){
+
+        doReturn(false).when(storeManager).isAdsRemovalPurchasable();
+
+        optionsPresenter.removeAds();
+
+        verify(storeManager, never()).purchaseItem(PurchasableItem.NO_ADS);
+
+    }
+
 }
