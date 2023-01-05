@@ -2,11 +2,12 @@ package com.lastdefenders.android;
 
 import androidx.annotation.NonNull;
 import com.google.android.gms.ads.AdError;
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.FullScreenContentCallback;
 import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.lastdefenders.ads.AdController;
@@ -24,7 +25,12 @@ public class GoogleAdsControllerImpl implements AdController {
     public void initialize(AndroidLauncher androidLauncher) {
 
         this.androidLauncher = androidLauncher;
-        loadInterstitialAd();
+        MobileAds.initialize(androidLauncher, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+                loadInterstitialAd();
+            }
+        });
     }
 
     private void loadInterstitialAd(){
@@ -41,7 +47,6 @@ public class GoogleAdsControllerImpl implements AdController {
                 interstitialAd.setFullScreenContentCallback(new FullScreenContentCallback() {
                     @Override
                     public void onAdDismissedFullScreenContent() {
-                        // Called when fullscreen content is dismissed
                         mInterstitialAd = null;
                         Logger.info("The ad was dismissed");
                         loadInterstitialAd();
@@ -49,7 +54,6 @@ public class GoogleAdsControllerImpl implements AdController {
 
                     @Override
                     public void onAdFailedToShowFullScreenContent(AdError adError) {
-                        // Called when fullscreen content failed to show.ew
                         mInterstitialAd = null;
                         Logger.error("The ad failed to show: " + adError.getMessage());
                         loadInterstitialAd();
@@ -57,10 +61,10 @@ public class GoogleAdsControllerImpl implements AdController {
 
                     @Override
                     public void onAdShowedFullScreenContent() {
-                        // Called when fullscreen content is shown.
                         Logger.info("The ad was shown");
                     }
                 });
+
             }
 
             @Override
