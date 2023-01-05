@@ -26,7 +26,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     buildToolsVersion "29.0.3"
-    compileSdkVersion 30
+    compileSdkVersion 33
     buildTypes {
         release {
             lintOptions {
@@ -62,8 +62,8 @@ android {
     defaultConfig {
         applicationId "com.lastdefenders.game"
         multiDexEnabled true
-        minSdkVersion 16
-        targetSdkVersion 30
+        minSdkVersion 19
+        targetSdkVersion 33
         versionCode project.version.replace(".", "") as int
         versionName project.version
     }
