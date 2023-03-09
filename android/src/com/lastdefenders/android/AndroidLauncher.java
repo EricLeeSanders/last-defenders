@@ -1,6 +1,5 @@
 package com.lastdefenders.android;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
@@ -38,10 +37,10 @@ public class AndroidLauncher extends AndroidApplication {
 		PurchaseManager purchaseManager = new PurchaseManagerGoogleBilling(this);
 
 		View gameView = initializeForView(
-			new LDGame(googlePlayServicesHelper, adController, eventLogger, purchaseManager),
+			new LDGame(googlePlayServicesHelper, adController, eventLogger, purchaseManager, new ErrorReporterImpl()),
 			config);
 		RelativeLayout layout = createLayout(gameView);
-		googlePlayServicesHelper.initialize(this, layout, gameView);
+		googlePlayServicesHelper.initialize(this, layout);
 		adController.initialize(this);
 
 	}
@@ -63,22 +62,6 @@ public class AndroidLauncher extends AndroidApplication {
 	@Override
 	public void onBackPressed(){
 		googlePlayServicesHelper.backButtonPressed();
-	}
-
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-
-		if (requestCode == GooglePlayServicesHelper.RC_SIGN_IN) {
-			googlePlayServicesHelper.handleGooglePlaySignInRequest(data);
-		}
-	}
-
-	@Override
-	protected  void onResume(){
-		super.onResume();
-		googlePlayServicesHelper.onResume();
 	}
 
 }

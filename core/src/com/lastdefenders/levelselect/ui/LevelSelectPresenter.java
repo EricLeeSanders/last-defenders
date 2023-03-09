@@ -52,10 +52,8 @@ public class LevelSelectPresenter {
         playServices.showLeaderboards();
     }
 
-    /**
-     * Is signed in to Google Play Services
-     */
-    public boolean isSignedInToGPS(){
-        return playServices.isSignedIn();
+    public boolean isGPSAvailable(){
+        return playServices.isDeviceCompatible();
     }
+
 }

@@ -25,15 +25,19 @@ public class GoogleAdsControllerImpl implements AdController {
     public void initialize(AndroidLauncher androidLauncher) {
 
         this.androidLauncher = androidLauncher;
+        Logger.info("GoogleAdsControllerImpl - Initializing");
         MobileAds.initialize(androidLauncher, new OnInitializationCompleteListener() {
             @Override
             public void onInitializationComplete(InitializationStatus initializationStatus) {
+                Logger.info("GoogleAdsControllerImpl - Initialization Complete");
                 loadInterstitialAd();
             }
         });
     }
 
     private void loadInterstitialAd(){
+
+        Logger.info("GoogleAdsControllerImpl - Loading Ad");
 
         AdRequest adRequest = new AdRequest.Builder().build();
 

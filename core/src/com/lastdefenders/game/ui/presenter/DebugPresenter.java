@@ -19,13 +19,11 @@ public class DebugPresenter implements GameUIStateObserver {
 
     private IDebugView view;
     private GameUIStateManager uiStateManager;
-    private GameStateManager gameStateManager;
     private Resources resources;
 
-    public DebugPresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager, Resources resources) {
+    public DebugPresenter(GameUIStateManager uiStateManager, Resources resources) {
 
         this.uiStateManager = uiStateManager;
-        this.gameStateManager = gameStateManager;
         this.resources = resources;
         uiStateManager.attach(this);
     }
@@ -47,7 +45,6 @@ public class DebugPresenter implements GameUIStateObserver {
     public void resumeGame() {
 
         Logger.info("Debug Presenter: resume game");
-        gameStateManager.setState(GameStateManager.GameState.PLAY);
         uiStateManager.setStateReturn();
     }
 

@@ -90,8 +90,8 @@ public class GameOverPresenter implements GameUIStateObserver {
     /**
      * Is signed in to Google Play Services
      */
-    public boolean isSignedInToGPS(){
-        return playServices.isSignedIn();
+    public boolean isGPSAvailable(){
+        return playServices.isDeviceCompatible();
     }
 
     /**
@@ -125,7 +125,7 @@ public class GameOverPresenter implements GameUIStateObserver {
 
     private boolean canViewLeaderboard(){
 
-        return isSignedInToGPS() && uiStateManager.getState().equals(GameUIState.GAME_OVER);
+        return isGPSAvailable() && uiStateManager.getState().equals(GameUIState.GAME_OVER);
     }
 
     @Override

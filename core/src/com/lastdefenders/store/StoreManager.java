@@ -82,7 +82,8 @@ public class StoreManager implements PurchaseObserver  {
         if(purchasableItem.equals(PurchasableItem.NO_ADS)){
             handleNoAdsPurchase();
         } else {
-            Logger.error("Invalid Purchase: " + transaction);
+            Logger.error("StoreManager: Invalid Purchase: " + transaction);
+            throw new IllegalArgumentException("StoreManager: Invalid Purchase: " + transaction);
         }
 
     }
@@ -135,7 +136,7 @@ public class StoreManager implements PurchaseObserver  {
                 }
             }
 
-            throw new IllegalArgumentException("No PurchasableItem for sku: " + sku);
+            throw new IllegalArgumentException("StoreManager: No PurchasableItem for sku: " + sku);
         }
 
 

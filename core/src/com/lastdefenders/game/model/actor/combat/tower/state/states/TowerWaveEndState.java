@@ -5,7 +5,6 @@ import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
 import com.lastdefenders.game.service.factory.EffectFactory;
 import java.util.Map;
-import javafx.scene.effect.Effect;
 
 /**
  * Created by Eric on 12/25/2019.

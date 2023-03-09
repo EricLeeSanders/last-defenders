@@ -23,7 +23,7 @@ allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
 
-    version = '1.12.1'
+    version = '1.12.3'
     ext {
         appName = "Last Defenders"
         gdxVersion = '1.10.0'
@@ -80,9 +80,11 @@ project(":android") {
         implementation "ch.acra:acra-toast:$acraVersion"
 
         // Google Play Services
-        implementation 'com.google.android.gms:play-services-auth:20.4.0'
-        implementation 'com.google.android.gms:play-services-games:23.1.0'
-        implementation 'com.google.android.gms:play-services-identity:18.0.1'
+        //implementation 'com.google.android.gms:play-services-auth:20.4.0'
+        //implementation 'com.google.android.gms:play-services-games:23.1.0'
+        implementation "com.google.android.gms:play-services-games-v2:17.0.0"
+        //implementation 'com.google.android.gms:play-services-identity:18.0.1'
+
 
         implementation 'com.github.bumptech.glide:glide:4.12.0' // Used for loading gif
 

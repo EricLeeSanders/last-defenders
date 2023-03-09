@@ -3,6 +3,7 @@ package com.lastdefenders.desktop;
 import com.lastdefenders.googleplay.GooglePlayAchievement;
 import com.lastdefenders.googleplay.GooglePlayLeaderboard;
 import com.lastdefenders.googleplay.GooglePlayServices;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * Created by Eric on 7/22/2018.
@@ -11,19 +12,14 @@ import com.lastdefenders.googleplay.GooglePlayServices;
 public class GooglePlayServicesHelper implements GooglePlayServices {
 
     @Override
-    public boolean isGooglePlayServicesAvailable() {
+    public boolean isDeviceCompatible() {
 
         return false;
     }
 
     @Override
-    public void signIn() {
-
-    }
-
-    @Override
-    public void signOut() {
-
+    public CompletableFuture<Boolean> signIn() {
+        return null;
     }
 
     @Override

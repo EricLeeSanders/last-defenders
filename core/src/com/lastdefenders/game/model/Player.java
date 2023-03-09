@@ -13,7 +13,7 @@ public class Player {
     private int money = 350;
     private int lives = 20;
     private int waveCount = 1;
-    private SnapshotArray<PlayerObserver> observers = new SnapshotArray<>();
+    private final SnapshotArray<PlayerObserver> observers = new SnapshotArray<>();
 
     public void attachObserver(PlayerObserver observer) {
 

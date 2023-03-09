@@ -31,7 +31,6 @@ import testutil.TestUtil;
 public class DebugPresenterTest {
 
     private GameUIStateManager gameUIStateManagerMock = mock(GameUIStateManager.class);
-    private GameStateManager gameStateManager = mock(GameStateManager.class);
     private IDebugView debugViewMock = mock(DebugView.class);
     private Resources resourcesMock = TestUtil.createResourcesMock();
 
@@ -43,7 +42,7 @@ public class DebugPresenterTest {
 
     private DebugPresenter createDebugPresenter() {
 
-        return new DebugPresenter(gameUIStateManagerMock, gameStateManager, resourcesMock);
+        return new DebugPresenter(gameUIStateManagerMock, resourcesMock);
     }
 
     @Test

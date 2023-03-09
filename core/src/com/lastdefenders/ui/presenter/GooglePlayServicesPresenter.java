@@ -6,11 +6,8 @@ package com.lastdefenders.ui.presenter;
 
 public interface GooglePlayServicesPresenter {
     void showGPSView();
-    void signIn();
-    void signOut();
     void leaderboards();
     void achievements();
-    boolean isSignedIn();
     void close();
     boolean isActive();
 }

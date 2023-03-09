@@ -41,7 +41,7 @@ class MenuStage extends Stage {
 
         // Only create the GPS presenter if GPS is enabled
         GooglePlayServicesPresenterImpl gpsPresenter = null;
-        if(playServices.isGooglePlayServicesAvailable()) {
+        if(playServices.isDeviceCompatible()) {
             gpsPresenter = new GooglePlayServicesPresenterImpl(audio, playServices);
         }
 
@@ -58,7 +58,7 @@ class MenuStage extends Stage {
         menuPresenter.setView(menuView, menuOptionsView);
 
         // Only create the view if GPS is enabled
-        if(playServices.isGooglePlayServicesAvailable()) {
+        if(playServices.isDeviceCompatible()) {
             GooglePlayServicesViewImpl gpsView = new GooglePlayServicesViewImpl(gpsPresenter,
                 resources);
             addActor(gpsView);
