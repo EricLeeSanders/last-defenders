@@ -25,7 +25,7 @@ public class GooglePlayServicesViewImpl extends Group implements GooglePlayServi
 
     private GooglePlayServicesPresenter presenter;
     private Resources resources;
-    private TextButton btnSignIn, btnSignOut, btnAchievements, btnLeaderboards;
+    private TextButton btnAchievements, btnLeaderboards;
 
     public GooglePlayServicesViewImpl(GooglePlayServicesPresenter presenter, Resources resources) {
 
@@ -40,24 +40,6 @@ public class GooglePlayServicesViewImpl extends Group implements GooglePlayServi
         setVisible(false);
     }
 
-    @Override
-    public void setVisible(boolean visible){
-        super.setVisible(visible);
-        if(visible) {
-            boolean isSignedIn = presenter.isSignedIn();
-            btnSignIn.setDisabled(isSignedIn);
-            btnSignIn.setTouchable(isSignedIn ? Touchable.disabled : Touchable.enabled);
-            btnSignIn.setVisible(!isSignedIn);
-            btnSignOut.setDisabled(!isSignedIn);
-            btnSignOut.setTouchable(isSignedIn ? Touchable.enabled : Touchable.disabled);
-            btnSignOut.setVisible(isSignedIn);
-            btnAchievements.setDisabled(!isSignedIn);
-            btnAchievements.setTouchable(isSignedIn ? Touchable.enabled : Touchable.disabled);
-            btnLeaderboards.setDisabled(!isSignedIn);
-            btnLeaderboards.setTouchable(isSignedIn ? Touchable.enabled : Touchable.disabled);
-        }
-
-    }
 
     private void createControls(){
         Skin skin = resources.getSkin();
@@ -91,18 +73,6 @@ public class GooglePlayServicesViewImpl extends Group implements GooglePlayServi
         addActor(btnClose);
         setBtnCloseListener(btnClose);
 
-        btnSignIn = new TextButton("Sign In", skin);
-        btnSignIn.getLabel().setFontScale(0.45f * resources.getFontScale());
-        setBtnSignInListener(btnSignIn);
-
-        btnSignOut = new TextButton("Sign Out", skin);
-        btnSignOut.getLabel().setFontScale(0.45f * resources.getFontScale());
-        setBtnSignOutListener(btnSignOut);
-
-        Stack signInOutStack = new Stack();
-        signInOutStack.addActor(btnSignIn);
-        signInOutStack.addActor(btnSignOut);
-
         btnAchievements = new TextButton("Achievements", skin);
         btnAchievements.getLabel().setFontScale(0.45f * resources.getFontScale());
         setBtnAchievementsListener(btnAchievements);
@@ -110,9 +80,7 @@ public class GooglePlayServicesViewImpl extends Group implements GooglePlayServi
         btnLeaderboards = new TextButton("Leaderboards", skin);
         btnLeaderboards.getLabel().setFontScale(0.45f * resources.getFontScale());
         setBtnLeaderboardsListener(btnLeaderboards);
-        
-        mainTable.add(signInOutStack).size(170, 45).spaceBottom(10);
-        mainTable.row();
+
         mainTable.add(btnAchievements).size(170,45).spaceBottom(10);
         mainTable.row();
         mainTable.add(btnLeaderboards).size(170,45).spaceTop(10);
@@ -129,32 +97,6 @@ public class GooglePlayServicesViewImpl extends Group implements GooglePlayServi
                 presenter.close();
             }
         });
-    }
-
-    private void setBtnSignInListener(Button button) {
-
-        button.addListener(new ClickListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
-                super.touchUp(event, x, y, pointer, button);
-                presenter.signIn();
-            }
-        });
-
-    }
-
-    private void setBtnSignOutListener(Button button) {
-
-        button.addListener(new ClickListener() {
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-
-                super.touchUp(event, x, y, pointer, button);
-                presenter.signOut();
-            }
-        });
-
     }
 
     private void setBtnLeaderboardsListener(Button button) {

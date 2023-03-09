@@ -83,6 +83,7 @@ public class MenuView extends Group implements IMenuView {
         }
         btnTable.add(btnPlayServices).size(64, 64).pad(5);
 
+
         btnRemoveAds = new ImageButton(skin, "remove_ads_round");
         btnRemoveAds.getImageCell().size(65, 65);
         setBtnRemoveAdsListener(btnRemoveAds);
@@ -91,6 +92,7 @@ public class MenuView extends Group implements IMenuView {
         setBtnTablePosition();
 
         addActor(btnTable);
+
         Logger.info("Menu view: view initialized");
     }
 

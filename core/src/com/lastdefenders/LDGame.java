@@ -27,6 +27,7 @@ import com.lastdefenders.state.GameStateManager.GameState;
 import com.lastdefenders.state.GameStateObserver;
 import com.lastdefenders.store.StoreManager;
 import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.util.ErrorReporter;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
@@ -42,6 +43,7 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
     private PurchaseManager purchaseManager;
     private StoreManager storeManager;
     private AdController adController;
+    private ErrorReporter errorReporter;
 
     // Needed for launcher without play services
     // TODO remove this
@@ -50,12 +52,13 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
     }
 
     public LDGame(GooglePlayServices playServices, AdController adController, EventLogger eventLogger,
-        PurchaseManager purchaseManager){
+        PurchaseManager purchaseManager, ErrorReporter errorReporter){
 
         this.playServices = playServices;
         this.adController = adController;
         this.eventLogger = eventLogger;
         this.purchaseManager = purchaseManager;
+        this.errorReporter = errorReporter;
     }
 
     @Override
@@ -63,6 +66,7 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
 
         Logger.info("LDGame: Creating");
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        Logger.setErrorReporter(this.errorReporter);
         UserPreferences userPreferences = new UserPreferences();
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         this.resources = new Resources(userPreferences, shapeRenderer);
@@ -87,6 +91,7 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
     public void resume() {
 
         Logger.info("LDGame: resuming");
+        Logger.setErrorReporter(this.errorReporter);
         resources.reload();
         super.resume();
     }

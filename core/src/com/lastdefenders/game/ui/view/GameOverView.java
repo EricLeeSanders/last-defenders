@@ -74,7 +74,7 @@ public class GameOverView extends Group implements IGameOverView {
         table.add(btnNewGame).width(150).height(45).spaceTop(10);
         setBtnNewGameListener(btnNewGame);
 
-        if(presenter.isSignedInToGPS()) {
+        if(presenter.isGPSAvailable()) {
             table.row();
             TextButton btnLeaderboard = new TextButton("Leaderboard", skin);
             btnLeaderboard.getLabel().setFontScale(0.45f * resources.getFontScale());

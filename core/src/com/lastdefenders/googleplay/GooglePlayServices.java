@@ -1,15 +1,15 @@
 package com.lastdefenders.googleplay;
 
+import java.util.concurrent.CompletableFuture;
+
 /**
  * Created by Eric on 10/29/2016.
  */
 public interface GooglePlayServices {
 
-    boolean isGooglePlayServicesAvailable();
+    boolean isDeviceCompatible();
 
-    void signIn();
-
-    void signOut();
+    CompletableFuture<Boolean> signIn();
 
     void unlockAchievement(GooglePlayAchievement achievement);
 

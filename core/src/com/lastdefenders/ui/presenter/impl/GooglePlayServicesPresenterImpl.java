@@ -35,22 +35,6 @@ public class GooglePlayServicesPresenterImpl implements GooglePlayServicesPresen
     }
 
     @Override
-    public void signIn() {
-        audio.playSound(LDSound.SMALL_CLICK);
-        Logger.info("GooglePlayServicesPresenterImpl: signIn");
-        gps.signIn();
-        close();
-    }
-
-    @Override
-    public void signOut() {
-        audio.playSound(LDSound.SMALL_CLICK);
-        Logger.info("GooglePlayServicesPresenterImpl: signOut");
-        gps.signOut();
-        close();
-    }
-
-    @Override
     public void leaderboards() {
         audio.playSound(LDSound.SMALL_CLICK);
         Logger.info("GooglePlayServicesPresenterImpl: leaderboards");
@@ -62,11 +46,6 @@ public class GooglePlayServicesPresenterImpl implements GooglePlayServicesPresen
         audio.playSound(LDSound.SMALL_CLICK);
         Logger.info("GooglePlayServicesPresenterImpl: achievements");
         gps.showAchievements();
-    }
-
-    @Override
-    public boolean isSignedIn() {
-        return gps.isSignedIn();
     }
 
     @Override

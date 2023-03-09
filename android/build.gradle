@@ -62,7 +62,7 @@ android {
     defaultConfig {
         applicationId "com.lastdefenders.game"
         multiDexEnabled true
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 33
         versionCode project.version.replace(".", "") as int
         versionName project.version

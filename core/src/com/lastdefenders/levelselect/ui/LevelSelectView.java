@@ -115,7 +115,7 @@ public class LevelSelectView extends Group {
         this.addActor(btnMenu);
         setBtnMenuListener(btnMenu);
 
-        if(presenter.isSignedInToGPS()) {
+        if(presenter.isGPSAvailable()) {
             createGooglePlayServicesControls();
         }
 
@@ -184,7 +184,7 @@ public class LevelSelectView extends Group {
         lblLevel.setAlignment(Align.center);
         levelConfirmationGroup.addActor(lblLevel);
 
-        if(presenter.isSignedInToGPS()) {
+        if(presenter.isGPSAvailable()) {
             ImageButton btnLeaderboard = new ImageButton(skin, "leaderboard_round");
             btnLeaderboard.setSize(64, 64);
             btnLeaderboard.getImageCell().size(40, 34);

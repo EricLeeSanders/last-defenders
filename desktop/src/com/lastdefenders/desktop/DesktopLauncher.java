@@ -5,7 +5,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.pay.PurchaseManager;
 import com.lastdefenders.LDGame;
-import com.lastdefenders.store.StoreManager;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -18,6 +17,7 @@ public class DesktopLauncher {
 		config.addIcon("icon/icon_32.png", FileType.Internal);// Windows and Linux
 		config.addIcon("icon/icon_16.png", FileType.Internal); // Windows
 		PurchaseManager purchaseManager = new DesktopPurchaseManager();
-		new LwjglApplication(new LDGame(new GooglePlayServicesHelper(), new AdControllerImpl(), new EventLoggerImpl(), purchaseManager), config);
+		new LwjglApplication(new LDGame(new GooglePlayServicesHelper(), new AdControllerImpl(),
+			new EventLoggerImpl(), purchaseManager, new ErrorReporterImpl()), config);
 	}
 }

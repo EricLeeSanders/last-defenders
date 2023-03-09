@@ -3,5 +3,5 @@
 
     <string name="app_name">Last Defenders</string>
     <string name="toast_crash">Sorry, something went wrong. We\'re working on it.</string>
-    <string name="signin_other_error">There was an error signing into Google Play.</string>
+    <string name="signin_error">There was an error signing into Google Play.</string>
 </resources>
