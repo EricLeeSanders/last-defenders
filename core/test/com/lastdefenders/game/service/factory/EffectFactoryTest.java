@@ -17,6 +17,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 /**
@@ -27,7 +28,7 @@ public class EffectFactoryTest {
     @Spy
     private ActorGroups actorGroups = new ActorGroups();
     @Mock
-    private Resources resources = TestUtil.createResourcesMock();
+    private Resources resources = ResourcesMock.create();
 
     @InjectMocks
     private EffectFactory effectFactory;

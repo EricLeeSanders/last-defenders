@@ -28,6 +28,7 @@ import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
+import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 /**
@@ -39,7 +40,7 @@ public class AirStrikeTest {
     @SuppressWarnings("unchecked")
     private SupportActorPool<AirStrike> poolMock = mock(SupportActorPool.class);
     private Rocket rocketMock = mock(Rocket.class);
-    private Resources resourcesMock = TestUtil.createResourcesMock();
+    private Resources resourcesMock = ResourcesMock.create();
 
     @Before
     public void initAirStrikeTest() {

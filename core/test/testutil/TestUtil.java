@@ -107,30 +107,6 @@ public class TestUtil {
         return resources;
     }
 
-    public static Resources createResourcesMock() {
-
-        Array<AtlasRegion> atlasRegion = new Array<>();
-        atlasRegion.add(null);
-
-        Resources resources = mock(Resources.class);
-        UserPreferences userPreferences = createUserPreferencesMock();
-        when(resources.getAtlasRegion(anyString())).thenReturn(atlasRegion);
-        when(resources.getTexture(anyString())).thenReturn(null);
-        when(resources.getUserPreferences()).thenReturn(userPreferences);
-
-        return resources;
-    }
-
-    public static UserPreferences createUserPreferencesMock(){
-
-        UserPreferences userPreferences = mock(UserPreferences.class);
-        Preferences preferences = mock(Preferences.class);
-
-        doReturn(preferences).when(userPreferences).getPreferences();
-
-        return userPreferences;
-    }
-
     private static ProjectileFactory createProjectileFactoryMock() {
 
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);

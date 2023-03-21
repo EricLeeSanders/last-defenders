@@ -24,6 +24,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
+import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 /**
@@ -38,7 +39,7 @@ public class OptionsPresenterTest {
     @Mock private LDAudio audio;
     @Mock private OptionsView view;
     @Mock private StoreManager storeManager;
-    @Spy private Resources resources = TestUtil.createResourcesMock();
+    @Spy private Resources resources = ResourcesMock.create();
 
     @InjectMocks private OptionsPresenter optionsPresenter;
 

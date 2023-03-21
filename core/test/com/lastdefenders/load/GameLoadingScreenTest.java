@@ -32,6 +32,7 @@ import org.mockito.Spy;
 
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 @PrepareForTest(Logger.class)
@@ -45,7 +46,7 @@ public class GameLoadingScreenTest {
     @Mock private Viewport viewport;
     @Mock private Stage stage;
     @Mock private AssetManager assetManager;
-    @Spy private Resources resources = TestUtil.createResourcesMock();
+    @Spy private Resources resources = ResourcesMock.create();
 
     @InjectMocks GameLoadingScreen gameLoadingScreen;
 

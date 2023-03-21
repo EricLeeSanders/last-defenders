@@ -40,6 +40,7 @@ import simulate.state.SingleSimulationState;
 import simulate.state.WaveState;
 import simulate.state.writer.StateWriter;
 import testutil.TestUtil;
+import testutil.UserPreferencesMock;
 
 /**
  * Created by Eric on 12/14/2019.
@@ -222,7 +223,7 @@ public class Simulation {
 
     private GameStage createGameStage() {
 
-        UserPreferences userPreferences = TestUtil.createUserPreferencesMock();
+        UserPreferences userPreferences = UserPreferencesMock.create();
         ShapeRenderer shapeRendererMock = mock(ShapeRenderer.class);
         resources = new Resources(userPreferences, shapeRendererMock);
 

@@ -13,6 +13,7 @@ import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
+import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 /**
@@ -33,7 +34,7 @@ public class EnemyCoinEffectTest {
 
     private EnemyCoinEffect createEnemyCoinEffect() {
 
-        Resources resourcesMock = TestUtil.createResourcesMock();
+        Resources resourcesMock = ResourcesMock.create();
 
         return new EnemyCoinEffect(animationEffectPool, resourcesMock.getAtlasRegion(""));
 

@@ -14,6 +14,7 @@ import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
 import org.junit.Before;
 import org.junit.Test;
+import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 /**
@@ -33,7 +34,7 @@ public class SupplyDropPlaneTest {
 
     private SupplyDropPlane createSupplyDropPlane() {
 
-        Resources resources = TestUtil.createResourcesMock();
+        Resources resources = ResourcesMock.create();
         return new SupplyDropPlane(resources.getTexture(""), audioMock);
     }
 
