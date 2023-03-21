@@ -29,6 +29,7 @@ import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 /**
@@ -50,7 +51,7 @@ public class FlameTest {
 
     public Flame createFlame() {
 
-        Resources resources = TestUtil.createResourcesMock();
+        Resources resources = ResourcesMock.create();
 
         return new Flame(poolMock, resources.getAtlasRegion(""));
 

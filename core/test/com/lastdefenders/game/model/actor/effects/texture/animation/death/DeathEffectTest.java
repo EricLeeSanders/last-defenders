@@ -14,6 +14,7 @@ import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
+import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 /**
@@ -33,7 +34,7 @@ public class DeathEffectTest {
 
     private TextureEffect createDeathEffect() {
 
-        Resources resourcesMock = TestUtil.createResourcesMock();
+        Resources resourcesMock = ResourcesMock.create();
 
         return new BloodSplatter(deathEffectPoolMock, resourcesMock.getTexture(""));
 

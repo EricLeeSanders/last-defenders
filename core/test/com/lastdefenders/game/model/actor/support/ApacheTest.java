@@ -30,6 +30,7 @@ import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.Before;
 import org.junit.Test;
+import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 /**
@@ -50,7 +51,7 @@ public class ApacheTest {
 
     public Apache createApache() {
 
-        Resources resourcesMock = TestUtil.createResourcesMock();
+        Resources resourcesMock = ResourcesMock.create();
         LDAudio audioMock = mock(LDAudio.class);
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(bulletMock).when(projectileFactoryMock).loadProjectile(Bullet.class);

@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 /**
@@ -47,7 +48,7 @@ public class RocketTest {
 
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(explosionMock).when(projectileFactoryMock).loadProjectile(Explosion.class);
-        Resources resourcesMock = TestUtil.createResourcesMock();
+        Resources resourcesMock = ResourcesMock.create();
 
         return new Rocket(poolMock, projectileFactoryMock, resourcesMock.getTexture(""));
     }

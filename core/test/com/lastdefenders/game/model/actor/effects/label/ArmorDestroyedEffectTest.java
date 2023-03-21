@@ -19,6 +19,7 @@ import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import com.lastdefenders.util.Resources;
 import org.junit.Before;
 import org.junit.Test;
+import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 /**
@@ -38,7 +39,7 @@ public class ArmorDestroyedEffectTest {
 
     private ArmorDestroyedEffect createArmorDestroyedEffect() {
 
-        Resources resourcesMock = TestUtil.createResourcesMock();
+        Resources resourcesMock = ResourcesMock.create();
         Skin skinMock = mock(Skin.class);
 
         BitmapFont bitmapFontMock = mock(BitmapFont.class);

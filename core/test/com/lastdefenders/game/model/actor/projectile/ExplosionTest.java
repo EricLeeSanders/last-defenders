@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 /**
@@ -43,7 +44,7 @@ public class ExplosionTest {
 
     public Explosion createExplosion() {
 
-        Resources resourcesMock = TestUtil.createResourcesMock();
+        Resources resourcesMock = ResourcesMock.create();
         LDAudio audioMock = mock(LDAudio.class);
 
         return new Explosion(poolMock, resourcesMock.getAtlasRegion(""), audioMock);

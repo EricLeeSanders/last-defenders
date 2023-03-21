@@ -137,6 +137,7 @@ public class MenuPresenter implements StoreManagerObserver {
         if(!isAdsRemovalPurchasable()){
             throw new IllegalStateException("Ad removal is not purchasable");
         }
+        audio.playSound(LDSound.SMALL_CLICK);
         storeManager.purchaseItem(PurchasableItem.NO_ADS);
     }
 

@@ -23,6 +23,7 @@ import com.lastdefenders.util.DebugOptions;
 import com.lastdefenders.util.Resources;
 import org.junit.Before;
 import org.junit.Test;
+import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 /**
@@ -32,7 +33,7 @@ public class DebugPresenterTest {
 
     private GameUIStateManager gameUIStateManagerMock = mock(GameUIStateManager.class);
     private IDebugView debugViewMock = mock(DebugView.class);
-    private Resources resourcesMock = TestUtil.createResourcesMock();
+    private Resources resourcesMock = ResourcesMock.create();
 
     @Before
     public void initDebugPresenterTest() {
