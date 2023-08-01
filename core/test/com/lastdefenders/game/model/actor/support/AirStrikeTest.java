@@ -1,10 +1,9 @@
 package com.lastdefenders.game.model.actor.support;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -26,10 +25,9 @@ import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import testutil.ResourcesMock;
-import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/22/2017.
@@ -42,12 +40,11 @@ public class AirStrikeTest {
     private Rocket rocketMock = mock(Rocket.class);
     private Resources resourcesMock = ResourcesMock.create();
 
-    @Before
-    public void initAirStrikeTest() {
+    @BeforeAll
+    public static void initAirStrikeTest() {
 
         Gdx.app = mock(Application.class);
     }
-
     public AirStrike createAirStrike() {
 
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);

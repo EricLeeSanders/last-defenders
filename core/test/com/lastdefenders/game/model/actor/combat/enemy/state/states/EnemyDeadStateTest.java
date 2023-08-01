@@ -1,49 +1,31 @@
 package com.lastdefenders.game.model.actor.combat.enemy.state.states;
 
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.Player;
-import com.lastdefenders.game.model.actor.ai.EnemyAI;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateManager;
 import com.lastdefenders.game.model.actor.effects.texture.TextureEffect;
 import com.lastdefenders.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.lastdefenders.game.service.factory.EffectFactory;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.jupiter.api.Test;
 import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/16/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({EnemyAI.class})
 public class EnemyDeadStateTest {
-
-    @Before
-    public void initEnemyDeadStateTest() {
-
-        Gdx.app = mock(Application.class);
-        PowerMockito.mockStatic(EnemyAI.class);
-    }
 
     @Test
     public void enemyDeadStateTest1() {
 
         Enemy enemy = TestUtil.createEnemy(EnemyRifle.class, false);
-        EnemyStateManager stateManagerMock = mock(EnemyStateManager.class);
         EffectFactory effectFactoryMock = mock(EffectFactory.class);
         Player playerMock = mock(Player.class);
 

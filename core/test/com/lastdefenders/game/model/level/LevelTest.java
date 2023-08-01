@@ -1,17 +1,14 @@
 package com.lastdefenders.game.model.level;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Queue;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
@@ -23,9 +20,7 @@ import com.lastdefenders.game.model.level.wave.impl.DynamicWaveLoader;
 import com.lastdefenders.game.model.level.wave.impl.FileWaveLoader;
 import com.lastdefenders.game.service.factory.CombatActorFactory.SpawningEnemyPool;
 import com.lastdefenders.levelselect.LevelName;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Matchers;
+import org.junit.jupiter.api.Test;
 import testutil.TestUtil;
 
 /**
@@ -38,12 +33,6 @@ public class LevelTest {
     private FileWaveLoader fileWaveLoader = mock(FileWaveLoader.class);
     private DynamicWaveLoader dynamicWaveLoader = mock(DynamicWaveLoader.class);
     private ActorGroups actorGroups = mock(ActorGroups.class);
-
-    @Before
-    public void initLevelTest() {
-
-        Gdx.app = mock(Application.class);
-    }
 
     @Test
     public void levelTest1() {
@@ -86,7 +75,7 @@ public class LevelTest {
             }
         }
 
-        verify(dynamicWaveLoader, times(1)).loadCurrentWaveQueue(Matchers.any(Queue.class));
+        verify(dynamicWaveLoader, times(1)).loadCurrentWaveQueue(any(Queue.class));
         verify(dynamicWaveLoader, times(1)).loadWave(levelName, Level.FILE_WAVE_LIMIT + 1);
         verify(fileWaveLoader, times(Level.FILE_WAVE_LIMIT)).loadWave(eq(levelName), anyInt());
     }

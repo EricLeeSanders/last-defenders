@@ -1,7 +1,7 @@
 package com.lastdefenders.game.service.factory;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.Application;
@@ -10,14 +10,15 @@ import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import testutil.ResourcesMock;
-import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/25/2018.
@@ -34,11 +35,23 @@ public class ProjectileFactoryTest {
     @InjectMocks
     private ProjectileFactory projectileFactory;
 
-    @Before
-    public void initProjectileFactoryTest() {
+    private AutoCloseable closeable;
+
+    @BeforeAll
+    public static void initProjectileFactoryTest() {
         Gdx.app = mock(Application.class);
-        MockitoAnnotations.initMocks(this);
     }
+
+    @BeforeEach
+    public void startMocks() {
+        closeable = MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void closeService() throws Exception {
+        closeable.close();
+    }
+
 
     @Test
     public void loadProjectileTest(){

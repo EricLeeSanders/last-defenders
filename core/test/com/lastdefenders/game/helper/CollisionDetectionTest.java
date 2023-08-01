@@ -1,9 +1,9 @@
 package com.lastdefenders.game.helper;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Polygon;
@@ -19,28 +19,14 @@ import com.lastdefenders.game.model.actor.combat.tower.TowerMachineGun;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.TowerSniper;
 import com.lastdefenders.game.model.actor.combat.tower.TowerTank;
-import com.lastdefenders.util.Logger;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.jupiter.api.Test;
 import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/17/2017.
  */
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class CollisionDetectionTest {
-
-    @Before
-    public void initCollisionDetectionTest() {
-
-        PowerMockito.mockStatic(Logger.class);
-    }
 
     @Test
     public void collisionWithPathWithCircleBodyTest1() {

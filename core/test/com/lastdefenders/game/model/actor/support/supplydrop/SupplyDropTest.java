@@ -1,18 +1,16 @@
 package com.lastdefenders.game.model.actor.support.supplydrop;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
@@ -26,8 +24,7 @@ import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPo
 import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import testutil.TestUtil;
 
 /**
@@ -42,18 +39,6 @@ public class SupplyDropTest {
     private LDAudio audioMock = mock(LDAudio.class);
     private Resources resourcesMock = mock(Resources.class);
 
-    @Before
-    public void initSupplyDropCrateTest() {
-
-        Gdx.app = mock(Application.class);
-    }
-
-    public SupplyDrop createSupplyDrop(TowerGroup towerGroup) {
-
-        SupplyDropPlane plane = createSupplyDropPlane();
-
-        return createSupplyDrop(towerGroup, plane);
-    }
 
     public SupplyDrop createSupplyDrop(TowerGroup towerGroup, SupplyDropPlane plane) {
         EffectFactory effectFactoryMock = mock(EffectFactory.class);

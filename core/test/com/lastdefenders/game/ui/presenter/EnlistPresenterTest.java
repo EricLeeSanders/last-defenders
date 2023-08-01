@@ -1,7 +1,7 @@
 package com.lastdefenders.game.ui.presenter;
 
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -23,18 +23,15 @@ import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
 import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import com.tngtech.java.junit.dataprovider.DataProvider;
-import com.tngtech.java.junit.dataprovider.DataProviderRunner;
-import com.tngtech.java.junit.dataprovider.UseDataProvider;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/29/2017.
  */
-@RunWith(DataProviderRunner.class)
 public class EnlistPresenterTest {
 
     private IEnlistView enlistView = mock(IEnlistView.class);
@@ -44,7 +41,6 @@ public class EnlistPresenterTest {
     private Viewport gameViewportMock = mock(Viewport.class);
     private Resources resources = TestUtil.getResources();
 
-    @DataProvider
     public static Object[][] filteredGameUIStateEnums() {
 
         Object[][] gameUIStateEnums = new Object[GameUIState.values().length - 2][1];
@@ -61,8 +57,8 @@ public class EnlistPresenterTest {
         return gameUIStateEnums;
     }
 
-    @Before
-    public void initEnlistPresenterTest() {
+    @BeforeAll
+    public static void initEnlistPresenterTest() {
 
         Gdx.app = mock(Application.class);
     }
@@ -115,8 +111,8 @@ public class EnlistPresenterTest {
      * Enlisting and Placing Tower
      */
     // Bit of an overkill... But I wanted to use a dataprovider at least once
-    @Test
-    @UseDataProvider("filteredGameUIStateEnums")
+    @ParameterizedTest
+    @MethodSource("filteredGameUIStateEnums")
     public void stateChangeTest3(GameUIState state) {
 
         EnlistPresenter enlistPresenter = createEnlistPresenter();

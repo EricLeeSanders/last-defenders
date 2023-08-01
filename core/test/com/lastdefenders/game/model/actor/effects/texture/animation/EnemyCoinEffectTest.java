@@ -1,20 +1,15 @@
 package com.lastdefenders.game.model.actor.effects.texture.animation;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
-import com.lastdefenders.game.model.actor.effects.texture.animation.EnemyCoinEffect;
 import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import testutil.ResourcesMock;
-import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/20/2017.
@@ -26,11 +21,6 @@ public class EnemyCoinEffectTest {
     private EffectPool<EnemyCoinEffect> animationEffectPool = mock(
         EffectPool.class);
 
-    @Before
-    public void initEnemyCoinEffectTest() {
-
-        Gdx.app = mock(Application.class);
-    }
 
     private EnemyCoinEffect createEnemyCoinEffect() {
 

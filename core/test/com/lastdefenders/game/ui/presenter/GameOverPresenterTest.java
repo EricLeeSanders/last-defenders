@@ -1,6 +1,6 @@
 package com.lastdefenders.game.ui.presenter;
 
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -18,8 +18,8 @@ import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.sound.LDAudio;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by Eric on 5/30/2017.
@@ -32,8 +32,8 @@ public class GameOverPresenterTest {
     private Player playerMock = mock(Player.class);
     private IGameOverView gameOverView = mock(GameOverView.class);
 
-    @Before
-    public void initGameOverPresenterTest() {
+    @BeforeAll
+    public static void initGameOverPresenterTest() {
 
         Gdx.app = mock(Application.class);
     }

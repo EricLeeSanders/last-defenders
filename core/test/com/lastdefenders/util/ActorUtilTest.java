@@ -1,6 +1,6 @@
 package com.lastdefenders.util;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
 import com.badlogic.gdx.Application;
@@ -13,8 +13,8 @@ import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import testutil.TestUtil;
 
 /**
@@ -23,8 +23,8 @@ import testutil.TestUtil;
 
 public class ActorUtilTest {
 
-    @Before
-    public void initActorUtilTest() {
+    @BeforeAll
+    public static void initActorUtilTest() {
 
         Gdx.app = mock(Application.class);
     }

@@ -1,8 +1,9 @@
 package com.lastdefenders.game.ui.presenter;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.eq;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
@@ -13,18 +14,15 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.lastdefenders.game.ui.presenter.DebugPresenter;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.DebugView;
 import com.lastdefenders.game.ui.view.interfaces.IDebugView;
-import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.util.DebugOptions;
 import com.lastdefenders.util.Resources;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import testutil.ResourcesMock;
-import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/29/2017.
@@ -35,8 +33,8 @@ public class DebugPresenterTest {
     private IDebugView debugViewMock = mock(DebugView.class);
     private Resources resourcesMock = ResourcesMock.create();
 
-    @Before
-    public void initDebugPresenterTest() {
+    @BeforeAll
+    public static void initDebugPresenterTest() {
 
         Gdx.app = mock(Application.class);
     }
@@ -104,18 +102,16 @@ public class DebugPresenterTest {
         assertFalse(DebugOptions.showFPS);
     }
 
-    @Test(expected = NullPointerException.class)
     public void crashTest1() {
 
-        DebugPresenter debugPresenter = createDebugPresenter();
-        debugPresenter = spy(debugPresenter);
+        final DebugPresenter debugPresenter = spy(createDebugPresenter());
         doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
 
         debugPresenter.setView(debugViewMock);
 
         doThrow(new NullPointerException()).when(debugPresenter).crash();
-
-        debugPresenter.crash();
+        assertThrows(NullPointerException.class,
+            debugPresenter::crash);
     }
 
     /**

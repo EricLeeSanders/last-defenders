@@ -1,19 +1,17 @@
 package com.lastdefenders.game.model.actor.support.supplydrop;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import testutil.ResourcesMock;
 import testutil.TestUtil;
 
@@ -25,13 +23,11 @@ public class SupplyDropPlaneTest {
 
     private LDAudio audioMock = mock(LDAudio.class);
 
-    @Before
-    public void initSupplyDropPlaneTest() {
+    @BeforeAll
+    public static void init() {
 
         Gdx.app = mock(Application.class);
     }
-
-
     private SupplyDropPlane createSupplyDropPlane() {
 
         Resources resources = ResourcesMock.create();

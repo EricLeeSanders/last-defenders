@@ -15,8 +15,8 @@ import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.LevelCompletedView;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.sound.LDAudio;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by Eric on 6/5/2017.
@@ -29,8 +29,8 @@ public class LevelCompletedPresenterTest {
     private ScreenChanger screenChanger = mock(ScreenChanger.class);
     private LevelCompletedView view = mock(LevelCompletedView.class);
 
-    @Before
-    public void initLevelCompletedPresenterTest() {
+    @BeforeAll
+    public static void initLevelCompletedPresenterTest() {
 
         Gdx.app = mock(Application.class);
     }

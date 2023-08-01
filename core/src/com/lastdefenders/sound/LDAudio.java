@@ -37,14 +37,14 @@ public class LDAudio {
     private static final String HELICOPTER_HOVER = "audio/helicopter_hover.ogg";
     private static final String AIRCRAFT_FLYOVER = "audio/aircraft_flyover.ogg";
 
-    private Map<LDSound, Sound> sounds = new HashMap<>();
+    private final Map<LDSound, Sound> sounds = new HashMap<>();
     private boolean musicEnabled, soundEnabled;
-    private UserPreferences userPreferences;
+    private final UserPreferences userPreferences;
     private float volume;
 
     private Music currentMusic;
     private String currentMusicFile = "";
-    private Set<String> musicQueue = new HashSet<>();
+    private final Set<String> musicQueue = new HashSet<>();
 
     public LDAudio(UserPreferences userPreferences) {
 
@@ -227,7 +227,7 @@ public class LDAudio {
         return musicEnabled;
     }
 
-    private void setMusicEnabled(boolean enabled) {
+    public void setMusicEnabled(boolean enabled) {
 
         Logger.info("Setting music enabled to " + enabled);
         musicEnabled = enabled;

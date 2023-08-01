@@ -1,15 +1,11 @@
 package com.lastdefenders.game.model.actor.projectile;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
@@ -17,32 +13,18 @@ import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.jupiter.api.Test;
 import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/22/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Damage.class})
 public class RocketTest {
 
     @SuppressWarnings("unchecked")
     private ProjectilePool<Rocket> poolMock = mock(ProjectilePool.class);
     private Explosion explosionMock = mock(Explosion.class);
-
-    @Before
-    public void initRocketTest() {
-
-        Gdx.app = mock(Application.class);
-        PowerMockito.mockStatic(Damage.class);
-    }
 
     public Rocket createRocket() {
 

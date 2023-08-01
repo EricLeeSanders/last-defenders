@@ -1,14 +1,12 @@
 package com.lastdefenders.game.model.actor.combat.enemy.state.states;
 
-import static org.mockito.Matchers.isA;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
@@ -18,21 +16,13 @@ import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/15/2017.
  */
 public class EnemyAttackingStateTest {
-
-    @Before
-    public void initEnemyAttackingStateTest() {
-
-        Gdx.app = mock(Application.class);
-    }
-
     @Test
     public void enemyAttackingStateTest1() {
 

@@ -1,12 +1,10 @@
 package com.lastdefenders.game.model.level;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapLayers;
 import com.badlogic.gdx.maps.MapObjects;
@@ -17,10 +15,8 @@ import com.badlogic.gdx.math.Polyline;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.SnapshotArray;
-import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by Eric on 5/26/2017.
@@ -29,12 +25,6 @@ import org.junit.Test;
 public class MapTest {
 
     private TiledMap tiledMap = mock(TiledMap.class);
-
-    @Before
-    public void initMapTest() {
-
-        Gdx.app = mock(Application.class);
-    }
 
     @Test
     public void mapTest1() {

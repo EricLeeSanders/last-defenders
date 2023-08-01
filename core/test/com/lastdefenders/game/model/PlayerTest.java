@@ -1,16 +1,14 @@
 package com.lastdefenders.game.model;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.lastdefenders.game.model.Player;
-import com.lastdefenders.game.model.PlayerObserver;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by Eric on 5/26/2017.
@@ -18,8 +16,8 @@ import org.junit.Test;
 
 public class PlayerTest {
 
-    @Before
-    public void initPlayerTest() {
+    @BeforeAll
+    public static void init() {
 
         Gdx.app = mock(Application.class);
     }
@@ -48,7 +46,8 @@ public class PlayerTest {
         player.enemyReachedEnd();
         player.enemyReachedEnd();
 
-        assertEquals(startingLivesAmount - 2, player.getLives());
+        int expectedLives = startingLivesAmount - 2;
+        assertEquals(expectedLives, player.getLives());
     }
 
     @Test

@@ -1,7 +1,7 @@
 package com.lastdefenders.game.service.validator;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.any;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
@@ -9,7 +9,7 @@ import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.support.AirStrike;
 import com.lastdefenders.game.model.actor.support.SupportActor;
 import com.lastdefenders.game.model.actor.support.SupportActorCooldown;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 public class SupportActorValidatorTest {
 

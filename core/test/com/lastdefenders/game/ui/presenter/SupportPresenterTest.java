@@ -1,7 +1,7 @@
 package com.lastdefenders.game.ui.presenter;
 
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -22,8 +22,8 @@ import com.lastdefenders.game.ui.view.MessageDisplayerImpl;
 import com.lastdefenders.game.ui.view.SupportView;
 import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by Eric on 6/10/2017.
@@ -45,8 +45,8 @@ public class SupportPresenterTest {
         return new SupportPresenter(uiStateManager, player, audio, supportActorPlacement, messageDisplayer, gameViewportMock);
     }
 
-    @Before
-    public void initSupportPresenterTest() {
+    @BeforeAll
+    public static void initSupportPresenterTest() {
 
         Gdx.app = mock(Application.class);
     }

@@ -1,12 +1,13 @@
 package com.lastdefenders.game.helper;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Shape2D;
@@ -22,28 +23,15 @@ import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerFlameThrower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
-import com.lastdefenders.util.Logger;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/20/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class, CollisionDetection.class})
 public class DamageTest {
-
-    @Before
-    public void initDamageTest() {
-
-        PowerMockito.mockStatic(Logger.class);
-        PowerMockito.mockStatic(CollisionDetection.class);
-    }
 
     @Test
     public void dealBulletDamageAttackEnemyTest() {
@@ -128,16 +116,20 @@ public class DamageTest {
 
         Polygon flameBody = new Polygon();
 
-        when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), eq(flameBody)))
-            .thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), eq(flameBody)))
-            .thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), eq(flameBody)))
-            .thenReturn(false);
-        when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), eq(flameBody)))
-            .thenReturn(true);
+        try (MockedStatic<CollisionDetection> collisionDetection = mockStatic(
+            CollisionDetection.class)) {
 
-        Damage.dealFlameGroupDamage(tower, enemies, flameBody);
+            when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), eq(flameBody)))
+                .thenReturn(true);
+            when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), eq(flameBody)))
+                .thenReturn(true);
+            when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), eq(flameBody)))
+                .thenReturn(false);
+            when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), eq(flameBody)))
+                .thenReturn(true);
+
+            Damage.dealFlameGroupDamage(tower, enemies, flameBody);
+        }
 
         assertEquals(enemy1.getMaxHealth() - 1, enemy1.getHealth(), TestUtil.DELTA);
         assertEquals(enemy2.getMaxHealth() - 1, enemy2.getHealth(), TestUtil.DELTA);
@@ -165,16 +157,19 @@ public class DamageTest {
 
         Polygon flameBody = new Polygon();
 
-        when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), eq(flameBody)))
-            .thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), eq(flameBody)))
-            .thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), eq(flameBody)))
-            .thenReturn(false);
-        when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), eq(flameBody)))
-            .thenReturn(true);
+        try (MockedStatic<CollisionDetection> collisionDetection = mockStatic(
+            CollisionDetection.class)) {
+            when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), eq(flameBody)))
+                .thenReturn(true);
+            when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), eq(flameBody)))
+                .thenReturn(true);
+            when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), eq(flameBody)))
+                .thenReturn(false);
+            when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), eq(flameBody)))
+                .thenReturn(true);
 
-        Damage.dealFlameGroupDamage(tower, enemies, flameBody);
+            Damage.dealFlameGroupDamage(tower, enemies, flameBody);
+        }
 
         assertTrue(enemy1.isDead());
         assertTrue(enemy2.isDead());
@@ -202,16 +197,19 @@ public class DamageTest {
 
         TestUtil.finishEnemySpawns(enemies);
 
-        when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), any(Shape2D.class)))
-            .thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), any(Shape2D.class)))
-            .thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), any(Shape2D.class)))
-            .thenReturn(false);
-        when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), any(Shape2D.class)))
-            .thenReturn(true);
+        try (MockedStatic<CollisionDetection> collisionDetection = mockStatic(
+            CollisionDetection.class)) {
+            when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), any(Shape2D.class)))
+                .thenReturn(true);
+            when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), any(Shape2D.class)))
+                .thenReturn(true);
+            when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), any(Shape2D.class)))
+                .thenReturn(false);
+            when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), any(Shape2D.class)))
+                .thenReturn(true);
 
-        Damage.dealExplosionDamage(tower, 1, new Vector2(), enemies);
+            Damage.dealExplosionDamage(tower, 1, new Vector2(), enemies);
+        }
 
         assertEquals(enemy1.getMaxHealth() - 1, enemy1.getHealth(), TestUtil.DELTA);
         assertEquals(enemy2.getMaxHealth() - 1, enemy2.getHealth(), TestUtil.DELTA);
@@ -238,16 +236,19 @@ public class DamageTest {
 
         TestUtil.finishEnemySpawns(enemies);
 
-        when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), any(Shape2D.class)))
-            .thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), any(Shape2D.class)))
-            .thenReturn(true);
-        when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), any(Shape2D.class)))
-            .thenReturn(false);
-        when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), any(Shape2D.class)))
-            .thenReturn(true);
+        try (MockedStatic<CollisionDetection> collisionDetection = mockStatic(
+            CollisionDetection.class)) {
+            when(CollisionDetection.shapesIntersect(eq(enemy1.getBody()), any(Shape2D.class)))
+                .thenReturn(true);
+            when(CollisionDetection.shapesIntersect(eq(enemy2.getBody()), any(Shape2D.class)))
+                .thenReturn(true);
+            when(CollisionDetection.shapesIntersect(eq(enemy3.getBody()), any(Shape2D.class)))
+                .thenReturn(false);
+            when(CollisionDetection.shapesIntersect(eq(enemy4.getBody()), any(Shape2D.class)))
+                .thenReturn(true);
 
-        Damage.dealExplosionDamage(tower, 1, new Vector2(), enemies);
+            Damage.dealExplosionDamage(tower, 1, new Vector2(), enemies);
+        }
 
         assertTrue(enemy1.isDead());
         assertTrue(enemy2.isDead());
