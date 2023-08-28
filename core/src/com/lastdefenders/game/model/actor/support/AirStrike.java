@@ -14,9 +14,9 @@ import com.lastdefenders.game.model.actor.interfaces.IRocket;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
+import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.ActorUtil;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.action.LDOneTimeAction;
@@ -39,17 +39,17 @@ public class AirStrike extends CombatSupportActor implements IRocket {
 
     private Array<AirStrikeLocation> airStrikeLocations = new Array<>();
     private ProjectileFactory projectileFactory;
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
     private int airStrikeLocationCounter = 0;
 
 
     public AirStrike(SupportActorPool<AirStrike> pool, EnemyGroup enemyGroup,
         ProjectileFactory projectileFactory, TextureRegion textureRegion,
-        TextureRegion rangeTexture, Array<AirStrikeLocation> airStrikeLocations, LDAudio audio) {
+        TextureRegion rangeTexture, Array<AirStrikeLocation> airStrikeLocations, SoundPlayer soundPlayer) {
 
         super(pool, enemyGroup, textureRegion, TEXTURE_SIZE, rangeTexture, AIRSTRIKE_RADIUS,
             ATTACK, GUN_POS);
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
         this.projectileFactory = projectileFactory;
         this.airStrikeLocations = airStrikeLocations;
     }
@@ -95,8 +95,8 @@ public class AirStrike extends CombatSupportActor implements IRocket {
             )
         );
 
-        audio.playSound(LDSound.AIRCRAFT_FLYOVER);
-        audio.playSound(LDSound.ROCKET_LAUNCH);
+        soundPlayer.play(LDSound.Type.AIRCRAFT_FLYOVER);
+        soundPlayer.play(LDSound.Type.ROCKET_LAUNCH);
         for (AirStrikeLocation location : airStrikeLocations) {
             dropBomb(location);
         }

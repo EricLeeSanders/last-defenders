@@ -13,8 +13,8 @@ import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
 import com.lastdefenders.game.service.factory.CombatActorFactory.EnemyPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.UtilPool;
 
@@ -35,23 +35,23 @@ public class EnemyTank extends EnemyTurret implements PlatedArmor, IVehicle, IRo
     private static final float[] BODY_POINTS = {0, 0, 0, 56, 75, 56, 75, 0};
 
     private ProjectileFactory projectileFactory;
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
 
     public EnemyTank(TextureRegion bodyRegion, TextureRegion turretRegion,
         TextureRegion[] animatedRegions, EnemyPool<EnemyTank> pool, GenericGroup<Tower> targetGroup,
-        ProjectileFactory projectileFactory, LDAudio audio, EnemyAttributes attributes) {
+        ProjectileFactory projectileFactory, SoundPlayer soundPlayer, EnemyAttributes attributes) {
 
         super(turretRegion, animatedRegions, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS,
             DEATH_EFFECT_TYPE, TEXTURE_SIZE_BODY, bodyRegion, BODY_POINTS, attributes);
         this.projectileFactory = projectileFactory;
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
     }
 
     @Override
     public void attackTarget(Targetable target) {
 
         if (target != null) {
-            audio.playSound(LDSound.ROCKET_LAUNCH);
+            soundPlayer.play(LDSound.Type.ROCKET_LAUNCH);
             projectileFactory.loadProjectile(Rocket.class)
                 .initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
         }

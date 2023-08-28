@@ -13,8 +13,8 @@ import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.GameActor;
 import com.lastdefenders.game.model.actor.interfaces.Attacker;
 import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.datastructures.Dimension;
 
 /**
@@ -30,16 +30,16 @@ public class Explosion extends GameActor implements Pool.Poolable {
     private Animation<TextureRegion> explosionAnimation;
     private float stateTime; // counter for animation
     private ProjectilePool<Explosion> pool;
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
 
     /**
      * Constructs an Explosion.
      */
-    public Explosion(ProjectilePool<Explosion> pool, Array<AtlasRegion> regions, LDAudio audio) {
+    public Explosion(ProjectilePool<Explosion> pool, Array<AtlasRegion> regions, SoundPlayer soundPlayer) {
 
         super(size);
         this.pool = pool;
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
         explosionAnimation = new Animation<TextureRegion>(0.05f, regions);
         explosionAnimation.setPlayMode(PlayMode.LOOP);
     }
@@ -49,7 +49,7 @@ public class Explosion extends GameActor implements Pool.Poolable {
      */
     public Actor initialize(Attacker attacker, float radius, Vector2 posCenter) {
 
-        audio.playSound(LDSound.ROCKET_EXPLOSION);
+        soundPlayer.play(LDSound.Type.ROCKET_EXPLOSION);
 
         this.setPositionCenter(posCenter);
         Group targetGroup = attacker.getEnemyGroup();

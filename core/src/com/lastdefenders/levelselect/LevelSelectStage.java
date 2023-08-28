@@ -7,7 +7,7 @@ import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.levelselect.ui.LevelSelectPresenter;
 import com.lastdefenders.levelselect.ui.LevelSelectView;
 import com.lastdefenders.screen.ScreenChanger;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.AudioManager;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -18,7 +18,7 @@ import com.lastdefenders.util.Resources;
  */
 class LevelSelectStage extends Stage {
 
-    public LevelSelectStage(ScreenChanger screenChanger, Resources resources, LDAudio audio,
+    public LevelSelectStage(ScreenChanger screenChanger, Resources resources, AudioManager audio,
         Viewport viewport, GooglePlayServices playServices) {
 
         super(viewport);

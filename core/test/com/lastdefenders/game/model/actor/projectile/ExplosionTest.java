@@ -12,7 +12,7 @@ import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
 import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.Resources;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
@@ -29,9 +29,9 @@ public class ExplosionTest {
     public Explosion createExplosion() {
 
         Resources resourcesMock = ResourcesMock.create();
-        LDAudio audioMock = mock(LDAudio.class);
+        SoundPlayer soundPlayerMock = mock(SoundPlayer.class);
 
-        return new Explosion(poolMock, resourcesMock.getAtlasRegion(""), audioMock);
+        return new Explosion(poolMock, resourcesMock.getAtlasRegion(""), soundPlayerMock);
 
     }
 

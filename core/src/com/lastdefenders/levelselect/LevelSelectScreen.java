@@ -10,8 +10,9 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.screen.AbstractScreen;
 import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.LDMusic;
 import com.lastdefenders.state.GameStateManager;
-import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -26,7 +27,7 @@ public class LevelSelectScreen extends AbstractScreen {
     private ScreenChanger screenChanger;
 
     public LevelSelectScreen(ScreenChanger screenChanger, GameStateManager gameStateManager,
-        Resources resources, LDAudio audio, GooglePlayServices playServices) {
+        Resources resources, AudioManager audio, GooglePlayServices playServices) {
 
         super(gameStateManager);
         this.screenChanger = screenChanger;
@@ -34,7 +35,7 @@ public class LevelSelectScreen extends AbstractScreen {
             new OrthographicCamera());
         this.stage = new LevelSelectStage(screenChanger, resources, audio, viewport, playServices);
         super.addInputProcessor(stage);
-        audio.playMenuMusic(); // Play menu music in case the user comes directly to this screen.
+        audio.getMusicPlayer().play(LDMusic.Type.MENU); // Play menu music in case the user comes directly to this screen.
         createBackListener();
     }
 

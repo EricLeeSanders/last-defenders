@@ -3,19 +3,17 @@ package com.lastdefenders.load;
 
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.Scaling;
-import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.screen.AbstractScreen;
 import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.MusicPlayer;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.store.StoreManager;
-import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -24,14 +22,14 @@ public class GameLoadingScreen extends AbstractScreen {
     private static final float MIN_LOAD_TIME = 2f;
     private static final float MAX_LOAD_TIME = 4f;
     private Resources resources;
-    private LDAudio audio;
+    private AudioManager audio;
     private ScreenChanger screenChanger;
     private Stage stage;
     private StoreManager storeManager;
     private float loadTime = 0;
 
     public GameLoadingScreen(GameStateManager gameStateManager, ScreenChanger screenChanger,
-        Resources resources, LDAudio audio, StoreManager storeManager, Viewport viewport, Stage stage) {
+        Resources resources, AudioManager audio, StoreManager storeManager, Viewport viewport, Stage stage) {
 
         super(gameStateManager);
         this.resources = resources;

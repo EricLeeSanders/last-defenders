@@ -9,7 +9,7 @@ import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.model.actor.projectile.Explosion;
 import com.lastdefenders.game.model.actor.projectile.Flame;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.Resources;
 
 /**
@@ -25,13 +25,13 @@ public class ProjectileFactory {
 
 
     private ActorGroups actorGroups;
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
     private Resources resources;
 
-    public ProjectileFactory(ActorGroups actorGroups, LDAudio audio, Resources resources) {
+    public ProjectileFactory(ActorGroups actorGroups, SoundPlayer soundPlayer, Resources resources) {
 
         this.actorGroups = actorGroups;
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
         this.resources = resources;
     }
 
@@ -98,7 +98,7 @@ public class ProjectileFactory {
     private Explosion createExplosion() {
 
         Array<TextureAtlas.AtlasRegion> atlasRegions = resources.getAtlasRegion("explosion");
-        return new Explosion(explosionPool, atlasRegions, audio);
+        return new Explosion(explosionPool, atlasRegions, soundPlayer);
 
     }
 

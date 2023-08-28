@@ -42,8 +42,8 @@ import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
 import com.lastdefenders.game.ui.view.interfaces.Updatable;
 import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.sound.AudioManager;
 import com.lastdefenders.state.GameStateManager;
-import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.store.StoreManager;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
@@ -69,7 +69,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
     public GameUIStage(Player player, TowerGroup towerGroup, GameUIStateManager uiStateManager,
         LevelStateManager levelStateManager, GameStateManager gameStateManager,
         GooglePlayServices playServices, ScreenChanger screenChanger, InputMultiplexer imp,
-        Viewport viewport, Resources resources, LDAudio audio, StoreManager storeManager,
+        Viewport viewport, Resources resources, AudioManager audio, StoreManager storeManager,
         GameStage gameStage, SpriteBatch spriteBatch) {
 
         super(viewport, spriteBatch);
@@ -90,13 +90,13 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
     /**
      * Create and initialize the views and presenters of the Game UI
      */
-    private void createUI(Resources resources, LDAudio audio, GameStage gameStage,
+    private void createUI(Resources resources, AudioManager audio, GameStage gameStage,
         GooglePlayServices playServices, StoreManager storeManager) {
 
         Logger.info("GameUIStage: creating ui");
 
         HUDPresenter hudPresenter = new HUDPresenter(uiStateManager, levelStateManager,
-            gameStateManager, player, audio);
+            gameStateManager, player, audio.getSoundPlayer());
         HUDView hudView = new HUDView(hudPresenter, resources);
         addActor(hudView);
         hudView.init();
@@ -107,7 +107,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 
         messageDisplayer = new MessageDisplayerImpl(resources);
 
-        EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio,
+        EnlistPresenter enlistPresenter = new EnlistPresenter(uiStateManager, player, audio.getSoundPlayer(),
             gameStage.getTowerPlacement(), messageDisplayer, gameStage.getViewport(), resources);
         EnlistView enlistView = new EnlistView(enlistPresenter, resources);
         addActor(enlistView);
@@ -117,7 +117,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
 
         java.util.Map<Class<? extends SupportActor>, SupportActorCooldown> supportActorCooldownMapMap = gameStage.getSupportActorCooldownMap();
 
-        SupportPresenter supportPresenter = new SupportPresenter(uiStateManager, player, audio,
+        SupportPresenter supportPresenter = new SupportPresenter(uiStateManager, player, audio.getSoundPlayer(),
             gameStage.getSupportActorPlacement(), messageDisplayer, gameStage.getViewport());
         SupportView supportView = new SupportView(supportPresenter, resources, supportActorCooldownMapMap);
         addActor(supportView);
@@ -126,7 +126,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         imp.addProcessor(supportView);
 
         InspectPresenter inspectPresenter = new InspectPresenter(uiStateManager, levelStateManager,
-            player, towerGroup, audio, messageDisplayer, gameStage.getViewport());
+            player, towerGroup, audio.getSoundPlayer(), messageDisplayer, gameStage.getViewport());
         InspectView inspectView = new InspectView(inspectPresenter, resources);
         addActor(inspectView);
         inspectView.init();
@@ -162,7 +162,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         debugPresenter.setView(debugView);
 
         PausePresenter pausePresenter = new PausePresenter(uiStateManager, gameStateManager,
-            screenChanger, audio);
+            screenChanger, audio.getSoundPlayer());
         PauseView pauseView = new PauseView(pausePresenter, resources);
         addActor(pauseView);
         pauseView.init();

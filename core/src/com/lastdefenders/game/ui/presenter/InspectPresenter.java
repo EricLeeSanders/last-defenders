@@ -15,8 +15,8 @@ import com.lastdefenders.game.ui.state.GameUIStateObserver;
 import com.lastdefenders.game.ui.view.interfaces.IInspectView;
 import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
 import com.lastdefenders.game.ui.view.interfaces.Updatable;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.UtilPool;
@@ -34,12 +34,12 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
     private Player player;
     private Group towerGroup;
     private IInspectView view;
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
     private MessageDisplayer messageDisplayer;
     private Viewport gameViewport;
 
     public InspectPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager,
-        Player player, Group towerGroup, LDAudio audio, MessageDisplayer messageDisplayer,
+        Player player, Group towerGroup, SoundPlayer soundPlayer, MessageDisplayer messageDisplayer,
         Viewport gameViewport) {
 
         this.uiStateManager = uiStateManager;
@@ -47,7 +47,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
         uiStateManager.attach(this);
         this.player = player;
         this.towerGroup = towerGroup;
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
         this.messageDisplayer = messageDisplayer;
         this.gameViewport = gameViewport;
     }
@@ -84,7 +84,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
     public void closeInspect() {
 
         Logger.info("Inspect Presenter: close inspect");
-        audio.playSound(LDSound.SMALL_CLICK);
+        soundPlayer.play(LDSound.Type.SMALL_CLICK);
         resetInspect();
         uiStateManager.setStateReturn();
 
@@ -122,7 +122,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
     public void increaseAttack() {
 
         Logger.info("Inspect Presenter: increasing attack");
-        audio.playSound(LDSound.SMALL_CLICK);
+        soundPlayer.play(LDSound.Type.SMALL_CLICK);
 
         if (canUpgradeTower(selectedTower.getAttackIncreaseCost(),
             selectedTower.hasIncreasedAttack())) {
@@ -139,7 +139,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
     public void giveArmor() {
 
         Logger.info("Inspect Presenter: giving armor");
-        audio.playSound(LDSound.SMALL_CLICK);
+        soundPlayer.play(LDSound.Type.SMALL_CLICK);
         if (canUpgradeTower(selectedTower.getArmorCost(), selectedTower.hasArmor())) {
             Logger.info("Inspect Presenter: tower given armor");
             player.spendMoney(selectedTower.getArmorCost());
@@ -154,7 +154,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
     public void increaseRange() {
 
         Logger.info("Inspect Presenter: increasing range");
-        audio.playSound(LDSound.SMALL_CLICK);
+        soundPlayer.play(LDSound.Type.SMALL_CLICK);
         if (canUpgradeTower(selectedTower.getRangeIncreaseCost(),
             selectedTower.hasIncreasedRange())) {
             Logger.info("Inspect Presenter: increased tower range");
@@ -170,7 +170,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
     public void increaseSpeed() {
 
         Logger.info("Inspect Presenter: increasing speed");
-        audio.playSound(LDSound.SMALL_CLICK);
+        soundPlayer.play(LDSound.Type.SMALL_CLICK);
         if (canUpgradeTower(selectedTower.getSpeedIncreaseCost(),
             selectedTower.hasIncreasedSpeed())) {
             Logger.info("Inspect Presenter: increased tower speed");
@@ -187,7 +187,7 @@ public class InspectPresenter implements Updatable, GameUIStateObserver {
 
         Logger.info("Inspect Presenter: discharging");
         if (canDischargeTower()) {
-            audio.playSound(LDSound.SELL);
+            soundPlayer.play(LDSound.Type.SELL);
             player.giveMoney(selectedTower.getSellCost());
             selectedTower.sellTower();
             closeInspect();

@@ -7,8 +7,8 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.GameActor;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UtilPool;
@@ -21,13 +21,13 @@ public class SupplyDropPlane extends GameActor {
     private static final Dimension TEXTURE_SIZE = new Dimension(206, 131);
 
     private boolean active;
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
 
-    public SupplyDropPlane(TextureRegion textureRegion, LDAudio audio) {
+    public SupplyDropPlane(TextureRegion textureRegion, SoundPlayer soundPlayer) {
         super(TEXTURE_SIZE);
 
         setTextureRegion(textureRegion);
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
 
     }
 
@@ -58,7 +58,7 @@ public class SupplyDropPlane extends GameActor {
         );
 
 
-        audio.playSound(LDSound.AIRCRAFT_FLYOVER);
+        soundPlayer.play(LDSound.Type.AIRCRAFT_FLYOVER);
     }
 
     LDVector2 getEndPositionByDestination(Vector2 destination){

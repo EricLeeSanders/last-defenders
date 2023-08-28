@@ -10,8 +10,8 @@ import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.CombatActorFactory.EnemyPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.UtilPool;
 
@@ -28,16 +28,16 @@ public class EnemyRifle extends Enemy {
     private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.BLOOD;
 
     private Circle body;
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
     private ProjectileFactory projectileFactory;
 
     public EnemyRifle(TextureRegion stationaryTextureRegion, TextureRegion[] animatedRegions,
         EnemyPool<EnemyRifle> pool, GenericGroup<Tower> targetGroup, ProjectileFactory projectileFactory,
-        LDAudio audio, EnemyAttributes attributes) {
+        SoundPlayer soundPlayer, EnemyAttributes attributes) {
 
         super(stationaryTextureRegion, animatedRegions, TEXTURE_SIZE, pool, targetGroup, GUN_POS,
             DEATH_EFFECT_TYPE, attributes);
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
         this.projectileFactory = projectileFactory;
         this.body = new Circle(this.getPositionCenter(), 10);
     }
@@ -46,7 +46,7 @@ public class EnemyRifle extends Enemy {
     public void attackTarget(Targetable target) {
 
         if (target != null) {
-            audio.playSound(LDSound.RIFLE);
+            soundPlayer.play(LDSound.Type.RIFLE_SHOT);
             projectileFactory.loadProjectile(Bullet.class).initialize(this, target, BULLET_SIZE);
         }
     }

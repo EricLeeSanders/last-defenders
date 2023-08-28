@@ -20,7 +20,7 @@ import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.MessageDisplayerImpl;
 import com.lastdefenders.game.ui.view.SupportView;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -39,10 +39,10 @@ public class SupportPresenterTest {
 
     SupportPresenter createSupportPresenter() {
 
-        LDAudio audio = mock(LDAudio.class);
+        SoundPlayer soundPlayerMock = mock(SoundPlayer.class);
         MessageDisplayerImpl messageDisplayer = mock(MessageDisplayerImpl.class);
 
-        return new SupportPresenter(uiStateManager, player, audio, supportActorPlacement, messageDisplayer, gameViewportMock);
+        return new SupportPresenter(uiStateManager, player, soundPlayerMock, supportActorPlacement, messageDisplayer, gameViewportMock);
     }
 
     @BeforeAll

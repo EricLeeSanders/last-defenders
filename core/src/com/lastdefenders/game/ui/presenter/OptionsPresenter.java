@@ -5,11 +5,11 @@ import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.state.GameUIStateObserver;
 import com.lastdefenders.game.ui.view.interfaces.IOptionsView;
 import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.sound.AudioManager;
 import com.lastdefenders.store.StoreManager;
 import com.lastdefenders.store.StoreManager.PurchasableItem;
 import com.lastdefenders.store.StoreManagerObserver;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.LDSound;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -23,12 +23,12 @@ public class OptionsPresenter implements GameUIStateObserver, StoreManagerObserv
     private GameUIStateManager uiStateManager;
     private ScreenChanger screenChanger;
     private IOptionsView view;
-    private LDAudio audio;
+    private AudioManager audio;
     private Resources resources;
     private StoreManager storeManager;
 
     public OptionsPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger,
-        Resources resources, LDAudio audio, StoreManager storeManager) {
+        Resources resources, AudioManager audio, StoreManager storeManager) {
 
         this.uiStateManager = uiStateManager;
         uiStateManager.attach(this);
@@ -52,8 +52,8 @@ public class OptionsPresenter implements GameUIStateObserver, StoreManagerObserv
 
         Logger.info("Options Presenter: initializing view");
         stateChange(uiStateManager.getState());
-        view.setBtnMusicOn(audio.isMusicEnabled());
-        view.setBtnSoundOn(audio.isSoundEnabled());
+        view.setBtnMusicOn(audio.getMusicPlayer().isEnabled());
+        view.setBtnSoundOn(audio.getSoundPlayer().isEnabled());
         view.setBtnShowRangesOn(isShowRangesEnabled());
     }
 
@@ -63,7 +63,7 @@ public class OptionsPresenter implements GameUIStateObserver, StoreManagerObserv
     public void closeOptions() {
 
         Logger.info("Options Presenter: close options");
-        audio.playSound(LDSound.SMALL_CLICK);
+        audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
         audio.saveMasterVolume();
         uiStateManager.setStateReturn();
     }
@@ -75,7 +75,7 @@ public class OptionsPresenter implements GameUIStateObserver, StoreManagerObserv
 
         if (canChangeToMainMenu()) {
             Logger.info("Options Presenter: main menu");
-            audio.playSound(LDSound.SMALL_CLICK);
+            audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
             audio.saveMasterVolume();
             screenChanger.changeToMenu();
         }
@@ -88,7 +88,7 @@ public class OptionsPresenter implements GameUIStateObserver, StoreManagerObserv
 
         if (canChangeToNewGame()) {
             Logger.info("Options Presenter: new game");
-            audio.playSound(LDSound.SMALL_CLICK);
+            audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
             audio.saveMasterVolume();
             screenChanger.changeToLevelSelect();
         }
@@ -98,7 +98,7 @@ public class OptionsPresenter implements GameUIStateObserver, StoreManagerObserv
 
         if (canChangeToDebug()) {
             Logger.info("Options Presenter: debug");
-            audio.playSound(LDSound.SMALL_CLICK);
+            audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
             audio.saveMasterVolume();
             uiStateManager.setState(GameUIState.DEBUG);
         }
@@ -112,7 +112,7 @@ public class OptionsPresenter implements GameUIStateObserver, StoreManagerObserv
     public void showRangesPressed() {
 
         Logger.info("Options Presenter: show ranges pressed");
-        audio.playSound(LDSound.SMALL_CLICK);
+        audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
         boolean isShowRangesEnabled = isShowRangesEnabled();
         resources.getUserPreferences().setShowTowerRanges(!isShowRangesEnabled);
         view.setBtnShowRangesOn(!isShowRangesEnabled);
@@ -121,18 +121,18 @@ public class OptionsPresenter implements GameUIStateObserver, StoreManagerObserv
     public void soundPressed() {
 
         Logger.info("Options Presenter: sound pressed");
-        audio.playSound(LDSound.SMALL_CLICK);
-        audio.changeSoundEnabled();
-        view.setBtnSoundOn(audio.isSoundEnabled());
+        audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
+        audio.getSoundPlayer().toggleEnabled();
+        view.setBtnSoundOn(audio.getSoundPlayer().isEnabled());
     }
 
 
     public void musicPressed() {
 
         Logger.info("Options Presenter: music pressed");
-        audio.playSound(LDSound.SMALL_CLICK);
-        audio.changeMusicEnabled();
-        view.setBtnMusicOn(audio.isMusicEnabled());
+        audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
+        audio.getMusicPlayer().toggleEnabled();
+        view.setBtnMusicOn(audio.getMusicPlayer().isEnabled());
     }
 
     public void speedChanged(float val) {
@@ -147,12 +147,12 @@ public class OptionsPresenter implements GameUIStateObserver, StoreManagerObserv
 
     public void volumeChanged(float vol) {
 
-        audio.setMasterVolume(vol);
+        audio.setVolume(vol);
     }
 
     public float getMasterVolume() {
 
-        return audio.getMasterVolume();
+        return audio.getVolume();
     }
 
     private boolean canChangeToMainMenu() {
@@ -192,7 +192,7 @@ public class OptionsPresenter implements GameUIStateObserver, StoreManagerObserv
         if(!isAdsRemovalPurchasable()){
             throw new IllegalStateException("Ad removal is not purchasable");
         }
-        audio.playSound(LDSound.SMALL_CLICK);
+        audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
         storeManager.purchaseItem(PurchasableItem.NO_ADS);
     }
 

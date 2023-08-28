@@ -30,7 +30,7 @@ import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.InspectView;
 import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -57,11 +57,11 @@ public class InspectPresenterTest {
     public InspectPresenter createInspectPresenter() {
 
         Group towerGroup = new Group();
-        LDAudio audio = mock(LDAudio.class);
+        SoundPlayer soundPlayerMock = mock(SoundPlayer.class);
         MessageDisplayer messageDisplayer = mock(MessageDisplayer.class);
 
         return new InspectPresenter(gameUIStateManagerMock, levelStateManagerMock, playerMock,
-            towerGroup, audio, messageDisplayer, gameViewportMock);
+            towerGroup, soundPlayerMock, messageDisplayer, gameViewportMock);
     }
 
 

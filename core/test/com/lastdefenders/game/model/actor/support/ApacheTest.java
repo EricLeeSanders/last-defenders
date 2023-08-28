@@ -21,8 +21,8 @@ import com.lastdefenders.game.model.actor.groups.EnemyGroup;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.ActorUtil;
-import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
@@ -43,13 +43,13 @@ public class ApacheTest {
     public Apache createApache() {
 
         Resources resourcesMock = ResourcesMock.create();
-        LDAudio audioMock = mock(LDAudio.class);
+        SoundPlayer soundPlayerMock = mock(SoundPlayer.class);
         ProjectileFactory projectileFactoryMock = mock(ProjectileFactory.class);
         doReturn(bulletMock).when(projectileFactoryMock).loadProjectile(Bullet.class);
 
         return new Apache(poolMock, new EnemyGroup(), projectileFactoryMock,
             resourcesMock.getTexture(""), new TextureRegion[]{resourcesMock.getTexture("")},
-            resourcesMock.getTexture(""), audioMock);
+            resourcesMock.getTexture(""), soundPlayerMock);
 
     }
 

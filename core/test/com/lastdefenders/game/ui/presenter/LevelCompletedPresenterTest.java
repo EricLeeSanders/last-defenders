@@ -7,6 +7,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Audio;
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.level.state.LevelStateManager;
 import com.lastdefenders.game.model.level.state.LevelStateManager.LevelState;
@@ -14,7 +16,9 @@ import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.LevelCompletedView;
 import com.lastdefenders.screen.ScreenChanger;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.MusicPlayer;
+import com.lastdefenders.sound.SoundPlayer;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -33,13 +37,20 @@ public class LevelCompletedPresenterTest {
     public static void initLevelCompletedPresenterTest() {
 
         Gdx.app = mock(Application.class);
+        Gdx.audio = mock(Audio.class);
+        Gdx.files = mock(Files.class);
     }
 
     private LevelCompletedPresenter createLevelCompletedPresenter() {
 
-        LDAudio audio = mock(LDAudio.class);
+        AudioManager audioManagerMock = mock(AudioManager.class);
+        SoundPlayer soundPlayerMock = mock(SoundPlayer.class);
+        MusicPlayer musicPlayerMock = mock(MusicPlayer.class);
 
-        return new LevelCompletedPresenter(uiStateManager, levelStateManager, screenChanger, audio);
+        doReturn(soundPlayerMock).when(audioManagerMock).getSoundPlayer();
+        doReturn(musicPlayerMock).when(audioManagerMock).getMusicPlayer();
+
+        return new LevelCompletedPresenter(uiStateManager, levelStateManager, screenChanger, audioManagerMock);
 
     }
 

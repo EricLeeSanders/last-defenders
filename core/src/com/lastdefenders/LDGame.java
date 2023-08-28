@@ -22,11 +22,14 @@ import com.lastdefenders.load.LevelLoadingScreen;
 import com.lastdefenders.log.EventLogger;
 import com.lastdefenders.menu.MenuScreen;
 import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.sound.AudioHelper;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.MusicPlayer;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.state.GameStateManager.GameState;
 import com.lastdefenders.state.GameStateObserver;
 import com.lastdefenders.store.StoreManager;
-import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.ErrorReporter;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
@@ -36,7 +39,7 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
 
     private GameStateManager gameStateManager;
     private Resources resources;
-    private LDAudio audio;
+    private AudioManager audio;
     private GooglePlayServices playServices;
     private AdControllerHelper adControllerHelper;
     private EventLogger eventLogger;
@@ -70,7 +73,13 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
         UserPreferences userPreferences = new UserPreferences();
         ShapeRenderer shapeRenderer = new ShapeRenderer();
         this.resources = new Resources(userPreferences, shapeRenderer);
-        this.audio = new LDAudio(userPreferences);
+
+        AudioHelper audioHelper = new AudioHelper();
+        this.audio = new AudioManager(
+            new SoundPlayer(userPreferences, audioHelper),
+            new MusicPlayer(userPreferences, audioHelper),
+            audioHelper,
+            userPreferences);
         this.gameStateManager = new GameStateManager();
 
         this.adControllerHelper = new AdControllerHelper(adController, userPreferences);
@@ -101,7 +110,7 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
 
         Logger.info("LDGame: disposing");
         resources.dispose();
-        audio.dispose();
+        audio.disposeAll();
         this.getScreen().dispose();
         super.dispose();
     }

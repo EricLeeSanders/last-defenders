@@ -20,7 +20,7 @@ import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.interfaces.IEnlistView;
 import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.jupiter.api.BeforeAll;
@@ -65,10 +65,10 @@ public class EnlistPresenterTest {
 
     public EnlistPresenter createEnlistPresenter() {
 
-        LDAudio audioMock = mock(LDAudio.class);
+        SoundPlayer soundPlayerMock = mock(SoundPlayer.class);
         MessageDisplayer messageDisplayerMock = mock(MessageDisplayer.class);
 
-        return new EnlistPresenter(gameUIStateManagerMock, playerMock, audioMock,
+        return new EnlistPresenter(gameUIStateManagerMock, playerMock, soundPlayerMock,
             towerPlacementMock, messageDisplayerMock, gameViewportMock, resources);
     }
 

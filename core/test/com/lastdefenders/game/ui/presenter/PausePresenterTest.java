@@ -13,9 +13,9 @@ import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.PauseView;
 import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.state.GameStateManager.GameState;
-import com.lastdefenders.sound.LDAudio;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -38,8 +38,8 @@ public class PausePresenterTest {
 
     private PausePresenter createPausePresenter() {
 
-        LDAudio audioMock = mock(LDAudio.class);
-        return new PausePresenter(uiStateManager, gameStateManager, screenChanger, audioMock);
+        SoundPlayer soundPlayerMock = mock(SoundPlayer.class);
+        return new PausePresenter(uiStateManager, gameStateManager, screenChanger, soundPlayerMock);
     }
 
     /**

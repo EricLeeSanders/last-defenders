@@ -16,9 +16,9 @@ import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.HUDView;
 import com.lastdefenders.game.ui.view.interfaces.IHUDView;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.state.GameStateManager.GameState;
-import com.lastdefenders.sound.LDAudio;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -41,10 +41,10 @@ public class HUDPresenterTest {
 
     private HUDPresenter createHUDPresenter() {
 
-        LDAudio audioMock = mock(LDAudio.class);
+        SoundPlayer soundPlayerMock = mock(SoundPlayer.class);
 
         return new HUDPresenter(gameUIStateManagerMock, levelStateManagerMock, gameStateManagerMock,
-            playerMock, audioMock);
+            playerMock, soundPlayerMock);
     }
 
     @Test

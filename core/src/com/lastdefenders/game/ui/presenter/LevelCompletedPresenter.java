@@ -7,8 +7,9 @@ import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.state.GameUIStateObserver;
 import com.lastdefenders.game.ui.view.interfaces.ILevelCompletedView;
 import com.lastdefenders.screen.ScreenChanger;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.LDMusic;
+import com.lastdefenders.sound.LDSound;
 import com.lastdefenders.util.Logger;
 
 public class LevelCompletedPresenter implements GameUIStateObserver {
@@ -17,10 +18,10 @@ public class LevelCompletedPresenter implements GameUIStateObserver {
     private ScreenChanger screenChanger;
     private GameUIStateManager uiStateManager;
     private LevelStateManager levelStateManager;
-    private LDAudio audio;
+    private AudioManager audio;
 
     public LevelCompletedPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager,
-        ScreenChanger screenChanger, LDAudio audio) {
+        ScreenChanger screenChanger, AudioManager audio) {
 
         this.screenChanger = screenChanger;
         this.uiStateManager = uiStateManager;
@@ -46,7 +47,7 @@ public class LevelCompletedPresenter implements GameUIStateObserver {
 
         if (canChangeToLevelSelect()) {
             Logger.info("Level Completed Presenter: level select");
-            audio.playSound(LDSound.SMALL_CLICK);
+            audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
             screenChanger.changeToLevelSelect();
         }
     }
@@ -58,7 +59,7 @@ public class LevelCompletedPresenter implements GameUIStateObserver {
 
         if (canChangeToMainMenu()) {
             Logger.info("Level Completed Presenter: main menu");
-            audio.playSound(LDSound.SMALL_CLICK);
+            audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
             screenChanger.changeToMenu();
         }
     }
@@ -70,14 +71,14 @@ public class LevelCompletedPresenter implements GameUIStateObserver {
 
         if (canContinueLevel()) {
             Logger.info("Level Completed Presenter: continue level");
-            audio.playSound(LDSound.SMALL_CLICK);
+            audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
             uiStateManager.setState(GameUIState.STANDBY);
             levelStateManager.setState(LevelState.STANDBY);
         }
     }
 
     private void levelCompletedState(){
-        audio.playGameEndingMusic();
+        audio.getMusicPlayer().play(LDMusic.Type.GAME_OVER);
         view.levelCompletedState();
     }
 

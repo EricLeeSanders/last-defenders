@@ -9,8 +9,10 @@ import com.lastdefenders.googleplay.GooglePlayLeaderboard;
 import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.screen.ScreenChanger;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.LDMusic;
+import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.sound.MusicPlayer;
 import com.lastdefenders.util.Logger;
 
 /**
@@ -24,12 +26,12 @@ public class GameOverPresenter implements GameUIStateObserver {
     private ScreenChanger screenChanger;
     private GameUIStateManager uiStateManager;
     private IGameOverView view;
-    private LDAudio audio;
+    private AudioManager audio;
     private GooglePlayServices playServices;
     private LevelName currentLevel;
 
     public GameOverPresenter(GameUIStateManager uiStateManager, ScreenChanger screenChanger,
-        GooglePlayServices playServices, Player player, LevelName currentLevel, LDAudio audio) {
+        GooglePlayServices playServices, Player player, LevelName currentLevel, AudioManager audio) {
 
         this.player = player;
         this.screenChanger = screenChanger;
@@ -62,7 +64,7 @@ public class GameOverPresenter implements GameUIStateObserver {
      */
     public void newGame() {
 
-        audio.playSound(LDSound.SMALL_CLICK);
+        audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
         if (canSwitchToNewGame()) {
             Logger.info("Game Over Presenter: new Game");
             screenChanger.changeToLevelSelect();
@@ -74,7 +76,7 @@ public class GameOverPresenter implements GameUIStateObserver {
      */
     public void mainMenu() {
 
-        audio.playSound(LDSound.SMALL_CLICK);
+        audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
         if (canSwitchToMainMenu()) {
             Logger.info("Game Over Presenter: main menu");
             screenChanger.changeToMenu();
@@ -84,7 +86,7 @@ public class GameOverPresenter implements GameUIStateObserver {
     private void gameOverState(){
         view.gameOverState();
         setWavesCompleted();
-        audio.playGameEndingMusic();
+        audio.getMusicPlayer().play(LDMusic.Type.GAME_OVER);
     }
 
     /**
@@ -99,7 +101,7 @@ public class GameOverPresenter implements GameUIStateObserver {
      */
     public void leaderboard() {
 
-        audio.playSound(LDSound.SMALL_CLICK);
+        audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
         if(canViewLeaderboard()){
             Logger.info("Game Over Presenter: Show leaderboard");
             GooglePlayLeaderboard leaderboard = GooglePlayLeaderboard.findByLevelName(currentLevel);

@@ -24,7 +24,10 @@ import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.log.EventLogger;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.AudioHelper;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.MusicPlayer;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
 import java.io.IOException;
@@ -39,7 +42,6 @@ import simulate.state.AggregateSimulationState;
 import simulate.state.SingleSimulationState;
 import simulate.state.WaveState;
 import simulate.state.writer.StateWriter;
-import testutil.TestUtil;
 import testutil.UserPreferencesMock;
 
 /**
@@ -230,7 +232,7 @@ public class Simulation {
         resources.loadActorAtlasRegions();
 
         actorGroups = new ActorGroups();
-        LDAudio audio = mock(LDAudio.class);
+        AudioManager audio = createAudioManager(userPreferences);
         player = new Player();
         levelStateManager = new LevelStateManager();
         GameUIStateManager gameUIStateManager = new GameUIStateManager(levelStateManager);
@@ -258,6 +260,17 @@ public class Simulation {
     private void createHelpers(){
         supportHelper = new SupportSimulationTypeHelper(gameStage, player);
         towerHelper = new SimulationTowerHelper(gameStage, resources, actorGroups, player);
+    }
+
+    private AudioManager createAudioManager(UserPreferences userPreferences){
+
+        SoundPlayer soundPlayerMock = mock(SoundPlayer.class);
+        MusicPlayer musicPlayerMock = mock(MusicPlayer.class);
+        AudioHelper audioHelperMock = mock(AudioHelper.class);
+
+        AudioManager audioManager = new AudioManager(soundPlayerMock, musicPlayerMock, audioHelperMock, userPreferences);
+
+        return audioManager;
     }
 
 }

@@ -8,10 +8,11 @@ import com.lastdefenders.menu.ui.MenuPresenter;
 import com.lastdefenders.menu.ui.view.MenuOptionsView;
 import com.lastdefenders.menu.ui.view.MenuView;
 import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.MusicPlayer;
 import com.lastdefenders.store.StoreManager;
 import com.lastdefenders.ui.presenter.impl.GooglePlayServicesPresenterImpl;
 import com.lastdefenders.ui.view.impl.GooglePlayServicesViewImpl;
-import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -24,7 +25,7 @@ class MenuStage extends Stage {
 
     private MenuPresenter menuPresenter;
 
-    public MenuStage(ScreenChanger screenChanger, Resources resources, LDAudio audio,
+    public MenuStage(ScreenChanger screenChanger, Resources resources, AudioManager audio,
         Viewport viewport, GooglePlayServices playServices, StoreManager storeManager) {
 
         super(viewport);
@@ -37,7 +38,7 @@ class MenuStage extends Stage {
     }
 
     private void createPresenterAndViews(ScreenChanger screenChanger, Resources resources,
-        LDAudio audio, GooglePlayServices playServices, StoreManager storeManager){
+        AudioManager audio, GooglePlayServices playServices, StoreManager storeManager){
 
         // Only create the GPS presenter if GPS is enabled
         GooglePlayServicesPresenterImpl gpsPresenter = null;

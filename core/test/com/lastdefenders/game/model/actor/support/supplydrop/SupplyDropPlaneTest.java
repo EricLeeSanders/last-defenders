@@ -8,7 +8,7 @@ import static org.mockito.Mockito.mock;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.Resources;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ import testutil.TestUtil;
 
 public class SupplyDropPlaneTest {
 
-    private LDAudio audioMock = mock(LDAudio.class);
+    private SoundPlayer soundPlayerMock = mock(SoundPlayer.class);
 
     @BeforeAll
     public static void init() {
@@ -31,7 +31,7 @@ public class SupplyDropPlaneTest {
     private SupplyDropPlane createSupplyDropPlane() {
 
         Resources resources = ResourcesMock.create();
-        return new SupplyDropPlane(resources.getTexture(""), audioMock);
+        return new SupplyDropPlane(resources.getTexture(""), soundPlayerMock);
     }
 
     @Test

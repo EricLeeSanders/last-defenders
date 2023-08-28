@@ -40,7 +40,7 @@ import com.lastdefenders.log.EventLogBuilder;
 import com.lastdefenders.log.EventLogger;
 import com.lastdefenders.log.EventLogger.LogEvent;
 import com.lastdefenders.log.EventLogger.LogParam;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.AudioManager;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import java.util.HashMap;
@@ -75,7 +75,7 @@ public class GameStage extends Stage implements PlayerObserver {
     private java.util.Map<Class<? extends SupportActor>, SupportActorCooldown> supportActorCooldownMap = new HashMap<>();
     private java.util.Map<Class<? extends SupportActor>, SupportActorValidator> supportActorValidatorMap = new HashMap<>();
 
-    public GameStage(LevelName levelName, Player player, ActorGroups actorGroups, LDAudio audio,
+    public GameStage(LevelName levelName, Player player, ActorGroups actorGroups, AudioManager audio,
         LevelStateManager levelStateManager, GameUIStateManager uiStateManager,
         Viewport viewport, Resources resources, SpriteBatch spriteBatch,
         GooglePlayServices playServices, AdControllerHelper adControllerHelper,
@@ -94,7 +94,7 @@ public class GameStage extends Stage implements PlayerObserver {
         initialize(levelName, audio);
     }
 
-    private void initialize(LevelName levelName, LDAudio audio){
+    private void initialize(LevelName levelName, AudioManager audio){
         eventLogger.addDefaultStringParameter(LogParam.LEVEL_NAME.getTag(), levelName.getName());
         TiledMap tiledMap = resources.getMap(levelName);
         map = new Map(tiledMap, resources.getTiledMapScale());
@@ -114,14 +114,14 @@ public class GameStage extends Stage implements PlayerObserver {
         eventLogger.logEvent(new EventLogBuilder(LogEvent.LEVEL_START));
     }
 
-    private void createFactories(LDAudio audio) {
+    private void createFactories(AudioManager audio) {
 
         effectFactory = new EffectFactory(actorGroups, resources);
         healthFactory = new HealthFactory(resources);
-        ProjectileFactory projectileFactory = new ProjectileFactory(actorGroups, audio, resources);
-        supportActorFactory = new SupportActorFactory(actorGroups, audio, resources, effectFactory,
+        ProjectileFactory projectileFactory = new ProjectileFactory(actorGroups, audio.getSoundPlayer(), resources);
+        supportActorFactory = new SupportActorFactory(actorGroups, audio.getSoundPlayer(), resources, effectFactory,
             projectileFactory);
-        combatActorFactory = new CombatActorFactory(actorGroups, audio, resources, effectFactory,
+        combatActorFactory = new CombatActorFactory(actorGroups, audio.getSoundPlayer(), resources, effectFactory,
             healthFactory, projectileFactory, player);
     }
 

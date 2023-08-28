@@ -10,8 +10,8 @@ import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.CombatActorFactory.TowerPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.UtilPool;
 
@@ -30,18 +30,18 @@ public class TowerHumvee extends TowerTurret implements IRotatable {
     private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.VEHCILE_EXPLOSION;
     private static final float[] BODY_POINTS = {0, 0, 0, 40, 75, 40, 75, 0};
 
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
     private ProjectileFactory projectileFactory;
 
     public TowerHumvee(TextureRegion bodyRegion, TextureRegion turretRegion,
         TowerPool<TowerHumvee> pool, GenericGroup<Enemy> targetGroup, TextureRegion rangeRegion,
-        TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, LDAudio audio,
+        TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, SoundPlayer soundPlayer,
         TowerAttributes attributes) {
 
         super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion,
             collidingRangeRegion, DEATH_EFFECT_TYPE, TEXTURE_SIZE_BODY, bodyRegion, BODY_POINTS, attributes);
 
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
         this.projectileFactory = projectileFactory;
     }
 
@@ -50,7 +50,7 @@ public class TowerHumvee extends TowerTurret implements IRotatable {
     public void attackTarget(Targetable target) {
 
         if (target != null) {
-            audio.playSound(LDSound.MACHINE_GUN);
+            soundPlayer.play(LDSound.Type.MACHINE_GUN_SHOT);
             projectileFactory.loadProjectile(Bullet.class).initialize(this, target, BULLET_SIZE);
         }
     }

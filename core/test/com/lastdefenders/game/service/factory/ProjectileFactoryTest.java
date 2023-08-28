@@ -8,7 +8,6 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
-import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -29,8 +28,6 @@ public class ProjectileFactoryTest {
     private ActorGroups actorGroups = new ActorGroups();
     @Mock
     private Resources resources = ResourcesMock.create();
-    @Mock
-    private LDAudio audio;
 
     @InjectMocks
     private ProjectileFactory projectileFactory;

@@ -9,12 +9,16 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Audio;
+import com.badlogic.gdx.Files;
 import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.view.OptionsView;
 import com.lastdefenders.screen.ScreenChanger;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.MusicPlayer;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.store.StoreManager;
 import com.lastdefenders.store.StoreManager.PurchasableItem;
 import com.lastdefenders.util.Resources;
@@ -38,7 +42,7 @@ public class OptionsPresenterTest {
     @Mock private GameUIStateManager uiStateManager;
     @Mock private ScreenChanger screenChanger;
     @Mock private UserPreferences userPreferences;
-    @Mock private LDAudio audio;
+    @Mock private AudioManager audio;
     @Mock private OptionsView view;
     @Mock private StoreManager storeManager;
     @Spy private Resources resources = ResourcesMock.create();
@@ -51,6 +55,9 @@ public class OptionsPresenterTest {
     public static void initOptionsPresenterTest() {
 
         Gdx.app = mock(Application.class);
+        Gdx.audio = mock(Audio.class);
+        Gdx.files = mock(Files.class);
+
     }
 
     @BeforeEach
@@ -65,9 +72,15 @@ public class OptionsPresenterTest {
     }
 
     private void initView(){
+        SoundPlayer soundPlayerMock = mock(SoundPlayer.class);
+        MusicPlayer musicPlayerMock = mock(MusicPlayer.class);
+
+        doReturn(soundPlayerMock).when(audio).getSoundPlayer();
+        doReturn(musicPlayerMock).when(audio).getMusicPlayer();
+
         doReturn(GameUIState.STANDBY).when(uiStateManager).getState();
-        doReturn(true).when(audio).isMusicEnabled();
-        doReturn(false).when(audio).isSoundEnabled();
+        doReturn(true).when(musicPlayerMock).isEnabled();
+        doReturn(false).when(soundPlayerMock).isEnabled();
         doReturn(userPreferences).when(resources).getUserPreferences();
         doReturn(true).when(userPreferences).getShowTowerRanges();
         optionsPresenter.setView(view);

@@ -9,14 +9,12 @@ import static org.mockito.Mockito.spy;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.health.HealthBar;
-import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -24,11 +22,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import testutil.TestUtil;
 
 /**
@@ -42,7 +38,6 @@ public class CombatActorFactoryTest {
     // in the init, but it's not instantiated as a Spy in time if using annotations?
     private ActorGroups actorGroups = spy(new ActorGroups());
     private Resources resources = spy(TestUtil.getResources());
-    @Mock private LDAudio audio;
     @Mock private EffectFactory effectFactory;
     @Mock private ProjectileFactory projectileFactory;
     @Mock private HealthFactory healthFactory;
