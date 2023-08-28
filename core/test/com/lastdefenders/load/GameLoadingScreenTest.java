@@ -1,6 +1,6 @@
 package com.lastdefenders.load;
 
-import static org.mockito.Matchers.any;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -9,33 +9,29 @@ import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.lastdefenders.game.helper.CollisionDetection;
 import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.store.StoreManager;
-import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 import testutil.ResourcesMock;
-import testutil.TestUtil;
 
-@PrepareForTest(Logger.class)
 public class GameLoadingScreenTest {
 
     @Mock private GameStateManager gameStateManager;
@@ -50,14 +46,24 @@ public class GameLoadingScreenTest {
 
     @InjectMocks GameLoadingScreen gameLoadingScreen;
 
-    @Before
-    public void initGameLoadingScreenTest() {
+    private AutoCloseable closeable;
+
+    @BeforeAll
+    public static void initGameLoadingScreenTest() {
 
         Gdx.app = mock(Application.class);
-        MockitoAnnotations.initMocks(this);
+    }
+
+    @BeforeEach
+    public void startMocks() {
+        closeable = MockitoAnnotations.openMocks(this);
         doReturn(userPreferences).when(resources).getUserPreferences();
     }
 
+    @AfterEach
+    void closeService() throws Exception {
+        closeable.close();
+    }
 
     @Test
     public void renderTest_resources_not_loaded(){
@@ -130,7 +136,7 @@ public class GameLoadingScreenTest {
         TextureAtlas atlasMock = mock(TextureAtlas.class);
         doReturn(atlasMock).when(resources).getAsset(Resources.LOAD_ATLAS, TextureAtlas.class);
         doReturn(null).when(atlasMock).findRegion("img-loading");
-
+        Gdx.input = mock(Input.class);
         gameLoadingScreen.show();
 
         verify(stage, times(1)).addActor(any(Image.class));

@@ -1,6 +1,6 @@
 package com.lastdefenders.game.ui.presenter;
 
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -16,8 +16,8 @@ import com.lastdefenders.screen.ScreenChanger;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.state.GameStateManager.GameState;
 import com.lastdefenders.sound.LDAudio;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by Eric on 6/7/2017.
@@ -30,8 +30,8 @@ public class PausePresenterTest {
     private ScreenChanger screenChanger = mock(ScreenChanger.class);
     private PauseView pauseView = mock(PauseView.class);
 
-    @Before
-    public void initPausePresenterTest() {
+    @BeforeAll
+    public static void initPausePresenterTest() {
 
         Gdx.app = mock(Application.class);
     }

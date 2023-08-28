@@ -1,17 +1,12 @@
 package com.lastdefenders.game.service.actorplacement;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.doReturn;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -19,9 +14,6 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.support.AirStrike;
 import com.lastdefenders.game.model.actor.support.Apache;
-import com.lastdefenders.game.model.actor.support.ApacheTest;
-import com.lastdefenders.game.model.actor.support.LandMine;
-import com.lastdefenders.game.model.actor.support.LandMineTest;
 import com.lastdefenders.game.model.actor.support.SupportActor;
 import com.lastdefenders.game.service.factory.SupportActorFactory;
 import com.lastdefenders.game.service.validator.SupportActorValidator;
@@ -29,9 +21,9 @@ import com.lastdefenders.game.service.validator.ValidationResponseEnum;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Before;
-import org.junit.Test;
-import testutil.TestUtil;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * Created by Eric on 5/28/2017.
@@ -41,8 +33,8 @@ public class SupportActorPlacementTest {
     private ActorGroups actorGroups = mock(ActorGroups.class);
     private SupportActorFactory supportActorFactory = mock(SupportActorFactory.class);
 
-    @Before
-    public void initSupportActorPlacementTest() {
+    @BeforeAll
+    public static void initSupportActorPlacementTest() {
 
         Gdx.app = mock(Application.class);
     }
@@ -126,7 +118,7 @@ public class SupportActorPlacementTest {
 
     }
 
-    @Test(expected=IllegalStateException.class)
+    @Test
     public void unsuccessfulApachePlacement() {
 
         Apache apache = mock(Apache.class);
@@ -140,8 +132,8 @@ public class SupportActorPlacementTest {
 
         SupportActorPlacement supportActorPlacement = new SupportActorPlacement(supportActorFactory, validatorMap);
 
-
-        supportActorPlacement.createSupportActor(apache.getClass());
+        assertThrows(IllegalStateException.class,
+            () -> supportActorPlacement.createSupportActor(apache.getClass()));
         verify(apache, never()).initialize();
         verify(apache, never()).ready();
     }

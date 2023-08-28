@@ -1,13 +1,10 @@
 package com.lastdefenders.game.model.actor.ai;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.ai.towerai.ClosestEnemyAI;
 import com.lastdefenders.game.model.actor.ai.towerai.FarthestEnemyAI;
@@ -31,21 +28,13 @@ import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRocketLauncher;
 import com.lastdefenders.game.model.actor.combat.tower.TowerTank;
 import com.lastdefenders.game.model.actor.groups.GenericGroup;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import testutil.TestUtil;
 
 /**
  * Tests the Tower AI.
  */
 public class TowerAITest {
-
-
-    @Before
-    public void initTowerAITest() {
-
-        Gdx.app = mock(Application.class);
-    }
 
     private void createEnemyGroup(Group towerTargetGroup) {
 

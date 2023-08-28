@@ -1,6 +1,7 @@
 package com.lastdefenders.game.ui.presenter;
 
-import static org.mockito.Matchers.eq;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -18,14 +19,15 @@ import com.lastdefenders.store.StoreManager;
 import com.lastdefenders.store.StoreManager.PurchasableItem;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.UserPreferences;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import testutil.ResourcesMock;
-import testutil.TestUtil;
 
 /**
  * Created by Eric on 6/5/2017.
@@ -43,13 +45,23 @@ public class OptionsPresenterTest {
 
     @InjectMocks private OptionsPresenter optionsPresenter;
 
-    @Before
-    public void initOptionsPresenterTest() {
+    private AutoCloseable closeable;
+
+    @BeforeAll
+    public static void initOptionsPresenterTest() {
 
         Gdx.app = mock(Application.class);
-        MockitoAnnotations.initMocks(this);
+    }
 
+    @BeforeEach
+    public void startMocks() {
+        closeable = MockitoAnnotations.openMocks(this);
         initView();
+    }
+
+    @AfterEach
+    void closeService() throws Exception {
+        closeable.close();
     }
 
     private void initView(){
@@ -162,15 +174,16 @@ public class OptionsPresenterTest {
 
     }
 
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void removeAdsInvalidTest(){
 
         doReturn(false).when(storeManager).isAdsRemovalPurchasable();
 
-        optionsPresenter.removeAds();
+        assertThrows(IllegalStateException.class,
+            optionsPresenter::removeAds);
 
         verify(storeManager, never()).purchaseItem(PurchasableItem.NO_ADS);
-
     }
+
 
 }

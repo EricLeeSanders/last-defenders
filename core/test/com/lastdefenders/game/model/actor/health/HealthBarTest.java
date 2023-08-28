@@ -1,9 +1,9 @@
 package com.lastdefenders.game.model.actor.health;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -16,8 +16,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import testutil.TestUtil;
 
 /**
@@ -35,13 +34,6 @@ public class HealthBarTest {
     {
         HealthBarTestUtil.setupBarMocks(greenMock, orangeMock, redMock, grayMock, unfilledMock);
     }
-
-    @Before
-    public void initHealthBarTest() {
-
-        Gdx.app = mock(Application.class);
-    }
-
 
     /**
      * Test that Green bar, Orange bar, and Red bar are displayed

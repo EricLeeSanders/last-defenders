@@ -1,19 +1,14 @@
 package com.lastdefenders.game.model.actor.combat.tower;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.tower.state.states.TowerStateEnum;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import testutil.TestUtil;
 
 
@@ -21,12 +16,6 @@ import testutil.TestUtil;
  * Created by Eric on 4/23/2017.
  */
 public class TowerTest {
-
-    @Before
-    public void initTowerTest() {
-
-        Gdx.app = mock(Application.class);
-    }
 
     /**
      * Tower is killed

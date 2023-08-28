@@ -1,15 +1,12 @@
 package com.lastdefenders.game.model.actor.combat.enemy;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.utils.Array;
@@ -18,8 +15,7 @@ import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import com.lastdefenders.util.action.LDSequenceAction;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import testutil.TestUtil;
 
 
@@ -27,12 +23,6 @@ import testutil.TestUtil;
  * Created by Eric on 4/23/2017.
  */
 public class EnemyTest {
-
-    @Before
-    public void initEnemyTest() {
-
-        Gdx.app = mock(Application.class);
-    }
 
     private Array<LDVector2> createWaypoints() {
 

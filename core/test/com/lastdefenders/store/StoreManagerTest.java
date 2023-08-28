@@ -1,25 +1,25 @@
 package com.lastdefenders.store;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.pay.PurchaseManager;
 import com.badlogic.gdx.pay.Transaction;
 import com.lastdefenders.store.StoreManager.PurchasableItem;
-import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.UserPreferences;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.MockitoAnnotations;
 
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Logger.class})
 public class StoreManagerTest {
 
     @Mock private PurchaseManager gdxPurchaseManager;
@@ -27,10 +27,21 @@ public class StoreManagerTest {
 
     @InjectMocks private StoreManager storeManager;
 
-    @Before
-    public void initStoreManagerTest() {
+    private AutoCloseable closeable;
+    @BeforeAll
+    public static void init() {
 
-        PowerMockito.mockStatic(Logger.class);
+        Gdx.app = mock(Application.class);
+    }
+
+    @BeforeEach
+    public void startMocks() {
+        closeable = MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void closeService() throws Exception {
+        closeable.close();
     }
 
     @Test
@@ -44,13 +55,14 @@ public class StoreManagerTest {
         verify(userPreferences, times(1)).setAdRemovalPurchased(true);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void hanldePurchaseOtherTest(){
 
         Transaction noAdsTransaction = new Transaction();
         noAdsTransaction.setIdentifier("SomethingElse");
 
-        storeManager.handlePurchase(noAdsTransaction);
+        assertThrows(IllegalArgumentException.class,
+            () -> storeManager.handlePurchase(noAdsTransaction));
 
         verify(userPreferences, never()).setAdRemovalPurchased(true);
     }

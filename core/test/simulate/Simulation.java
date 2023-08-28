@@ -30,8 +30,8 @@ import com.lastdefenders.util.UserPreferences;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import simulate.helper.SimulationTowerHelper;
 import simulate.helper.support.SupportSimulationTypeHelper;
 import simulate.helper.UpgradeSimulationTypeHelper;
@@ -64,7 +64,7 @@ public class Simulation {
     private SimulationTowerHelper towerHelper;
 
     private StateWriter stateWriter = new StateWriter();
-    @Before
+    @BeforeEach
     public void initSimulation() {
 
         HeadlessNativesLoader.load();

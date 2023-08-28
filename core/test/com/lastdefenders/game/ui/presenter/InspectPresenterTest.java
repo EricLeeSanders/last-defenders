@@ -1,23 +1,21 @@
 package com.lastdefenders.game.ui.presenter;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.game.helper.CollisionDetection;
 import com.lastdefenders.game.model.Player;
@@ -34,20 +32,15 @@ import com.lastdefenders.game.ui.view.InspectView;
 import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
 import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Matchers;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.MockedStatic;
 import testutil.TestUtil;
 
 /**
  * Created by Eric on 6/4/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({CollisionDetection.class})
 public class InspectPresenterTest {
 
     private GameUIStateManager gameUIStateManagerMock = mock(GameUIStateManager.class);
@@ -56,11 +49,9 @@ public class InspectPresenterTest {
     private InspectView inspectView = mock(InspectView.class);
     private Viewport gameViewportMock = mock(Viewport.class);
 
-    @Before
-    public void initInspectPresenterTest() {
-
+    @BeforeAll
+    public static void initInspectPresenterTest() {
         Gdx.app = mock(Application.class);
-        PowerMockito.mockStatic(CollisionDetection.class);
     }
 
     public InspectPresenter createInspectPresenter() {
@@ -101,17 +92,19 @@ public class InspectPresenterTest {
         doReturn(GameUIState.WAVE_IN_PROGRESS).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower(TowerRifle.class, true, true);
         tower.setActive(true);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
+        try (MockedStatic<CollisionDetection> collisionDetection = mockStatic(CollisionDetection.class)) {
+            when(CollisionDetection
+                .towerHit(ArgumentMatchers.any(), isA(LDVector2.class)))
+                .thenReturn(tower);
 
-        float moveX = 20;
-        float moveY = 20;
-        LDVector2 coords = TestUtil.nonPooledLDVector2(moveX, moveY);
-        TestUtil.mockViewportUnproject(coords, gameViewportMock);
+            float moveX = 20;
+            float moveY = 20;
+            LDVector2 coords = TestUtil.nonPooledLDVector2(moveX, moveY);
+            TestUtil.mockViewportUnproject(coords, gameViewportMock);
 
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(moveX,moveY);
+            inspectPresenter.setView(inspectView);
+            inspectPresenter.inspectTower(moveX,moveY);
+        }
 
         verify(gameUIStateManagerMock, times(1)).setState(eq(GameUIState.INSPECTING));
         inspectPresenter.stateChange(GameUIState.INSPECTING);
@@ -127,10 +120,11 @@ public class InspectPresenterTest {
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.OPTIONS).when(gameUIStateManagerMock).getState();
         Tower tower = TestUtil.createTower(TowerRifle.class, true, true);
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
-
+        try (MockedStatic<CollisionDetection> collisionDetection = mockStatic(CollisionDetection.class)) {
+            when(CollisionDetection
+                .towerHit(ArgumentMatchers.any(), isA(LDVector2.class)))
+                .thenReturn(tower);
+        }
         inspectPresenter.setView(inspectView);
         inspectPresenter.inspectTower(20,20);
 
@@ -145,10 +139,11 @@ public class InspectPresenterTest {
 
         InspectPresenter inspectPresenter = createInspectPresenter();
         doReturn(GameUIState.OPTIONS).when(gameUIStateManagerMock).getState();
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(null);
-
+        try (MockedStatic<CollisionDetection> collisionDetection = mockStatic(CollisionDetection.class)) {
+            when(CollisionDetection
+                .towerHit(ArgumentMatchers.any(), isA(LDVector2.class)))
+                .thenReturn(null);
+        }
         inspectPresenter.setView(inspectView);
         inspectPresenter.inspectTower(20,20);
 
@@ -566,17 +561,18 @@ public class InspectPresenterTest {
 
     private void initInspectPresenter(InspectPresenter inspectPresenter, Tower tower) {
 
-        doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
-        when(CollisionDetection
-            .towerHit(Matchers.<SnapshotArray<Actor>>any(), isA(LDVector2.class)))
-            .thenReturn(tower);
+        try (MockedStatic<CollisionDetection> collisionDetection = mockStatic(CollisionDetection.class)) {
+            doReturn(GameUIState.STANDBY).when(gameUIStateManagerMock).getState();
+            when(CollisionDetection
+                .towerHit(ArgumentMatchers.any(), isA(LDVector2.class)))
+                .thenReturn(tower);
+            float moveX = 20;
+            float moveY = 20;
+            LDVector2 coords = TestUtil.nonPooledLDVector2(moveX, moveY);
+            TestUtil.mockViewportUnproject(coords, gameViewportMock);
 
-        float moveX = 20;
-        float moveY = 20;
-        LDVector2 coords = TestUtil.nonPooledLDVector2(moveX, moveY);
-        TestUtil.mockViewportUnproject(coords, gameViewportMock);
-
-        inspectPresenter.setView(inspectView);
-        inspectPresenter.inspectTower(moveX,moveY);
+            inspectPresenter.setView(inspectView);
+            inspectPresenter.inspectTower(moveX, moveY);
+        }
     }
 }

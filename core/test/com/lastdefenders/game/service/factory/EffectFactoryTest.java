@@ -1,9 +1,7 @@
 package com.lastdefenders.game.service.factory;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -11,14 +9,15 @@ import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.BloodSplatter;
 import com.lastdefenders.game.model.actor.effects.texture.animation.death.DeathEffectType;
 import com.lastdefenders.util.Resources;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import testutil.ResourcesMock;
-import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/23/2018.
@@ -33,11 +32,22 @@ public class EffectFactoryTest {
     @InjectMocks
     private EffectFactory effectFactory;
 
-    @Before
-    public void initEffectFactoryTest() {
+    private AutoCloseable closeable;
+
+    @BeforeAll
+    public static void initEffectFactoryTest() {
 
         Gdx.app = mock(Application.class);
-        MockitoAnnotations.initMocks(this);
+    }
+
+    @BeforeEach
+    public void startMocks() {
+        closeable = MockitoAnnotations.openMocks(this);
+    }
+
+    @AfterEach
+    void closeService() throws Exception {
+        closeable.close();
     }
 
     /**
@@ -47,7 +57,7 @@ public class EffectFactoryTest {
     @Test
     public void loadDeathEffectTest1(){
 
-        BloodSplatter bloodSplatter = effectFactory.loadDeathEffect(DeathEffectType.BLOOD,
+        effectFactory.loadDeathEffect(DeathEffectType.BLOOD,
             true);
 
         assertEquals(1, actorGroups.getDeathEffectGroup().getChildren().size);
@@ -59,7 +69,7 @@ public class EffectFactoryTest {
     @Test
     public void loadDeathEffectTest2(){
 
-        BloodSplatter bloodSplatter = effectFactory.loadDeathEffect(DeathEffectType.BLOOD,
+         effectFactory.loadDeathEffect(DeathEffectType.BLOOD,
             false);
 
         assertEquals(0, actorGroups.getDeathEffectGroup().getChildren().size);

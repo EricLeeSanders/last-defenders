@@ -1,6 +1,6 @@
 package com.lastdefenders.game.ui.presenter;
 
-import static org.mockito.Matchers.isA;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -19,8 +19,8 @@ import com.lastdefenders.game.ui.view.interfaces.IHUDView;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.state.GameStateManager.GameState;
 import com.lastdefenders.sound.LDAudio;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by Eric on 5/30/2017.
@@ -33,8 +33,8 @@ public class HUDPresenterTest {
     private IHUDView hudView = mock(HUDView.class);
     private Player playerMock = mock(Player.class);
 
-    @Before
-    public void initHUDPresenterTest() {
+    @BeforeAll
+    public static void initHUDPresenterTest() {
 
         Gdx.app = mock(Application.class);
     }

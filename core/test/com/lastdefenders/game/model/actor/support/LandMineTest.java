@@ -1,14 +1,12 @@
 package com.lastdefenders.game.model.actor.support;
 
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
@@ -21,8 +19,7 @@ import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import testutil.ResourcesMock;
 import testutil.TestUtil;
 
@@ -35,12 +32,6 @@ public class LandMineTest {
     @SuppressWarnings("unchecked")
     private SupportActorPool<LandMine> poolMock = mock(SupportActorPool.class);
     private Explosion explosionMock = mock(Explosion.class);
-
-    @Before
-    public void initLandMineTest() {
-
-        Gdx.app = mock(Application.class);
-    }
 
     public LandMine createLandMine() {
 

@@ -1,31 +1,20 @@
 package com.lastdefenders.game.model.actor.combat.enemy.state;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/14/2017.
  */
 public class EnemyStateManagerTest {
-
-
-    @Before
-    public void initEnemyStateManagerTest() {
-
-        Gdx.app = mock(Application.class);
-    }
 
     @Test
     public void transitionTest() {

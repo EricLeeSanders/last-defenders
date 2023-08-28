@@ -1,20 +1,17 @@
 package com.lastdefenders.game.model.actor.health;
 
 import static com.lastdefenders.game.model.actor.health.ArmorIcon.TEXTURE_PADDING_HEALTH_BAR_SHOWING;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Align;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
 import com.lastdefenders.game.model.actor.combat.tower.TowerRifle;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import testutil.TestUtil;
 
 /**
@@ -24,12 +21,6 @@ import testutil.TestUtil;
 public class ArmorIconTest {
 
     private Batch batchMock = mock(Batch.class);
-
-    @Before
-    public void initArmorIconTest() {
-
-        Gdx.app = mock(Application.class);
-    }
 
     /**
      * Tower has armor and takes no damage. Verify that the armor icon is visible and centered.

@@ -1,24 +1,19 @@
 package com.lastdefenders.game.model.actor.effects.label;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.lastdefenders.game.model.actor.effects.label.WaveOverCoinEffect;
 import com.lastdefenders.game.service.factory.EffectFactory.EffectPool;
 import com.lastdefenders.util.Resources;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import testutil.ResourcesMock;
 import testutil.TestUtil;
 
@@ -31,12 +26,6 @@ public class WaveOverCoinEffectTest {
 
     @SuppressWarnings("unchecked")
     private EffectPool<WaveOverCoinEffect> labelEffectPoolMock = mock(EffectPool.class);
-
-    @Before
-    public void initWaveOverCoinEffectTest() {
-
-        Gdx.app = mock(Application.class);
-    }
 
     private WaveOverCoinEffect createWaveOverCoinEffect() {
 

@@ -1,13 +1,14 @@
 package com.lastdefenders.game.service.actorplacement;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.eq;
-import static org.mockito.Matchers.isA;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.powermock.api.mockito.PowerMockito.doReturn;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
@@ -23,19 +24,14 @@ import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.game.service.factory.CombatActorFactory;
 import com.lastdefenders.game.service.factory.HealthFactory;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/28/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({CollisionDetection.class})
 public class TowerPlacementTest {
 
     private Map map = mock(Map.class);
@@ -43,11 +39,10 @@ public class TowerPlacementTest {
     private CombatActorFactory combatActorFactory = mock(CombatActorFactory.class);
     private HealthFactory healthFactory = mock(HealthFactory.class);
 
-    @Before
-    public void initTowerPlacementTest() {
+    @BeforeAll
+    public static void initTowerPlacementTest() {
 
         Gdx.app = mock(Application.class);
-        PowerMockito.mockStatic(CollisionDetection.class);
     }
 
     public TowerPlacement createTowerPlacement() {
@@ -76,9 +71,12 @@ public class TowerPlacementTest {
         // Move tower and mock collision detection
         Array<Rectangle> pathBoundaries = new Array<>();
         doReturn(pathBoundaries).when(map).getPathBoundaries();
-        when(CollisionDetection.collisionWithPath(eq(pathBoundaries), eq(tower))).thenReturn(false);
-        when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower)))
-            .thenReturn(false);
+        try (MockedStatic<CollisionDetection> collisionDetection = mockStatic(CollisionDetection.class)) {
+            when(CollisionDetection.collisionWithPath(eq(pathBoundaries), eq(tower))).thenReturn(
+                false);
+            when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower)))
+                .thenReturn(false);
+        }
 
         LDVector2 moveCoords = new LDVector2(200, 100);
         towerPlacement.moveTower(moveCoords);
@@ -92,8 +90,6 @@ public class TowerPlacementTest {
         float rotation = 70;
         towerPlacement.rotateTower(rotation);
         assertEquals(-rotation, tower.getRotation(), TestUtil.DELTA);
-
-
 
         boolean placed = towerPlacement.placeTower();
 
@@ -123,21 +119,25 @@ public class TowerPlacementTest {
         // Move tower and mock collision detection
         Array<Rectangle> pathBoundaries = new Array<>();
         doReturn(pathBoundaries).when(map).getPathBoundaries();
-        when(CollisionDetection.collisionWithPath(eq(pathBoundaries), eq(tower))).thenReturn(true);
-        when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower)))
-            .thenReturn(true);
 
-        LDVector2 moveCoords = new LDVector2(200, 100);
-        towerPlacement.moveTower(moveCoords);
+        try (MockedStatic<CollisionDetection> collisionDetection = mockStatic(
+            CollisionDetection.class)) {
+            when(CollisionDetection.collisionWithPath(eq(pathBoundaries), eq(tower))).thenReturn(
+                true);
+            when(CollisionDetection.collisionWithActors(isA(SnapshotArray.class), eq(tower)))
+                .thenReturn(true);
 
-        assertTrue(tower.isVisible());
-        assertTrue(tower.isShowRange());
-        assertEquals(moveCoords, tower.getPositionCenter());
-        assertTrue(tower.isTowerColliding());
+            LDVector2 moveCoords = new LDVector2(200, 100);
+            towerPlacement.moveTower(moveCoords);
 
-        // place tower
-        towerPlacement.placeTower();
-        assertEquals(tower, towerPlacement.getCurrentTower());
+            assertTrue(tower.isVisible());
+            assertTrue(tower.isShowRange());
+            assertEquals(moveCoords, tower.getPositionCenter());
+            assertTrue(tower.isTowerColliding());
 
+            // place tower
+            towerPlacement.placeTower();
+            assertEquals(tower, towerPlacement.getCurrentTower());
+        }
     }
 }

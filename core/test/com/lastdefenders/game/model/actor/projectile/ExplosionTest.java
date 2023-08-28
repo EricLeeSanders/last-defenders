@@ -1,14 +1,11 @@
 package com.lastdefenders.game.model.actor.projectile;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Matchers.eq;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.powermock.api.mockito.PowerMockito.verifyStatic;
-
-import com.badlogic.gdx.Application;
-import com.badlogic.gdx.Gdx;
 import com.lastdefenders.game.helper.Damage;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
@@ -17,30 +14,17 @@ import com.lastdefenders.game.model.actor.combat.tower.TowerHumvee;
 import com.lastdefenders.game.service.factory.ProjectileFactory.ProjectilePool;
 import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Resources;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
 import testutil.ResourcesMock;
 import testutil.TestUtil;
 
 /**
  * Created by Eric on 5/21/2017.
  */
-@RunWith(PowerMockRunner.class)
-@PrepareForTest({Damage.class})
 public class ExplosionTest {
     @SuppressWarnings("unchecked")
     private ProjectilePool<Explosion> poolMock = mock(ProjectilePool.class);
-
-    @Before
-    public void initExplosionTest() {
-
-        Gdx.app = mock(Application.class);
-        PowerMockito.mockStatic(Damage.class);
-    }
 
     public Explosion createExplosion() {
 
@@ -60,12 +44,13 @@ public class ExplosionTest {
         target.setPositionCenter(200, 200);
 
         Explosion explosion = createExplosion();
-        explosion.initialize(attacker, 70.0f, target.getPositionCenter());
+        try(MockedStatic<Damage> mockedDamage = mockStatic(Damage.class)) {
+            explosion.initialize(attacker, 70.0f, target.getPositionCenter());
 
-        assertEquals(target.getPositionCenter(), explosion.getPositionCenter());
-        verifyStatic(times(1));
-        Damage.dealExplosionDamage(eq(attacker), eq(70.0f), eq(target.getPositionCenter()),
-            eq(attacker.getEnemyGroup().getChildren()));
+            assertEquals(target.getPositionCenter(), explosion.getPositionCenter());
+            mockedDamage.verify(() -> Damage.dealExplosionDamage(eq(attacker), eq(70.0f), eq(target.getPositionCenter()),
+                eq(attacker.getEnemyGroup().getChildren())));
+        }
 
     }
 

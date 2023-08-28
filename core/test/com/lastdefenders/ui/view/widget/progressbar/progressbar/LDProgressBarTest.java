@@ -1,6 +1,6 @@
 package com.lastdefenders.ui.view.widget.progressbar.progressbar;
 
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
@@ -15,8 +15,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarPadding;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarStyle;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 /**
  * Created by Eric on 2/15/2018.
@@ -24,8 +24,8 @@ import org.junit.Test;
 
 public class LDProgressBarTest {
 
-    @Before
-    public void initLDProgressBarTest() {
+    @BeforeAll
+    public static void initLDProgressBarTest() {
 
         Gdx.app = mock(Application.class);
     }
@@ -44,7 +44,6 @@ public class LDProgressBarTest {
     @Test
     public void filledTest1() {
 
-        //(float min, float max, float stepSize, LDProgressBarPadding padding, LDProgressBarStyle style) {
         LDProgressBarPadding padding = new LDProgressBarPadding(2f);
         TextureRegionDrawable frameMock = setupTextureRegionDrawableMock();
         TextureRegionDrawable filledMock = setupTextureRegionDrawableMock();
