@@ -11,8 +11,8 @@ import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Flame;
 import com.lastdefenders.game.service.factory.CombatActorFactory.TowerPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.UtilPool;
 
@@ -29,17 +29,17 @@ public class TowerFlameThrower extends Tower implements IFlame {
 
     private Circle body;
     private Dimension flameSize;
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
     private ProjectileFactory projectileFactory;
 
     public TowerFlameThrower(TextureRegion actorRegion, TowerPool<TowerFlameThrower> pool,
         GenericGroup<Enemy> targetGroup, TextureRegion rangeRegion, TextureRegion collidingRangeRegion,
-        ProjectileFactory projectileFactory, LDAudio audio, TowerAttributes attributes) {
+        ProjectileFactory projectileFactory, SoundPlayer soundPlayer, TowerAttributes attributes) {
 
         super(actorRegion, TEXTURE_SIZE, pool, targetGroup, GUN_POS, rangeRegion,
             collidingRangeRegion, DEATH_EFFECT_TYPE, attributes);
         flameSize = new Dimension(attributes.getRange() - 26, 20);
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
         this.projectileFactory = projectileFactory;
         this.body = new Circle(this.getPositionCenter(), 10);
     }
@@ -55,7 +55,7 @@ public class TowerFlameThrower extends Tower implements IFlame {
     public void attackTarget(Targetable target) {
 
         if (target != null) {
-            audio.playSound(LDSound.FLAME_BURST);
+            soundPlayer.play(LDSound.Type.FLAME);
             projectileFactory.loadProjectile(Flame.class).initialize(this, getEnemyGroup(), getFlameSize());
         }
     }

@@ -5,10 +5,10 @@ import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.state.GameUIStateObserver;
 import com.lastdefenders.game.ui.view.interfaces.IPauseView;
 import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.state.GameStateManager.GameState;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.LDSound;
 import com.lastdefenders.util.Logger;
 
 /**
@@ -20,15 +20,15 @@ public class PausePresenter implements GameUIStateObserver {
     private GameUIStateManager uiStateManager;
     private GameStateManager gameStateManager;
     private ScreenChanger screenChanger;
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
     private IPauseView view;
     private boolean keepGamePaused;
 
     public PausePresenter(GameUIStateManager uiStateManager, GameStateManager gameStateManager,
-        ScreenChanger screenChanger, LDAudio audio) {
+        ScreenChanger screenChanger, SoundPlayer soundPlayer) {
 
         this.uiStateManager = uiStateManager;
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
         this.screenChanger = screenChanger;
         this.gameStateManager = gameStateManager;
         uiStateManager.attach(this);
@@ -43,7 +43,7 @@ public class PausePresenter implements GameUIStateObserver {
 
         Logger.info("PausePresenter: Resume");
         if (canResume()) {
-            audio.playSound(LDSound.SMALL_CLICK);
+            soundPlayer.play(LDSound.Type.SMALL_CLICK);
             if (!keepGamePaused) {
                 gameStateManager.setState(GameState.PLAY);
             }
@@ -55,7 +55,7 @@ public class PausePresenter implements GameUIStateObserver {
 
         Logger.info("PausePresenter: New Game");
         if (canChangeToNewGame()) {
-            audio.playSound(LDSound.SMALL_CLICK);
+            soundPlayer.play(LDSound.Type.SMALL_CLICK);
             screenChanger.changeToLevelSelect();
         }
     }
@@ -64,7 +64,7 @@ public class PausePresenter implements GameUIStateObserver {
 
         Logger.info("PausePresenter: Main Menu");
         if (canChangeToMainMenu()) {
-            audio.playSound(LDSound.SMALL_CLICK);
+            soundPlayer.play(LDSound.Type.SMALL_CLICK);
             screenChanger.changeToMenu();
         }
 

@@ -1,5 +1,6 @@
 package com.lastdefenders.game.service.factory;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -13,7 +14,7 @@ import com.lastdefenders.game.model.actor.support.LandMine;
 import com.lastdefenders.game.model.actor.support.SupportActor;
 import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDrop;
 import com.lastdefenders.game.model.actor.support.supplydrop.SupplyDropPlane;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -30,17 +31,17 @@ public class SupportActorFactory {
     private SupportActorPool<AirStrike> airStrikePool;
     private SupportActorPool<LandMine> landMinePool;
 
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
     private Resources resources;
     private EffectFactory effectFactory;
     private ProjectileFactory projectileFactory;
     private ActorGroups actorGroups;
 
-    public SupportActorFactory(ActorGroups actorGroups, LDAudio audio, Resources resources,
+    public SupportActorFactory(ActorGroups actorGroups, SoundPlayer soundPlayer, Resources resources,
         EffectFactory effectFactory, ProjectileFactory projectileFactory) {
 
         this.actorGroups = actorGroups;
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
         this.resources = resources;
         this.effectFactory = effectFactory;
         this.projectileFactory = projectileFactory;
@@ -110,7 +111,7 @@ public class SupportActorFactory {
         TextureRegion supplyDropPlaneRegion = resources.getTexture("supply-drop-plane");
         TextureRegion supplyDropCrateRegion = resources.getTexture("supply-drop-crate");
         TextureRegion rangeTexture = resources.getTexture("range-black");
-        SupplyDropPlane plane = new SupplyDropPlane(supplyDropPlaneRegion, audio);
+        SupplyDropPlane plane = new SupplyDropPlane(supplyDropPlaneRegion, soundPlayer);
         return new SupplyDrop(supplyDropCrateRegion, rangeTexture, supplyDropPool, actorGroups.getTowerGroup(),effectFactory, plane);
     }
 
@@ -127,7 +128,7 @@ public class SupportActorFactory {
         TextureRegion rangeTexture = resources.getTexture("range");
         TextureRegion stationaryRegion = resources.getTexture("apache-stationary");
         return new Apache(apachePool, actorGroups.getEnemyGroup(), projectileFactory, stationaryRegion,
-            textureRegions, rangeTexture, audio);
+            textureRegions, rangeTexture, soundPlayer);
     }
 
     private AirStrike createAirStrike(){
@@ -141,7 +142,7 @@ public class SupportActorFactory {
         }
 
         return new AirStrike(airStrikePool, actorGroups.getEnemyGroup(), projectileFactory, textureRegion,
-            rangeTexture, airStrikeLocations, audio);
+            rangeTexture, airStrikeLocations, soundPlayer);
     }
 
     private LandMine createLandMine(){

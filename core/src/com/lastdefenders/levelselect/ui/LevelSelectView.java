@@ -15,8 +15,8 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ObjectMap;
 import com.badlogic.gdx.utils.Scaling;
 import com.lastdefenders.levelselect.LevelName;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.LDSound;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -31,12 +31,12 @@ public class LevelSelectView extends Group {
     private Label lblLevel;
     private ObjectMap<LevelName, Image> levels = new ObjectMap<>();
     private Group levelConfirmationGroup;
-    private LDAudio audio;
+    private AudioManager audio;
     private LevelName selectedLevel;
     private TextureAtlas levelSelectAtlas;
     private Skin skin;
 
-    public LevelSelectView(LevelSelectPresenter presenter, Resources resources, LDAudio audio) {
+    public LevelSelectView(LevelSelectPresenter presenter, Resources resources, AudioManager audio) {
 
         this.presenter = presenter;
         this.audio = audio;
@@ -225,7 +225,7 @@ public class LevelSelectView extends Group {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                audio.playSound(LDSound.LARGE_CLICK);
+                audio.getSoundPlayer().play(LDSound.Type.LARGE_CLICK);
                 presenter.mainMenu();
 
             }
@@ -239,7 +239,7 @@ public class LevelSelectView extends Group {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                audio.playSound(LDSound.SMALL_CLICK);
+                audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
                 presenter.showAchievements();
 
             }
@@ -253,7 +253,7 @@ public class LevelSelectView extends Group {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                audio.playSound(LDSound.SMALL_CLICK);
+                audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
                 presenter.showAllLeaderboards();
 
             }
@@ -267,7 +267,7 @@ public class LevelSelectView extends Group {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                audio.playSound(LDSound.SMALL_CLICK);
+                audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
                 presenter.showLeaderboardForLevel(selectedLevel);
 
             }
@@ -281,7 +281,7 @@ public class LevelSelectView extends Group {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                audio.playSound(LDSound.SMALL_CLICK);
+                audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
                 selectedLevel = level;
                 levelConfirmationGroup.setVisible(true);
                 showConfirmWindow();
@@ -297,7 +297,7 @@ public class LevelSelectView extends Group {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                audio.playSound(LDSound.LARGE_CLICK);
+                audio.getSoundPlayer().play(LDSound.Type.LARGE_CLICK);
                 levelConfirmationGroup.setVisible(false);
 
             }
@@ -311,7 +311,7 @@ public class LevelSelectView extends Group {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 
                 super.touchUp(event, x, y, pointer, button);
-                audio.playSound(LDSound.LARGE_CLICK);
+                audio.getSoundPlayer().play(LDSound.Type.LARGE_CLICK);
                 presenter.loadLevel(selectedLevel);
 
             }

@@ -18,10 +18,10 @@ import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Rocket;
 import com.lastdefenders.game.service.factory.CombatActorFactory.TowerPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
+import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.ActorUtil;
 import com.lastdefenders.util.DebugOptions;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.UtilPool;
@@ -47,18 +47,19 @@ public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatabl
     private TextureRegion turretRegion;
     private float bodyRotation;
     private ProjectileFactory projectileFactory;
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
 
     public TowerTank(TextureRegion bodyRegion, TextureRegion turretRegion,
         TowerPool<TowerTank> pool, GenericGroup<Enemy> targetGroup, TextureRegion rangeRegion,
-        TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, LDAudio audio, TowerAttributes attributes) {
+        TextureRegion collidingRangeRegion, ProjectileFactory projectileFactory, SoundPlayer soundPlayer,
+        TowerAttributes attributes) {
 
         super(turretRegion, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS, rangeRegion,
             collidingRangeRegion, DEATH_EFFECT_TYPE, attributes);
         this.bodyRegion = bodyRegion;
         this.turretRegion = turretRegion;
         this.projectileFactory = projectileFactory;
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
         body = new Polygon(BODY_POINTS);
     }
 
@@ -137,7 +138,7 @@ public class TowerTank extends Tower implements IVehicle, PlatedArmor, IRotatabl
     public void attackTarget(Targetable target) {
 
         if (target != null) {
-            audio.playSound(LDSound.ROCKET_LAUNCH);
+            soundPlayer.play(LDSound.Type.ROCKET_LAUNCH);
             projectileFactory.loadProjectile(Rocket.class)
                 .initialize(this, target.getPositionCenter(), ROCKET_SIZE, AOE_RADIUS);
         }

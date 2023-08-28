@@ -11,10 +11,11 @@ import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.state.GameUIStateObserver;
 import com.lastdefenders.game.ui.view.interfaces.IHUDView;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.state.GameStateManager.GameState;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.LDSound;
 import com.lastdefenders.util.Logger;
 
 /**
@@ -29,17 +30,17 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
     private GameStateManager gameStateManager;
     private Player player;
     private IHUDView view;
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
 
     public HUDPresenter(GameUIStateManager uiStateManager, LevelStateManager levelStateManager,
-        GameStateManager gameStateManager, Player player, LDAudio audio) {
+        GameStateManager gameStateManager, Player player, SoundPlayer soundPlayer) {
 
         this.levelStateManager = levelStateManager;
         this.uiStateManager = uiStateManager;
         uiStateManager.attach(this);
         this.gameStateManager = gameStateManager;
         this.player = player;
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
         player.attachObserver(this);
     }
 
@@ -58,7 +59,7 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
      */
     public void pause() {
 
-        audio.playSound(LDSound.SMALL_CLICK);
+        soundPlayer.play(LDSound.Type.SMALL_CLICK);
         if (canPauseGame()) {
             Logger.info("HUD Presenter: pause");
             gameStateManager.setState(GameState.PAUSE);
@@ -70,7 +71,7 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
      */
     public void resume() {
 
-        audio.playSound(LDSound.SMALL_CLICK);
+        soundPlayer.play(LDSound.Type.SMALL_CLICK);
         if (canResumeGame()) {
             Logger.info("HUD Presenter: resume");
             gameStateManager.setState(GameState.PLAY);
@@ -82,7 +83,7 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
      */
     public void options() {
 
-        audio.playSound(LDSound.SMALL_CLICK);
+        soundPlayer.play(LDSound.Type.SMALL_CLICK);
         if (canViewOptions()) {
             Logger.info("HUD Presenter: options");
             uiStateManager.setState(GameUIState.OPTIONS);
@@ -94,7 +95,7 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
      */
     public void startWave() {
 
-        audio.playSound(LDSound.SMALL_CLICK);
+        soundPlayer.play(LDSound.Type.SMALL_CLICK);
         if (canStartWave()) {
             Logger.info("HUD Presenter: starting wave");
             levelStateManager.setState(LevelState.WAVE_IN_PROGRESS);
@@ -107,7 +108,7 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
      */
     public void enlist() {
 
-        audio.playSound(LDSound.SMALL_CLICK);
+        soundPlayer.play(LDSound.Type.SMALL_CLICK);
         if (canEnlist()) {
             Logger.info("HUD Presenter: enlist");
             uiStateManager.setState(GameUIState.ENLISTING);
@@ -119,7 +120,7 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
      */
     public void addSupport() {
 
-        audio.playSound(LDSound.SMALL_CLICK);
+        soundPlayer.play(LDSound.Type.SMALL_CLICK);
         if (canAddSupport()) {
             Logger.info("HUD Presenter: addSupport");
             uiStateManager.setState(GameUIState.SUPPORT);

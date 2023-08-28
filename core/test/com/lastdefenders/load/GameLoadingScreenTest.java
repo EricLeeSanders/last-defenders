@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.screen.ScreenChanger;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.AudioManager;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.store.StoreManager;
 import com.lastdefenders.util.Resources;
@@ -37,7 +37,7 @@ public class GameLoadingScreenTest {
     @Mock private GameStateManager gameStateManager;
     @Mock private ScreenChanger screenChanger;
     @Mock private UserPreferences userPreferences;
-    @Mock private LDAudio audio;
+    @Mock private AudioManager audio;
     @Mock private StoreManager storeManager;
     @Mock private Viewport viewport;
     @Mock private Stage stage;

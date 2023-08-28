@@ -10,10 +10,13 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.screen.AbstractScreen;
 import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.AudioPlayer;
+import com.lastdefenders.sound.LDMusic;
+import com.lastdefenders.sound.MusicPlayer;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.state.GameStateManager.GameState;
 import com.lastdefenders.store.StoreManager;
-import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -29,19 +32,19 @@ public class MenuScreen extends AbstractScreen {
     private Viewport viewport;
 
     public MenuScreen(ScreenChanger screenChanger, GameStateManager gameStateManager,
-        Resources resources, LDAudio audio, GooglePlayServices playServices,
+        Resources resources, AudioManager audio, GooglePlayServices playServices,
         StoreManager storeManager) {
 
         super(gameStateManager);
         this.gameStateManager = gameStateManager;
         createStageAndViewport(screenChanger, resources, audio, playServices, storeManager);
-        audio.playMenuMusic();
+        audio.getMusicPlayer().play(LDMusic.Type.MENU);
 
         createBackListener();
     }
 
     private void createStageAndViewport(ScreenChanger screenChanger, Resources resources,
-        LDAudio audio, GooglePlayServices playServices, StoreManager storeManager){
+        AudioManager audio, GooglePlayServices playServices, StoreManager storeManager){
 
         viewport = new ScalingViewport(Scaling.stretch, Resources.VIRTUAL_WIDTH, Resources.VIRTUAL_HEIGHT,
             new OrthographicCamera());

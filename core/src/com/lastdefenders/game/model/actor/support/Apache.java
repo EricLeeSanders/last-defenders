@@ -1,5 +1,6 @@
 package com.lastdefenders.game.model.actor.support;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
@@ -16,9 +17,9 @@ import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
+import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.ActorUtil;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.action.LDOneTimeAction;
@@ -43,18 +44,18 @@ public class Apache extends CombatSupportActor {
     private boolean readyToAttack;
     private float attackCounter;
     private ProjectileFactory projectileFactory;
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
     private TowerAI ai = new ClosestEnemyAI();
     private Animation<TextureRegion> movementAnimation;
     private float movementAnimationStateTime;
 
     public Apache(SupportActorPool<Apache> pool, EnemyGroup enemyGroup,
         ProjectileFactory projectileFactory, TextureRegion stationaryTextureRegion,
-        TextureRegion[] textureRegions, TextureRegion rangeTexture, LDAudio audio) {
+        TextureRegion[] textureRegions, TextureRegion rangeTexture, SoundPlayer soundPlayer) {
 
         super(pool, enemyGroup, stationaryTextureRegion, TEXTURE_SIZE, rangeTexture, RANGE, ATTACK,
             GUN_POS);
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
         this.projectileFactory = projectileFactory;
 
         movementAnimation = new Animation<>(FRAME_DURATION, textureRegions);
@@ -79,7 +80,7 @@ public class Apache extends CombatSupportActor {
 
         UtilPool.freeObjects(centerPos, destination, placePosition);
 
-        audio.playSound(LDSound.HELICOPTER_HOVER);
+        soundPlayer.play(LDSound.Type.HELICOPTER_HOVER);
     }
 
     /**
@@ -189,7 +190,7 @@ public class Apache extends CombatSupportActor {
         destination.free();
         setActive(false);
 
-        audio.playSound(LDSound.HELICOPTER_HOVER);
+        soundPlayer.play(LDSound.Type.HELICOPTER_HOVER);
     }
 
     /**
@@ -203,7 +204,7 @@ public class Apache extends CombatSupportActor {
     private void attackTarget(Targetable target) {
 
         if (target != null && !target.isDead()) {
-            audio.playSound(LDSound.MACHINE_GUN);
+            soundPlayer.play(LDSound.Type.MACHINE_GUN_SHOT);
             projectileFactory.loadProjectile(Bullet.class).initialize(this, target, BULLET_SIZE);
         }
 

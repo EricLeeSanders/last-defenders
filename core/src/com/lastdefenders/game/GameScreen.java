@@ -20,9 +20,9 @@ import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.log.EventLogger;
 import com.lastdefenders.screen.AbstractScreen;
 import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.sound.AudioManager;
 import com.lastdefenders.state.GameStateManager;
 import com.lastdefenders.state.GameStateManager.GameState;
-import com.lastdefenders.sound.LDAudio;
 import com.lastdefenders.store.StoreManager;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
@@ -46,7 +46,7 @@ public class GameScreen extends AbstractScreen {
     private Viewport uiViewport;
 
     public GameScreen(LevelName levelName, GameStateManager gameStateManager, ScreenChanger screenChanger,
-        Resources resources, LDAudio audio, GooglePlayServices playServices, AdControllerHelper adControllerHelper,
+        Resources resources, AudioManager audio, GooglePlayServices playServices, AdControllerHelper adControllerHelper,
         EventLogger eventLogger, StoreManager storeManager) {
 
         super(gameStateManager);
@@ -59,7 +59,7 @@ public class GameScreen extends AbstractScreen {
         createStages(levelName, audio, playServices, adControllerHelper, eventLogger, storeManager);
 
         super.show();
-        audio.fadeOutMusic();
+        audio.getMusicPlayer().fadeOutCurrentMusic();
         gameStage.loadFirstWave();
         createBackListener();
         gameStateManager.setState(GameState.PLAY);
@@ -77,7 +77,7 @@ public class GameScreen extends AbstractScreen {
         addViewport(uiViewport);
     }
 
-    private void createStages(LevelName levelName, LDAudio audio, GooglePlayServices playServices,
+    private void createStages(LevelName levelName, AudioManager audio, GooglePlayServices playServices,
         AdControllerHelper adControllerHelper, EventLogger eventLogger, StoreManager storeManager) {
 
         Player player = new Player();

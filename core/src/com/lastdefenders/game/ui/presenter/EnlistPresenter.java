@@ -16,8 +16,9 @@ import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.state.GameUIStateObserver;
 import com.lastdefenders.game.ui.view.interfaces.IEnlistView;
 import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
@@ -36,20 +37,20 @@ public class EnlistPresenter implements GameUIStateObserver {
     private GameUIStateManager uiStateManager;
     private Player player;
     private IEnlistView view;
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
     private MessageDisplayer messageDisplayer;
     private Map<String, Integer> towerCosts = new HashMap<>();
     private Viewport gameViewport;
     private Resources resources;
 
     public EnlistPresenter(GameUIStateManager uiStateManager, Player player,
-        LDAudio audio, TowerPlacement towerPlacement, MessageDisplayer messageDisplayer,
+        SoundPlayer soundPlayer, TowerPlacement towerPlacement, MessageDisplayer messageDisplayer,
         Viewport gameViewport, Resources resources) {
 
         this.uiStateManager = uiStateManager;
         uiStateManager.attach(this);
         this.player = player;
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
         this.towerPlacement = towerPlacement;
         this.messageDisplayer = messageDisplayer;
         this.gameViewport = gameViewport;
@@ -85,7 +86,7 @@ public class EnlistPresenter implements GameUIStateObserver {
 
         Logger.info("Enlist Presenter: creating tower");
         int cost = towerCosts.get(strEnlistTower);
-        audio.playSound(LDSound.SMALL_CLICK);
+        soundPlayer.play(LDSound.Type.SMALL_CLICK);
         if (canCreateTower(cost)) {
             towerPlacement.createTower(strEnlistTower);
             Logger.info("Enlist Presenter: tower created");
@@ -107,7 +108,7 @@ public class EnlistPresenter implements GameUIStateObserver {
         Logger.info("Enlist Presenter: placing tower");
         if (canPlaceTower()) {
             if (towerPlacement.placeTower()) {
-                audio.playSound(LDSound.ACTOR_PLACE);
+                soundPlayer.play(LDSound.Type.ACTOR_PLACE);
                 int cost = towerPlacement.getCurrentTower().getCost();
                 player.spendMoney(cost);
                 Logger.info("Enlist Presenter: tower placed");
@@ -133,7 +134,7 @@ public class EnlistPresenter implements GameUIStateObserver {
     public void cancel() {
 
         Logger.info("Enlist Presenter: cancel");
-        audio.playSound(LDSound.SMALL_CLICK);
+        soundPlayer.play(LDSound.Type.SMALL_CLICK);
         uiStateManager.setStateReturn();
     }
 

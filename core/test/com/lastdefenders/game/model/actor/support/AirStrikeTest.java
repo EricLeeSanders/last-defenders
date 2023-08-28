@@ -21,7 +21,7 @@ import com.lastdefenders.game.model.actor.projectile.Rocket;
 import com.lastdefenders.game.model.actor.support.AirStrike.AirStrikeLocation;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
@@ -51,10 +51,10 @@ public class AirStrikeTest {
         doReturn(rocketMock).when(projectileFactoryMock).loadProjectile(Rocket.class);
 
 
-        LDAudio audioMock = mock(LDAudio.class);
+        SoundPlayer soundPlayerMock = mock(SoundPlayer.class);
         Array<AirStrikeLocation> locations = getAirStrikeLocations(AirStrike.MAX_AIRSTRIKES);
         AirStrike airStrike =  new AirStrike(poolMock, new EnemyGroup(), projectileFactoryMock,
-            resourcesMock.getTexture(""), resourcesMock.getTexture(""),locations, audioMock);
+            resourcesMock.getTexture(""), resourcesMock.getTexture(""),locations, soundPlayerMock);
 
         AirStrike airStrikeSpy = spy(airStrike);
         doReturn(new Group()).when(airStrikeSpy).getParent();

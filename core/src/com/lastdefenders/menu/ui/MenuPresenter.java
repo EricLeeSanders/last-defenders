@@ -2,12 +2,15 @@ package com.lastdefenders.menu.ui;
 
 import com.lastdefenders.menu.ui.view.interfaces.IMenuOptionsView;
 import com.lastdefenders.screen.ScreenChanger;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.AudioPlayer;
+import com.lastdefenders.sound.LDMusic;
+import com.lastdefenders.sound.LDSound;
 import com.lastdefenders.store.StoreManager;
 import com.lastdefenders.store.StoreManager.PurchasableItem;
 import com.lastdefenders.store.StoreManagerObserver;
 import com.lastdefenders.ui.presenter.GooglePlayServicesPresenter;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.menu.ui.view.interfaces.IMenuView;
 
@@ -21,12 +24,12 @@ public class MenuPresenter implements StoreManagerObserver {
     private ScreenChanger screenChanger;
     private IMenuView view;
     private IMenuOptionsView menuOptionsView;
-    private LDAudio audio;
+    private AudioManager audio;
     private GooglePlayServicesPresenter gpsPresenter;
     private boolean optionsActive;
     private StoreManager storeManager;
 
-    public MenuPresenter(ScreenChanger screenChanger, LDAudio audio, GooglePlayServicesPresenter gpsPresenter,
+    public MenuPresenter(ScreenChanger screenChanger, AudioManager audio, GooglePlayServicesPresenter gpsPresenter,
         StoreManager storeManager) {
         this.screenChanger = screenChanger;
         this.audio = audio;
@@ -46,17 +49,17 @@ public class MenuPresenter implements StoreManagerObserver {
     private void initView() {
 
         Logger.info("Menu Presenter: initializing view");
-        view.setBtnMusicOn(audio.isMusicEnabled());
-        view.setBtnSoundOn(audio.isSoundEnabled());
-        menuOptionsView.setBtnMusicOn(audio.isMusicEnabled());
-        menuOptionsView.setBtnSoundOn(audio.isSoundEnabled());
+        view.setBtnMusicOn(audio.getMusicPlayer().isEnabled());
+        view.setBtnSoundOn(audio.getSoundPlayer().isEnabled());
+        menuOptionsView.setBtnMusicOn(audio.getMusicPlayer().isEnabled());
+        menuOptionsView.setBtnSoundOn(audio.getSoundPlayer().isEnabled());
         menuOptionsView.setVisible(false);
     }
 
     public void playGame() {
 
         Logger.info("Menu Presenter: play game");
-        audio.playSound(LDSound.LARGE_CLICK);
+        audio.getSoundPlayer().play(LDSound.Type.LARGE_CLICK);
         screenChanger.changeToLevelSelect();
 
     }
@@ -64,22 +67,22 @@ public class MenuPresenter implements StoreManagerObserver {
     public void soundPressed() {
 
         Logger.info("Menu Presenter: sound pressed");
-        audio.playSound(LDSound.SMALL_CLICK);
-        audio.changeSoundEnabled();
-        view.setBtnSoundOn(audio.isSoundEnabled());
-        menuOptionsView.setBtnSoundOn(audio.isSoundEnabled());
+        audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
+        audio.getSoundPlayer().toggleEnabled();
+        view.setBtnSoundOn(audio.getSoundPlayer().isEnabled());
+        menuOptionsView.setBtnSoundOn(audio.getSoundPlayer().isEnabled());
     }
 
     public void musicPressed() {
 
         Logger.info("Menu Presenter: music pressed");
-        audio.playSound(LDSound.SMALL_CLICK);
-        audio.changeMusicEnabled();
-        if(audio.isMusicEnabled()){
-            audio.playMenuMusic();
+        audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
+        audio.getMusicPlayer().toggleEnabled();
+        if(audio.getMusicPlayer().isEnabled()){
+            audio.getMusicPlayer().play(LDMusic.Type.MENU);
         }
-        view.setBtnMusicOn(audio.isMusicEnabled());
-        menuOptionsView.setBtnMusicOn(audio.isMusicEnabled());
+        view.setBtnMusicOn(audio.getMusicPlayer().isEnabled());
+        menuOptionsView.setBtnMusicOn(audio.getMusicPlayer().isEnabled());
     }
 
     public void playServicesPressed() {
@@ -87,13 +90,13 @@ public class MenuPresenter implements StoreManagerObserver {
         if(gpsPresenter == null){
             return;
         }
-        audio.playSound(LDSound.SMALL_CLICK);
+        audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
         gpsPresenter.showGPSView();
     }
 
     public void menuOptions() {
         Logger.info("Menu Presenter: menu options");
-        audio.playSound(LDSound.SMALL_CLICK);
+        audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
         menuOptionsView.setVisible(true);
         optionsActive = true;
     }
@@ -108,7 +111,7 @@ public class MenuPresenter implements StoreManagerObserver {
     public void closeMenuOptions() {
 
         Logger.info("Options Presenter: close options");
-        audio.playSound(LDSound.SMALL_CLICK);
+        audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
         audio.saveMasterVolume();
         menuOptionsView.setVisible(false);
         optionsActive = false;
@@ -117,12 +120,12 @@ public class MenuPresenter implements StoreManagerObserver {
 
     public void volumeChanged(float vol) {
 
-        audio.setMasterVolume(vol);
+        audio.setVolume(vol);
     }
 
     public float getMasterVolume() {
 
-        return audio.getMasterVolume();
+        return audio.getVolume();
     }
 
     public boolean isOptionsActive(){
@@ -137,7 +140,7 @@ public class MenuPresenter implements StoreManagerObserver {
         if(!isAdsRemovalPurchasable()){
             throw new IllegalStateException("Ad removal is not purchasable");
         }
-        audio.playSound(LDSound.SMALL_CLICK);
+        audio.getSoundPlayer().play(LDSound.Type.SMALL_CLICK);
         storeManager.purchaseItem(PurchasableItem.NO_ADS);
     }
 

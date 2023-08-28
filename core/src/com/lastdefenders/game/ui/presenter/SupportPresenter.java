@@ -14,8 +14,9 @@ import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.state.GameUIStateObserver;
 import com.lastdefenders.game.ui.view.interfaces.ISupportView;
 import com.lastdefenders.game.ui.view.interfaces.MessageDisplayer;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.AudioManager;
+import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import com.lastdefenders.util.UtilPool;
@@ -33,19 +34,19 @@ public class SupportPresenter implements GameUIStateObserver {
     private GameUIStateManager uiStateManager;
     private Player player;
     private ISupportView view;
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
     private MessageDisplayer messageDisplayer;
     private Map<Class<?>, Integer> supportCosts = new HashMap<>();
     private Viewport gameViewport;
 
 
-    public SupportPresenter(GameUIStateManager uiStateManager, Player player, LDAudio audio,
+    public SupportPresenter(GameUIStateManager uiStateManager, Player player, SoundPlayer soundPlayer,
         SupportActorPlacement supportActorPlacement, MessageDisplayer messageDisplayer,
         Viewport gameViewport) {
 
         this.uiStateManager = uiStateManager;
         uiStateManager.attach(this);
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
         this.player = player;
         this.supportActorPlacement = supportActorPlacement;
         this.messageDisplayer = messageDisplayer;
@@ -79,7 +80,7 @@ public class SupportPresenter implements GameUIStateObserver {
         ValidationResponseEnum validationResponse = supportActorPlacement.canCreateSupport(type);
 
         if (validationResponse == ValidationResponseEnum.OK) {
-            audio.playSound(LDSound.SMALL_CLICK);
+            soundPlayer.play(LDSound.Type.SMALL_CLICK);
             supportActorPlacement.createSupportActor(type);
             uiStateManager.setState(GameUIState.PLACING_SUPPORT);
             Logger.info("Support Presenter: support actor created - " + type.getSimpleName());
@@ -155,7 +156,7 @@ public class SupportPresenter implements GameUIStateObserver {
     public void cancel() {
 
         Logger.info("Support Presenter: cancel");
-        audio.playSound(LDSound.SMALL_CLICK);
+        soundPlayer.play(LDSound.Type.SMALL_CLICK);
         uiStateManager.setStateReturn();
         cancelSupport();
     }

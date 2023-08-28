@@ -10,8 +10,8 @@ import com.lastdefenders.game.model.actor.interfaces.Targetable;
 import com.lastdefenders.game.model.actor.projectile.Bullet;
 import com.lastdefenders.game.service.factory.CombatActorFactory.EnemyPool;
 import com.lastdefenders.game.service.factory.ProjectileFactory;
-import com.lastdefenders.sound.LDAudio;
-import com.lastdefenders.sound.LDAudio.LDSound;
+import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.datastructures.Dimension;
 import com.lastdefenders.util.UtilPool;
 
@@ -29,17 +29,17 @@ public class EnemyHumvee extends EnemyTurret implements IVehicle {
     private static final DeathEffectType DEATH_EFFECT_TYPE = DeathEffectType.VEHCILE_EXPLOSION;
     private static final float[] BODY_POINTS = {0, 0, 0, 40, 75, 40, 75, 0};
 
-    private LDAudio audio;
+    private SoundPlayer soundPlayer;
     private ProjectileFactory projectileFactory;
 
     public EnemyHumvee(TextureRegion bodyRegion, TextureRegion turretRegion,
         TextureRegion[] animatedRegions, EnemyPool<EnemyHumvee> pool, GenericGroup<Tower> targetGroup,
-        ProjectileFactory projectileFactory, LDAudio audio, EnemyAttributes attributes) {
+        ProjectileFactory projectileFactory, SoundPlayer soundPlayer, EnemyAttributes attributes) {
 
         super(turretRegion, animatedRegions, TEXTURE_SIZE_TURRET, pool, targetGroup, GUN_POS,
             DEATH_EFFECT_TYPE, TEXTURE_SIZE_BODY, bodyRegion, BODY_POINTS,attributes);
         this.projectileFactory = projectileFactory;
-        this.audio = audio;
+        this.soundPlayer = soundPlayer;
     }
 
 
@@ -47,7 +47,7 @@ public class EnemyHumvee extends EnemyTurret implements IVehicle {
     public void attackTarget(Targetable target) {
 
         if (target != null) {
-            audio.playSound(LDSound.ROCKET_LAUNCH);
+            soundPlayer.play(LDSound.Type.ROCKET_LAUNCH);
             projectileFactory.loadProjectile(Bullet.class).initialize(this, target, BULLET_SIZE);
         }
     }

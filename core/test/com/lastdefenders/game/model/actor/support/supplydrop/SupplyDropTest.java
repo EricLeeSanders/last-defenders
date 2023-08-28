@@ -21,7 +21,7 @@ import com.lastdefenders.game.model.actor.effects.label.TowerHealEffect;
 import com.lastdefenders.game.model.actor.groups.TowerGroup;
 import com.lastdefenders.game.service.factory.EffectFactory;
 import com.lastdefenders.game.service.factory.SupportActorFactory.SupportActorPool;
-import com.lastdefenders.sound.LDAudio;
+import com.lastdefenders.sound.SoundPlayer;
 import com.lastdefenders.util.Resources;
 import com.lastdefenders.util.datastructures.pool.LDVector2;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ public class SupplyDropTest {
     @SuppressWarnings("unchecked")
     private SupportActorPool<SupplyDrop> supplyDropPoolMock = mock(SupportActorPool.class);
     private TowerHealEffect towerHealEffectMock = mock(TowerHealEffect.class);
-    private LDAudio audioMock = mock(LDAudio.class);
+    private SoundPlayer soundPlayerMock = mock(SoundPlayer.class);
     private Resources resourcesMock = mock(Resources.class);
 
 
@@ -57,7 +57,7 @@ public class SupplyDropTest {
     }
 
     public SupplyDropPlane createSupplyDropPlane(){
-        SupplyDropPlane plane = new SupplyDropPlane(resourcesMock.getTexture(""), audioMock);
+        SupplyDropPlane plane = new SupplyDropPlane(resourcesMock.getTexture(""), soundPlayerMock);
         plane = spy(plane);
 
         return plane;
