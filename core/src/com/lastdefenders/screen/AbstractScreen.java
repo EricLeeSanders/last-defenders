@@ -64,15 +64,10 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public void pause() {
 
-        Logger.info("Abstract Screen: pausing");
-        gameStateManager.setState(GameState.PAUSE);
     }
 
     @Override
     public void resume() {
-
-        Logger.info("Abstract Screen: resuming");
-        gameStateManager.setState(GameState.PLAY);
 
     }
 

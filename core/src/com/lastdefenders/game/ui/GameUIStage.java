@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.lastdefenders.ads.AdController;
+import com.lastdefenders.ads.AdControllerHelper;
 import com.lastdefenders.game.GameStage;
 import com.lastdefenders.game.model.Player;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
@@ -13,6 +15,7 @@ import com.lastdefenders.game.model.actor.groups.TowerGroup;
 import com.lastdefenders.game.model.actor.support.SupportActor;
 import com.lastdefenders.game.model.actor.support.SupportActorCooldown;
 import com.lastdefenders.game.model.level.state.LevelStateManager;
+import com.lastdefenders.game.ui.presenter.AdPresenter;
 import com.lastdefenders.game.ui.presenter.DebugPresenter;
 import com.lastdefenders.game.ui.presenter.EnlistPresenter;
 import com.lastdefenders.game.ui.presenter.GameOverPresenter;
@@ -26,6 +29,7 @@ import com.lastdefenders.game.ui.presenter.TutorialPresenter;
 import com.lastdefenders.game.ui.state.GameUIStateManager;
 import com.lastdefenders.game.ui.state.GameUIStateManager.GameUIState;
 import com.lastdefenders.game.ui.state.GameUIStateObserver;
+import com.lastdefenders.game.ui.view.AdView;
 import com.lastdefenders.game.ui.view.DebugView;
 import com.lastdefenders.game.ui.view.EnlistView;
 import com.lastdefenders.game.ui.view.GameOverView;
@@ -70,7 +74,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         LevelStateManager levelStateManager, GameStateManager gameStateManager,
         GooglePlayServices playServices, ScreenChanger screenChanger, InputMultiplexer imp,
         Viewport viewport, Resources resources, AudioManager audio, StoreManager storeManager,
-        GameStage gameStage, SpriteBatch spriteBatch) {
+        GameStage gameStage, SpriteBatch spriteBatch, AdControllerHelper adControllerHelper) {
 
         super(viewport, spriteBatch);
         this.imp = imp;
@@ -83,7 +87,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         this.screenChanger = screenChanger;
         uiStateManager.attach(this);
         imp.addProcessor(this);
-        createUI(resources, audio, gameStage, playServices, storeManager);
+        createUI(resources, audio, gameStage, playServices, storeManager, adControllerHelper);
     }
 
 
@@ -91,7 +95,7 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
      * Create and initialize the views and presenters of the Game UI
      */
     private void createUI(Resources resources, AudioManager audio, GameStage gameStage,
-        GooglePlayServices playServices, StoreManager storeManager) {
+        GooglePlayServices playServices, StoreManager storeManager, AdControllerHelper adControllerHelper) {
 
         Logger.info("GameUIStage: creating ui");
 
@@ -167,6 +171,16 @@ public class GameUIStage extends Stage implements GameUIStateObserver {
         addActor(pauseView);
         pauseView.init();
         pausePresenter.setView(pauseView);
+
+        if(adControllerHelper.adsEnabled()) {
+            AdPresenter adPresenter = new AdPresenter(adControllerHelper, storeManager,
+                audio.getSoundPlayer());
+            AdView adView = new AdView(adPresenter, resources);
+            addActor(adView);
+            adView.init();
+            adPresenter.setView(adView);
+            this.levelStateManager.attach(adPresenter);
+        }
 
 
         addActor(messageDisplayer);

@@ -215,6 +215,7 @@ public class GameStage extends Stage implements PlayerObserver {
             level.update(delta);
             if (isWaveOver()) {
                 waveOver();
+                levelStateManager.setState(LevelState.STANDBY);
             }
         }
     }
@@ -256,11 +257,10 @@ public class GameStage extends Stage implements PlayerObserver {
                 .withIntegerParameter(LogParam.COMPLETED_WAVES.getTag(), this.getLevel().getCurrentWave())
         );
 
-        adControllerHelper.incrementEventTriggered();
+        levelStateManager.setState(LevelState.WAVE_COMPLETED);
 
         int money = (int) (WAVE_OVER_MONEY_MULTIPLIER * (float) level.getCurrentWave()) + WAVE_OVER_MONEY_ADDITION;
         player.giveMoney(money);
-        levelStateManager.setState(LevelState.STANDBY);
         player.setWaveCount(player.getWaveCount() + 1);
         if (isLevelComplete()) {
             levelComplete();

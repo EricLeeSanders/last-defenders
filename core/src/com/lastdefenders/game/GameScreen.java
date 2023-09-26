@@ -89,7 +89,7 @@ public class GameScreen extends AbstractScreen {
             uiStateManager, gameViewport, resources, spriteBatch, playServices, adControllerHelper, eventLogger);
         gameUIStage = new GameUIStage(player, actorGroups.getTowerGroup(), uiStateManager,
             levelStateManager, gameStateManager, playServices, screenChanger, super.getInputMultiplexer(),
-            uiViewport, resources, audio, storeManager, gameStage, spriteBatch);
+            uiViewport, resources, audio, storeManager, gameStage, spriteBatch, adControllerHelper);
     }
     private void createBackListener() {
 

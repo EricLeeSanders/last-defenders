@@ -10,7 +10,7 @@ import com.lastdefenders.util.UserPreferences;
 public class AdControllerHelper {
 
     // Show the ad after every five occurrences
-    private static final int DEFAULT_NUM_OF_EVENT_OCCURRENCES_REQUIRED = 5;
+    private static final int DEFAULT_NUM_OF_EVENT_OCCURRENCES_REQUIRED = 15;
 
     private AdController adController;
     private UserPreferences userPreferences;
@@ -35,16 +35,22 @@ public class AdControllerHelper {
 
         Logger.info("AdControllerHelper: incrementing the number of times event triggered");
         eventTriggeredCounter++;
-        if(eventTriggeredCounter % numOfEventOccurrencesRequired == 0){
-            showAd();
-        }
     }
 
-    private void showAd(){
-        if(!userPreferences.getAdRemovalPurchased()){
+    public boolean readyToShowAd(){
+        return adsEnabled() && adController.adReady() &&
+            (eventTriggeredCounter % numOfEventOccurrencesRequired == 0);
+    }
+
+    public void showAd(){
+        if(adsEnabled()){
             Logger.info("AdControllerHelper: showing ad");
             adController.showInterstitialAd();
         }
+    }
+
+    public boolean adsEnabled(){
+        return adController.adsEnabled() && !userPreferences.getAdRemovalPurchased();
     }
 
 }
