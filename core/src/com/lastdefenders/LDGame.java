@@ -112,6 +112,7 @@ public class LDGame extends Game implements ScreenChanger, GameStateObserver {
         resources.dispose();
         audio.disposeAll();
         this.getScreen().dispose();
+        purchaseManager.dispose();
         super.dispose();
     }
 

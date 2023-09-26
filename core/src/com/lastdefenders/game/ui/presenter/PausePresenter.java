@@ -90,7 +90,7 @@ public class PausePresenter implements GameUIStateObserver {
         return uiStateManager.getState().equals(GameUIState.PAUSE_MENU);
     }
 
-    private void pauseState() {
+    private void pauseMenuState() {
 
         keepGamePaused = gameStateManager.getState().equals(GameState.PAUSE);
         view.pauseState();
@@ -102,7 +102,7 @@ public class PausePresenter implements GameUIStateObserver {
 
         switch (state) {
             case PAUSE_MENU:
-                pauseState();
+                pauseMenuState();
                 break;
             default:
                 view.standByState();

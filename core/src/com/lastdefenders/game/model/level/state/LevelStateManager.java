@@ -26,6 +26,7 @@ public class LevelStateManager extends ObservableStateManager<LevelState, LevelS
         WAVE_IN_PROGRESS,
         STANDBY,
         GAME_OVER,
+        WAVE_COMPLETED,
         LEVEL_COMPLETED;
     }
 }

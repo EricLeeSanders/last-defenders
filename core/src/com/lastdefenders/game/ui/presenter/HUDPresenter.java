@@ -98,6 +98,7 @@ public class HUDPresenter implements GameUIStateObserver, PlayerObserver {
         soundPlayer.play(LDSound.Type.SMALL_CLICK);
         if (canStartWave()) {
             Logger.info("HUD Presenter: starting wave");
+            gameStateManager.setState(GameState.PLAY);
             levelStateManager.setState(LevelState.WAVE_IN_PROGRESS);
             uiStateManager.setState(GameUIState.WAVE_IN_PROGRESS);
         }

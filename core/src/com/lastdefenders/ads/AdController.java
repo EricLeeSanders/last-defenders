@@ -6,4 +6,6 @@ package com.lastdefenders.ads;
 
 public interface AdController {
     void showInterstitialAd();
+    boolean adsEnabled();
+    boolean adReady();
 }

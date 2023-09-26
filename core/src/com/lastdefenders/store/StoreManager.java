@@ -1,5 +1,6 @@
 package com.lastdefenders.store;
 
+import com.badlogic.gdx.pay.ItemAlreadyOwnedException;
 import com.badlogic.gdx.pay.Offer;
 import com.badlogic.gdx.pay.OfferType;
 import com.badlogic.gdx.pay.PurchaseManager;
@@ -35,6 +36,7 @@ public class StoreManager implements PurchaseObserver  {
     }
 
     public void purchaseItem(PurchasableItem item){
+        Logger.info("StoreManager: Purchasing: " + item.getSku());
         this.gdxPurchaseManager.purchase(item.getSku());
     }
 
@@ -77,7 +79,6 @@ public class StoreManager implements PurchaseObserver  {
     public void handlePurchase(Transaction transaction) {
         Logger.info("StoreManager: handlePurchase - " + transaction);
         PurchasableItem purchasableItem = PurchasableItem.getPurchasableItemFromSku(transaction.getIdentifier());
-        notifyObserversOfPurchase(purchasableItem);
 
         if(purchasableItem.equals(PurchasableItem.NO_ADS)){
             handleNoAdsPurchase();
@@ -86,11 +87,22 @@ public class StoreManager implements PurchaseObserver  {
             throw new IllegalArgumentException("StoreManager: Invalid Purchase: " + transaction);
         }
 
+        notifyObserversOfPurchase(purchasableItem);
+
+
     }
 
     @Override
     public void handlePurchaseError(Throwable e) {
         Logger.error("StoreManager: handlePurchaseError", e);
+        if(e instanceof ItemAlreadyOwnedException){
+            handleAlreadyPurchasedError();
+        }
+    }
+
+    private void handleAlreadyPurchasedError(){
+        handleNoAdsPurchase();
+        notifyObserversOfPurchase(PurchasableItem.NO_ADS);
     }
 
     @Override

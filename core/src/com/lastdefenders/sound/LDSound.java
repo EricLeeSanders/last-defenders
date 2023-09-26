@@ -30,6 +30,7 @@ public class LDSound implements LDAudio<LDSound> {
 
         public Builder(String file){
             this.sound = Gdx.audio.newSound(Gdx.files.internal(file));
+
         }
 
         public Builder build() {
