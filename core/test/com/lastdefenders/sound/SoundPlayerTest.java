@@ -1,6 +1,8 @@
 package com.lastdefenders.sound;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -25,13 +27,14 @@ public class SoundPlayerTest {
         Gdx.files = mock(Files.class);
     }
 
-    private static LDSound.Type createLDSoundTypeMock(){
+    private static LDSound.Type createLDSoundTypeMock(boolean ready){
         LDSound.Type soundTypeMock = mock(LDSound.Type.class);
         LDSound ldSoundMock = mock(LDSound.class);
         Sound soundMock = mock(Sound.class);
 
         doReturn(soundMock).when(ldSoundMock).getSound();
         doReturn(ldSoundMock).when(soundTypeMock).getLDSound();
+        doReturn(ready).when(ldSoundMock).isReady();
 
         return soundTypeMock;
     }
@@ -45,12 +48,30 @@ public class SoundPlayerTest {
         doReturn(.5f).when(audioHelperMock).getVolume();
 
         SoundPlayer soundPlayer = new SoundPlayer(userPreferencesMock, audioHelperMock);
-        LDSound.Type soundTypeMock = createLDSoundTypeMock();
+        LDSound.Type soundTypeMock = createLDSoundTypeMock(true);
 
         soundPlayer.setEnabled(true);
         soundPlayer.play(soundTypeMock);
 
-        verify(soundTypeMock.getLDSound().getSound(), times(1)).play(.5f);
+        verify(soundTypeMock.getLDSound(), times(1)).play(.5f);
+        verify(userPreferencesMock, times(1)).setSoundEnabled(true);
+    }
+
+    @Test
+    public void playTest_Ready(){
+
+        UserPreferences userPreferencesMock = mock(UserPreferences.class);
+        AudioHelper audioHelperMock = mock(AudioHelper.class);
+
+        doReturn(.5f).when(audioHelperMock).getVolume();
+
+        SoundPlayer soundPlayer = new SoundPlayer(userPreferencesMock, audioHelperMock);
+        LDSound.Type soundTypeMock = createLDSoundTypeMock(true);
+
+        soundPlayer.setEnabled(true);
+        soundPlayer.play(soundTypeMock);
+
+        verify(soundTypeMock.getLDSound(), times(1)).play(.5f);
         verify(userPreferencesMock, times(1)).setSoundEnabled(true);
     }
 
@@ -63,13 +84,32 @@ public class SoundPlayerTest {
         doReturn(.5f).when(audioHelperMock).getVolume();
 
         SoundPlayer soundPlayer = new SoundPlayer(userPreferencesMock, audioHelperMock);
-        LDSound.Type soundTypeMock = createLDSoundTypeMock();
+        LDSound.Type soundTypeMock = createLDSoundTypeMock(true);
 
         soundPlayer.setEnabled(false);
         soundPlayer.play(soundTypeMock);
 
-        verify(soundTypeMock.getLDSound().getSound(), never()).play(.5f);
+        verify(soundTypeMock.getLDSound(), never()).play(.5f);
         verify(userPreferencesMock, times(1)).setSoundEnabled(false);
+
+    }
+
+    @Test
+    public void playTest_NotReady(){
+
+        UserPreferences userPreferencesMock = mock(UserPreferences.class);
+        AudioHelper audioHelperMock = mock(AudioHelper.class);
+
+        doReturn(.5f).when(audioHelperMock).getVolume();
+
+        SoundPlayer soundPlayer = new SoundPlayer(userPreferencesMock, audioHelperMock);
+        LDSound.Type soundTypeMock = createLDSoundTypeMock(false);
+
+        soundPlayer.setEnabled(true);
+        soundPlayer.play(soundTypeMock);
+
+        verify(soundTypeMock.getLDSound(), never()).play(.5f);
+        verify(userPreferencesMock, times(1)).setSoundEnabled(true);
 
     }
 
@@ -81,8 +121,8 @@ public class SoundPlayerTest {
         SoundPlayer soundPlayer = new SoundPlayer(userPreferencesMock, audioHelperMock);
         soundPlayer.setEnabled(true);
 
-        assertEquals(true, soundPlayer.isEnabled());
+        assertTrue(soundPlayer.isEnabled());
         soundPlayer.toggleEnabled();
-        assertEquals(false, soundPlayer.isEnabled());
+        assertFalse(soundPlayer.isEnabled());
     }
 }

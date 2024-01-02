@@ -23,7 +23,7 @@ allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
 
-    version = '1.12.3'
+    version = '1.12.4'
     ext {
         appName = "Last Defenders"
         gdxVersion = '1.10.0'

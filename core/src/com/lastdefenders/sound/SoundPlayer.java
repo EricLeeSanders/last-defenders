@@ -25,11 +25,11 @@ public class SoundPlayer{
 
     public void play(LDSound.Type type){
 
-        if(!enabled){
+        LDSound ldSound = type.getLDSound();
+        if(!enabled || !ldSound.isReady()){
             return;
         }
-
-        type.getLDSound().getSound().play(audioHelper.getVolume());
+        ldSound.play(audioHelper.getVolume());
     }
 
     public void setEnabled(boolean enabled) {
