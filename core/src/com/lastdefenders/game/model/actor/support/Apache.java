@@ -30,7 +30,7 @@ import com.lastdefenders.util.UtilPool;
 public class Apache extends CombatSupportActor {
 
     static final float TIME_ACTIVE_LIMIT = 10f;
-    public static final float COOLDOWN_TIME = 30;
+    public static final float COOLDOWN_TIME = 60;
     public static final int COST = 1500;
     private static final float FRAME_DURATION = 0.05f;
     private static final float ATTACK_SPEED = 0.2f;

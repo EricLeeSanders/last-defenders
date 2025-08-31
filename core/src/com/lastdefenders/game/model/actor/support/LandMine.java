@@ -24,7 +24,7 @@ import com.lastdefenders.util.UtilPool;
 
 public class LandMine extends CombatSupportActor implements IRocket {
 
-    public static final float COOLDOWN_TIME = 3;
+    public static final float COOLDOWN_TIME = 10;
     public static final int COST = 200;
     private static final float ATTACK = 15f;
     private static final float RANGE = 75;
