@@ -11,6 +11,7 @@ import com.google.android.gms.ads.initialization.OnInitializationCompleteListene
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.lastdefenders.ads.AdController;
+import com.lastdefenders.game.BuildConfig;
 import com.lastdefenders.util.Logger;
 
 /**
@@ -38,7 +39,7 @@ public class GoogleAdsControllerImpl implements AdController {
 
         AdRequest adRequest = new AdRequest.Builder().build();
 
-        InterstitialAd.load(androidLauncher,BuildConfig.ADMOB_AD_UNIT_ID, adRequest, new InterstitialAdLoadCallback() {
+        InterstitialAd.load(androidLauncher, BuildConfig.ADMOB_AD_UNIT_ID, adRequest, new InterstitialAdLoadCallback() {
 
             @Override
             public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {

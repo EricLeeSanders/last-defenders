@@ -6,6 +6,7 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.DrawableImageViewTarget ;
+import com.lastdefenders.game.R;
 
 /**
  * Created by Eric on 6/27/2018.

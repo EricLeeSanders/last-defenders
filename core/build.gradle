@@ -1,8 +1,8 @@
 sourceCompatibility = 1.8
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
-sourceSets.main.java.srcDirs = [ "src/" ]
-sourceSets.test.java.srcDirs = [ "test/" ]
+sourceSets.main.java.srcDirs = ["src/"]
+sourceSets.test.java.srcDirs = ["test/"]
 test {
     workingDir = "../android/assets"
     useJUnitPlatform()
@@ -25,3 +25,29 @@ jacoco {
 }
 
 eclipse.project.name = appName + "-core"
+
+// Always register the task early
+def outputDir = "$buildDir/generated/source/config"
+def configTask = tasks.register("generateConfigFile") {
+    doLast {
+        // Use a fallback value in case nothing sets the debug flag
+        def isDebug = (project.findProperty("isDebug") ?: "false").toString().toBoolean()
+        println project.findProperty("isDebug")
+        def configClass = """
+            package com.lastdefenders.util;
+
+            public class Config {
+                public static final String VERSION = \"${rootProject.version}\";
+                public static final Boolean IS_DEBUG = ${isDebug};
+            }
+        """
+        println "Generating Config.java with IS_DEBUG = ${isDebug}"
+        file(outputDir).mkdirs()
+        def outputFile = file("${outputDir}/com/lastdefenders/util/Config.java")
+        outputFile.parentFile.mkdirs()
+        outputFile.text = configClass
+    }
+}
+
+sourceSets.main.java.srcDirs += outputDir
+compileJava.dependsOn configTask

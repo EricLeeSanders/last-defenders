@@ -165,13 +165,14 @@ public class OptionsView extends Group implements IOptionsView {
         container.add(btnNewGame).size(150,45).spaceTop(10).padLeft(5);
         container.add(btnMainMenu).size(150,45).spaceTop(10);
 
-        // Free position elements
-        ImageButton btnDebug = new ImageButton(skin, "debug");
-        btnDebug.setSize(50,50);
-        btnDebug.getImageCell().size(30, 30);
-        btnDebug.setPosition(80, lblTitleY - 30);
-        addActor(btnDebug);
-        setBtnDebugListener(btnDebug);
+        if(presenter.isDebug()) {
+            ImageButton btnDebug = new ImageButton(skin, "debug");
+            btnDebug.setSize(50, 50);
+            btnDebug.getImageCell().size(30, 30);
+            btnDebug.setPosition(80, lblTitleY - 30);
+            addActor(btnDebug);
+            setBtnDebugListener(btnDebug);
+        }
 
         ImageButton btnClose = new ImageButton(skin, "cancel");
         btnClose.setSize(50, 50);

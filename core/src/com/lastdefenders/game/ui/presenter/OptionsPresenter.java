@@ -10,6 +10,7 @@ import com.lastdefenders.store.StoreManager;
 import com.lastdefenders.store.StoreManager.PurchasableItem;
 import com.lastdefenders.store.StoreManagerObserver;
 import com.lastdefenders.sound.LDSound;
+import com.lastdefenders.util.Config;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
 
@@ -168,6 +169,10 @@ public class OptionsPresenter implements GameUIStateObserver, StoreManagerObserv
     private boolean canChangeToDebug() {
 
         return uiStateManager.getState().equals(GameUIState.OPTIONS);
+    }
+
+    public boolean isDebug(){
+        return true;
     }
 
     @Override
