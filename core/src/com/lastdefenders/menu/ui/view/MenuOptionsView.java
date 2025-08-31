@@ -1,5 +1,6 @@
 package com.lastdefenders.menu.ui.view;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -22,6 +23,7 @@ import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar;
 import com.lastdefenders.ui.view.widget.progressbar.LDProgressBar.LDProgressBarPadding;
 import com.lastdefenders.util.Logger;
 import com.lastdefenders.util.Resources;
+import com.lastdefenders.util.Config;
 
 /**
  * Created by Eric on 12/19/2017.
@@ -80,6 +82,17 @@ public class MenuOptionsView extends Group implements IMenuOptionsView {
         btnClose.setPosition(500, 300);
         addActor(btnClose);
         setBtnCloseListener();
+
+        Label lblVersion = new Label("v." + Config.VERSION, skin);
+        lblVersion.setAlignment(Align.center);
+        lblVersion.setFontScale(0.35f * resources.getFontScale());
+        lblVersion.setPosition(375, 28);
+
+        Color color = lblVersion.getColor(); // Get the current color
+        color.a = 0.5f; // Set the alpha to 50% transparency
+        lblVersion.setColor(color); // Apply the updated color
+
+        addActor(lblVersion);
 
         btnSound = new CheckBox(" Sound On", skin);
         btnSound.getLabel().setFontScale(0.45f * resources.getFontScale());

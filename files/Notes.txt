@@ -1,4 +1,6 @@
-Bars 
+
+
+Bars
 -- Right click linked overlay loading bar
 -- Click Select and Mask
 
@@ -12,3 +14,8 @@ Order Management
 		- https://play.google.com/console/u/0/developers/6098707238824711971/orders
 	- Refund
 	- Remove Entitlement
+
+Debug/Release -
+./gradlew :android:bundleDebug -PisDebug=true
+./gradlew :android:bundleRelease -PisDebug=false
+ ./gradlew :android:signBundle

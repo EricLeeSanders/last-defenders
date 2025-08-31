@@ -1,3 +1,9 @@
+apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'kotlin-android'
+
 def keystorePropertiesFile = rootProject.file("android/src/com/lastdefenders/config/keystore.properties")
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
@@ -7,6 +13,18 @@ def adMobProperties = new Properties()
 adMobProperties.load(new FileInputStream(adMobPropertiesFile))
 
 android {
+    namespace 'com.lastdefenders.game'
+    compileSdk = 34
+
+    defaultConfig {
+        applicationId "com.lastdefenders.game"
+        minSdkVersion 33
+        targetSdkVersion 34
+        versionCode project.version.replace(".", "") as int
+        versionName project.version
+        multiDexEnabled true
+    }
+
     signingConfigs {
         debug {
             keyAlias keystoreProperties['keyAlias']
@@ -21,31 +39,36 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
-    buildToolsVersion "29.0.3"
-    compileSdkVersion 33
+
     buildTypes {
-        release {
-            lintOptions {
-            }
-            signingConfig signingConfigs.release
-            resValue "string", "ADMOB_APP_ID", adMobProperties['app_id']
-            buildConfigField "String", "ADMOB_APP_ID", adMobProperties['app_id']
-            buildConfigField "String", "ADMOB_AD_UNIT_ID", adMobProperties['ad_unit_id']
-        }
         debug {
             signingConfig signingConfigs.debug
             resValue "string", "ADMOB_APP_ID", '"ca-app-pub-3940256099942544~3347511713"'
             buildConfigField "String", "ADMOB_APP_ID", '"ca-app-pub-3940256099942544~3347511713"'
             buildConfigField "String", "ADMOB_AD_UNIT_ID", '"ca-app-pub-3940256099942544/1033173712"'
+            project.rootProject.ext.debugBuild = "true"
+            debuggable = false // False for games upload requirement
+        }
+        release {
+            signingConfig signingConfigs.release
+            resValue "string", "ADMOB_APP_ID", adMobProperties['app_id']
+            buildConfigField "String", "ADMOB_APP_ID", adMobProperties['app_id']
+            buildConfigField "String", "ADMOB_AD_UNIT_ID", adMobProperties['ad_unit_id']
+            minifyEnabled false
+            shrinkResources false
+            debuggable false
         }
     }
-    dexOptions {
-        javaMaxHeapSize "2g"
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
+
+    buildFeatures {
+        buildConfig true
+    }
+
     sourceSets {
         main {
             manifest.srcFile 'AndroidManifest.xml'
@@ -56,22 +79,9 @@ android {
             assets.srcDirs = ['assets']
             jniLibs.srcDirs = ['libs']
         }
-        // removed see https://stackoverflow.com/a/46977035/2951367
-        //instrumentTest.setRoot('tests')
-    }
-    defaultConfig {
-        applicationId "com.lastdefenders.game"
-        multiDexEnabled true
-        minSdkVersion 24
-        targetSdkVersion 33
-        versionCode project.version.replace(".", "") as int
-        versionName project.version
     }
 }
 
-// called every time gradle gets executed, takes the native dependencies of
-// the natives configuration, and extracts them to the proper libs/ folders
-// so they get packed with the APK.
 task copyAndroidNatives {
     doFirst {
         file("libs/armeabi/").mkdirs()
@@ -84,10 +94,10 @@ task copyAndroidNatives {
             def outputDir = null
             if (jar.name.endsWith("natives-arm64-v8a.jar")) outputDir = file("libs/arm64-v8a")
             if (jar.name.endsWith("natives-armeabi-v7a.jar")) outputDir = file("libs/armeabi-v7a")
-            if(jar.name.endsWith("natives-armeabi.jar")) outputDir = file("libs/armeabi")
-            if(jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
-            if(jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
-            if(outputDir != null) {
+            if (jar.name.endsWith("natives-armeabi.jar")) outputDir = file("libs/armeabi")
+            if (jar.name.endsWith("natives-x86_64.jar")) outputDir = file("libs/x86_64")
+            if (jar.name.endsWith("natives-x86.jar")) outputDir = file("libs/x86")
+            if (outputDir != null) {
                 copy {
                     from zipTree(jar)
                     into outputDir
@@ -97,6 +107,46 @@ task copyAndroidNatives {
         }
     }
 }
+
+/*
+This is for signing my bundles when I create them from CLI.
+./gradlew :android:bundleDebug -PisDebug=true
+./gradlew :android:signBundle
+ */
+task signBundle(type: Exec) {
+    doFirst {
+        def keystoreProps = new Properties()
+        def propsFile = rootProject.file("android/src/com/lastdefenders/config/keystore.properties")
+        if (!propsFile.exists()) {
+            throw new GradleException("Keystore properties file not found: ${propsFile}")
+        }
+        propsFile.withInputStream { keystoreProps.load(it) }
+
+        def keyAlias = keystoreProps['keyAlias']
+        def keyPassword = keystoreProps['keyPassword']
+        def storePassword = keystoreProps['storePassword']
+        def storeFile = keystoreProps['storeFile']
+
+        def bundlePath = "$buildDir/outputs/bundle/debug/android-debug.aab"
+        def jarsignerPath = "${System.env.JAVA_HOME ?: ""}/bin/jarsigner"
+
+        if (!file(bundlePath).exists()) {
+            throw new GradleException("Bundle file not found: ${bundlePath}")
+        }
+
+        commandLine jarsignerPath,
+                "-verbose",
+                "-sigalg", "SHA256withRSA",
+                "-digestalg", "SHA-256",
+                "-keystore", storeFile,
+                "-storepass", storePassword,
+                "-keypass", keyPassword,
+                bundlePath,
+                keyAlias
+    }
+}
+
+
 
 tasks.whenTaskAdded { packageTask ->
     if (packageTask.name.contains("package")) {
@@ -113,38 +163,11 @@ task run(type: Exec) {
             properties.load(instr)
         }
         def sdkDir = properties.getProperty('sdk.dir')
-        if (sdkDir) {
-            path = sdkDir
-        } else {
-            path = "$System.env.ANDROID_HOME"
-        }
+        path = sdkDir ?: "$System.env.ANDROID_HOME"
     } else {
         path = "$System.env.ANDROID_HOME"
     }
 
     def adb = path + "/platform-tools/adb"
     commandLine "$adb", 'shell', 'am', 'start', '-n', 'com.lastdefenders.game/com.lastdefenders.game.AndroidLauncher'
-}
-
-// sets up the Android Idea project, using the old Ant based build.
-idea {
-    module {
-        sourceDirs += file("src")
-        scopes = [COMPILE: [plus: [project.configurations.compile]]]
-
-        iml {
-            withXml {
-                def node = it.asNode()
-                def builder = NodeBuilder.newInstance()
-                builder.current = node
-                builder.component(name: "FacetManager") {
-                    facet(type: "android", name: "Android") {
-                        configuration {
-                            option(name: "UPDATE_PROPERTY_FILES", value: "true")
-                        }
-                    }
-                }
-            }
-        }
-    }
 }

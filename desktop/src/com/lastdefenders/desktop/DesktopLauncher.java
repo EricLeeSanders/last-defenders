@@ -1,6 +1,7 @@
 package com.lastdefenders.desktop;
 
 import com.badlogic.gdx.Files.FileType;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.badlogic.gdx.pay.PurchaseManager;
@@ -9,8 +10,9 @@ import com.lastdefenders.LDGame;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 1281;//640x360 480x320
-        config.height = 721;
+		config.width = LwjglApplicationConfiguration.getDesktopDisplayMode().width;
+		config.height = LwjglApplicationConfiguration.getDesktopDisplayMode().height;
+		config.fullscreen = true;
 		config.vSyncEnabled = false;
 		config.foregroundFPS = 0;
 		config.addIcon("icon/icon_128.png", FileType.Internal); // Mac

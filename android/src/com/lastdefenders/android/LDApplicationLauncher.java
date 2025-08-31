@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.lastdefenders.config.AcraProperties;
 
+import com.lastdefenders.game.R;
 import org.acra.ACRA;
 import org.acra.BuildConfig;
 import org.acra.ReportField;

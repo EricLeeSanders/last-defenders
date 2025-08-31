@@ -17,14 +17,13 @@ task run(dependsOn: classes, type: JavaExec) {
 task dist(type: Jar) {
     from files(sourceSets.main.output.classesDirs)
     from files(sourceSets.main.output.resourcesDir)
-    from {configurations.compile.collect {zipTree(it)}}
+    from { configurations.compile.collect { zipTree(it) } }
     from files(project.assetsDir)
- 
+
     manifest {
         attributes 'Main-Class': project.mainClassName
     }
 }
-
 dist.dependsOn classes
 
 eclipse {
@@ -35,12 +34,34 @@ eclipse {
 }
 
 task afterEclipseImport(description: "Post processing after project generation", group: "IDE") {
-  doLast {
-    def classpath = new XmlParser().parse(file(".classpath"))
-    new Node(classpath, "classpathentry", [ kind: 'src', path: 'assets' ])
-    def writer = new FileWriter(file(".classpath"))
-    def printer = new XmlNodePrinter(new PrintWriter(writer))
-    printer.setPreserveWhitespace(true)
-    printer.print(classpath)
-  }
+    doLast {
+        def classpath = new XmlParser().parse(file(".classpath"))
+        new Node(classpath, "classpathentry", [ kind: 'src', path: 'assets' ])
+        def writer = new FileWriter(file(".classpath"))
+        def printer = new XmlNodePrinter(new PrintWriter(writer))
+        printer.setPreserveWhitespace(true)
+        printer.print(classpath)
+    }
+}
+
+jar {
+    dependsOn ":core:jar"
+    manifest {
+        attributes 'Main-Class': project.mainClassName
+    }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    from(project.assetsDir)
+    def debugMode = project.hasProperty('isDebug') ? project.isDebug.toBoolean() : false
+    println "Generating Config.java Desktop with IS_DEBUG = ${debugMode}"
+    archiveClassifier.set(debugMode ? "debug-fat" : "fat")
+    archiveBaseName.set("desktop")
+    archiveVersion.set(project.version.toString())
+}
+gradle.beforeProject { project ->
+    if (gradle.startParameter.projectProperties.containsKey("isDebug")) {
+        project.ext.set("isDebug", gradle.startParameter.projectProperties.get("isDebug"))
+    }
 }

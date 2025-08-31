@@ -6,6 +6,7 @@ import com.lastdefenders.log.EventLogBuilder;
 import com.lastdefenders.log.EventLogger;
 import java.util.HashMap;
 import java.util.Map;
+import com.lastdefenders.game.BuildConfig;
 
 public class FirebaseEventLogger implements EventLogger {
 
