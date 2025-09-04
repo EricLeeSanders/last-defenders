@@ -56,6 +56,9 @@ public class ArmorIcon extends GameActor {
     }
 
     public void armorActive(){
+        // First clear the actions so that if the armor is reapplied before the
+        // destroyed animation is complete, it doesn't hide the new armor icon.
+        this.clearActions();
         this.setVisible(true);
         this.setTextureRegion(icon);
     }
