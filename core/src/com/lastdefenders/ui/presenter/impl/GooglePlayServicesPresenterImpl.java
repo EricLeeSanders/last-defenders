@@ -9,7 +9,6 @@ import com.lastdefenders.sound.MusicPlayer;
 import com.lastdefenders.ui.presenter.GooglePlayServicesPresenter;
 import com.lastdefenders.ui.view.GooglePlayServicesView;
 import com.lastdefenders.util.Logger;
-import java.lang.reflect.Method;
 
 /**
  * Created by Eric on 6/28/2018.
@@ -27,34 +26,8 @@ public class GooglePlayServicesPresenterImpl implements GooglePlayServicesPresen
         this.gps = gps;
         this.audio = audio;
 
-        // Set up auth state listener using reflection (Android-specific)
-        setupAuthStateListener();
-    }
-
-    private void setupAuthStateListener() {
-        try {
-            // Check if the GPS implementation has the setAuthStateListener method
-            Method setListenerMethod = gps.getClass().getMethod("setAuthStateListener",
-                Class.forName("com.lastdefenders.android.GooglePlayServicesHelper$AuthStateListener"));
-
-            // Create a lambda that matches the AuthStateListener interface
-            Object listener = java.lang.reflect.Proxy.newProxyInstance(
-                gps.getClass().getClassLoader(),
-                new Class[] { Class.forName("com.lastdefenders.android.GooglePlayServicesHelper$AuthStateListener") },
-                (proxy, method, args) -> {
-                    if (method.getName().equals("onAuthStateResolved")) {
-                        onAuthStateResolved((Boolean) args[0]);
-                    }
-                    return null;
-                }
-            );
-
-            // Set the listener
-            setListenerMethod.invoke(gps, listener);
-        } catch (Exception e) {
-            // Not Android implementation or method not available, ignore
-            Logger.info("Auth state listener not available (expected on non-Android platforms)");
-        }
+        // Set up auth state listener
+        gps.setAuthStateListener(this::onAuthStateResolved);
     }
 
     private void onAuthStateResolved(boolean isAuthenticated) {

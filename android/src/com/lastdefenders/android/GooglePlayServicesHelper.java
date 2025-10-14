@@ -40,15 +40,11 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
         NOT_AUTHENTICATED  // User is not signed in
     }
 
-    public interface AuthStateListener {
-        void onAuthStateResolved(boolean isAuthenticated);
-    }
-
     private AuthState authState = AuthState.UNKNOWN;
     private CompletableFuture<Boolean> initialAuthCheck;
     private final Object signInLock = new Object();
     private boolean isSigningIn = false;
-    private AuthStateListener authStateListener;
+    private GooglePlayServices.AuthStateListener authStateListener;
 
     private AndroidLauncher androidLauncher;
     private LoadingView loadingView;
@@ -282,11 +278,13 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
         return authState == AuthState.AUTHENTICATED;
     }
 
+    @Override
     public boolean isAuthStateKnown() {
         return authState != AuthState.UNKNOWN;
     }
 
-    public void setAuthStateListener(AuthStateListener listener) {
+    @Override
+    public void setAuthStateListener(GooglePlayServices.AuthStateListener listener) {
         this.authStateListener = listener;
 
         // If auth state is already known, notify immediately

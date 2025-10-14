@@ -49,7 +49,19 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
 
     @Override
     public boolean isSignedIn() {
-
         return false;
+    }
+
+    @Override
+    public boolean isAuthStateKnown() {
+        return true; // Test stub always knows auth state (always not signed in)
+    }
+
+    @Override
+    public void setAuthStateListener(AuthStateListener listener) {
+        // Test stub doesn't support Google Play, immediately notify as not authenticated
+        if(listener != null) {
+            listener.onAuthStateResolved(false);
+        }
     }
 }
