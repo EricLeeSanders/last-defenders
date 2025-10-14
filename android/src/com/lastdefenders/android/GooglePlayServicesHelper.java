@@ -252,9 +252,15 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
             builder.setMessage("You need to sign in to Google Play Games to use this feature. Would you like to sign in now?");
 
             builder.setPositiveButton("Sign In", (dialog, which) -> {
-                // User confirmed, trigger sign-in
+                // User confirmed, show loading view and trigger sign-in
                 Logger.info("GooglePlayServicesHelper: User confirmed sign-in request");
+
+                androidLauncher.runOnUiThread(() -> loadingView.showLoadingView());
+
                 signInAsync().thenAccept(success -> {
+                    // Hide loading view
+                    androidLauncher.runOnUiThread(() -> loadingView.hideLoadingView());
+
                     Gdx.app.postRunnable(() -> {
                         if(success) {
                             Logger.info("GooglePlayServicesHelper: Sign-in successful");
