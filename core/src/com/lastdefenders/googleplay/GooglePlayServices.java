@@ -7,13 +7,11 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface GooglePlayServices {
 
-    interface AuthStateListener {
-        void onAuthStateResolved(boolean isAuthenticated);
-    }
-
     boolean isDeviceCompatible();
 
     CompletableFuture<Boolean> signIn();
+
+    CompletableFuture<Boolean> signInAsync();
 
     void unlockAchievement(GooglePlayAchievement achievement);
 
@@ -26,8 +24,4 @@ public interface GooglePlayServices {
     void showLeaderboards();
 
     boolean isSignedIn();
-
-    boolean isAuthStateKnown();
-
-    void setAuthStateListener(AuthStateListener listener);
 }

@@ -1,5 +1,6 @@
 package com.lastdefenders.ui.presenter.impl;
 
+import com.badlogic.gdx.Gdx;
 import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.sound.AudioManager;
 import com.lastdefenders.sound.LDSound;
@@ -25,18 +26,6 @@ public class GooglePlayServicesPresenterImpl implements GooglePlayServicesPresen
         GooglePlayServices gps){
         this.gps = gps;
         this.audio = audio;
-
-        // Set up auth state listener
-        gps.setAuthStateListener(this::onAuthStateResolved);
-    }
-
-    private void onAuthStateResolved(boolean isAuthenticated) {
-        Logger.info("GooglePlayServicesPresenterImpl: Auth state resolved - " + isAuthenticated);
-
-        // Enable buttons now that we know the auth state
-        if(view != null) {
-            view.setButtonsEnabled(true);
-        }
     }
 
     public void setView(GooglePlayServicesView view){
@@ -45,8 +34,20 @@ public class GooglePlayServicesPresenterImpl implements GooglePlayServicesPresen
 
     @Override
     public void showGPSView(){
-        view.setVisible(true);
-        active = true;
+        // Trigger sign-in first, then show view only if successful
+        gps.signInAsync().thenAccept(success -> {
+            Gdx.app.postRunnable(() -> {
+                if(success) {
+                    // User signed in successfully, show the view
+                    Logger.info("GooglePlayServicesPresenterImpl: Sign-in successful, showing view");
+                    view.setVisible(true);
+                    active = true;
+                } else {
+                    // Sign-in failed or cancelled, don't show view
+                    Logger.info("GooglePlayServicesPresenterImpl: Sign-in failed, not showing GPS view");
+                }
+            });
+        });
     }
 
     @Override

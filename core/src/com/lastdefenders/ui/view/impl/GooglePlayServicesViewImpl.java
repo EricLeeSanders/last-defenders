@@ -81,9 +81,6 @@ public class GooglePlayServicesViewImpl extends Group implements GooglePlayServi
         btnLeaderboards.getLabel().setFontScale(0.45f * resources.getFontScale());
         setBtnLeaderboardsListener(btnLeaderboards);
 
-        // Initially disable buttons until auth state is known
-        setButtonsEnabled(false);
-
         mainTable.add(btnAchievements).size(170,45).spaceBottom(10);
         mainTable.row();
         mainTable.add(btnLeaderboards).size(170,45).spaceTop(10);

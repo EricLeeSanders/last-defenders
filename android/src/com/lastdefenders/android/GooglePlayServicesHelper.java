@@ -42,9 +42,6 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
 
     private AuthState authState = AuthState.UNKNOWN;
     private CompletableFuture<Boolean> initialAuthCheck;
-    private final Object signInLock = new Object();
-    private boolean isSigningIn = false;
-    private GooglePlayServices.AuthStateListener authStateListener;
 
     private AndroidLauncher androidLauncher;
     private LoadingView loadingView;
@@ -90,11 +87,6 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
             // Update auth state
             authState = isAuthenticated ? AuthState.AUTHENTICATED : AuthState.NOT_AUTHENTICATED;
 
-            // Notify UI that auth state is now known
-            if(authStateListener != null) {
-                authStateListener.onAuthStateResolved(isAuthenticated);
-            }
-
             future.complete(isAuthenticated);
         });
 
@@ -128,6 +120,32 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
             });
 
         return future;
+    }
+
+    @Override
+    public CompletableFuture<Boolean> signInAsync() {
+        // If already authenticated, return immediately
+        if(authState == AuthState.AUTHENTICATED) {
+            Logger.info("signInAsync: Already authenticated");
+            return CompletableFuture.completedFuture(true);
+        }
+
+        // If initial check still pending, wait for it then sign in if needed
+        if(initialAuthCheck != null && !initialAuthCheck.isDone()) {
+            Logger.info("signInAsync: Waiting for initial auth check");
+            return initialAuthCheck.thenCompose(authenticated -> {
+                if(authenticated) {
+                    Logger.info("signInAsync: Initial check shows authenticated");
+                    return CompletableFuture.completedFuture(true);
+                }
+                Logger.info("signInAsync: Initial check shows not authenticated, triggering sign-in");
+                return signIn();
+            });
+        }
+
+        // Not authenticated, trigger sign-in
+        Logger.info("signInAsync: Not authenticated, triggering sign-in");
+        return signIn();
     }
 
     @Override
@@ -179,80 +197,25 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
         }
     }
 
-    private Boolean syncSignIn() throws ExecutionException, InterruptedException {
-
-        // Synchronize to prevent multiple simultaneous sign-in attempts
-        synchronized(signInLock) {
-            if(isSigningIn) {
-                Logger.info("Sign-in already in progress, skipping");
-                return false;
-            }
-            isSigningIn = true;
-        }
-
-        try {
-            // Wait for initial auth check if it's still pending
-            if(initialAuthCheck != null && !initialAuthCheck.isDone()) {
-                Logger.info("Waiting for initial auth check to complete");
-                initialAuthCheck.get();
-            }
-
-            // Check current auth state
-            if(authState == AuthState.AUTHENTICATED){
-                Logger.info("Already authenticated");
-                return true;
-            }
-
-            // User is not authenticated, perform sign-in
-            CompletableFuture<Boolean> signedIn = signIn();
-            return signedIn.get(); // Causes a block/wait
-
-        } finally {
-            // Release the lock
-            synchronized(signInLock) {
-                isSigningIn = false;
-            }
-        }
-    }
-
     private void handleGPSTaskIntent(Supplier<Task<Intent>> task, int activityReqCode){
+        androidLauncher.runOnUiThread(() -> {
+            loadingView.showLoadingView();
 
-        new Thread(() -> {
-
-            Boolean signedIn = null;
-            try {
-                signedIn = syncSignIn();
-            } catch (Exception e) {
-                Logger.error("Google Play Services: Error signing in", e);
-            }
-
-            if(Boolean.FALSE.equals(signedIn)){
-                return;
-            }
-
-            androidLauncher.runOnUiThread(() -> {
-
-                loadingView.showLoadingView();
-
-                task.get()
-                    .addOnSuccessListener(intent -> {
-
-                        try {
-                            androidLauncher
-                                .startActivityForResult(intent, activityReqCode);
-                        } catch (Exception e) {
-                            Logger.error("Google Play services failed to login.", e);
-                            handleAndShowError(e);
-                        }
-                    })
-                    .addOnFailureListener(e -> {
-
-                        Logger.error("Google Play services failed to login.", e);
+            task.get()
+                .addOnSuccessListener(intent -> {
+                    try {
+                        androidLauncher.startActivityForResult(intent, activityReqCode);
+                    } catch (Exception e) {
+                        Logger.error("Google Play services failed.", e);
                         handleAndShowError(e);
-                    }).addOnCompleteListener(task1 -> loadingView.hideLoadingView());
-            });
-        }).start();
-
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Logger.error("Google Play services failed.", e);
+                    handleAndShowError(e);
+                })
+                .addOnCompleteListener(task1 -> loadingView.hideLoadingView());
+        });
     }
 
     @Override
@@ -276,21 +239,6 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
     @Override
     public boolean isSignedIn(){
         return authState == AuthState.AUTHENTICATED;
-    }
-
-    @Override
-    public boolean isAuthStateKnown() {
-        return authState != AuthState.UNKNOWN;
-    }
-
-    @Override
-    public void setAuthStateListener(GooglePlayServices.AuthStateListener listener) {
-        this.authStateListener = listener;
-
-        // If auth state is already known, notify immediately
-        if(authState != AuthState.UNKNOWN) {
-            listener.onAuthStateResolved(authState == AuthState.AUTHENTICATED);
-        }
     }
 
     void backButtonPressed(){
