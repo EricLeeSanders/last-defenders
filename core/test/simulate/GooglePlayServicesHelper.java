@@ -28,6 +28,12 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
     }
 
     @Override
+    public void requestSignInWithConfirmation(SignInConfirmationCallback callback) {
+        // Test stub doesn't support Google Play, immediately cancel
+        callback.onUserCancelled();
+    }
+
+    @Override
     public void unlockAchievement(GooglePlayAchievement achievement) {
 
     }

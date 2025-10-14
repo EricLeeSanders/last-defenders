@@ -7,11 +7,18 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface GooglePlayServices {
 
+    interface SignInConfirmationCallback {
+        void onUserConfirmed();
+        void onUserCancelled();
+    }
+
     boolean isDeviceCompatible();
 
     CompletableFuture<Boolean> signIn();
 
     CompletableFuture<Boolean> signInAsync();
+
+    void requestSignInWithConfirmation(SignInConfirmationCallback callback);
 
     void unlockAchievement(GooglePlayAchievement achievement);
 

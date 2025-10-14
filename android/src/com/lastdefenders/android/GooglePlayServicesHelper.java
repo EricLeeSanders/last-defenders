@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.RelativeLayout;
+import com.badlogic.gdx.Gdx;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.games.GamesSignInClient;
@@ -239,6 +240,46 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
     @Override
     public boolean isSignedIn(){
         return authState == AuthState.AUTHENTICATED;
+    }
+
+    @Override
+    public void requestSignInWithConfirmation(GooglePlayServices.SignInConfirmationCallback callback) {
+        androidLauncher.runOnUiThread(() -> {
+            int themeFromGoogle = 5; // Matches GPS dialogs
+            AlertDialog.Builder builder = new AlertDialog.Builder(androidLauncher, themeFromGoogle);
+
+            builder.setTitle("Sign In Required");
+            builder.setMessage("You need to sign in to Google Play Games to use this feature. Would you like to sign in now?");
+
+            builder.setPositiveButton("Sign In", (dialog, which) -> {
+                // User confirmed, trigger sign-in
+                Logger.info("GooglePlayServicesHelper: User confirmed sign-in request");
+                signInAsync().thenAccept(success -> {
+                    Gdx.app.postRunnable(() -> {
+                        if(success) {
+                            Logger.info("GooglePlayServicesHelper: Sign-in successful");
+                            callback.onUserConfirmed();
+                        } else {
+                            Logger.info("GooglePlayServicesHelper: Sign-in failed or cancelled");
+                            callback.onUserCancelled();
+                        }
+                    });
+                });
+            });
+
+            builder.setNegativeButton("Cancel", (dialog, which) -> {
+                Logger.info("GooglePlayServicesHelper: User cancelled sign-in request");
+                Gdx.app.postRunnable(() -> callback.onUserCancelled());
+            });
+
+            builder.setCancelable(true);
+            builder.setOnCancelListener(dialog -> {
+                Logger.info("GooglePlayServicesHelper: User dismissed sign-in dialog");
+                Gdx.app.postRunnable(() -> callback.onUserCancelled());
+            });
+
+            builder.create().show();
+        });
     }
 
     void backButtonPressed(){

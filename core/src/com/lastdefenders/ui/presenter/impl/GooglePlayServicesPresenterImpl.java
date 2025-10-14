@@ -34,19 +34,28 @@ public class GooglePlayServicesPresenterImpl implements GooglePlayServicesPresen
 
     @Override
     public void showGPSView(){
-        // Trigger sign-in first, then show view only if successful
-        gps.signInAsync().thenAccept(success -> {
-            Gdx.app.postRunnable(() -> {
-                if(success) {
-                    // User signed in successfully, show the view
-                    Logger.info("GooglePlayServicesPresenterImpl: Sign-in successful, showing view");
-                    view.setVisible(true);
-                    active = true;
-                } else {
-                    // Sign-in failed or cancelled, don't show view
-                    Logger.info("GooglePlayServicesPresenterImpl: Sign-in failed, not showing GPS view");
-                }
-            });
+        // If already signed in, show view immediately
+        if(gps.isSignedIn()) {
+            Logger.info("GooglePlayServicesPresenterImpl: Already signed in, showing view");
+            view.setVisible(true);
+            active = true;
+            return;
+        }
+
+        // Not signed in, ask user if they want to sign in
+        Logger.info("GooglePlayServicesPresenterImpl: Not signed in, requesting confirmation");
+        gps.requestSignInWithConfirmation(new GooglePlayServices.SignInConfirmationCallback() {
+            @Override
+            public void onUserConfirmed() {
+                Logger.info("GooglePlayServicesPresenterImpl: User confirmed sign-in, showing view");
+                view.setVisible(true);
+                active = true;
+            }
+
+            @Override
+            public void onUserCancelled() {
+                Logger.info("GooglePlayServicesPresenterImpl: User cancelled sign-in");
+            }
         });
     }
 
