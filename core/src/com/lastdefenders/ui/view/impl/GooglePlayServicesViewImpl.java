@@ -81,6 +81,9 @@ public class GooglePlayServicesViewImpl extends Group implements GooglePlayServi
         btnLeaderboards.getLabel().setFontScale(0.45f * resources.getFontScale());
         setBtnLeaderboardsListener(btnLeaderboards);
 
+        // Initially disable buttons until auth state is known
+        setButtonsEnabled(false);
+
         mainTable.add(btnAchievements).size(170,45).spaceBottom(10);
         mainTable.row();
         mainTable.add(btnLeaderboards).size(170,45).spaceTop(10);
@@ -123,5 +126,17 @@ public class GooglePlayServicesViewImpl extends Group implements GooglePlayServi
             }
         });
 
+    }
+
+    @Override
+    public void setButtonsEnabled(boolean enabled) {
+        if(btnAchievements != null) {
+            btnAchievements.setDisabled(!enabled);
+            btnAchievements.setTouchable(enabled ? Touchable.enabled : Touchable.disabled);
+        }
+        if(btnLeaderboards != null) {
+            btnLeaderboards.setDisabled(!enabled);
+            btnLeaderboards.setTouchable(enabled ? Touchable.enabled : Touchable.disabled);
+        }
     }
 }
