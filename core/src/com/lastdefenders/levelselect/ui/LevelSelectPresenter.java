@@ -38,18 +38,18 @@ public class LevelSelectPresenter {
     }
 
     public void showAchievements(){
-        playServices.showAchievements();
+        playServices.showAchievementsWithSignIn();
     }
 
     public void showLeaderboardForLevel(LevelName levelName){
 
         GooglePlayLeaderboard leaderboard = GooglePlayLeaderboard.findByLevelName(levelName);
-        playServices.showLeaderboard(leaderboard);
+        playServices.showLeaderboardWithSignIn(leaderboard);
     }
 
     public void showAllLeaderboards(){
 
-        playServices.showLeaderboards();
+        playServices.showLeaderboardsWithSignIn();
     }
 
     public boolean isGPSAvailable(){

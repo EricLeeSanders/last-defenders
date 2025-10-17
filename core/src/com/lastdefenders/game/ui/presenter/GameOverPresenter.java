@@ -105,7 +105,7 @@ public class GameOverPresenter implements GameUIStateObserver {
         if(canViewLeaderboard()){
             Logger.info("Game Over Presenter: Show leaderboard");
             GooglePlayLeaderboard leaderboard = GooglePlayLeaderboard.findByLevelName(currentLevel);
-            playServices.showLeaderboard(leaderboard);
+            playServices.showLeaderboardWithSignIn(leaderboard);
         }
     }
 

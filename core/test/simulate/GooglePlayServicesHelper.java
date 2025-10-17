@@ -59,6 +59,21 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
     }
 
     @Override
+    public void showAchievementsWithSignIn() {
+        // Test stub doesn't support Google Play
+    }
+
+    @Override
+    public void showLeaderboardWithSignIn(GooglePlayLeaderboard leaderboard) {
+        // Test stub doesn't support Google Play
+    }
+
+    @Override
+    public void showLeaderboardsWithSignIn() {
+        // Test stub doesn't support Google Play
+    }
+
+    @Override
     public boolean isSignedIn() {
         return false;
     }

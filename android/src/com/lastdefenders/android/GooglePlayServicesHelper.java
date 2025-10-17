@@ -238,6 +238,63 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
     }
 
     @Override
+    public void showAchievementsWithSignIn() {
+        if(isSignedIn()) {
+            showAchievements();
+        } else {
+            requestSignInWithConfirmation(new GooglePlayServices.SignInConfirmationCallback() {
+                @Override
+                public void onUserConfirmed() {
+                    showAchievements();
+                }
+
+                @Override
+                public void onUserCancelled() {
+                    Logger.info("GooglePlayServicesHelper: User cancelled, not showing achievements");
+                }
+            });
+        }
+    }
+
+    @Override
+    public void showLeaderboardWithSignIn(GooglePlayLeaderboard leaderboard) {
+        if(isSignedIn()) {
+            showLeaderboard(leaderboard);
+        } else {
+            requestSignInWithConfirmation(new GooglePlayServices.SignInConfirmationCallback() {
+                @Override
+                public void onUserConfirmed() {
+                    showLeaderboard(leaderboard);
+                }
+
+                @Override
+                public void onUserCancelled() {
+                    Logger.info("GooglePlayServicesHelper: User cancelled, not showing leaderboard");
+                }
+            });
+        }
+    }
+
+    @Override
+    public void showLeaderboardsWithSignIn() {
+        if(isSignedIn()) {
+            showLeaderboards();
+        } else {
+            requestSignInWithConfirmation(new GooglePlayServices.SignInConfirmationCallback() {
+                @Override
+                public void onUserConfirmed() {
+                    showLeaderboards();
+                }
+
+                @Override
+                public void onUserCancelled() {
+                    Logger.info("GooglePlayServicesHelper: User cancelled, not showing leaderboards");
+                }
+            });
+        }
+    }
+
+    @Override
     public boolean isSignedIn(){
         return authState == AuthState.AUTHENTICATED;
     }

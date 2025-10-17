@@ -59,6 +59,21 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
     }
 
     @Override
+    public void showAchievementsWithSignIn() {
+        // Desktop doesn't support Google Play
+    }
+
+    @Override
+    public void showLeaderboardWithSignIn(GooglePlayLeaderboard leaderboard) {
+        // Desktop doesn't support Google Play
+    }
+
+    @Override
+    public void showLeaderboardsWithSignIn() {
+        // Desktop doesn't support Google Play
+    }
+
+    @Override
     public boolean isSignedIn() {
         return false;
     }

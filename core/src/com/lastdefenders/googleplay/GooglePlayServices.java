@@ -30,5 +30,11 @@ public interface GooglePlayServices {
 
     void showLeaderboards();
 
+    void showAchievementsWithSignIn();
+
+    void showLeaderboardWithSignIn(GooglePlayLeaderboard leaderboard);
+
+    void showLeaderboardsWithSignIn();
+
     boolean isSignedIn();
 }
