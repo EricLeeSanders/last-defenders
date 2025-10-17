@@ -23,6 +23,17 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
     }
 
     @Override
+    public CompletableFuture<Boolean> signInAsync() {
+        return CompletableFuture.completedFuture(false);
+    }
+
+    @Override
+    public void requestSignInWithConfirmation(SignInConfirmationCallback callback) {
+        // Desktop doesn't support Google Play, immediately cancel
+        callback.onUserCancelled();
+    }
+
+    @Override
     public void unlockAchievement(GooglePlayAchievement achievement) {
 
     }
@@ -48,8 +59,22 @@ public class GooglePlayServicesHelper implements GooglePlayServices {
     }
 
     @Override
-    public boolean isSignedIn() {
+    public void showAchievementsWithSignIn() {
+        // Desktop doesn't support Google Play
+    }
 
+    @Override
+    public void showLeaderboardWithSignIn(GooglePlayLeaderboard leaderboard) {
+        // Desktop doesn't support Google Play
+    }
+
+    @Override
+    public void showLeaderboardsWithSignIn() {
+        // Desktop doesn't support Google Play
+    }
+
+    @Override
+    public boolean isSignedIn() {
         return false;
     }
 }

@@ -5,6 +5,6 @@ Save this file as res/values/games-ids.xml in your project.
 -->
 <resources>
     <string name="app_id">400830991161</string>
-    <string name="package_name">com.lastdefenders.android</string>
+    <string name="package_name">com.lastdefenders.game</string>
     <string name="loading_view">loading.gif</string>
 </resources>

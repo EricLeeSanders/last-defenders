@@ -7,9 +7,18 @@ import java.util.concurrent.CompletableFuture;
  */
 public interface GooglePlayServices {
 
+    interface SignInConfirmationCallback {
+        void onUserConfirmed();
+        void onUserCancelled();
+    }
+
     boolean isDeviceCompatible();
 
     CompletableFuture<Boolean> signIn();
+
+    CompletableFuture<Boolean> signInAsync();
+
+    void requestSignInWithConfirmation(SignInConfirmationCallback callback);
 
     void unlockAchievement(GooglePlayAchievement achievement);
 
@@ -20,6 +29,12 @@ public interface GooglePlayServices {
     void showLeaderboard(GooglePlayLeaderboard leaderboard);
 
     void showLeaderboards();
+
+    void showAchievementsWithSignIn();
+
+    void showLeaderboardWithSignIn(GooglePlayLeaderboard leaderboard);
+
+    void showLeaderboardsWithSignIn();
 
     boolean isSignedIn();
 }

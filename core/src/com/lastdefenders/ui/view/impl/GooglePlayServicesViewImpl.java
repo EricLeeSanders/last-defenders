@@ -124,4 +124,16 @@ public class GooglePlayServicesViewImpl extends Group implements GooglePlayServi
         });
 
     }
+
+    @Override
+    public void setButtonsEnabled(boolean enabled) {
+        if(btnAchievements != null) {
+            btnAchievements.setDisabled(!enabled);
+            btnAchievements.setTouchable(enabled ? Touchable.enabled : Touchable.disabled);
+        }
+        if(btnLeaderboards != null) {
+            btnLeaderboards.setDisabled(!enabled);
+            btnLeaderboards.setTouchable(enabled ? Touchable.enabled : Touchable.disabled);
+        }
+    }
 }

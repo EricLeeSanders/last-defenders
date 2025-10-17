@@ -7,4 +7,5 @@ package com.lastdefenders.ui.view;
 public interface GooglePlayServicesView {
     void setVisible(boolean visible);
     void init();
+    void setButtonsEnabled(boolean enabled);
 }

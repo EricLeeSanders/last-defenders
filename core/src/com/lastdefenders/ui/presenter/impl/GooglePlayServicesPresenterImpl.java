@@ -1,5 +1,6 @@
 package com.lastdefenders.ui.presenter.impl;
 
+import com.badlogic.gdx.Gdx;
 import com.lastdefenders.googleplay.GooglePlayServices;
 import com.lastdefenders.sound.AudioManager;
 import com.lastdefenders.sound.LDSound;
@@ -33,8 +34,29 @@ public class GooglePlayServicesPresenterImpl implements GooglePlayServicesPresen
 
     @Override
     public void showGPSView(){
-        view.setVisible(true);
-        active = true;
+        // If already signed in, show view immediately
+        if(gps.isSignedIn()) {
+            Logger.info("GooglePlayServicesPresenterImpl: Already signed in, showing view");
+            view.setVisible(true);
+            active = true;
+            return;
+        }
+
+        // Not signed in, ask user if they want to sign in
+        Logger.info("GooglePlayServicesPresenterImpl: Not signed in, requesting confirmation");
+        gps.requestSignInWithConfirmation(new GooglePlayServices.SignInConfirmationCallback() {
+            @Override
+            public void onUserConfirmed() {
+                Logger.info("GooglePlayServicesPresenterImpl: User confirmed sign-in, showing view");
+                view.setVisible(true);
+                active = true;
+            }
+
+            @Override
+            public void onUserCancelled() {
+                Logger.info("GooglePlayServicesPresenterImpl: User cancelled sign-in");
+            }
+        });
     }
 
     @Override
