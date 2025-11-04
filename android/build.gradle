@@ -14,12 +14,12 @@ adMobProperties.load(new FileInputStream(adMobPropertiesFile))
 
 android {
     namespace 'com.lastdefenders.game'
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId "com.lastdefenders.game"
-        minSdkVersion 33
-        targetSdkVersion 34
+        minSdkVersion 35
+        targetSdkVersion 35
         versionCode project.version.replace(".", "") as int
         versionName project.version
         multiDexEnabled true
