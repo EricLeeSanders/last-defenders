@@ -23,7 +23,7 @@ public class LDApplicationLauncher extends Application {
 		CoreConfigurationBuilder builder = new CoreConfigurationBuilder(this)
 			.setBuildConfigClass(BuildConfig.class)
 			.setReportFormat(StringFormat.JSON)
-			.setLogcatArguments( "-t", "2000", "-v", "time", "LD:D", "*:S")
+			.setLogcatArguments( "-t", "2000", "-v", "time", "LD:D", "GdxPay/GoogleBilling:D", "*:W")
 			.setReportContent(
 				ReportField.APP_VERSION_CODE,
 				ReportField.APP_VERSION_NAME,

@@ -20,6 +20,7 @@ import com.lastdefenders.game.model.level.Level;
 import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.game.model.level.state.LevelStateManager;
 import com.lastdefenders.game.model.level.state.LevelStateManager.LevelState;
+import com.lastdefenders.game.model.level.wave.HybridWaveLoaderStrategy;
 import com.lastdefenders.game.model.level.wave.impl.DynamicWaveLoader;
 import com.lastdefenders.game.model.level.wave.impl.FileWaveLoader;
 import com.lastdefenders.game.service.actorplacement.SupportActorPlacement;
@@ -107,8 +108,8 @@ public class GameStage extends Stage implements PlayerObserver {
         mapRenderer = new MapRenderer(tiledMap, resources.getTiledMapScale(), getCamera(), getBatch());
         FileWaveLoader fileWaveLoader = new FileWaveLoader(combatActorFactory, map);
         DynamicWaveLoader dynamicWaveLoader = new DynamicWaveLoader(combatActorFactory, map);
-        level = new Level(levelName, getActorGroups(), fileWaveLoader,
-            dynamicWaveLoader);
+        HybridWaveLoaderStrategy waveLoaderStrategy = new HybridWaveLoaderStrategy(fileWaveLoader, dynamicWaveLoader);
+        level = new Level(levelName, getActorGroups(), waveLoaderStrategy);
         player.attachObserver(this);
 
         eventLogger.logEvent(new EventLogBuilder(LogEvent.LEVEL_START));

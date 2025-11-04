@@ -2,33 +2,32 @@ package com.lastdefenders.game.model.level;
 
 import com.badlogic.gdx.utils.Queue;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
-import com.lastdefenders.game.model.level.wave.WaveLoader;
-import com.lastdefenders.game.model.level.wave.impl.DynamicWaveLoader;
-import com.lastdefenders.game.model.level.wave.impl.FileWaveLoader;
+import com.lastdefenders.game.model.level.wave.WaveLoaderStrategy;
 import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.util.Logger;
 
+/**
+ * Represents a game level that manages wave spawning and progression.
+ *
+ * @author Eric
+ */
 public class Level {
 
     public static final int WAVE_LEVEL_WIN_LIMIT = 20;
-    static final int FILE_WAVE_LIMIT = 100;
+    public static final int FILE_WAVE_LIMIT = 100;
 
     private float delayCount = 0;
     private float enemyDelay = 0f;
     private int currentWave = 0;
     private Queue<SpawningEnemy> spawningEnemyQueue;
     private LevelName activeLevel;
-    private WaveLoader waveLoader;
-    private DynamicWaveLoader dynamicWaveLoader;
+    private WaveLoaderStrategy waveLoaderStrategy;
     private ActorGroups actorGroups;
 
-    public Level(LevelName activeLevel, ActorGroups actorGroups, FileWaveLoader fileWaveLoader,
-        DynamicWaveLoader dynamicWaveLoader) {
-
+    public Level(LevelName activeLevel, ActorGroups actorGroups, WaveLoaderStrategy waveLoaderStrategy) {
         this.activeLevel = activeLevel;
         this.actorGroups = actorGroups;
-        this.waveLoader = fileWaveLoader;
-        this.dynamicWaveLoader = dynamicWaveLoader;
+        this.waveLoaderStrategy = waveLoaderStrategy;
     }
 
     /**
@@ -61,24 +60,14 @@ public class Level {
     }
 
     /**
-     * Loads the wave
+     * Loads the next wave using the configured wave loader strategy.
+     * The strategy handles the transition between different wave generation methods automatically.
      */
     public void loadNextWave() {
-
         currentWave++;
 
-        //Switch the wave loader when we reach MAX_WAVES
-        if (currentWave == FILE_WAVE_LIMIT + 1) {
-            Logger.info("Level: Switching to DynamicWaveLoader");
-            waveLoader = dynamicWaveLoader;
-        }
-        spawningEnemyQueue = waveLoader.loadWave(activeLevel, currentWave);
-
-        // Prep the dynamicWaveLoader when we are on the last file wave
-        if(currentWave == FILE_WAVE_LIMIT){
-
-            dynamicWaveLoader.loadCurrentWaveQueue(spawningEnemyQueue);
-        }
+        Logger.info("Level: Loading wave " + currentWave);
+        spawningEnemyQueue = waveLoaderStrategy.loadWave(activeLevel, currentWave);
 
         delayCount = 0;
         enemyDelay = 0;

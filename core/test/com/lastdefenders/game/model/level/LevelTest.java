@@ -16,6 +16,7 @@ import com.lastdefenders.game.model.actor.combat.enemy.EnemyHumvee;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyRifle;
 import com.lastdefenders.game.model.actor.combat.enemy.EnemyTank;
 import com.lastdefenders.game.model.actor.groups.EnemyGroup;
+import com.lastdefenders.game.model.level.wave.HybridWaveLoaderStrategy;
 import com.lastdefenders.game.model.level.wave.impl.DynamicWaveLoader;
 import com.lastdefenders.game.model.level.wave.impl.FileWaveLoader;
 import com.lastdefenders.game.service.factory.CombatActorFactory.SpawningEnemyPool;
@@ -39,7 +40,8 @@ public class LevelTest {
 
         LevelName levelName = LevelName.SERPENTINE_RIVER;
 
-        Level level = new Level(levelName, actorGroups, fileWaveLoader, dynamicWaveLoader);
+        HybridWaveLoaderStrategy waveLoaderStrategy = new HybridWaveLoaderStrategy(fileWaveLoader, dynamicWaveLoader);
+        Level level = new Level(levelName, actorGroups, waveLoaderStrategy);
 
         Queue<SpawningEnemy> loadedEnemies = new Queue<>();
         Enemy enemy1 = TestUtil.createEnemy(EnemyRifle.class, false);
@@ -66,7 +68,7 @@ public class LevelTest {
         doReturn(new EnemyGroup()).when(actorGroups).getEnemyGroup();
 
 
-        // Calls FileWaveLoader and DynamicWaveLoader
+        // Calls FileWaveLoader and DynamicWaveLoader through HybridWaveLoaderStrategy
         for (int i = 0; i <= Level.FILE_WAVE_LIMIT + 1; i++) {
             level.loadNextWave();
             for (int j = level.getSpawningEnemiesCount() - 1; j >= 0; j--) {
@@ -75,8 +77,13 @@ public class LevelTest {
             }
         }
 
-        verify(dynamicWaveLoader, times(1)).loadCurrentWaveQueue(any(Queue.class));
-        verify(dynamicWaveLoader, times(1)).loadWave(levelName, Level.FILE_WAVE_LIMIT + 1);
+        // Verify FileWaveLoader was called for waves 1-100
         verify(fileWaveLoader, times(Level.FILE_WAVE_LIMIT)).loadWave(eq(levelName), anyInt());
+
+        // Verify DynamicWaveLoader was initialized from wave 100
+        verify(dynamicWaveLoader, times(1)).initializeFromSeedWave(any(Queue.class));
+
+        // Verify DynamicWaveLoader was called for wave 101
+        verify(dynamicWaveLoader, times(1)).loadWave(levelName, Level.FILE_WAVE_LIMIT + 1);
     }
 }
