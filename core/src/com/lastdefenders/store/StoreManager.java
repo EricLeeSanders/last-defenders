@@ -58,6 +58,17 @@ public class StoreManager implements PurchaseObserver  {
     @Override
     public void handleInstallError(Throwable e) {
         Logger.error("StoreManager: Purchase Manager Installation Unsuccessful", e);
+
+        // Log detailed diagnostic information
+        Logger.error("StoreManager Diagnostics:");
+        Logger.error("  - Exception type: " + (e != null ? e.getClass().getName() : "null"));
+        Logger.error("  - Exception message: " + (e != null ? e.getMessage() : "null"));
+
+        if (e != null && e.getCause() != null) {
+            Logger.error("  - Cause type: " + e.getCause().getClass().getName());
+            Logger.error("  - Cause message: " + e.getCause().getMessage());
+        }
+
         notifyObserversOfInstallationStatus(false);
     }
 
