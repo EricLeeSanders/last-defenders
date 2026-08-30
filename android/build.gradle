@@ -12,6 +12,41 @@ def adMobPropertiesFile = rootProject.file("android/src/com/lastdefenders/config
 def adMobProperties = new Properties()
 adMobProperties.load(new FileInputStream(adMobPropertiesFile))
 
+/**
+ * Builds the Play Store versionCode from a major.minor.patch version.
+ *
+ * Google Play requires versionCode to strictly increase between uploads. Concatenating the
+ * digits breaks that at the next minor bump: 1.13.0 concatenates to 1130, which is lower than
+ * 1.12.16 -> 11216, and Play rejects the upload. Giving each component a fixed two-digit slot
+ * keeps the ordering.
+ *
+ * The formula deliberately produces the same result as the old one for the versions already
+ * released (1.12.15 -> 11215, 1.12.16 -> 11216), so this is continuous with what is already
+ * published rather than a jump.
+ */
+static int toVersionCode(String version) {
+
+    List<String> parts = version.tokenize('.')
+
+    if (parts.size() != 3) {
+        throw new GradleException("Version '${version}' must be major.minor.patch")
+    }
+
+    int major = parts[0] as int
+    int minor = parts[1] as int
+    int patch = parts[2] as int
+
+    // Each component owns two digits. Going past 99 would carry into the component above and
+    // silently collide (1.12.100 and 1.13.0 would both be 11300), so fail instead.
+    if (minor > 99 || patch > 99) {
+        throw new GradleException("Version '${version}' has a minor or patch component above " +
+            "99, which would collide with the next component up. Widen the versionCode " +
+            "formula in android/build.gradle before releasing this version.")
+    }
+
+    return (major * 10000) + (minor * 100) + patch
+}
+
 android {
     namespace 'com.lastdefenders.game'
     compileSdk = 35
@@ -20,7 +55,7 @@ android {
         applicationId "com.lastdefenders.game"
         minSdkVersion 35
         targetSdkVersion 35
-        versionCode project.version.replace(".", "") as int
+        versionCode toVersionCode(project.version.toString())
         versionName project.version
         multiDexEnabled true
     }
