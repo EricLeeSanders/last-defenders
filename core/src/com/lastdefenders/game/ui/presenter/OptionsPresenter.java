@@ -172,7 +172,7 @@ public class OptionsPresenter implements GameUIStateObserver, StoreManagerObserv
     }
 
     public boolean isDebug(){
-        return true;
+        return Config.IS_DEBUG;
     }
 
     @Override
