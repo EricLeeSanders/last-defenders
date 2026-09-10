@@ -1,10 +1,8 @@
 package simulate.state;
 
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Queue;
 import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.combat.tower.Tower;
-import com.lastdefenders.game.model.level.SpawningEnemy;
 import simulate.state.combatactor.EnemyState;
 import simulate.state.combatactor.TowerState;
 import simulate.state.support.SupportState;
@@ -16,28 +14,37 @@ public class WaveState {
     private int moneyStart;
     private int moneyEnd;
     private Array<Tower> towers = new Array<>();
-    private Queue<SpawningEnemy> enemies = new Queue<>();
     private Array<TowerState> towerStates = new Array<>();
     private Array<EnemyState> enemyStates = new Array<>();
     private Array<SupportState> supportStates = new Array<>();
 
+    private float lastSpawnTime = 0f;
+
     public WaveState(int waveNumber, int livesStart, int moneyStart,
-        Array<Tower> towers,
-        Queue<SpawningEnemy> enemies) {
+        Array<Tower> towers) {
 
         this.waveNumber = waveNumber;
         this.livesStart = livesStart;
         this.towers = towers;
-        this.enemies = enemies;
         this.moneyStart = moneyStart;
 
         for(Tower t : towers){
             this.towerStates.add(new TowerState(waveNumber, t));
         }
+    }
 
-        for(SpawningEnemy e : enemies){
-            this.enemyStates.add(new EnemyState(e));
-        }
+    /**
+     * Records an enemy at the moment it spawns.
+     *
+     * Waves past Level.FILE_WAVE_LIMIT create their enemies on demand, so there is no queue to
+     * read up front. Recording each enemy as it appears works for every wave, and the spawn
+     * delay measured here is the pacing the wave actually ran at rather than the value asked
+     * for, which Level rounds up to a whole frame.
+     */
+    public void enemySpawned(Enemy enemy, float waveTime) {
+
+        this.enemyStates.add(new EnemyState(enemy, waveTime - lastSpawnTime));
+        this.lastSpawnTime = waveTime;
     }
 
     public void setLivesEnd(int livesEnd){
@@ -76,11 +83,6 @@ public class WaveState {
     public Array<Tower> getTowers() {
 
         return towers;
-    }
-
-    public Queue<SpawningEnemy> getEnemies() {
-
-        return enemies;
     }
 
     public Array<TowerState> getTowerStates() {

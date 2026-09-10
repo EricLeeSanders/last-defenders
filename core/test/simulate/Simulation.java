@@ -12,11 +12,13 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.lastdefenders.ads.AdControllerHelper;
 import com.lastdefenders.game.GameStage;
 import com.lastdefenders.game.model.Player;
+import com.lastdefenders.game.model.actor.combat.enemy.Enemy;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
 import com.lastdefenders.game.model.level.state.LevelStateManager;
 import com.lastdefenders.game.model.level.state.LevelStateManager.LevelState;
@@ -161,13 +163,24 @@ public class Simulation {
             startWave();
 
             WaveState waveState = new WaveState(wave, player.getLives(), startMoney,
-                actorGroups.getTowerGroup().getCastedChildren(), gameStage.getLevel().getSpawningEnemyQueue());
+                actorGroups.getTowerGroup().getCastedChildren());
 
             supportHelper.setCurrentWaveState(waveState);
             float waveTimeLength = 0;
             while (levelStateManager.getState().equals(LevelState.WAVE_IN_PROGRESS)) {
+                int pendingBefore = gameStage.getLevel().getSpawningEnemiesCount();
                 gameStage.act(GAME_STEP_SIZE);
                 waveTimeLength += GAME_STEP_SIZE;
+
+                // Level spawns at most one enemy per frame and appends it to the group, so a
+                // drop in the pending count means the last child is the enemy that just spawned.
+                if (gameStage.getLevel().getSpawningEnemiesCount() < pendingBefore) {
+                    SnapshotArray<Enemy> spawned = actorGroups.getEnemyGroup().getCastedChildren();
+                    if (spawned.size > 0) {
+                        waveState.enemySpawned(spawned.get(spawned.size - 1), waveTimeLength);
+                    }
+                }
+
                 switch (simulationRunType) {
                     case SUPPORT_ALL:
                     case ALL:

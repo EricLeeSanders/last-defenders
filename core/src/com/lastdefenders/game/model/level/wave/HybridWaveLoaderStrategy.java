@@ -5,6 +5,7 @@ import com.lastdefenders.game.model.level.Level;
 import com.lastdefenders.game.model.level.SpawningEnemy;
 import com.lastdefenders.game.model.level.wave.impl.DynamicWaveLoader;
 import com.lastdefenders.game.model.level.wave.impl.FileWaveLoader;
+import com.lastdefenders.game.model.level.wave.impl.PreloadedWave;
 import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.util.Logger;
 
@@ -16,7 +17,7 @@ import com.lastdefenders.util.Logger;
  *
  * @author Eric
  */
-public class HybridWaveLoaderStrategy implements WaveLoaderStrategy {
+public class HybridWaveLoaderStrategy implements WaveLoader {
 
     private final FileWaveLoader fileWaveLoader;
     private final DynamicWaveLoader dynamicWaveLoader;
@@ -28,15 +29,16 @@ public class HybridWaveLoaderStrategy implements WaveLoaderStrategy {
     }
 
     @Override
-    public Queue<SpawningEnemy> loadWave(LevelName levelName, int waveNumber) {
+    public Wave loadWave(LevelName levelName, int waveNumber) {
         // Use file-based waves for waves 1-100
         if (waveNumber <= Level.FILE_WAVE_LIMIT) {
-            Queue<SpawningEnemy> wave = fileWaveLoader.loadWave(levelName, waveNumber);
+            PreloadedWave wave = fileWaveLoader.loadWave(levelName, waveNumber);
 
-            // On wave 100, prepare the dynamic loader with this wave as a seed
+            // On the last file wave, prepare the dynamic loader with this wave as a seed.
+            // Snapshotting every file wave would allocate a snapshot per enemy on every wave
+            // transition to keep a seed that only the last wave ever provides.
             if (waveNumber == Level.FILE_WAVE_LIMIT) {
-                Logger.info("HybridWaveLoaderStrategy: Preparing dynamic wave generator");
-                dynamicWaveLoader.initializeFromSeedWave(wave);
+                seedDynamicLoader(wave, waveNumber);
             }
 
             return wave;
@@ -48,6 +50,35 @@ public class HybridWaveLoaderStrategy implements WaveLoaderStrategy {
             hasTransitioned = true;
         }
 
+        if (!dynamicWaveLoader.isInitialized()) {
+            // Waves are requested in order, so wave FILE_WAVE_LIMIT has already been through
+            // seedDynamicLoader by now. Getting here means it had no enemies to seed from.
+            throw new IllegalStateException("HybridWaveLoaderStrategy: Cannot generate wave "
+                + waveNumber + ". " + levelName + " wave " + Level.FILE_WAVE_LIMIT
+                + " contains no enemies to seed from.");
+        }
+
         return dynamicWaveLoader.loadWave(levelName, waveNumber);
     }
+
+    /**
+     * Seeds the dynamic loader from a wave that is about to be played.
+     *
+     * An empty wave is logged and left alone rather than throwing here, since this runs
+     * mid-game and the loader is not needed until the first dynamic wave. loadWave reports it
+     * then, by which point there is actually something to fail.
+     */
+    private void seedDynamicLoader(PreloadedWave wave, int waveNumber) {
+
+        Queue<SpawningEnemy> pendingEnemies = wave.getPendingEnemies();
+
+        if (pendingEnemies.size == 0) {
+            Logger.info("HybridWaveLoaderStrategy: Wave " + waveNumber
+                + " is empty. Deferring dynamic seeding.");
+            return;
+        }
+
+        dynamicWaveLoader.initializeFromSeedWave(pendingEnemies, waveNumber);
+    }
+
 }

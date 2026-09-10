@@ -8,7 +8,6 @@ import com.lastdefenders.game.model.actor.combat.enemy.state.EnemyStateEnum;
 import com.lastdefenders.game.model.actor.combat.event.CombatActorEventEnum;
 import com.lastdefenders.game.model.actor.combat.event.CombatActorEventObserver;
 import com.lastdefenders.game.model.actor.combat.event.EventObserver;
-import com.lastdefenders.game.model.level.SpawningEnemy;
 
 /**
  * Created by Eric on 12/16/2019.
@@ -27,14 +26,18 @@ public class EnemyState extends CombatActorState {
     private EventObserver<CombatActor, CombatActorEventEnum> combatActorEventObserver = combatActorEventObserver();
     private EventObserver<Enemy, EnemyEventEnum> enemyEventObserver = enemyEventObserver();
 
-    public EnemyState(SpawningEnemy actor) {
-        super(actor.getEnemy());
-        this.actor = actor.getEnemy();
-        this.spawnDelay = actor.getSpawnDelay();
-        this.speed = actor.getEnemy().getSpeed();
-        this.reward = actor.getEnemy().getKillReward();
-        actor.getEnemy().getCombatActorEventObserverManager().attachObserver(combatActorEventObserver);
-        actor.getEnemy().getEnemyEventObserverManager().attachObserver(enemyEventObserver);
+    /**
+     * @param spawnDelay how long after the previous enemy this one appeared. Measured at spawn
+     * time rather than read from the wave, so it covers dynamically generated waves too.
+     */
+    public EnemyState(Enemy actor, float spawnDelay) {
+        super(actor);
+        this.actor = actor;
+        this.spawnDelay = spawnDelay;
+        this.speed = actor.getSpeed();
+        this.reward = actor.getKillReward();
+        actor.getCombatActorEventObserverManager().attachObserver(combatActorEventObserver);
+        actor.getEnemyEventObserverManager().attachObserver(enemyEventObserver);
     }
 
     public Float getSpawnDelay() {
