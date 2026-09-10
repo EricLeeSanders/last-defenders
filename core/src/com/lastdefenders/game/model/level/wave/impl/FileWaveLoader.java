@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.utils.Queue;
 import com.lastdefenders.game.model.level.Map;
 import com.lastdefenders.game.model.level.SpawningEnemy;
+import com.lastdefenders.game.model.level.wave.Wave;
 import com.lastdefenders.game.service.factory.CombatActorFactory;
 import com.lastdefenders.levelselect.LevelName;
 
@@ -22,7 +23,7 @@ public class FileWaveLoader extends AbstractWaveLoader {
     }
 
     @Override
-    public Queue<SpawningEnemy> loadWave(LevelName levelName, int wave) {
+    public PreloadedWave loadWave(LevelName levelName, int wave) {
 
         Queue<SpawningEnemy> spawningEnemies = new Queue<>();
 
@@ -42,6 +43,6 @@ public class FileWaveLoader extends AbstractWaveLoader {
 
         }
 
-        return spawningEnemies;
+        return new PreloadedWave(spawningEnemies);
     }
 }

@@ -1,8 +1,8 @@
 package com.lastdefenders.game.model.level;
 
-import com.badlogic.gdx.utils.Queue;
 import com.lastdefenders.game.model.actor.groups.ActorGroups;
-import com.lastdefenders.game.model.level.wave.WaveLoaderStrategy;
+import com.lastdefenders.game.model.level.wave.Wave;
+import com.lastdefenders.game.model.level.wave.WaveLoader;
 import com.lastdefenders.levelselect.LevelName;
 import com.lastdefenders.util.Logger;
 
@@ -19,15 +19,15 @@ public class Level {
     private float delayCount = 0;
     private float enemyDelay = 0f;
     private int currentWave = 0;
-    private Queue<SpawningEnemy> spawningEnemyQueue;
+    private Wave currentWaveEnemies;
     private LevelName activeLevel;
-    private WaveLoaderStrategy waveLoaderStrategy;
+    private WaveLoader waveLoader;
     private ActorGroups actorGroups;
 
-    public Level(LevelName activeLevel, ActorGroups actorGroups, WaveLoaderStrategy waveLoaderStrategy) {
+    public Level(LevelName activeLevel, ActorGroups actorGroups, WaveLoader waveLoader) {
         this.activeLevel = activeLevel;
         this.actorGroups = actorGroups;
-        this.waveLoaderStrategy = waveLoaderStrategy;
+        this.waveLoader = waveLoader;
     }
 
     /**
@@ -35,7 +35,7 @@ public class Level {
      */
     public void update(float delta) {
 
-        if (spawningEnemyQueue.size > 0) {
+        if (currentWaveEnemies.hasNextEnemy()) {
             delayCount += delta;
             if (delayCount >= enemyDelay) {
                 spawnNextEnemy();
@@ -49,7 +49,7 @@ public class Level {
 
         delayCount = 0;
 
-        SpawningEnemy spawningEnemy = spawningEnemyQueue.removeFirst();
+        SpawningEnemy spawningEnemy = currentWaveEnemies.nextEnemy();
         actorGroups.getEnemyGroup().addActor(spawningEnemy.getEnemy());
 
         spawningEnemy.getEnemy().ready();
@@ -60,26 +60,27 @@ public class Level {
     }
 
     /**
-     * Loads the next wave using the configured wave loader strategy.
-     * The strategy handles the transition between different wave generation methods automatically.
+     * Loads the next wave using the configured wave loader.
+     * The loader handles the transition between different wave generation methods automatically.
      */
     public void loadNextWave() {
         currentWave++;
 
         Logger.info("Level: Loading wave " + currentWave);
-        spawningEnemyQueue = waveLoaderStrategy.loadWave(activeLevel, currentWave);
+        currentWaveEnemies = waveLoader.loadWave(activeLevel, currentWave);
 
         delayCount = 0;
         enemyDelay = 0;
     }
 
+    /**
+     * Fails rather than reporting zero when no wave has been loaded. GameStage treats a count
+     * of zero as the wave being over, so a default would award the wave-over money and roll
+     * straight into the next wave instead of surfacing the missing loadNextWave() call.
+     */
     public int getSpawningEnemiesCount() {
 
-        return spawningEnemyQueue.size;
-    }
-
-    public Queue<SpawningEnemy> getSpawningEnemyQueue(){
-        return spawningEnemyQueue;
+        return currentWaveEnemies.getRemainingEnemyCount();
     }
 
     public int getCurrentWave() {

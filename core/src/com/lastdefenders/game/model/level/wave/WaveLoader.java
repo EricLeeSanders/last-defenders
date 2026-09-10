@@ -1,7 +1,5 @@
 package com.lastdefenders.game.model.level.wave;
 
-import com.badlogic.gdx.utils.Queue;
-import com.lastdefenders.game.model.level.SpawningEnemy;
 import com.lastdefenders.levelselect.LevelName;
 
 /**
@@ -10,5 +8,5 @@ import com.lastdefenders.levelselect.LevelName;
 
 public interface WaveLoader {
 
-    Queue<SpawningEnemy> loadWave(LevelName levelName, int wave);
+    Wave loadWave(LevelName levelName, int wave);
 }
